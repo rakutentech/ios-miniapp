@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'MiniApps_Example' do
+  pod 'MiniApps', :path => '../'
+
+  target 'MiniApps_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
