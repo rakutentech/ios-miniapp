@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint MiniApps.podspec' to ensure this is a
+# Be sure to run `pod lib lint MiniApp.podspec' to ensure this is a
 # valid spec before submitting.
 #
 # Any lines starting with a # are optional, but their use is encouraged
@@ -7,16 +7,16 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'MiniApps'
+  s.name             = 'MiniApp'
   s.version          = '0.1.0'
   s.authors      = "Rakuten Ecosystem Mobile"
   s.summary      = "Rakuten's Mini App SDK"
-  s.homepage     = "https://github.com/rakutentech/ios-miniapps"
+  s.homepage     = "https://github.com/rakutentech/ios-miniapp"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
-  s.source       = { :git => "https://github.com/rakutentech/ios-miniapps.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/rakutentech/ios-miniapp.git", :tag => s.version.to_s }
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = 'MiniApps/Classes/**/*'
+  s.source_files = 'MiniApp/Classes/**/*'
 
 end

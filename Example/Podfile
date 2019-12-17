@@ -1,9 +1,10 @@
 use_frameworks!
 
-target 'MiniApps_Example' do
-  pod 'MiniApps', :path => '../'
+platform :ios, '10.0'
+target 'MiniApp_Example' do
+  pod 'MiniApp', :path => '../'
 
-  target 'MiniApps_Tests' do
+  target 'MiniApp_Tests' do
     inherit! :search_paths
 
     
