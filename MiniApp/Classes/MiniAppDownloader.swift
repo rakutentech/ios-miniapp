@@ -2,7 +2,7 @@
  * Protocol for the Downloader class that handles downloading the manifest files.
  */
 protocol MiniAppDownloaderProtocol {
-    
+
     /**
      * Handles downloading each file to a specific location.
      * @param { urls: [String] } - List of URLs in the manifest.
@@ -12,22 +12,22 @@ protocol MiniAppDownloaderProtocol {
 }
 
 class MiniAppDownloader: NSObject, MiniAppDownloaderProtocol {
-    
-    private var urlToDirectoryMap = [String : URL]()
-    
+
+    private var urlToDirectoryMap = [String: URL]()
+
     private var queue: OperationQueue = {
         let operationQueue = OperationQueue()
         operationQueue.name = "MiniAppDownloader"
         operationQueue.maxConcurrentOperationCount = 4
-        
+
         return operationQueue
     }()
-    
+
     lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.default
         return URLSession(configuration: configuration, delegate: self, delegateQueue: queue)
     }()
-    
+
     func download(_ urls: [String], to pathDirectory: URL) {
         for url in urls {
             guard let fileDirectory = UrlParser.parseForFileDirectory(with: url),
@@ -38,12 +38,12 @@ class MiniAppDownloader: NSObject, MiniAppDownloaderProtocol {
                 #endif
                 return
             }
-            
+
             urlToDirectoryMap[url] = pathDirectory.appendingPathComponent(fileDirectory)
-            
+
             queue.addOperation {
                 let task = self.session.downloadTask(with: downloadUrl)
-                task.resume();
+                task.resume()
             }
         }
     }
@@ -57,7 +57,7 @@ extension MiniAppDownloader: URLSessionDownloadDelegate {
         guard let sourceURL = downloadTask.originalRequest?.url else {
             return
         }
-        
+
         guard let destinationPath = urlToDirectoryMap[sourceURL.absoluteString] else {
             #if DEBUG
                 print("MiniAppSDK: Failed to save files.")
@@ -68,8 +68,7 @@ extension MiniAppDownloader: URLSessionDownloadDelegate {
         try? FileManager.default.createDirectory(atPath: destinationPath.relativePath, withIntermediateDirectories: true)
         try? FileManager.default.removeItem(at: destinationPath)
         try? FileManager.default.copyItem(at: location, to: destinationPath)
-        
+
         urlToDirectoryMap.removeValue(forKey: sourceURL.absoluteString)
     }
 }
-

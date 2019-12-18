@@ -2,7 +2,7 @@
  * Constants for MiniAppSDK.
  */
 struct Constants {
-    
+
     /**
      * URL related constants.
      */

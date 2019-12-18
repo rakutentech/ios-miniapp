@@ -1,0 +1,21 @@
+language: swift
+xcode_workspace: MiniApp.xcworkspace
+xcode_scheme: Tests
+osx_image: xcode10.2
+
+before_install:
+- bundle install
+- gem update fastlane cocoapods --no-document
+- pod repo update
+
+script:
+- fastlane ci
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  local_dir: docs
+  on:
+    branch: master

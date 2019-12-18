@@ -1,0 +1,19 @@
+# Import base_config from git
+import_from_git(url: 'https://github.com/rakutentech/ios-buildconfig.git')
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Build All"
+  lane :ci do |options|
+    xcversion(version: "~> 10.2")
+
+    swiftlint(
+      strict: true,
+      ignore_exit_status: false
+    )
+
+    cocoapods(repo_update: ENV['MA_FL_CP_REPO_UPDATE'] || false)
+
+  end
+end

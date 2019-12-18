@@ -2,7 +2,7 @@
  * Utility class to help process URL parsing operations.
  */
 struct UrlParser {
-    
+
     /**
      * Parses for the file directory from an URL provided in a manifest.
      * @param { url: String } - URL to parse through.
@@ -18,7 +18,7 @@ struct UrlParser {
             #endif
             return nil
         }
-    
+
         return directory
     }
 }
