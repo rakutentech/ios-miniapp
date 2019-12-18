@@ -1,5 +1,5 @@
 //import XCTest
-//import MiniApps
+//import MiniApp
 //
 //class Tests: XCTestCase {
 //

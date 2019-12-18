@@ -14,7 +14,7 @@ extension FileManager {
         let cachePath =
             FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         
-        let miniAppDirectory = "MiniApps/\(appId)/\(versionId)/"
+        let miniAppDirectory = "MiniApp/\(appId)/\(versionId)/"
         
         return cachePath.appendingPathComponent(miniAppDirectory)
     }

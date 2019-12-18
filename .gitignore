@@ -1,0 +1,28 @@
+# macos
+.DS_Store
+.LSOverride
+
+# vim
+*.swp
+
+# Xcode
+xcuserdata
+*.xccheckout
+*.xcworkspace
+*.playground
+build
+
+# Cocoapods
+Pods
+
+# Fastlane
+/artifacts
+/fastlane/report.xml
+/fastlane/README.md
+/fastlane/.env
+
+# Jazzy-generated documentation
+docs/
+
+# Use latest gem versions
+Gemfile.lock
