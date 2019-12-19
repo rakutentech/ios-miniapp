@@ -5,8 +5,11 @@ line_length:
   - 200 # warning
   - 300 # error
 function_body_length:
-  - 300
-  - 500
+  max_length:
+    warning: 30
+    error: 50
+  excluded:
+    - Example/Tests
 type_body_length:
   - 300
   - 400

@@ -1,7 +1,7 @@
 language: swift
 xcode_workspace: MiniApp.xcworkspace
 xcode_scheme: Tests
-osx_image: xcode10.2
+osx_image: xcode11.3
 
 before_install:
 - bundle install
@@ -10,12 +10,3 @@ before_install:
 
 script:
 - fastlane ci
-
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  keep_history: true
-  local_dir: docs
-  on:
-    branch: master
