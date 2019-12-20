@@ -2,15 +2,15 @@ PODS:
   - MiniApp (0.1.0)
 
 DEPENDENCIES:
-  - MiniApp (from `../`)
+  - MiniApp (from `./`)
 
 EXTERNAL SOURCES:
   MiniApp:
-    :path: "../"
+    :path: "./"
 
 SPEC CHECKSUMS:
   MiniApp: 7cb5a7219239907fda4fb95862d863ab7a46f49a
 
-PODFILE CHECKSUM: 1d85a4cc60f97a24ef2c882d5c9cad38f382515d
+PODFILE CHECKSUM: ae15a16f85849a6957cfb18ce6687f3e1aa02a62
 
 COCOAPODS: 1.8.4
