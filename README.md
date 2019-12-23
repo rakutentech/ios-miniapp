@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/rakutentech/ios-mini-apps.svg?branch=master)](https://travis-ci.org/rakutentech/ios-mini-apps)
+[![Build Status](https://travis-ci.org/rakutentech/ios-miniapp.svg?branch=master)](https://travis-ci.org/rakutentech/ios-miniapp)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 # MiniApp

@@ -1,0 +1,2 @@
+ignore:
+  - "fastlane/report.xml"

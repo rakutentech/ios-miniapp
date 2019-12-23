@@ -10,3 +10,8 @@ before_install:
 
 script:
 - fastlane ci
+- bundle exec danger
+
+after_success:
+  # generate docs
+- jazzy --xcodebuild-arguments -scheme,Tests --module MiniApp --source-directory MiniApp --podspec MiniApp.podspec --readme README.md
