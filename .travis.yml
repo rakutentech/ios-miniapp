@@ -10,3 +10,20 @@ before_install:
 
 script:
 - fastlane ci
+
+after_success:
+- jazzy \
+  --xcodebuild-arguments -scheme,Tests
+  --module MiniApp
+  --source-directory MiniApp
+  --podspec MiniApp.podspec
+  --readme README.md
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  local_dir: docs
+  on:
+    branch: master
