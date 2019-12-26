@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/rakutentech/ios-mini-apps.svg?branch=master)](https://travis-ci.org/rakutentech/ios-mini-apps)
+[![Build Status](https://travis-ci.org/rakutentech/ios-mini-app.svg?branch=master)](https://travis-ci.org/rakutentech/ios-mini-app)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 # MiniApp
 
-This SDK provides capabilities to downloading/cache and host the Mini-Apps in native iOS applications. It also provides more features to interact with the native application via bridge.
+This SDK provides capabilities to downloading/cache and host the Mini-App in native iOS applications. It also provides more features to interact with the native application via bridge.
 
 ## Example
 
