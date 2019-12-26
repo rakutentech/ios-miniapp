@@ -12,7 +12,7 @@ script:
 - fastlane ci
 
 after_success:
-- jazzy \
+- jazzy
   --xcodebuild-arguments -scheme,Tests
   --module MiniApp
   --source-directory MiniApp
