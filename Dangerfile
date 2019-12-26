@@ -10,3 +10,4 @@ xcov.report(
   include_targets: 'MiniApp.framework',
   include_test_targets: false,
   minimum_coverage_percentage: 50.0
+)
