@@ -10,6 +10,7 @@ before_install:
 
 script:
 - fastlane ci
+- bundle exec danger
 
 after_success:
 - jazzy

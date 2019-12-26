@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0900"
+   LastUpgradeVersion = "1130"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -9,14 +9,14 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "MiniApp_Example.app"
-               BlueprintName = "MiniApp_Example"
+               BlueprintIdentifier = "607FACE41AFB9204008FA782"
+               BuildableName = "MiniApp_Tests.xctest"
+               BlueprintName = "MiniApp_Tests"
                ReferencedContainer = "container:MiniApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -25,12 +25,12 @@
             buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "MiniApp_Tests.xctest"
-               BlueprintName = "MiniApp_Tests"
+               BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+               BuildableName = "MiniApp_Example.app"
+               BlueprintName = "MiniApp_Example"
                ReferencedContainer = "container:MiniApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,15 +42,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "MiniApp_Example.app"
-            BlueprintName = "MiniApp_Example"
-            ReferencedContainer = "container:MiniApp.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -74,16 +65,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "MiniApp_Example.app"
-            BlueprintName = "MiniApp_Example"
-            ReferencedContainer = "container:MiniApp.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -91,16 +72,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "MiniApp_Example.app"
-            BlueprintName = "MiniApp_Example"
-            ReferencedContainer = "container:MiniApp.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

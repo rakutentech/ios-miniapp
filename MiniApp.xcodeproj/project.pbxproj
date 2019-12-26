@@ -77,7 +77,6 @@
 				9BA437EA14FAA2BAFB63D12D /* Pods-MiniApp_Tests.debug.xcconfig */,
 				7B98CE874F226779F477A2B5 /* Pods-MiniApp_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -508,6 +507,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9BA437EA14FAA2BAFB63D12D /* Pods-MiniApp_Tests.debug.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -529,6 +529,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7B98CE874F226779F477A2B5 /* Pods-MiniApp_Tests.release.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
