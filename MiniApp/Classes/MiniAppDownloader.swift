@@ -1,13 +1,12 @@
 /**
- * Protocol for the Downloader class that handles downloading the manifest files.
+ * Protocol for the Downloader class that handles downloading the files for Mini App.
  */
 protocol MiniAppDownloaderProtocol {
-
-    /**
-     * Handles downloading each file to a specific location.
-     * @param { urls: [String] } - List of URLs in the manifest.
-     * @param { pathDirectory: URL } - The system path directory to cache.
-     */
+    
+    /// Handles downloading each file to a specific location.
+    /// - Parameters:
+    ///   - urls: [String] - List of URLs in the manifest.
+    ///   - pathDirectory: URL - The system path directory to cache.
     func download(_ urls: [String], to pathDirectory: URL)
 }
 

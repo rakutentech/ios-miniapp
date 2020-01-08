@@ -28,3 +28,6 @@ deploy:
   local_dir: docs
   on:
     branch: master
+
+notifications:
+  slack: rakuten:9bxA8UeOrx5XOIWggBcEewPV

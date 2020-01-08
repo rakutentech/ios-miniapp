@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/rakutentech/ios-mini-app.svg?branch=master)](https://travis-ci.org/rakutentech/ios-miniapp)
+[![Build Status](https://travis-ci.org/rakutentech/ios-miniapp.svg?branch=master)](https://travis-ci.org/rakutentech/ios-miniapp)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 <a href="https://opensource.org/licenses/MIT">
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" />

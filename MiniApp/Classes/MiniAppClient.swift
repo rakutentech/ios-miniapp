@@ -3,12 +3,11 @@
  */
 protocol MiniAppClientProtocol {
 
-    /**
-     * Fetches the manifest from the MiniApp backend.
-     * @param { appId: String } - AppID of the MiniApp.
-     * @param { versionID: String } - VersionID of the MiniApp.
-     * @return { ManifestResponse? } - Response of from the endpoint.
-     */
+    /// Fetches the manifest from the MiniApp backend.
+    /// - Parameters:
+    ///   - appId: String - AppID of the MiniApp.
+    ///   - versionId: String - VersionID of the MiniApp.
+    /// - Returns:Response of from the endpoint.
     func fetchManifest(with appId: String, and versionId: String) -> ManifestResponse?
 }
 
