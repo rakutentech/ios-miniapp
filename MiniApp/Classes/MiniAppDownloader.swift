@@ -2,7 +2,7 @@
  * Protocol for the Downloader class that handles downloading the files for Mini App.
  */
 protocol MiniAppDownloaderProtocol {
-    
+
     /// Handles downloading each file to a specific location.
     /// - Parameters:
     ///   - urls: [String] - List of URLs in the manifest.

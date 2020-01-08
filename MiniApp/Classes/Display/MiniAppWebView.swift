@@ -1,2 +1,2 @@
-internal class MiniAppWebView{
+internal class MiniAppWebView {
 }
