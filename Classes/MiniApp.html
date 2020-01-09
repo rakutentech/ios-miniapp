@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MiniApp Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/MiniApp" class="dashAnchor"></a>
+    <a title="MiniApp Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MiniApp Docs</a> (80% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MiniApp Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        MiniApp Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../readme.html">README</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/MiniApp.html">MiniApp</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:7MiniApp0aB4ViewP">MiniAppView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:7MiniApp0aB4InfoV">MiniAppInfo</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>MiniApp</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">MiniApp</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Mini App Public API methods</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniAppAAC4list15completionBlockyys6ResultOySayAA0aB4InfoVGs5Error_pGc_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/list(completionBlock:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC4list15completionBlockyys6ResultOySayAA0aB4InfoVGs5Error_pGc_tFZ">list(completionBlock:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch the List of [MiniAppInfo] information.
+Error information will be returned if any problem while fetching from the backed</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">list</span><span class="p">(</span><span class="nv">completionBlock</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs.html#/s:7MiniApp0aB4InfoV">MiniAppInfo</a></span><span class="p">],</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionBlock</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block to be called when list of [MiniAppInfo] information is fetched. Completion blocks receives the following parameters
+
+<ul>
+<li>[MiniAppInfo]: List of [MiniAppInfo] information.</li>
+<li>Error: Error details if fetching is failed.</li>
+</ul></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniAppAAC6create5appId15completionBlockySS_ys6ResultOyAA0aB4View_ps5Error_pGctFZ"></a>
+                    <a name="//apple_ref/swift/Method/create(appId:completionBlock:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC6create5appId15completionBlockySS_ys6ResultOyAA0aB4View_ps5Error_pGctFZ">create(appId:completionBlock:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a Mini App for the given appId. Mini app will be downloaded and cached in local.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">appId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionBlock</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Protocols.html#/s:7MiniApp0aB4ViewP">MiniAppView</a></span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>appId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Unique Application Id of Mini App</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionBlock</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
+
+<ul>
+<li>[MiniAppView]: Mini App View placeholder that hosts the Mini App</li>
+<li>Error: Error details if Mini App View creating is failed</li>
+</ul></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-01-09)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
