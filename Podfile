@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :ios, '10.0'
+platform :ios, '9.0'
 target 'MiniApp_Example' do
   xcodeproj 'MiniApp.xcodeproj'
   workspace 'MiniApp.xcworkspace'
