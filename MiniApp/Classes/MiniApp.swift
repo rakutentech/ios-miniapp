@@ -8,7 +8,7 @@ public class MiniApp: NSObject {
     ///     -   completionBlock: A block to be called when list of [MiniAppInfo] information is fetched. Completion blocks receives the following parameters
     ///         -   [MiniAppInfo]: List of [MiniAppInfo] information.
     ///         -   Error: Error details if fetching is failed.
-    public class func listMiniApp(completionBlock: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
+    public class func list(completionBlock: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
         return RealMiniApp.shared.listMiniApp(completionHandler: completionBlock)
     }
 
