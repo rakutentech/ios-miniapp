@@ -30,4 +30,6 @@ deploy:
     branch: master
 
 notifications:
-  slack: rakuten:9bxA8UeOrx5XOIWggBcEewPV
+  slack:
+    rooms:
+      secure: $SLACK_TOKEN
