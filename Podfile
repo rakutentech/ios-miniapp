@@ -8,6 +8,7 @@ target 'MiniApp_Example' do
 
   target 'MiniApp_Tests' do
     inherit! :search_paths
-
+    pod 'Quick'
+    pod 'Nimble'
   end
 end
