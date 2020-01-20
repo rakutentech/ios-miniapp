@@ -21,4 +21,3 @@ identifier_name:
 excluded:
   - Pods
   - vendor
-  - Tests/Unit/*.swift

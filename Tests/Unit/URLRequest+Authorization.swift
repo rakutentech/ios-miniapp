@@ -2,7 +2,7 @@ import Quick
 import Nimble
 @testable import MiniApp
 
-class URLRequest_HeadersTests: QuickSpec {
+class URLRequestHeadersTests: QuickSpec {
 
     override func spec() {
         describe("authorization header is set") {

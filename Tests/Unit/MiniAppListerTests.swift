@@ -2,6 +2,7 @@ import Quick
 import Nimble
 @testable import MiniApp
 
+// swiftlint:disable function_body_length
 class MiniAppListerTests: QuickSpec {
 
     override func spec() {
@@ -83,7 +84,6 @@ class MiniAppListerTests: QuickSpec {
                             break
                         case .failure(let error):
                             testError = error as NSError
-                            break
                         }
                     }
                     expect(testError?.code).toEventually(equal(0))
@@ -103,7 +103,6 @@ class MiniAppListerTests: QuickSpec {
                             break
                         case .failure(let error):
                             testError = error as NSError
-                            break
                         }
                     }
                     expect(testError?.code).toEventually(equal(123))
