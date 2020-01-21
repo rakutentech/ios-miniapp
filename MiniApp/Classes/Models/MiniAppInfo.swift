@@ -1,13 +1,13 @@
 /// Mini App information
 public struct MiniAppInfo: Decodable {
-    var id: String
-    var name: String
-    var description: String
-    var icon: URL
-    var version: Version
+    public var id: String
+    public var name: String
+    public var description: String
+    public var icon: URL
+    public var version: Version
 }
 
-struct Version: Decodable {
-    var versionTag: String
-    var versionId: String
+public struct Version: Decodable {
+    public var versionTag: String
+    public var versionId: String
 }

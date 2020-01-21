@@ -15,7 +15,7 @@ internal class MiniAppLister {
         self.miniAppClient.requestFromServer(request: listingURLRequest(url: url)) { (result) in
             switch result {
             case .success(let responseData):
-                guard let decodeResponse = self.decodeListingResponse(with: responseData.data) as? [MiniAppInfo] else {
+                guard let decodeResponse = self.decodeListingResponse(with: responseData.data) else {
                     return completionHandler(.failure(self.invalidResponseData()))
                 }
                 return completionHandler(.success(decodeResponse))
@@ -31,9 +31,9 @@ internal class MiniAppLister {
         return urlRequest
     }
 
-    func decodeListingResponse(with dataResponse: Data?) -> AnyObject? {
+    func decodeListingResponse(with dataResponse: Data?) -> [MiniAppInfo]? {
         do {
-            return try JSONDecoder().decode(Array<MiniAppInfo>.self, from: dataResponse!) as AnyObject
+            return try JSONDecoder().decode(Array<MiniAppInfo>.self, from: dataResponse!) as [MiniAppInfo]
         } catch let error {
             print("Decoding Failed with Error: ", error)
             return nil
