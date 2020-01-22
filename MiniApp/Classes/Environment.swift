@@ -30,10 +30,6 @@ internal class Environment {
         return URL(string: "\(endpointUrlString)")
     }
 
-    var listingUrl: URL? {
-        return baseUrl?.appendingPathComponent("/oneapp/ios/\(appVersion)/miniapps")
-    }
-
     func manifestRequestUrl(with miniAppId: String, versionId: String) -> URL? {
         return baseUrl?.appendingPathComponent("/miniapp/\(miniAppId)/version/\(versionId)/manifest")
     }

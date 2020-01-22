@@ -7,7 +7,7 @@ class MiniAppClientTests: QuickSpec {
 
     override func spec() {
         describe("start data task") {
-            class MockSession: MiniAppClientProtocol {
+            class MockSession: SessionProtocol {
                 var data: Data?
                 var error: Error?
                 var urlResponse: HTTPURLResponse?

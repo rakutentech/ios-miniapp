@@ -18,11 +18,11 @@ fileprivate extension NSError {
     }
 }
 
-protocol MiniAppClientProtocol {
+protocol SessionProtocol {
     func startDataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void)
 }
 
-extension URLSession: MiniAppClientProtocol {
+extension URLSession: SessionProtocol {
     func startDataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         dataTask(with: request) { (data, response, error) in
             completionHandler(data, response, error)
@@ -31,9 +31,9 @@ extension URLSession: MiniAppClientProtocol {
 }
 
 class MiniAppClient {
-    let session: MiniAppClientProtocol
+    let session: SessionProtocol
 
-    init(session: MiniAppClientProtocol = URLSession(configuration: URLSessionConfiguration.default)) {
+    init(session: SessionProtocol = URLSession(configuration: URLSessionConfiguration.default)) {
         self.session = session
     }
 

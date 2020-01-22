@@ -45,10 +45,25 @@ class MiniAppListerTests: QuickSpec {
                     let miniAppLister = MiniAppLister(environment: Environment(bundle: mockBundle))
                     miniAppLister.miniAppClient = mockAPIClient
                     let responseString = """
-                    [{"id": "123", "name": "Test", "description": "Test", "icon": "https://test.com",
-                        "version": { "versionTag": "1.0.0", "versionId": "455"}
-                      },{"id": "123", "name": "Test", "description": "Test", "icon": "https://test.com",
-                        "version": { "versionTag": "1.0.0", "versionId": "455"}
+                    [
+                      {
+                        "id": "123",
+                        "name": "Test",
+                        "description": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "455"
+                        }
+                      },{
+                        "id": "123",
+                        "name": "Test",
+                        "description": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "455"
+                        }
                       }]
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -71,10 +86,25 @@ class MiniAppListerTests: QuickSpec {
                     let miniAppLister = MiniAppLister(environment: Environment(bundle: mockBundle))
                     miniAppLister.miniAppClient = mockAPIClient
                     let responseString = """
-                    [{"test": "123", "name": "Test", "description": "Test", "icon": "https://test.com",
-                        "version": { "versionTag": "1.0.0", "versionId": "455"}
-                      },{"id": "123", "name": "Test", "description": "Test", "icon": "https://test.com",
-                        "version": { "versionTag": "1.0.0", "versionId": "455"}
+                    [
+                      {
+                        "test": "123",
+                        "name": "Test",
+                        "description": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "455"
+                        }
+                      },{
+                        "id": "123",
+                        "name": "Test",
+                        "description": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "455"
+                        }
                       }]
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)

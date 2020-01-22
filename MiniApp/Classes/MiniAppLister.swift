@@ -8,7 +8,7 @@ internal class MiniAppLister {
     }
 
     func fetchList(completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
-        guard let url = environment.listingUrl else {
+        guard let url = self.getListingURL() else {
             return completionHandler(.failure(self.invalidURLError()))
         }
 
@@ -31,13 +31,20 @@ internal class MiniAppLister {
         return urlRequest
     }
 
-    func decodeListingResponse(with dataResponse: Data?) -> [MiniAppInfo]? {
+    func decodeListingResponse(with dataResponse: Data) -> [MiniAppInfo]? {
         do {
-            return try JSONDecoder().decode(Array<MiniAppInfo>.self, from: dataResponse!) as [MiniAppInfo]
+            return try JSONDecoder().decode(Array<MiniAppInfo>.self, from: dataResponse) as [MiniAppInfo]
         } catch let error {
             print("Decoding Failed with Error: ", error)
             return nil
         }
+    }
+
+    func getListingURL() -> URL? {
+        guard let baseURL = environment.baseUrl else {
+            return nil
+        }
+        return baseURL.appendingPathComponent("/oneapp/ios/\(environment.appVersion)/miniapps")
     }
 
     func invalidURLError() -> NSError {
