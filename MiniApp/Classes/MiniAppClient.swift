@@ -1,50 +1,66 @@
-/**
- * Protocol for the client that talks to 'GET /app:/version:/manifest' endpoint.
- */
-protocol MiniAppClientProtocol {
-
-    /// Fetches the manifest from the MiniApp backend.
-    /// - Parameters:
-    ///   - appId: String - AppID of the MiniApp.
-    ///   - versionId: String - VersionID of the MiniApp.
-    /// - Returns:Response of from the endpoint.
-    func fetchManifest(with appId: String, and versionId: String) -> ManifestResponse?
+struct ResponseData {
+    let data: Data
+    let httpResponse: HTTPURLResponse
+    init(_ data: Data, _ httpResponse: HTTPURLResponse) {
+        self.data = data
+        self.httpResponse = httpResponse
+    }
 }
 
-struct MiniAppClient: MiniAppClientProtocol {
-    var serviceCommunicator: ServiceCommunicatorProtocol = ServiceCommunicator()
+struct ErrorData: Decodable, Equatable {
+    let code: Int
+    let message: String
+}
 
-    func fetchManifest(with appId: String, and versionId: String) -> ManifestResponse? {
-        guard let manifestUrl = formRequestUrl(with: appId, and: versionId) else {
-            #if DEBUG
-                print("MiniAppSDK: Failed to create manifest URL.")
-            #endif
-            return nil
-        }
+fileprivate extension NSError {
+    class func serverError(code: Int, message: String) -> NSError {
+        return NSError(domain: "Server", code: code, userInfo: [NSLocalizedDescriptionKey: message])
+    }
+}
 
-        let (responseBody, metadata) = serviceCommunicator.requestFromServer(withUrl: manifestUrl,
-                                                                             withHttpMethod: .get,
-                                                                             withSemaphoreWait: true)
+protocol SessionProtocol {
+    func startDataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void)
+}
 
-        guard let manifestResponse = decodeManifestResponse(with: responseBody) else {
-            return nil
-        }
+extension URLSession: SessionProtocol {
+    func startDataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        dataTask(with: request) { (data, response, error) in
+            completionHandler(data, response, error)
+        }.resume()
+    }
+}
 
-        return manifestResponse
+class MiniAppClient {
+    let session: SessionProtocol
+
+    init(session: SessionProtocol = URLSession(configuration: URLSessionConfiguration.default)) {
+        self.session = session
     }
 
-    private func formRequestUrl(with appId: String, and versionId: String) -> URL? {
-        return URL(string: Constants.URLs.miniAppBaseUrl + appId + "/version/" + versionId + "/manifest")
-    }
+    func requestFromServer(request: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
-    private func decodeManifestResponse(with dataResponse: Data?) -> ManifestResponse? {
-        do {
-            return try JSONDecoder().decode(ManifestResponse.self, from: dataResponse!)
-        } catch let error {
-            #if DEBUG
-                print("MiniAppSDK: Failed to decode ManifestResponse: ", error)
-            #endif
-            return nil
+        session.startDataTask(with: request) { (data, response, error) in
+            if let err = error {
+                return completionHandler(.failure(err))
+            }
+
+            guard let data = data else {
+                let dataError = NSError.serverError(code: (response as? HTTPURLResponse)?.statusCode ?? 0, message: "Response is Nil")
+                return completionHandler(.failure(dataError))
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse,
+                (200...299).contains(httpResponse.statusCode) else {
+                    do {
+                        let errorModel = try JSONDecoder().decode(ErrorData.self, from: data)
+                        return completionHandler(.failure(NSError.serverError(code: errorModel.code, message: errorModel.message)))
+                    } catch {
+                        let unknownError = NSError.serverError(code: (response as? HTTPURLResponse)?.statusCode ?? 0, message: "Unspecified server error occurred")
+                        return completionHandler(.failure(unknownError))
+                    }
+            }
+
+            return completionHandler(.success(ResponseData(data, httpResponse)))
         }
     }
 }

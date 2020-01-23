@@ -8,8 +8,6 @@ function_body_length:
   max_length:
     warning: 30
     error: 50
-  excluded:
-    - Example/Tests
 type_body_length:
   - 300
   - 400
