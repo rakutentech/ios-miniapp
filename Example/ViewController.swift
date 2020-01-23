@@ -22,15 +22,6 @@ class ViewController: UITableViewController {
         }
     }
 
-    func decodeListingResponse(with dataResponse: Data?) -> [MiniAppInfo]? {
-        do {
-            return try JSONDecoder().decode(Array<MiniAppInfo>.self, from: dataResponse!)
-        } catch let error {
-            print("Decoding Failed with Error: ", error)
-            return nil
-        }
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return decodeResponse?.count ?? 0
     }
