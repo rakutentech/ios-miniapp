@@ -39,7 +39,7 @@
 	<string>RAS_APPLICATION_IDENTIFIER</string>
 	<key>RASProjectSubscriptionKey</key>
 	<string>RAS_SUBSCRIPTION_KEY</string>
-	<key>RMAConfigAPIEndpoint</key>
+	<key>RMAAPIEndpoint</key>
 	<string>https://www.example.com</string>
 </dict>
 </plist>

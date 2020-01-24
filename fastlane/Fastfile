@@ -31,6 +31,20 @@ platform :ios do
       coverage
     end
 
+  desc "Set up environment"
+  lane :setup_env do
+    # Use env variables to set up endpoints/keys in order to keep them secret
+    set_info_plist_value(path: "./Example/Info.plist",
+                         key: "RASApplicationIdentifier",
+                         value: ENV['RAS_APPLICATION_IDENTIFIER'] || "APP_ID")
+    set_info_plist_value(path: "./Example/Info.plist",
+                         key: "RASProjectSubscriptionKey",
+                         value: ENV['RAS_PROJECT_SUBSCRIPTION_KEY'] || "SUBSCRIPTION_KEY")
+    set_info_plist_value(path: "./Example/Info.plist",
+                         key: "RMAAPIEndpoint",
+                         value: ENV['RMA_API_ENDPOINT'] || "https://www.example.com")
+  end
+
     desc "Generate code coverage"
     lane :coverage do |options|
       Dir.chdir("..") do
