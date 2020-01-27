@@ -5,21 +5,21 @@ internal class ListingApi {
         self.environment = environment
     }
 
-    func urlRequest() -> URLRequest? {
+    func createURLRequest() -> URLRequest? {
         guard let url = getListingURL() else {
             return nil
         }
-        return listingURLRequest(url: url)
+        return urlRequest(url: url)
     }
 
-    func getListingURL() -> URL? {
+    private func getListingURL() -> URL? {
         guard let baseURL = environment.baseUrl else {
             return nil
         }
         return baseURL.appendingPathComponent("/oneapp/ios/\(environment.appVersion)/miniapps")
     }
 
-    func listingURLRequest(url: URL) -> URLRequest {
+    private func urlRequest(url: URL) -> URLRequest {
         var urlRequest = URLRequest(url: url)
         urlRequest.setAuthorizationHeader(environment: environment)
         return urlRequest

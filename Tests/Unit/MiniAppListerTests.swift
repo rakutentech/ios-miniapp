@@ -89,7 +89,11 @@ class MiniAppListerTests: QuickSpec {
                 it("will pass an error with status code and failure completion handler is called") {
                     let mockAPIClient = MockAPIClient()
                     var testError: NSError?
-                    mockAPIClient.error = NSError(domain: "Test", code: 123, userInfo: nil)
+                    mockAPIClient.error = NSError(
+                        domain: "Test",
+                        code: 123,
+                        userInfo: nil
+                    )
                     let miniAppLister = MiniAppLister()
                     miniAppLister.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
                         switch result {

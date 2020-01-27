@@ -23,8 +23,12 @@ class MiniAppClientTests: QuickSpec {
                             return completionHandler(.failure(error))
                         }
                         guard let httpResponse = urlResponse, let data = data else {
-                            let error = NSError(domain: "APIClient", code: (urlResponse)?.statusCode ?? 0, userInfo: [NSLocalizedDescriptionKey: "Unknown server error occurred"])
-                                return completionHandler(.failure(error))
+                            let error = NSError(
+                                domain: "APIClient",
+                                code: (urlResponse)?.statusCode ?? 0,
+                                userInfo: [NSLocalizedDescriptionKey: "Unknown server error occurred"]
+                            )
+                            return completionHandler(.failure(error))
                         }
                         return completionHandler(.success(ResponseData(data, httpResponse)))
                 }
@@ -52,7 +56,11 @@ class MiniAppClientTests: QuickSpec {
             }
 
             context("when network response doesn't contain data") {
-                var testError: NSError = NSError.init(domain: "Error", code: 0, userInfo: nil)
+                var testError: NSError = NSError.init(
+                    domain: "Error",
+                    code: 0,
+                    userInfo: nil
+                )
                 it("will pass an error with status code and completion handler expected to return the same") {
                     let mockSession = MockSession(data: nil, statusCode: 400)
                     MiniAppClient(session: mockSession).getMiniAppsList { (result) in

@@ -7,7 +7,7 @@ class MockAPIClient: MiniAppClient {
     var headers: [String: String]?
 
     override func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-        guard let urlRequest = self.listingApi.urlRequest() else {
+        guard let urlRequest = self.listingApi.createURLRequest() else {
             return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
         }
 

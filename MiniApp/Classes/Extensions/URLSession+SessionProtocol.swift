@@ -5,7 +5,7 @@ extension URLSession: SessionProtocol {
                 return completionHandler(.failure(error))
             }
             guard let httpResponse = response as? HTTPURLResponse, let data = data else {
-                let error = NSError(domain: "APIClient", code: (response as? HTTPURLResponse)?.statusCode ?? 0, userInfo: [NSLocalizedDescriptionKey: "Unknown server error occurred"])
+                let error = NSError.unknownServerError(httpResponse: response as? HTTPURLResponse)
                 return completionHandler(.failure(error))
             }
             return completionHandler(.success(ResponseData(data, httpResponse)))
