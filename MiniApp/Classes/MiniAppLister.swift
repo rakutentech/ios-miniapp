@@ -6,7 +6,7 @@ internal class MiniAppLister {
             switch result {
             case .success(let responseData):
                 guard let decodeResponse = self.decodeListingResponse(with: responseData.data) else {
-                    return completionHandler(.failure(self.invalidResponseData()))
+                    return completionHandler(.failure(NSError.invalidResponseData()))
                 }
                 return completionHandler(.success(decodeResponse))
             case .failure(let error):
@@ -22,9 +22,5 @@ internal class MiniAppLister {
             print("Decoding Failed with Error: ", error)
             return nil
         }
-    }
-
-    func invalidResponseData() -> NSError {
-        return NSError(domain: "Server Error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response received"])
     }
 }
