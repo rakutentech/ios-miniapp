@@ -6,13 +6,18 @@ class MockAPIClient: MiniAppClient {
     var request: URLRequest?
     var headers: [String: String]?
 
-    override func requestFromServer(request: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-        self.request = request
-
-        guard let data = data, let url = request.url else {
+    override func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+        guard let urlRequest = self.listingApi.createURLRequest() else {
             return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
         }
 
+        guard let data = data else {
+            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+        }
+        guard let url = urlRequest.url else {
+            return
+        }
+        self.request = urlRequest
         if let httpResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
             return  completionHandler(.success(ResponseData(data, httpResponse)))
         }
