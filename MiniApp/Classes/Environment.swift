@@ -23,8 +23,8 @@ internal class Environment {
     }
 
     var baseUrl: URL? {
-        guard let endpointUrlString = bundle.value(for: "RMAConfigAPIEndpoint") else {
-            Logger.e("Ensure RMAConfigAPIEndpoint value in plist is valid")
+        guard let endpointUrlString = bundle.value(for: "RMAAPIEndpoint") else {
+            Logger.e("Ensure RMAAPIEndpoint value in plist is valid")
             return nil
         }
         return URL(string: "\(endpointUrlString)")

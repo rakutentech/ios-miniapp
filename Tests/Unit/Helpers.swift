@@ -43,7 +43,7 @@ class MockBundle: EnvironmentProtocol {
             return mockSubscriptionKey
         case "CFBundleShortVersionString":
             return mockAppVersion
-        case "RMAConfigAPIEndpoint":
+        case "RMAAPIEndpoint":
             return mockEndpoint
         default:
             return nil
