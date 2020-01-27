@@ -1,5 +1,8 @@
 protocol SessionProtocol {
-    func startDataTask(with request: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void)
+    func startDataTask(
+        with request: URLRequest,
+        completionHandler: @escaping (Result<ResponseData, Error>) -> Void
+    )
 }
 
 class MiniAppClient {
