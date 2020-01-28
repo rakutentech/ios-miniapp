@@ -9,18 +9,25 @@ extension NSError {
     }
 
     class func unknownServerError(httpResponse: HTTPURLResponse?) -> NSError {
-        let unknownError = NSError.serverError(
+        return NSError.serverError(
             code: (httpResponse)?.statusCode ?? 0,
             message: "Unknown server error occurred"
         )
-        return unknownError
     }
 
     class func invalidURLError() -> NSError {
         return NSError(
-            domain: "API Client",
+            domain: "APIClient",
             code: 0,
             userInfo: [NSLocalizedDescriptionKey: "Invalid URL error"]
+        )
+    }
+
+    class func invalidResponseData() -> NSError {
+        return NSError(
+            domain: "Server Error",
+            code: 0,
+            userInfo: [NSLocalizedDescriptionKey: "Invalid response received"]
         )
     }
 }
