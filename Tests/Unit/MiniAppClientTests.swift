@@ -117,7 +117,7 @@ class MiniAppClientTests: QuickSpec {
         }
         describe("fetch manifest information") {
             context("for a valid mini app") {
-                var testResult: ManifestResponse?
+                var testResult: ResponseData?
                 it("should return list of files of mini app") {
                     let mockSession = MockSession(data: ["id": "123",
                                                          "versionTag": "1.0",
@@ -131,23 +131,7 @@ class MiniAppClientTests: QuickSpec {
                             break
                         }
                     }
-                    expect(testResult).toEventually(beAnInstanceOf(ManifestResponse.self))
-                }
-                it("returns invalid response data") {
-                    let mockSession = MockSession(data: ["id": "123",
-                                                         "version": "1.0",
-                                                         "name": "Sample",
-                                                         "files": ["http://www.example.com"]])
-                    var testError: NSError?
-                    MiniAppClient(session: mockSession).getAppManifest(appId: "abc", versionId: "ver") { (result) in
-                        switch result {
-                        case .success:
-                            break
-                        case .failure(let error):
-                            testError = error as NSError
-                        }
-                    }
-                    expect(testError).toEventually(equal(NSError.invalidResponseData()), timeout: 2)
+                    expect(testResult).toEventuallyNot(beNil())
                 }
                 it("returns response data as nil") {
                     var testError: NSError = NSError.init(

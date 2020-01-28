@@ -23,8 +23,21 @@ class MiniAppClient {
         guard let urlRequest = self.listingApi.createURLRequest() else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
+        return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
+    }
 
-        session.startDataTask(with: urlRequest) { (result) in
+    func getAppManifest(appId: String,
+                        versionId: String,
+                        completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+
+        guard let urlRequest = self.manifestApi.createURLRequest(appId: appId, versionId: versionId) else {
+            return completionHandler(.failure(NSError.invalidURLError()))
+        }
+        return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
+    }
+
+    func requestFromServer(urlRequest: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+        return session.startDataTask(with: urlRequest) { (result) in
             switch result {
             case .success(let responseData):
                 if !(200...299).contains(responseData.httpResponse.statusCode) {
@@ -35,34 +48,6 @@ class MiniAppClient {
                 }
                 return completionHandler(.success(ResponseData(responseData.data,
                                                                responseData.httpResponse)))
-            case .failure(let error):
-                return completionHandler(.failure(error))
-            }
-        }
-    }
-
-    func getAppManifest(appId: String,
-                        versionId: String,
-                        completionHandler: @escaping (Result<ManifestResponse, Error>) -> Void) {
-
-        guard let urlRequest = self.manifestApi.createURLRequest(appId: appId, versionId: versionId) else {
-            return completionHandler(.failure(NSError.invalidURLError()))
-        }
-
-        session.startDataTask(with: urlRequest) { (result) in
-            switch result {
-            case .success(let responseData):
-                if !(200...299).contains(responseData.httpResponse.statusCode) {
-                    return completionHandler(.failure(
-                        self.handleHttpResponse(responseData: responseData.data,
-                                                httpResponse: responseData.httpResponse)
-                    ))
-                }
-                guard let decodeResponse = ResponseDecoder.decode(decodeType: ManifestResponse.self,
-                                                                  data: responseData.data) else {
-                    return completionHandler(.failure(NSError.invalidResponseData()))
-                }
-                return completionHandler(.success(decodeResponse))
             case .failure(let error):
                 return completionHandler(.failure(error))
             }
