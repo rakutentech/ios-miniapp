@@ -6,39 +6,35 @@ import Nimble
 class MiniAppClientTests: QuickSpec {
 
     override func spec() {
-        describe("start data task") {
-            class MockSession: SessionProtocol {
-                var data: Data?
-                var error: Error?
-                var urlResponse: HTTPURLResponse?
-                var jsonObject: [String: Any]?
-                var serverErrorCode = Int()
+        class MockSession: SessionProtocol {
+            var data: Data?
+            var error: Error?
+            var urlResponse: HTTPURLResponse?
+            var jsonObject: [String: Any]?
+            var serverErrorCode = Int()
 
-                func startDataTask(with request: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-                        urlResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: serverErrorCode, httpVersion: "1", headerFields: nil)
-                        if let json = jsonObject {
-                            data = try? JSONSerialization.data(withJSONObject: json, options: [])
-                        }
-                        if let error = error {
-                            return completionHandler(.failure(error))
-                        }
-                        guard let httpResponse = urlResponse, let data = data else {
-                            let error = NSError(
-                                domain: "APIClient",
-                                code: (urlResponse)?.statusCode ?? 0,
-                                userInfo: [NSLocalizedDescriptionKey: "Unknown server error occurred"]
-                            )
-                            return completionHandler(.failure(error))
-                        }
-                        return completionHandler(.success(ResponseData(data, httpResponse)))
-                }
-
-                init(data: [String: Any]? = nil, statusCode: Int = 200, error: NSError? = nil) {
-                    self.jsonObject = data
-                    self.serverErrorCode = statusCode
-                    self.error = error
-                }
+            func startDataTask(with request: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+                    urlResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: serverErrorCode, httpVersion: "1", headerFields: nil)
+                    if let json = jsonObject {
+                        data = try? JSONSerialization.data(withJSONObject: json, options: [])
+                    }
+                    if let error = error {
+                        return completionHandler(.failure(error))
+                    }
+                    guard let httpResponse = urlResponse, let data = data else {
+                        let error = NSError.unknownServerError(httpResponse: urlResponse)
+                        return completionHandler(.failure(error))
+                    }
+                    return completionHandler(.success(ResponseData(data, httpResponse)))
             }
+
+            init(data: [String: Any]? = nil, statusCode: Int = 200, error: NSError? = nil) {
+                self.jsonObject = data
+                self.serverErrorCode = statusCode
+                self.error = error
+            }
+        }
+        describe("start data task") {
             context("when network response contains valid data") {
                 var testResult: Data?
                 it("will pass a result to success completion handler with expected value") {
@@ -108,6 +104,69 @@ class MiniAppClientTests: QuickSpec {
                 it("will pass an error to completion handler with expected code") {
                     let mockSession = MockSession(data: ["error_code": 404, "message": "error message"], statusCode: 404)
                     MiniAppClient(session: mockSession).getMiniAppsList { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    }
+                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: 2)
+                }
+            }
+        }
+        describe("fetch manifest information") {
+            context("for a valid mini app") {
+                var testResult: ResponseData?
+                it("should return list of files of mini app") {
+                    let mockSession = MockSession(data: ["id": "123",
+                                                         "versionTag": "1.0",
+                                                         "name": "Sample",
+                                                         "files": ["http://www.example.com"]])
+                    MiniAppClient(session: mockSession).getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                        switch result {
+                        case .success(let responseData):
+                            testResult = responseData
+                        case .failure:
+                            break
+                        }
+                    }
+                    expect(testResult).toEventuallyNot(beNil())
+                }
+                it("returns response data as nil") {
+                    var testError: NSError = NSError.init(
+                        domain: "Error",
+                        code: 0,
+                        userInfo: nil
+                    )
+                    let mockSession = MockSession(data: nil, statusCode: 400)
+                    MiniAppClient(session: mockSession).getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    }
+                    expect(testError.code).toEventually(equal(400), timeout: 2)
+                }
+                it("returns valid error response") {
+                    var testError: NSError?
+                    let mockSession = MockSession(data: ["code": 404, "message": "error message"], statusCode: 404)
+                    MiniAppClient(session: mockSession).getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    }
+                    expect(testError?.code).toEventually(equal(404), timeout: 2)
+                }
+                it("returns invalid error response") {
+                    var testError: NSError?
+                    let mockSession = MockSession(data: ["error_code": 404, "message": "error message"], statusCode: 404)
+                    MiniAppClient(session: mockSession).getAppManifest(appId: "abc", versionId: "ver") { (result) in
                         switch result {
                         case .success:
                             break

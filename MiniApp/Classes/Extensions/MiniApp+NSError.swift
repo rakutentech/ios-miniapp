@@ -25,7 +25,7 @@ extension NSError {
 
     class func invalidResponseData() -> NSError {
         return NSError(
-            domain: "Server Error",
+            domain: "APIClient",
             code: 0,
             userInfo: [NSLocalizedDescriptionKey: "Invalid response received"]
         )

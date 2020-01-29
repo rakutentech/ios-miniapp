@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
+		38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */; };
+		38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */; };
 		3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878D4D123B44F85001E27F8 /* AppDelegate.swift */; };
 		3878D4D523B44F85001E27F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3878D4D223B44F85001E27F8 /* Images.xcassets */; };
 		3878D4D623B44F85001E27F8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878D4D323B44F85001E27F8 /* ViewController.swift */; };
@@ -32,6 +35,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
+		38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestAPITests.swift; sourceTree = "<group>"; };
+		38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestDownloaderTests.swift; sourceTree = "<group>"; };
 		3878D4D123B44F85001E27F8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Example/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		3878D4D223B44F85001E27F8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Example/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		3878D4D323B44F85001E27F8 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Example/ViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -102,9 +108,12 @@
 			children = (
 				389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */,
 				38F73B4623D55CCB00F2C1CE /* MiniAppListerTests.swift */,
+				38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */,
 				38F73B4D23D5EC9600F2C1CE /* URLRequest+Authorization.swift */,
-				38F73B4423D554FE00F2C1CE /* Helpers.swift */,
 				388FEEE523DEABCF0062382F /* EnvironmentTests.swift */,
+				38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */,
+				38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */,
+				38F73B4423D554FE00F2C1CE /* Helpers.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -381,6 +390,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */,
+				38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */,
+				38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */,
+				38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */,
 				38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */,
 				38F73B4723D55CCB00F2C1CE /* MiniAppListerTests.swift in Sources */,
 				388FEEE623DEABCF0062382F /* EnvironmentTests.swift in Sources */,

@@ -5,22 +5,13 @@ internal class MiniAppLister {
         apiClient.getMiniAppsList { (result) in
             switch result {
             case .success(let responseData):
-                guard let decodeResponse = self.decodeListingResponse(with: responseData.data) else {
+                guard let decodeResponse = ResponseDecoder.decode(decodeType: Array<MiniAppInfo>.self, data: responseData.data) else {
                     return completionHandler(.failure(NSError.invalidResponseData()))
                 }
                 return completionHandler(.success(decodeResponse))
             case .failure(let error):
                 return completionHandler(.failure(error))
             }
-        }
-    }
-
-    func decodeListingResponse(with dataResponse: Data) -> [MiniAppInfo]? {
-        do {
-            return try JSONDecoder().decode(Array<MiniAppInfo>.self, from: dataResponse) as [MiniAppInfo]
-        } catch let error {
-            print("Decoding Failed with Error: ", error)
-            return nil
         }
     }
 }
