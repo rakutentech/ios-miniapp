@@ -8,7 +8,7 @@ class MiniAppClientTests: QuickSpec {
     override func spec() {
         class MockSession: SessionProtocol {
             func startDownloadTask(downloadUrl: URL) {
-                
+
             }
 
             var data: Data?

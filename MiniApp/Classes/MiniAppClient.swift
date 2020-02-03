@@ -7,12 +7,11 @@ protocol SessionProtocol {
 }
 
 class MiniAppClient: NSObject, URLSessionDownloadDelegate {
-    
+
     let listingApi: ListingApi
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
     let environment: Environment
-    var delegate: MiniAppDownloaderProtocol?
 
     override init() {
         self.environment = Environment()
@@ -42,7 +41,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
-    
+
     func download(url: String) {
         guard let url = self.downloadApi.createURLFromString(urlString: url) else {
             return
@@ -76,8 +75,8 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         return NSError.serverError(code: errorModel.code, message: errorModel.message)
     }
 
-    // TODO: Saving the file - Storage
+    // Saving the file - Storage
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        
+
     }
 }
