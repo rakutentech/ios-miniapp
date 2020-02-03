@@ -9,7 +9,7 @@ internal class ManifestApi {
         guard let url = getManifestRequestUrl(with: appId, versionId: versionId) else {
             return nil
         }
-        return urlRequest(url: url)
+        return URLRequest.createURLRequest(url: url, environment: environment)
     }
 
     private func getManifestRequestUrl(with miniAppId: String, versionId: String) -> URL? {
@@ -18,11 +18,4 @@ internal class ManifestApi {
         }
         return baseURL.appendingPathComponent("/miniapp/\(miniAppId)/version/\(versionId)/manifest")
     }
-
-    private func urlRequest(url: URL) -> URLRequest {
-        var urlRequest = URLRequest(url: url)
-        urlRequest.setAuthorizationHeader(environment: environment)
-        return urlRequest
-    }
-
 }

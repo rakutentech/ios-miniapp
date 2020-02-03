@@ -3,20 +3,27 @@ protocol SessionProtocol {
         with request: URLRequest,
         completionHandler: @escaping (Result<ResponseData, Error>) -> Void
     )
+    func startDownloadTask(downloadUrl: URL)
 }
 
-class MiniAppClient {
-    let session: SessionProtocol
+class MiniAppClient: NSObject, URLSessionDownloadDelegate {
+    
     let listingApi: ListingApi
     let manifestApi: ManifestApi
+    let downloadApi: DownloadApi
     let environment: Environment
+    var delegate: MiniAppDownloaderProtocol?
 
-    init(session: SessionProtocol = URLSession(configuration: URLSessionConfiguration.default)) {
-        self.session = session
+    override init() {
         self.environment = Environment()
         self.listingApi = ListingApi(environment: self.environment)
         self.manifestApi = ManifestApi(environment: self.environment)
+        self.downloadApi = DownloadApi(environment: self.environment)
     }
+
+    lazy var session: SessionProtocol = {
+        return URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+    }()
 
     func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
@@ -34,6 +41,13 @@ class MiniAppClient {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
+    }
+    
+    func download(url: String) {
+        guard let url = self.downloadApi.createURLFromString(urlString: url) else {
+            return
+        }
+        self.session.startDownloadTask(downloadUrl: url)
     }
 
     func requestFromServer(urlRequest: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
@@ -60,5 +74,10 @@ class MiniAppClient {
             return NSError.unknownServerError(httpResponse: httpResponse)
         }
         return NSError.serverError(code: errorModel.code, message: errorModel.message)
+    }
+
+    // TODO: Saving the file - Storage
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        
     }
 }
