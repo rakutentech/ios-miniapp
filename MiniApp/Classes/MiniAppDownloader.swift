@@ -1,16 +1,12 @@
-/**
- * Protocol for the Downloader class that handles downloading the files for Mini App.
- */
-protocol MiniAppDownloaderProtocol {
+class MiniAppDownloader {
 
-    /// Handles downloading each file to a specific location.
-    /// - Parameters:
-    ///   - urls: [String] - List of URLs in the manifest.
-    ///   - pathDirectory: URL - The system path directory to cache.
-    func download(_ urls: [String], to pathDirectory: URL)
-}
+    typealias DownloadCompletionHandler = (Result<URL?, Error>) -> Void
 
-class MiniAppDownloader: NSObject, MiniAppDownloaderProtocol {
+    var miniAppClient: MiniAppClient?
+    var miniAppStorage: MiniAppStorage
+    var manifestDownloader: ManifestDownloader
+    var completionHandler: DownloadCompletionHandler?
+    var miniAppDirectory: URL?
 
     private var urlToDirectoryMap = [String: URL]()
 
@@ -22,52 +18,70 @@ class MiniAppDownloader: NSObject, MiniAppDownloaderProtocol {
         return operationQueue
     }()
 
-    lazy var session: URLSession = {
-        let configuration = URLSessionConfiguration.default
-        return URLSession(configuration: configuration, delegate: self, delegateQueue: queue)
-    }()
+    init() {
+        self.miniAppStorage = MiniAppStorage()
+        self.manifestDownloader = ManifestDownloader()
+    }
 
-    func download(_ urls: [String], to pathDirectory: URL) {
+    func download(with apiClient: MiniAppClient, appId: String, versionId: String, completionHandler: @escaping (Result<URL?, Error>) -> Void) {
+        self.miniAppClient = apiClient
+        self.manifestDownloader.fetchManifest(apiClient: apiClient, appId: appId, versionId: versionId) { (result) in
+            switch result {
+            case .success(let responseData):
+                self.completionHandler = completionHandler
+                self.downloadManifestFiles(with: appId, versionId: versionId, manifestResponse: responseData)
+            case .failure(let error):
+                return completionHandler(.failure(error))
+            }
+        }
+    }
+
+    private func downloadManifestFiles(with appId: String, versionId: String, manifestResponse: ManifestResponse) {
+        guard let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId, and: versionId) else {
+            return
+        }
+        miniAppDirectory = miniAppStoragePath
+        downloadMiniApp(manifestResponse.files, to: miniAppStoragePath)
+    }
+
+    private func downloadMiniApp(_ urls: [String], to miniAppPath: URL) {
+        self.miniAppClient?.delegate = self
         for url in urls {
-            guard let fileDirectory = UrlParser.parseForFileDirectory(with: url),
-                let downloadUrl = URL(string: url)
-            else {
-                #if DEBUG
-                    print("MiniAppSDK: Invalid URL from manifest.")
-                #endif
+            guard let fileDirectory = UrlParser.parseForFileDirectory(with: url) else {
+                self.completionHandler?(.failure(NSError.downloadingFailed()))
                 return
             }
-
-            urlToDirectoryMap[url] = pathDirectory.appendingPathComponent(fileDirectory)
-
+            urlToDirectoryMap[url] = miniAppPath.appendingPathComponent(fileDirectory)
             queue.addOperation {
-                let task = self.session.downloadTask(with: downloadUrl)
-                task.resume()
+                self.miniAppClient?.download(url: url)
             }
         }
     }
 }
 
-/**
- * URLSessionDownloadDelegate methods for MiniAppDownloader.
- */
-extension MiniAppDownloader: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        guard let sourceURL = downloadTask.originalRequest?.url else {
+extension MiniAppDownloader: MiniAppDownloaderProtocol {
+
+    func downloadedFileData(downloadTask: URLSessionDownloadTask, location: URL) {
+        guard let sourceURL = downloadTask.currentRequest?.url else {
             return
         }
-
         guard let destinationPath = urlToDirectoryMap[sourceURL.absoluteString] else {
-            #if DEBUG
-                print("MiniAppSDK: Failed to save files.")
-            #endif
             return
         }
+        miniAppStorage.save(sourcePath: location, destinationPath: destinationPath)
+    }
 
-        try? FileManager.default.createDirectory(atPath: destinationPath.relativePath, withIntermediateDirectories: true)
-        try? FileManager.default.removeItem(at: destinationPath)
-        try? FileManager.default.copyItem(at: location, to: destinationPath)
-
-        urlToDirectoryMap.removeValue(forKey: sourceURL.absoluteString)
+    func downloadCompleted(task: URLSessionTask, error: Error?) {
+        guard let error = error else {
+            guard let url = task.currentRequest?.url?.absoluteString else {
+                return
+            }
+            urlToDirectoryMap.removeValue(forKey: url)
+            if urlToDirectoryMap.isEmpty {
+                self.completionHandler?(.success(self.miniAppDirectory))
+            }
+            return
+        }
+        self.completionHandler?(.failure(error))
     }
 }
