@@ -2,8 +2,7 @@ import Quick
 import Nimble
 @testable import MiniApp
 
-// swiftlint:disable function_body_length
-class MiniApp_URLRequest: QuickSpec {
+class MiniAppURLRequestTests: QuickSpec {
 
     override func spec() {
         describe("create url request") {
