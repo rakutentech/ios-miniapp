@@ -2,8 +2,8 @@ import Quick
 import Nimble
 @testable import MiniApp
 
+// swiftlint:disable function_body_length
 class MiniAppNSErrorTests: QuickSpec {
-
     override func spec() {
         describe("When Mini app") {
             context("throws server error") {

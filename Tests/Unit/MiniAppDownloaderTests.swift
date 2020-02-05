@@ -2,6 +2,7 @@ import Quick
 import Nimble
 @testable import MiniApp
 
+// swiftlint:disable function_body_length
 class MiniAppDownloaderTests: QuickSpec {
 
     override func spec() {
@@ -23,10 +24,10 @@ class MiniAppDownloaderTests: QuickSpec {
                     var miniApp: URL?
                     downloader.download(with: mockAPIClient, appId: "Apple", versionId: "Mac") { (result) in
                         switch result {
-                            case .success(let url):
-                                miniApp = url
-                            case .failure(_):
-                                break
+                        case .success(let url):
+                            miniApp = url
+                        case .failure:
+                            break
                         }
                     }
                     let miniAppPath = FileManager.getMiniAppDirectory(with: "Apple", and: "Mac")
@@ -52,14 +53,13 @@ class MiniAppDownloaderTests: QuickSpec {
                     var miniApp: URL?
                     downloader.download(with: mockAPIClient, appId: "Apple", versionId: "Mac") { (result) in
                         switch result {
-                            case .success(let url):
-                                miniApp = url
-                                miniApp?.appendPathComponent("/devstreaming-cdn.apple.com/videos/tutorials/TestFlight_App_Store_Connect_2018/TestFlight_App_Store_Connect_2018_sd.mp4")
-                            case .failure(_):
-                                break
+                        case .success(let url):
+                            miniApp = url
+                            miniApp?.appendPathComponent("/devstreaming-cdn.apple.com/videos/tutorials/TestFlight_App_Store_Connect_2018/TestFlight_App_Store_Connect_2018_sd.mp4")
+                        case .failure:
+                            break
                         }
                     }
-
 
                     var expectedFilePath = FileManager.getMiniAppDirectory(with: "Apple", and: "Mac")
                 expectedFilePath?.appendPathComponent("/devstreaming-cdn.apple.com/videos/tutorials/TestFlight_App_Store_Connect_2018/TestFlight_App_Store_Connect_2018_sd.mp4")
@@ -77,11 +77,10 @@ class MiniAppDownloaderTests: QuickSpec {
                     var testError: NSError?
                     downloader.download(with: mockAPIClient, appId: "Apple", versionId: "Mac") { (result) in
                         switch result {
-                            case .success(_):
-                                break
-                            case .failure(let error):
-                                testError = error as NSError
-                                break
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error as NSError
                         }
                     }
                     expect(testError?.code).toEventually(equal(0))
