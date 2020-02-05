@@ -14,4 +14,8 @@ extension URLSession: SessionProtocol {
             return completionHandler(.success(ResponseData(data, httpResponse)))
         }.resume()
     }
+
+    func startDownloadTask(downloadUrl: URL ) {
+        downloadTask(with: downloadUrl).resume()
+    }
 }

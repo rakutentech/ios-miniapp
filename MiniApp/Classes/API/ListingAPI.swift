@@ -9,7 +9,7 @@ internal class ListingApi {
         guard let url = getListingURL() else {
             return nil
         }
-        return urlRequest(url: url)
+        return URLRequest.createURLRequest(url: url, environment: environment)
     }
 
     private func getListingURL() -> URL? {
@@ -17,11 +17,5 @@ internal class ListingApi {
             return nil
         }
         return baseURL.appendingPathComponent("/oneapp/ios/\(environment.appVersion)/miniapps")
-    }
-
-    private func urlRequest(url: URL) -> URLRequest {
-        var urlRequest = URLRequest(url: url)
-        urlRequest.setAuthorizationHeader(environment: environment)
-        return urlRequest
     }
 }

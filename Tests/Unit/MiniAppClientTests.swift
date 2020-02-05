@@ -7,6 +7,10 @@ class MiniAppClientTests: QuickSpec {
 
     override func spec() {
         class MockSession: SessionProtocol {
+            func startDownloadTask(downloadUrl: URL) {
+
+            }
+
             var data: Data?
             var error: Error?
             var urlResponse: HTTPURLResponse?
@@ -39,7 +43,9 @@ class MiniAppClientTests: QuickSpec {
                 var testResult: Data?
                 it("will pass a result to success completion handler with expected value") {
                     let mockSession = MockSession(data: ["key": "value"])
-                    MiniAppClient(session: mockSession).getMiniAppsList { (result) in
+                    let miniAppClient = MiniAppClient()
+                    miniAppClient.session = mockSession
+                    miniAppClient.getMiniAppsList { (result) in
                         switch result {
                         case .success(let responseData):
                             testResult = responseData.data
@@ -59,7 +65,9 @@ class MiniAppClientTests: QuickSpec {
                 )
                 it("will pass an error with status code and completion handler expected to return the same") {
                     let mockSession = MockSession(data: nil, statusCode: 400)
-                    MiniAppClient(session: mockSession).getMiniAppsList { (result) in
+                    let miniAppClient = MiniAppClient()
+                    miniAppClient.session = mockSession
+                     miniAppClient.getMiniAppsList { (result) in
                         switch result {
                         case .success:
                             break
@@ -75,7 +83,9 @@ class MiniAppClientTests: QuickSpec {
                 var testError: NSError?
                 it("will pass an error to completion handler with expected code") {
                     let mockSession = MockSession(data: ["code": 404, "message": "error message"], statusCode: 404)
-                    MiniAppClient(session: mockSession).getMiniAppsList { (result) in
+                    let miniAppClient = MiniAppClient()
+                    miniAppClient.session = mockSession
+                   miniAppClient.getMiniAppsList { (result) in
                         switch result {
                         case .success:
                             break
@@ -87,7 +97,9 @@ class MiniAppClientTests: QuickSpec {
                 }
                 it("will pass an error to completion handler with expected message") {
                     let mockSession = MockSession(data: ["code": 404, "message": "error message description"], statusCode: 404)
-                    MiniAppClient(session: mockSession).getMiniAppsList { (result) in
+                    let miniAppClient = MiniAppClient()
+                    miniAppClient.session = mockSession
+                     miniAppClient.getMiniAppsList { (result) in
                         switch result {
                         case .success:
                             break
@@ -103,7 +115,9 @@ class MiniAppClientTests: QuickSpec {
                 var testError: NSError?
                 it("will pass an error to completion handler with expected code") {
                     let mockSession = MockSession(data: ["error_code": 404, "message": "error message"], statusCode: 404)
-                    MiniAppClient(session: mockSession).getMiniAppsList { (result) in
+                    let miniAppClient = MiniAppClient()
+                    miniAppClient.session = mockSession
+                     miniAppClient.getMiniAppsList { (result) in
                         switch result {
                         case .success:
                             break
@@ -123,7 +137,9 @@ class MiniAppClientTests: QuickSpec {
                                                          "versionTag": "1.0",
                                                          "name": "Sample",
                                                          "files": ["http://www.example.com"]])
-                    MiniAppClient(session: mockSession).getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                    let miniAppClient = MiniAppClient()
+                    miniAppClient.session = mockSession
+                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
                         switch result {
                         case .success(let responseData):
                             testResult = responseData
@@ -140,7 +156,9 @@ class MiniAppClientTests: QuickSpec {
                         userInfo: nil
                     )
                     let mockSession = MockSession(data: nil, statusCode: 400)
-                    MiniAppClient(session: mockSession).getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                    let miniAppClient = MiniAppClient()
+                    miniAppClient.session = mockSession
+                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
                         switch result {
                         case .success:
                             break
@@ -153,7 +171,9 @@ class MiniAppClientTests: QuickSpec {
                 it("returns valid error response") {
                     var testError: NSError?
                     let mockSession = MockSession(data: ["code": 404, "message": "error message"], statusCode: 404)
-                    MiniAppClient(session: mockSession).getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                    let miniAppClient = MiniAppClient()
+                    miniAppClient.session = mockSession
+                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
                         switch result {
                         case .success:
                             break
@@ -166,7 +186,9 @@ class MiniAppClientTests: QuickSpec {
                 it("returns invalid error response") {
                     var testError: NSError?
                     let mockSession = MockSession(data: ["error_code": 404, "message": "error message"], statusCode: 404)
-                    MiniAppClient(session: mockSession).getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                    let miniAppClient = MiniAppClient()
+                    miniAppClient.session = mockSession
+                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
                         switch result {
                         case .success:
                             break
