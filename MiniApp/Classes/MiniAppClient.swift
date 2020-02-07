@@ -77,10 +77,19 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        delegate?.downloadedFileData(downloadTask: downloadTask, location: location)
+        guard let destinationURL = downloadTask.currentRequest?.url?.absoluteString else {
+            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            return
+        }
+        delegate?.fileDownloaded(sourcePath: location, destinationPath: destinationURL)
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        delegate?.downloadCompleted(task: task, error: error)
+        guard let url = task.currentRequest?.url?.absoluteString else {
+            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            return
+        }
+        delegate?.downloadCompleted(url: url, error: error)
     }
 }
+

@@ -35,7 +35,7 @@ extension NSError {
         return NSError(
             domain: "Downloader",
             code: 0,
-            userInfo: [NSLocalizedDescriptionKey: "Mini App Downloading failed"]
+            userInfo: [NSLocalizedDescriptionKey: "Downloading failed"]
         )
     }
 }

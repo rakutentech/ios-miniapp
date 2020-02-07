@@ -3,7 +3,7 @@
  */
 protocol MiniAppDownloaderProtocol: class {
 
-    func downloadedFileData(downloadTask: URLSessionDownloadTask, location: URL)
+    func fileDownloaded(sourcePath: URL, destinationPath: String)
 
-    func downloadCompleted(task: URLSessionTask, error: Error?)
+    func downloadCompleted(url: String, error: Error?)
 }
