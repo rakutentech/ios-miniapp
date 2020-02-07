@@ -92,4 +92,3 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         delegate?.downloadCompleted(url: url, error: error)
     }
 }
-

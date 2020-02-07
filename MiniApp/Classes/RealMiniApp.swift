@@ -5,7 +5,6 @@ internal class RealMiniApp {
     var miniAppDownloader: MiniAppDownloader
     var manifestDownloader: ManifestDownloader
 
-
     init() {
         self.miniAppLister = MiniAppLister()
         self.miniAppClient = MiniAppClient()

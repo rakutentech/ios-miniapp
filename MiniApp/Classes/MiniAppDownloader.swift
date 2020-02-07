@@ -48,7 +48,7 @@ class MiniAppDownloader {
                 self.completionHandler?(.failure(NSError.downloadingFailed()))
                 return
             }
-            if(!FileManager.default.fileExists(atPath: miniAppPath.appendingPathComponent(fileDirectory).path)) {
+            if !FileManager.default.fileExists(atPath: miniAppPath.appendingPathComponent(fileDirectory).path) {
                 urlToDirectoryMap[url] = miniAppPath.appendingPathComponent(fileDirectory)
                 queue.addOperation {
                     self.miniAppClient.download(url: url)

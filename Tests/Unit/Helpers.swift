@@ -75,7 +75,7 @@ class MockManifestDownloader: ManifestDownloader {
     var headers: [String: String]?
 
     override func fetchManifest(apiClient: MiniAppClient, appId: String, versionId: String, completionHandler: @escaping (Result<ManifestResponse, Error>) -> Void) {
-        
+
         apiClient.getAppManifest(appId: appId, versionId: versionId) { (result) in
             switch result {
             case .success(let responseData):

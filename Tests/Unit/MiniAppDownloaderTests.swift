@@ -26,7 +26,6 @@ class MiniAppDownloaderTests: QuickSpec {
                         switch result {
                         case .success(let status):
                             isDownloaded = status
-                            break
                         case .failure:
                             break
                         }
@@ -52,7 +51,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     downloader.download(appId: "Apple", versionId: "Mac") { (result) in
                         switch result {
-                        case .success(_):
+                        case .success:
                             break
                         case .failure:
                             break
@@ -85,13 +84,13 @@ class MiniAppDownloaderTests: QuickSpec {
                     var testError: NSError?
                     downloader.download(appId: "Apple", versionId: "Mac") { (result) in
                         switch result {
-                        case .success(_):
+                        case .success:
                             break
                         case .failure(let error):
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(-1022),timeout: 20)
+                    expect(testError?.code).toEventually(equal(-1022), timeout: 20)
                 }
             }
         }
@@ -111,7 +110,7 @@ class MiniAppDownloaderTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(0),timeout: 10)
+                    expect(testError?.code).toEventually(equal(0), timeout: 10)
                 }
             }
         }
