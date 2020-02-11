@@ -27,4 +27,3 @@ class MiniAppViewTests: QuickSpec {
         }
     }
 }
-
