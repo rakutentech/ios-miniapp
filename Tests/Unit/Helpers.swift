@@ -70,5 +70,17 @@ class MockBundle: EnvironmentProtocol {
             return nil
         }
     }
+}
 
+class MockFile {
+
+    public class func createTestFile(fileName: String) -> URL? {
+        let tempDirectory = NSTemporaryDirectory()
+        let rakutenText: Data? = "Rakuten".data(using: .utf8)
+        guard let fullURL = NSURL.fileURL(withPathComponents: [tempDirectory, fileName]) else {
+            return nil
+        }
+        FileManager.default.createFile(atPath: fullURL.path, contents: rakutenText, attributes: nil)
+        return fullURL
+    }
 }
