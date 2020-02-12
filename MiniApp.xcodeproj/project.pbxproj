@@ -12,6 +12,7 @@
 		38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */; };
 		385C25CA23F2E8BA00D61206 /* DisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25C923F2E8BA00D61206 /* DisplayerTests.swift */; };
 		385C25CE23F2FEA300D61206 /* MiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */; };
+		385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */; };
 		3862EFA823EA5752004D518C /* MiniApp+URLRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */; };
 		3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878D4D123B44F85001E27F8 /* AppDelegate.swift */; };
 		3878D4D523B44F85001E27F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3878D4D223B44F85001E27F8 /* Images.xcassets */; };
@@ -42,6 +43,7 @@
 		38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestDownloaderTests.swift; sourceTree = "<group>"; };
 		385C25C923F2E8BA00D61206 /* DisplayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayerTests.swift; sourceTree = "<group>"; };
 		385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewTests.swift; sourceTree = "<group>"; };
+		385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewTests.swift; sourceTree = "<group>"; };
 		3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniApp+URLRequestTests.swift"; sourceTree = "<group>"; };
 		3878D4D123B44F85001E27F8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Example/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		3878D4D223B44F85001E27F8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Example/Images.xcassets; sourceTree = SOURCE_ROOT; };
@@ -120,6 +122,7 @@
 				3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */,
 				385C25C923F2E8BA00D61206 /* DisplayerTests.swift */,
 				385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */,
+				385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */,
 				38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */,
 				385C25CA23F2E8BA00D61206 /* DisplayerTests.swift in Sources */,
+				385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */,
 				38F73B4723D55CCB00F2C1CE /* MiniAppListerTests.swift in Sources */,
 				388FEEE623DEABCF0062382F /* EnvironmentTests.swift in Sources */,
 			);
