@@ -3,9 +3,9 @@ import WebKit
 public class MiniAppView: UIView {
     private var webView: WKWebView
 
-    init(filePath: URL, frame: CGRect) {
+    init(filePath: URL) {
         webView = MiniAppWebView(filePath: filePath)
-        super.init(frame: frame)
+        super.init(frame: .zero)
         addSubview(webView)
     }
 
