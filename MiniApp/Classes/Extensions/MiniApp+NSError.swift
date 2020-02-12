@@ -30,4 +30,12 @@ extension NSError {
             userInfo: [NSLocalizedDescriptionKey: "Invalid response received"]
         )
     }
+
+    class func downloadingFailed() -> NSError {
+        return NSError(
+            domain: "Downloader",
+            code: 0,
+            userInfo: [NSLocalizedDescriptionKey: "Downloading failed"]
+        )
+    }
 }

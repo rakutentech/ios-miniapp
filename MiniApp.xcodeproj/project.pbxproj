@@ -14,6 +14,8 @@
 		385C25CE23F2FEA300D61206 /* MiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */; };
 		385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */; };
 		3862EFA823EA5752004D518C /* MiniApp+URLRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */; };
+		3862EFB123EABC15004D518C /* MiniAppDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */; };
+		3862EFB523EAF6B8004D518C /* MiniApp+NSErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */; };
 		3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878D4D123B44F85001E27F8 /* AppDelegate.swift */; };
 		3878D4D523B44F85001E27F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3878D4D223B44F85001E27F8 /* Images.xcassets */; };
 		3878D4D623B44F85001E27F8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878D4D323B44F85001E27F8 /* ViewController.swift */; };
@@ -45,6 +47,8 @@
 		385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewTests.swift; sourceTree = "<group>"; };
 		385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewTests.swift; sourceTree = "<group>"; };
 		3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniApp+URLRequestTests.swift"; sourceTree = "<group>"; };
+		3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppDownloaderTests.swift; sourceTree = "<group>"; };
+		3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniApp+NSErrorTests.swift"; sourceTree = "<group>"; };
 		3878D4D123B44F85001E27F8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Example/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		3878D4D223B44F85001E27F8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Example/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		3878D4D323B44F85001E27F8 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Example/ViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -123,6 +127,8 @@
 				385C25C923F2E8BA00D61206 /* DisplayerTests.swift */,
 				385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */,
 				385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */,
+				3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */,
+				3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -409,6 +415,8 @@
 				385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */,
 				38F73B4723D55CCB00F2C1CE /* MiniAppListerTests.swift in Sources */,
 				388FEEE623DEABCF0062382F /* EnvironmentTests.swift in Sources */,
+				3862EFB523EAF6B8004D518C /* MiniApp+NSErrorTests.swift in Sources */,
+				3862EFB123EABC15004D518C /* MiniAppDownloaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

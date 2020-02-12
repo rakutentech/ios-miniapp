@@ -12,6 +12,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
     let environment: Environment
+    weak var delegate: MiniAppDownloaderProtocol?
 
     override init() {
         self.environment = Environment()
@@ -75,8 +76,19 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         return NSError.serverError(code: errorModel.code, message: errorModel.message)
     }
 
-    // Saving the file - Storage
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        guard let destinationURL = downloadTask.currentRequest?.url?.absoluteString else {
+            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            return
+        }
+        delegate?.fileDownloaded(sourcePath: location, destinationPath: destinationURL)
+    }
 
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        guard let url = task.currentRequest?.url?.absoluteString else {
+            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            return
+        }
+        delegate?.downloadCompleted(url: url, error: error)
     }
 }
