@@ -43,6 +43,51 @@ class MockAPIClient: MiniAppClient {
             return  completionHandler(.success(ResponseData(data, httpResponse)))
         }
     }
+
+    override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        guard let destinationURL = downloadTask.currentRequest?.url?.absoluteString else {
+            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            return
+        }
+        guard let fileName = downloadTask.currentRequest?.url?.lastPathComponent else {
+            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            return
+        }
+        guard let mockSourceFileURL =  MockFile.createTestFile(fileName: fileName) else {
+            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            return
+        }
+        delegate?.fileDownloaded(sourcePath: mockSourceFileURL, destinationPath: destinationURL)
+    }
+
+    override func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        guard let url = task.currentRequest?.url?.absoluteString else {
+            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            return
+        }
+        delegate?.downloadCompleted(url: url, error: error)
+    }}
+
+class MockManifestDownloader: ManifestDownloader {
+    var data: Data?
+    var error: Error?
+    var request: URLRequest?
+    var headers: [String: String]?
+
+    override func fetchManifest(apiClient: MiniAppClient, appId: String, versionId: String, completionHandler: @escaping (Result<ManifestResponse, Error>) -> Void) {
+
+        apiClient.getAppManifest(appId: appId, versionId: versionId) { (result) in
+            switch result {
+            case .success(let responseData):
+                guard let decodeResponse = ResponseDecoder.decode(decodeType: ManifestResponse.self, data: responseData.data) else {
+                    return completionHandler(.failure(NSError.invalidResponseData()))
+                }
+                return completionHandler(.success(decodeResponse))
+            case .failure(let error):
+                return completionHandler(.failure(error))
+            }
+        }
+    }
 }
 
 class MockBundle: EnvironmentProtocol {
@@ -70,5 +115,17 @@ class MockBundle: EnvironmentProtocol {
             return nil
         }
     }
+}
 
+class MockFile {
+
+    public class func createTestFile(fileName: String) -> URL? {
+        let tempDirectory = NSTemporaryDirectory()
+        let rakutenText: Data? = "Rakuten".data(using: .utf8)
+        guard let fullURL = NSURL.fileURL(withPathComponents: [tempDirectory, fileName]) else {
+            return nil
+        }
+        FileManager.default.createFile(atPath: fullURL.path, contents: rakutenText, attributes: nil)
+        return fullURL
+    }
 }
