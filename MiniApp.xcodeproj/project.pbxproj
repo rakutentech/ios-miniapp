@@ -131,6 +131,7 @@
 				3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */,
 				385C25C923F2E8BA00D61206 /* DisplayerTests.swift */,
 				385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */,
+				385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
