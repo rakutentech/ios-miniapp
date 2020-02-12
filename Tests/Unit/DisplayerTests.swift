@@ -16,13 +16,6 @@ class DisplayerTests: QuickSpec {
                     expect(miniAppView).toEventually(beAnInstanceOf(MiniAppView.self))
                 }
             }
-            context("when invalid URL of a mini app is passed") {
-                it("will return nil") {
-                    let miniAppDisplayer = Displayer()
-                    let miniAppView = miniAppDisplayer.getMiniAppView(miniAppPath: nil)
-                    expect(miniAppView).toEventually(beNil())
-                }
-            }
         }
     }
 }
