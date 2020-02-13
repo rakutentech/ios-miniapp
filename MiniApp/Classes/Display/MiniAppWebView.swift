@@ -2,7 +2,10 @@ import WebKit
 
 internal class MiniAppWebView: WKWebView {
 
-    convenience init(filePath: URL) {
+    convenience init?(filePath: URL) {
+        if !filePath.isFileURL {
+            return nil
+        }
         let config = WKWebViewConfiguration()
         config.preferences.javaScriptEnabled = true
         self.init(frame: .zero, configuration: config)

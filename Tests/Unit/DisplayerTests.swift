@@ -16,6 +16,16 @@ class DisplayerTests: QuickSpec {
                     expect(miniAppView).toEventually(beAnInstanceOf(MiniAppView.self))
                 }
             }
+            context("when invalid file URL of a mini app is passed") {
+                it("will return nil") {
+                    let miniAppDisplayer = Displayer()
+                    guard let url = URL(string: "https://example.com") else {
+                        return
+                    }
+                    let miniAppView = miniAppDisplayer.getMiniAppView(miniAppPath: url)
+                    expect(miniAppView).toEventually(beNil())
+                }
+            }
         }
     }
 }

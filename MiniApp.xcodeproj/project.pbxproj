@@ -124,14 +124,11 @@
 				38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */,
 				38F73B4423D554FE00F2C1CE /* Helpers.swift */,
 				3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */,
-				385C25C923F2E8BA00D61206 /* DisplayerTests.swift */,
-				385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */,
-				385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */,
 				3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */,
 				3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */,
 				385C25C923F2E8BA00D61206 /* DisplayerTests.swift */,
-				385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */,
 				385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */,
+				385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";

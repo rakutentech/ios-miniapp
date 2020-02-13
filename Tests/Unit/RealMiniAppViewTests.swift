@@ -15,6 +15,15 @@ class RealMiniAppViewTests: QuickSpec {
                     expect(realMiniAppView).toEventually(beAnInstanceOf(MiniAppView.self))
                 }
             }
+            context("when initialized with invalid parameters") {
+                it("will return nil") {
+                    guard let url = URL(string: "https://example.com") else {
+                          return
+                    }
+                    let realMiniAppView = RealMiniAppView.shared.getMiniAppView(miniAppPath: url)
+                    expect(realMiniAppView).toEventually(beNil())
+                }
+            }
         }
     }
 }

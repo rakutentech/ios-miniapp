@@ -3,8 +3,11 @@ import WebKit
 public class MiniAppView: UIView {
     private var webView: WKWebView
 
-    init(filePath: URL) {
-        webView = MiniAppWebView(filePath: filePath)
+    init?(filePath: URL) {
+        guard let miniAppWebView = MiniAppWebView(filePath: filePath) else {
+            return nil
+        }
+        webView = miniAppWebView
         super.init(frame: .zero)
         addSubview(webView)
     }
