@@ -15,11 +15,11 @@ public class MiniApp: NSObject {
     /// Create a Mini App for the given appId. Mini app will be downloaded and cached in local.
     ///
     /// - Parameters:
-    ///   - appId: Unique Application Id of Mini App
+    ///   - appInfo: Mini App info object
     ///   - completionBlock: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
-    ///         -   [MiniAppView]: Mini App View placeholder that hosts the Mini App
+    ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the SDK
     ///         -   Error: Error details if Mini App View creating is failed
-    public class func create(appId: String, completionHandler: @escaping (Result<MiniAppView, Error>) -> Void) {
-        return RealMiniApp.shared.createMiniApp(appId: appId, completionHandler: completionHandler)
+    public class func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {
+        return RealMiniApp.shared.createMiniApp(appInfo: appInfo, completionHandler: completionHandler)
     }
 }
