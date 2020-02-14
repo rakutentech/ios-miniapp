@@ -17,7 +17,8 @@ public class MiniApp: NSObject {
     /// - Parameters:
     ///   - appInfo: Mini App info object
     ///   - completionBlock: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
-    ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the SDK
+    ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
+    ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     public class func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {
         return RealMiniApp.shared.createMiniApp(appInfo: appInfo, completionHandler: completionHandler)
