@@ -8,4 +8,4 @@ Add links to github/jira issues, design documents and other relevant resources (
 # Checklist
 - [ ] I have read the [contributing guidelines](../CONTRIBUTING.md).
 - [ ] I wrote/updated tests for new/changed code
-- [ ] I ran `./gradlew check` without errors
+- [ ] I ran `fastlane ci` without errors
