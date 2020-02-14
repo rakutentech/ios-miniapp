@@ -1,6 +1,7 @@
 import WebKit
 
-public class MiniAppView: UIView {
+public class MiniAppView: UIView, MiniAppDisplayProtocol {
+
     private var webView: WKWebView
 
     init?(filePath: URL) {
@@ -19,5 +20,9 @@ public class MiniAppView: UIView {
     override public func layoutSubviews() {
         super.layoutSubviews()
         webView.frame = bounds
+    }
+
+    public func getMiniAppView() -> UIView {
+        return self
     }
 }

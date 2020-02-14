@@ -24,6 +24,15 @@ class MiniAppViewTests: QuickSpec {
                     expect(miniAppView).toEventually(beNil())
                 }
             }
+            context("when getMiniAppView is called") {
+                it("will return object of UIView type") {
+                    guard let testFileURL = MockFile.createTestFile(fileName: "MiniApp.txt") else {
+                        return
+                    }
+                    let miniAppView = MiniAppView(filePath: testFileURL)
+                    expect(miniAppView?.getMiniAppView()).toEventually(beAKindOf(UIView.self))
+                }
+            }
         }
     }
 }
