@@ -9,7 +9,7 @@
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppView.swift",
-      "line": 19,
+      "line": 20,
       "symbol": "MiniAppView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
