@@ -17,7 +17,7 @@ class ViewController: UITableViewController {
                 self.dismiss(animated: false, completion: nil)
             case .failure(let error):
                 print(error.localizedDescription)
-                self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App list, please try again later", dimissController: false)
+                self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App list, please try again later", dismissController: false)
             }
         }
     }
@@ -44,7 +44,7 @@ class ViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if segue.identifier == "DisplayMiniApp" {
         guard let indexPath = self.tableView.indexPathForSelectedRow?.row else {
-            self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App, please try again later", dimissController: false)
+            self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App, please try again later", dismissController: false)
             return
         }
         let displayController = segue.destination as? DisplayController

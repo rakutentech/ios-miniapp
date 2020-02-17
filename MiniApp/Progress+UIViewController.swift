@@ -20,12 +20,12 @@ extension UIViewController {
         })
     }
 
-    func displayErrorAlert(title: String, message: String, dimissController: Bool) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+    func displayErrorAlert(title: String, message: String, dismissController: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.dismiss(animated: true, completion: {
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (_: UIAlertAction!) in
-                    if dimissController {
+                    if dismissController {
                         self.dismiss(animated: true, completion: nil)
                     }
                 }))
