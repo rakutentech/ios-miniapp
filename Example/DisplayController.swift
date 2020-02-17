@@ -19,9 +19,6 @@ class DisplayController: UIViewController {
             case .failure(let error):
                 self.displayErrorAlert(title: "Error", message: "Downloading failed, please try again later", dismissController: true)
                 print("Errored: ", error.localizedDescription)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                    self.dismiss(animated: true, completion: nil)
-                })
             }
         }
     }
