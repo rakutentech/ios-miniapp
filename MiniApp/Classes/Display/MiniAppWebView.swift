@@ -3,13 +3,14 @@ import WebKit
 internal class MiniAppWebView: WKWebView {
 
     convenience init?(filePath: URL) {
-        if !filePath.isFileURL {
+        let fileURL = filePath.appendingPathComponent("index.html")
+        if !fileURL.isFileURL {
             return nil
         }
         let config = WKWebViewConfiguration()
         config.preferences.javaScriptEnabled = true
         self.init(frame: .zero, configuration: config)
         contentMode = .scaleToFill
-        loadFileURL(filePath, allowingReadAccessTo: filePath.deletingLastPathComponent())
+        loadFileURL(fileURL, allowingReadAccessTo: filePath.deletingLastPathComponent())
     }
 }
