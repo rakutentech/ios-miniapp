@@ -12,7 +12,7 @@ public class MiniApp: NSObject {
         return RealMiniApp.shared.listMiniApp(completionHandler: completionHandler)
     }
 
-    /// Create a Mini App for the given appId. Mini app will be downloaded and cached in local.
+    /// Create a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
     ///
     /// - Parameters:
     ///   - appInfo: Mini App info object
