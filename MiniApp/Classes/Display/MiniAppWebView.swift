@@ -3,8 +3,8 @@ import WebKit
 internal class MiniAppWebView: WKWebView {
 
     convenience init?(filePath: URL) {
-        let fileURL = filePath.appendingPathComponent(Constants.FileNames.baseFile)
-        if !filePath.isFileURL {
+        let fileURL = filePath.appendingPathComponent("index.html")
+        if !fileURL.isFileURL {
             return nil
         }
         let config = WKWebViewConfiguration()
