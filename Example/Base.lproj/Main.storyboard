@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Mini App list-->
         <scene sceneID="LsR-RN-Jia">
             <objects>
                 <tableViewController id="YI1-4h-cvm" customClass="ViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -40,6 +40,9 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <segue destination="EFj-rP-o8F" kind="showDetail" identifier="DisplayMiniApp" id="3mT-U9-Wdl"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -47,7 +50,9 @@
                             <outlet property="delegate" destination="YI1-4h-cvm" id="BNO-QU-VNJ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="8cu-AR-SJI"/>
+                    <navigationItem key="navigationItem" title="Mini App list" id="8cu-AR-SJI">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Z2m-gv-DbI"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zsb-zf-A01" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -68,6 +73,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fuO-cR-uS5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-879" y="50"/>
+        </scene>
+        <!--Display Controller-->
+        <scene sceneID="poG-Jp-R00">
+            <objects>
+                <viewController id="EFj-rP-o8F" customClass="DisplayController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uts-jG-JDj"/>
+                        <viewControllerLayoutGuide type="bottom" id="2Js-EV-iRO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JwU-02-xpe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="lbI-VN-E8M"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wmx-vD-Phy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1010" y="50"/>
         </scene>
     </scenes>
 </document>

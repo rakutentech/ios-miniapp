@@ -17,7 +17,7 @@ class ViewController: UITableViewController {
                 self.dismiss(animated: false, completion: nil)
             case .failure(let error):
                 print(error.localizedDescription)
-                self.displayAlert(title: "Error", message: "Couldn't retrieve Mini App list, please try again later")
+                self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App list, please try again later", dimissController: false)
             }
         }
     }
@@ -41,26 +41,15 @@ class ViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    func displayAlert(title: String, message: String) {
-        DispatchQueue.main.async {
-            self.dismiss(animated: true, completion: {
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            })
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       if segue.identifier == "DisplayMiniApp" {
+        guard let indexPath = self.tableView.indexPathForSelectedRow?.row else {
+            self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App, please try again later", dimissController: false)
+            return
         }
-    }
-
-    func showProgressIndicator() {
-        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.style = UIActivityIndicatorView.Style.gray
-        loadingIndicator.startAnimating()
-
-        alert.view.addSubview(loadingIndicator)
-        present(alert, animated: true, completion: nil)
+        let displayController = segue.destination as? DisplayController
+        displayController?.miniAppInfo = decodeResponse?[indexPath]
+       }
     }
 }
 
