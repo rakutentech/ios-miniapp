@@ -9,6 +9,7 @@ class DisplayController: UIViewController {
             return
         }
         self.showProgressIndicator()
+        self.title = info.name
         MiniApp.create(appInfo: info) { (result) in
             switch result {
             case .success(let miniAppDisplay):
