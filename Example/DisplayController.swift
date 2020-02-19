@@ -4,11 +4,14 @@ import MiniApp
 class DisplayController: UIViewController {
     var miniAppInfo: MiniAppInfo?
 
-    override func viewDidLoad() {
+    override func viewWillAppear(_ animated: Bool) {
+        self.showProgressIndicator()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
         guard let info = miniAppInfo else {
             return
         }
-        self.showProgressIndicator()
         self.title = info.name
         MiniApp.create(appInfo: info) { (result) in
             switch result {
