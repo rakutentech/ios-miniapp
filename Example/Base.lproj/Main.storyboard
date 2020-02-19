@@ -41,7 +41,7 @@
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
-                                    <segue destination="EFj-rP-o8F" kind="showDetail" identifier="DisplayMiniApp" id="3mT-U9-Wdl"/>
+                                    <segue destination="EFj-rP-o8F" kind="show" identifier="DisplayMiniApp" id="3mT-U9-Wdl"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -51,7 +51,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Mini App list" id="8cu-AR-SJI">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="Z2m-gv-DbI"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="6gZ-4N-NPm"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zsb-zf-A01" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -83,7 +83,7 @@
                         <viewControllerLayoutGuide type="bottom" id="2Js-EV-iRO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JwU-02-xpe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     </view>
