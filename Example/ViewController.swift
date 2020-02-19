@@ -14,7 +14,7 @@ class ViewController: UITableViewController {
             case .success(let responseData):
                 self.decodeResponse = responseData
                 self.tableView.reloadData()
-                self.dismiss(animated: false, completion: nil)
+                self.dismissProgressIndicator()
             case .failure(let error):
                 print(error.localizedDescription)
                 self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App list, please try again later", dismissController: false)

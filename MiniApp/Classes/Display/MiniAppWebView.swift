@@ -9,6 +9,7 @@ internal class MiniAppWebView: WKWebView {
         }
         let config = WKWebViewConfiguration()
         config.preferences.javaScriptEnabled = true
+        config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         self.init(frame: .zero, configuration: config)
         contentMode = .scaleToFill
         loadFileURL(fileURL, allowingReadAccessTo: filePath.deletingLastPathComponent())

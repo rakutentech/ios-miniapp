@@ -15,7 +15,7 @@ extension UIViewController {
     }
 
     func dismissProgressIndicator() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
             self.dismiss(animated: true, completion: nil)
         })
     }
