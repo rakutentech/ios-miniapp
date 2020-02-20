@@ -27,7 +27,7 @@ class MiniAppDownloader {
             switch result {
             case .success(let responseData):
                 self.completionHandler = completionHandler
-                self.downloadManifestFiles(with: appId, versionId: versionId, files: responseData.files)
+                self.downloadManifestFiles(with: appId, versionId: versionId, files: responseData.manifest)
             case .failure(let error):
                 return completionHandler(.failure(error))
             }

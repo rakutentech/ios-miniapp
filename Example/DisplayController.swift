@@ -12,7 +12,7 @@ class DisplayController: UIViewController {
         guard let info = miniAppInfo else {
             return
         }
-        self.title = info.name
+        self.title = info.displayName
         MiniApp.create(appInfo: info) { (result) in
             switch result {
             case .success(let miniAppDisplay):
