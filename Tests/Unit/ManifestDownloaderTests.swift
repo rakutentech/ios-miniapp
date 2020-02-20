@@ -14,10 +14,7 @@ class ManifestDownloaderTests: QuickSpec {
                     let manifestDownloader = ManifestDownloader()
                     let responseString = """
                       {
-                        "id": "123",
-                        "versionTag": "1",
-                        "name": "Test",
-                        "files": [
+                        "manifest": [
                             "https://test.com",
                             "https://example.com"
                         ]
@@ -42,9 +39,6 @@ class ManifestDownloaderTests: QuickSpec {
                     var testError: NSError?
                     let responseString = """
                       {
-                        "app_id": "123",
-                        "name": "Test",
-                        "versionTag": "1",
                         "files": [
                             "https://test.com",
                             "https://example.com"

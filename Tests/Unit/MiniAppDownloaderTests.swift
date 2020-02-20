@@ -14,10 +14,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader)
                     let responseString = """
                       {
-                        "id": "123",
-                        "versionTag": "1",
-                        "name": "Test",
-                        "files": ["https://google.com/version/Mac/HelloWorld.txt"]
+                        "manifest": ["https://google.com/version/Mac/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -42,10 +39,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader)
                     let responseString = """
                       {
-                        "id": "123",
-                        "versionTag": "1",
-                        "name": "Test",
-                        "files": ["https://google.com/version/Mac/HelloWorld.txt"]
+                        "manifest": ["https://google.com/version/Mac/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -74,10 +68,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader)
                     let responseString = """
                       {
-                        "id": "123",
-                        "versionTag": "1",
-                        "name": "Test",
-                        "files": ["http://example.com/version/Mac/Testing.txt"]
+                        "manifest": ["http://example.com/version/Mac/Testing.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
