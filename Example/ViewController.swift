@@ -30,8 +30,7 @@ class ViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppCell", for: indexPath)
 
         let miniAppDetail = self.decodeResponse?[indexPath.row]
-        cell.textLabel?.text = miniAppDetail?.name
-        cell.detailTextLabel?.text = miniAppDetail?.description
+        cell.textLabel?.text = miniAppDetail?.displayName
         cell.imageView?.image = UIImage(named: "image_placeholder")
         cell.imageView?.loadImageURL(url: miniAppDetail!.icon)
         return cell

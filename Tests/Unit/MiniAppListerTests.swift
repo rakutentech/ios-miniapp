@@ -16,8 +16,7 @@ class MiniAppListerTests: QuickSpec {
                     [
                       {
                         "id": "123",
-                        "name": "Test",
-                        "description": "Test",
+                        "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
                             "versionTag": "1.0.0",
@@ -25,8 +24,7 @@ class MiniAppListerTests: QuickSpec {
                         }
                       },{
                         "id": "123",
-                        "name": "Test",
-                        "description": "Test",
+                        "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
                             "versionTag": "1.0.0",
@@ -55,8 +53,7 @@ class MiniAppListerTests: QuickSpec {
                     [
                       {
                         "test": "123",
-                        "name": "Test",
-                        "description": "Test",
+                        "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
                             "versionTag": "1.0.0",
@@ -64,8 +61,7 @@ class MiniAppListerTests: QuickSpec {
                         }
                       },{
                         "id": "123",
-                        "name": "Test",
-                        "description": "Test",
+                        "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
                             "versionTag": "1.0.0",
