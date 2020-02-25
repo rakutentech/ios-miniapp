@@ -6,12 +6,13 @@ import Nimble
 class MiniAppDownloaderTests: QuickSpec {
 
     override func spec() {
+        let preferences = MiniAppPreferences()
         describe("mini app folder will be created") {
             context("when valid manifest information is returned") {
                 it("will be downloaded and path is returned") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
-                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader)
+                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, preferences: preferences)
                     let responseString = """
                       {
                         "manifest": ["https://google.com/version/Mac/HelloWorld.txt"]
@@ -36,7 +37,7 @@ class MiniAppDownloaderTests: QuickSpec {
                 it("will return downloading failed error") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
-                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader)
+                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, preferences: preferences)
                     let responseString = """
                       {
                         "manifest": ["https://google.com/version/Mac/HelloWorld.txt"]
@@ -65,7 +66,7 @@ class MiniAppDownloaderTests: QuickSpec {
                 it("will be downloaded and path is returned") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
-                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader)
+                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, preferences: preferences)
                     let responseString = """
                       {
                         "manifest": ["http://example.com/version/Mac/Testing.txt"]
@@ -90,7 +91,7 @@ class MiniAppDownloaderTests: QuickSpec {
                 it("will return error") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
-                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader)
+                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, preferences: preferences)
                     mockAPIClient.data = nil
                     var testError: NSError?
                     downloader.download(appId: "Apple", versionId: "Mac") { (result) in

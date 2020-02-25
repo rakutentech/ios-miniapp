@@ -7,6 +7,7 @@ class MiniAppDownloader {
     private var manifestDownloader: ManifestDownloader
     private var completionHandler: DownloadCompletionHandler?
     private var urlToDirectoryMap = [String: URL]()
+    private var miniAppPreferences: MiniAppPreferences
 
     private var queue: OperationQueue = {
         let operationQueue = OperationQueue()
@@ -16,13 +17,19 @@ class MiniAppDownloader {
         return operationQueue
     }()
 
-    init(apiClient: MiniAppClient, manifestDownloader: ManifestDownloader) {
+    init(apiClient: MiniAppClient, manifestDownloader: ManifestDownloader, preferences: MiniAppPreferences) {
         self.miniAppClient = apiClient
         self.miniAppStorage = MiniAppStorage()
         self.manifestDownloader = manifestDownloader
+        self.miniAppPreferences = preferences
     }
 
     func download(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+        if(miniAppPreferences.isDownloaded(key: "\(appId)/\(versionId)")) {
+            completionHandler(.success(true))
+            return
+        }
         self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
             switch result {
             case .success(let responseData):
