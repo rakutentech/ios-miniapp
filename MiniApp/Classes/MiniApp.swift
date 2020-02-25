@@ -15,6 +15,7 @@ public class MiniApp: NSObject {
     /// Fetch the MiniAppInfo information for a given MiniApp id.
     ///
     /// - Parameters:
+    ///     -   miniAppId: the identifier string of the Mini App you want information
     ///     -   completionHandler: A block to be called when MiniAppInfo information is fetched. Completion blocks receives the following parameters
     ///         -   MiniAppInfo: MiniAppInfo information.
     ///         -   Error: Error details if fetching is failed.

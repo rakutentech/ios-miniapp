@@ -25,6 +25,7 @@ internal class MiniAppLister {
                 }
 
                 return completionHandler(.success(miniApp))
+
             case .failure(let error):
                 return completionHandler(.failure(error))
             }

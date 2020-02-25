@@ -5,7 +5,7 @@ internal class ListingApi {
         self.environment = environment
     }
 
-    func createURLRequest(_ miniAppID: String? = nil) -> URLRequest? {
+    func createURLRequest(miniAppID: String? = nil) -> URLRequest? {
         guard let url = getListingURL(miniAppID) else {
             return nil
         }
@@ -17,12 +17,14 @@ internal class ListingApi {
             return nil
         }
 
-        var appIdParam = ""
-
-        if let appId = miniAppId {
-            appIdParam = "/\(appId)"
+        guard var components = URLComponents(url: baseURL.appendingPathComponent("/oneapp/ios/\(environment.appVersion)/miniapps"), resolvingAgainstBaseURL: false) else {
+            return nil
         }
 
-        return baseURL.appendingPathComponent("/oneapp/ios/\(environment.appVersion)/miniapps\(appIdParam)")
+        if let appId = miniAppId {
+            components.queryItems = [URLQueryItem(name: "miniAppId", value: appId)]
+        }
+
+        return components.url
     }
 }
