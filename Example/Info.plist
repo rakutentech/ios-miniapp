@@ -40,6 +40,6 @@
 	<key>RASProjectSubscriptionKey</key>
 	<string>RAS_SUBSCRIPTION_KEY</string>
 	<key>RMAAPIEndpoint</key>
-	<string>https://www.example.com</string>
+	<string>https://miniapp-platform-japaneast-dev.azurewebsites.net/api/v1/</string>
 </dict>
 </plist>

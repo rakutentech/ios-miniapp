@@ -17,6 +17,10 @@ internal class RealMiniApp {
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
         return miniAppLister.fetchList(apiClient: self.miniAppClient, completionHandler: completionHandler)
     }
+    
+    func getMiniApp(miniAppId: String, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+        return miniAppLister.fetchMiniApp(miniAppId: miniAppId, apiClient: self.miniAppClient, completionHandler: completionHandler)
+    }
 
     func createMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {
         return miniAppDownloader.download(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
