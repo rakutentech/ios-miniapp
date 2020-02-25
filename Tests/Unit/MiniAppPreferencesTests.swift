@@ -2,7 +2,6 @@ import Quick
 import Nimble
 @testable import MiniApp
 
-// swiftlint:disable function_body_length
 class MiniAppPreferencesTests: QuickSpec {
 
     override func spec() {

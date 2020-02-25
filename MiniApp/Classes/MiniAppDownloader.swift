@@ -25,8 +25,8 @@ class MiniAppDownloader {
     }
 
     func download(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
-        
-        if(miniAppPreferences.isDownloaded(key: "\(appId)/\(versionId)")) {
+
+        if miniAppPreferences.isDownloaded(key: "\(appId)/\(versionId)") {
             completionHandler(.success(true))
             return
         }
