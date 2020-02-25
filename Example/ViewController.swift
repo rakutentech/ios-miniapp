@@ -8,11 +8,6 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showProgressIndicator()
-        
-        if let jsonData = "[{\"id\":\"c67f32b6-987d-405d-978f-6d8118b336ea\",\"displayName\":\"LookBook\",\"icon\":\"https://ysy.com\",\"version\":{\"versionTag\":\"1.0.0\",\"versionId\":\"9ab14a68-e8f9-4216-a6df-2c3b06f3c7f7\"}},{\"id\":\"34d0e875-e3aa-410b-b625-c71bc18a19c7\",\"displayName\":\"Panda Park\",\"icon\":\"https://ysy.com\",\"version\":{\"versionTag\":\"1.0.0\",\"versionId\":\"56dc97af-f278-465b-b985-ec383b6a4dac\"}},{\"id\":\"0d207c56-6cbf-44ba-b550-64266869b83f\",\"displayName\":\"Mixed Juice\",\"icon\":\"https://ysy.com\",\"version\":{\"versionTag\":\"1.0.0\",\"versionId\":\"b6dec279-9ad0-4da4-a46a-e4f4c3b18a01\"}}]".data(using: .utf8) {
-            self.decodeResponse = try? JSONDecoder().decode([MiniAppInfo].self, from: jsonData)
-            
-        }
 
         MiniApp.list { (result) in
             switch result {
