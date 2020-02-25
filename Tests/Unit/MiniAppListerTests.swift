@@ -103,7 +103,7 @@ class MiniAppListerTests: QuickSpec {
                 }
             }
         }
-        
+
         describe("fetch mini app") {
             context("when request from server returns valid data") {
                 it("will decode the response with MiniAppInfo decodable") {

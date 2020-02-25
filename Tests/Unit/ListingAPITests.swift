@@ -16,7 +16,7 @@ class ListingAPITests: QuickSpec {
                     mockBundle.mockEndpoint = "http://example.com"
                     expect(listingAPI.createURLRequest()).toEventually(beAnInstanceOf(URLRequest.self))
                 }
-                
+
                 it("will return valid URL Request for app info") {
                     mockBundle.mockEndpoint = "http://example.com"
                     expect(listingAPI.createURLRequest("123")).toEventually(beAnInstanceOf(URLRequest.self))
@@ -27,7 +27,7 @@ class ListingAPITests: QuickSpec {
                     mockBundle.mockEndpoint = nil
                     expect(listingAPI.createURLRequest()).toEventually(beNil())
                 }
-                
+
                 it("will return nil for app info") {
                     mockBundle.mockEndpoint = nil
                     expect(listingAPI.createURLRequest("123")).toEventually(beNil())

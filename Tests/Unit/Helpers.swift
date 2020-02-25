@@ -24,7 +24,7 @@ class MockAPIClient: MiniAppClient {
             return  completionHandler(.success(ResponseData(data, httpResponse)))
         }
     }
-    
+
     override func getMiniApp(_ miniAppId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
         guard let urlRequest = self.listingApi.createURLRequest() else {
             return completionHandler(.failure(NSError.invalidURLError()))

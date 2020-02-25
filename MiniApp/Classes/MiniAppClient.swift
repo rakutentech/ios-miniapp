@@ -32,7 +32,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
-    
+
     func getMiniApp(_ miniAppId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
         guard let urlRequest = self.listingApi.createURLRequest(miniAppId) else {

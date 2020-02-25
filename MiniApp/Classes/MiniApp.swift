@@ -11,7 +11,7 @@ public class MiniApp: NSObject {
     public class func list(completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
         return RealMiniApp.shared.listMiniApp(completionHandler: completionHandler)
     }
-    
+
     /// Fetch the MiniAppInfo information for a given MiniApp id.
     ///
     /// - Parameters:
@@ -33,6 +33,4 @@ public class MiniApp: NSObject {
     public class func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {
         return RealMiniApp.shared.createMiniApp(appInfo: appInfo, completionHandler: completionHandler)
     }
-    
-    
 }

@@ -16,13 +16,13 @@ internal class ListingApi {
         guard let baseURL = environment.baseUrl else {
             return nil
         }
-        
+
         var appIdParam = ""
-        
+
         if let appId = miniAppId {
             appIdParam = "/\(appId)"
         }
-        
+
         return baseURL.appendingPathComponent("/oneapp/ios/\(environment.appVersion)/miniapps\(appIdParam)")
     }
 }
