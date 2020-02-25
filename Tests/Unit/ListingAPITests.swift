@@ -12,15 +12,25 @@ class ListingAPITests: QuickSpec {
             let listingAPI = ListingApi(environment: environment)
 
             context("when endpoint is properly configured") {
-                it("will return valid URL Request") {
+                it("will return valid URL Request for app listing") {
                     mockBundle.mockEndpoint = "http://example.com"
                     expect(listingAPI.createURLRequest()).toEventually(beAnInstanceOf(URLRequest.self))
                 }
+
+                it("will return valid URL Request for app info") {
+                    mockBundle.mockEndpoint = "http://example.com"
+                    expect(listingAPI.createURLRequest(miniAppID: "123")).toEventually(beAnInstanceOf(URLRequest.self))
+                }
             }
             context("when endpoint is not properly configured") {
-                it("will return nil") {
+                it("will return nil for app listing") {
                     mockBundle.mockEndpoint = nil
                     expect(listingAPI.createURLRequest()).toEventually(beNil())
+                }
+
+                it("will return nil for app info") {
+                    mockBundle.mockEndpoint = nil
+                    expect(listingAPI.createURLRequest(miniAppID: "123")).toEventually(beNil())
                 }
             }
         }
