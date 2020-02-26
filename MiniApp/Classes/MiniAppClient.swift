@@ -69,11 +69,25 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     func handleHttpResponse(responseData: Data, httpResponse: HTTPURLResponse) -> NSError {
-        guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self,
-                                                      data: responseData) else {
-            return NSError.unknownServerError(httpResponse: httpResponse)
+        let code = httpResponse.statusCode
+        var message: String
+
+        switch code {
+        case 401, 403:
+            guard let errorModel = ResponseDecoder.decode(decodeType: UnauthorizedData.self,
+                                                          data: responseData) else {
+                                                            return NSError.unknownServerError(httpResponse: httpResponse)
+            }
+            message = "\(errorModel.error): \(errorModel.errorDescription)"
+        default:
+            guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self,
+                                                          data: responseData) else {
+                    return NSError.unknownServerError(httpResponse: httpResponse)
+                }
+            message = errorModel.message
         }
-        return NSError.serverError(code: errorModel.code, message: errorModel.message)
+
+        return NSError.serverError(code: code, message: message)
     }
 
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
