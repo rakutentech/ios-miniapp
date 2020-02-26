@@ -5,14 +5,14 @@ internal class RealMiniApp {
     var miniAppDownloader: MiniAppDownloader
     var manifestDownloader: ManifestDownloader
     var displayer: Displayer
-    var miniAppPreferences: MiniAppPreferences
+    var miniAppStatus: MiniAppStatus
 
     init() {
         self.miniAppLister = MiniAppLister()
         self.miniAppClient = MiniAppClient()
         self.manifestDownloader = ManifestDownloader()
-        self.miniAppPreferences = MiniAppPreferences()
-        self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, preferences: self.miniAppPreferences)
+        self.miniAppStatus = MiniAppStatus()
+        self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer()
     }
 
@@ -33,7 +33,7 @@ internal class RealMiniApp {
                             completionHandler(.failure(NSError.downloadingFailed()))
                             return
                         }
-                        self.miniAppPreferences.setDownloadStatus(value: true, key: "\(appInfo.id)/\(appInfo.version.versionId)")
+                        self.miniAppStatus.setDownloadStatus(value: true, key: "\(appInfo.id)/\(appInfo.version.versionId)")
                         completionHandler(.success(miniAppDisplayProtocol))
                     }
                 case .failure(let error):

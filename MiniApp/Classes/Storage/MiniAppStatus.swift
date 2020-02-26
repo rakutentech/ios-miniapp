@@ -1,4 +1,4 @@
-class MiniAppPreferences {
+class MiniAppStatus {
     private let defaults: UserDefaults?
 
     init() {

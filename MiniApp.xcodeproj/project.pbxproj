@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3813F32324051E1D002703D7 /* MiniAppPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppPreferencesTests.swift */; };
+		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
 		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
 		38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */; };
 		38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */; };
@@ -43,7 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3813F32224051E1D002703D7 /* MiniAppPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppPreferencesTests.swift; sourceTree = "<group>"; };
+		3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStatusTests.swift; sourceTree = "<group>"; };
 		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
 		38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestAPITests.swift; sourceTree = "<group>"; };
 		38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestDownloaderTests.swift; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 				385C25C923F2E8BA00D61206 /* DisplayerTests.swift */,
 				385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */,
 				385C25CD23F2FEA300D61206 /* MiniAppViewTests.swift */,
-				3813F32224051E1D002703D7 /* MiniAppPreferencesTests.swift */,
+				3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -428,7 +428,7 @@
 				388FEEE623DEABCF0062382F /* EnvironmentTests.swift in Sources */,
 				3862EFB523EAF6B8004D518C /* MiniApp+NSErrorTests.swift in Sources */,
 				3862EFB123EABC15004D518C /* MiniAppDownloaderTests.swift in Sources */,
-				3813F32324051E1D002703D7 /* MiniAppPreferencesTests.swift in Sources */,
+				3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
