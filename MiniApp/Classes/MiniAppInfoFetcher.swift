@@ -1,4 +1,4 @@
-internal class MiniAppLister {
+internal class MiniAppInfoFetcher {
 
     func fetchList(apiClient: MiniAppClient, completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
 
@@ -15,7 +15,7 @@ internal class MiniAppLister {
         }
     }
 
-    func fetchMiniApp(miniAppId: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+    func getInfo(miniAppId: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
 
         apiClient.getMiniApp(miniAppId) { (result) in
             switch result {

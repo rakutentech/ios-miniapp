@@ -3,7 +3,7 @@ import Nimble
 @testable import MiniApp
 
 // swiftlint:disable function_body_length
-class MiniAppListerTests: QuickSpec {
+class MiniAppInfoFetcherTests: QuickSpec {
 
     override func spec() {
         describe("fetch mini apps list") {
@@ -11,7 +11,7 @@ class MiniAppListerTests: QuickSpec {
                 it("will decode the response with MiniAppInfo decodable") {
                     let mockAPIClient = MockAPIClient()
                     var decodedResponse: [MiniAppInfo]?
-                    let miniAppLister = MiniAppLister()
+                    let miniAppInfoFetcher = MiniAppInfoFetcher()
                     let responseString = """
                     [
                       {
@@ -33,7 +33,7 @@ class MiniAppListerTests: QuickSpec {
                       }]
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    miniAppLister.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
+                    miniAppInfoFetcher.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
                         switch result {
                         case .success(let responseData):
                             decodedResponse = responseData
@@ -48,7 +48,7 @@ class MiniAppListerTests: QuickSpec {
                 it("will decode the response with MiniAppInfo decodable") {
                     let mockAPIClient = MockAPIClient()
                     var testError: NSError?
-                    let miniAppLister = MiniAppLister()
+                    let miniAppInfoFetcher = MiniAppInfoFetcher()
                     let responseString = """
                     [
                       {
@@ -70,7 +70,7 @@ class MiniAppListerTests: QuickSpec {
                       }]
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    miniAppLister.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
+                    miniAppInfoFetcher.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
                         switch result {
                         case .success:
                             break
@@ -90,8 +90,8 @@ class MiniAppListerTests: QuickSpec {
                         code: 123,
                         userInfo: nil
                     )
-                    let miniAppLister = MiniAppLister()
-                    miniAppLister.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
+                    let miniAppInfoFetcher = MiniAppInfoFetcher()
+                    miniAppInfoFetcher.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
                         switch result {
                         case .success:
                             break
@@ -109,7 +109,7 @@ class MiniAppListerTests: QuickSpec {
                 it("will decode the response with MiniAppInfo decodable") {
                     let mockAPIClient = MockAPIClient()
                     var decodedResponse: MiniAppInfo?
-                    let miniAppLister = MiniAppLister()
+                    let miniAppInfoFetcher = MiniAppInfoFetcher()
                     let responseString = """
                     [{
                         "id": "123",
@@ -122,7 +122,7 @@ class MiniAppListerTests: QuickSpec {
                       }]
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    miniAppLister.fetchMiniApp(miniAppId: "123", apiClient: mockAPIClient, completionHandler: { (result) in
+                    miniAppInfoFetcher.getInfo(miniAppId: "123", apiClient: mockAPIClient, completionHandler: { (result) in
                         switch result {
                         case .success(let responseData):
                             decodedResponse = responseData
@@ -137,7 +137,7 @@ class MiniAppListerTests: QuickSpec {
                 it("will decode the response with MiniAppInfo decodable") {
                     let mockAPIClient = MockAPIClient()
                     var testError: NSError?
-                    let miniAppLister = MiniAppLister()
+                    let miniAppInfoFetcher = MiniAppInfoFetcher()
                     let responseString = """
                     [{
                         "test": "123",
@@ -150,7 +150,7 @@ class MiniAppListerTests: QuickSpec {
                       }]
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    miniAppLister.fetchMiniApp(miniAppId: "123", apiClient: mockAPIClient, completionHandler: { (result) in
+                    miniAppInfoFetcher.getInfo(miniAppId: "123", apiClient: mockAPIClient, completionHandler: { (result) in
                         switch result {
                         case .success:
                             break
@@ -170,8 +170,8 @@ class MiniAppListerTests: QuickSpec {
                         code: 123,
                         userInfo: nil
                     )
-                    let miniAppLister = MiniAppLister()
-                    miniAppLister.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
+                    let miniAppInfoFetcher = MiniAppInfoFetcher()
+                    miniAppInfoFetcher.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
                         switch result {
                         case .success:
                             break
