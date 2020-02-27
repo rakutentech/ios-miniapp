@@ -30,21 +30,21 @@
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Models/MiniAppInfo.swift",
-      "line": 9,
+      "line": 16,
       "symbol": "Version",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Models/MiniAppInfo.swift",
-      "line": 10,
+      "line": 17,
       "symbol": "Version.versionTag",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Models/MiniAppInfo.swift",
-      "line": 11,
+      "line": 18,
       "symbol": "Version.versionId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"

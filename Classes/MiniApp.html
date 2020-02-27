@@ -14,7 +14,7 @@
     <a title="MiniApp Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniApp Docs</a> (50% documented)</p>
+        <p><a href="../index.html">MiniApp Docs</a> (53% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -124,6 +124,69 @@ Error information will be returned if any problem while fetching from the backed
 
 <ul>
 <li>[MiniAppInfo]: List of [MiniAppInfo] information.</li>
+<li>Error: Error details if fetching is failed.</li>
+</ul></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniAppAAC4info04miniB2Id17completionHandlerySS_ys6ResultOyAA0aB4InfoVs5Error_pGctFZ"></a>
+                    <a name="//apple_ref/swift/Method/info(miniAppId:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC4info04miniB2Id17completionHandlerySS_ys6ResultOyAA0aB4InfoVs5Error_pGctFZ">info(miniAppId:completionHandler:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetch the MiniAppInfo information for a given MiniApp id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/MiniAppInfo.html">MiniAppInfo</a></span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>miniAppId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the identifier string of the Mini App you want information</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block to be called when MiniAppInfo information is fetched. Completion blocks receives the following parameters
+
+<ul>
+<li>MiniAppInfo: MiniAppInfo information.</li>
 <li>Error: Error details if fetching is failed.</li>
 </ul></p>
                                 </div>
