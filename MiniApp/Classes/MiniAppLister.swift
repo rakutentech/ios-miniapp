@@ -23,7 +23,6 @@ internal class MiniAppLister {
                 guard let decodeResponse = ResponseDecoder.decode(decodeType: Array<MiniAppInfo>.self, data: responseData.data), let miniApp = decodeResponse.first else {
                     return completionHandler(.failure(NSError.invalidResponseData()))
                 }
-
                 return completionHandler(.success(miniApp))
 
             case .failure(let error):

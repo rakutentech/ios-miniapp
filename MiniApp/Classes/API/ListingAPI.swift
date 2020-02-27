@@ -1,29 +1,48 @@
 internal class ListingApi {
     let environment: Environment
+    var path: String {
+        get {
+            return "/oneapp/ios/\(environment.appVersion)/miniapps"
+        }
+    }
 
     init(environment: Environment) {
         self.environment = environment
     }
 
-    func createURLRequest(miniAppID: String? = nil) -> URLRequest? {
-        guard let url = getListingURL(miniAppID) else {
+    func createURLRequest() -> URLRequest? {
+
+        guard let url = getListingURL() else {
             return nil
         }
         return URLRequest.createURLRequest(url: url, environment: environment)
     }
 
-    private func getListingURL(_ miniAppId: String? = nil) -> URL? {
+    func createURLRequest(for miniAppID: String) -> URLRequest? {
+
+        guard let url = getListingURL(for: miniAppID) else {
+            return nil
+        }
+        return URLRequest.createURLRequest(url: url, environment: environment)
+    }
+
+    private func getListingURL() -> URL? {
+        guard let baseURL = environment.baseUrl else {
+            return nil
+        }
+        return baseURL.appendingPathComponent(path)
+    }
+
+    private func getListingURL(for miniAppId: String) -> URL? {
         guard let baseURL = environment.baseUrl else {
             return nil
         }
 
-        guard var components = URLComponents(url: baseURL.appendingPathComponent("/oneapp/ios/\(environment.appVersion)/miniapps"), resolvingAgainstBaseURL: false) else {
+        guard var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false) else {
             return nil
         }
 
-        if let appId = miniAppId {
-            components.queryItems = [URLQueryItem(name: "miniAppId", value: appId)]
-        }
+        components.queryItems = [URLQueryItem(name: "miniAppId", value: miniAppId)]
 
         return components.url
     }

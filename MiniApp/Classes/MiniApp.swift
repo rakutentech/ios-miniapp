@@ -20,6 +20,9 @@ public class MiniApp: NSObject {
     ///         -   MiniAppInfo: MiniAppInfo information.
     ///         -   Error: Error details if fetching is failed.
     public class func info(miniAppId: String, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+        if miniAppId.count == 0 {
+            return completionHandler(.failure(NSError.invalidAppId()))
+        }
         return RealMiniApp.shared.getMiniApp(miniAppId: miniAppId, completionHandler: completionHandler)
     }
 

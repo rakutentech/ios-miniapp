@@ -23,6 +23,14 @@ extension NSError {
         )
     }
 
+    class func invalidAppId() -> NSError {
+        return NSError(
+            domain: "APIClient",
+            code: 0,
+            userInfo: [NSLocalizedDescriptionKey: "Invalid AppID error"]
+        )
+    }
+
     class func invalidResponseData() -> NSError {
         return NSError(
             domain: "APIClient",

@@ -35,7 +35,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func getMiniApp(_ miniAppId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
-        guard let urlRequest = self.listingApi.createURLRequest(miniAppID: miniAppId) else {
+        guard let urlRequest = self.listingApi.createURLRequest(for: miniAppId) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
