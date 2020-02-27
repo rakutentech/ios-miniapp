@@ -12,6 +12,20 @@ public class MiniApp: NSObject {
         return RealMiniApp.shared.listMiniApp(completionHandler: completionHandler)
     }
 
+    /// Fetch the MiniAppInfo information for a given MiniApp id.
+    ///
+    /// - Parameters:
+    ///     -   miniAppId: the identifier string of the Mini App you want information
+    ///     -   completionHandler: A block to be called when MiniAppInfo information is fetched. Completion blocks receives the following parameters
+    ///         -   MiniAppInfo: MiniAppInfo information.
+    ///         -   Error: Error details if fetching is failed.
+    public class func info(miniAppId: String, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+        if miniAppId.count == 0 {
+            return completionHandler(.failure(NSError.invalidAppId()))
+        }
+        return RealMiniApp.shared.getMiniApp(miniAppId: miniAppId, completionHandler: completionHandler)
+    }
+
     /// Create a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
     ///
     /// - Parameters:

@@ -1,6 +1,6 @@
 internal class RealMiniApp {
     static let shared =  RealMiniApp()
-    var miniAppLister: MiniAppLister
+    var miniAppInfoFetcher: MiniAppInfoFetcher
     var miniAppClient: MiniAppClient
     var miniAppDownloader: MiniAppDownloader
     var manifestDownloader: ManifestDownloader
@@ -8,7 +8,7 @@ internal class RealMiniApp {
     var miniAppStatus: MiniAppStatus
 
     init() {
-        self.miniAppLister = MiniAppLister()
+        self.miniAppInfoFetcher = MiniAppInfoFetcher()
         self.miniAppClient = MiniAppClient()
         self.manifestDownloader = ManifestDownloader()
         self.miniAppStatus = MiniAppStatus()
@@ -17,7 +17,11 @@ internal class RealMiniApp {
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
-        return miniAppLister.fetchList(apiClient: self.miniAppClient, completionHandler: completionHandler)
+        return miniAppInfoFetcher.fetchList(apiClient: self.miniAppClient, completionHandler: completionHandler)
+    }
+
+    func getMiniApp(miniAppId: String, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+        return miniAppInfoFetcher.getInfo(miniAppId: miniAppId, apiClient: self.miniAppClient, completionHandler: completionHandler)
     }
 
     func createMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {

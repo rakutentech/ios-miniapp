@@ -4,9 +4,21 @@ public struct MiniAppInfo: Decodable {
     public var displayName: String
     public var icon: URL
     internal var version: Version
+
+    private enum CodingKeys: String, CodingKey {
+        case id,
+        displayName,
+        icon,
+        version
+    }
 }
 
 public struct Version: Decodable {
     public var versionTag: String
     public var versionId: String
+
+    private enum CodingKeys: String, CodingKey {
+        case versionTag,
+        versionId
+    }
 }
