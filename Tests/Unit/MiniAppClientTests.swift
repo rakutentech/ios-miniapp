@@ -3,49 +3,52 @@ import Nimble
 @testable import MiniApp
 
 // swiftlint:disable function_body_length
+// swiftlint:disable cyclomatic_complexity
 class MiniAppClientTests: QuickSpec {
+    class MockSession: SessionProtocol {
+        func startDownloadTask(downloadUrl: URL) {}
+
+        var data: Data?
+        var error: Error?
+        var urlResponse: HTTPURLResponse?
+        var jsonObject: [String: Any]?
+        var serverErrorCode = Int()
+
+        func startDataTask(with request: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+            urlResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: serverErrorCode, httpVersion: "1", headerFields: nil)
+            if let json = jsonObject {
+                data = try? JSONSerialization.data(withJSONObject: json, options: [])
+            }
+            if let error = error {
+                return completionHandler(.failure(error))
+            }
+            guard let httpResponse = urlResponse, let data = data else {
+                let error = NSError.unknownServerError(httpResponse: urlResponse)
+                return completionHandler(.failure(error))
+            }
+            return completionHandler(.success(ResponseData(data, httpResponse)))
+        }
+
+        init(data: [String: Any]? = nil, statusCode: Int = 200, error: NSError? = nil) {
+            self.jsonObject = data
+            self.serverErrorCode = statusCode
+            self.error = error
+        }
+    }
+
+    func executeSession(data: [String: Any]? = nil, statusCode: Int = 200, error: NSError? = nil, completion: @escaping (Result<ResponseData, Error>) -> Void) {
+        let mockSession = MockSession(data: data, statusCode: statusCode, error: error)
+        let miniAppClient = MiniAppClient()
+        miniAppClient.session = mockSession
+        miniAppClient.getMiniAppsList(completionHandler: completion)
+    }
 
     override func spec() {
-        class MockSession: SessionProtocol {
-            func startDownloadTask(downloadUrl: URL) {
-
-            }
-
-            var data: Data?
-            var error: Error?
-            var urlResponse: HTTPURLResponse?
-            var jsonObject: [String: Any]?
-            var serverErrorCode = Int()
-
-            func startDataTask(with request: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-                    urlResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: serverErrorCode, httpVersion: "1", headerFields: nil)
-                    if let json = jsonObject {
-                        data = try? JSONSerialization.data(withJSONObject: json, options: [])
-                    }
-                    if let error = error {
-                        return completionHandler(.failure(error))
-                    }
-                    guard let httpResponse = urlResponse, let data = data else {
-                        let error = NSError.unknownServerError(httpResponse: urlResponse)
-                        return completionHandler(.failure(error))
-                    }
-                    return completionHandler(.success(ResponseData(data, httpResponse)))
-            }
-
-            init(data: [String: Any]? = nil, statusCode: Int = 200, error: NSError? = nil) {
-                self.jsonObject = data
-                self.serverErrorCode = statusCode
-                self.error = error
-            }
-        }
         describe("start data task") {
             context("when network response contains valid data") {
                 var testResult: Data?
                 it("will pass a result to success completion handler with expected value") {
-                    let mockSession = MockSession(data: ["key": "value"])
-                    let miniAppClient = MiniAppClient()
-                    miniAppClient.session = mockSession
-                    miniAppClient.getMiniAppsList { (result) in
+                    self.executeSession(data: ["key": "value"]) { (result) in
                         switch result {
                         case .success(let responseData):
                             testResult = responseData.data
@@ -64,10 +67,7 @@ class MiniAppClientTests: QuickSpec {
                     userInfo: nil
                 )
                 it("will pass an error with status code and completion handler expected to return the same") {
-                    let mockSession = MockSession(data: nil, statusCode: 400)
-                    let miniAppClient = MiniAppClient()
-                    miniAppClient.session = mockSession
-                     miniAppClient.getMiniAppsList { (result) in
+                    self.executeSession(statusCode: 400) { (result) in
                         switch result {
                         case .success:
                             break
@@ -82,10 +82,7 @@ class MiniAppClientTests: QuickSpec {
             context("when network response contains valid error json") {
                 var testError: NSError?
                 it("will pass an error to completion handler with expected code") {
-                    let mockSession = MockSession(data: ["code": 404, "message": "error message"], statusCode: 404)
-                    let miniAppClient = MiniAppClient()
-                    miniAppClient.session = mockSession
-                   miniAppClient.getMiniAppsList { (result) in
+                    self.executeSession(data: ["code": 404, "message": "error message"], statusCode: 404) { (result) in
                         switch result {
                         case .success:
                             break
@@ -96,10 +93,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(testError?.code).toEventually(equal(404), timeout: 2)
                 }
                 it("will pass an error to completion handler with expected message") {
-                    let mockSession = MockSession(data: ["code": 404, "message": "error message description"], statusCode: 404)
-                    let miniAppClient = MiniAppClient()
-                    miniAppClient.session = mockSession
-                     miniAppClient.getMiniAppsList { (result) in
+                    self.executeSession(data: ["code": 404, "message": "error message description"], statusCode: 404) { (result) in
                         switch result {
                         case .success:
                             break
@@ -110,14 +104,35 @@ class MiniAppClientTests: QuickSpec {
 
                     expect(testError?.localizedDescription).toEventually(equal("error message description"), timeout: 2)
                 }
+
+                let sessionDataForbidden = ["error": "Error", "error_description": "An error has occurred"]
+                it("will pass an error to completion handler with expected message if it is a 401 error") {
+                    self.executeSession(data: sessionDataForbidden, statusCode: 401) { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    }
+                    expect(testError?.localizedDescription).toEventually(equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"), timeout: 2)
+                }
+                it("will pass an error to completion handler with expected message if it is a 403 error") {
+                    self.executeSession(data: sessionDataForbidden, statusCode: 403) { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    }
+                    expect(testError?.localizedDescription).toEventually(equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"), timeout: 2)
+                }
             }
             context("when network response contains invalid error") {
                 var testError: NSError?
                 it("will pass an error to completion handler with expected code") {
-                    let mockSession = MockSession(data: ["error_code": 404, "message": "error message"], statusCode: 404)
-                    let miniAppClient = MiniAppClient()
-                    miniAppClient.session = mockSession
-                     miniAppClient.getMiniAppsList { (result) in
+                    self.executeSession(data: ["error_code": 404, "message": "error message"], statusCode: 404) { (result) in
                         switch result {
                         case .success:
                             break

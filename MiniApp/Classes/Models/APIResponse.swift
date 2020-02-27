@@ -10,4 +10,19 @@ struct ResponseData {
 struct ErrorData: Decodable, Equatable {
     let code: Int
     let message: String
+
+    private enum CodingKeys: String, CodingKey {
+        case code,
+        message
+    }
+}
+
+struct UnauthorizedData: Decodable, Equatable {
+    let errorDescription: String
+    let error: String
+
+    private enum CodingKeys: String, CodingKey {
+        case errorDescription = "error_description",
+        error
+    }
 }
