@@ -27,11 +27,7 @@ internal class RealMiniApp {
     func createMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {
         return miniAppDownloader.download(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
                 switch result {
-                case .success:
-                    guard let miniAppPath = FileManager.getMiniAppDirectory(with: appInfo.id, and: appInfo.version.versionId) else {
-                        completionHandler(.failure(NSError.downloadingFailed()))
-                        return
-                    }
+                case .success(let miniAppPath):
                     DispatchQueue.main.async {
                         guard let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppPath: miniAppPath) else {
                             completionHandler(.failure(NSError.downloadingFailed()))
