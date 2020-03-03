@@ -20,7 +20,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Enter a Mini App ID manually"/>
                             <connections>
-                                <action selector="actionShowMiniApp" destination="YI1-4h-cvm" eventType="touchUpInside" id="UuR-ZV-fih"/>
+                                <action selector="actionShowMiniAppById" destination="YI1-4h-cvm" eventType="touchUpInside" id="1uI-8N-QKv"/>
                             </connections>
                         </button>
                         <prototypes>

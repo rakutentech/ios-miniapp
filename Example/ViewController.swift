@@ -23,7 +23,7 @@ class ViewController: UITableViewController {
         }
     }
 
-    @IBAction func actionShowMiniApp() {
+    @IBAction func actionShowMiniAppById() {
         let alert = UIAlertController(title: "Please enter Mini App ID",
                                       message: nil,
                                       preferredStyle: .alert)
