@@ -27,14 +27,14 @@ class ViewController: UITableViewController {
         let alert = UIAlertController(title: "Please enter Mini App ID",
                                       message: nil,
                                       preferredStyle: .alert)
-        
+
         alert.addTextField { (textField) in
             textField.keyboardType = .asciiCapable
         }
-        
-        let okAction = UIAlertAction(title: "OK", style: .default) { [unowned alert] (action) in
+
+        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
             self.showProgressIndicator()
-            if let textField = alert.textFields?.first, let miniAppID = textField.text, miniAppID.count > 0{
+            if let textField = alert.textFields?.first, let miniAppID = textField.text, miniAppID.count > 0 {
                 MiniApp.info(miniAppId: miniAppID) { (result) in
                     switch result {
                     case .success(let responseData):
@@ -42,20 +42,20 @@ class ViewController: UITableViewController {
                         self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
                     case .failure(let error):
                         print(error.localizedDescription)
-                        self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App list, please try again later", dismissController: false)
+                        self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App info, please try again later", dismissController: false)
                     }
                     self.dismissProgressIndicator()
                 }
-            }else {
+            } else {
                 self.dismissProgressIndicator()
                 self.displayErrorAlert(title: "Error", message: "Incorrect Mini App ID, please try again", dismissController: false)
             }
         }
         alert.addAction(okAction)
-        
+
         self.present(alert, animated: true, completion: nil)
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return decodeResponse?.count ?? 0
     }
