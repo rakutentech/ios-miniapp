@@ -65,26 +65,26 @@ class MockAPIClient: MiniAppClient {
 
     override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         guard let destinationURL = downloadTask.currentRequest?.url?.absoluteString else {
-            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
         guard let fileName = downloadTask.currentRequest?.url?.lastPathComponent else {
-            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
         guard let mockSourceFileURL =  MockFile.createTestFile(fileName: fileName) else {
-            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
-        delegate?.fileDownloaded(sourcePath: mockSourceFileURL, destinationPath: destinationURL)
+        delegate?.fileDownloaded(at: mockSourceFileURL, downloadedURL: destinationURL)
     }
 
     override func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         guard let url = task.currentRequest?.url?.absoluteString else {
-            delegate?.downloadCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
-        delegate?.downloadCompleted(url: url, error: error)
+        delegate?.downloadFileTaskCompleted(url: url, error: error)
     }}
 
 class MockManifestDownloader: ManifestDownloader {

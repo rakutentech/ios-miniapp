@@ -1,12 +1,9 @@
 class MiniAppDownloader {
 
-    typealias DownloadCompletionHandler = (Result<Bool, Error>) -> Void
-
     private var miniAppClient: MiniAppClient
     private var miniAppStorage: MiniAppStorage
     private var manifestDownloader: ManifestDownloader
-    private var completionHandler: DownloadCompletionHandler?
-    private var urlToDirectoryMap = [String: URL]()
+    private var urlToDirectoryMap = [String: DownloadOperation]()
     private var miniAppStatus: MiniAppStatus
 
     private var queue: OperationQueue = {
@@ -24,70 +21,80 @@ class MiniAppDownloader {
         self.miniAppStatus = status
     }
 
-    func download(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
-
+    func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+        let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId, and: versionId)
         if miniAppStatus.isDownloaded(key: "\(appId)/\(versionId)") {
-            completionHandler(.success(true))
+            completionHandler(.success(miniAppStoragePath))
             return
         }
         self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
             switch result {
             case .success(let responseData):
-                self.completionHandler = completionHandler
-                self.downloadManifestFiles(with: appId, versionId: versionId, files: responseData.manifest)
+                self.downloadMiniApp(urls: responseData.manifest, to: miniAppStoragePath, completionHandler: completionHandler)
             case .failure(let error):
                 return completionHandler(.failure(error))
             }
         }
     }
 
-    private func downloadManifestFiles(with appId: String, versionId: String, files: [String]) {
-        guard let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId, and: versionId) else {
-            return
-        }
-        downloadMiniApp(files, to: miniAppStoragePath)
-    }
-
-    private func downloadMiniApp(_ urls: [String], to miniAppPath: URL) {
+    private func downloadMiniApp(urls: [String], to miniAppPath: URL, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         self.miniAppClient.delegate = self
         for url in urls {
             guard let fileDirectory = UrlParser.parseForFileDirectory(with: url) else {
-                self.completionHandler?(.failure(NSError.downloadingFailed()))
+                completionHandler(.failure(NSError.downloadingFailed()))
                 return
             }
-            if !FileManager.default.fileExists(atPath: miniAppPath.appendingPathComponent(fileDirectory).path) {
-                urlToDirectoryMap[url] = miniAppPath.appendingPathComponent(fileDirectory)
+            let filePath = miniAppPath.appendingPathComponent(fileDirectory)
+            if !FileManager.default.fileExists(atPath: filePath.path) {
+                urlToDirectoryMap[url] = DownloadOperation(fileStoragePath: filePath, miniAppDirectoryPath: miniAppPath, completionHanlder: completionHandler)
                 queue.addOperation {
                     self.miniAppClient.download(url: url)
                 }
             }
         }
         if urlToDirectoryMap.isEmpty {
-            self.completionHandler?(.success(true))
+            completionHandler(.success(miniAppPath))
         }
     }
 }
 
 extension MiniAppDownloader: MiniAppDownloaderProtocol {
 
-    func fileDownloaded(sourcePath: URL, destinationPath: String) {
-        guard let filePath = urlToDirectoryMap[destinationPath] else {
+    /// Delegate called only when file is downloaded successfully
+    /// Downloaded file should be taken care by moving them to any directory before returning the function.
+    ///
+    /// - Parameters:
+    ///     - tempFilePath: Temporary file path where the downloaded file is stored
+    ///     - downloadedURL: URL of the file which was downloaded
+    func fileDownloaded(at sourcePath: URL, downloadedURL destinationPath: String) {
+        guard let filePath = urlToDirectoryMap[destinationPath]?.fileStoragePath else {
             return
         }
         guard let error = miniAppStorage.save(sourcePath: sourcePath, destinationPath: filePath) else {
             return
         }
-        self.completionHandler?(.failure(error))
+        urlToDirectoryMap[destinationPath]?.completionHanlder(.failure(error))
     }
 
-    func downloadCompleted(url: String, error: Error?) {
+    /// Delegate called whenever download task is completed/failed.
+    /// This method will be called everytime any download file task is completed/failed
+    /// 
+    /// - Parameters:
+    ///   - url: URL of the file which was downloaded
+    ///   - error: Error information if the downloading is failed with error
+    func downloadFileTaskCompleted(url: String, error: Error?) {
+        let completionHandler = urlToDirectoryMap[url]?.completionHanlder
         guard let error = error else {
+            guard let miniAppDirectoryPath = urlToDirectoryMap[url]?.miniAppDirectoryPath else {
+                completionHandler?(.failure(NSError.downloadingFailed()))
+                return
+            }
             urlToDirectoryMap.removeValue(forKey: url)
             if urlToDirectoryMap.isEmpty {
-                self.completionHandler?(.success(true))
+                completionHandler?(.success(miniAppDirectoryPath))
             }
             return
         }
-        self.completionHandler?(.failure(error))
+        completionHandler?(.failure(error))
     }
 }

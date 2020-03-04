@@ -8,8 +8,8 @@ class MiniAppDownloaderTests: QuickSpec {
     override func spec() {
         let miniAppStatus = MiniAppStatus()
         describe("mini app folder will be created") {
-            context("when valid manifest information is returned") {
-                it("will be downloaded and path is returned") {
+            context("when manifest returns list of valid URLs") {
+                it("will download all files and mini app path is created") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
@@ -19,19 +19,22 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    var isDownloaded: Bool?
+                    var isFolderExists: Bool?
                     downloader.download(appId: "Apple", versionId: "Mac") { (result) in
                         switch result {
-                        case .success(let status):
-                            isDownloaded = status
+                        case .success:
+                            let miniAppDirectory = FileManager.getMiniAppDirectory(with: "Apple", and: "Mac")
+                            var isDir: ObjCBool = true
+                            isFolderExists = FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)
                         case .failure:
                             break
                         }
                     }
-                    expect(isDownloaded).toEventually(equal(true), timeout: 50)
+                    expect(isFolderExists).toEventually(equal(true), timeout: 50)
                 }
             }
         }
+
         describe("mini app files will be downloaded") {
             context("when valid manifest information is returned ") {
                 it("will return downloading failed error") {
@@ -40,7 +43,8 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/version/Mac/HelloWorld.txt"]
+                        "manifest": ["https://google.com/version/Mac/HelloWorld.txt",
+                                    "https://google.com/version/Mac/Testing.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -53,17 +57,15 @@ class MiniAppDownloaderTests: QuickSpec {
                         }
                     }
                     let miniAppPath = FileManager.getMiniAppDirectory(with: "Apple", and: "Mac")
-                    guard let expectedPath = miniAppPath?.appendingPathComponent("HelloWorld.txt") else {
-                        return
-                    }
+                    let expectedPath = miniAppPath.appendingPathComponent("HelloWorld.txt")
                     let isFileExists = FileManager.default.fileExists(atPath: expectedPath.path)
                     expect(isFileExists).toEventually(equal(true), timeout: 50)
                 }
             }
         }
-        describe("mini app files will be downloaded") {
+        describe("mini app downloader fails") {
             context("when invalid urls is returned") {
-                it("will be downloaded and path is returned") {
+                it("will return error") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
