@@ -4,6 +4,7 @@ import MiniApp
 class ViewController: UITableViewController {
 
     var decodeResponse: [MiniAppInfo]?
+    var currentMiniAppInfo: MiniAppInfo?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +18,42 @@ class ViewController: UITableViewController {
                 self.dismissProgressIndicator()
             case .failure(let error):
                 print(error.localizedDescription)
-                self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App list, please try again later", dismissController: false)
+                self.displayErrorAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: false)
+            }
+        }
+    }
+
+    func fetchAppInfo(for miniAppID: String) {
+        self.showProgressIndicator {
+            MiniApp.info(miniAppId: miniAppID) { (result) in
+                self.dismissProgressIndicator {
+                    switch result {
+                    case .success(let responseData):
+                        self.currentMiniAppInfo = responseData
+                        self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        self.displayErrorAlert(
+                            title: NSLocalizedString("error_title", comment: ""),
+                            message: NSLocalizedString("error_single_message", comment: ""),
+                            dismissController: false)
+                    }
+                }
+            }
+        }
+    }
+
+    @IBAction func actionShowMiniAppById() {
+        self.displayTextFieldAlert(title: NSLocalizedString("input_miniapp_title", comment: "")) { (_, textField) in
+            self.dismiss(animated: true) {
+                if let textField = textField, let miniAppID = textField.text, miniAppID.count > 0 {
+                    self.fetchAppInfo(for: miniAppID)
+                } else {
+                    self.displayErrorAlert(
+                        title: NSLocalizedString("error_title", comment: ""),
+                        message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
+                        dismissController: false)
+                }
             }
         }
     }
@@ -41,14 +77,20 @@ class ViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       if segue.identifier == "DisplayMiniApp" {
-        guard let indexPath = self.tableView.indexPathForSelectedRow?.row else {
-            self.displayErrorAlert(title: "Error", message: "Couldn't retrieve Mini App, please try again later", dismissController: false)
-            return
+        if segue.identifier == "DisplayMiniApp" {
+            if let indexPath = self.tableView.indexPathForSelectedRow?.row {
+                currentMiniAppInfo = decodeResponse?[indexPath]
+            }
+
+            guard let miniAppInfo = self.currentMiniAppInfo else {
+                self.displayErrorAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: false)
+                return
+            }
+
+            let displayController = segue.destination as? DisplayController
+            displayController?.miniAppInfo = miniAppInfo
+            self.currentMiniAppInfo = nil
         }
-        let displayController = segue.destination as? DisplayController
-        displayController?.miniAppInfo = decodeResponse?[indexPath]
-       }
     }
 }
 
