@@ -23,27 +23,31 @@ class ViewController: UITableViewController {
         }
     }
 
+    func fetchAppInfo(for miniAppID: String) {
+        self.showProgressIndicator {
+            MiniApp.info(miniAppId: miniAppID) { (result) in
+                self.dismissProgressIndicator {
+                    switch result {
+                    case .success(let responseData):
+                        self.currentMiniAppInfo = responseData
+                        self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        self.displayErrorAlert(
+                            title: NSLocalizedString("error_title", comment: ""),
+                            message: NSLocalizedString("error_single_message", comment: ""),
+                            dismissController: false)
+                    }
+                }
+            }
+        }
+    }
+
     @IBAction func actionShowMiniAppById() {
         self.displayTextFieldAlert(title: NSLocalizedString("input_miniapp_title", comment: "")) { (_, textField) in
             self.dismiss(animated: true) {
                 if let textField = textField, let miniAppID = textField.text, miniAppID.count > 0 {
-                    self.showProgressIndicator {
-                        MiniApp.info(miniAppId: miniAppID) { (result) in
-                            self.dismissProgressIndicator {
-                                switch result {
-                                case .success(let responseData):
-                                    self.currentMiniAppInfo = responseData
-                                    self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
-                                case .failure(let error):
-                                    print(error.localizedDescription)
-                                    self.displayErrorAlert(
-                                        title: NSLocalizedString("error_title", comment: ""),
-                                        message: NSLocalizedString("error_single_message", comment: ""),
-                                        dismissController: false)
-                                }
-                            }
-                        }
-                    }
+                    self.fetchAppInfo(for: miniAppID)
                 } else {
                     self.displayErrorAlert(
                         title: NSLocalizedString("error_title", comment: ""),
