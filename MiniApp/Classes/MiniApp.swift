@@ -50,8 +50,7 @@ public class MiniAppSdkConfig {
             }
         }
     }
-    var rasAppId: String?
-    {
+    var rasAppId: String? {
         didSet(value) {
             if value?.count ?? 0 == 0 {
                 rasAppId = nil
