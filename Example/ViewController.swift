@@ -9,9 +9,12 @@ class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        config = Config.getCurrent()
-
         fetchAppList()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        config = Config.getCurrent()
     }
 
     func fetchAppList() {
