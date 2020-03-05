@@ -1,15 +1,7 @@
 /// Mini App Public API methods
 public class MiniApp: NSObject {
 
-    public struct SdkConfig {
-        var baseUrl: String
-        var rasAppId: String
-        var subscriptionKey: String
-        var hostAppVersion: String
-        var key: String {
-            return "\(baseUrl)-\(rasAppId)-\(subscriptionKey)-\(hostAppVersion)"
-        }
-    }
+
 
     /// Fetch the List of [MiniAppInfo] information.
     /// Error information will be returned if any problem while fetching from the backed
@@ -19,7 +11,7 @@ public class MiniApp: NSObject {
     ///     -   completionBlock: A block to be called when list of [MiniAppInfo] information is fetched. Completion blocks receives the following parameters
     ///         -   [MiniAppInfo]: List of [MiniAppInfo] information.
     ///         -   Error: Error details if fetching is failed.
-    public class func list(config: SdkConfig? = nil, completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
+    public class func list(config: MiniAppSdkConfig? = nil, completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
         return RealMiniApp.shared(with: config).listMiniApp(completionHandler: completionHandler)
     }
 
@@ -31,7 +23,7 @@ public class MiniApp: NSObject {
     ///     -   completionHandler: A block to be called when MiniAppInfo information is fetched. Completion blocks receives the following parameters
     ///         -   MiniAppInfo: MiniAppInfo information.
     ///         -   Error: Error details if fetching is failed.
-    public class func info(config: SdkConfig? = nil, miniAppId: String, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+    public class func info(config: MiniAppSdkConfig? = nil, miniAppId: String, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
         if miniAppId.count == 0 {
             return completionHandler(.failure(NSError.invalidAppId()))
         }
@@ -47,7 +39,27 @@ public class MiniApp: NSObject {
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
-    public class func create(config: SdkConfig? = nil, appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {
+    public class func create(config: MiniAppSdkConfig? = nil, appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {
         return RealMiniApp.shared(with: config).createMiniApp(appInfo: appInfo, completionHandler: completionHandler)
+    }
+}
+
+public class MiniAppSdkConfig {
+    var baseUrl: String?
+    var rasAppId: String?
+    var subscriptionKey: String?
+    var hostAppVersion: String?
+    var key: String {
+        return "\(baseUrl ?? "noBaseUrl")-\(rasAppId ?? "noRasAppId")-\(subscriptionKey ?? "noSubscriptionKey")-\(hostAppVersion ?? "noHostAppVersion")"
+    }
+
+    public init(baseUrl: String? = nil,
+         rasAppId: String? = nil,
+         subscriptionKey: String? = nil,
+         hostAppVersion: String? = nil) {
+        self.baseUrl = baseUrl
+        self.rasAppId = rasAppId
+        self.subscriptionKey = subscriptionKey
+        self.hostAppVersion = hostAppVersion
     }
 }

@@ -20,7 +20,7 @@ extension UIViewController {
         })
     }
 
-    func displayErrorAlert(title: String, message: String, dismissController: Bool) {
+    func displayAlert(title: String, message: String, dismissController: Bool) {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.dismiss(animated: true, completion: {
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

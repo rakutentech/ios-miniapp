@@ -12,7 +12,7 @@ internal class RealMiniApp {
         self.init(with: nil)
     }
 
-    init(with settings: MiniApp.SdkConfig?) {
+    init(with settings: MiniAppSdkConfig?) {
         self.miniAppInfoFetcher = MiniAppInfoFetcher()
         self.miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl, rasAppId: settings?.rasAppId, subscriptionKey: settings?.subscriptionKey, hostAppVersion: settings?.hostAppVersion)
         self.manifestDownloader = ManifestDownloader()
@@ -21,7 +21,7 @@ internal class RealMiniApp {
         self.displayer = Displayer()
     }
 
-    class func shared(with settings: MiniApp.SdkConfig?) -> RealMiniApp {
+    class func shared(with settings: MiniAppSdkConfig?) -> RealMiniApp {
         guard let config = settings else {
             return shared
         }

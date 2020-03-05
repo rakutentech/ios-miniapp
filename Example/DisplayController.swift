@@ -3,9 +3,11 @@ import MiniApp
 
 class DisplayController: UIViewController {
     var miniAppInfo: MiniAppInfo?
+    var config: MiniAppSdkConfig?
 
     override func viewWillAppear(_ animated: Bool) {
         self.showProgressIndicator()
+        config = Config.getCurrent()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -13,7 +15,7 @@ class DisplayController: UIViewController {
             return
         }
         self.title = info.displayName
-        MiniApp.create(appInfo: info) { (result) in
+        MiniApp.create(config: config, appInfo: info) { (result) in
             switch result {
             case .success(let miniAppDisplay):
                 self.dismissProgressIndicator()
@@ -21,7 +23,7 @@ class DisplayController: UIViewController {
                 view.frame = self.view.bounds
                 self.view.addSubview(view)
             case .failure(let error):
-                self.displayErrorAlert(title: "Error", message: "Downloading failed, please try again later", dismissController: true)
+                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_download_message", comment: ""), dismissController: true)
                 print("Errored: ", error.localizedDescription)
             }
         }
