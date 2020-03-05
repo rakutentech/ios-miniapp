@@ -1,8 +1,6 @@
 /// Mini App Public API methods
 public class MiniApp: NSObject {
 
-
-
     /// Fetch the List of [MiniAppInfo] information.
     /// Error information will be returned if any problem while fetching from the backed
     ///
@@ -54,9 +52,9 @@ public class MiniAppSdkConfig {
     }
 
     public init(baseUrl: String? = nil,
-         rasAppId: String? = nil,
-         subscriptionKey: String? = nil,
-         hostAppVersion: String? = nil) {
+                rasAppId: String? = nil,
+                subscriptionKey: String? = nil,
+                hostAppVersion: String? = nil) {
         self.baseUrl = baseUrl
         self.rasAppId = rasAppId
         self.subscriptionKey = subscriptionKey

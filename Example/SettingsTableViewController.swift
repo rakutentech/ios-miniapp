@@ -1,13 +1,12 @@
 import UIKit
 
 class SettingsTableViewController: UITableViewController {
-    
+
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
     @IBOutlet weak var textFieldURL: UITextField!
     @IBOutlet weak var textFieldVersion: UITextField!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
