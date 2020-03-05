@@ -1,11 +1,3 @@
-//
-//  Config.swift
-//  MiniApp_Example
-//
-//  Created by Villa, PierreMichel on 2020/03/05.
-//  Copyright © 2020 CocoaPods. All rights reserved.
-//
-
 import UIKit
 import MiniApp
 
