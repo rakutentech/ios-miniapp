@@ -7,5 +7,5 @@
 "input_miniapp_title" = "Please enter Mini App ID";
 
 "wait_message" = "Please wait...";
-"OK" = "OK";
-"CANCEL" = "Cancel";
+"ok" = "OK";
+"cancel" = "Cancel";

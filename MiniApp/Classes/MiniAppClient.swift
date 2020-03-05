@@ -11,11 +11,19 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let listingApi: ListingApi
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
-    let environment: Environment
+    var environment: Environment
     weak var delegate: MiniAppDownloaderProtocol?
 
-    override init() {
+    convenience override init() {
+        self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
+    }
+
+    init(baseUrl: String?, rasAppId: String?, subscriptionKey: String?, hostAppVersion: String?) {
         self.environment = Environment()
+        self.environment.customUrl = baseUrl
+        self.environment.customAppId = rasAppId
+        self.environment.customSubscriptionKey = subscriptionKey
+        self.environment.customAppVersion = hostAppVersion
         self.listingApi = ListingApi(environment: self.environment)
         self.manifestApi = ManifestApi(environment: self.environment)
         self.downloadApi = DownloadApi(environment: self.environment)
@@ -84,14 +92,14 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         case 401, 403:
             guard let errorModel = ResponseDecoder.decode(decodeType: UnauthorizedData.self,
                                                           data: responseData) else {
-                                                            return NSError.unknownServerError(httpResponse: httpResponse)
+                return NSError.unknownServerError(httpResponse: httpResponse)
             }
             message = "\(errorModel.error): \(errorModel.errorDescription)"
         default:
             guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self,
                                                           data: responseData) else {
-                    return NSError.unknownServerError(httpResponse: httpResponse)
-                }
+                return NSError.unknownServerError(httpResponse: httpResponse)
+            }
             message = errorModel.message
         }
 
