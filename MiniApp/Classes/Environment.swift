@@ -22,6 +22,14 @@ internal class Environment {
         self.bundle = bundle
     }
 
+    convenience init(with config: MiniAppSdkConfig, bundle: EnvironmentProtocol = Bundle.main) {
+        self.init(bundle: bundle)
+        self.customUrl = config.baseUrl
+        self.customAppId = config.rasAppId
+        self.customSubscriptionKey = config.subscriptionKey
+        self.customAppVersion = config.hostAppVersion
+    }
+
     var appId: String {
         return value(for: customAppId, fallback: .applicationIdentifier)
     }

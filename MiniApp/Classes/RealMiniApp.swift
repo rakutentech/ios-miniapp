@@ -1,6 +1,5 @@
 internal class RealMiniApp {
     static let shared = RealMiniApp()
-    static var instances = [String: RealMiniApp]()
     var miniAppInfoFetcher: MiniAppInfoFetcher
     var miniAppClient: MiniAppClient
     var miniAppDownloader: MiniAppDownloader
@@ -22,13 +21,12 @@ internal class RealMiniApp {
     }
 
     class func shared(with settings: MiniAppSdkConfig?) -> RealMiniApp {
-        guard let config = settings else {
-            return shared
-        }
+        shared.update(with: settings)
+        return shared
+    }
 
-        let instance = instances[config.key] ?? RealMiniApp(with: settings)
-
-        return instance
+    func update(with settings: MiniAppSdkConfig?) {
+        self.miniAppClient.updateEnvironment(with: settings)
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {

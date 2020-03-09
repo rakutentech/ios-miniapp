@@ -18,15 +18,24 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
     }
 
-    init(baseUrl: String?, rasAppId: String?, subscriptionKey: String?, hostAppVersion: String?) {
-        self.environment = Environment()
-        self.environment.customUrl = baseUrl
-        self.environment.customAppId = rasAppId
-        self.environment.customSubscriptionKey = subscriptionKey
-        self.environment.customAppVersion = hostAppVersion
+
+
+    convenience init(baseUrl: String?, rasAppId: String?, subscriptionKey: String?, hostAppVersion: String?) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion))
+    }
+
+    init(with config: MiniAppSdkConfig) {
+        self.environment = Environment(with: config)
         self.listingApi = ListingApi(environment: self.environment)
         self.manifestApi = ManifestApi(environment: self.environment)
         self.downloadApi = DownloadApi(environment: self.environment)
+    }
+
+    func updateEnvironment(with config: MiniAppSdkConfig?) {
+        self.environment.customUrl = config?.baseUrl
+        self.environment.customAppId = config?.rasAppId
+        self.environment.customSubscriptionKey = config?.subscriptionKey
+        self.environment.customAppVersion = config?.hostAppVersion
     }
 
     lazy var session: SessionProtocol = {
