@@ -1,5 +1,4 @@
 internal class RealMiniApp {
-    static let shared = RealMiniApp()
     var miniAppInfoFetcher: MiniAppInfoFetcher
     var miniAppClient: MiniAppClient
     var miniAppDownloader: MiniAppDownloader
@@ -18,11 +17,6 @@ internal class RealMiniApp {
         self.miniAppStatus = MiniAppStatus()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer()
-    }
-
-    class func shared(with settings: MiniAppSdkConfig?) -> RealMiniApp {
-        shared.update(with: settings)
-        return shared
     }
 
     func update(with settings: MiniAppSdkConfig?) {

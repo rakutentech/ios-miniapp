@@ -19,7 +19,7 @@ class ViewController: UITableViewController {
 
     func fetchAppList() {
         showProgressIndicator {
-            MiniApp.list(config: self.config) { (result) in
+            MiniApp.shared(with:self.config).list() { (result) in
                 DispatchQueue.main.async {
                     self.refreshControl?.endRefreshing()
                 }
@@ -38,7 +38,7 @@ class ViewController: UITableViewController {
 
     func fetchAppInfo(for miniAppID: String) {
         self.showProgressIndicator {
-            MiniApp.info(config: self.config, miniAppId: miniAppID) { (result) in
+            MiniApp.shared(with:self.config).info(miniAppId: miniAppID) { (result) in
                 self.dismissProgressIndicator {
                     switch result {
                     case .success(let responseData):
