@@ -35,6 +35,41 @@ class MiniAppDownloaderTests: QuickSpec {
             }
         }
 
+        describe("old mini app folder will be deleted") {
+            context("when manifest returns list of valid URLs") {
+                it("will download all files and remove previous mini app path") {
+                    let mockAPIClient = MockAPIClient()
+                    let mockManifestDownloader = MockManifestDownloader()
+                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
+                    let responseString = """
+                      {
+                        "manifest": ["https://google.com/version/Mac/HelloWorld.txt"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    var isFolderExists: Bool?
+                    var isOldFolderExists: Bool?
+                    downloader.download(appId: "testApp", versionId: "1") { (_) in
+                        downloader.download(appId: "testApp", versionId: "2") { (result) in
+                            switch result {
+                            case .success:
+                                let miniAppDirectory = FileManager.getMiniAppDirectory(with: "testApp", and: "2")
+                                let oldMiniAppDirectory = FileManager.getMiniAppDirectory(with: "testApp", and: "1")
+                                var isDir: ObjCBool = true
+                                isOldFolderExists = FileManager.default.fileExists(atPath: oldMiniAppDirectory.path, isDirectory: &isDir)
+                                isFolderExists = FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)
+                            case .failure:
+                                break
+                            }
+                        }
+                    }
+
+                    expect(isFolderExists).toEventually(equal(true), timeout: 50)
+                    expect(isOldFolderExists).toEventually(equal(false), timeout: 50)
+                }
+            }
+        }
+
         describe("mini app files will be downloaded") {
             context("when valid manifest information is returned ") {
                 it("will return downloading failed error") {
