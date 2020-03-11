@@ -23,14 +23,23 @@ class MiniAppDownloader {
 
     func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId, and: versionId)
-        if miniAppStatus.isDownloaded(key: "\(appId)/\(versionId)") {
+        if miniAppStatus.isDownloaded(appId: appId, versionId: versionId) {
             completionHandler(.success(miniAppStoragePath))
             return
         }
         self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
             switch result {
             case .success(let responseData):
-                self.downloadMiniApp(urls: responseData.manifest, to: miniAppStoragePath, completionHandler: completionHandler)
+                self.downloadMiniApp(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
+                    switch downloadResult {
+                    case .success:
+                        self.cleanVersions(for: appId, differentFrom: versionId)
+                        fallthrough
+                    default:
+                        completionHandler(downloadResult)
+                    }
+
+                }
             case .failure(let error):
                 return completionHandler(.failure(error))
             }
@@ -56,7 +65,25 @@ class MiniAppDownloader {
             completionHandler(.success(miniAppPath))
         }
     }
+
+    private func cleanVersions(for appId: String, differentFrom versionId: String) {
+        let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId)
+
+        if let directoryContents = try? FileManager.default.contentsOfDirectory(at: miniAppStoragePath, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) {
+            for path in directoryContents {
+                if path.lastPathComponent != versionId {
+                    do {
+                        try FileManager.default.removeItem(at: path)
+                        miniAppStatus.setDownloadStatus(false,  appId: appId, versionId: versionId)
+                    } catch {
+                        print("WARNING: MiniAppDownloader could not delete previously downloaded versions for appId \(appId) (\(error))")
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 extension MiniAppDownloader: MiniAppDownloaderProtocol {
 
@@ -78,7 +105,7 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
 
     /// Delegate called whenever download task is completed/failed.
     /// This method will be called everytime any download file task is completed/failed
-    /// 
+    ///
     /// - Parameters:
     ///   - url: URL of the file which was downloaded
     ///   - error: Error information if the downloading is failed with error

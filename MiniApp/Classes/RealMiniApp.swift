@@ -33,7 +33,7 @@ internal class RealMiniApp {
                             completionHandler(.failure(NSError.downloadingFailed()))
                             return
                         }
-                        self.miniAppStatus.setDownloadStatus(value: true, key: "\(appInfo.id)/\(appInfo.version.versionId)")
+                        self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
                         completionHandler(.success(miniAppDisplayProtocol))
                     }
                 case .failure(let error):
