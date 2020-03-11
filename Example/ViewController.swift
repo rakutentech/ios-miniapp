@@ -19,7 +19,7 @@ class ViewController: UITableViewController {
 
     func fetchAppList() {
         showProgressIndicator {
-            MiniApp.shared(with: self.config).list() { (result) in
+            MiniApp.shared(with: self.config).list { (result) in
                 DispatchQueue.main.async {
                     self.refreshControl?.endRefreshing()
                 }
