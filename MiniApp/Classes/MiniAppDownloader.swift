@@ -70,20 +70,17 @@ class MiniAppDownloader {
         let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId)
 
         if let directoryContents = try? FileManager.default.contentsOfDirectory(at: miniAppStoragePath, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) {
-            for path in directoryContents {
-                if path.lastPathComponent != versionId {
-                    do {
-                        try FileManager.default.removeItem(at: path)
-                        miniAppStatus.setDownloadStatus(false,  appId: appId, versionId: versionId)
-                    } catch {
-                        print("WARNING: MiniAppDownloader could not delete previously downloaded versions for appId \(appId) (\(error))")
-                    }
+            for path in directoryContents where path.lastPathComponent != versionId {
+                do {
+                    try FileManager.default.removeItem(at: path)
+                    miniAppStatus.setDownloadStatus(false, appId: appId, versionId: versionId)
+                } catch {
+                    print("WARNING: MiniAppDownloader could not delete previously downloaded versions for appId \(appId) (\(error))")
                 }
             }
         }
     }
 }
-
 
 extension MiniAppDownloader: MiniAppDownloaderProtocol {
 
