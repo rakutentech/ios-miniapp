@@ -15,7 +15,7 @@ class DisplayController: UIViewController {
             return
         }
         self.title = info.displayName
-        MiniApp.shared(with:config).create(appInfo: info) { (result) in
+        MiniApp.shared(with: config).create(appInfo: info) { (result) in
             switch result {
             case .success(let miniAppDisplay):
                 self.dismissProgressIndicator()
