@@ -10,14 +10,13 @@ extension FileManager {
      * @param { versionId: String } - VersionID of the MiniApp.
      * @return { URL } - URL path to the MiniApp.
      */
-    class func getMiniAppDirectory(with appId: String, and versionId: String) -> URL {
+    class func getMiniAppVersionDirectory(with appId: String, and versionId: String) -> URL {
         return getMiniAppDirectory(with: appId).appendingPathComponent("\(versionId)/")
     }
 
     /*
      * Provide the MiniApp directory by appending the system
      * cache directory with AppID.
-     * @param { appId: String } - AppID of the MiniApp.
      * @param { versionId: String } - VersionID of the MiniApp.
      * @return { URL } - URL path to the MiniApp.
      */

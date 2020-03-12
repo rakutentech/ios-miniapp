@@ -23,7 +23,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     downloader.download(appId: "Apple", versionId: "Mac") { (result) in
                         switch result {
                         case .success:
-                            let miniAppDirectory = FileManager.getMiniAppDirectory(with: "Apple", and: "Mac")
+                            let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "Mac")
                             var isDir: ObjCBool = true
                             isFolderExists = FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)
                         case .failure:
@@ -53,8 +53,8 @@ class MiniAppDownloaderTests: QuickSpec {
                         downloader.download(appId: "testApp", versionId: "2") { (result) in
                             switch result {
                             case .success:
-                                let miniAppDirectory = FileManager.getMiniAppDirectory(with: "testApp", and: "2")
-                                let oldMiniAppDirectory = FileManager.getMiniAppDirectory(with: "testApp", and: "1")
+                                let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "testApp", and: "2")
+                                let oldMiniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "testApp", and: "1")
                                 var isDir: ObjCBool = true
                                 isOldFolderExists = FileManager.default.fileExists(atPath: oldMiniAppDirectory.path, isDirectory: &isDir)
                                 isFolderExists = FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)
@@ -91,7 +91,7 @@ class MiniAppDownloaderTests: QuickSpec {
                             break
                         }
                     }
-                    let miniAppPath = FileManager.getMiniAppDirectory(with: "Apple", and: "Mac")
+                    let miniAppPath = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "Mac")
                     let expectedPath = miniAppPath.appendingPathComponent("HelloWorld.txt")
                     let isFileExists = FileManager.default.fileExists(atPath: expectedPath.path)
                     expect(isFileExists).toEventually(equal(true), timeout: 50)

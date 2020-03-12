@@ -22,7 +22,7 @@ class MiniAppDownloader {
     }
 
     func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
-        let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId, and: versionId)
+        let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
         if miniAppStatus.isDownloaded(appId: appId, versionId: versionId) {
             completionHandler(.success(miniAppStoragePath))
             return
@@ -33,12 +33,14 @@ class MiniAppDownloader {
                 self.downloadMiniApp(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
                     switch downloadResult {
                     case .success:
-                        self.cleanVersions(for: appId, differentFrom: versionId)
+                        if let error = self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus) {
+                            print("WARNING: MiniAppDownloader could not delete previously downloaded versions for appId \(appId) (\(error))")
+                        }
+
                         fallthrough
                     default:
                         completionHandler(downloadResult)
                     }
-
                 }
             case .failure(let error):
                 return completionHandler(.failure(error))
@@ -63,21 +65,6 @@ class MiniAppDownloader {
         }
         if urlToDirectoryMap.isEmpty {
             completionHandler(.success(miniAppPath))
-        }
-    }
-
-    private func cleanVersions(for appId: String, differentFrom versionId: String) {
-        let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId)
-
-        if let directoryContents = try? FileManager.default.contentsOfDirectory(at: miniAppStoragePath, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) {
-            for path in directoryContents where path.lastPathComponent != versionId {
-                do {
-                    try FileManager.default.removeItem(at: path)
-                    miniAppStatus.setDownloadStatus(false, appId: appId, versionId: versionId)
-                } catch {
-                    print("WARNING: MiniAppDownloader could not delete previously downloaded versions for appId \(appId) (\(error))")
-                }
-            }
         }
     }
 }
