@@ -11,6 +11,7 @@
 		181DC083240F316D00FDF633 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 181DC085240F316D00FDF633 /* Localizable.strings */; };
 		18C59F2B241094F600F66632 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C59F2A241094F600F66632 /* SettingsTableViewController.swift */; };
 		18C59F2D2410ADE300F66632 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C59F2C2410ADE300F66632 /* Config.swift */; };
+		18D764392419D08600150A30 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C59F2C2410ADE300F66632 /* Config.swift */; };
 		32EBAB652329E85618B76E53 /* Pods_MiniApp_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D87B5609C299582369DA550 /* Pods_MiniApp_Example.framework */; };
 		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
 		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
@@ -429,6 +430,7 @@
 			files = (
 				3862EFA823EA5752004D518C /* MiniApp+URLRequestTests.swift in Sources */,
 				389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */,
+				18D764392419D08600150A30 /* Config.swift in Sources */,
 				38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */,
 				385C25CE23F2FEA300D61206 /* MiniAppViewTests.swift in Sources */,
 				38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */,

@@ -18,7 +18,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
     }
 
-    convenience init(baseUrl: String?, rasAppId: String?, subscriptionKey: String?, hostAppVersion: String?) {
+    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil) {
         self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion))
     }
 
