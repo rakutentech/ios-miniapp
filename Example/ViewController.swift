@@ -5,27 +5,40 @@ class ViewController: UITableViewController {
 
     var decodeResponse: [MiniAppInfo]?
     var currentMiniAppInfo: MiniAppInfo?
+    var config: MiniAppSdkConfig?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        showProgressIndicator()
+        fetchAppList()
+    }
 
-        MiniApp.list { (result) in
-            switch result {
-            case .success(let responseData):
-                self.decodeResponse = responseData
-                self.tableView.reloadData()
-                self.dismissProgressIndicator()
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.displayErrorAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: false)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        config = Config.getCurrent()
+    }
+
+    func fetchAppList() {
+        showProgressIndicator {
+            MiniApp.shared(with: self.config).list { (result) in
+                DispatchQueue.main.async {
+                    self.refreshControl?.endRefreshing()
+                }
+                switch result {
+                case .success(let responseData):
+                    self.decodeResponse = responseData
+                    self.tableView.reloadData()
+                    self.dismissProgressIndicator()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: false)
+                }
             }
         }
     }
 
     func fetchAppInfo(for miniAppID: String) {
         self.showProgressIndicator {
-            MiniApp.info(miniAppId: miniAppID) { (result) in
+            MiniApp.shared(with: self.config).info(miniAppId: miniAppID) { (result) in
                 self.dismissProgressIndicator {
                     switch result {
                     case .success(let responseData):
@@ -33,7 +46,7 @@ class ViewController: UITableViewController {
                         self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
                     case .failure(let error):
                         print(error.localizedDescription)
-                        self.displayErrorAlert(
+                        self.displayAlert(
                             title: NSLocalizedString("error_title", comment: ""),
                             message: NSLocalizedString("error_single_message", comment: ""),
                             dismissController: false)
@@ -43,13 +56,17 @@ class ViewController: UITableViewController {
         }
     }
 
+    @IBAction func refreshList(_ sender: UIRefreshControl) {
+        fetchAppList()
+    }
+
     @IBAction func actionShowMiniAppById() {
         self.displayTextFieldAlert(title: NSLocalizedString("input_miniapp_title", comment: "")) { (_, textField) in
             self.dismiss(animated: true) {
                 if let textField = textField, let miniAppID = textField.text, miniAppID.count > 0 {
                     self.fetchAppInfo(for: miniAppID)
                 } else {
-                    self.displayErrorAlert(
+                    self.displayAlert(
                         title: NSLocalizedString("error_title", comment: ""),
                         message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
                         dismissController: false)
@@ -83,7 +100,7 @@ class ViewController: UITableViewController {
             }
 
             guard let miniAppInfo = self.currentMiniAppInfo else {
-                self.displayErrorAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: false)
+                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: false)
                 return
             }
 
