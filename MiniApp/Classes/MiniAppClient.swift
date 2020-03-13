@@ -11,14 +11,29 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let listingApi: ListingApi
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
-    let environment: Environment
+    var environment: Environment
     weak var delegate: MiniAppDownloaderProtocol?
 
-    override init() {
-        self.environment = Environment()
+    convenience override init() {
+        self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
+    }
+
+    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion))
+    }
+
+    init(with config: MiniAppSdkConfig) {
+        self.environment = Environment(with: config)
         self.listingApi = ListingApi(environment: self.environment)
         self.manifestApi = ManifestApi(environment: self.environment)
         self.downloadApi = DownloadApi(environment: self.environment)
+    }
+
+    func updateEnvironment(with config: MiniAppSdkConfig?) {
+        self.environment.customUrl = config?.baseUrl
+        self.environment.customAppId = config?.rasAppId
+        self.environment.customSubscriptionKey = config?.subscriptionKey
+        self.environment.customAppVersion = config?.hostAppVersion
     }
 
     lazy var session: SessionProtocol = {
@@ -84,14 +99,14 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         case 401, 403:
             guard let errorModel = ResponseDecoder.decode(decodeType: UnauthorizedData.self,
                                                           data: responseData) else {
-                                                            return NSError.unknownServerError(httpResponse: httpResponse)
+                return NSError.unknownServerError(httpResponse: httpResponse)
             }
             message = "\(errorModel.error): \(errorModel.errorDescription)"
         default:
             guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self,
                                                           data: responseData) else {
-                    return NSError.unknownServerError(httpResponse: httpResponse)
-                }
+                return NSError.unknownServerError(httpResponse: httpResponse)
+            }
             message = errorModel.message
         }
 
