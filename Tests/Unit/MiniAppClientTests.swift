@@ -6,7 +6,7 @@ import Nimble
 // swiftlint:disable cyclomatic_complexity
 class MiniAppClientTests: QuickSpec {
     class MockSession: SessionProtocol {
-        func startDownloadTask(downloadUrl: URL) {}
+        func startDownloadTask(downloadUrl: URL) { }
 
         var data: Data?
         var error: Error?
@@ -149,12 +149,12 @@ class MiniAppClientTests: QuickSpec {
                 var testResult: ResponseData?
                 it("should return list of files of mini app") {
                     let mockSession = MockSession(data: ["id": "123",
-                                                         "versionTag": "1.0",
-                                                         "name": "Sample",
-                                                         "files": ["http://www.example.com"]])
+                                                      "versionTag": "1.0",
+                                                      "name": "Sample",
+                                                      "files": ["http://www.example.com"]])
                     let miniAppClient = MiniAppClient()
                     miniAppClient.session = mockSession
-                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                    miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
                         switch result {
                         case .success(let responseData):
                             testResult = responseData
@@ -173,7 +173,7 @@ class MiniAppClientTests: QuickSpec {
                     let mockSession = MockSession(data: nil, statusCode: 400)
                     let miniAppClient = MiniAppClient()
                     miniAppClient.session = mockSession
-                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                    miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
                         switch result {
                         case .success:
                             break
@@ -188,7 +188,7 @@ class MiniAppClientTests: QuickSpec {
                     let mockSession = MockSession(data: ["code": 404, "message": "error message"], statusCode: 404)
                     let miniAppClient = MiniAppClient()
                     miniAppClient.session = mockSession
-                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                    miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
                         switch result {
                         case .success:
                             break
@@ -203,7 +203,7 @@ class MiniAppClientTests: QuickSpec {
                     let mockSession = MockSession(data: ["error_code": 404, "message": "error message"], statusCode: 404)
                     let miniAppClient = MiniAppClient()
                     miniAppClient.session = mockSession
-                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
+                    miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
                         switch result {
                         case .success:
                             break
@@ -212,6 +212,74 @@ class MiniAppClientTests: QuickSpec {
                         }
                     }
                     expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: 2)
+                }
+            }
+        }
+        describe("override configuration at runtime") {
+            let applicationIdentifierKey = "RASApplicationIdentifier"
+            let versionKey = "CFBundleShortVersionString"
+            let subscriptionKey = "RASProjectSubscriptionKey"
+            let endpointKey = "RMAAPIEndpoint"
+            let bundle = Bundle.main as EnvironmentProtocol
+            let testURL = "http://dummy.url"
+            let testID = "testID"
+            let testKey = "testKey"
+            let testVersion = "testVersion"
+
+            context("when no configuration is provided") {
+                it("it uses plist configuration as environment") {
+                    let miniAppClient = MiniAppClient()
+
+                    expect(miniAppClient.environment.appId).to(equal(bundle.value(for: applicationIdentifierKey)))
+                    expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
+                    expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
+                    expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
+                }
+            }
+
+            context("when a configuration is provided") {
+                it("it uses configuration values as environment") {
+                    let miniAppClient = MiniAppClient(with: MiniAppSdkConfig(baseUrl: testURL, rasAppId: testID, subscriptionKey: testKey, hostAppVersion: testVersion))
+
+                    expect(miniAppClient.environment.appId).to(equal(testID))
+                    expect(miniAppClient.environment.appVersion).to(equal(testVersion))
+                    expect(miniAppClient.environment.subscriptionKey).to(equal(testKey))
+                    expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
+                }
+            }
+
+            context("when a custom parameter is provided") {
+                it("it uses provided custom parameters values as environment") {
+                    let miniAppClient = MiniAppClient(baseUrl: testURL, rasAppId: testID)
+
+                    expect(miniAppClient.environment.appId).to(equal(testID))
+                    expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
+                    expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
+                    expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
+                }
+            }
+
+            context("when we update configuration after creating client") {
+                it("it uses configuration values as environment") {
+                    let miniAppClient = MiniAppClient()
+                    miniAppClient.updateEnvironment(with: MiniAppSdkConfig(baseUrl: testURL, rasAppId: testID, subscriptionKey: testKey, hostAppVersion: testVersion))
+
+                    expect(miniAppClient.environment.appId).to(equal(testID))
+                    expect(miniAppClient.environment.appVersion).to(equal(testVersion))
+                    expect(miniAppClient.environment.subscriptionKey).to(equal(testKey))
+                    expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
+                }
+            }
+
+            context("when we provide nil configuration") {
+                it("it uses plist configuration as environment") {
+                    let miniAppClient = MiniAppClient(baseUrl: testURL, rasAppId: testID)
+                    miniAppClient.updateEnvironment(with: nil)
+
+                    expect(miniAppClient.environment.appId).to(equal(bundle.value(for: applicationIdentifierKey)))
+                    expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
+                    expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
+                    expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
                 }
             }
         }

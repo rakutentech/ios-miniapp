@@ -111,7 +111,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var testError: NSError?
-                    downloader.download(appId: "Apple", versionId: "Mac") { (result) in
+                    downloader.download(appId: "Apple", versionId: "MacFails") { (result) in
                         switch result {
                         case .success:
                             break

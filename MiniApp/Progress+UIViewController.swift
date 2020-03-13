@@ -20,11 +20,11 @@ extension UIViewController {
         })
     }
 
-    func displayErrorAlert(title: String, message: String, dismissController: Bool) {
+    func displayAlert(title: String, message: String, dismissController: Bool) {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.dismiss(animated: true, completion: {
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: { (_: UIAlertAction!) in
+                alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel, handler: { (_: UIAlertAction!) in
                     if dismissController {
                         self.dismiss(animated: true, completion: nil)
                     }
@@ -45,11 +45,11 @@ extension UIViewController {
                 }
             }
 
-            let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { (action) in
+            let okAction = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default) { (action) in
                 handler?(action, alert.textFields?.first)
             }
 
-            alert.addAction(UIAlertAction(title: NSLocalizedString("CANCEL", comment: ""), style: .cancel, handler: { (_) in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: { (_) in
                 self.dismiss(animated: true, completion: nil)
             }))
             alert.addAction(okAction)
