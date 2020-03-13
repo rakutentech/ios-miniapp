@@ -13,7 +13,7 @@ class UrlParserTests: QuickSpec {
                 }
             }
             context("when parseForFileDirectory is called with invalid url") {
-                it("will return nil") {
+                it("will return invalid path") {
                     let urlString = "https://www.example.com/mini-ver/rak0123/img/onload/file.png"
                     let path = UrlParser.parseForFileDirectory(with: urlString)
                     expect(path).toEventuallyNot(equal("img/onload/file.png"))
