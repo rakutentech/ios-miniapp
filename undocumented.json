@@ -15,6 +15,20 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/MiniAppSdkConfig.swift",
+      "line": 3,
+      "symbol": "MiniAppSdkConfig",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/MiniAppSdkConfig.swift",
+      "line": 33,
+      "symbol": "MiniAppSdkConfig.init(baseUrl:rasAppId:subscriptionKey:hostAppVersion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Models/MiniAppInfo.swift",
       "line": 4,
       "symbol": "MiniAppInfo.displayName",
