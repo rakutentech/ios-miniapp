@@ -3,7 +3,7 @@ struct ResponseDecoder {
         do {
             return try JSONDecoder().decode(decodeType, from: data)
         } catch let error {
-            print("Decoding Failed with Error: ", error)
+            Logger.e("Decoding Failed", error)
             return nil
         }
     }

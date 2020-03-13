@@ -34,7 +34,7 @@ class MiniAppDownloader {
                     switch downloadResult {
                     case .success:
                         if let error = self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus) {
-                            print("WARNING: MiniAppDownloader could not delete previously downloaded versions for appId \(appId) (\(error))")
+                            Logger.w("MiniAppDownloader could not delete previously downloaded versions for appId \(appId) (\(error))")
                         }
 
                         fallthrough
