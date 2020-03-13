@@ -29,7 +29,7 @@ public class MiniAppSdkConfig {
             }
         }
     }
-    
+
     public init(baseUrl: String? = nil,
                 rasAppId: String? = nil,
                 subscriptionKey: String? = nil,
