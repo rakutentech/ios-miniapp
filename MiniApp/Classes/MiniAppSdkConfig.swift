@@ -29,10 +29,7 @@ public class MiniAppSdkConfig {
             }
         }
     }
-    var key: String {
-        return "\(baseUrl ?? "noBaseUrl")-\(rasAppId ?? "noRasAppId")-\(subscriptionKey ?? "noSubscriptionKey")-\(hostAppVersion ?? "noHostAppVersion")"
-    }
-
+    
     public init(baseUrl: String? = nil,
                 rasAppId: String? = nil,
                 subscriptionKey: String? = nil,
