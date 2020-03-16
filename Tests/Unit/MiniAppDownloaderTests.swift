@@ -47,25 +47,16 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    var isFolderExists: Bool?
-                    var isOldFolderExists: Bool?
                     downloader.download(appId: "testApp", versionId: "1") { (_) in
-                        downloader.download(appId: "testApp", versionId: "2") { (result) in
-                            switch result {
-                            case .success:
-                                let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "testApp", and: "2")
-                                let oldMiniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "testApp", and: "1")
-                                var isDir: ObjCBool = true
-                                isOldFolderExists = FileManager.default.fileExists(atPath: oldMiniAppDirectory.path, isDirectory: &isDir)
-                                isFolderExists = FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)
-                            case .failure:
-                                break
-                            }
-                        }
+                        downloader.download(appId: "testApp", versionId: "2") { (_) in }
                     }
 
-                    expect(isFolderExists).toEventually(equal(true), timeout: 50)
-                    expect(isOldFolderExists).toEventually(equal(false), timeout: 50)
+                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "testApp", and: "2")
+                    let oldMiniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "testApp", and: "1")
+                    var isDir: ObjCBool = true
+
+                    expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: 50)
+                    expect(FileManager.default.fileExists(atPath: oldMiniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(false), timeout: 50)
                 }
             }
         }
