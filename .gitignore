@@ -1,0 +1,42 @@
+# Build
+public/css/main.css
+
+# Coverage reports
+coverage
+coverage.*
+
+# API keys and secrets
+.env
+
+# Dependency directory
+node_modules/
+
+# Ignore built files
+dist/
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# File System
+*.DS_Store
+Thumbs.db
+
+# Editor
+.vscode
+jsconfig.json
+/typings
+.idea
+*.iml
+
+# Ignore yarn.lock
+yarn.lock
+
+#Exclude tsc generated files
+js/*.map
+js/ts.js
