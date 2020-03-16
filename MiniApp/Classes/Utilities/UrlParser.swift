@@ -13,7 +13,7 @@ struct UrlParser {
             url.components(separatedBy: "version/").last?.components(separatedBy: "/").first,
             let directory = url.components(separatedBy: "\(versionId)/").last
         else {
-            Logger.e("MiniAppSDK: Failed parsing URL.")
+            MiniAppLogger.e("MiniAppSDK: Failed parsing URL.")
             return nil
         }
 

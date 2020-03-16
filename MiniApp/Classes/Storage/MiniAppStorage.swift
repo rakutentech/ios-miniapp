@@ -21,7 +21,7 @@ class MiniAppStorage {
                     status.setDownloadStatus(false, appId: appId, versionId: path.lastPathComponent)
                 }
             } catch {
-                 Logger.w("MiniAppDownloader could not delete previously downloaded versions for appId \(appId) (\(error))")
+                 MiniAppLogger.w("MiniAppDownloader could not delete previously downloaded versions for appId \(appId) (\(error))")
             }
         }
     }
