@@ -1,0 +1,25 @@
+{
+  "name": "js-miniapp",
+  "version": "1.0.0",
+  "description": "Mini App SDK for JavaScript",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "tslint": "^6.1.0",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rakutentech/js-miniapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rakutentech/js-miniapp/issues"
+  },
+  "homepage": "https://github.com/rakutentech/js-miniapp#readme"
+}
