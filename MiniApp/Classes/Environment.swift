@@ -44,7 +44,7 @@ internal class Environment {
 
     var baseUrl: URL? {
         guard let endpointUrlString = (self.customUrl ?? bundle.value(for: Key.endpoint.rawValue)) else {
-            Logger.e("Ensure RMAAPIEndpoint value in plist is valid")
+            MiniAppLogger.e("Ensure RMAAPIEndpoint value in plist is valid")
             return nil
         }
         return URL(string: "\(endpointUrlString)")

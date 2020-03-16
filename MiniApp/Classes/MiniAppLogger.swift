@@ -3,13 +3,13 @@ import os
 extension OSLog {
     static let sdk = OSLog(category: "Mini App SDK")
 
-    private convenience init(category: String, bundle: Bundle = Bundle(for: Logger.self)) {
+    private convenience init(category: String, bundle: Bundle = Bundle(for: MiniAppLogger.self)) {
         let identifier = bundle.infoDictionary?["CFBundleIdentifier"] as? String
         self.init(subsystem: (identifier ?? "").appending(".logs"), category: category)
     }
 }
 
-internal class Logger {
+internal class MiniAppLogger {
     /// Debug
     class func d(_ message: String) {
         #if DEBUG
