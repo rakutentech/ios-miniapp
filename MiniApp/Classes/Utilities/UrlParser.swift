@@ -12,7 +12,7 @@ struct UrlParser {
      * @return { String } - The file directory after removing the base URL.
      */
     static func getFileStoragePath(from url: String) -> String? {
-        if (url.contains(separatorKey)) {
+        if url.contains(separatorKey) {
             var pathComponents: [String] = url.components(separatedBy: separatorKey)
             guard let path: String = pathComponents.last, !path.isEmpty else {
                 MiniAppLogger.e("MiniAppSDK: Failed parsing URL.")
