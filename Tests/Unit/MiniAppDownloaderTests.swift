@@ -15,7 +15,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/Mac/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/Mac/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -35,7 +35,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/Mac/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/Mac/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -61,8 +61,8 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/Mac/HelloWorld.txt",
-                                    "https://google.com/map-published/Mac/Testing.txt"]
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/Mac/HelloWorld.txt",
+                                    "https://google.com/map-published/min-abc/ver-abc/Mac/Testing.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -88,7 +88,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["http://example.com/map-published/Mac/Testing.txt"]
+                        "manifest": ["http://example.com/map-published/min-abc/ver-abc/Mac/Testing.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
