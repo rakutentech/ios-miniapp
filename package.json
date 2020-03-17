@@ -5,20 +5,26 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
     "@types/node": "^10.0.3",
+    "chai": "^4.2.0",
     "gts": "^1.1.2",
     "jsdoc": "^3.6.3",
+    "mocha": "^7.1.0",
+    "sinon": "^9.0.1",
+    "ts-node": "^8.6.2",
     "tslint": "^6.1.0",
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
     "fix": "gts fix",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
+    "test": "mocha -r ts-node/register tests/**/*.spec.ts",
     "posttest": "npm run check"
   },
   "repository": {
