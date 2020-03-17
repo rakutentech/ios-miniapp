@@ -22,15 +22,24 @@ class MiniAppDownloader {
     }
 
     func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
-        let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId, and: versionId)
-        if miniAppStatus.isDownloaded(key: "\(appId)/\(versionId)") {
+        let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+        if miniAppStatus.isDownloaded(appId: appId, versionId: versionId) {
             completionHandler(.success(miniAppStoragePath))
             return
         }
         self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
             switch result {
             case .success(let responseData):
-                self.downloadMiniApp(urls: responseData.manifest, to: miniAppStoragePath, completionHandler: completionHandler)
+                self.downloadMiniApp(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
+                    switch downloadResult {
+                    case .success:
+                        self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
+
+                        fallthrough
+                    default:
+                        completionHandler(downloadResult)
+                    }
+                }
             case .failure(let error):
                 return completionHandler(.failure(error))
             }
@@ -78,7 +87,7 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
 
     /// Delegate called whenever download task is completed/failed.
     /// This method will be called everytime any download file task is completed/failed
-    /// 
+    ///
     /// - Parameters:
     ///   - url: URL of the file which was downloaded
     ///   - error: Error information if the downloading is failed with error

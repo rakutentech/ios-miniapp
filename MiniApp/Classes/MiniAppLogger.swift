@@ -34,4 +34,22 @@ internal class MiniAppLogger {
         os_log("%@", log: OSLog.sdk, type: .error, message)
         #endif
     }
+
+    /// Error
+    class func e(_ message: String, _ error: Error) {
+        #if DEBUG
+        e("\(message)\nError: \(error)")
+        #else
+        os_log("%@", log: OSLog.sdk, type: .error, message)
+        #endif
+    }
+
+    /// Warning
+    class func w(_ message: String) {
+        #if DEBUG
+        print("⚠️ \(message)")
+        #else
+        os_log("%@", log: OSLog.sdk, type: .debug, message)
+        #endif
+    }
 }
