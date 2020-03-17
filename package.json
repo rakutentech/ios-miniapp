@@ -1,6 +1,6 @@
 {
   "name": "js-miniapp",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Mini App SDK for JavaScript",
   "main": "index.js",
   "dependencies": {},
@@ -25,7 +25,7 @@
     "url": "git+https://github.com/rakutentech/js-miniapp.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mini App SDK Team",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rakutentech/js-miniapp/issues"
