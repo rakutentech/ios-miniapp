@@ -12,6 +12,7 @@ coverage.*
 node_modules/
 
 # Ignore built files
+build/
 dist/
 
 # Logs
