@@ -19,18 +19,10 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    var isFolderExists: Bool?
-                    downloader.download(appId: "Apple", versionId: "Mac") { (result) in
-                        switch result {
-                        case .success:
-                            let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "Mac")
-                            var isDir: ObjCBool = true
-                            isFolderExists = FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)
-                        case .failure:
-                            break
-                        }
-                    }
-                    expect(isFolderExists).toEventually(equal(true), timeout: 50)
+                    downloader.download(appId: "Apple", versionId: "Mac") { (_) in }
+                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "Mac")
+                    var isDir: ObjCBool = true
+                    expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: 50)
                 }
             }
         }
@@ -84,8 +76,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     }
                     let miniAppPath = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "Mac")
                     let expectedPath = miniAppPath.appendingPathComponent("HelloWorld.txt")
-                    let isFileExists = FileManager.default.fileExists(atPath: expectedPath.path)
-                    expect(isFileExists).toEventually(equal(true), timeout: 50)
+                    expect(FileManager.default.fileExists(atPath: expectedPath.path)).toEventually(equal(true), timeout: 50)
                 }
             }
         }
