@@ -2,7 +2,8 @@
   "name": "js-miniapp",
   "version": "0.1.0",
   "description": "Mini App SDK for JavaScript",
-  "main": "index.js",
+  "main": "build/index.js",
+  "types": "build",
   "dependencies": {},
   "devDependencies": {
     "@types/chai": "^4.2.11",
@@ -21,18 +22,20 @@
   "scripts": {
     "check": "gts check",
     "clean": "gts clean",
+    "precompile": "npm run clean",
     "compile": "tsc -p .",
+    "build": "npm run clean && npm run compile",
     "fix": "gts fix",
-    "prepare": "npm run compile",
     "pretest": "npm run compile",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
-    "posttest": "npm run check"
+    "posttest": "npm run check",
+    "coverage": "nyc npm test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rakutentech/js-miniapp.git"
   },
-  "keywords": [],
+  "keywords": [ "rakuten", "mini apps", "apps", "typescript", "mocha"],
   "author": "Mini App SDK Team",
   "license": "ISC",
   "bugs": {
