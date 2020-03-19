@@ -49,7 +49,7 @@ class MiniAppDownloader {
     private func downloadMiniApp(urls: [String], to miniAppPath: URL, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         self.miniAppClient.delegate = self
         for url in urls {
-            guard let fileDirectory = UrlParser.parseForFileDirectory(with: url) else {
+            guard let fileDirectory = UrlParser.getFileStoragePath(from: url) else {
                 completionHandler(.failure(NSError.downloadingFailed()))
                 return
             }

@@ -15,7 +15,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/version/Mac/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -35,7 +35,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/version/Mac/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -54,15 +54,15 @@ class MiniAppDownloaderTests: QuickSpec {
         }
 
         describe("mini app files will be downloaded") {
-            context("when valid manifest information is returned ") {
+            context("when valid manifest information is returned") {
                 it("will return downloading failed error") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/version/Mac/HelloWorld.txt",
-                                    "https://google.com/version/Mac/Testing.txt"]
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt",
+                                    "https://google.com/map-published/min-abc/ver-abc/Testing.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -80,6 +80,7 @@ class MiniAppDownloaderTests: QuickSpec {
                 }
             }
         }
+
         describe("mini app downloader fails") {
             context("when invalid urls is returned") {
                 it("will return error") {
@@ -88,7 +89,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["http://example.com/version/Mac/Testing.txt"]
+                        "manifest": ["http://example.com/map-published/min-abc/ver-abc/Mac/Testing.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -105,6 +106,7 @@ class MiniAppDownloaderTests: QuickSpec {
                 }
             }
         }
+
         describe("mini app download") {
             context("when invalid manifest information is returned") {
                 it("will return error") {
