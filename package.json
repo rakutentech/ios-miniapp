@@ -22,13 +22,11 @@
   "scripts": {
     "check": "gts check",
     "clean": "gts clean",
-    "precompile": "npm run clean",
     "compile": "tsc -p .",
-    "build": "npm run clean && npm run compile",
+    "prebuild": "npm run clean && npm run check",
+    "build": "tsc -p .",
     "fix": "gts fix",
-    "pretest": "npm run compile",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
-    "posttest": "npm run check",
     "coverage": "nyc npm test"
   },
   "repository": {
