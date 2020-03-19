@@ -11,12 +11,12 @@
     "@types/node": "^10.0.3",
     "chai": "^4.2.0",
     "gts": "^1.1.2",
-    "jsdoc": "^3.6.3",
     "mocha": "^7.1.0",
     "nyc": "^15.0.0",
     "sinon": "^9.0.1",
     "ts-node": "^8.6.2",
     "tslint": "^6.1.0",
+    "typedoc": "^0.17.1",
     "typescript": "^3.8.3"
   },
   "scripts": {
@@ -27,13 +27,20 @@
     "build": "tsc -p .",
     "fix": "gts fix",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
-    "coverage": "nyc npm test"
+    "coverage": "nyc npm test",
+    "docs": "typedoc --out docs src"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rakutentech/js-miniapp.git"
   },
-  "keywords": [ "rakuten", "mini apps", "apps", "typescript", "mocha"],
+  "keywords": [
+    "rakuten",
+    "mini apps",
+    "apps",
+    "typescript",
+    "mocha"
+  ],
   "author": "Mini App SDK Team",
   "license": "ISC",
   "bugs": {

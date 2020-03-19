@@ -1,1 +1,2 @@
-// Add code here for index.ts
+/** This is a description of the foo function. */
+function foo() {}
