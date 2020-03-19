@@ -6,24 +6,11 @@ class DisplayerTests: QuickSpec {
 
     override func spec() {
         describe("get mini app view") {
-            context("when valid URL of a mini app is passed") {
+            context("when mini app id is passed") {
                 it("will return MiniAppView") {
                     let miniAppDisplayer = Displayer()
-                    guard let testFileURL = MockFile.createTestFile(fileName: "MiniApp.txt") else {
-                        return
-                    }
-                    let miniAppView = miniAppDisplayer.getMiniAppView(miniAppPath: testFileURL)
+                    let miniAppView = miniAppDisplayer.getMiniAppView(miniAppId: "miniappid-testing")
                     expect(miniAppView).toEventually(beAnInstanceOf(MiniAppView.self))
-                }
-            }
-            context("when invalid file URL of a mini app is passed") {
-                it("will return nil") {
-                    let miniAppDisplayer = Displayer()
-                    guard let url = URL(string: "https://example.com") else {
-                        return
-                    }
-                    let miniAppView = miniAppDisplayer.getMiniAppView(miniAppPath: url)
-                    expect(miniAppView).toEventually(beNil())
                 }
             }
         }

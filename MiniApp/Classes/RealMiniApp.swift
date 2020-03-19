@@ -36,7 +36,7 @@ internal class RealMiniApp {
             switch result {
             case .success(let miniAppPath):
                 DispatchQueue.main.async {
-                    guard let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppPath: miniAppPath) else {
+                    guard let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id) else {
                         completionHandler(.failure(NSError.downloadingFailed()))
                         return
                     }
