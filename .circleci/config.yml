@@ -44,10 +44,39 @@ jobs: # a collection of steps
           paths:
             - build/
 
+publish-sdk:
+    working_directory: ~/mini-js-sdk
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: publish to npm
+          command: | 
+            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+            npm publish 
+      - run:
+          name: Publish Documentation
+          command: |
+            set -e
+            npm run docs
+            if [[ ! $CIRCLE_TAG == *"-"* ]]; then
+              git checkout gh-pages
+              cp -R docs/. ./docs
+              git add docs _versions
+              git config user.name "CI Publisher"
+              git config user.email "dev-opensource@mail.rakuten.com"
+              git commit -m "Publish documentation for $CIRCLE_TAG"
+              git push origin gh-pages
+            else
+              echo "Documentation not published for snapshot version"
+            fi
 
 workflows:
   version: 2
-  build:
+  build-and-release:
     jobs:
       - build:
           filters:
@@ -55,3 +84,20 @@ workflows:
               only: /^v.*/
             branches:
               only: /.*/
+      - release-verification:
+          type: approval
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - publish-sdk:
+          requires:
+            - release-verification
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
