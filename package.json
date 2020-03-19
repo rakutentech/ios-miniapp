@@ -24,7 +24,7 @@
     "clean": "gts clean",
     "compile": "tsc -p .",
     "prebuild": "npm run clean && npm run check",
-    "build": "tsc -p .",
+    "build": "npm run clean && npm run check && tsc -p . && npm run test",
     "fix": "gts fix",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
     "coverage": "nyc npm test",

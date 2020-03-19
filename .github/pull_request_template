@@ -7,4 +7,4 @@ Add links to github/jira issues, design documents and other relevant resources (
 
 # Checklist
 - [ ] I wrote/updated tests for new/changed code
-- [ ] I ran `npm run check` without issues
+- [ ] I ran `npm run build` without issues
