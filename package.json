@@ -42,7 +42,7 @@
     "mocha"
   ],
   "author": "Mini App SDK Team",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/rakutentech/js-miniapp/issues"
   },
