@@ -1,14 +1,18 @@
 import WebKit
 
 /// This class helps to handle Custom URL schemes that is Registered in MiniAppWebView class
-class URLSchemeHandler : NSObject, WKURLSchemeHandler {
+class URLSchemeHandler: NSObject, WKURLSchemeHandler {
 
     func webView(_ webView: WKWebView, start urlSchemeTask: WKURLSchemeTask) {
-        guard let loadRequestUrl = webView.url else { return }
 
         if urlSchemeTask.request.url != nil {
             do {
-                guard let miniAppFilePath = getMiniAppFilePath(webViewRequestUrl: loadRequestUrl, schemeRequestUrl: urlSchemeTask.request.url?.absoluteURL) else {
+                guard let scheme = webView.url?.scheme else {
+                    return
+                }
+                let miniAppId = getAppIdFromScheme(scheme: scheme)
+                let relativeFilePath = getFileName(url: urlSchemeTask.request.url)
+                guard let miniAppFilePath = getFilePath(relativeFilePath: relativeFilePath, appId: miniAppId) else {
                     return
                 }
                 let data = try Data(contentsOf: miniAppFilePath)
@@ -16,7 +20,7 @@ class URLSchemeHandler : NSObject, WKURLSchemeHandler {
                 urlSchemeTask.didReceive(data)
                 urlSchemeTask.didFinish()
             } catch let error as NSError {
-                print("Error: ",error)
+                print("Error: ", error)
             }
         }
     }
@@ -32,28 +36,27 @@ class URLSchemeHandler : NSObject, WKURLSchemeHandler {
         return scheme.replacingOccurrences(of: Constants.miniAppSchemePrefix, with: "")
     }
 
-    /// Returns file path from the Mini App folder for a requested URL
-    /// - Parameter url: Custom URL scheme that is loaded as URLRequest in WebView
-    func getMiniAppFilePath(webViewRequestUrl: URL, schemeRequestUrl: URL?) -> URL? {
-        guard let scheme = schemeRequestUrl?.scheme else {
+    /// Returns file name from the given URL
+    /// - Parameter url: URL
+    func getFileName(url: URL?) -> String {
+        /*
+         Only for the first request i.e initial load request from WebView, url.path
+         will be empty
+         */
+        guard let fileName = url?.path, !fileName.isEmpty else {
+            return Constants.rootFileName
+        }
+        return fileName
+    }
+
+    /// Method to get the absolute file path using relative file path and appID
+    /// - Parameters:
+    ///   - relativeFilePath: Relative file path for a request URL
+    ///   - appId: Mini app ID
+    func getFilePath(relativeFilePath: String, appId: String) -> URL? {
+        guard let miniAppPath = FileManager.getMiniAppVersionDirectory(usingAppId: appId) else {
             return nil
         }
-        let urlSchemeSeparator = scheme + "://"
-        let miniAppPath = FileManager.getMiniAppVersionDirectory(usingAppId: getAppIdFromScheme(scheme: scheme))
-
-        // Only for the first time, webViewRequestUrl and schemeRequestUrl will be same when index.html is loaded.
-        // webViewRequestUrl & schemeRequestUrl - miniapp.MINI_APP_ID://index.html
-        // For the subsequent request, webViewRequestUrl will remain the same but schemeRequestUrl will be for respective local files inside mini app folder
-        if(webViewRequestUrl == schemeRequestUrl) {
-            guard let queryParameter = schemeRequestUrl?.absoluteString.replacingOccurrences(of: urlSchemeSeparator, with: "") else {
-                return nil
-            }
-            return miniAppPath?.appendingPathComponent(queryParameter)
-        } else {
-            guard let queryParameter = schemeRequestUrl?.absoluteString.replacingOccurrences(of: webViewRequestUrl.absoluteString, with: "") else {
-                return nil
-            }
-            return miniAppPath?.appendingPathComponent(queryParameter)
-        }
+        return miniAppPath.appendingPathComponent(relativeFilePath)
     }
 }

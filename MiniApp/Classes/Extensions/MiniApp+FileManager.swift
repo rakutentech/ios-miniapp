@@ -28,8 +28,7 @@ extension FileManager {
 
         return cachePath.appendingPathComponent(miniAppDirectory)
     }
-    
-    
+
     /// Returns the Mini App version directory for the given app Id
     /// - Parameter appId: { appId: String } - AppID of the MiniApp.
     /// - Returns: URL path to the MiniApp.
