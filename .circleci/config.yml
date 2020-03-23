@@ -28,7 +28,7 @@ jobs: # a collection of steps
           name: test
           command: npm run test
       - run: # run coverage report
-          name: code-coverage
+          name: code coverage
           command: npm run coverage
       - store_artifacts: # special step to save test results as as artifact
           # Upload test summary for display in Artifacts
