@@ -30,6 +30,9 @@ jobs: # a collection of steps
       - run: # run coverage report
           name: code coverage
           command: npm run coverage
+      - run: # upload coverage report
+          name: upload coverage
+          command: bash <(curl -s https://codecov.io/bash)
       - store_artifacts: # special step to save test results as as artifact
           # Upload test summary for display in Artifacts
           path: test-results
