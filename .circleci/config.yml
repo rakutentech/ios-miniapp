@@ -32,13 +32,13 @@ jobs: # a collection of steps
           command: npm run coverage
       - store_artifacts: # special step to save test results as as artifact
           # Upload test summary for display in Artifacts
-          path: test-results.xml
+          path: test-results
           prefix: tests
       - store_artifacts: # for display in Artifacts
           path: coverage
           prefix: coverage
       - store_test_results: # for display in Test Summary
-          path: test-results.xml
+          path: test-results
       - persist_to_workspace:
           root: ~/mini-js-sdk
           paths:
