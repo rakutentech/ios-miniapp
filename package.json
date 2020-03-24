@@ -12,14 +12,15 @@
     "@types/node": "^10.0.3",
     "chai": "^4.2.0",
     "gts": "^1.1.2",
-    "mocha": "^7.1.0",
+    "mocha": "^7.1.1",
     "mocha-junit-reporter": "^1.23.3",
     "nyc": "^15.0.0",
     "sinon": "^9.0.1",
     "source-map-support": "^0.5.16",
     "ts-node": "^8.8.1",
     "tslint": "^6.1.0",
-    "typedoc": "^0.17.1",
+    "typedoc": "^0.17.3",
+    "typedoc-plugin-markdown": "^2.2.17",
     "typescript": "^3.8.3"
   },
   "scripts": {
@@ -31,7 +32,8 @@
     "fix": "gts fix",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/mocha/results.xml",
     "coverage": "nyc npm test",
-    "docs": "typedoc --out docs src"
+    "version": "npx -c 'echo $npm_package_version'",
+    "docs": "chmod +x scripts/docs.sh && scripts/docs.sh"
   },
   "repository": {
     "type": "git",

@@ -6,9 +6,6 @@ jobs: # a collection of steps
       - image: circleci/node:10.16.3
     steps:
       - checkout
-      - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
@@ -47,7 +44,7 @@ jobs: # a collection of steps
           paths:
             - build/
 
-publish-sdk:
+  publish-sdk:
     working_directory: ~/mini-js-sdk
     docker:
       - image: circleci/node:10.16.3
@@ -67,7 +64,8 @@ publish-sdk:
             npm run docs
             if [[ ! $CIRCLE_TAG == *"-"* ]]; then
               git checkout gh-pages
-              cp -R docs/. ./docs
+              cp -R publishableDocs/docs/. ./docs
+              cp -R publishableDocs/_versions. ./_versions
               git add docs _versions
               git config user.name "CI Publisher"
               git config user.email "dev-opensource@mail.rakuten.com"
