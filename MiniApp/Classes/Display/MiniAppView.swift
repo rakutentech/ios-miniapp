@@ -4,8 +4,8 @@ public class MiniAppView: UIView, MiniAppDisplayProtocol {
 
     private var webView: WKWebView
 
-    init?(filePath: URL) {
-        guard let miniAppWebView = MiniAppWebView(filePath: filePath) else {
+    init?(miniAppId: String) {
+        guard let miniAppWebView = MiniAppWebView(miniAppId: miniAppId) else {
             return nil
         }
         webView = miniAppWebView

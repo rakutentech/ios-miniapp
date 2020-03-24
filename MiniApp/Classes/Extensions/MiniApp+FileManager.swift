@@ -28,4 +28,18 @@ extension FileManager {
 
         return cachePath.appendingPathComponent(miniAppDirectory)
     }
+
+    /// Returns the Mini App version directory for the given app Id
+    /// - Parameter appId: { appId: String } - AppID of the MiniApp.
+    /// - Returns: URL path to the MiniApp.
+    class func getMiniAppVersionDirectory(usingAppId id: String) -> URL? {
+        do {
+            let miniAppDirectory = getMiniAppDirectory(with: id)
+            let versionDirectory = try FileManager.default.contentsOfDirectory(at: miniAppDirectory, includingPropertiesForKeys: [URLResourceKey.isDirectoryKey], options: [.skipsHiddenFiles])[0]
+            return versionDirectory
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
 }
