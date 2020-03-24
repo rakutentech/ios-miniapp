@@ -35,6 +35,12 @@
     "version": "npx -c 'echo $npm_package_version'",
     "docs": "chmod +x scripts/docs.sh && scripts/docs.sh"
   },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "package.json",
+    "build/src/"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rakutentech/js-miniapp.git"
