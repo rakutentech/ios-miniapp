@@ -2,8 +2,8 @@
   "name": "js-miniapp",
   "version": "0.1.0",
   "description": "Mini App SDK for JavaScript",
-  "main": "build/index.js",
-  "types": "build",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
   "dependencies": {},
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
