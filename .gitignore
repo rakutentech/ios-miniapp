@@ -7,9 +7,6 @@ coverage
 coverage.*
 .nyc_output/
 
-#Test results
-test-results/
-
 # API keys and secrets
 .env
 
@@ -20,6 +17,9 @@ node_modules/
 build/
 dist/
 publishableDocs/
+
+# Tests
+test-results/
 
 # Logs
 logs
