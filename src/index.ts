@@ -1,1 +1,1 @@
-export {MiniApp} from './miniapp'
+export { MiniApp } from './miniapp';
