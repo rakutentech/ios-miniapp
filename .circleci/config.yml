@@ -1,106 +1,21 @@
 version: 2
-jobs: # a collection of steps
-  build: # runs not using Workflows must have a `build` job as entry point
-    working_directory: ~/mini-js-sdk # directory where steps will run
-    docker: # run the steps with Docker
-      - image: circleci/node:10.16.3
-    steps:
-      - checkout
-      - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-      - run:
-          name: install-npm-wee
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
-      - run: #run lint and check for formatting
-          name: check
-          command: npm run check
-      - run: #compile the code
-          name: compile
-          command: npm run compile
-      - run: # run tests
-          name: test
-          command: npm run test
-      - run: # run coverage report
-          name: code coverage
-          command: npm run coverage
-      - run: # upload coverage report
-          name: upload coverage
-          command: bash <(curl -s https://codecov.io/bash)
-      - store_artifacts: # special step to save test results as as artifact
-          # Upload test summary for display in Artifacts
-          path: test-results
-          prefix: tests
-      - store_artifacts: # for display in Artifacts
-          path: coverage
-          prefix: coverage
-      - store_test_results: # for display in Test Summary
-          path: test-results
-      - persist_to_workspace:
-          root: ~/mini-js-sdk
-          paths:
-            - build/
 
-publish-sdk:
-    working_directory: ~/mini-js-sdk
+## Empty config file to prevent CircleCI from running when commits are pushed to gh-pages branch
+jobs:
+  build:
     docker:
       - image: circleci/node:10.16.3
     steps:
-      - checkout
-      - attach_workspace:
-          at: ./
       - run:
-          name: publish to npm
-          command: | 
-            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-            npm publish 
-      - run:
-          name: Publish Documentation
-          command: |
-            set -e
-            npm run docs
-            if [[ ! $CIRCLE_TAG == *"-"* ]]; then
-              git checkout gh-pages
-              cp -R docs/. ./docs
-              git add docs _versions
-              git config user.name "CI Publisher"
-              git config user.email "dev-opensource@mail.rakuten.com"
-              git commit -m "Publish documentation for $CIRCLE_TAG"
-              git push origin gh-pages
-            else
-              echo "Documentation not published for snapshot version"
-            fi
+          command: echo ""
 
 workflows:
   version: 2
-  build-and-release:
+
+  build:
     jobs:
       - build:
           filters:
-            tags:
-              only: /^v.*/
             branches:
-              only: /.*/
-      - release-verification:
-          type: approval
-          requires:
-            - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - publish-sdk:
-          requires:
-            - release-verification
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+              ignore:
+                - gh-pages

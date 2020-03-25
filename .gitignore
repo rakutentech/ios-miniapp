@@ -1,10 +1,14 @@
 # Build
 public/
+*.tgz
 
 # Coverage reports
 coverage
 coverage.*
 .nyc_output/
+
+#Test results
+test-results/
 
 # API keys and secrets
 .env
@@ -15,10 +19,7 @@ node_modules/
 # Ignore built files
 build/
 dist/
-docs/
-
-# Tests
-test-results/
+publishableDocs/
 
 # Logs
 logs
