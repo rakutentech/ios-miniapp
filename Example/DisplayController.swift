@@ -2,7 +2,7 @@ import UIKit
 import MiniApp
 
 class DisplayController: UIViewController, MiniAppMessageProtocol {
-    
+
     var miniAppInfo: MiniAppInfo?
     var config: MiniAppSdkConfig?
 
