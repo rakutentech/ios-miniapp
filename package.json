@@ -4,6 +4,7 @@
   "description": "Mini App SDK for JavaScript",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
+  "dependencies": {},
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
@@ -27,12 +28,12 @@
     "clean": "gts clean",
     "compile": "tsc -p .",
     "prebuild": "npm run clean && npm run check",
-    "build": "npm run prebuild && tsc -p . && npm run test",
+    "build": "npm run clean && npm run check && tsc -p . && npm run test",
     "fix": "gts fix",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/mocha/results.xml",
     "coverage": "nyc npm test",
     "version": "npx -c 'echo $npm_package_version'",
-    "docs": "chmod +x scripts/docs.sh && scripts/docs.sh"
+    "docs": "scripts/docs.sh"
   },
   "files": [
     "README.md",
@@ -56,6 +57,5 @@
   "bugs": {
     "url": "https://github.com/rakutentech/js-miniapp/issues"
   },
-  "homepage": "https://github.com/rakutentech/js-miniapp#readme",
-  "dependencies": {}
+  "homepage": "https://github.com/rakutentech/js-miniapp#readme"
 }
