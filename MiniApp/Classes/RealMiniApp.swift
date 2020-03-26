@@ -31,7 +31,7 @@ internal class RealMiniApp {
         return miniAppInfoFetcher.getInfo(miniAppId: miniAppId, apiClient: self.miniAppClient, completionHandler: completionHandler)
     }
 
-    func createMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {
+    func createMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol) {
         return miniAppDownloader.download(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
             switch result {
             case .success(let miniAppPath):
