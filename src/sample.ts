@@ -1,4 +1,3 @@
 import { MiniApp } from './miniapp.js';
 
-let instance = new MiniApp.MiniAppImpl();
-console.log(`Unique Id: ${instance.getUniqueId()}`)
+console.log(`Unique Id: ${new MiniApp.MiniAppImpl().getUniqueId()}`)
