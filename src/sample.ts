@@ -1,3 +1,4 @@
-import { MiniApp } from './miniapp.js';
+// tslint:disable-next-line:variable-name
+const MiniApp = require('./miniapp');
 
-console.log(`Unique Id: ${new MiniApp.MiniAppImpl().getUniqueId()}`);
+console.log(`Unique Id: ${MiniApp.getUniqueId()}`);
