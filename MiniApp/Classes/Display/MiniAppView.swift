@@ -4,7 +4,7 @@ public class MiniAppView: UIView, MiniAppDisplayProtocol {
 
     private var webView: WKWebView
 
-    init?(miniAppId: String) {
+    init?(miniAppId: String, messageInterface: MiniAppMessageProtocol) {
         guard let miniAppWebView = MiniAppWebView(miniAppId: miniAppId) else {
             return nil
         }

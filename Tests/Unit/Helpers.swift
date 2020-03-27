@@ -148,3 +148,12 @@ class MockFile {
         return fullURL
     }
 }
+
+class MockMessageInterface: MiniAppMessageProtocol {
+    func getUniqueId() -> String {
+        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+            return ""
+        }
+        return deviceId
+    }
+}

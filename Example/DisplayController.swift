@@ -31,6 +31,9 @@ class DisplayController: UIViewController, MiniAppMessageProtocol {
     }
 
     func getUniqueId() -> String {
-        return ""
+        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+            return ""
+        }
+        return deviceId
     }
 }

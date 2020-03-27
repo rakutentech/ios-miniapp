@@ -8,7 +8,8 @@ class RealMiniAppViewTests: QuickSpec {
         describe("Mini App view") {
             context("when initialized with valid parameters") {
                 it("will return MiniAppView object") {
-                    let realMiniAppView = RealMiniAppView.shared.getMiniAppView(miniAppId: "mini-app-testing")
+                    let mockMessageInterface = MockMessageInterface()
+                    let realMiniAppView = RealMiniAppView.shared.getMiniAppView(miniAppId: "mini-app-testing", messageInterface: mockMessageInterface)
                     expect(realMiniAppView).toEventually(beAnInstanceOf(MiniAppView.self))
                 }
             }
