@@ -12,11 +12,16 @@ class RealMiniAppTests: QuickSpec {
                 deleteMockMiniApp(appId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId)
                 deleteStatusPreferences()
             }
+            let realMiniApp = RealMiniApp()
+            let mockAPIClient = MockAPIClient()
+            realMiniApp.miniAppClient = mockAPIClient
+            let mockManifestDownloader = MockManifestDownloader()
+            let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
+            realMiniApp.manifestDownloader = mockManifestDownloader
+            realMiniApp.miniAppDownloader = downloader
+
             context("when getMiniApp is called with valid app id") {
                 it("will return valid MiniAppInfo") {
-                    let realMiniApp = RealMiniApp()
-                    let mockAPIClient = MockAPIClient()
-                    realMiniApp.miniAppClient = mockAPIClient
                     var decodedResponse: MiniAppInfo?
                     let responseString = """
                     [{
@@ -43,10 +48,8 @@ class RealMiniAppTests: QuickSpec {
             }
             context("when getMiniApp is called with invalid app id") {
                 it("will return valid MiniAppInfo") {
-                    let realMiniApp = RealMiniApp()
-                    let mockAPIClient = MockAPIClient()
                     var testError: NSError?
-                    realMiniApp.miniAppClient = mockAPIClient
+                    mockAPIClient.data = nil
                     realMiniApp.getMiniApp(miniAppId: "123", completionHandler: { (result) in
                             switch result {
                             case .success:
@@ -60,13 +63,7 @@ class RealMiniAppTests: QuickSpec {
             }
             context("when createMiniApp is called valid Mini App info") {
                 it("will return valid Mini App View instance") {
-                    let realMiniApp = RealMiniApp()
-                    let mockAPIClient = MockAPIClient()
-                    let mockManifestDownloader = MockManifestDownloader()
-                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                    realMiniApp.miniAppClient = mockAPIClient
-                    realMiniApp.manifestDownloader = mockManifestDownloader
-                    realMiniApp.miniAppDownloader = downloader
+
                     let responseString = """
                       {
                         "manifest": ["https://example.com/map-published/app-id-test/ver-id-test/HelloWorld.txt"]
@@ -87,13 +84,6 @@ class RealMiniAppTests: QuickSpec {
             }
             context("when createMiniApp is called with valid Mini App info but failed because of invalid URLs") {
                 it("will return error") {
-                    let realMiniApp = RealMiniApp()
-                    let mockAPIClient = MockAPIClient()
-                    let mockManifestDownloader = MockManifestDownloader()
-                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                    realMiniApp.miniAppClient = mockAPIClient
-                    realMiniApp.manifestDownloader = mockManifestDownloader
-                    realMiniApp.miniAppDownloader = downloader
                     let responseString = """
                       {
                         "manifest": ["https://example.com/app-id-test/ver-id-test/HelloWorld.txt"]
