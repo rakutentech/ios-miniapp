@@ -10,6 +10,7 @@ class RealMiniAppTests: QuickSpec {
         describe("Real mini app tests") {
             afterEach {
                 deleteMockMiniApp(appId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId)
+                deleteStatusPreferences()
             }
             context("when getMiniApp is called with valid app id") {
                 it("will return valid MiniAppInfo") {
@@ -68,7 +69,7 @@ class RealMiniAppTests: QuickSpec {
                     realMiniApp.miniAppDownloader = downloader
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/app-id-test/ver-id-test/HelloWorld.txt"]
+                        "manifest": ["https://example.com/map-published/app-id-test/ver-id-test/HelloWorld.txt"]
                       }
                     """
                     var decodedResponse: MiniAppDisplayProtocol?
@@ -95,7 +96,7 @@ class RealMiniAppTests: QuickSpec {
                     realMiniApp.miniAppDownloader = downloader
                     let responseString = """
                       {
-                        "manifest": ["https://google.co/app-id-test/ver-id-test/HelloWorld.txt"]
+                        "manifest": ["https://example.com/app-id-test/ver-id-test/HelloWorld.txt"]
                       }
                     """
                     var testError: NSError?

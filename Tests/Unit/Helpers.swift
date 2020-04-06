@@ -160,5 +160,8 @@ var mockMiniAppInfo: MiniAppInfo {
 ///   - appId: Mini App ID
 func deleteMockMiniApp(appId: String, versionId: String) {
     try? FileManager.default.removeItem(at: FileManager.getMiniAppDirectory(with: appId))
-    UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp")?.set(false, forKey: "\(appId)/\(versionId)")
+}
+
+func deleteStatusPreferences() {
+    UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
 }
