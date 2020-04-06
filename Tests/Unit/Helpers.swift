@@ -148,3 +148,20 @@ class MockFile {
         return fullURL
     }
 }
+
+var mockMiniAppInfo: MiniAppInfo {
+    let mockVersion = Version(versionTag: "Dev", versionId: "ver-id-test")
+    let info = MiniAppInfo.init(id: "app-id-test", displayName: "Mini App Title", icon: URL(string: "https://www.example.com/icon.png")!, version: mockVersion)
+    return info
+}
+
+/// Method to delete the Mini App directory which was created for Mock testing
+/// - Parameters:
+///   - appId: Mini App ID
+func deleteMockMiniApp(appId: String, versionId: String) {
+    try? FileManager.default.removeItem(at: FileManager.getMiniAppDirectory(with: appId))
+}
+
+func deleteStatusPreferences() {
+    UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
+}
