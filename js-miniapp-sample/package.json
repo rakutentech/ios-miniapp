@@ -1,0 +1,25 @@
+{
+    "name": "js-miniapp-sample",
+    "version": "0.1.0",
+    "description": "Mini App Sample for JavaScript",
+    "main": "build/src/index.js",
+    "dependencies": {},
+    "devDependencies": {},
+    "scripts": {},
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/rakutentech/js-miniapp.git"
+    },
+    "keywords": [
+      "rakuten",
+      "mini app",
+      "apps"
+    ],
+    "author": "Mini App SDK Team",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/rakutentech/js-miniapp/issues"
+    },
+    "homepage": "https://github.com/rakutentech/js-miniapp#readme"
+  }
+  
