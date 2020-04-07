@@ -41,9 +41,6 @@ jsconfig.json
 .idea
 *.iml
 
-# Ignore yarn.lock
-yarn.lock
-
 #Exclude tsc generated files
 js/*.map
 js/ts.js
