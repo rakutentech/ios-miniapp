@@ -1,7 +1,7 @@
 internal class ListingApi {
     let environment: Environment
     var path: String {
-        return "/oneapp/ios/\(environment.appVersion)/miniapps"
+        return "host/\(environment.appId)/miniapps"
     }
 
     init(environment: Environment) {
