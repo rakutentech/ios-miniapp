@@ -259,7 +259,7 @@
                             <outlet property="delegate" destination="hxN-ta-hmR" id="vdg-K7-FmJ"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Custom runtime settings" image="settings" id="htA-x6-pk4"/>
+                    <tabBarItem key="tabBarItem" title="Custom runtime settings" image="Settings" id="htA-x6-pk4"/>
                     <connections>
                         <outlet property="textFieldAppID" destination="e1K-zq-1Po" id="fl7-NT-Yhh"/>
                         <outlet property="textFieldSubKey" destination="QMe-rU-0NL" id="ER6-UH-PBD"/>
@@ -310,7 +310,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Settings" width="24" height="24"/>
         <image name="app-list" width="24" height="24"/>
-        <image name="settings" width="24" height="24"/>
     </resources>
 </document>

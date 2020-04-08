@@ -16,6 +16,6 @@ internal class ManifestApi {
         guard let baseURL = environment.baseUrl else {
             return nil
         }
-        return baseURL.appendingPathComponent("/miniapp/\(miniAppId)/version/\(versionId)/manifest")
+        return baseURL.appendingPathComponent("host/\(environment.appId)/miniapp/\(miniAppId)/version/\(versionId)/manifest")
     }
 }

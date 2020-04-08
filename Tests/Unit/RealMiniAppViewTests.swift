@@ -6,11 +6,18 @@ class RealMiniAppViewTests: QuickSpec {
 
     override func spec() {
         describe("Mini App view") {
+            let mockMessageInterface = MockMessageInterface()
             context("when initialized with valid parameters") {
                 it("will return MiniAppView object") {
-                    let mockMessageInterface = MockMessageInterface()
-                    let realMiniAppView = RealMiniAppView.shared.getMiniAppView(miniAppId: "mini-app-testing", messageInterface: mockMessageInterface)
-                    expect(realMiniAppView).toEventually(beAnInstanceOf(MiniAppView.self))
+                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", messageInterface: mockMessageInterface)
+
+                    expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self))
+                }
+            }
+            context("when getMiniAppView is called") {
+                it("will return object of UIView type") {
+                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", messageInterface: mockMessageInterface)
+                    expect(miniAppView?.getMiniAppView()).toEventually(beAKindOf(UIView.self))
                 }
             }
         }

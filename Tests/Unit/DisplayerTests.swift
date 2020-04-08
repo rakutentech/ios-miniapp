@@ -11,7 +11,7 @@ class DisplayerTests: QuickSpec {
                     let miniAppDisplayer = Displayer()
                     let mockMessageInterface = MockMessageInterface()
                     let miniAppView = miniAppDisplayer.getMiniAppView(miniAppId: "miniappid-testing", messageInterface: mockMessageInterface)
-                    expect(miniAppView).toEventually(beAnInstanceOf(MiniAppView.self))
+                    expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self))
                 }
             }
         }
