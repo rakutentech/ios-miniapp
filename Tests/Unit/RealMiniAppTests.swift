@@ -79,7 +79,7 @@ class RealMiniAppTests: QuickSpec {
                                 break
                         }
                     })
-                    expect(decodedResponse).toEventually(beAnInstanceOf(MiniAppView.self))
+                    expect(decodedResponse).toEventually(beAnInstanceOf(RealMiniAppView.self))
                 }
             }
             context("when createMiniApp is called with valid Mini App info but failed because of invalid URLs") {
