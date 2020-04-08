@@ -2,7 +2,7 @@ import Quick
 import Nimble
 @testable import MiniApp
 
-class MiniAppViewTests: QuickSpec {
+class RealMiniAppViewTests: QuickSpec {
 
     override func spec() {
         describe("Mini App view") {
