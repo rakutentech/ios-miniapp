@@ -1,16 +1,16 @@
 {
   "warnings": [
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppView.swift",
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/RealMiniAppView.swift",
       "line": 3,
-      "symbol": "MiniAppView",
+      "symbol": "RealMiniAppView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppView.swift",
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/RealMiniAppView.swift",
       "line": 20,
-      "symbol": "MiniAppView.layoutSubviews()",
+      "symbol": "RealMiniAppView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
