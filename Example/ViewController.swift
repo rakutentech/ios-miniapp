@@ -86,13 +86,15 @@ class ViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppCell", for: indexPath) as! MiniAppCell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppCell", for: indexPath) as? MiniAppCell {
+            let miniAppDetail = self.decodeResponse?[indexPath.row]
+            cell.titleLabel?.text = miniAppDetail?.displayName
+            cell.icon?.image = UIImage(named: "image_placeholder")
+            cell.icon?.loadImageURL(url: miniAppDetail!.icon)
+            return cell
+        }
 
-        let miniAppDetail = self.decodeResponse?[indexPath.row]
-        cell.titleLabel?.text = miniAppDetail?.displayName
-        cell.icon?.image = UIImage(named: "image_placeholder")
-        cell.icon?.loadImageURL(url: miniAppDetail!.icon)
-        return cell
+        return UITableViewCell()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

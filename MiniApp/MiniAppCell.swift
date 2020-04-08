@@ -1,7 +1,7 @@
 import UIKit
 
 class MiniAppCell: UITableViewCell {
-    
+
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
 
@@ -11,5 +11,3 @@ class MiniAppCell: UITableViewCell {
         titleLabel.text = nil
     }
 }
-
-

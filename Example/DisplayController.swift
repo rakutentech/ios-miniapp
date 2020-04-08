@@ -28,7 +28,7 @@ class DisplayController: UIViewController {
             }
         }
     }
-    
+
     @IBAction func done(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
