@@ -1,7 +1,7 @@
 /**
  * A module layer for webapps and mobile native interaction.
  */
-export interface MiniAppInterface {
+interface MiniAppInterface {
   /** @returns The Promise of provided id of mini app from injected side. */
   getUniqueId(): Promise<string>;
 }
