@@ -49,15 +49,18 @@ class MiniAppDownloader {
     private func downloadMiniApp(urls: [String], to miniAppPath: URL, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         self.miniAppClient.delegate = self
         for url in urls {
+            guard let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+                return
+            }
             guard let fileDirectory = UrlParser.getFileStoragePath(from: url) else {
                 completionHandler(.failure(NSError.downloadingFailed()))
                 return
             }
             let filePath = miniAppPath.appendingPathComponent(fileDirectory)
             if !FileManager.default.fileExists(atPath: filePath.path) {
-                urlToDirectoryMap[url] = DownloadOperation(fileStoragePath: filePath, miniAppDirectoryPath: miniAppPath, completionHanlder: completionHandler)
+                urlToDirectoryMap[urlString] = DownloadOperation(fileStoragePath: filePath, miniAppDirectoryPath: miniAppPath, completionHanlder: completionHandler)
                 queue.addOperation {
-                    self.miniAppClient.download(url: url)
+                    self.miniAppClient.download(url: urlString)
                 }
             }
         }
