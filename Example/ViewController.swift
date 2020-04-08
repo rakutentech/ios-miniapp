@@ -25,9 +25,11 @@ class ViewController: UITableViewController {
                 }
                 switch result {
                 case .success(let responseData):
-                    self.decodeResponse = responseData
-                    self.tableView.reloadData()
-                    self.dismissProgressIndicator()
+                    DispatchQueue.main.async {
+                        self.decodeResponse = responseData
+                        self.tableView.reloadData()
+                        self.dismissProgressIndicator()
+                    }
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: false)
