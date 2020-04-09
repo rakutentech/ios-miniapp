@@ -149,6 +149,15 @@ class MockFile {
     }
 }
 
+class MockMessageInterface: MiniAppMessageProtocol {
+    func getUniqueId() -> String {
+        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+            return ""
+        }
+        return deviceId
+    }
+}
+
 var mockMiniAppInfo: MiniAppInfo {
     let mockVersion = Version(versionTag: "Dev", versionId: "ver-id-test")
     let info = MiniAppInfo.init(id: "app-id-test", displayName: "Mini App Title", icon: URL(string: "https://www.example.com/icon.png")!, version: mockVersion)

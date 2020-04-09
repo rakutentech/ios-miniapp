@@ -19,7 +19,7 @@ class RealMiniAppTests: QuickSpec {
             let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
             realMiniApp.manifestDownloader = mockManifestDownloader
             realMiniApp.miniAppDownloader = downloader
-
+            let mockMessageInterface = MockMessageInterface()
             context("when getMiniApp is called with valid app id") {
                 it("will return valid MiniAppInfo") {
                     var decodedResponse: MiniAppInfo?
@@ -78,7 +78,7 @@ class RealMiniAppTests: QuickSpec {
                             case .failure:
                                 break
                         }
-                    })
+                    }, messageInterface: mockMessageInterface)
                     expect(decodedResponse).toEventually(beAnInstanceOf(RealMiniAppView.self))
                 }
             }
@@ -98,7 +98,7 @@ class RealMiniAppTests: QuickSpec {
                             case .failure(let error):
                                 testError = error as NSError
                         }
-                    })
+                    }, messageInterface: mockMessageInterface)
                     expect(testError?.code).toEventually(equal(0))
                 }
             }

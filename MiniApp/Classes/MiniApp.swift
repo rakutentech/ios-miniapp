@@ -46,7 +46,8 @@ public class MiniApp: NSObject {
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
-    public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {
-        return realMiniApp.createMiniApp(appInfo: appInfo, completionHandler: completionHandler)
+    ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
+    public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol) {
+        return realMiniApp.createMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 }
