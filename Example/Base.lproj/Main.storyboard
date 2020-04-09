@@ -57,7 +57,7 @@
                                 <connections>
                                     <outlet property="icon" destination="vaJ-zY-eL8" id="yg6-6f-Ubq"/>
                                     <outlet property="titleLabel" destination="8ZM-h8-cTS" id="vaA-V9-ihv"/>
-                                    <segue destination="eW9-Vs-PTN" kind="presentation" identifier="DisplayMiniApp" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="Bkv-dX-4I1"/>
+                                    <segue destination="eW9-Vs-PTN" kind="presentation" identifier="DisplayMiniApp" modalPresentationStyle="fullScreen" id="Bkv-dX-4I1"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -76,7 +76,7 @@
                             <fragment content="Pull to fetch Mini App List">
                                 <attributes>
                                     <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <font key="NSFont" metaFont="message" size="11"/>
+                                    <font key="NSFont" metaFont="toolTip"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
