@@ -72,6 +72,13 @@
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Models/MiniAppInfo.swift",
+      "line": 6,
+      "symbol": "MiniAppInfo.version",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Models/MiniAppInfo.swift",
       "line": 16,
       "symbol": "Version",
       "symbol_kind": "source.lang.swift.decl.struct",
