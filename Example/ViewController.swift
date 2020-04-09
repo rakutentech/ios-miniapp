@@ -9,6 +9,10 @@ class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         fetchAppList()
     }
 
@@ -82,13 +86,15 @@ class ViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppCell", for: indexPath)
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppCell", for: indexPath) as? MiniAppCell {
+            let miniAppDetail = self.decodeResponse?[indexPath.row]
+            cell.titleLabel?.text = miniAppDetail?.displayName
+            cell.icon?.image = UIImage(named: "image_placeholder")
+            cell.icon?.loadImageURL(url: miniAppDetail!.icon)
+            return cell
+        }
 
-        let miniAppDetail = self.decodeResponse?[indexPath.row]
-        cell.textLabel?.text = miniAppDetail?.displayName
-        cell.imageView?.image = UIImage(named: "image_placeholder")
-        cell.imageView?.loadImageURL(url: miniAppDetail!.icon)
-        return cell
+        return UITableViewCell()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -106,7 +112,7 @@ class ViewController: UITableViewController {
                 return
             }
 
-            let displayController = segue.destination as? DisplayController
+            let displayController = segue.destination as? DisplayNavigationController
             displayController?.miniAppInfo = miniAppInfo
             self.currentMiniAppInfo = nil
         }

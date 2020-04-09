@@ -7,14 +7,15 @@ class DisplayController: UIViewController, MiniAppMessageProtocol {
     var config: MiniAppSdkConfig?
 
     override func viewWillAppear(_ animated: Bool) {
-        self.showProgressIndicator()
         config = Config.getCurrent()
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        guard let info = miniAppInfo else {
+        guard let controller = self.navigationController as? DisplayNavigationController, let info = controller.miniAppInfo else {
             return
         }
+
+        self.showProgressIndicator()
         self.title = info.displayName
         MiniApp.shared(with: config).create(appInfo: info, completionHandler: { (result) in
             switch result {
@@ -35,5 +36,9 @@ class DisplayController: UIViewController, MiniAppMessageProtocol {
             return ""
         }
         return deviceId
+    }
+
+    @IBAction func done(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
