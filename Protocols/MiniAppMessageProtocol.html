@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppSdkConfig Class Reference</title>
+    <title>MiniAppMessageProtocol Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/MiniAppSdkConfig" class="dashAnchor"></a>
-    <a title="MiniAppSdkConfig Class Reference"></a>
+    <a name="//apple_ref/swift/Protocol/MiniAppMessageProtocol" class="dashAnchor"></a>
+    <a title="MiniAppMessageProtocol Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MiniApp Docs</a> (48% documented)</p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MiniApp Reference</a>
         <img id="carat" src="../img/carat.png" />
-        MiniAppSdkConfig Class Reference
+        MiniAppMessageProtocol Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -79,14 +79,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>MiniAppSdkConfig</h1>
+            <h1>MiniAppMessageProtocol</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">MiniAppSdkConfig</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppMessageProtocol</span></code></pre>
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Public Protocol that will be used by the Mini App to communicate
+ with the Native implementation</p>
 
           </section>
           <section class="section task-group-section">
@@ -95,9 +96,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB9SdkConfigC7baseUrl03rasB2Id15subscriptionKey04hostB7VersionACSSSg_A3Htcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(baseUrl:rasAppId:subscriptionKey:hostAppVersion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB9SdkConfigC7baseUrl03rasB2Id15subscriptionKey04hostB7VersionACSSSg_A3Htcfc">init(baseUrl:<wbr>rasAppId:<wbr>subscriptionKey:<wbr>hostAppVersion:<wbr>)</a>
+                    <a name="/s:7MiniApp0aB15MessageProtocolP11getUniqueIdSSyF"></a>
+                    <a name="//apple_ref/swift/Method/getUniqueId()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB15MessageProtocolP11getUniqueIdSSyF">getUniqueId()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -105,17 +106,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Interface that should be implemented to return alphanumeric string that uniquely identifies a device.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">baseUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-            <span class="nv">rasAppId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-            <span class="nv">subscriptionKey</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-            <span class="nv">hostAppVersion</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getUniqueId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
