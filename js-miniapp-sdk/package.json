@@ -24,11 +24,11 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "check": "gts check",
+    "lint": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
-    "prebuild": "npm run clean && npm run check",
-    "build": "npm run clean && npm run check && tsc -p . && npm run test",
+    "prebuild": "npm run clean && npm run lint",
+    "build": "npm run clean && npm run lint && tsc -p . && npm run test",
     "fix": "gts fix",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/mocha/results.xml",
     "coverage": "nyc npm test",
