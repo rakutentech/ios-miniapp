@@ -26,7 +26,7 @@ class SettingsTableViewController: UITableViewController {
         save(field: self.textFieldURL, for: .endpoint)
         displayAlert(title: NSLocalizedString("message_save_title", comment: ""), message: NSLocalizedString("message_save_text", comment: ""), dismissController: false)
     }
-    
+
     /// Adding Tap gesture to dismiss the Keyboard
     func addTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
