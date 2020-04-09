@@ -1,6 +1,6 @@
 import WebKit
 
-public class RealMiniAppView: UIView, MiniAppDisplayProtocol {
+public class MiniAppView: UIView, MiniAppDisplayProtocol {
 
     private var webView: WKWebView
 
@@ -10,6 +10,7 @@ public class RealMiniAppView: UIView, MiniAppDisplayProtocol {
         }
         webView = miniAppWebView
         super.init(frame: .zero)
+        webView.configuration.userContentController.add(self, name: Constants.javascriptInterface)
         addSubview(webView)
     }
 
@@ -24,5 +25,14 @@ public class RealMiniAppView: UIView, MiniAppDisplayProtocol {
 
     public func getMiniAppView() -> UIView {
         return self
+    }
+}
+
+extension MiniAppView: WKScriptMessageHandler {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if let messageBody = message.body as? [String: Any] {
+            // Message that is sent from the Javascript
+            // We need to parse this message and call appropriate method
+        }
     }
 }

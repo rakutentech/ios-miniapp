@@ -1,7 +1,9 @@
 import UIKit
 import MiniApp
 
-class DisplayController: UIViewController {
+class DisplayController: UIViewController, MiniAppMessageProtocol {
+
+    var miniAppInfo: MiniAppInfo?
     var config: MiniAppSdkConfig?
 
     override func viewWillAppear(_ animated: Bool) {
@@ -15,7 +17,7 @@ class DisplayController: UIViewController {
 
         self.showProgressIndicator()
         self.title = info.displayName
-        MiniApp.shared(with: config).create(appInfo: info) { (result) in
+        MiniApp.shared(with: config).create(appInfo: info, completionHandler: { (result) in
             switch result {
             case .success(let miniAppDisplay):
                 self.dismissProgressIndicator()
@@ -26,7 +28,14 @@ class DisplayController: UIViewController {
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_download_message", comment: ""), dismissController: true)
                 print("Errored: ", error.localizedDescription)
             }
+        }, messageInterface: self)
+    }
+
+    func getUniqueId() -> String {
+        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+            return ""
         }
+        return deviceId
     }
 
     @IBAction func done(_ sender: UIBarButtonItem) {
