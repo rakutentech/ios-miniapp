@@ -89,6 +89,7 @@ class ViewController: UITableViewController {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppCell", for: indexPath) as? MiniAppCell {
             let miniAppDetail = self.decodeResponse?[indexPath.row]
             cell.titleLabel?.text = miniAppDetail?.displayName
+            cell.detailedTextLabel?.text = "Version: " + (miniAppDetail?.version.versionTag ?? "N/A")
             cell.icon?.image = UIImage(named: "image_placeholder")
             cell.icon?.loadImageURL(url: miniAppDetail!.icon)
             return cell
