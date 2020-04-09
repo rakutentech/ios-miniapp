@@ -3,7 +3,7 @@ public struct MiniAppInfo: Decodable {
     internal var id: String
     public var displayName: String
     public var icon: URL
-    internal var version: Version
+    public var version: Version
 
     private enum CodingKeys: String, CodingKey {
         case id,

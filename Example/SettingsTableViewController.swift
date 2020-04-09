@@ -9,6 +9,7 @@ class SettingsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        addTapGesture()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -24,6 +25,13 @@ class SettingsTableViewController: UITableViewController {
         save(field: self.textFieldVersion, for: .version)
         save(field: self.textFieldURL, for: .endpoint)
         displayAlert(title: NSLocalizedString("message_save_title", comment: ""), message: NSLocalizedString("message_save_text", comment: ""), dismissController: false)
+    }
+
+    /// Adding Tap gesture to dismiss the Keyboard
+    func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
     }
 
     func configure(field: UITextField, for key: Config.Key) {
