@@ -1,15 +1,18 @@
 import WebKit
 
-public class RealMiniAppView: UIView, MiniAppDisplayProtocol {
-
-    private var webView: WKWebView
+public class RealMiniAppView: UIView, MiniAppDisplayProtocol, MiniAppCallbackProtocol {
+    internal var webView: WKWebView
+    private var messageInterface: MiniAppMessageProtocol
 
     init?(miniAppId: String, messageInterface: MiniAppMessageProtocol) {
         guard let miniAppWebView = MiniAppWebView(miniAppId: miniAppId) else {
             return nil
         }
         webView = miniAppWebView
+        self.messageInterface = messageInterface
         super.init(frame: .zero)
+        webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self, hostMessageInterface: messageInterface)
+        webView.configuration.userContentController.addBridgingJavaScript()
         addSubview(webView)
     }
 
@@ -24,5 +27,17 @@ public class RealMiniAppView: UIView, MiniAppDisplayProtocol {
 
     public func getMiniAppView() -> UIView {
         return self
+    }
+
+    func didRecieveScriptMessageResponse(messageId: String, response: String) {
+        self.webView.evaluateJavaScript(Constants.javascriptSuccessCallback + "('\(messageId)'," + "'\(response)')")
+    }
+
+    func didRecieveScriptMessageError(messageId: String, errorMessage: String) {
+        self.webView.evaluateJavaScript(Constants.javascriptErrorCallback + "('\(messageId)'," + "'\(errorMessage)')")
+    }
+
+    deinit {
+        webView.configuration.userContentController.removeMessageHandler()
     }
 }
