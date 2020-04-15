@@ -1,10 +1,8 @@
-
 import Quick
 import Nimble
 import WebKit
 @testable import MiniApp
 
-// swiftlint:disable function_body_length
 class MiniAppScriptMessageHandlerTests: QuickSpec {
 
     override func spec() {

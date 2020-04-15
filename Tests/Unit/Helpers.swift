@@ -190,15 +190,15 @@ class MockWKScriptMessage: WKScriptMessage {
 }
 
 class MockMiniAppCallbackProtocol: MiniAppCallbackProtocol {
-    var messageId: String? = nil
-    var response: String? = nil
-    var errorMessage: String? = nil
+    var messageId: String?
+    var response: String?
+    var errorMessage: String?
 
     func didRecieveScriptMessageResponse(messageId: String, response: String) {
         self.messageId = messageId
         self.response = response
     }
-    
+
     func didRecieveScriptMessageError(messageId: String, errorMessage: String) {
         self.messageId = messageId
         self.errorMessage = errorMessage
