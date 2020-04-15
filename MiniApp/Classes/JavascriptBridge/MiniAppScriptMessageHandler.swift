@@ -26,8 +26,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func handleBridgeMessage(responseJson: MiniAppJavaScriptMessageInfo?) {
-        guard let actionCommand = responseJson?.action,
-            let callbackId = responseJson?.id else {
+        guard let actionCommand = responseJson?.action, !actionCommand.isEmpty,
+            let callbackId = responseJson?.id, !callbackId.isEmpty else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: "", response: MiniAppJavaScriptError.unexpectedMessageFormat.rawValue)
             return
         }
@@ -42,7 +42,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func sendUniqueId(messageId: String) {
-        guard let uniqueId = hostMessageInterface?.getUniqueId() else {
+        guard let uniqueId = hostMessageInterface?.getUniqueId(), !uniqueId.isEmpty else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: MiniAppJavaScriptError.internalError.rawValue)
             return
         }

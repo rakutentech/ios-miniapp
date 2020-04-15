@@ -1,4 +1,5 @@
 @testable import MiniApp
+import WebKit
 
 class MockAPIClient: MiniAppClient {
     var data: Data?
@@ -150,11 +151,16 @@ class MockFile {
 }
 
 class MockMessageInterface: MiniAppMessageProtocol {
+    var mockUniqueId: Bool = false
     func getUniqueId() -> String {
-        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+        if mockUniqueId {
             return ""
+        } else {
+            guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+                return ""
+            }
+            return deviceId
         }
-        return deviceId
     }
 }
 
@@ -162,6 +168,41 @@ var mockMiniAppInfo: MiniAppInfo {
     let mockVersion = Version(versionTag: "Dev", versionId: "ver-id-test")
     let info = MiniAppInfo.init(id: "app-id-test", displayName: "Mini App Title", icon: URL(string: "https://www.example.com/icon.png")!, version: mockVersion)
     return info
+}
+
+class MockWKScriptMessage: WKScriptMessage {
+
+    let mockBody: Any
+    let mockName: String
+
+    init(name: String, body: Any) {
+        mockName = name
+        mockBody = body
+    }
+
+    override var body: Any {
+        return mockBody
+    }
+
+    override var name: String {
+        return mockName
+    }
+}
+
+class MockMiniAppCallbackProtocol: MiniAppCallbackProtocol {
+    var messageId: String? = nil
+    var response: String? = nil
+    var errorMessage: String? = nil
+
+    func didRecieveScriptMessageResponse(messageId: String, response: String) {
+        self.messageId = messageId
+        self.response = response
+    }
+    
+    func didRecieveScriptMessageError(messageId: String, errorMessage: String) {
+        self.messageId = messageId
+        self.errorMessage = errorMessage
+    }
 }
 
 /// Method to delete the Mini App directory which was created for Mock testing
