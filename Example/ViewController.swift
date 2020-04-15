@@ -5,6 +5,7 @@ class ViewController: UITableViewController {
 
     var decodeResponse: [MiniAppInfo]?
     var currentMiniAppInfo: MiniAppInfo?
+    var currentMiniAppView: MiniAppDisplayProtocol?
     let imageCache = ImageCache()
 
     override func viewDidLoad() {
@@ -41,21 +42,37 @@ class ViewController: UITableViewController {
         }
     }
 
+    func fetchMiniApp(for appInfo: MiniAppInfo) {
+        MiniApp.shared(with: Config.getCurrent()).create(appInfo: appInfo, completionHandler: { (result) in
+            switch result {
+            case .success(let miniAppDisplay):
+                self.dismissProgressIndicator {
+                    self.currentMiniAppView = miniAppDisplay
+                    self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
+                }
+            case .failure(let error):
+                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_download_message", comment: ""), dismissController: true) { _ in
+                    self.fetchAppList()
+                }
+                print("Errored: ", error.localizedDescription)
+            }
+        }, messageInterface: self)
+    }
+
     func fetchAppInfo(for miniAppID: String) {
         self.showProgressIndicator {
             MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) in
-                self.dismissProgressIndicator {
-                    switch result {
-                    case .success(let responseData):
-                        self.currentMiniAppInfo = responseData
-                        self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        self.displayAlert(
-                            title: NSLocalizedString("error_title", comment: ""),
-                            message: NSLocalizedString("error_single_message", comment: ""),
-                            dismissController: true)
-                    }
+
+                switch result {
+                case .success(let responseData):
+                    self.currentMiniAppInfo = responseData
+                    self.fetchMiniApp(for: responseData)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.displayAlert(
+                        title: NSLocalizedString("error_title", comment: ""),
+                        message: NSLocalizedString("error_single_message", comment: ""),
+                        dismissController: true)
                 }
             }
         }
@@ -99,22 +116,26 @@ class ViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.showProgressIndicator {
+            if let miniAppInfo = self.decodeResponse?[indexPath.row] {
+                self.currentMiniAppInfo = miniAppInfo
+                self.fetchMiniApp(for: miniAppInfo)
+            }
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DisplayMiniApp" {
-            if let indexPath = self.tableView.indexPathForSelectedRow?.row {
-                currentMiniAppInfo = decodeResponse?[indexPath]
-            }
-
-            guard let miniAppInfo = self.currentMiniAppInfo else {
+            guard let miniAppInfo = self.currentMiniAppInfo, let miniAppDisplay = self.currentMiniAppView else {
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
                 return
             }
 
             let displayController = segue.destination as? DisplayNavigationController
             displayController?.miniAppInfo = miniAppInfo
+            displayController?.miniAppDisplay = miniAppDisplay
             self.currentMiniAppInfo = nil
+            self.currentMiniAppView = nil
         }
     }
 }
@@ -150,5 +171,14 @@ extension UIImageView {
                 }
             }
         }
+    }
+}
+
+extension ViewController: MiniAppMessageProtocol {
+    func getUniqueId() -> String {
+        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+            return ""
+        }
+        return deviceId
     }
 }
