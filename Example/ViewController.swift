@@ -5,7 +5,7 @@ class ViewController: UITableViewController {
 
     var decodeResponse: [MiniAppInfo]?
     var currentMiniAppInfo: MiniAppInfo?
-    var config: MiniAppSdkConfig?
+    let imageCache = ImageCache()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,12 +18,11 @@ class ViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        config = Config.getCurrent()
     }
 
     func fetchAppList() {
         showProgressIndicator {
-            MiniApp.shared(with: self.config).list { (result) in
+            MiniApp.shared(with: Config.getCurrent()).list { (result) in
                 DispatchQueue.main.async {
                     self.refreshControl?.endRefreshing()
                 }
@@ -36,7 +35,7 @@ class ViewController: UITableViewController {
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
-                    self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: false)
+                    self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: true)
                 }
             }
         }
@@ -44,7 +43,7 @@ class ViewController: UITableViewController {
 
     func fetchAppInfo(for miniAppID: String) {
         self.showProgressIndicator {
-            MiniApp.shared(with: self.config).info(miniAppId: miniAppID) { (result) in
+            MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) in
                 self.dismissProgressIndicator {
                     switch result {
                     case .success(let responseData):
@@ -55,7 +54,7 @@ class ViewController: UITableViewController {
                         self.displayAlert(
                             title: NSLocalizedString("error_title", comment: ""),
                             message: NSLocalizedString("error_single_message", comment: ""),
-                            dismissController: false)
+                            dismissController: true)
                     }
                 }
             }
@@ -75,7 +74,7 @@ class ViewController: UITableViewController {
                     self.displayAlert(
                         title: NSLocalizedString("error_title", comment: ""),
                         message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
-                        dismissController: false)
+                        dismissController: true)
                 }
             }
         }
@@ -91,7 +90,7 @@ class ViewController: UITableViewController {
             cell.titleLabel?.text = miniAppDetail?.displayName
             cell.detailedTextLabel?.text = "Version: " + (miniAppDetail?.version.versionTag ?? "N/A")
             cell.icon?.image = UIImage(named: "image_placeholder")
-            cell.icon?.loadImageURL(url: miniAppDetail!.icon)
+            cell.icon?.loadImage(miniAppDetail!.icon, placeholder: "image_placeholder", cache: imageCache)
             return cell
         }
 
@@ -109,7 +108,7 @@ class ViewController: UITableViewController {
             }
 
             guard let miniAppInfo = self.currentMiniAppInfo else {
-                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: false)
+                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
                 return
             }
 
@@ -121,12 +120,32 @@ class ViewController: UITableViewController {
 }
 
 extension UIImageView {
-    func loadImageURL(url: URL) {
-        DispatchQueue.global().async { [weak self] in
+    func loadImage(_ url: URL, placeholder: String? = nil, cache: ImageCache? = nil) {
+
+        if let cachedImage = cache?[url] {
+            self.image = cachedImage
+        } else if let imageName = placeholder {
+            self.image = UIImage(named: imageName)
+        } else {
+            self.image = nil
+        }
+
+        UIImageView.downloadImage(url, for: self, cache: cache)
+    }
+
+    class func downloadImage(_ url: URL, for imageView: UIImageView, cache: ImageCache? = nil) {
+        let tag = Int(Date().timeIntervalSince1970)
+        imageView.tag = tag
+        DispatchQueue.global().async { [weak imageView] in
             if let data = try? Data(contentsOf: url) {
                 if let image = UIImage(data: data) {
                     DispatchQueue.main.async {
-                        self?.image = image
+                        if imageView?.tag == tag {
+                            imageView?.image = image
+                        } else {
+                            print("image tag diff")
+                        }
+                        cache?[url] = image
                     }
                 }
             }
