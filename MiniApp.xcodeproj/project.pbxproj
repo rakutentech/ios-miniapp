@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		181DC083240F316D00FDF633 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 181DC085240F316D00FDF633 /* Localizable.strings */; };
+		1867996B243EF6C200CD6A8E /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1867996A243EF6C200CD6A8E /* ImageCache.swift */; };
+		1867996D243EF79800CD6A8E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1867996C243EF79700CD6A8E /* Foundation.framework */; };
 		188F5921243DC6470042618E /* MiniAppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5920243DC6470042618E /* MiniAppCell.swift */; };
 		188F5923243DCBAB0042618E /* DisplayNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5922243DCBAB0042618E /* DisplayNavigationController.swift */; };
 		18C59F2B241094F600F66632 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C59F2A241094F600F66632 /* SettingsTableViewController.swift */; };
@@ -51,8 +53,11 @@
 
 /* Begin PBXFileReference section */
 		181DC084240F316D00FDF633 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		188F5920243DC6470042618E /* MiniAppCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppCell.swift; sourceTree = "<group>"; };
-		188F5922243DCBAB0042618E /* DisplayNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNavigationController.swift; sourceTree = "<group>"; };
+		1867996A243EF6C200CD6A8E /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCache.swift; path = ../Example/ImageCache.swift; sourceTree = "<group>"; };
+		1867996C243EF79700CD6A8E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		18679970243EFD0D00CD6A8E /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
+		188F5920243DC6470042618E /* MiniAppCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MiniAppCell.swift; path = ../Example/MiniAppCell.swift; sourceTree = "<group>"; };
+		188F5922243DCBAB0042618E /* DisplayNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplayNavigationController.swift; path = ../Example/DisplayNavigationController.swift; sourceTree = "<group>"; };
 		18C59F2A241094F600F66632 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = Example/SettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		18C59F2C2410ADE300F66632 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Example/Config.swift; sourceTree = SOURCE_ROOT; };
 		3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStatusTests.swift; sourceTree = "<group>"; };
@@ -66,7 +71,7 @@
 		3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppDownloaderTests.swift; sourceTree = "<group>"; };
 		3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniApp+NSErrorTests.swift"; sourceTree = "<group>"; };
 		386A913B23F653E800F5DB1B /* DisplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplayController.swift; path = Example/DisplayController.swift; sourceTree = SOURCE_ROOT; };
-		38777D9223F67BD2008716A7 /* Progress+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+UIViewController.swift"; sourceTree = "<group>"; };
+		38777D9223F67BD2008716A7 /* Progress+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Progress+UIViewController.swift"; path = "../Example/Progress+UIViewController.swift"; sourceTree = "<group>"; };
 		3878D4D123B44F85001E27F8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Example/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		3878D4D223B44F85001E27F8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Example/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		3878D4D323B44F85001E27F8 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Example/ViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -93,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
+      );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		607FACE21AFB9204008FA782 /* Frameworks */ = {
@@ -137,6 +142,15 @@
 			path = Unit;
 			sourceTree = "<group>";
 		};
+		4C00308BA5E16279A50E9889 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18679970243EFD0D00CD6A8E /* Combine.framework */,
+				1867996C243EF79700CD6A8E /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +181,7 @@
 				386A913B23F653E800F5DB1B /* DisplayController.swift */,
 				18C59F2A241094F600F66632 /* SettingsTableViewController.swift */,
 				38777D9223F67BD2008716A7 /* Progress+UIViewController.swift */,
+				1867996A243EF6C200CD6A8E /* ImageCache.swift */,
 				18C59F2C2410ADE300F66632 /* Config.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -320,6 +335,7 @@
 				188F5921243DC6470042618E /* MiniAppCell.swift in Sources */,
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
 				188F5923243DCBAB0042618E /* DisplayNavigationController.swift in Sources */,
+				1867996B243EF6C200CD6A8E /* ImageCache.swift in Sources */,
 				18C59F2B241094F600F66632 /* SettingsTableViewController.swift in Sources */,
 				3878D4D623B44F85001E27F8 /* ViewController.swift in Sources */,
 				386A913C23F653E800F5DB1B /* DisplayController.swift in Sources */,

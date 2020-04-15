@@ -1,14 +1,14 @@
 "error_title" = "Error";
-"error_list_message" = "Couldn't retrieve Mini App list, please try again later";
-"error_single_message" = "Couldn't retrieve Mini App info, please try again later";
-"error_incorrect_appid_message" = "Incorrect Mini App ID, please try again";
-"error_miniapp_message" = "Couldn't retrieve Mini App, please try again later";
+"error_list_message" = "Couldn't retrieve Miniapp list, please try again later";
+"error_single_message" = "Couldn't retrieve Miniapp info, please try again later";
+"error_incorrect_appid_message" = "Incorrect Miniapp ID, please try again";
+"error_miniapp_message" = "Couldn't retrieve Miniapp, please try again later";
 "error_miniapp_download_message" = "Downloading failed, please try again later";
 
-"input_miniapp_title" = "Please enter Mini App ID";
+"input_miniapp_title" = "Please enter Miniapp ID";
 
 "message_save_title" = "Parameters saved";
-"message_save_text" = "You can now refresh your Mini App list";
+"message_save_text" = "You can now refresh your Miniapp list";
 
 "wait_message" = "Please wait...";
 "ok" = "OK";

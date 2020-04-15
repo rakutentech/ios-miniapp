@@ -2,7 +2,7 @@ import UIKit
 
 extension UIViewController {
 
-    func showProgressIndicator(completion:(() -> Void)? = nil) {
+    func showProgressIndicator(completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: nil, message: NSLocalizedString("wait_message", comment: ""), preferredStyle: .alert)
             let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
@@ -14,31 +14,46 @@ extension UIViewController {
         }
     }
 
-    func dismissProgressIndicator(completion:(() -> Void)? = nil) {
+    func dismissProgressIndicator(completion: (() -> Void)? = nil) {
         DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
-            self.dismiss(animated: true, completion: completion)
-        })
+                self.dismiss(animated: true, completion: completion)
+            })
     }
 
-    func displayAlert(title: String, message: String, dismissController: Bool) {
+    func displayAlert(title: String, message: String, dismissController: Bool, autoDismiss: Bool? = true, okHandler: ((UIAlertAction) -> Void)? = nil) {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
-            self.dismiss(animated: true, completion: {
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel, handler: { (_: UIAlertAction!) in
-                    if dismissController {
-                        self.dismiss(animated: true, completion: nil)
+            if dismissController {
+                self.dismiss(animated: true, completion: {
+                    self.displayAlert(title: title,
+                        message: message,
+                        autoDismiss: autoDismiss,
+                        okHandler: okHandler)
+                })
+            }
+        }
+    }
+
+    func displayAlert(title: String, message: String, autoDismiss: Bool? = true, okHandler: ((UIAlertAction) -> Void)? = nil) {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default, handler: { (action: UIAlertAction!) in
+                    if let actionHandler = okHandler {
+                        actionHandler(action)
+                    }
+                    if autoDismiss ?? true {
+                        alert.dismiss(animated: true, completion: nil)
                     }
                 }))
-                self.present(alert, animated: true, completion: nil)
-            })
+            self.present(alert, animated: true, completion: nil)
         }
     }
 
     func displayTextFieldAlert(title: String? = nil, message: String? = nil, keyboardType: UIKeyboardType? = .asciiCapable, handler: ((UIAlertAction, UITextField?) -> Void)? = nil) {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             let alert = UIAlertController(title: title,
-                                          message: message,
-                                          preferredStyle: .alert)
+                message: message,
+                preferredStyle: .alert)
             alert.addTextField { (textField) in
                 if let type = keyboardType {
                     textField.keyboardType = type
@@ -50,8 +65,8 @@ extension UIViewController {
             }
 
             alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: { (_) in
-                self.dismiss(animated: true, completion: nil)
-            }))
+                    self.dismiss(animated: true, completion: nil)
+                }))
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
         }
