@@ -9,11 +9,11 @@ protocol MiniAppCallbackProtocol: AnyObject {
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     weak var delegate: MiniAppCallbackProtocol?
-    var hostMessageInterface: MiniAppMessageProtocol?
+    var hostAppMessageDelegate: MiniAppMessageProtocol?
 
-    init(delegate: MiniAppCallbackProtocol, hostMessageInterface: MiniAppMessageProtocol) {
+    init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol) {
         self.delegate = delegate
-        self.hostMessageInterface = hostMessageInterface
+        self.hostAppMessageDelegate = hostAppMessageDelegate
         super.init()
     }
 
@@ -42,7 +42,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func sendUniqueId(messageId: String) {
-        guard let uniqueId = hostMessageInterface?.getUniqueId(), !uniqueId.isEmpty else {
+        guard let uniqueId = hostAppMessageDelegate?.getUniqueId(), !uniqueId.isEmpty else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: MiniAppJavaScriptError.internalError.rawValue)
             return
         }

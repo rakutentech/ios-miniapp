@@ -2,16 +2,16 @@ import WebKit
 
 public class RealMiniAppView: UIView, MiniAppDisplayProtocol, MiniAppCallbackProtocol {
     internal var webView: WKWebView
-    private var messageInterface: MiniAppMessageProtocol
+    private var hostAppMessageDelegate: MiniAppMessageProtocol
 
-    init?(miniAppId: String, messageInterface: MiniAppMessageProtocol) {
+    init?(miniAppId: String, hostAppMessageDelegate: MiniAppMessageProtocol) {
         guard let miniAppWebView = MiniAppWebView(miniAppId: miniAppId) else {
             return nil
         }
         webView = miniAppWebView
-        self.messageInterface = messageInterface
+        self.hostAppMessageDelegate = hostAppMessageDelegate
         super.init(frame: .zero)
-        webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self, hostMessageInterface: messageInterface)
+        webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self, hostAppMessageDelegate: hostAppMessageDelegate)
         webView.configuration.userContentController.addBridgingJavaScript()
         addSubview(webView)
     }
