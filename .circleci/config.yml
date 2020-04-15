@@ -7,17 +7,19 @@ jobs: # a collection of steps
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: yarn install
-          command: yarn install
+          name: Install dependencies w/ Yarn
+          command: yarn install --frozen-lockfile
       - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ./node_modules
+            - ~/.cache/yarn
       - run: #run lint and check for formatting
           name: check
-          command: yarn sdk check
+          command: yarn sdk lint
       - run: #compile the code
           name: compile
           command: yarn sdk compile
