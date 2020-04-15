@@ -194,12 +194,12 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackProtocol {
     var response: String?
     var errorMessage: String?
 
-    func didRecieveScriptMessageResponse(messageId: String, response: String) {
+    func didReceiveScriptMessageResponse(messageId: String, response: String) {
         self.messageId = messageId
         self.response = response
     }
 
-    func didRecieveScriptMessageError(messageId: String, errorMessage: String) {
+    func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
         self.messageId = messageId
         self.errorMessage = errorMessage
     }

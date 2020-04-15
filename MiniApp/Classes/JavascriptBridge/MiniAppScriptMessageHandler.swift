@@ -2,14 +2,14 @@ import Foundation
 import WebKit
 
 protocol MiniAppCallbackProtocol: AnyObject {
-    func didRecieveScriptMessageResponse(messageId: String, response: String)
-    func didRecieveScriptMessageError(messageId: String, errorMessage: String)
+    func didReceiveScriptMessageResponse(messageId: String, response: String)
+    func didReceiveScriptMessageError(messageId: String, errorMessage: String)
 }
 
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     weak var delegate: MiniAppCallbackProtocol?
-    var hostAppMessageDelegate: MiniAppMessageProtocol?
+    weak var hostAppMessageDelegate: MiniAppMessageProtocol?
 
     init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol) {
         self.delegate = delegate
@@ -17,7 +17,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         super.init()
     }
 
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
             if let messageBody = message.body as? String {
                 let bodyData: Data = messageBody.data(using: .utf8)!
                 let responseJson = try? JSONDecoder().decode(MiniAppJavaScriptMessageInfo.self, from: bodyData)
@@ -52,9 +52,9 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {
         switch responseStatus {
         case .onSuccess:
-            delegate?.didRecieveScriptMessageResponse(messageId: messageId, response: response)
+            delegate?.didReceiveScriptMessageResponse(messageId: messageId, response: response)
         case .onError:
-            delegate?.didRecieveScriptMessageError(messageId: messageId, errorMessage: response)
+            delegate?.didReceiveScriptMessageError(messageId: messageId, errorMessage: response)
         }
     }
 }

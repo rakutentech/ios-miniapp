@@ -2,7 +2,7 @@ import WebKit
 
 public class RealMiniAppView: UIView, MiniAppDisplayProtocol, MiniAppCallbackProtocol {
     internal var webView: WKWebView
-    private var hostAppMessageDelegate: MiniAppMessageProtocol
+    private weak var hostAppMessageDelegate: MiniAppMessageProtocol?
 
     init?(miniAppId: String, hostAppMessageDelegate: MiniAppMessageProtocol) {
         guard let miniAppWebView = MiniAppWebView(miniAppId: miniAppId) else {
@@ -29,11 +29,11 @@ public class RealMiniAppView: UIView, MiniAppDisplayProtocol, MiniAppCallbackPro
         return self
     }
 
-    func didRecieveScriptMessageResponse(messageId: String, response: String) {
+    func didReceiveScriptMessageResponse(messageId: String, response: String) {
         self.webView.evaluateJavaScript(Constants.javascriptSuccessCallback + "('\(messageId)'," + "'\(response)')")
     }
 
-    func didRecieveScriptMessageError(messageId: String, errorMessage: String) {
+    func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
         self.webView.evaluateJavaScript(Constants.javascriptErrorCallback + "('\(messageId)'," + "'\(errorMessage)')")
     }
 
