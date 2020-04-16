@@ -3,4 +3,5 @@ const MiniApp = require('./miniapp.js');
 
 const miniAppInstance = new MiniApp();
 
-export default miniAppInstance
+// tslint:disable-next-line:no-default-export
+export default miniAppInstance;
