@@ -3,9 +3,7 @@
     "version": "0.1.0",
     "description": "Mini App Sample for JavaScript",
     "main": "build/src/index.js",
-    "dependencies": {
-      "browserify": "^16.5.1"
-    },
+    "dependencies": {},
     "devDependencies": {},
     "scripts": {},
     "repository": {

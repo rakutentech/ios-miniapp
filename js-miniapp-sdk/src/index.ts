@@ -1,5 +1,5 @@
 // tslint:disable-next-line:variable-name
-const MiniApp = require('./miniapp.js');
+const MiniApp = require('./miniapp');
 
 const miniAppInstance = new MiniApp();
 

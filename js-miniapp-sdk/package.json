@@ -4,9 +4,7 @@
   "description": "Mini App SDK for JavaScript",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
-  "dependencies": {
-    "browserify": "^16.5.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
