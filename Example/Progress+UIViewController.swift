@@ -61,7 +61,16 @@ extension UIViewController {
             }
 
             let okAction = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default) { (action) in
-                handler?(action, alert.textFields?.first)
+                if UUID(uuidString: alert.textFields![0].text!) != nil {
+                    handler?(action, alert.textFields?.first)
+                } else {
+                    self.displayErrorInAlertController(alertController: alert, message: NSLocalizedString("error_invalid_miniapp_id", comment: ""))
+                    self.present(alert, animated: true, completion: nil)
+                    // The below code is to remove the error message after three seconds
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        self.displayErrorInAlertController(alertController: alert, message: "")
+                    }
+                }
             }
 
             alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: { (_) in
@@ -70,5 +79,20 @@ extension UIViewController {
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    /// Method to add a Attributed string as Error message for a given UIAlertController
+    /// - Parameters:
+    ///   - alertController: UIAlertController object in which you want to display error message
+    ///   - message: Error message description
+    func displayErrorInAlertController(alertController: UIAlertController, message: String) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.center
+        let attributedString = NSAttributedString(string: message, attributes: [
+            NSAttributedString.Key.paragraphStyle: paragraphStyle,
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14),
+            NSAttributedString.Key.foregroundColor : UIColor.red
+        ])
+        alertController.setValue(attributedString, forKey: "attributedMessage")
     }
 }
