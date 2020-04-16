@@ -1,32 +1,34 @@
 version: 2
 jobs: # a collection of steps
-  build: # runs not using Workflows must have a `build` job as entry point
+  build-sdk: # runs not using Workflows must have a `build` job as entry point
     working_directory: ~/mini-js-sdk # directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/node:10.16.3
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: install-npm-wee
-          command: npm install
+          name: Install dependencies w/ Yarn
+          command: yarn install --frozen-lockfile
       - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ./node_modules
+            - ~/.cache/yarn
       - run: #run lint and check for formatting
           name: check
-          command: npm run check
+          command: yarn sdk lint
       - run: #compile the code
           name: compile
-          command: npm run compile
+          command: yarn sdk compile
       - run: # run tests
           name: test
-          command: npm run test
+          command: yarn sdk test
       - run: # run coverage report
           name: code coverage
-          command: npm run coverage
+          command: yarn sdk coverage
       - run: # upload coverage report
           name: upload coverage
           command: bash <(curl -s https://codecov.io/bash)
@@ -42,7 +44,7 @@ jobs: # a collection of steps
       - persist_to_workspace:
           root: ~/mini-js-sdk
           paths:
-            - build/
+            - js-miniapp-sdk/build/
 
   publish-sdk:
     working_directory: ~/mini-js-sdk
@@ -53,15 +55,15 @@ jobs: # a collection of steps
       - attach_workspace:
           at: ./
       - run:
-          name: publish to npm
+          name: publish to NPM
           command: | 
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-            npm publish 
+            yarn sdk publish 
       - run:
           name: Publish Documentation
           command: |
             set -e
-            npm run docs
+            yarn sdk docs
             if [[ ! $CIRCLE_TAG == *"-"* ]]; then
               git checkout gh-pages
               cp -R publishableDocs/docs/. ./docs
@@ -79,16 +81,16 @@ workflows:
   version: 2
   build-and-release:
     jobs:
-      - build:
+      - build-sdk:
           filters:
             tags:
               only: /^v.*/
             branches:
               only: /.*/
-      - release-verification:
+      - sdk-release-verification:
           type: approval
           requires:
-            - build
+            - build-sdk
           filters:
             tags:
               only: /^v.*/
@@ -96,7 +98,7 @@ workflows:
               ignore: /.*/
       - publish-sdk:
           requires:
-            - release-verification
+            - sdk-release-verification
           filters:
             tags:
               only: /^v.*/
