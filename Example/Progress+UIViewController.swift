@@ -80,7 +80,7 @@ extension UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
+
     /// Method to add a Attributed string as Error message for a given UIAlertController
     /// - Parameters:
     ///   - alertController: UIAlertController object in which you want to display error message
@@ -90,8 +90,8 @@ extension UIViewController {
         paragraphStyle.alignment = NSTextAlignment.center
         let attributedString = NSAttributedString(string: message, attributes: [
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14),
-            NSAttributedString.Key.foregroundColor : UIColor.red
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
+            NSAttributedString.Key.foregroundColor: UIColor.red
         ])
         alertController.setValue(attributedString, forKey: "attributedMessage")
     }
