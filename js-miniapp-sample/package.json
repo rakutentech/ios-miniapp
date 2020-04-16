@@ -3,7 +3,9 @@
     "version": "0.1.0",
     "description": "Mini App Sample for JavaScript",
     "main": "build/src/index.js",
-    "dependencies": {},
+    "dependencies": {
+      "browserify": "^16.5.1"
+    },
     "devDependencies": {},
     "scripts": {},
     "repository": {
@@ -22,4 +24,3 @@
     },
     "homepage": "https://github.com/rakutentech/js-miniapp#readme"
   }
-  

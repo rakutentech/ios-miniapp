@@ -4,7 +4,9 @@
   "description": "Mini App SDK for JavaScript",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
-  "dependencies": {},
+  "dependencies": {
+    "browserify": "^16.5.1"
+  },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
@@ -28,7 +30,7 @@
     "clean": "gts clean",
     "compile": "tsc -p .",
     "prebuild": "npm run clean && npm run lint",
-    "build": "npm run clean && npm run lint && tsc -p . && npm run test",
+    "buildSdk": "tsc -p . && npm run test",
     "fix": "gts fix",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/mocha/results.xml",
     "coverage": "nyc npm test",

@@ -2,11 +2,11 @@
     "extends": "../tsconfig.json",
     "compilerOptions": {
         "rootDir": ".",
-        "outDir": "build"
+        "outDir": "build",
+        "declaration": true
     },
     "include": [
       "src/**/*.ts",
       "tests/**/*.ts"
     ]
 }
-  
