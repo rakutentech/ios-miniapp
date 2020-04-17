@@ -5,6 +5,7 @@ class ViewController: UITableViewController {
 
     var decodeResponse: [MiniAppInfo]?
     var currentMiniAppInfo: MiniAppInfo?
+    var currentMiniAppView: MiniAppDisplayProtocol?
     let imageCache = ImageCache()
 
     override func viewDidAppear(_ animated: Bool) {
@@ -14,18 +15,16 @@ class ViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DisplayMiniApp" {
-            if let indexPath = self.tableView.indexPathForSelectedRow?.row {
-                currentMiniAppInfo = decodeResponse?[indexPath]
-            }
-
-            guard let miniAppInfo = self.currentMiniAppInfo else {
+            guard let miniAppInfo = self.currentMiniAppInfo, let miniAppDisplay = self.currentMiniAppView else {
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
                 return
             }
 
             let displayController = segue.destination as? DisplayNavigationController
             displayController?.miniAppInfo = miniAppInfo
+            displayController?.miniAppDisplay = miniAppDisplay
             self.currentMiniAppInfo = nil
+            self.currentMiniAppView = nil
         }
     }
 }
@@ -62,6 +61,7 @@ extension ViewController {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppCell", for: indexPath) as? MiniAppCell {
             let miniAppDetail = self.decodeResponse?[indexPath.row]
             cell.titleLabel?.text = miniAppDetail?.displayName
+            cell.titleLabel?.text = miniAppDetail?.displayName ?? "Null"
             cell.detailedTextLabel?.text = "Version: " + (miniAppDetail?.version.versionTag ?? "N/A")
             cell.icon?.image = UIImage(named: "image_placeholder")
             cell.icon?.loadImage(miniAppDetail!.icon, placeholder: "image_placeholder", cache: imageCache)
@@ -73,5 +73,11 @@ extension ViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.showProgressIndicator {
+            if let miniAppInfo = self.decodeResponse?[indexPath.row] {
+                self.currentMiniAppInfo = miniAppInfo
+                self.fetchMiniApp(for: miniAppInfo)
+            }
+        }
     }
 }
