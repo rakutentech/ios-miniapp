@@ -13,4 +13,5 @@ export class MiniApp implements MiniAppInterface {
   }
 }
 
-module.exports = MiniApp;
+// tslint:disable-next-line:no-default-export
+export default MiniApp;
