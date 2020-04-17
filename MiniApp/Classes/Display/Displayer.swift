@@ -1,6 +1,6 @@
 internal class Displayer {
 
-    func getMiniAppView(miniAppId: String, messageInterface: MiniAppMessageProtocol) -> MiniAppDisplayProtocol? {
-        return RealMiniAppView(miniAppId: miniAppId, messageInterface: messageInterface)
+    func getMiniAppView(miniAppId: String, hostAppMessageDelegate: MiniAppMessageProtocol) -> MiniAppDisplayProtocol? {
+        return RealMiniAppView(miniAppId: miniAppId, hostAppMessageDelegate: hostAppMessageDelegate)
     }
 }
