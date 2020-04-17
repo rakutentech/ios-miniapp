@@ -9,11 +9,5 @@
         "sdk": "yarn workspace js-miniapp-sdk",
         "sample": "yarn workspace js-miniapp-sample",
         "bridge": "yarn workspace js-miniapp-bridge"
-    },
-    "devDependencies": {
-        "esmify": "^2.1.1"
-    },
-    "dependencies": {
-        "browser-resolve": "^1.11.3"
     }
 }
