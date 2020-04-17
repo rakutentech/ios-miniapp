@@ -67,4 +67,3 @@ extension ViewController {
         }, messageInterface: self)
     }
 }
-
