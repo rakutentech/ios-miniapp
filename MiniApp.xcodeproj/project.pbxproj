@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		181DC083240F316D00FDF633 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 181DC085240F316D00FDF633 /* Localizable.strings */; };
 		1867996B243EF6C200CD6A8E /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1867996A243EF6C200CD6A8E /* ImageCache.swift */; };
-		1867996D243EF79800CD6A8E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1867996C243EF79700CD6A8E /* Foundation.framework */; };
 		188F5921243DC6470042618E /* MiniAppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5920243DC6470042618E /* MiniAppCell.swift */; };
 		188F5923243DCBAB0042618E /* DisplayNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5922243DCBAB0042618E /* DisplayNavigationController.swift */; };
 		18C59F2B241094F600F66632 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C59F2A241094F600F66632 /* SettingsTableViewController.swift */; };
@@ -54,8 +53,6 @@
 /* Begin PBXFileReference section */
 		181DC084240F316D00FDF633 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1867996A243EF6C200CD6A8E /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCache.swift; path = ../Example/ImageCache.swift; sourceTree = "<group>"; };
-		1867996C243EF79700CD6A8E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		18679970243EFD0D00CD6A8E /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
 		188F5920243DC6470042618E /* MiniAppCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MiniAppCell.swift; path = ../Example/MiniAppCell.swift; sourceTree = "<group>"; };
 		188F5922243DCBAB0042618E /* DisplayNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplayNavigationController.swift; path = ../Example/DisplayNavigationController.swift; sourceTree = "<group>"; };
 		18C59F2A241094F600F66632 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = Example/SettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -98,7 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-      );
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		607FACE21AFB9204008FA782 /* Frameworks */ = {
@@ -140,15 +137,6 @@
 				38FC4652244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift */,
 			);
 			path = Unit;
-			sourceTree = "<group>";
-		};
-		4C00308BA5E16279A50E9889 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				18679970243EFD0D00CD6A8E /* Combine.framework */,
-				1867996C243EF79700CD6A8E /* Foundation.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		607FACC71AFB9204008FA782 = {
