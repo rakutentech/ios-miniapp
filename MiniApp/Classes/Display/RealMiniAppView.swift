@@ -1,6 +1,6 @@
 import WebKit
 
-public class RealMiniAppView: UIView, MiniAppDisplayProtocol, MiniAppCallbackProtocol {
+internal class RealMiniAppView: UIView, MiniAppDisplayProtocol, MiniAppCallbackProtocol {
     internal var webView: WKWebView
     private weak var hostAppMessageDelegate: MiniAppMessageProtocol?
 
