@@ -72,7 +72,6 @@
                                     <outlet property="detailedTextLabel" destination="gej-KN-6rR" id="0gt-aS-3at"/>
                                     <outlet property="icon" destination="vaJ-zY-eL8" id="yg6-6f-Ubq"/>
                                     <outlet property="titleLabel" destination="8ZM-h8-cTS" id="vaA-V9-ihv"/>
-                                    <segue destination="eW9-Vs-PTN" kind="presentation" identifier="DisplayMiniApp" modalPresentationStyle="fullScreen" id="Bkv-dX-4I1"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -105,6 +104,9 @@
                             <action selector="refreshList:" destination="YI1-4h-cvm" eventType="valueChanged" id="ZCk-fq-CPA"/>
                         </connections>
                     </refreshControl>
+                    <connections>
+                        <segue destination="eW9-Vs-PTN" kind="presentation" identifier="DisplayMiniApp" modalPresentationStyle="fullScreen" id="6x7-eF-gjJ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zsb-zf-A01" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -146,7 +148,6 @@
         <!--Custom runtime settings-->
         <scene sceneID="7fb-nw-Qcz">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bJO-tx-zfF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tableViewController id="hxN-ta-hmR" customClass="SettingsTableViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="PU0-gj-2yN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
@@ -243,6 +244,7 @@
                         <outlet property="textFieldSubKey" destination="QMe-rU-0NL" id="ER6-UH-PBD"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bJO-tx-zfF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1566" y="-329"/>
         </scene>
