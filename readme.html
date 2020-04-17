@@ -13,7 +13,7 @@
     <a title="README  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp Docs</a> (52% documented)</p>
+        <p><a href="index.html">MiniApp Docs</a> (88% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -42,9 +42,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/RealMiniAppView.html">RealMiniAppView</a>
               </li>
             </ul>
           </li>
@@ -78,24 +75,108 @@
             
             <p><a href="https://travis-ci.org/rakutentech/ios-miniapp"><img src="https://travis-ci.org/rakutentech/ios-miniapp.svg?branch=master" alt="Build Status"></a>
 <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome"></a>
-<a href="https://opensource.org/licenses/MIT">
-  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-</a></p>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a></p>
 <h1 id='miniapp' class='heading'>MiniApp</h1>
 
-<p>This SDK provides capabilities to downloading/cache and host the Mini-App in native iOS applications. It also provides more features to interact with the native application via bridge.</p>
+<p>This open-source library allows you to integrate a Rakuten MiniApp into your iOS applications. It also provides more features to interact with the native application via bridge.</p>
+<h2 id='features' class='heading'>Features</h2>
+
+<ul>
+<li>Load MiniApp list</li>
+<li>Load MiniApp meta-informations</li>
+<li>Create a MiniApp view</li>
+</ul>
+
+<p>All the MiniApp files downloaded by the MiniApp iOS library are cached locally for efficiency</p>
+<h2 id='getting-started' class='heading'>Getting started</h2>
+<h3 id='requirements' class='heading'>Requirements</h3>
+
+<p>This module supports <strong>iOS 11.0 and above</strong>. It has been tested on iOS 11.0 and above.</p>
+
+<p>It is written in Swift 5.0 and can be used in compatible Xcode versions.</p>
+
+<p>In order to run your MiniApp you will have to provide the following,</p>
+
+<ul>
+<li>MiniApp host application identifier (RASApplicationIdentifier)</li>
+<li>Subscription key (RASProjectSubscriptionKey)</li>
+<li>Base URL for API requests to the library (RMAAPIEndpoint)</li>
+</ul>
 <h1 id='documentation' class='heading'>Documentation</h1>
 
 <p>Generated documentation for this SDK can be found at <a href="https://rakutentech.github.io/ios-miniapp/">https://rakutentech.github.io/ios-miniapp/</a></p>
 <h2 id='example' class='heading'>Example</h2>
 
 <p>To run the example project, clone the repo, and run <code>pod install</code> from the Example directory first.</p>
-<h2 id='requirements' class='heading'>Requirements</h2>
-<h2 id='installation' class='heading'>Installation</h2>
+<h3 id='custom-parameters' class='heading'>Custom parameters</h3>
 
-<p>MiniApp is available through <a href="https://cocoapods.org">CocoaPods</a>. To install
-it, simply add the following line to your Podfile:</p>
+<p>In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (RASApplicationIdentifier, RASProjectSubscriptionKey) or by taping the top right configuration icon in the example application. Also we don&rsquo;t currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (RMAAPIEndpoint)</p>
+<h1 id='installation' class='heading'>Installation</h1>
+
+<p>MiniApp is available through <a href="https://cocoapods.org">CocoaPods</a>. To install it, simply add the following line to your Podfile:</p>
 <pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'MiniApp'</span>
+</code></pre>
+<h1 id='configuration' class='heading'>Configuration</h1>
+
+<p>In your project configuration .plist you should add 2 custom string target properties :</p>
+
+<ul>
+<li><code>RASApplicationIdentifier</code> - to set your MiniApp host application identifier</li>
+<li><code>RASProjectSubscriptionKey</code> - to set your MiniApp subscription key</li>
+<li><code>RMAAPIEndpoint</code> - to provide your own Base URL for API requests</li>
+</ul>
+
+<p>If you don&rsquo;t want to use project settings, you have to pass this informations one by one to the <code>Config.userDefaults</code> using a <code>Config.Key</code> as key:</p>
+<pre class="highlight swift"><code><span class="kt">Config</span><span class="o">.</span><span class="n">userDefaults</span><span class="p">?</span><span class="o">.</span><span class="nf">set</span><span class="p">(</span><span class="s">"MY_CUSTOM_ID"</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="kt">Key</span><span class="o">.</span><span class="n">subscriptionKey</span><span class="o">.</span><span class="n">rawValue</span><span class="p">)</span>
+</code></pre>
+<h1 id='usage' class='heading'>Usage</h1>
+
+<ul>
+<li><a href="#load-miniapp-list">Load the Mini App list</a></li>
+<li><a href="#get-mini-appinfo">Get a MiniAppInfo</a></li>
+<li><a href="#create-mini-app">Create a MiniApp</a></li>
+</ul>
+
+<div id="load-miniapp-list"></div>
+<h3 id='load-the-code-miniapp-code-list' class='heading'>Load the <code><a href="Classes/MiniApp.html">MiniApp</a></code> list:</h3>
+
+<p>MiniApp library calls are done via the <code>MiniApp.shared()</code> singleton with or without a <code><a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a></code> instance (you can get the current one with <code>Config.getCurrent()</code>). If you don&rsquo;t provide a config instance, values in custom iOS target properties will be used by default. </p>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="n">list</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>or</p>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">())</span><span class="o">.</span><span class="n">list</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre>
+
+<div id="get-mini-appinfo"></div>
+<h3 id='getting-a-code-miniappinfo-code' class='heading'>Getting a <code><a href="Structs/MiniAppInfo.html">MiniAppInfo</a></code> :</h3>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>or</p>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">())</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre>
+
+<div id="create-mini-app"></div>
+<h3 id='create-a-miniapp-for-the-given-code-miniappinfo-code-object' class='heading'>Create a MiniApp for the given <code><a href="Structs/MiniAppInfo.html">MiniAppInfo</a></code> object :</h3>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">appInfo</span><span class="p">:</span> <span class="n">info</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">miniAppDisplay</span><span class="p">):</span>
+                <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="n">miniAppDisplay</span><span class="o">.</span><span class="nf">getMiniAppView</span><span class="p">()</span>
+                <span class="n">view</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">bounds</span>
+                <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+            <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+                <span class="nf">print</span><span class="p">(</span><span class="s">"Error: "</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="p">)</span>
+            <span class="p">}</span>
+<span class="p">},</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
 </code></pre>
 <h2 id='license' class='heading'>License</h2>
 
@@ -104,7 +185,7 @@ it, simply add the following line to your Podfile:</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-04-16)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-04-17)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
