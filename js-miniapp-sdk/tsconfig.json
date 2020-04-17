@@ -3,6 +3,7 @@
     "compilerOptions": {
         "rootDir": ".",
         "outDir": "build",
+        "module": "es2015",
         "declaration": true
     },
     "include": [
