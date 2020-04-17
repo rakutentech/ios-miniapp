@@ -22,12 +22,6 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>RASApplicationIdentifier</key>
-	<string>RAS_APPLICATION_IDENTIFIER</string>
-	<key>RASProjectSubscriptionKey</key>
-	<string>RAS_SUBSCRIPTION_KEY</string>
-	<key>RMAAPIEndpoint</key>
-	<string>https://test.api-catalog-gateway-api.rakuten.co.jp/appstudio-stg/miniapps-publishing/api/v1/</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -41,5 +35,11 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
+	<key>RASApplicationIdentifier</key>
+	<string>RAS_APPLICATION_IDENTIFIER</string>
+	<key>RASProjectSubscriptionKey</key>
+	<string>RAS_SUBSCRIPTION_KEY</string>
+	<key>RMAAPIEndpoint</key>
+	<string>https://www.example.com</string>
 </dict>
 </plist>
