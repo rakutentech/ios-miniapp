@@ -3,7 +3,7 @@ public struct MiniAppInfo: Decodable {
     /// Unique identifier of a Miniapp
     internal var id: String
     /// Name given for a Miniapp that will be displayed on the list
-    public var displayName: String
+    public var displayName: String?
     /// App Icon associated for the Miniapp
     public var icon: URL
     /// Version information of a Miniapp
