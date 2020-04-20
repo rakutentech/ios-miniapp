@@ -2,20 +2,28 @@ import UIKit
 
 extension UIViewController {
 
-    func showProgressIndicator(completion: (() -> Void)? = nil) {
+    func showProgressIndicator(silently: Bool = false, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: nil, message: NSLocalizedString("wait_message", comment: ""), preferredStyle: .alert)
-            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-            loadingIndicator.hidesWhenStopped = true
-            loadingIndicator.style = UIActivityIndicatorView.Style.gray
-            loadingIndicator.startAnimating()
-            alert.view.addSubview(loadingIndicator)
-            self.present(alert, animated: true, completion: completion)
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            if silently {
+                if let launchCompletion = completion {
+                    launchCompletion()
+                }
+            } else {
+                let alert = UIAlertController(title: nil, message: NSLocalizedString("wait_message", comment: ""), preferredStyle: .alert)
+                let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+                loadingIndicator.hidesWhenStopped = true
+                loadingIndicator.style = UIActivityIndicatorView.Style.gray
+                loadingIndicator.startAnimating()
+                alert.view.addSubview(loadingIndicator)
+                self.present(alert, animated: true, completion: completion)
+            }
         }
     }
 
     func dismissProgressIndicator(completion: (() -> Void)? = nil) {
         DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self.dismiss(animated: true, completion: completion)
             })
     }
