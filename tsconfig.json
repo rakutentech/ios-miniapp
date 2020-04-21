@@ -4,6 +4,7 @@
     "strict": false,
     "target": "ES5",
     "lib": ["dom"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "moduleResolution": "node"
   }
 }
