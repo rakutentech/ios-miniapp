@@ -25,6 +25,6 @@ The repo is split into three packages:
 - `yarn sdk check`
 - `yarn sdk clean`
 - `yarn sdk compile`
-- `yarn sdk build`
+- `yarn sdk buildSdk`
 - `yarn sdk fix`
 - `yarn sdk test`
