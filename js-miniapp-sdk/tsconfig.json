@@ -2,11 +2,12 @@
     "extends": "../tsconfig.json",
     "compilerOptions": {
         "rootDir": ".",
-        "outDir": "build"
+        "outDir": "build",
+        "module": "es2015",
+        "declaration": true
     },
     "include": [
       "src/**/*.ts",
       "tests/**/*.ts"
     ]
 }
-  

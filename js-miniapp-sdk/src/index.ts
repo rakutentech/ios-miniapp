@@ -1,4 +1,6 @@
-/** This is a description of the foo function. */
-function foo() {
-  console.log('foo');
-}
+import { MiniApp } from './miniapp';
+
+const miniAppInstance = new MiniApp();
+
+// tslint:disable-next-line:no-default-export
+export default miniAppInstance;
