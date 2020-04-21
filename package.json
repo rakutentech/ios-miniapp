@@ -8,6 +8,7 @@
     "scripts": {
         "sdk": "yarn workspace js-miniapp-sdk",
         "sample": "yarn workspace js-miniapp-sample",
-        "bridge": "yarn workspace js-miniapp-bridge"
+        "bridge": "yarn workspace js-miniapp-bridge",
+        "postinstall": "yarn sdk compile"
     }
 }
