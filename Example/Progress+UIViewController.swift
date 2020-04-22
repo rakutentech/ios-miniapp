@@ -69,15 +69,11 @@ extension UIViewController {
             }
 
             let okAction = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default) { (action) in
-                if UUID(uuidString: alert.textFields![0].text!) != nil {
+                if alert.textFields![0].text!.isValidUUID() {
                     handler?(action, alert.textFields?.first)
                 } else {
                     self.displayErrorInAlertController(alertController: alert, message: NSLocalizedString("error_invalid_miniapp_id", comment: ""))
                     self.present(alert, animated: true, completion: nil)
-                    // The below code is to remove the error message after three seconds
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        self.displayErrorInAlertController(alertController: alert, message: "")
-                    }
                 }
             }
 

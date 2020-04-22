@@ -25,12 +25,14 @@ class SettingsTableViewController: UITableViewController {
     }
 
     @IBAction func actionSaveConfig() {
-        save(field: self.textFieldAppID, for: .applicationIdentifier)
-        save(field: self.textFieldSubKey, for: .subscriptionKey)
-        displayAlert(title: NSLocalizedString("message_save_title", comment: ""),
-            message: NSLocalizedString("message_save_text", comment: ""),
-            autoDismiss: true) { _ in
-            self.dismiss(animated: true, completion: nil)
+        if isValidKeyEntered(text: self.textFieldAppID.text, key: .applicationIdentifier) && isValidKeyEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
+            save(field: self.textFieldAppID, for: .applicationIdentifier)
+            save(field: self.textFieldSubKey, for: .subscriptionKey)
+            displayAlert(title: NSLocalizedString("message_save_title", comment: ""),
+                message: NSLocalizedString("message_save_text", comment: ""),
+                autoDismiss: true) { _ in
+                self.dismiss(animated: true, completion: nil)
+            }
         }
     }
 
@@ -54,4 +56,44 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
+    func isValidKeyEntered(text: String?, key: Config.Key) -> Bool {
+        guard let textFieldValue = text, !textFieldValue.isEmpty else {
+            displayNoValueFoundErrorMessage(forKey: key)
+            return false
+        }
+        if textFieldValue.isValidUUID() {
+            return true
+        }
+        displayInvalidValueErrorMessage(forKey: key)
+        return false
+    }
+
+    func displayInvalidValueErrorMessage(forKey: Config.Key) {
+        switch forKey {
+        case .applicationIdentifier:
+        displayAlert(title: NSLocalizedString("error_title", comment: ""),
+            message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
+            autoDismiss: true)
+        case .subscriptionKey:
+        displayAlert(title: NSLocalizedString("error_title", comment: ""),
+            message: NSLocalizedString("error_incorrect_subscription_key_message", comment: ""),
+            autoDismiss: false)
+        default:
+        break
+        }
+    }
+    func displayNoValueFoundErrorMessage(forKey: Config.Key) {
+        switch forKey {
+        case .applicationIdentifier:
+        displayAlert(title: NSLocalizedString("error_title", comment: ""),
+            message: NSLocalizedString("error_empty_appid_key_message", comment: ""),
+            autoDismiss: true)
+        case .subscriptionKey:
+        displayAlert(title: NSLocalizedString("error_title", comment: ""),
+            message: NSLocalizedString("error_empty_subscription_key_message", comment: ""),
+            autoDismiss: false)
+        default:
+        break
+        }
+    }
 }

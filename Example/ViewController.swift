@@ -7,6 +7,7 @@ class ViewController: UITableViewController {
     var currentMiniAppInfo: MiniAppInfo?
     var currentMiniAppView: MiniAppDisplayProtocol?
     let imageCache = ImageCache()
+    let config = Config.getCurrent()
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
