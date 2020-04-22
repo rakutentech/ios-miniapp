@@ -1,12 +1,15 @@
 import UIKit
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
+    var configUpdateProtocol: ConfigProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.textFieldAppID.delegate = self
+        self.textFieldSubKey.delegate = self
         addTapGesture()
     }
 
@@ -32,6 +35,7 @@ class SettingsTableViewController: UITableViewController {
                 message: NSLocalizedString("message_save_text", comment: ""),
                 autoDismiss: true) { _ in
                 self.dismiss(animated: true, completion: nil)
+                self.configUpdateProtocol?.didConfigChanged()
             }
         }
     }
@@ -95,5 +99,22 @@ class SettingsTableViewController: UITableViewController {
         default:
         break
         }
+    }
+
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        return true
+    }
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let hostAppIdText = self.textFieldAppID.text, !hostAppIdText.isEmpty else {
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            return
+        }
+        guard let subscriptionKeyText = self.textFieldSubKey.text, !subscriptionKeyText.isEmpty else {
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            return
+        }
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
 }

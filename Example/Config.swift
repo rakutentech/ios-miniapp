@@ -17,5 +17,8 @@ class Config: NSObject {
                                          subscriptionKey: Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue),
                                          hostAppVersion: Config.userDefaults?.string(forKey: Config.Key.version.rawValue))
     }
+}
 
+protocol ConfigProtocol {
+    func didConfigChanged()
 }

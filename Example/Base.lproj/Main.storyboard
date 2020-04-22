@@ -84,7 +84,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="6gZ-4N-NPm"/>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="Settings" id="QKl-NE-KE1">
                             <connections>
-                                <segue destination="TVZ-Rp-2Bg" kind="presentation" modalPresentationStyle="fullScreen" id="6nU-Qi-B5w"/>
+                                <segue destination="TVZ-Rp-2Bg" kind="presentation" identifier="CustomConfiguration" id="6nU-Qi-B5w"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -110,7 +110,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zsb-zf-A01" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="229.59999999999999" y="385.45727136431788"/>
+            <point key="canvasLocation" x="-50" y="358"/>
         </scene>
         <!--Mini Apps-->
         <scene sceneID="oLG-1t-f3c">
@@ -132,16 +132,16 @@
         <!--Navigation Controller-->
         <scene sceneID="5pZ-hz-1d8">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bb9-pQ-R82" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="TVZ-Rp-2Bg" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oiR-SE-CN6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
                         <segue destination="hxN-ta-hmR" kind="relationship" relationship="rootViewController" id="Fp9-YY-LHb"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bb9-pQ-R82" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="734" y="-328"/>
         </scene>
@@ -150,7 +150,7 @@
             <objects>
                 <tableViewController id="hxN-ta-hmR" customClass="SettingsTableViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="PU0-gj-2yN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>

@@ -1,10 +1,10 @@
 "error_title" = "Error";
 "error_list_message" = "Couldn't retrieve Miniapp list, please try again later";
 "error_single_message" = "Couldn't retrieve Miniapp info, please try again later";
-"error_incorrect_appid_message" = "Incorrect Miniapp ID, please try again";
-"error_empty_appid_key_message" = "Miniapp ID cannot be empty, enter valid Miniapp ID and try again";
-"error_incorrect_subscription_key_message" = "Incorrect Miniapp subscription key, please try again";
-"error_empty_subscription_key_message" = "Miniapp subscription key cannot be empty, enter valid subscription key and try again";
+"error_incorrect_appid_message" = "Incorrect Host app ID, please try again";
+"error_empty_appid_key_message" = "Host app ID cannot be empty, enter valid ID and try again";
+"error_incorrect_subscription_key_message" = "Incorrect subscription key, please try again";
+"error_empty_subscription_key_message" = "Subscription key cannot be empty, enter valid subscription key and try again";
 "error_miniapp_message" = "Couldn't retrieve Miniapp, please try again later";
 "error_miniapp_download_message" = "Downloading failed, please try again later";
 "error_invalid_miniapp_id" = "Invalid Miniapp ID";
