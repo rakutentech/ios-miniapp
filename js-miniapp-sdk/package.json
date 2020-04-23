@@ -2,7 +2,9 @@
   "name": "js-miniapp-sdk",
   "version": "0.1.0",
   "description": "Mini App SDK for JavaScript",
-  "main": "build/src/index.js",
+  "main": "build/bundle.js",
+  "browser": "build/bundle.js",
+  "module": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "dependencies": {},
   "devDependencies": {
@@ -12,6 +14,7 @@
     "@types/mocha": "^7.0.2",
     "@types/node": "^10.0.3",
     "@types/sinon": "^9.0.0",
+    "browserify": "^16.5.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "gts": "^1.1.2",
@@ -30,9 +33,9 @@
   "scripts": {
     "lint": "gts check",
     "clean": "gts clean",
-    "compile": "tsc -p .",
+    "compile": "tsc -p . && browserify ./build/src/index.js --standalone MiniApp > build/bundle.js ",
     "prebuild": "npm run clean && npm run lint",
-    "buildSdk": "gts check && tsc -p . && npm run test",
+    "buildSdk": "npm run lint && npm run compile && npm run test",
     "fix": "gts fix",
     "test": "mocha test/**/*.spec.ts",
     "coverage": "nyc npm test",
@@ -43,7 +46,8 @@
     "README.md",
     "LICENSE",
     "package.json",
-    "build/src/"
+    "build/src/",
+    "build/bundle.js"
   ],
   "repository": {
     "type": "git",
