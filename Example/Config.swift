@@ -20,5 +20,5 @@ class Config: NSObject {
 }
 
 protocol ConfigProtocol {
-    func didConfigChanged()
+    func didConfigChanged(miniAppList: [MiniAppInfo])
 }

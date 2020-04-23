@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIViewController {
+extension UIViewController: UITextFieldDelegate {
 
     func showProgressIndicator(silently: Bool = false, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
@@ -63,6 +63,7 @@ extension UIViewController {
                 message: message,
                 preferredStyle: .alert)
             alert.addTextField { (textField) in
+                textField.delegate = self
                 if let type = keyboardType {
                     textField.keyboardType = type
                 }
@@ -76,7 +77,7 @@ extension UIViewController {
                     self.present(alert, animated: true, completion: nil)
                 }
             }
-
+            okAction.isEnabled = false
             alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: { (_) in
                     self.dismiss(animated: true, completion: nil)
                 }))
@@ -98,5 +99,18 @@ extension UIViewController {
             NSAttributedString.Key.foregroundColor: UIColor.red
         ])
         alertController.setValue(attributedString, forKey: "attributedMessage")
+    }
+
+    /// Method to enable/disable OK button in UIAlertController
+    public func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let alertController = self.presentedViewController as? UIAlertController else {
+            return
+        }
+        let okButtonAction: UIAlertAction = alertController.actions[1]
+        guard let textFieldValue = textField.text, !textFieldValue.isEmpty else {
+            okButtonAction.isEnabled = false
+            return
+        }
+        okButtonAction.isEnabled = true
     }
 }

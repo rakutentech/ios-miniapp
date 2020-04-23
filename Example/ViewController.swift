@@ -88,9 +88,9 @@ extension ViewController {
     }
 
     /// Delegate called whenever Runtime configuration is changed from SettingsTableViewController
-    func didConfigChanged() {
+    func didConfigChanged(miniAppList: [MiniAppInfo]) {
         self.decodeResponse?.removeAll()
+        self.decodeResponse = miniAppList
         self.tableView.reloadData()
-        fetchAppList()
     }
 }

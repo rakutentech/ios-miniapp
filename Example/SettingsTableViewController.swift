@@ -1,6 +1,7 @@
 import UIKit
+import MiniApp
 
-class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
+class SettingsTableViewController: UITableViewController {
 
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
@@ -29,15 +30,59 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
 
     @IBAction func actionSaveConfig() {
         if isValidKeyEntered(text: self.textFieldAppID.text, key: .applicationIdentifier) && isValidKeyEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
-            save(field: self.textFieldAppID, for: .applicationIdentifier)
-            save(field: self.textFieldSubKey, for: .subscriptionKey)
-            displayAlert(title: NSLocalizedString("message_save_title", comment: ""),
-                message: NSLocalizedString("message_save_text", comment: ""),
-                autoDismiss: true) { _ in
-                self.dismiss(animated: true, completion: nil)
-                self.configUpdateProtocol?.didConfigChanged()
+            fetchAppList(withConfig: createConfig(hostAppId: self.textFieldAppID.text!, subscriptionKey: self.textFieldSubKey.text!))
+        }
+    }
+
+    /// Fetch the mini app list for a given Host app ID and subscription key.
+    /// Reload Mini App list only when successful response is received
+    /// If error received with 200 as status code but there is no mini apps published in the platform, so we show a different error message
+    func fetchAppList(withConfig: MiniAppSdkConfig) {
+        showProgressIndicator(silently: false) {
+            MiniApp.shared(with: withConfig).list { (result) in
+                DispatchQueue.main.async {
+                    self.refreshControl?.endRefreshing()
+                }
+                switch result {
+                case .success(let responseData):
+                    DispatchQueue.main.async {
+                        self.configUpdateProtocol?.didConfigChanged(miniAppList: responseData)
+                        self.dismissProgressIndicator()
+                        self.saveCustomConfiguration()
+                    }
+                case .failure(let error):
+                    let errorInfo = error as NSError
+                    if errorInfo.code != 200 {
+                        print(error.localizedDescription)
+                        self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: true)
+                    } else {
+                        DispatchQueue.main.async {
+                            self.displayAlert(title: "Information", message: NSLocalizedString("error_no_miniapp_found", comment: ""), dismissController: true) { _ in
+                                self.saveCustomConfiguration()
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                    }
+                }
             }
         }
+    }
+
+    func saveCustomConfiguration() {
+        self.save(field: self.textFieldAppID, for: .applicationIdentifier)
+        self.save(field: self.textFieldSubKey, for: .subscriptionKey)
+        self.displayAlert(title: NSLocalizedString("message_save_title", comment: ""),
+            message: NSLocalizedString("message_save_text", comment: ""),
+            autoDismiss: true) { _ in
+                self.dismiss(animated: true, completion: nil)
+            }
+    }
+
+    func createConfig(hostAppId: String, subscriptionKey: String) -> MiniAppSdkConfig {
+        return MiniAppSdkConfig(baseUrl: Bundle.main.infoDictionary?[Config.Key.endpoint.rawValue] as? String,
+                                rasAppId: hostAppId,
+                                subscriptionKey: subscriptionKey,
+                                hostAppVersion: Bundle.main.infoDictionary?[Config.Key.version.rawValue] as? String)
     }
 
     /// Adding Tap gesture to dismiss the Keyboard
@@ -106,7 +151,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
         return true
     }
 
-    func textFieldDidChangeSelection(_ textField: UITextField) {
+    override func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let hostAppIdText = self.textFieldAppID.text, !hostAppIdText.isEmpty else {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
             return
