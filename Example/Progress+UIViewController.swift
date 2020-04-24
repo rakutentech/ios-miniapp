@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIViewController {
+extension UIViewController: UITextFieldDelegate {
 
     func showProgressIndicator(silently: Bool = false, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
@@ -63,24 +63,21 @@ extension UIViewController {
                 message: message,
                 preferredStyle: .alert)
             alert.addTextField { (textField) in
+                textField.delegate = self
                 if let type = keyboardType {
                     textField.keyboardType = type
                 }
             }
 
             let okAction = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default) { (action) in
-                if UUID(uuidString: alert.textFields![0].text!) != nil {
+                if alert.textFields![0].text!.isValidUUID() {
                     handler?(action, alert.textFields?.first)
                 } else {
                     self.displayErrorInAlertController(alertController: alert, message: NSLocalizedString("error_invalid_miniapp_id", comment: ""))
                     self.present(alert, animated: true, completion: nil)
-                    // The below code is to remove the error message after three seconds
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        self.displayErrorInAlertController(alertController: alert, message: "")
-                    }
                 }
             }
-
+            okAction.isEnabled = false
             alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: { (_) in
                     self.dismiss(animated: true, completion: nil)
                 }))
@@ -102,5 +99,18 @@ extension UIViewController {
             NSAttributedString.Key.foregroundColor: UIColor.red
         ])
         alertController.setValue(attributedString, forKey: "attributedMessage")
+    }
+
+    /// Method to enable/disable OK button in UIAlertController
+    public func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let alertController = self.presentedViewController as? UIAlertController else {
+            return
+        }
+        let okButtonAction: UIAlertAction = alertController.actions[1]
+        guard let textFieldValue = textField.text, !textFieldValue.isEmpty else {
+            okButtonAction.isEnabled = false
+            return
+        }
+        okButtonAction.isEnabled = true
     }
 }

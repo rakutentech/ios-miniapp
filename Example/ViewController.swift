@@ -1,12 +1,13 @@
 import UIKit
 import MiniApp
 
-class ViewController: UITableViewController {
+class ViewController: UITableViewController, ConfigProtocol {
 
     var decodeResponse: [MiniAppInfo]?
     var currentMiniAppInfo: MiniAppInfo?
     var currentMiniAppView: MiniAppDisplayProtocol?
     let imageCache = ImageCache()
+    let config = Config.getCurrent()
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -25,6 +26,11 @@ class ViewController: UITableViewController {
             displayController?.miniAppDisplay = miniAppDisplay
             self.currentMiniAppInfo = nil
             self.currentMiniAppView = nil
+        } else if segue.identifier == "CustomConfiguration" {
+            if let navigationController = segue.destination as? UINavigationController,
+                let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
+                customSettingsController.configUpdateProtocol = self
+            }
         }
     }
 }
@@ -79,5 +85,12 @@ extension ViewController {
                 self.fetchMiniApp(for: miniAppInfo)
             }
         }
+    }
+
+    /// Delegate called whenever Runtime configuration is changed from SettingsTableViewController
+    func didConfigChanged(miniAppList: [MiniAppInfo]) {
+        self.decodeResponse?.removeAll()
+        self.decodeResponse = miniAppList
+        self.tableView.reloadData()
     }
 }

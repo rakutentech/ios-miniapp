@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hzK-gd-cH8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hzK-gd-cH8">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -84,7 +84,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="6gZ-4N-NPm"/>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="Settings" id="QKl-NE-KE1">
                             <connections>
-                                <segue destination="TVZ-Rp-2Bg" kind="presentation" id="6nU-Qi-B5w"/>
+                                <segue destination="TVZ-Rp-2Bg" kind="presentation" identifier="CustomConfiguration" id="6nU-Qi-B5w"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -110,7 +110,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zsb-zf-A01" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="229.59999999999999" y="385.45727136431788"/>
+            <point key="canvasLocation" x="-50" y="358"/>
         </scene>
         <!--Mini Apps-->
         <scene sceneID="oLG-1t-f3c">
@@ -132,6 +132,7 @@
         <!--Navigation Controller-->
         <scene sceneID="5pZ-hz-1d8">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bb9-pQ-R82" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="TVZ-Rp-2Bg" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oiR-SE-CN6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
@@ -141,7 +142,6 @@
                         <segue destination="hxN-ta-hmR" kind="relationship" relationship="rootViewController" id="Fp9-YY-LHb"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bb9-pQ-R82" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="734" y="-328"/>
         </scene>
@@ -290,9 +290,9 @@
             <point key="canvasLocation" x="1983" y="385"/>
         </scene>
     </scenes>
-    <color key="tintColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
         <image name="Settings" width="24" height="24"/>
         <image name="app-list" width="24" height="24"/>
     </resources>
+    <color key="tintColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>
