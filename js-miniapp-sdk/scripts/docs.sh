@@ -14,4 +14,6 @@ version: "$PACKAGE_VERSION"
 ---"
 cat <<< "$contents" > "$FILE_VERSION_MD"
 
-npx typedoc --includeVersion --out $DIR_DOCS src --plugin typedoc-plugin-markdown
+npx typedoc --includeVersion --out $DIR_DOCS/api src --plugin typedoc-plugin-markdown --stripInternal --readme none
+mv $DIR_DOCS/api/README.md $DIR_DOCS/api/index.md
+cp README.md $DIR_DOCS/index.md
