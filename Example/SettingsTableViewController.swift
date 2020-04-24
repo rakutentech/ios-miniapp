@@ -29,8 +29,11 @@ class SettingsTableViewController: UITableViewController {
     }
 
     @IBAction func actionSaveConfig() {
-        if isValidKeyEntered(text: self.textFieldAppID.text, key: .applicationIdentifier) && isValidKeyEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
-            fetchAppList(withConfig: createConfig(hostAppId: self.textFieldAppID.text!, subscriptionKey: self.textFieldSubKey.text!))
+        if isValueEntered(text: self.textFieldAppID.text, key: .applicationIdentifier) && isValueEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
+            if self.textFieldAppID.text!.isValidUUID() {
+                fetchAppList(withConfig: createConfig(hostAppId: self.textFieldAppID.text!, subscriptionKey: self.textFieldSubKey.text!))
+            }
+            displayInvalidValueErrorMessage(forKey: .applicationIdentifier)
         }
     }
 
@@ -105,16 +108,12 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
-    func isValidKeyEntered(text: String?, key: Config.Key) -> Bool {
+    func isValueEntered(text: String?, key: Config.Key) -> Bool {
         guard let textFieldValue = text, !textFieldValue.isEmpty else {
             displayNoValueFoundErrorMessage(forKey: key)
             return false
         }
-        if textFieldValue.isValidUUID() {
-            return true
-        }
-        displayInvalidValueErrorMessage(forKey: key)
-        return false
+        return true
     }
 
     func displayInvalidValueErrorMessage(forKey: Config.Key) {
