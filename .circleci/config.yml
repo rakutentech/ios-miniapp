@@ -26,6 +26,9 @@ jobs: # a collection of steps
       - run: # run tests
           name: test
           command: yarn sdk test
+      - run: 
+          name: Generate Docs
+          command: yarn sdk docs
       - run: # run coverage report
           name: code coverage
           command: yarn sdk coverage
@@ -34,17 +37,24 @@ jobs: # a collection of steps
           command: bash <(curl -s https://codecov.io/bash)
       - store_artifacts: # special step to save test results as as artifact
           # Upload test summary for display in Artifacts
-          path: test-results
+          path: js-miniapp-sdk/test-results/
           prefix: tests
       - store_artifacts: # for display in Artifacts
-          path: coverage
+          path: js-miniapp-sdk/coverage/
           prefix: coverage
+      - store_artifacts:
+          path: js-miniapp-sdk/publishableDocs/
+          prefix: docs
+      - store_artifacts:
+          path: js-miniapp-sdk/build
+          prefix: build
       - store_test_results: # for display in Test Summary
           path: test-results
       - persist_to_workspace:
           root: ~/mini-js-sdk
           paths:
             - js-miniapp-sdk/build/
+            - js-miniapp-sdk/publishableDocs/
 
   publish-sdk:
     working_directory: ~/mini-js-sdk
