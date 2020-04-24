@@ -3,7 +3,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import MiniApp from '../src/miniapp';
+import { MiniAppImp } from '../src/miniapp';
 
 const window: any = {};
 (global as any).window = window;
@@ -18,7 +18,7 @@ describe('getUniqueId', () => {
   it('should retrieve the unique id from the Mini App Bridge', () => {
     window.MiniAppBridge.getUniqueId.resolves('test_mini_app_id');
 
-    const miniApp = new MiniApp();
+    const miniApp = new MiniAppImp();
 
     return expect(miniApp.getUniqueId()).to.eventually.equal(
       'test_mini_app_id'

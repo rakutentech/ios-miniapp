@@ -1,5 +1,11 @@
-import { MiniApp } from './miniapp';
+/** @internal */
 
-const miniAppInstance = new MiniApp();
+/**
+ * Main entry point for SDK
+ */
+
+import { MiniAppImp } from './miniapp';
+
+const miniAppInstance = new MiniAppImp();
 
 export = miniAppInstance;
