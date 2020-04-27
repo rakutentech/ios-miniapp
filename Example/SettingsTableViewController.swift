@@ -5,7 +5,7 @@ class SettingsTableViewController: UITableViewController {
 
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
-    var configUpdateDelegate: ConfigDelegate?
+    weak var configUpdateDelegate: SettingsTableViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,7 @@ class SettingsTableViewController: UITableViewController {
                 switch result {
                 case .success(let responseData):
                     DispatchQueue.main.async {
-                        self.configUpdateDelegate?.configDidUpdate(responseData)
+                        self.configUpdateDelegate?.settingsTableViewController(self, updated: responseData)
                         self.dismissProgressIndicator()
                         self.saveCustomConfiguration()
                     }
@@ -161,4 +161,8 @@ class SettingsTableViewController: UITableViewController {
         }
         self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
+}
+
+protocol SettingsTableViewControllerDelegate: class {
+    func settingsTableViewController(_ controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo])
 }

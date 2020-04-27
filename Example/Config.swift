@@ -18,7 +18,3 @@ class Config: NSObject {
                                          hostAppVersion: Config.userDefaults?.string(forKey: Config.Key.version.rawValue))
     }
 }
-
-protocol ConfigDelegate {
-    func configDidUpdate(_ miniAppList: [MiniAppInfo])
-}

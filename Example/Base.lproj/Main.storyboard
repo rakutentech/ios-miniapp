@@ -434,7 +434,7 @@
                         <outlet property="imageViewArrow" destination="yT1-zs-EtE" id="Wl1-su-yPw"/>
                         <outlet property="labelHint" destination="t3z-2Z-1dP" id="I0T-jC-A6n"/>
                         <outlet property="labelMiniApp" destination="KcI-k9-czF" id="U8m-uo-zgP"/>
-                        <segue destination="YI1-4h-cvm" kind="show" identifier="showList" id="1cI-AJ-6w8"/>
+                        <segue destination="YI1-4h-cvm" kind="show" identifier="showList" animates="NO" id="1cI-AJ-6w8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W7Y-0J-gpd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

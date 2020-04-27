@@ -94,10 +94,9 @@ extension ViewController {
     }
 }
 
-// MARK: - ConfigDelegate
-extension ViewController: ConfigDelegate {
-    /// Delegate called whenever Runtime configuration is changed from SettingsTableViewController
-    func configDidUpdate(_ miniAppList: [MiniAppInfo]) {
+// MARK: - SettingsTableViewControllerDelegate
+extension ViewController: SettingsTableViewControllerDelegate {
+    func settingsTableViewController(_ controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]) {
         self.decodeResponse?.removeAll()
         self.decodeResponse = miniAppList
         self.tableView.reloadData()
