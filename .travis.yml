@@ -19,24 +19,22 @@ after_success:
   --readme README.md
 
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: |
-    pod spec lint --allow-warnings 
-    && pod trunk push --allow-warnings --verbose
-  on:
-    tags: true
-    condition: $TRAVIS_TAG =~ ^v
-
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  keep_history: true
-  local_dir: docs
-  on:
-    tags: true
-    condition: $TRAVIS_TAG =~ ^v
+  - provider: script
+    skip_cleanup: true
+    script: |
+      pod spec lint --allow-warnings 
+      && pod trunk push --allow-warnings
+    on:
+      tags: true
+      condition: $TRAVIS_TAG =~ ^v
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    keep_history: true
+    local_dir: docs
+    on:
+      tags: true
+      condition: $TRAVIS_TAG =~ ^v
 
 notifications:
   slack:
