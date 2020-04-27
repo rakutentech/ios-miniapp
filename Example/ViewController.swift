@@ -1,7 +1,7 @@
 import UIKit
 import MiniApp
 
-class ViewController: UITableViewController, ConfigProtocol {
+class ViewController: UITableViewController {
 
     var decodeResponse: [MiniAppInfo]?
     var currentMiniAppInfo: MiniAppInfo?
@@ -29,7 +29,7 @@ class ViewController: UITableViewController, ConfigProtocol {
         } else if segue.identifier == "CustomConfiguration" {
             if let navigationController = segue.destination as? UINavigationController,
                 let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
-                customSettingsController.configUpdateProtocol = self
+                customSettingsController.configUpdateDelegate = self
             }
         }
     }
@@ -86,9 +86,12 @@ extension ViewController {
             }
         }
     }
+}
 
+// MARK: - ConfigDelegate
+extension ViewController: ConfigDelegate {
     /// Delegate called whenever Runtime configuration is changed from SettingsTableViewController
-    func didConfigChanged(miniAppList: [MiniAppInfo]) {
+    func configDidUpdate(_ miniAppList: [MiniAppInfo]) {
         self.decodeResponse?.removeAll()
         self.decodeResponse = miniAppList
         self.tableView.reloadData()

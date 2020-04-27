@@ -5,7 +5,7 @@ class SettingsTableViewController: UITableViewController {
 
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
-    var configUpdateProtocol: ConfigProtocol?
+    var configUpdateDelegate: ConfigDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,7 @@ class SettingsTableViewController: UITableViewController {
                 switch result {
                 case .success(let responseData):
                     DispatchQueue.main.async {
-                        self.configUpdateProtocol?.didConfigChanged(miniAppList: responseData)
+                        self.configUpdateDelegate?.configDidUpdate(responseData)
                         self.dismissProgressIndicator()
                         self.saveCustomConfiguration()
                     }

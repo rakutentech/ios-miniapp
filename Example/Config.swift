@@ -19,6 +19,6 @@ class Config: NSObject {
     }
 }
 
-protocol ConfigProtocol {
-    func didConfigChanged(miniAppList: [MiniAppInfo])
+protocol ConfigDelegate {
+    func configDidUpdate(_ miniAppList: [MiniAppInfo])
 }
