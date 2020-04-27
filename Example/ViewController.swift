@@ -9,6 +9,12 @@ class ViewController: UITableViewController {
     let imageCache = ImageCache()
     let config = Config.getCurrent()
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.viewControllers = [self]
+        self.navigationItem.hidesBackButton = true
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         fetchAppList()

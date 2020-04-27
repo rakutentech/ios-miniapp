@@ -289,10 +289,10 @@
             </objects>
             <point key="canvasLocation" x="1983" y="385"/>
         </scene>
-        <!--View Controller-->
+        <!--First Launch View Controller-->
         <scene sceneID="V5O-3V-s60">
             <objects>
-                <viewController id="PYJ-k9-q8M" sceneMemberID="viewController">
+                <viewController id="PYJ-k9-q8M" customClass="FirstLaunchViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kk8-aI-8Ur"/>
                         <viewControllerLayoutGuide type="bottom" id="Krt-em-zT8"/>
@@ -304,7 +304,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kLC-8d-Ced">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MiniApp" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="KcI-k9-czF">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MiniApp" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="KcI-k9-czF">
                                         <rect key="frame" x="118" y="233" width="139.5" height="43"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -313,7 +313,7 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Rakuten" translatesAutoresizingMaskIntoConstraints="NO" id="Uwn-UA-4RB">
                                         <rect key="frame" x="142.5" y="288.5" width="90" height="90"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3z-2Z-1dP">
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3z-2Z-1dP">
                                         <rect key="frame" x="32" y="76" width="286" height="66"/>
                                         <attributedString key="attributedText">
                                             <fragment content="This is the first time you launch the ">
@@ -390,7 +390,7 @@
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="curved-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="yT1-zs-EtE">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" image="curved-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="yT1-zs-EtE">
                                         <rect key="frame" x="326" y="52" width="35" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="35" id="Y9Z-G0-0Nn"/>
@@ -425,12 +425,15 @@
                     <navigationItem key="navigationItem" id="Mgh-Ps-pab">
                         <barButtonItem key="rightBarButtonItem" title="Setting" image="Settings" id="WPI-EJ-83i">
                             <connections>
-                                <segue destination="TVZ-Rp-2Bg" kind="presentation" id="KN6-HW-6Lh"/>
+                                <segue destination="TVZ-Rp-2Bg" kind="presentation" identifier="CustomConfiguration" id="KN6-HW-6Lh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="imageViewArrow" destination="yT1-zs-EtE" id="Wl1-su-yPw"/>
+                        <outlet property="labelHint" destination="t3z-2Z-1dP" id="I0T-jC-A6n"/>
+                        <outlet property="labelMiniApp" destination="KcI-k9-czF" id="U8m-uo-zgP"/>
                         <segue destination="YI1-4h-cvm" kind="show" identifier="showList" id="1cI-AJ-6w8"/>
                     </connections>
                 </viewController>
