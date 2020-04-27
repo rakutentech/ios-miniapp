@@ -126,3 +126,9 @@ MiniApp.shared().create(appInfo: info, completionHandler: { (result) in
 ## License
 
 See the *LICENSE* file for more info.
+
+## Changelog
+
+### 1.0.0 (2020-04-27)
+
+- Initial release
