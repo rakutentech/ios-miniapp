@@ -42,18 +42,7 @@ extension ViewController {
     }
 
     @IBAction func actionShowMiniAppById() {
-        self.displayTextFieldAlert(title: NSLocalizedString("input_miniapp_title", comment: "")) { (_, textField) in
-            self.dismiss(animated: true) {
-                if let textField = textField, let miniAppID = textField.text, miniAppID.count > 0 {
-                    self.fetchAppInfo(for: miniAppID)
-                } else {
-                    self.displayAlert(
-                        title: NSLocalizedString("error_title", comment: ""),
-                        message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
-                        dismissController: true)
-                }
-            }
-        }
+        fetchMiniAppUsingId(title: NSLocalizedString("input_miniapp_title", comment: ""))
     }
 }
 
