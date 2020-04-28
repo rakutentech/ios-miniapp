@@ -13,17 +13,25 @@ class FirstLaunchViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        guard Config.userDefaults?.string(forKey: Config.Key.applicationIdentifier.rawValue) != nil, Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue) != nil else {
-            UIView.animate(withDuration: 1.5) {
-                self.imageViewArrow.alpha = 1.0
-                self.labelHint.alpha = 1.0
-            }
-            UIView.animate(withDuration: 0.5) {
-                self.labelMiniApp.alpha = 0.0
-            }
-            return
+        if checkSettingsOK() {
+            self.performSegue(withIdentifier: "ShowList", sender: nil)
+        } else {
+            animateViews()
         }
-        self.performSegue(withIdentifier: "showList", sender: nil)
+    }
+
+    func checkSettingsOK() -> Bool {
+        return Config.userDefaults?.string(forKey: Config.Key.applicationIdentifier.rawValue) != nil && Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue) != nil
+    }
+
+    func animateViews() {
+        UIView.animate(withDuration: 1.5) {
+            self.imageViewArrow.alpha = 1.0
+            self.labelHint.alpha = 1.0
+        }
+        UIView.animate(withDuration: 0.5) {
+            self.labelMiniApp.alpha = 0.0
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -32,7 +40,7 @@ class FirstLaunchViewController: UIViewController {
                 let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
                 customSettingsController.configUpdateDelegate = self
             }
-        } else if segue.identifier == "showList" {
+        } else if segue.identifier == "ShowList" {
             if let viewController = segue.destination as? ViewController {
                 viewController.decodeResponse = sender as? [MiniAppInfo]
             }
@@ -40,8 +48,8 @@ class FirstLaunchViewController: UIViewController {
     }
 }
 
-extension FirstLaunchViewController: SettingsTableViewControllerDelegate {
-    func settingsTableViewController(_ controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]) {
-        self.performSegue(withIdentifier: "showList", sender: miniAppList)
+extension FirstLaunchViewController: SettingsDelegate {
+    func settings(_ controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]) {
+        self.performSegue(withIdentifier: "ShowList", sender: miniAppList)
     }
 }

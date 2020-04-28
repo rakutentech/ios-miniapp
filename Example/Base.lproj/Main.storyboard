@@ -95,7 +95,7 @@
                             <fragment content="Pull to fetch Mini App List">
                                 <attributes>
                                     <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <font key="NSFont" metaFont="message" size="11"/>
+                                    <font key="NSFont" metaFont="menu" size="11"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -434,7 +434,7 @@
                         <outlet property="imageViewArrow" destination="yT1-zs-EtE" id="Wl1-su-yPw"/>
                         <outlet property="labelHint" destination="t3z-2Z-1dP" id="I0T-jC-A6n"/>
                         <outlet property="labelMiniApp" destination="KcI-k9-czF" id="U8m-uo-zgP"/>
-                        <segue destination="YI1-4h-cvm" kind="show" identifier="showList" animates="NO" id="1cI-AJ-6w8"/>
+                        <segue destination="YI1-4h-cvm" kind="show" identifier="ShowList" animates="NO" id="1cI-AJ-6w8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W7Y-0J-gpd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -443,7 +443,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="KN6-HW-6Lh"/>
+        <segue reference="6nU-Qi-B5w"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>

@@ -5,7 +5,7 @@ class SettingsTableViewController: UITableViewController {
 
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
-    weak var configUpdateDelegate: SettingsTableViewControllerDelegate?
+    weak var configUpdateDelegate: SettingsDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,6 +163,6 @@ class SettingsTableViewController: UITableViewController {
     }
 }
 
-protocol SettingsTableViewControllerDelegate: class {
-    func settingsTableViewController(_ controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo])
+protocol SettingsDelegate: class {
+    func settings(_ controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo])
 }
