@@ -49,7 +49,7 @@ class FirstLaunchViewController: UIViewController {
 }
 
 extension FirstLaunchViewController: SettingsDelegate {
-    func settings(_ controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]) {
+    func settings(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]) {
         self.performSegue(withIdentifier: "ShowList", sender: miniAppList)
     }
 }

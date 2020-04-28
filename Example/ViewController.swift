@@ -96,7 +96,7 @@ extension ViewController {
 
 // MARK: - SettingsDelegate
 extension ViewController: SettingsDelegate {
-    func settings(_ controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]) {
+    func settings(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]) {
         self.decodeResponse?.removeAll()
         self.decodeResponse = miniAppList
         self.tableView.reloadData()

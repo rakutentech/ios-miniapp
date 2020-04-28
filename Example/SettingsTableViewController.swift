@@ -49,7 +49,7 @@ class SettingsTableViewController: UITableViewController {
                 switch result {
                 case .success(let responseData):
                     DispatchQueue.main.async {
-                        self.configUpdateDelegate?.settingsTableViewController(self, updated: responseData)
+                        self.configUpdateDelegate?.settings(controller: self, updated: responseData)
                         self.dismissProgressIndicator()
                         self.saveCustomConfiguration()
                     }
@@ -164,5 +164,5 @@ class SettingsTableViewController: UITableViewController {
 }
 
 protocol SettingsDelegate: class {
-    func settings(_ controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo])
+    func settings(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo])
 }
