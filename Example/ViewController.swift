@@ -1,13 +1,19 @@
 import UIKit
 import MiniApp
 
-class ViewController: UITableViewController, ConfigProtocol {
+class ViewController: UITableViewController {
 
     var decodeResponse: [MiniAppInfo]?
     var currentMiniAppInfo: MiniAppInfo?
     var currentMiniAppView: MiniAppDisplayProtocol?
     let imageCache = ImageCache()
     let config = Config.getCurrent()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.viewControllers = [self]
+        self.navigationItem.hidesBackButton = true
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -29,7 +35,7 @@ class ViewController: UITableViewController, ConfigProtocol {
         } else if segue.identifier == "CustomConfiguration" {
             if let navigationController = segue.destination as? UINavigationController,
                 let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
-                customSettingsController.configUpdateProtocol = self
+                customSettingsController.configUpdateDelegate = self
             }
         }
     }
@@ -75,9 +81,11 @@ extension ViewController {
             }
         }
     }
+}
 
-    /// Delegate called whenever Runtime configuration is changed from SettingsTableViewController
-    func didConfigChanged(miniAppList: [MiniAppInfo]) {
+// MARK: - SettingsDelegate
+extension ViewController: SettingsDelegate {
+    func settings(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]) {
         self.decodeResponse?.removeAll()
         self.decodeResponse = miniAppList
         self.tableView.reloadData()

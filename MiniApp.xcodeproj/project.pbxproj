@@ -11,6 +11,7 @@
 		1867996B243EF6C200CD6A8E /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1867996A243EF6C200CD6A8E /* ImageCache.swift */; };
 		18694AD22449883300F97BAA /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18694AD12449883300F97BAA /* UIImageView+Extensions.swift */; };
 		18694AD62449891800F97BAA /* ViewController+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18694AD52449891800F97BAA /* ViewController+MiniApp.swift */; };
+		188974B82456B02F00042C97 /* FirstLaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188974B72456B02F00042C97 /* FirstLaunchViewController.swift */; };
 		188F5921243DC6470042618E /* MiniAppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5920243DC6470042618E /* MiniAppCell.swift */; };
 		188F5923243DCBAB0042618E /* DisplayNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F5922243DCBAB0042618E /* DisplayNavigationController.swift */; };
 		18C59F2B241094F600F66632 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C59F2A241094F600F66632 /* SettingsTableViewController.swift */; };
@@ -58,6 +59,7 @@
 		1867996A243EF6C200CD6A8E /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCache.swift; path = ../Example/ImageCache.swift; sourceTree = "<group>"; };
 		18694AD12449883300F97BAA /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImageView+Extensions.swift"; path = "Example/UIImageView+Extensions.swift"; sourceTree = SOURCE_ROOT; };
 		18694AD52449891800F97BAA /* ViewController+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ViewController+MiniApp.swift"; path = "Example/ViewController+MiniApp.swift"; sourceTree = SOURCE_ROOT; };
+		188974B72456B02F00042C97 /* FirstLaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FirstLaunchViewController.swift; path = Example/FirstLaunchViewController.swift; sourceTree = SOURCE_ROOT; };
 		188F5920243DC6470042618E /* MiniAppCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MiniAppCell.swift; path = ../Example/MiniAppCell.swift; sourceTree = "<group>"; };
 		188F5922243DCBAB0042618E /* DisplayNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplayNavigationController.swift; path = ../Example/DisplayNavigationController.swift; sourceTree = "<group>"; };
 		18C59F2A241094F600F66632 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = Example/SettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				3878D4D123B44F85001E27F8 /* AppDelegate.swift */,
+				188974B72456B02F00042C97 /* FirstLaunchViewController.swift */,
 				3878D4D323B44F85001E27F8 /* ViewController.swift */,
 				18694AD52449891800F97BAA /* ViewController+MiniApp.swift */,
 				188F5920243DC6470042618E /* MiniAppCell.swift */,
@@ -331,6 +334,7 @@
 			files = (
 				18694AD22449883300F97BAA /* UIImageView+Extensions.swift in Sources */,
 				18694AD62449891800F97BAA /* ViewController+MiniApp.swift in Sources */,
+				188974B82456B02F00042C97 /* FirstLaunchViewController.swift in Sources */,
 				188F5921243DC6470042618E /* MiniAppCell.swift in Sources */,
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
 				188F5923243DCBAB0042618E /* DisplayNavigationController.swift in Sources */,

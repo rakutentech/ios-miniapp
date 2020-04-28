@@ -22,12 +22,12 @@ extension ViewController {
                     DispatchQueue.main.async {
                         self.decodeResponse = responseData
                         self.tableView.reloadData()
-                        self.dismissProgressIndicator()
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: true)
                 }
+                self.dismissProgressIndicator()
             }
         }
     }
@@ -45,6 +45,7 @@ extension ViewController {
                         self.fetchMiniAppUsingId(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""))
                     }
                 }
+                self.dismissProgressIndicator()
             }
         }
     }
