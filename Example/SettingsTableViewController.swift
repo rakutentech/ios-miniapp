@@ -5,7 +5,7 @@ class SettingsTableViewController: UITableViewController {
 
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
-    var configUpdateProtocol: ConfigProtocol?
+    weak var configUpdateDelegate: SettingsDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,8 +14,10 @@ class SettingsTableViewController: UITableViewController {
         addTapGesture()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         resetFields()
+        toggleSaveButton()
     }
 
     func resetFields() {
@@ -49,7 +51,7 @@ class SettingsTableViewController: UITableViewController {
                 switch result {
                 case .success(let responseData):
                     DispatchQueue.main.async {
-                        self.configUpdateProtocol?.didConfigChanged(miniAppList: responseData)
+                        self.configUpdateDelegate?.settings(controller: self, updated: responseData)
                         self.dismissProgressIndicator()
                         self.saveCustomConfiguration()
                     }
@@ -100,6 +102,13 @@ class SettingsTableViewController: UITableViewController {
         field?.text = Config.userDefaults?.string(forKey: key.rawValue)
     }
 
+    func toggleSaveButton() {
+        guard let hostAppId = Config.userDefaults?.string(forKey: Config.Key.applicationIdentifier.rawValue), hostAppId.isValidUUID(), !hostAppId.isEmpty else {
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            return
+        }
+    }
+
     func save(field: UITextField?, for key: Config.Key) {
         if let textField = field {
             Config.userDefaults?.set(textField.text, forKey: key.rawValue)
@@ -145,20 +154,26 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
+    public func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        if textField.tag == 100 {
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+        }
         return true
     }
 
-    override func textFieldDidChangeSelection(_ textField: UITextField) {
-        guard let hostAppIdText = self.textFieldAppID.text, !hostAppIdText.isEmpty else {
+    public override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField.tag == 100 {
+            let textFieldValue = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            if !textFieldValue.isEmpty && textFieldValue.isValidUUID() {
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                return true
+            }
             self.navigationItem.rightBarButtonItem?.isEnabled = false
-            return
         }
-        guard let subscriptionKeyText = self.textFieldSubKey.text, !subscriptionKeyText.isEmpty else {
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
-            return
-        }
-        self.navigationItem.rightBarButtonItem?.isEnabled = true
+        return true
     }
+}
+
+protocol SettingsDelegate: class {
+    func settings(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo])
 }

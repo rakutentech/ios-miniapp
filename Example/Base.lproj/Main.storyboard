@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hzK-gd-cH8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hzK-gd-cH8">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -82,7 +82,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Mini App Sample" id="8cu-AR-SJI">
                         <barButtonItem key="backBarButtonItem" title=" " id="6gZ-4N-NPm"/>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="Settings" id="QKl-NE-KE1">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" image="Settings" id="QKl-NE-KE1">
                             <connections>
                                 <segue destination="TVZ-Rp-2Bg" kind="presentation" identifier="CustomConfiguration" id="6nU-Qi-B5w"/>
                             </connections>
@@ -95,7 +95,7 @@
                             <fragment content="Pull to fetch Mini App List">
                                 <attributes>
                                     <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <font key="NSFont" metaFont="controlContent" size="11"/>
+                                    <font key="NSFont" metaFont="menu" size="11"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -122,17 +122,16 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="YI1-4h-cvm" kind="relationship" relationship="rootViewController" id="g0y-BZ-lRq"/>
+                        <segue destination="PYJ-k9-q8M" kind="relationship" relationship="rootViewController" id="mCy-XW-KqD"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fuO-cR-uS5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-722" y="386"/>
+            <point key="canvasLocation" x="-1644" y="358"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5pZ-hz-1d8">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bb9-pQ-R82" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="TVZ-Rp-2Bg" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oiR-SE-CN6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
@@ -142,6 +141,7 @@
                         <segue destination="hxN-ta-hmR" kind="relationship" relationship="rootViewController" id="Fp9-YY-LHb"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bb9-pQ-R82" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="734" y="-328"/>
         </scene>
@@ -163,7 +163,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="e1K-zq-1Po">
+                                                <textField opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="e1K-zq-1Po">
                                                     <rect key="frame" x="122" y="15.5" width="242" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="Y2n-DM-48v"/>
@@ -289,10 +289,167 @@
             </objects>
             <point key="canvasLocation" x="1983" y="385"/>
         </scene>
+        <!--First Launch View Controller-->
+        <scene sceneID="V5O-3V-s60">
+            <objects>
+                <viewController id="PYJ-k9-q8M" customClass="FirstLaunchViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kk8-aI-8Ur"/>
+                        <viewControllerLayoutGuide type="bottom" id="Krt-em-zT8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2rm-Uc-2a0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kLC-8d-Ced">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MiniApp" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="KcI-k9-czF">
+                                        <rect key="frame" x="118" y="233" width="139.5" height="43"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Rakuten" translatesAutoresizingMaskIntoConstraints="NO" id="Uwn-UA-4RB">
+                                        <rect key="frame" x="142.5" y="288.5" width="90" height="90"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3z-2Z-1dP">
+                                        <rect key="frame" x="32" y="76" width="286" height="66"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="This is the first time you launch the ">
+                                                <attributes>
+                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                    <font key="NSOriginalFont" size="14" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="MiniApp Demo ">
+                                                <attributes>
+                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="application on this device. You need to provide your own ">
+                                                <attributes>
+                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                    <font key="NSOriginalFont" size="14" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="Host App">
+                                                <attributes>
+                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" ID and ">
+                                                <attributes>
+                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                    <font key="NSOriginalFont" size="14" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="Subscription Key">
+                                                <attributes>
+                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" from ">
+                                                <attributes>
+                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                                    <font key="NSOriginalFont" size="14" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="Rakuten">
+                                                <attributes>
+                                                    <color key="NSBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="NSColor" red="0.78323704000000005" green="0.023616725580000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
+                                                    <font key="NSOriginalFont" size="14" name="HelveticaNeue-Bold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" App Studio">
+                                                <attributes>
+                                                    <color key="NSBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
+                                                    <font key="NSOriginalFont" size="14" name="HelveticaNeue-Bold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" image="curved-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="yT1-zs-EtE">
+                                        <rect key="frame" x="326" y="52" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="Y9Z-G0-0Nn"/>
+                                            <constraint firstAttribute="width" secondItem="yT1-zs-EtE" secondAttribute="height" multiplier="1:1" id="mGP-I6-WpH"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Uwn-UA-4RB" firstAttribute="centerX" secondItem="kLC-8d-Ced" secondAttribute="centerX" id="1OC-In-Fpx"/>
+                                    <constraint firstItem="KcI-k9-czF" firstAttribute="centerX" secondItem="Uwn-UA-4RB" secondAttribute="centerX" id="BdT-kG-Ahq"/>
+                                    <constraint firstItem="t3z-2Z-1dP" firstAttribute="top" secondItem="kLC-8d-Ced" secondAttribute="topMargin" constant="24" id="HXZ-0j-1fp"/>
+                                    <constraint firstItem="yT1-zs-EtE" firstAttribute="leading" secondItem="t3z-2Z-1dP" secondAttribute="trailing" constant="8" id="JHm-xb-idJ"/>
+                                    <constraint firstItem="yT1-zs-EtE" firstAttribute="top" secondItem="kLC-8d-Ced" secondAttribute="topMargin" id="LKp-jW-Q9S"/>
+                                    <constraint firstItem="Uwn-UA-4RB" firstAttribute="top" secondItem="KcI-k9-czF" secondAttribute="bottom" constant="12.5" id="Uh1-FY-WgY"/>
+                                    <constraint firstItem="Uwn-UA-4RB" firstAttribute="centerY" secondItem="kLC-8d-Ced" secondAttribute="centerY" id="fW2-vs-FEl"/>
+                                    <constraint firstAttribute="trailing" secondItem="yT1-zs-EtE" secondAttribute="trailing" constant="14" id="nKN-EE-0xo"/>
+                                    <constraint firstItem="t3z-2Z-1dP" firstAttribute="leading" secondItem="kLC-8d-Ced" secondAttribute="leading" constant="32" id="zdN-j5-YlA"/>
+                                    <constraint firstItem="t3z-2Z-1dP" firstAttribute="top" secondItem="yT1-zs-EtE" secondAttribute="bottom" constant="-11" id="zz4-Wa-iSv"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="kLC-8d-Ced" firstAttribute="top" secondItem="2rm-Uc-2a0" secondAttribute="top" id="TU6-34-Bix"/>
+                            <constraint firstAttribute="bottom" secondItem="kLC-8d-Ced" secondAttribute="bottom" id="X7h-pv-4Br"/>
+                            <constraint firstAttribute="trailing" secondItem="kLC-8d-Ced" secondAttribute="trailing" id="asp-u3-Cm4"/>
+                            <constraint firstItem="kLC-8d-Ced" firstAttribute="leading" secondItem="2rm-Uc-2a0" secondAttribute="leading" id="v1C-zW-8Rc"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Mgh-Ps-pab">
+                        <barButtonItem key="rightBarButtonItem" title="Setting" image="Settings" id="WPI-EJ-83i">
+                            <connections>
+                                <segue destination="TVZ-Rp-2Bg" kind="presentation" identifier="CustomConfiguration" id="KN6-HW-6Lh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="imageViewArrow" destination="yT1-zs-EtE" id="Wl1-su-yPw"/>
+                        <outlet property="labelHint" destination="t3z-2Z-1dP" id="I0T-jC-A6n"/>
+                        <outlet property="labelMiniApp" destination="KcI-k9-czF" id="U8m-uo-zgP"/>
+                        <segue destination="YI1-4h-cvm" kind="show" identifier="ShowList" animates="NO" id="1cI-AJ-6w8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W7Y-0J-gpd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-850.39999999999998" y="357.57121439280365"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="6nU-Qi-B5w"/>
+    </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
+        <image name="Rakuten" width="90" height="90"/>
         <image name="Settings" width="24" height="24"/>
         <image name="app-list" width="24" height="24"/>
+        <image name="curved-arrow" width="170.66667175292969" height="170.66667175292969"/>
     </resources>
-    <color key="tintColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>
