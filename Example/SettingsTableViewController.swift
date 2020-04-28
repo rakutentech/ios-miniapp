@@ -15,6 +15,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         resetFields()
         toggleSaveButton()
     }
