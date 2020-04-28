@@ -73,8 +73,7 @@ extension UIViewController: UITextFieldDelegate {
                 if alert.textFields![0].text!.isValidUUID() {
                     handler?(action, alert.textFields?.first)
                 } else {
-                    self.displayErrorInAlertController(alertController: alert, message: NSLocalizedString("error_invalid_miniapp_id", comment: ""))
-                    self.present(alert, animated: true, completion: nil)
+                    handler?(action, nil)
                 }
             }
             okAction.isEnabled = false
@@ -86,31 +85,17 @@ extension UIViewController: UITextFieldDelegate {
         }
     }
 
-    /// Method to add a Attributed string as Error message for a given UIAlertController
-    /// - Parameters:
-    ///   - alertController: UIAlertController object in which you want to display error message
-    ///   - message: Error message description
-    func displayErrorInAlertController(alertController: UIAlertController, message: String) {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = NSTextAlignment.center
-        let attributedString = NSAttributedString(string: message, attributes: [
-            NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
-            NSAttributedString.Key.foregroundColor: UIColor.red
-        ])
-        alertController.setValue(attributedString, forKey: "attributedMessage")
-    }
-
-    /// Method to enable/disable OK button in UIAlertController
-    public func textFieldDidChangeSelection(_ textField: UITextField) {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let alertController = self.presentedViewController as? UIAlertController else {
-            return
+            return true
         }
         let okButtonAction: UIAlertAction = alertController.actions[1]
-        guard let textFieldValue = textField.text, !textFieldValue.isEmpty else {
+        let textFieldValue = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        if !textFieldValue.isEmpty {
+            okButtonAction.isEnabled = true
+        } else {
             okButtonAction.isEnabled = false
-            return
         }
-        okButtonAction.isEnabled = true
+        return true
     }
 }

@@ -11,6 +11,7 @@
 "error_no_miniapp_found" = "No Miniapp found, please contact your administrator";
 
 "input_miniapp_title" = "Please enter Miniapp ID";
+"input_valid_miniapp_title" = "Please enter valid Miniapp ID and try again";
 
 "message_save_title" = "Parameters saved";
 "message_save_text" = "Configuration is saved and Miniapp list is updated";

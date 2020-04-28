@@ -41,10 +41,9 @@ extension ViewController {
                     self.fetchMiniApp(for: responseData)
                 case .failure(let error):
                     print(error.localizedDescription)
-                    self.displayAlert(
-                        title: NSLocalizedString("error_title", comment: ""),
-                        message: NSLocalizedString("error_single_message", comment: ""),
-                        dismissController: true)
+                    self.dismissProgressIndicator {
+                        self.fetchMiniAppUsingId(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""))
+                    }
                 }
                 self.dismissProgressIndicator()
             }
@@ -66,5 +65,15 @@ extension ViewController {
                 print("Errored: ", error.localizedDescription)
             }
         }, messageInterface: self)
+    }
+
+    func fetchMiniAppUsingId(title: String? = nil, message: String? = nil) {
+        self.displayTextFieldAlert(title: title, message: message) { (_, textField) in
+            if let textField = textField, let miniAppID = textField.text, miniAppID.count > 0 {
+                self.fetchAppInfo(for: miniAppID)
+            } else {
+                self.fetchMiniAppUsingId(title: NSLocalizedString("error_invalid_miniapp_id", comment: ""), message: NSLocalizedString("input_valid_miniapp_title", comment: ""))
+            }
+        }
     }
 }
