@@ -1,5 +1,6 @@
 # Build
-public/
+js-miniapp-sdk/public/
+js-miniapp-bridge/public/
 *.tgz
 
 # Coverage reports

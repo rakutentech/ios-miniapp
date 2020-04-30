@@ -1,24 +1,78 @@
 {
-    "name": "js-miniapp-sample",
-    "version": "0.1.0",
-    "description": "Mini App Sample for JavaScript",
-    "main": "build/src/index.js",
-    "dependencies": {},
-    "devDependencies": {},
-    "scripts": {},
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/rakutentech/js-miniapp.git"
-    },
-    "keywords": [
-      "rakuten",
-      "mini app",
-      "apps"
-    ],
-    "author": "Mini App SDK Team",
-    "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/rakutentech/js-miniapp/issues"
-    },
-    "homepage": "https://github.com/rakutentech/js-miniapp#readme"
-  }
+  "name": "js-miniapp-sample",
+  "version": "0.1.0",
+  "description": "Mini App Sample for JavaScript SDK",
+  "dependencies": {
+    "@material-ui/core": "^4.9.8",
+    "@material-ui/icons": "^4.9.1",
+    "axios": "^0.19.2",
+    "bowser": "^2.9.0",
+    "js-miniapp-sdk": "0.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "uuid": "^7.0.3"
+  },
+  "scripts": {
+    "prettify": "prettier --config ./prettier.config.js --check src/**/*.js",
+    "lint": "eslint src/ --fix-dry-run",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "dockerBuild": "cd ci && make build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "flow": "flow"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all",
+    "Chrome>=37",
+    "iOS>=11"
+  ],
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/react-hooks": "^3.2.1",
+    "@testing-library/user-event": "^7.2.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-react": "^7.19.0",
+    "flow-bin": "^0.121.0",
+    "flow-typed": "^3.1.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.1.1",
+    "prettier": "^2.0.2",
+    "react-test-renderer": "^16.13.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write",
+      "eslint src/*.js --fix-dry-run"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rakutentech/js-miniapp.git"
+  },
+  "keywords": [
+    "rakuten",
+    "mini app",
+    "apps"
+  ],
+  "author": "Mini App Build Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rakutentech/js-miniapp/issues"
+  },
+  "homepage": ""
+}
