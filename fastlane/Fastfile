@@ -30,6 +30,7 @@ platform :ios do
       puts "Running locally so call coverage lane"
       coverage
     end
+  end
 
   desc "Set up environment"
   lane :setup_env do
@@ -45,11 +46,10 @@ platform :ios do
                          value: ENV['RMA_API_ENDPOINT'] || "https://www.example.com")
   end
 
-    desc "Generate code coverage"
-    lane :coverage do |options|
-      Dir.chdir("..") do
-        sh("bundle exec danger dry_run")
-      end
+  desc "Generate code coverage"
+  lane :coverage do |options|
+    Dir.chdir("..") do
+      sh("bundle exec danger dry_run")
     end
   end
 end
