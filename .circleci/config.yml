@@ -117,6 +117,18 @@ jobs: # a collection of steps
             else
               echo "Documentation not published for snapshot version"
             fi
+      - run:
+          name: Publish GitHub Release
+          command: |
+            set -e
+            curl -fsSL https://github.com/github/hub/raw/master/script/get | bash -s 2.14.1
+            if [[ ! $CIRCLE_TAG == *"-"* ]]; then
+              echo "Publishing $CIRCLE_TAG release to GitHub"
+              ./bin/hub release create -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
+            else
+              echo "Publishing $CIRCLE_TAG pre-release to GitHub"
+              ./bin/hub release create --prerelease -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
+            fi
 
 workflows:
   version: 2
