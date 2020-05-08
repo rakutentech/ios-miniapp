@@ -2,8 +2,8 @@
   "name": "js-miniapp-sdk",
   "version": "0.1.0",
   "description": "Mini App SDK for JavaScript",
-  "main": "build/bundle.js",
-  "browser": "build/bundle.js",
+  "main": "build/miniapp.bundle.js",
+  "browser": "build/miniapp.bundle.js",
   "module": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "dependencies": {},
@@ -33,7 +33,7 @@
   "scripts": {
     "lint": "gts check",
     "clean": "gts clean",
-    "compile": "tsc -p . && browserify ./build/src/index.js --standalone MiniApp > build/bundle.js ",
+    "compile": "tsc -p . && browserify ./build/src/index.js --standalone MiniApp > build/miniapp.bundle.js ",
     "prebuild": "npm run clean && npm run lint",
     "buildSdk": "npm run lint && npm run compile && npm run test",
     "fix": "gts fix",
@@ -47,7 +47,7 @@
     "LICENSE",
     "package.json",
     "build/src/",
-    "build/bundle.js"
+    "build/miniapp.bundle.js"
   ],
   "repository": {
     "type": "git",
