@@ -175,7 +175,7 @@ class SettingsTableViewController: UITableViewController {
         }
         return true
     }
-    
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField.tag != 100 {
             guard let hostAppId = self.textFieldAppID.text, !hostAppId.isEmpty && hostAppId.isValidUUID() else {
