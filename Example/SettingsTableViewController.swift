@@ -5,12 +5,14 @@ class SettingsTableViewController: UITableViewController {
 
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
+    @IBOutlet weak var invalidHostAppIdLabel: UILabel!
     weak var configUpdateDelegate: SettingsDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textFieldAppID.delegate = self
         self.textFieldSubKey.delegate = self
+        self.invalidHostAppIdLabel.isHidden = true
         addTapGesture()
     }
 
@@ -168,9 +170,20 @@ class SettingsTableViewController: UITableViewController {
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
                 return true
             }
+            self.invalidHostAppIdLabel.isHidden = true
             self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
         return true
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.tag != 100 {
+            guard let hostAppId = self.textFieldAppID.text, !hostAppId.isEmpty && hostAppId.isValidUUID() else {
+                self.invalidHostAppIdLabel.isHidden = false
+                return
+            }
+            self.invalidHostAppIdLabel.isHidden = true
+        }
     }
 }
 
