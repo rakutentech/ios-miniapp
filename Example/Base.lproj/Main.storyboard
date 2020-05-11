@@ -95,7 +95,7 @@
                             <fragment content="Pull to fetch Mini App List">
                                 <attributes>
                                     <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <font key="NSFont" metaFont="menu" size="11"/>
+                                    <font key="NSFont" metaFont="controlContent" size="11"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -177,10 +177,22 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalid Input" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eST-ow-q7O">
+                                                    <rect key="frame" x="122" y="58" width="242" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="242" id="Vun-17-BfE"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="z2Q-t7-IML" firstAttribute="leading" secondItem="xyd-1o-xzF" secondAttribute="leading" constant="16" id="67H-eC-OiT"/>
+                                                <constraint firstItem="eST-ow-q7O" firstAttribute="top" secondItem="xyd-1o-xzF" secondAttribute="topMargin" constant="47" id="9Yf-L7-s33"/>
                                                 <constraint firstItem="e1K-zq-1Po" firstAttribute="leading" secondItem="z2Q-t7-IML" secondAttribute="trailing" id="DPF-Fc-yQn"/>
+                                                <constraint firstItem="eST-ow-q7O" firstAttribute="leading" secondItem="e1K-zq-1Po" secondAttribute="leading" id="EDn-Fp-hNl"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="eST-ow-q7O" secondAttribute="bottom" constant="-15" id="PI2-rf-VgJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="e1K-zq-1Po" secondAttribute="trailing" constant="11" id="hbp-9W-Cb7"/>
                                                 <constraint firstItem="e1K-zq-1Po" firstAttribute="centerY" secondItem="xyd-1o-xzF" secondAttribute="centerY" id="lL1-Vh-jef"/>
                                                 <constraint firstItem="z2Q-t7-IML" firstAttribute="centerY" secondItem="xyd-1o-xzF" secondAttribute="centerY" id="pyM-Lq-PHX"/>
@@ -240,13 +252,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="invalidHostAppIdLabel" destination="eST-ow-q7O" id="4wN-gc-60I"/>
                         <outlet property="textFieldAppID" destination="e1K-zq-1Po" id="fl7-NT-Yhh"/>
                         <outlet property="textFieldSubKey" destination="QMe-rU-0NL" id="ER6-UH-PBD"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bJO-tx-zfF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1566" y="-329"/>
+            <point key="canvasLocation" x="1565.5999999999999" y="-329.68515742128938"/>
         </scene>
         <!--Display Navigation Controller-->
         <scene sceneID="zzX-v6-zei">
