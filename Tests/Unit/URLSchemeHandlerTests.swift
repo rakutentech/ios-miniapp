@@ -6,10 +6,10 @@ class URLSchemeHandlerTests: QuickSpec {
     override func spec() {
         describe("URL Scheme Handler") {
             let schemeHandler = URLSchemeHandler()
-            var components = URLComponents(string: "miniapp.MINI_APP_ID")
+            var components = URLComponents(string: "mscheme.MINI_APP_ID")
             context("when getAppIdFromScheme is called with scheme") {
                 it("will return mini app id") {
-                    let appId = schemeHandler.getAppIdFromScheme(scheme: "miniapp.MINI_APP_ID")
+                    let appId = schemeHandler.getAppIdFromScheme(scheme: "mscheme.MINI_APP_ID")
                     expect(appId).toEventually(equal("MINI_APP_ID"))
                 }
             }
