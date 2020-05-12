@@ -7,28 +7,47 @@ before_install:
 - pod repo update
 
 script:
+- fastlane setup_env
 - fastlane ci
+- fastlane build_simulator
 - bundle exec danger
 
 after_success:
+# Upload code coverage
 - jazzy
   --xcodebuild-arguments -scheme,Tests
   --module MiniApp
   --source-directory MiniApp
   --podspec MiniApp.podspec
   --readme README.md
+# Deploy Simulator build to App Center when merged to master (this script doesn't work from the `deploy` section)
+- |
+  set -e
+  if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
+    zip -r artifacts/miniapp.app.zip artifacts/MiniApp_Example.app/*
+    npm install -g appcenter-cli
+    appcenter distribute release \
+      --token $APP_CENTER_TOKEN \
+      --app $APP_CENTER_APP_NAME \
+      --group $APP_CENTER_GROUP \
+      --build-version $TRAVIS_BUILD_NUMBER \
+      --file ./artifacts/miniapp.app.zip \
+      --quiet
+  fi
 
 deploy:
+  # Deploy Pod spec when tagged as release
   - provider: script
-    skip_cleanup: true
-    script: |
-      pod spec lint --allow-warnings 
-      && pod trunk push --allow-warnings
+    cleanup: false
+    script:
+      - pod spec lint --allow-warnings 
+      - pod trunk push --allow-warnings
     on:
       tags: true
       condition: $TRAVIS_TAG =~ ^v
+  # Deploy Docs to Github Pages when tagged as release
   - provider: pages
-    skip_cleanup: true
+    cleanup: false
     github_token: $GITHUB_TOKEN
     keep_history: true
     local_dir: docs
