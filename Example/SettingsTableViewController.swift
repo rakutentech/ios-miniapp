@@ -6,6 +6,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
     @IBOutlet weak var invalidHostAppIdLabel: UILabel!
+    @IBOutlet weak var invalidSubscriptionKeyLabel: UILabel!
     weak var configUpdateDelegate: SettingsDelegate?
 
     override func viewDidLoad() {
@@ -13,6 +14,7 @@ class SettingsTableViewController: UITableViewController {
         self.textFieldAppID.delegate = self
         self.textFieldSubKey.delegate = self
         self.invalidHostAppIdLabel.isHidden = true
+        self.invalidSubscriptionKeyLabel.isHidden = true
         addTapGesture()
     }
 
@@ -159,30 +161,33 @@ class SettingsTableViewController: UITableViewController {
     public func textFieldShouldClear(_ textField: UITextField) -> Bool {
         if textField.tag == 100 {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
+            self.invalidHostAppIdLabel.isHidden = true
         }
         return true
     }
 
     public override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField.tag == 100 {
+            self.invalidHostAppIdLabel.isHidden = true
             let textFieldValue = (textField.text! as NSString).replacingCharacters(in: range, with: string)
             if !textFieldValue.isEmpty && textFieldValue.isValidUUID() {
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
                 return true
             }
-            self.invalidHostAppIdLabel.isHidden = true
             self.navigationItem.rightBarButtonItem?.isEnabled = false
+        } else {
+            self.invalidSubscriptionKeyLabel.isHidden = true
         }
         return true
     }
 
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.tag != 100 {
-            guard let hostAppId = self.textFieldAppID.text, !hostAppId.isEmpty && hostAppId.isValidUUID() else {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.tag == 100 {
+            if textField.text!.isEmpty || !textField.text!.isValidUUID() {
                 self.invalidHostAppIdLabel.isHidden = false
-                return
             }
-            self.invalidHostAppIdLabel.isHidden = true
+        } else if textField.text!.isEmpty {
+            self.invalidSubscriptionKeyLabel.isHidden = false
         }
     }
 }

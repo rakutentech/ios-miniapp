@@ -30,7 +30,7 @@ class URLSchemeHandler: NSObject, WKURLSchemeHandler {
 
     /// Returns Mini app id from a given scheme
     ///
-    /// For eg., If miniapp.MINI_APP_ID is the scheme, this method returns only MINI_APP_ID
+    /// For eg., If mscheme.MINI_APP_ID is the scheme, this method returns only MINI_APP_ID
     /// - Parameter scheme: Scheme that is requested to load in the WebView instance
     func getAppIdFromScheme(scheme: String) -> String {
         return scheme.replacingOccurrences(of: Constants.miniAppSchemePrefix, with: "")
