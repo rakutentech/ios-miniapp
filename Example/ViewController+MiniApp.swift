@@ -45,7 +45,6 @@ extension ViewController {
                         self.fetchMiniAppUsingId(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""))
                     }
                 }
-                self.dismissProgressIndicator()
             }
         }
     }
