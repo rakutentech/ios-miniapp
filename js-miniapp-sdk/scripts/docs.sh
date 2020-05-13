@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-PACKAGE_VERSION=$(node -p "require('./package.json').version")
+
+# Get SDK version as X.X (remove fix version)
+PACKAGE_VERSION=$(node -p "require('./package.json').version" | sed -e 's/\.[0-9]*$//')
 echo "version: $PACKAGE_VERSION"
 
 DIR_DOCS="publishableDocs/docs/$PACKAGE_VERSION"
