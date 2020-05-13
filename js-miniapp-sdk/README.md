@@ -88,3 +88,7 @@ function getId() {
 ```
 
 ## Changelog
+
+### v1.0.0 (2020-5-13)
+
+- Initial release.
