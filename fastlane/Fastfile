@@ -32,6 +32,24 @@ platform :ios do
     end
   end
 
+  lane :build_simulator do |options|
+    xcversion(version: "~> 11.2")
+
+    cocoapods(repo_update: ENV['MA_FL_CP_REPO_UPDATE'] || false)
+
+    xcodebuild(
+      workspace: "MiniApp.xcworkspace",
+      scheme: "MiniApp-Example",
+      xcargs: "-configuration Debug -sdk 'iphonesimulator' -destination 'generic/platform=iOS Simulator' -derivedDataPath 'artifacts/derivedData'"
+    )
+
+    copy_artifacts(
+      target_path: "artifacts",
+      artifacts: ["./artifacts/derivedData/Build/Products/Debug-iphonesimulator/MiniApp_Example.app"]
+    )
+
+  end
+
   desc "Set up environment"
   lane :setup_env do
     # Use env variables to set up endpoints/keys in order to keep them secret
