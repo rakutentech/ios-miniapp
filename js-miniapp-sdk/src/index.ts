@@ -6,6 +6,7 @@
 
 import { MiniAppImp } from './miniapp';
 
+/** @internal */
 const miniAppInstance = new MiniAppImp();
 
 export = miniAppInstance;
