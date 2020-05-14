@@ -15,7 +15,7 @@ class URLSchemeHandlerTests: QuickSpec {
             }
             context("when getFileName is called with url that has valid url path") {
                 it("will return realtive file path") {
-                    components?.path = "/images/home.png"
+                    components?.path = "images/home.png"
                     let fileName = schemeHandler.getFileName(url: components?.url)
                     expect(fileName).toEventually(equal(components?.path))
                 }

@@ -46,7 +46,7 @@ class URLSchemeHandler: NSObject, WKURLSchemeHandler {
         guard let fileName = url?.path, !fileName.isEmpty else {
             return Constants.rootFileName
         }
-        return fileName
+        return fileName.deletingPrefix("/")
     }
 
     /// Method to get the absolute file path using relative file path and appID
