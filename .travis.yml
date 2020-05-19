@@ -7,6 +7,22 @@ before_install:
 - pod repo update
 
 script:
+  # First check if this is a build from master or a release and setup ENV variables
+- |
+  if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
+    export IS_MASTER = true
+  elif [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_TAG" == "v"* ]]; then
+    export IS_RELEASE = true;
+  fi
+  if [[ IS_RELEASE ]]; then
+    export RAS_APPLICATION_IDENTIFIER=RAS_APPLICATION_IDENTIFIER_PROD
+    export RAS_PROJECT_SUBSCRIPTION_KEY=RAS_PROJECT_SUBSCRIPTION_KEY_PROD
+    export RMA_API_ENDPOINT=RMA_API_ENDPOINT_PROD
+  else
+    export RAS_APPLICATION_IDENTIFIER=RAS_APPLICATION_IDENTIFIER_STG
+    export RAS_PROJECT_SUBSCRIPTION_KEY=RAS_PROJECT_SUBSCRIPTION_KEY_STG
+    export RMA_API_ENDPOINT=RMA_API_ENDPOINT_STG
+  fi
 - fastlane setup_env
 - fastlane ci
 - fastlane build_simulator
@@ -21,11 +37,20 @@ after_success:
   --podspec MiniApp.podspec
   --readme README.md
 # Deploy Simulator build to App Center when merged to master (this script doesn't work from the `deploy` section)
+# Deploys to STG group if merging to master or deploys to prod group if this is a release
 - |
   set -e
-  if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
-    zip -r artifacts/miniapp.app.zip artifacts/MiniApp_Example.app/*
-    npm install -g appcenter-cli
+  zip -r artifacts/miniapp.app.zip artifacts/MiniApp_Example.app/*
+  npm install -g appcenter-cli
+  if [[ $IS_RELEASE ]]; then
+    appcenter distribute release \
+      --token $APP_CENTER_TOKEN \
+      --app $APP_CENTER_APP_NAME \
+      --group $APP_CENTER_GROUP_PROD \
+      --build-version $TRAVIS_TAG \
+      --file ./artifacts/miniapp.app.zip \
+      --quiet
+  elif [[ $IS_MASTER ]]; then
     appcenter distribute release \
       --token $APP_CENTER_TOKEN \
       --app $APP_CENTER_APP_NAME \
@@ -33,6 +58,13 @@ after_success:
       --build-version $TRAVIS_BUILD_NUMBER \
       --file ./artifacts/miniapp.app.zip \
       --quiet
+  fi
+# Merge master into prod branch to trigger production build on App Center
+- |
+  if [[ $IS_RELEASE ]]; then
+    git remote add github https://${GITHUB_TOKEN}@github.com/rakutentech/ios-miniapp.git
+    git fetch github master:prod
+    git push github prod
   fi
 
 deploy:
