@@ -10,7 +10,6 @@ import {
 import { connect } from 'react-redux';
 
 import { setUUID } from '../services/uuid/actions';
-import NOT_AVILABLE_GIF from './../assets/images/not_available.gif';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,13 +46,7 @@ const UuidFetcher = (props: UUIDProps) => {
   return (
     <Card className={classes.root}>
       <CardContent className={classes.content}>
-        {props.uuid ?? (
-          <img
-            className={classes.uuidNotFound}
-            src={NOT_AVILABLE_GIF}
-            alt="Not Available"
-          />
-        )}
+        {props.uuid ?? 'Not Available'}
       </CardContent>
       <CardActions className={classes.actions}>
         <Button

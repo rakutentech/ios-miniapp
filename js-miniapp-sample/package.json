@@ -13,8 +13,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "uuid": "^7.0.3"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "prettify": "prettier --config ./prettier.config.js --check src/**/*.js",

@@ -1,13 +1,12 @@
 import { setUUID } from '../actions';
-import { SET_UUID } from '../types';
+import { UUID_FETCH_ERROR } from '../types';
 
 describe('uuid actions', () => {
-  test('should create a set_uuid action with unique uuid', () => {
+  test('should set UUID_FETCH_ERROR when not running in mobile environment', () => {
     const dispatch = jest.fn();
     setUUID()(dispatch);
     expect(dispatch).toBeCalledWith({
-      type: SET_UUID,
-      payload: expect.any(String),
+      type: UUID_FETCH_ERROR,
     });
   });
 });
