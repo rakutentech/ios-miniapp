@@ -17,7 +17,7 @@ class RealMiniAppViewTests: QuickSpec {
             context("when getMiniAppView is called") {
                 it("will return object of UIView type") {
                     let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", hostAppMessageDelegate: mockMessageInterface)
-                    expect(miniAppView?.getMiniAppView()).toEventually(beAKindOf(UIView.self))
+                    expect(miniAppView.getMiniAppView()).toEventually(beAKindOf(UIView.self))
                 }
             }
         }

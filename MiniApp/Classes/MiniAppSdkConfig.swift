@@ -2,29 +2,29 @@ import Foundation
 
 public class MiniAppSdkConfig {
     var baseUrl: String? {
-        didSet(value) {
-            if value?.count ?? 0 == 0 {
+        didSet {
+            if baseUrl?.count ?? 0 == 0 {
                 baseUrl = nil
             }
         }
     }
     var rasAppId: String? {
-        didSet(value) {
-            if value?.count ?? 0 == 0 {
+        didSet {
+            if rasAppId?.count ?? 0 == 0 {
                 rasAppId = nil
             }
         }
     }
     var subscriptionKey: String? {
-        didSet(value) {
-            if value?.count ?? 0 == 0 {
+        didSet {
+            if subscriptionKey?.count ?? 0 == 0 {
                 subscriptionKey = nil
             }
         }
     }
     var hostAppVersion: String? {
-        didSet(value) {
-            if value?.count ?? 0 == 0 {
+        didSet {
+            if hostAppVersion?.count ?? 0 == 0 {
                 hostAppVersion = nil
             }
         }
