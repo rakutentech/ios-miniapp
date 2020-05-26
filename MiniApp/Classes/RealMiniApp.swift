@@ -31,15 +31,12 @@ internal class RealMiniApp {
         return miniAppInfoFetcher.getInfo(miniAppId: miniAppId, apiClient: self.miniAppClient, completionHandler: completionHandler)
     }
 
-    func createMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol) {
+    func createMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol? = nil) {
         return miniAppDownloader.download(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
             switch result {
-            case .success(let miniAppPath):
+            case .success:
                 DispatchQueue.main.async {
-                    guard let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id, hostAppMessageDelegate: messageInterface) else {
-                        completionHandler(.failure(NSError.downloadingFailed()))
-                        return
-                    }
+                    let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id, hostAppMessageDelegate: messageInterface ?? self)
                     self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
                     completionHandler(.success(miniAppDisplayProtocol))
                 }
@@ -47,5 +44,11 @@ internal class RealMiniApp {
                 completionHandler(.failure(error))
             }
         }
+    }
+}
+
+extension RealMiniApp: MiniAppMessageProtocol {
+    func getUniqueId() -> String {
+        return "MiniAppMessageBridge has not been implemented"
     }
 }
