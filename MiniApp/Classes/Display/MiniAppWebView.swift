@@ -2,7 +2,7 @@ import WebKit
 
 internal class MiniAppWebView: WKWebView {
 
-    convenience init?(miniAppId: String) {
+    convenience init(miniAppId: String) {
         let schemeName = Constants.miniAppSchemePrefix + miniAppId
         let urlRequest = URLRequest(url: URL(string: schemeName + "://miniapp/" + Constants.rootFileName)!)
         let config = WKWebViewConfiguration()
