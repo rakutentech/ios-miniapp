@@ -84,10 +84,10 @@ class SettingsTableViewController: UITableViewController {
             autoDismiss: true) { _ in
                 self.dismiss(animated: true, completion: nil)
                 guard let miniAppList = responseData else {
-                    self.configUpdateDelegate?.settingsUpdated(controller: self, updated: nil)
+                    self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: nil)
                     return
                 }
-                self.configUpdateDelegate?.settingsUpdated(controller: self, updated: miniAppList)
+                self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: miniAppList)
             }
     }
 
@@ -197,5 +197,5 @@ class SettingsTableViewController: UITableViewController {
 }
 
 protocol SettingsDelegate: class {
-    func settingsUpdated(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]?)
+    func didSettingsUpdated(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]?)
 }
