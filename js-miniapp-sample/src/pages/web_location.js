@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   Button,
-  Card,
   CardActions,
   CardContent,
   makeStyles,
@@ -11,15 +10,10 @@ import LocationOffIcon from '@material-ui/icons/LocationOff';
 import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
 import clsx from 'clsx';
 
+import GreyCard from '../components/GreyCard';
 import useGeoLocation from '../hooks/useGeoLocation';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    background: theme.color.secondary,
-    height: 300,
-    maxWidth: 500,
-    width: '95%',
-  },
   content: {
     height: '50%',
     justifyContent: 'center',
@@ -63,7 +57,7 @@ const Location = (props: any) => {
   const [state, watch, unwatch] = useGeoLocation();
 
   return (
-    <Card className={classes.root}>
+    <GreyCard>
       <CardContent className={classes.content}>
         {state.location && state.isWatching && (
           <div
@@ -109,7 +103,7 @@ const Location = (props: any) => {
           TURN OFF
         </Button>
       </CardActions>
-    </Card>
+    </GreyCard>
   );
 };
 

@@ -2,22 +2,16 @@ import React from 'react';
 
 import {
   Button,
-  Card,
   CardContent,
   CardActions,
   makeStyles,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 
+import GreyCard from '../components/GreyCard';
 import { setUUID } from '../services/uuid/actions';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    background: theme.color.secondary,
-    height: 300,
-    maxWidth: 500,
-    width: '95%',
-  },
   content: {
     height: '50%',
     justifyContent: 'center',
@@ -44,7 +38,7 @@ type UUIDProps = {
 const UuidFetcher = (props: UUIDProps) => {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
+    <GreyCard>
       <CardContent className={classes.content}>
         {props.uuid ?? 'Not Available'}
       </CardContent>
@@ -59,7 +53,7 @@ const UuidFetcher = (props: UUIDProps) => {
           GET UNIQUE ID
         </Button>
       </CardActions>
-    </Card>
+    </GreyCard>
   );
 };
 

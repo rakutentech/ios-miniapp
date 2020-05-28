@@ -2,6 +2,7 @@ import React from 'react';
 
 import ChatIcon from '@material-ui/icons/Chat';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
+import HomeIcon from '@material-ui/icons/Home';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import PersonIcon from '@material-ui/icons/Person';
@@ -11,12 +12,19 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AuthToken from './pages/auth-token';
 import TalkToChatBot from './pages/chatbot';
 import FetchCredentials from './pages/fetch-credentials';
+import Landing from "./pages/landing";
 import LocalStorage from './pages/local-storage';
 import UserDetails from './pages/user-details';
 import UuidFetcher from './pages/uuid_sdk';
 import WebLocation from './pages/web_location';
 
 const navItems = [
+  {
+    icon: <HomeIcon />,
+    label: 'Home',
+    navLink: '/landing',
+    component: Landing,
+  },
   {
     icon: <StorageIcon />,
     label: 'Local Storage',

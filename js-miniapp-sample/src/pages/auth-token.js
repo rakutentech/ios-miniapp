@@ -8,20 +8,15 @@ import {
   Grid,
   Typography,
   CardContent,
-  Card,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import clsx from 'clsx';
 
+import GreyCard from '../components/GreyCard';
+
 const useStyles = makeStyles((theme) => ({
-  root: {
-    background: theme.color.secondary,
-    width: '85vw',
-    maxWidth: 500,
-    marginTop: 15,
-  },
   wrapper: {
     position: 'relative',
     marginTop: 20,
@@ -166,7 +161,7 @@ function AuthToken() {
   }
 
   return (
-    <Card className={classes.root}>
+    <GreyCard height="auto">
       <CardContent>
         <FormGroup column="true" classes={{ root: classes.rootFormGroup }}>
           <Typography variant="body2" align="center">
@@ -195,7 +190,7 @@ function AuthToken() {
           )}
         </FormGroup>
       </CardContent>
-    </Card>
+    </GreyCard>
   );
 }
 

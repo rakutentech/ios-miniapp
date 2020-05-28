@@ -5,7 +5,6 @@ import {
   CircularProgress,
   FormGroup,
   Typography,
-  Card,
   CardContent,
   CardActions,
   TextField,
@@ -17,6 +16,8 @@ import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import clsx from 'clsx';
+
+import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -299,7 +300,7 @@ function UserDetails() {
   }
 
   return (
-    <Card className={classes.root}>
+    <GreyCard height="auto">
       <CardContent>
         <Typography variant="body2" align="center">
           Please note that we use a <strong>mocked API</strong> in this example
@@ -313,7 +314,7 @@ function UserDetails() {
       <CardActions classes={{ root: classes.rootCardActions }}>
         {CardActionsForm()}
       </CardActions>
-    </Card>
+    </GreyCard>
   );
 }
 

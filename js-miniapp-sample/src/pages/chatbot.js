@@ -6,7 +6,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Card,
   CardContent,
   CardActions,
   Button,
@@ -21,6 +20,7 @@ import { connect } from 'react-redux';
 
 import { getBotsList } from '../services/chatbot/actions';
 import type { ChatBot } from '../services/chatbot/types';
+import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -32,12 +32,6 @@ const useStyles = makeStyles((theme) => ({
     '& div': {
       color: theme.color.primary,
     },
-  },
-  root: {
-    background: theme.color.secondary,
-    height: 300,
-    maxWidth: 500,
-    width: '95%',
   },
   content: {
     height: '50%',
@@ -108,7 +102,7 @@ const TalkToChatBot = (props: ChatBotProps) => {
   };
   return (
     <Fragment>
-      <Card className={classes.root}>
+      <GreyCard>
         <CardContent className={classes.content}>
           <FormControl className={classes.formControl}>
             <InputLabel id="chatbotLabel">Chatbot</InputLabel>
@@ -158,7 +152,7 @@ const TalkToChatBot = (props: ChatBotProps) => {
             SEND MESSAGE
           </Button>
         </CardActions>
-      </Card>
+      </GreyCard>
 
       <Dialog
         data-testid="chatbot-response-dialog"

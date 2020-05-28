@@ -4,20 +4,14 @@ import {
   Button,
   TextField,
   makeStyles,
-  Card,
   CardContent,
   CardActions,
 } from '@material-ui/core';
 
+import GreyCard from '../components/GreyCard';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    background: theme.color.secondary,
-    height: 300,
-    maxWidth: 500,
-    width: '95%',
-  },
   content: {
     height: '25%',
     justifyContent: 'center',
@@ -68,7 +62,7 @@ function LocalStorage() {
   };
 
   return (
-    <Card className={classes.root}>
+    <GreyCard>
       <CardContent className={classes.content}>
         <TextField
           type="text"
@@ -100,7 +94,7 @@ function LocalStorage() {
           Save text to Local Storage
         </Button>
       </CardActions>
-    </Card>
+    </GreyCard>
   );
 }
 
