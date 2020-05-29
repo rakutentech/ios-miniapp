@@ -55,9 +55,8 @@ class SettingsTableViewController: UITableViewController {
                 switch result {
                 case .success(let responseData):
                     DispatchQueue.main.async {
-                        self.configUpdateDelegate?.settings(controller: self, updated: responseData)
                         self.dismissProgressIndicator()
-                        self.saveCustomConfiguration()
+                        self.saveCustomConfiguration(responseData: responseData)
                     }
                 case .failure(let error):
                     let errorInfo = error as NSError
@@ -67,7 +66,7 @@ class SettingsTableViewController: UITableViewController {
                     } else {
                         DispatchQueue.main.async {
                             self.displayAlert(title: "Information", message: NSLocalizedString("error_no_miniapp_found", comment: ""), dismissController: true) { _ in
-                                self.saveCustomConfiguration()
+                                self.saveCustomConfiguration(responseData: nil)
                                 self.dismiss(animated: true, completion: nil)
                             }
                         }
@@ -77,13 +76,18 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
-    func saveCustomConfiguration() {
+    func saveCustomConfiguration(responseData: [MiniAppInfo]?) {
         self.save(field: self.textFieldAppID, for: .applicationIdentifier)
         self.save(field: self.textFieldSubKey, for: .subscriptionKey)
         self.displayAlert(title: NSLocalizedString("message_save_title", comment: ""),
             message: NSLocalizedString("message_save_text", comment: ""),
             autoDismiss: true) { _ in
                 self.dismiss(animated: true, completion: nil)
+                guard let miniAppList = responseData else {
+                    self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: nil)
+                    return
+                }
+                self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: miniAppList)
             }
     }
 
@@ -193,5 +197,5 @@ class SettingsTableViewController: UITableViewController {
 }
 
 protocol SettingsDelegate: class {
-    func settings(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo])
+    func didSettingsUpdated(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]?)
 }
