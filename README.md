@@ -123,11 +123,32 @@ MiniApp.shared().create(appInfo: info, completionHandler: { (result) in
 }, messageInterface: self)
 ```
 
+### Implement the MiniAppMessageProtocol in your View Controller
+
+The `MiniAppMessageProtocol` is used for passing messages between the Mini App (JavaScript) and the Host App (your native iOS App) and vice versa. Your App must provide the implementation for these functions.
+
+```swift
+extension ViewController: MiniAppMessageProtocol {
+    func getUniqueId() -> String {
+        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+            return ""
+        }
+        return deviceId
+    }
+}
+```
+
 ## License
 
 See the *LICENSE* file for more info.
 
 ## Changelog
+
+### 1.1.0 (2020-06-01)
+
+- Added JavaScript bridge for passing data between Mini App and Host App. Your App now must implement `MiniAppMessageProtocol` in your view controller and provide the implementation when calling `MiniApp#create`.
+- Deprecated `MiniApp#create(appInfo:completionHandler:)`. Your App should instead use `MiniApp#create(appInfo:completionHandler:messageInterface)`.
+- Added `getUniqueId` function to `MiniAppMessageProtocol`. This function should provide a unique identifier (unique to the user and device) to Mini Apps.
 
 ### 1.0.0 (2020-04-27)
 
