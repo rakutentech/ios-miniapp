@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppDisplayProtocol Protocol Reference</title>
+    <title>MiniAppMessageProtocol Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/MiniAppDisplayProtocol" class="dashAnchor"></a>
-    <a title="MiniAppDisplayProtocol Protocol Reference"></a>
+    <a name="//apple_ref/swift/Protocol/MiniAppMessageProtocol" class="dashAnchor"></a>
+    <a title="MiniAppMessageProtocol Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MiniApp 1.1.0 Docs</a> (89% documented)</p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MiniApp Reference</a>
         <img id="carat" src="../img/carat.png" />
-        MiniAppDisplayProtocol Protocol Reference
+        MiniAppMessageProtocol Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -73,15 +73,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>MiniAppDisplayProtocol</h1>
+            <h1>MiniAppMessageProtocol</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppDisplayProtocol</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppMessageProtocol</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                 </div>
               </div>
-            <p>Public Protocol that will be used by any hosting application
-to communicate with the Mini App display module</p>
+            <p>Public Protocol that will be used by the Mini App to communicate
+ with the Native implementation</p>
 
           </section>
           <section class="section task-group-section">
@@ -90,9 +90,9 @@ to communicate with the Mini App display module</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB15DisplayProtocolP03getaB4ViewSo6UIViewCyF"></a>
-                    <a name="//apple_ref/swift/Method/getMiniAppView()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB15DisplayProtocolP03getaB4ViewSo6UIViewCyF">getMiniAppView()</a>
+                    <a name="/s:7MiniApp0aB15MessageProtocolP11getUniqueIdSSyF"></a>
+                    <a name="//apple_ref/swift/Method/getUniqueId()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB15MessageProtocolP11getUniqueIdSSyF">getUniqueId()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -100,14 +100,14 @@ to communicate with the Mini App display module</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Get the view of the Mini app</p>
+                        <p>Interface that should be implemented to return alphanumeric string that uniquely identifies a device.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getMiniAppView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getUniqueId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
