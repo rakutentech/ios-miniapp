@@ -10,11 +10,11 @@ script:
   # First check if this is a build from master or a release and setup ENV variables
 - |
   if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
-    export IS_MASTER = true
+    export IS_MASTER=true
   elif [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_TAG" == "v"* ]]; then
-    export IS_RELEASE = true;
+    export IS_RELEASE=true;
   fi
-  if [[ IS_RELEASE ]]; then
+  if [[ $IS_RELEASE ]]; then
     export RAS_APPLICATION_IDENTIFIER=RAS_APPLICATION_IDENTIFIER_PROD
     export RAS_PROJECT_SUBSCRIPTION_KEY=RAS_PROJECT_SUBSCRIPTION_KEY_PROD
     export RMA_API_ENDPOINT=RMA_API_ENDPOINT_PROD
@@ -62,30 +62,29 @@ after_success:
 # Merge master into prod branch to trigger production build on App Center
 - |
   if [[ $IS_RELEASE ]]; then
+    set -e
     git remote add github https://${GITHUB_TOKEN}@github.com/rakutentech/ios-miniapp.git
     git fetch github master:prod
     git push github prod
   fi
+# Deploy Pod spec when tagged as release
+- |
+  if [[ $IS_RELEASE ]]; then
+    set -e
+    pod spec lint --allow-warnings 
+    pod trunk push --allow-warnings
+  fi
 
 deploy:
-  # Deploy Pod spec when tagged as release
-  - provider: script
-    cleanup: false
-    script:
-      - pod spec lint --allow-warnings 
-      - pod trunk push --allow-warnings
-    on:
-      tags: true
-      condition: $TRAVIS_TAG =~ ^v
   # Deploy Docs to Github Pages when tagged as release
-  - provider: pages
-    cleanup: false
-    github_token: $GITHUB_TOKEN
-    keep_history: true
-    local_dir: docs
-    on:
-      tags: true
-      condition: $TRAVIS_TAG =~ ^v
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  local_dir: docs
+  on:
+    tags: true
+    condition: $TRAVIS_TAG =~ ^v
 
 notifications:
   slack:
