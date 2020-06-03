@@ -72,6 +72,14 @@ extension ViewController {
         return UITableViewCell()
     }
 
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return getHeaderView()
+    }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 60.0
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         self.showProgressIndicator {
@@ -80,6 +88,18 @@ extension ViewController {
                 self.fetchMiniApp(for: miniAppInfo)
             }
         }
+    }
+
+    func getHeaderView() -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 60))
+        let miniAppByIdButton = UIButton(frame: headerView.bounds)
+        miniAppByIdButton.setTitle("Display Miniapp from ID", for: .normal)
+        miniAppByIdButton.contentHorizontalAlignment = .center
+        miniAppByIdButton.autoresizingMask = .flexibleWidth
+        miniAppByIdButton.addTarget(self, action: #selector(actionShowMiniAppById), for: .touchUpInside)
+        headerView.addSubview(miniAppByIdButton)
+        headerView.backgroundColor = #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
+        return headerView
     }
 }
 
