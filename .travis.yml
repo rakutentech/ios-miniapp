@@ -3,8 +3,13 @@ xcode_workspace: MiniApp.xcworkspace
 xcode_scheme: Tests
 osx_image: xcode11.2
 
+cache:
+  - bundler
+
 before_install:
-- pod repo update
+  # update necessary pods only instead of running `pod repo update`
+  # https://github.com/travis-ci/travis-ci/issues/6473 
+  - pod outdated | awk '{ if ( $1 ~ /^-/ ) { print $0 } }' | awk '{ if ( $3 != $5 ) { pod update $2 } else { print "No updated needed it for" $2 } }'
 
 script:
   # First check if this is a build from master or a release and setup ENV variables
@@ -15,17 +20,17 @@ script:
     export IS_RELEASE=true;
   fi
   if [[ $IS_RELEASE ]]; then
-    export RAS_APPLICATION_IDENTIFIER=RAS_APPLICATION_IDENTIFIER_PROD
-    export RAS_PROJECT_SUBSCRIPTION_KEY=RAS_PROJECT_SUBSCRIPTION_KEY_PROD
-    export RMA_API_ENDPOINT=RMA_API_ENDPOINT_PROD
-  else
-    export RAS_APPLICATION_IDENTIFIER=RAS_APPLICATION_IDENTIFIER_STG
-    export RAS_PROJECT_SUBSCRIPTION_KEY=RAS_PROJECT_SUBSCRIPTION_KEY_STG
-    export RMA_API_ENDPOINT=RMA_API_ENDPOINT_STG
+    export RAS_APPLICATION_IDENTIFIER=$RAS_APPLICATION_IDENTIFIER_PROD
+    export RAS_PROJECT_SUBSCRIPTION_KEY=$RAS_PROJECT_SUBSCRIPTION_KEY_PROD
+    export RMA_API_ENDPOINT=$RMA_API_ENDPOINT_PROD
+  elif [[ $IS_MASTER ]]; then
+    export RAS_APPLICATION_IDENTIFIER=$RAS_APPLICATION_IDENTIFIER_STG
+    export RAS_PROJECT_SUBSCRIPTION_KEY=$RAS_PROJECT_SUBSCRIPTION_KEY_STG
+    export RMA_API_ENDPOINT=$RMA_API_ENDPOINT_STG
   fi
-- fastlane setup_env
-- fastlane ci
-- fastlane build_simulator
+- bundle exec fastlane setup_env
+- travis_wait bundle exec fastlane ci
+- travis_wait bundle exec fastlane build_simulator
 - bundle exec danger
 
 after_success:
