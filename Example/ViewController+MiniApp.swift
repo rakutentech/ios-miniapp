@@ -28,7 +28,6 @@ extension ViewController {
                         self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: true)
                     }
                 }
-                /// Dismiss progress indicator only if it is not in background
                 if !inBackground {
                     self.dismissProgressIndicator()
                 }
