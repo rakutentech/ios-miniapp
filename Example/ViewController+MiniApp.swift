@@ -10,9 +10,8 @@ extension ViewController: MiniAppMessageProtocol {
 }
 
 extension ViewController {
-    func fetchAppList() {
-        let silent = self.decodeResponse?.count ?? 0 > 0
-        showProgressIndicator(silently: silent) {
+    func fetchAppList(inBackground: Bool) {
+        showProgressIndicator(silently: inBackground) {
             MiniApp.shared(with: Config.getCurrent()).list { (result) in
                 DispatchQueue.main.async {
                     self.refreshControl?.endRefreshing()
@@ -25,9 +24,13 @@ extension ViewController {
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
-                    self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: true)
+                    if !inBackground {
+                        self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: true)
+                    }
                 }
-                self.dismissProgressIndicator()
+                if !inBackground {
+                    self.dismissProgressIndicator()
+                }
             }
         }
     }
@@ -59,7 +62,7 @@ extension ViewController {
                 }
             case .failure(let error):
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_download_message", comment: ""), dismissController: true) { _ in
-                    self.fetchAppList()
+                    self.fetchAppList(inBackground: true)
                 }
                 print("Errored: ", error.localizedDescription)
             }

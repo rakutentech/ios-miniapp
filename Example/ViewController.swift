@@ -17,7 +17,7 @@ class ViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        fetchAppList()
+        fetchAppList(inBackground: self.decodeResponse?.count ?? 0 > 0)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -44,7 +44,7 @@ class ViewController: UITableViewController {
 // MARK: - Actions
 extension ViewController {
     @IBAction func refreshList(_ sender: UIRefreshControl) {
-        fetchAppList()
+        fetchAppList(inBackground: false)
     }
 
     @IBAction func actionShowMiniAppById() {
