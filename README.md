@@ -52,9 +52,11 @@ pod 'MiniApp'
 
 In your project configuration .plist you should add 2 custom string target properties :
 
-- `RASApplicationIdentifier` - to set your MiniApp host application identifier
-- `RASProjectSubscriptionKey` - to set your MiniApp subscription key
-- `RMAAPIEndpoint` - to provide your own Base URL for API requests
+| Key     | Value     |
+| :---:   | :---:     |
+| `RASApplicationIdentifier` | your MiniApp host application identifier |
+| `RASProjectSubscriptionKey` | your MiniApp subscription key |
+| `RMAAPIEndpoint` | your own Base URL for API requests |
 
 
 If you don't want to use project settings, you have to pass this informations one by one to the `Config.userDefaults` using a `Config.Key` as key:
@@ -62,6 +64,16 @@ If you don't want to use project settings, you have to pass this informations on
 ```swift
 Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawValue)
 ```
+
+## **Build/Run Example Application and Unit Tests**
+
+* Clone or fork the repo
+* `cd` to the repo folder
+* Set env vars `RMAAPIEndpoint` and `RASProjectSubscriptionKey` according to the internal integration guide
+* _Important Note_: `Example-Secrets.xcconfig` **MUST NOT** be committed to git - it is ignored by git in the repo's `.gitignore` file
+* Run `bundle install` then run `bundle exec pod install`
+* Open `RInAppMessaging.xcworkspace` in Xcode then build/run
+* To run the tests press key shortcut command-U
 
 # Usage
 
