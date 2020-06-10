@@ -13,8 +13,6 @@ class SettingsTableViewController: UITableViewController {
         super.viewDidLoad()
         self.textFieldAppID.delegate = self
         self.textFieldSubKey.delegate = self
-        self.invalidHostAppIdLabel.isHidden = true
-        self.invalidSubscriptionKeyLabel.isHidden = true
         addTapGesture()
     }
 
@@ -25,6 +23,8 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func resetFields() {
+        self.invalidHostAppIdLabel.isHidden = true
+        self.invalidSubscriptionKeyLabel.isHidden = true
         configure(field: self.textFieldAppID, for: .applicationIdentifier)
         configure(field: self.textFieldSubKey, for: .subscriptionKey)
     }
@@ -115,6 +115,7 @@ class SettingsTableViewController: UITableViewController {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
             return
         }
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
 
     func save(field: UITextField?, for key: Config.Key) {
@@ -164,35 +165,39 @@ class SettingsTableViewController: UITableViewController {
 
     public func textFieldShouldClear(_ textField: UITextField) -> Bool {
         if textField.tag == 100 {
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
             self.invalidHostAppIdLabel.isHidden = true
+        } else {
+            self.invalidSubscriptionKeyLabel.isHidden = true
         }
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
         return true
     }
 
     public override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField.tag == 100 {
-            self.invalidHostAppIdLabel.isHidden = true
-            let textFieldValue = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-            if !textFieldValue.isEmpty && textFieldValue.isValidUUID() {
-                self.navigationItem.rightBarButtonItem?.isEnabled = true
-                return true
-            }
+        let textFieldValue = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        if textFieldValue.isEmpty {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
-        } else {
-            self.invalidSubscriptionKeyLabel.isHidden = true
+            return true
         }
+        if textField.tag == 100 {
+            self.navigationItem.rightBarButtonItem?.isEnabled = textFieldValue.isValidUUID()
+            return true
+        }
+        if self.textFieldAppID.text!.isValidUUID() {
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
+            return true
+        }
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
         return true
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField.tag == 100 {
-            if textField.text!.isEmpty || !textField.text!.isValidUUID() {
-                self.invalidHostAppIdLabel.isHidden = false
-            }
-        } else if textField.text!.isEmpty {
-            self.invalidSubscriptionKeyLabel.isHidden = false
-        }
+        validateTextFields()
+    }
+
+    func validateTextFields() {
+        self.invalidHostAppIdLabel.isHidden = self.textFieldAppID.text!.isValidUUID()
+        self.invalidSubscriptionKeyLabel.isHidden = !self.textFieldSubKey.text!.isEmpty
     }
 }
 
