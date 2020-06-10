@@ -24,12 +24,17 @@ extension ViewController {
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
-                    if !inBackground {
+                    if !inBackground && self.checkSettingsOK() {
                         self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: true)
                     }
                 }
                 if !inBackground {
                     self.dismissProgressIndicator()
+                }
+                if !self.checkSettingsOK() {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                        self.performSegue(withIdentifier: "ShowFirstTimeSettings", sender: nil)
+                    }
                 }
             }
         }

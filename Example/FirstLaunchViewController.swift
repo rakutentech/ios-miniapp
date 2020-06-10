@@ -13,15 +13,7 @@ class FirstLaunchViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if checkSettingsOK() {
-            self.performSegue(withIdentifier: "ShowList", sender: nil)
-        } else {
-            animateViews()
-        }
-    }
-
-    func checkSettingsOK() -> Bool {
-        return Config.userDefaults?.string(forKey: Config.Key.applicationIdentifier.rawValue) != nil && Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue) != nil
+        animateViews()
     }
 
     func animateViews() {
@@ -40,16 +32,12 @@ class FirstLaunchViewController: UIViewController {
                 let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
                 customSettingsController.configUpdateDelegate = self
             }
-        } else if segue.identifier == "ShowList" {
-            if let viewController = segue.destination as? ViewController {
-                viewController.decodeResponse = sender as? [MiniAppInfo]
-            }
         }
     }
 }
 
 extension FirstLaunchViewController: SettingsDelegate {
     func didSettingsUpdated(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]?) {
-        self.performSegue(withIdentifier: "ShowList", sender: miniAppList)
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -39,6 +39,10 @@ class ViewController: UITableViewController {
             }
         }
     }
+
+    func checkSettingsOK() -> Bool {
+        return Config.userDefaults?.string(forKey: Config.Key.applicationIdentifier.rawValue) != nil && Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue) != nil
+    }
 }
 
 // MARK: - Actions
