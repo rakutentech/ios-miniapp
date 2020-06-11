@@ -69,7 +69,7 @@ after_success:
   if [[ $IS_RELEASE ]]; then
     set -e
     git remote add github https://${GITHUB_TOKEN}@github.com/rakutentech/ios-miniapp.git
-    git fetch github master:prod
+    git fetch github $TRAVIS_TAG:prod
     git push github prod
   fi
 # Deploy Pod spec when tagged as release
