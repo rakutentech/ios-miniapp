@@ -125,13 +125,24 @@ class RealMiniAppTests: QuickSpec {
             }
             context("when createMiniApp is called with valid Mini App info but without MessageInterface") {
                 it("will return valid Mini App View instance with a default hostAppMessageDelegate and getUniqueId() will return an error message") {
-
                     let responseString = """
+                    [{
+                        "id": "123",
+                        "displayName": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "455"
+                        }
+                      }]
+                    """
+                    let manifestResponse = """
                       {
-                        "manifest": ["https://example.com/map-published/app-id-test/ver-id-test/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     waitUntil { done in
                         realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
                             switch result {
@@ -152,15 +163,60 @@ class RealMiniAppTests: QuickSpec {
                 }
             }
 
+            context("when createMiniApp is called with valid Mini App info and real mini app validates with platform for the latest version and if the versions are same") {
+                it("will download mini app with the mini app info that is passed on") {
+                    let responseString = """
+                    [{
+                        "id": "123",
+                        "displayName": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "ver-id-test"
+                        }
+                      }]
+                    """
+                    let manifestResponse = """
+                      {
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
+                    var testResultData: MiniAppDisplayProtocol?
+                    realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        switch result {
+                        case .success(let responseData):
+                            testResultData = responseData
+                        case .failure:
+                            break
+                        }
+                    })
+                    expect(testResultData).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: 20)
+                }
+            }
+
             context("when createMiniApp is called with valid Mini App info") {
                 it("will return valid Mini App View instance") {
 
                     let responseString = """
+                    [{
+                        "id": "123",
+                        "displayName": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "455"
+                        }
+                      }]
+                    """
+                    let manifestResponse = """
                       {
-                        "manifest": ["https://example.com/map-published/app-id-test/ver-id-test/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     waitUntil { done in
                         realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
                             switch result {
