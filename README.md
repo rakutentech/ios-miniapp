@@ -156,6 +156,15 @@ See the *LICENSE* file for more info.
 
 ## Changelog
 
+### 1.1.1 (2020-06-11)
+
+**SDK**
+- no changes
+
+**Sample App**
+- *Bugfix:* First time settings success dialog dismissed before tapping OK
+- *Bugfix:* "Display MiniApp" button was not visible when scrolling in the list Mini Apps
+
 ### 1.1.0 (2020-06-01)
 
 - Added JavaScript bridge for passing data between Mini App and Host App. Your App now must implement `MiniAppMessageProtocol` in your view controller and provide the implementation when calling `MiniApp#create`.

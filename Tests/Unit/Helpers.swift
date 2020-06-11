@@ -3,6 +3,7 @@ import WebKit
 
 class MockAPIClient: MiniAppClient {
     var data: Data?
+    var manifestData: Data?
     var error: Error?
     var request: URLRequest?
     var headers: [String: String]?
@@ -50,7 +51,7 @@ class MockAPIClient: MiniAppClient {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
 
-        guard let data = data else {
+        guard let responseData = manifestData ?? data else {
             return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
         }
 
@@ -60,7 +61,7 @@ class MockAPIClient: MiniAppClient {
 
         self.request = urlRequest
         if let httpResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
-            return  completionHandler(.success(ResponseData(data, httpResponse)))
+            return  completionHandler(.success(ResponseData(responseData, httpResponse)))
         }
     }
 
