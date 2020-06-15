@@ -8,6 +8,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var invalidHostAppIdLabel: UILabel!
     @IBOutlet weak var invalidSubscriptionKeyLabel: UILabel!
     weak var configUpdateDelegate: SettingsDelegate?
+    let predefinedKeys: [String] = ["RAS_APPLICATION_IDENTIFIER", "RAS_SUBSCRIPTION_KEY", ""]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,11 +108,19 @@ class SettingsTableViewController: UITableViewController {
 
     func configure(field: UITextField?, for key: Config.Key) {
         field?.placeholder = Bundle.main.infoDictionary?[key.rawValue] as? String
-        field?.text = Config.userDefaults?.string(forKey: key.rawValue)
+        field?.text = getTextFieldValue(key: key, placeholderText: field?.placeholder)
+    }
+
+    func getTextFieldValue(key: Config.Key, placeholderText: String?) -> String? {
+        if predefinedKeys.contains(placeholderText ?? "") {
+            return Config.userDefaults?.string(forKey: key.rawValue) ?? ""
+        } else {
+            return placeholderText
+        }
     }
 
     func toggleSaveButton() {
-        guard let hostAppId = Config.userDefaults?.string(forKey: Config.Key.applicationIdentifier.rawValue), hostAppId.isValidUUID(), !hostAppId.isEmpty else {
+        if !self.textFieldAppID.text!.isValidUUID() || self.textFieldSubKey.text!.isEmpty {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
             return
         }
@@ -175,6 +184,7 @@ class SettingsTableViewController: UITableViewController {
 
     public override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let textFieldValue = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        validateTextFields(textField: textField, and: textFieldValue)
         if textFieldValue.isEmpty {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
             return true
@@ -192,12 +202,15 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        validateTextFields()
+        validateTextFields(textField: textField, and: textField.text ?? "")
     }
 
-    func validateTextFields() {
-        self.invalidHostAppIdLabel.isHidden = self.textFieldAppID.text!.isValidUUID()
-        self.invalidSubscriptionKeyLabel.isHidden = !self.textFieldSubKey.text!.isEmpty
+    func validateTextFields(textField: UITextField, and value: String) {
+        if textField.tag == 100 {
+            self.invalidHostAppIdLabel.isHidden = value.isValidUUID()
+            return
+        }
+        self.invalidSubscriptionKeyLabel.isHidden = !value.isEmpty
     }
 }
 

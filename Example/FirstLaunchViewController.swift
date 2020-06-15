@@ -1,19 +1,24 @@
 import UIKit
 import MiniApp
-
 class FirstLaunchViewController: UIViewController {
-
     @IBOutlet weak var imageViewArrow: UIImageView!
     @IBOutlet weak var labelHint: UILabel!
     @IBOutlet weak var labelMiniApp: UILabel!
-
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        animateViews()
+        if checkSettingsOK() {
+            self.performSegue(withIdentifier: "ShowList", sender: nil)
+        } else {
+            animateViews()
+        }
+    }
+
+    func checkSettingsOK() -> Bool {
+        return Config.userDefaults?.string(forKey: Config.Key.applicationIdentifier.rawValue) != nil && Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue) != nil
     }
 
     func animateViews() {
@@ -32,12 +37,16 @@ class FirstLaunchViewController: UIViewController {
                 let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
                 customSettingsController.configUpdateDelegate = self
             }
+        } else if segue.identifier == "ShowList" {
+            if let viewController = segue.destination as? ViewController {
+                viewController.decodeResponse = sender as? [MiniAppInfo]
+            }
         }
     }
 }
 
 extension FirstLaunchViewController: SettingsDelegate {
     func didSettingsUpdated(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]?) {
-        dismiss(animated: true, completion: nil)
+        self.performSegue(withIdentifier: "ShowList", sender: miniAppList)
     }
 }
