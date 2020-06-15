@@ -35,7 +35,7 @@ script:
 
 after_success:
 # Upload code coverage
-- jazzy
+- bundle exec jazzy
   --xcodebuild-arguments -scheme,Tests
   --module MiniApp
   --source-directory MiniApp
