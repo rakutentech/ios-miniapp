@@ -158,18 +158,18 @@ class MiniAppDownloaderTests: QuickSpec {
         }
 
         describe("mini app downloader") {
-            context("when isMiniAppDownloadedAlready is called with valid appId and versionId - which is not downloaded") {
+            context("when isMiniAppAlreadyDownloaded is called with valid appId and versionId - which is not downloaded") {
               it("will return false") {
                 miniAppStatus.setDownloadStatus(true, for: "mini-app/testing")
                 let mockAPIClient = MockAPIClient()
                 let mockManifestDownloader = MockManifestDownloader()
                 let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                let isDownloaded = downloader.isMiniAppDownloadedAlready(appId: "mini-app", versionId: "testing")
+                let isDownloaded = downloader.isMiniAppAlreadyDownloaded(appId: "mini-app", versionId: "testing")
                 expect(isDownloaded).toEventually(equal(false))
                 UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
               }
             }
-            context("when isMiniAppDownloadedAlready is called with valid appId and versionId - which is  downloaded") {
+            context("when isMiniAppAlreadyDownloaded is called with valid appId and versionId - which is  downloaded") {
               it("will return true") {
                     let appId = "Apple"
                     let versionId = "Mac"
@@ -184,7 +184,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     downloader.download(appId: appId, versionId: versionId) { (_) in }
                     miniAppStatus.setDownloadStatus(true, appId: appId, versionId: versionId)
-                    let isDownloaded = downloader.isMiniAppDownloadedAlready(appId: appId, versionId: versionId)
+                    let isDownloaded = downloader.isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId)
                     expect(isDownloaded).toEventually(equal(true))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
                 }
