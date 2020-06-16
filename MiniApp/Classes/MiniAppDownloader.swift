@@ -23,26 +23,55 @@ class MiniAppDownloader {
 
     func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
-        if miniAppStatus.isDownloaded(appId: appId, versionId: versionId) {
+        if !isMiniAppDownloadedAlready(appId: appId, versionId: versionId) {
+            self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
+                 switch result {
+                 case .success(let responseData):
+                     self.downloadMiniApp(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
+                         switch downloadResult {
+                         case .success:
+                             self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
+
+                             fallthrough
+                         default:
+                             completionHandler(downloadResult)
+                         }
+                     }
+                 case .failure(let error):
+                     let downloadError = error as NSError
+                     if downloadError.code == NSURLErrorNotConnectedToInternet {
+                         self.getCachedMiniApp(appId: appId, downloadError: downloadError, completionHandler: completionHandler)
+                         return
+                     }
+                     return completionHandler(.failure(error))
+                 }
+             }
+        } else {
             completionHandler(.success(miniAppStoragePath))
+        }
+    }
+
+    func isMiniAppDownloadedAlready(appId: String, versionId: String) -> Bool {
+        if miniAppStatus.isDownloaded(appId: appId, versionId: versionId) {
+            let versionDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+            var isDirectory: ObjCBool = true
+            if FileManager.default.fileExists(atPath: versionDirectory.path, isDirectory: &isDirectory) {
+                return true
+            }
+        }
+        return false
+    }
+
+    func getCachedMiniApp(appId: String, downloadError: NSError, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+        guard let versionDirectory = FileManager.getMiniAppVersionDirectory(usingAppId: appId) else {
+            completionHandler(.failure(downloadError))
             return
         }
-        self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
-            switch result {
-            case .success(let responseData):
-                self.downloadMiniApp(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
-                    switch downloadResult {
-                    case .success:
-                        self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
-
-                        fallthrough
-                    default:
-                        completionHandler(downloadResult)
-                    }
-                }
-            case .failure(let error):
-                return completionHandler(.failure(error))
-            }
+        var isDirectory: ObjCBool = true
+        if FileManager.default.fileExists(atPath: versionDirectory.path, isDirectory: &isDirectory) {
+            completionHandler(.success(versionDirectory))
+        } else {
+            completionHandler(.failure(downloadError))
         }
     }
 

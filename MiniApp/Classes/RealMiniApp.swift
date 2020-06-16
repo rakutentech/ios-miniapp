@@ -48,6 +48,10 @@ internal class RealMiniApp {
                 }
                 self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler)
             case .failure(let error):
+                let createError = error as NSError
+                if createError.code == NSURLErrorNotConnectedToInternet {
+                    self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler)
+                }
                 completionHandler(.failure(error))
         }}
     }
