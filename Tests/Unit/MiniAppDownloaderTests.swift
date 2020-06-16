@@ -170,7 +170,7 @@ class MiniAppDownloaderTests: QuickSpec {
               }
             }
             context("when isMiniAppDownloadedAlready is called with valid appId and versionId - which is  downloaded") {
-              it("will download all files and mini app path is created") {
+              it("will return true") {
                     let appId = "Apple"
                     let versionId = "Mac"
                     let mockAPIClient = MockAPIClient()
