@@ -1,3 +1,5 @@
+import ZIPFoundation
+
 protocol SessionProtocol {
     func startDataTask(
         with request: URLRequest,

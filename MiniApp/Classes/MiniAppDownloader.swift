@@ -6,6 +6,8 @@ class MiniAppDownloader {
     private var urlToDirectoryMap = [String: DownloadOperation]()
     private var miniAppStatus: MiniAppStatus
 
+    private var time: Date
+
     private var queue: OperationQueue = {
         let operationQueue = OperationQueue()
         operationQueue.name = "MiniAppDownloader"
@@ -19,6 +21,7 @@ class MiniAppDownloader {
         self.miniAppStorage = MiniAppStorage()
         self.manifestDownloader = manifestDownloader
         self.miniAppStatus = status
+        self.time = Date()
     }
 
     func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
@@ -48,6 +51,8 @@ class MiniAppDownloader {
 
     private func downloadMiniApp(urls: [String], to miniAppPath: URL, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         self.miniAppClient.delegate = self
+        time = Date()
+        MiniAppLogger.d("MiniApp dl start")
         for url in urls {
             guard let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
                 return
@@ -64,6 +69,7 @@ class MiniAppDownloader {
                 }
             }
         }
+
         if urlToDirectoryMap.isEmpty {
             completionHandler(.success(miniAppPath))
         }
@@ -82,9 +88,21 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
         guard let filePath = urlToDirectoryMap[destinationPath]?.fileStoragePath else {
             return
         }
+        MiniAppLogger.d("MiniApp dl time: \(Date().timeIntervalSince(time))")
         guard let error = miniAppStorage.save(sourcePath: sourcePath, destinationPath: filePath) else {
+            MiniAppLogger.d("MiniApp save time: \(Date().timeIntervalSince(time))")
+            if let directory = urlToDirectoryMap[destinationPath]?.miniAppDirectoryPath, (filePath.absoluteString as NSString).pathExtension.lowercased() == "zip" {
+                do {
+                    try FileManager.default.unzipItem(at: filePath, to: directory, skipCRC32: true)
+                    MiniAppLogger.d("MiniApp unzip time: \(Date().timeIntervalSince(time))")
+                } catch let err {
+                    MiniAppLogger.e("error unzipping archive", err)
+                    urlToDirectoryMap[destinationPath]?.completionHanlder(.failure(err))
+                }
+            }
             return
         }
+
         urlToDirectoryMap[destinationPath]?.completionHanlder(.failure(error))
     }
 

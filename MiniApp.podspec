@@ -20,4 +20,6 @@ Pod::Spec.new do |s|
   s.source_files = 'MiniApp/Classes/**/*'
   s.resources = "MiniApp/Classes/JavascriptBridge/bridge.js"
 
+  s.dependency 'ZIPFoundation'
+
 end
