@@ -2,12 +2,10 @@ import Foundation
 
 public class MiniAppSdkConfig {
     var url: String? {
-        get {
-            if loadTestVersions ?? false {
-                return self.testBaseUrl
-            }else {
-                return self.baseUrl
-            }
+        if loadTestVersions ?? false {
+            return self.testBaseUrl
+        } else {
+            return self.baseUrl
         }
     }
 

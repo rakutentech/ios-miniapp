@@ -54,7 +54,6 @@ internal class Environment {
         return URL(string: "\(endpointUrlString)")
     }
 
-    
     func value(for field: String?, fallback key: Key) -> String {
         return field ?? bundle.value(for: key.rawValue) ?? bundle.valueNotFound
     }

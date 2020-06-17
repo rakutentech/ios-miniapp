@@ -148,8 +148,6 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
-
-
     func isValueEntered(text: String?, key: Config.Key) -> Bool {
         guard let textFieldValue = text, !textFieldValue.isEmpty else {
             displayNoValueFoundErrorMessage(forKey: key)
