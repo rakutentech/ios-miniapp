@@ -43,11 +43,18 @@ internal class RealMiniApp {
             switch result {
             case .success(let responseData):
                 if appInfo.version.versionId != responseData.version.versionId {
-                    self.downloadMiniApp(appInfo: responseData, completionHandler: completionHandler)
+                    self.downloadMiniApp(appInfo: responseData, completionHandler: completionHandler, messageInterface: messageInterface)
                     return
                 }
-                self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler)
+                self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
+                let createError = error as NSError
+                if Constants.offlineErrorCodeList.contains(createError.code) {
+                    if self.miniAppDownloader.getCachedMiniApp(appId: appInfo.id) == nil {
+                        return completionHandler(.failure(error))
+                    }
+                    self.getMiniAppView(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
+                }
                 completionHandler(.failure(error))
         }}
     }
@@ -61,14 +68,18 @@ internal class RealMiniApp {
         return miniAppDownloader.download(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
             switch result {
             case .success:
-                DispatchQueue.main.async {
-                    let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id, hostAppMessageDelegate: messageInterface ?? self)
-                    self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
-                    completionHandler(.success(miniAppDisplayProtocol))
-                }
+                self.getMiniAppView(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
                 completionHandler(.failure(error))
             }
+        }
+    }
+
+    func getMiniAppView(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol? = nil) {
+        DispatchQueue.main.async {
+            let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id, hostAppMessageDelegate: messageInterface ?? self)
+            self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
+            completionHandler(.success(miniAppDisplayProtocol))
         }
     }
 }

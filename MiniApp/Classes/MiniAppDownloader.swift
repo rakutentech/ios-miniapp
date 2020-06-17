@@ -23,30 +23,67 @@ class MiniAppDownloader {
 
     func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
-        if miniAppStatus.isDownloaded(appId: appId, versionId: versionId) {
-            completionHandler(.success(miniAppStoragePath))
-            return
-        }
-        self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
-            switch result {
-            case .success(let responseData):
-                self.downloadMiniApp(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
-                    switch downloadResult {
-                    case .success:
-                        self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
+        if !isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId) {
+            self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
+                 switch result {
+                 case .success(let responseData):
+                     self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
+                         switch downloadResult {
+                         case .success:
+                             self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
 
-                        fallthrough
-                    default:
-                        completionHandler(downloadResult)
-                    }
-                }
-            case .failure(let error):
-                return completionHandler(.failure(error))
-            }
+                             fallthrough
+                         default:
+                             completionHandler(downloadResult)
+                         }
+                     }
+                 case .failure(let error):
+                    self.handleDownloadError(appId: appId, error: error, completionHandler: completionHandler)
+                 }
+             }
+        } else {
+            completionHandler(.success(miniAppStoragePath))
         }
     }
 
-    private func downloadMiniApp(urls: [String], to miniAppPath: URL, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+    func handleDownloadError(appId: String, error: Error, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+        let downloadError = error as NSError
+        if Constants.offlineErrorCodeList.contains(downloadError.code) {
+           guard let miniAppPath = self.getCachedMiniApp(appId: appId) else {
+               return completionHandler(.failure(downloadError))
+           }
+           completionHandler(.success(miniAppPath))
+        }
+        return completionHandler(.failure(error))
+    }
+
+    func isMiniAppAlreadyDownloaded(appId: String, versionId: String) -> Bool {
+        if miniAppStatus.isDownloaded(appId: appId, versionId: versionId) {
+            let versionDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+            var isDirectory: ObjCBool = true
+            if FileManager.default.fileExists(atPath: versionDirectory.path, isDirectory: &isDirectory) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /// Check if there is any old version of mini app cached for a given app ID
+    /// - Parameter appId: App ID for which the version directory path to be fetched
+    /// - Returns: URL of the available cached version for a given mini app ID
+    func getCachedMiniApp(appId: String) -> URL? {
+        guard let versionDirectory = FileManager.getMiniAppVersionDirectory(usingAppId: appId) else {
+            return nil
+        }
+        var isDirectory: ObjCBool = true
+        if FileManager.default.fileExists(atPath: versionDirectory.path, isDirectory: &isDirectory) {
+            return versionDirectory
+        } else {
+            return nil
+        }
+    }
+
+    private func startDownloadingFiles(urls: [String], to miniAppPath: URL, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         self.miniAppClient.delegate = self
         for url in urls {
             guard let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
