@@ -7,7 +7,6 @@ class ViewController: UITableViewController {
     var currentMiniAppInfo: MiniAppInfo?
     var currentMiniAppView: MiniAppDisplayProtocol?
     let imageCache = ImageCache()
-    let config = Config.getCurrent()
 
     override func viewDidLoad() {
         super.viewDidLoad()

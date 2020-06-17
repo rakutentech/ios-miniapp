@@ -8,7 +8,8 @@ internal class Environment {
         case applicationIdentifier = "RASApplicationIdentifier",
             version = "CFBundleShortVersionString",
             subscriptionKey = "RASProjectSubscriptionKey",
-            endpoint = "RMAAPIEndpoint"
+            endpoint = "RMAAPIEndpoint",
+            testEndpoint = "RMAAPITestEndpoint"
     }
 
     let bundle: EnvironmentProtocol
@@ -17,6 +18,7 @@ internal class Environment {
     var customAppId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
+    var loadTestVersions: Bool?
 
     init(bundle: EnvironmentProtocol = Bundle.main) {
         self.bundle = bundle
@@ -24,10 +26,11 @@ internal class Environment {
 
     convenience init(with config: MiniAppSdkConfig, bundle: EnvironmentProtocol = Bundle.main) {
         self.init(bundle: bundle)
-        self.customUrl = config.baseUrl
+        self.customUrl = config.url
         self.customAppId = config.rasAppId
         self.customSubscriptionKey = config.subscriptionKey
         self.customAppVersion = config.hostAppVersion
+        self.loadTestVersions = config.loadTestVersions
     }
 
     var appId: String {
@@ -43,13 +46,15 @@ internal class Environment {
     }
 
     var baseUrl: URL? {
-        guard let endpointUrlString = (self.customUrl ?? bundle.value(for: Key.endpoint.rawValue)) else {
-            MiniAppLogger.e("Ensure RMAAPIEndpoint value in plist is valid")
+        let defaultEndpoint = loadTestVersions ?? false ? (bundle.value(for: Key.testEndpoint.rawValue)) : (bundle.value(for: Key.endpoint.rawValue))
+        guard let endpointUrlString = (self.customUrl ?? defaultEndpoint) else {
+            MiniAppLogger.e("Ensure RMAAPIEndpoint and RMAAPITestEndpoint values in plist are valid")
             return nil
         }
         return URL(string: "\(endpointUrlString)")
     }
 
+    
     func value(for field: String?, fallback key: Key) -> String {
         return field ?? bundle.value(for: key.rawValue) ?? bundle.valueNotFound
     }

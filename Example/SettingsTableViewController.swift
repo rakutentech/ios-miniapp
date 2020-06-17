@@ -3,6 +3,7 @@ import MiniApp
 
 class SettingsTableViewController: UITableViewController {
 
+    @IBOutlet weak var endPointSegmentedControl: UISegmentedControl!
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
     @IBOutlet weak var invalidHostAppIdLabel: UILabel!
@@ -28,6 +29,11 @@ class SettingsTableViewController: UITableViewController {
         self.invalidSubscriptionKeyLabel.isHidden = true
         configure(field: self.textFieldAppID, for: .applicationIdentifier)
         configure(field: self.textFieldSubKey, for: .subscriptionKey)
+        self.endPointSegmentedControl.selectedSegmentIndex = Config.userDefaults?.bool(forKey: Config.Key.loadTestVersions.rawValue) ?? false ? 1 : 0
+    }
+
+    @IBAction func endPointChanged(_ sender: UISegmentedControl) {
+
     }
 
     @IBAction func actionResetConfig(_ sender: Any) {
@@ -38,7 +44,13 @@ class SettingsTableViewController: UITableViewController {
     @IBAction func actionSaveConfig() {
         if isValueEntered(text: self.textFieldAppID.text, key: .applicationIdentifier) && isValueEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
             if self.textFieldAppID.text!.isValidUUID() {
-                fetchAppList(withConfig: createConfig(hostAppId: self.textFieldAppID.text!, subscriptionKey: self.textFieldSubKey.text!))
+                fetchAppList(withConfig:
+                        createConfig(
+                            hostAppId: self.textFieldAppID.text!,
+                            subscriptionKey: self.textFieldSubKey.text!,
+                            loadTestVersions: self.endPointSegmentedControl.selectedSegmentIndex == 1
+                    )
+                )
             }
             displayInvalidValueErrorMessage(forKey: .applicationIdentifier)
         }
@@ -80,23 +92,24 @@ class SettingsTableViewController: UITableViewController {
     func saveCustomConfiguration(responseData: [MiniAppInfo]?) {
         self.save(field: self.textFieldAppID, for: .applicationIdentifier)
         self.save(field: self.textFieldSubKey, for: .subscriptionKey)
+        Config.userDefaults?.set(self.endPointSegmentedControl.selectedSegmentIndex == 1, forKey: Config.Key.loadTestVersions.rawValue)
         self.displayAlert(title: NSLocalizedString("message_save_title", comment: ""),
             message: NSLocalizedString("message_save_text", comment: ""),
             autoDismiss: true) { _ in
-                self.dismiss(animated: true, completion: nil)
-                guard let miniAppList = responseData else {
-                    self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: nil)
-                    return
-                }
-                self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: miniAppList)
+            self.dismiss(animated: true, completion: nil)
+            guard let miniAppList = responseData else {
+                self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: nil)
+                return
             }
+            self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: miniAppList)
+        }
     }
 
-    func createConfig(hostAppId: String, subscriptionKey: String) -> MiniAppSdkConfig {
-        return MiniAppSdkConfig(baseUrl: Bundle.main.infoDictionary?[Config.Key.endpoint.rawValue] as? String,
-                                rasAppId: hostAppId,
-                                subscriptionKey: subscriptionKey,
-                                hostAppVersion: Bundle.main.infoDictionary?[Config.Key.version.rawValue] as? String)
+    func createConfig(hostAppId: String, subscriptionKey: String, loadTestVersions: Bool) -> MiniAppSdkConfig {
+        return MiniAppSdkConfig(loadTestVersions: loadTestVersions,
+            rasAppId: hostAppId,
+            subscriptionKey: subscriptionKey,
+            hostAppVersion: Bundle.main.infoDictionary?[Config.Key.version.rawValue] as? String)
     }
 
     /// Adding Tap gesture to dismiss the Keyboard
@@ -135,6 +148,8 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
+
+
     func isValueEntered(text: String?, key: Config.Key) -> Bool {
         guard let textFieldValue = text, !textFieldValue.isEmpty else {
             displayNoValueFoundErrorMessage(forKey: key)
@@ -146,29 +161,29 @@ class SettingsTableViewController: UITableViewController {
     func displayInvalidValueErrorMessage(forKey: Config.Key) {
         switch forKey {
         case .applicationIdentifier:
-        displayAlert(title: NSLocalizedString("error_title", comment: ""),
-            message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
-            autoDismiss: true)
+            displayAlert(title: NSLocalizedString("error_title", comment: ""),
+                message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
+                autoDismiss: true)
         case .subscriptionKey:
-        displayAlert(title: NSLocalizedString("error_title", comment: ""),
-            message: NSLocalizedString("error_incorrect_subscription_key_message", comment: ""),
-            autoDismiss: false)
+            displayAlert(title: NSLocalizedString("error_title", comment: ""),
+                message: NSLocalizedString("error_incorrect_subscription_key_message", comment: ""),
+                autoDismiss: false)
         default:
-        break
+            break
         }
     }
     func displayNoValueFoundErrorMessage(forKey: Config.Key) {
         switch forKey {
         case .applicationIdentifier:
-        displayAlert(title: NSLocalizedString("error_title", comment: ""),
-            message: NSLocalizedString("error_empty_appid_key_message", comment: ""),
-            autoDismiss: true)
+            displayAlert(title: NSLocalizedString("error_title", comment: ""),
+                message: NSLocalizedString("error_empty_appid_key_message", comment: ""),
+                autoDismiss: true)
         case .subscriptionKey:
-        displayAlert(title: NSLocalizedString("error_title", comment: ""),
-            message: NSLocalizedString("error_empty_subscription_key_message", comment: ""),
-            autoDismiss: false)
+            displayAlert(title: NSLocalizedString("error_title", comment: ""),
+                message: NSLocalizedString("error_empty_subscription_key_message", comment: ""),
+                autoDismiss: false)
         default:
-        break
+            break
         }
     }
 
