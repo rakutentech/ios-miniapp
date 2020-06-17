@@ -43,10 +43,10 @@ internal class RealMiniApp {
             switch result {
             case .success(let responseData):
                 if appInfo.version.versionId != responseData.version.versionId {
-                    self.downloadMiniApp(appInfo: responseData, completionHandler: completionHandler)
+                    self.downloadMiniApp(appInfo: responseData, completionHandler: completionHandler, messageInterface: messageInterface)
                     return
                 }
-                self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler)
+                self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
                 let createError = error as NSError
                 if Constants.offlineErrorCodeList.contains(createError.code) {
