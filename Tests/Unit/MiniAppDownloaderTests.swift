@@ -7,6 +7,15 @@ class MiniAppDownloaderTests: QuickSpec {
 
     override func spec() {
         let miniAppStatus = MiniAppStatus()
+        let appId = "Apple"
+        let versionId = "Mac"
+        let mockAPIClient = MockAPIClient()
+        let mockManifestDownloader = MockManifestDownloader()
+        let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
+        afterEach {
+            deleteMockMiniApp(appId: "Apple", versionId: "Mac")
+            deleteStatusPreferences()
+        }
         describe("mini app folder will be created") {
             context("when manifest returns list of valid URLs") {
                 it("will download all files and mini app path is created") {
@@ -25,8 +34,8 @@ class MiniAppDownloaderTests: QuickSpec {
                     expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: 10)
                 }
             }
-            context("when downloader fails due to no network availability") {
-                it("will return last version of mini app that is already download") {
+            context("when downloader is failed") {
+                it("will return error") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
@@ -40,18 +49,16 @@ class MiniAppDownloaderTests: QuickSpec {
                     mockManifestDownloader.error = NSError(domain: "URLErrorDomain", code: -1009, userInfo: nil)
                     mockAPIClient.data = nil
                     mockManifestDownloader.data = nil
-                    var miniAppCachedURL: URL?
-
+                    var testError: NSError?
                     downloader.download(appId: "Apple", versionId: "Mac1") { (result) in
                         switch result {
-                        case .success(let url):
-                            miniAppCachedURL = url
-                        case .failure:
+                        case .success:
                             break
+                        case .failure(let error):
+                            testError = error as NSError
                         }
                     }
-                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "Mac")
-                    expect(miniAppCachedURL?.path).toEventually(equal(miniAppDirectory.path), timeout: 10)
+                    expect(testError?.code).toEventually(equal(-1009), timeout: 20)
                 }
             }
         }
@@ -84,7 +91,7 @@ class MiniAppDownloaderTests: QuickSpec {
 
         describe("mini app files will be downloaded") {
             context("when valid manifest information is returned") {
-                it("will return downloading failed error") {
+                it("will download all files in the manifest") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
@@ -171,22 +178,76 @@ class MiniAppDownloaderTests: QuickSpec {
             }
             context("when isMiniAppAlreadyDownloaded is called with valid appId and versionId - which is  downloaded") {
               it("will return true") {
-                    let appId = "Apple"
-                    let versionId = "Mac"
-                    let mockAPIClient = MockAPIClient()
-                    let mockManifestDownloader = MockManifestDownloader()
-                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                     {
                       "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
                     }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.download(appId: appId, versionId: versionId) { (_) in }
-                    miniAppStatus.setDownloadStatus(true, appId: appId, versionId: versionId)
-                    let isDownloaded = downloader.isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId)
+                    var isDownloaded: Bool = false
+                    downloader.download(appId: appId, versionId: versionId) { (result) in
+                        switch result {
+                        case .success:
+                            miniAppStatus.setDownloadStatus(true, appId: appId, versionId: versionId)
+                            isDownloaded = downloader.isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId)
+                        case .failure:
+                            break
+                        }
+                    }
                     expect(isDownloaded).toEventually(equal(true))
-                    UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
+                }
+            }
+        }
+        describe("mini app downloader") {
+            context("when getCachedMiniAppVersion is called with invalid data") {
+                it("will return nil") {
+                    let version = downloader.getCachedMiniAppVersion(appId: "test", versionId: "")
+                    expect(version).toEventually(beNil(), timeout: 10)
+                }
+            }
+            context("when getCachedMiniAppVersion is called with valid mini app id and version id") {
+                it("will return version that is already downloaded") {
+                    let responseString = """
+                      {
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    var version: String?
+                    downloader.download(appId: appId, versionId: versionId) { (result) in
+                        switch result {
+                        case .success:
+                            miniAppStatus.setDownloadStatus(true, appId: appId, versionId: versionId)
+                            miniAppStatus.setCachedVersion(versionId, for: appId)
+                            version = downloader.getCachedMiniAppVersion(appId: appId, versionId: versionId)
+                        case .failure:
+                            break
+                        }
+                    }
+                    expect(version).toEventually(equal("Mac"), timeout: 20)
+                }
+            }
+            context("when getCachedMiniAppVersion is called with valid mini app id and empty version id") {
+                it("will return version that is already downloaded") {
+
+                    let responseString = """
+                      {
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    var version: String?
+                    downloader.download(appId: appId, versionId: versionId) { (result) in
+                        switch result {
+                        case .success:
+                            miniAppStatus.setDownloadStatus(true, appId: appId, versionId: versionId)
+                            miniAppStatus.setCachedVersion(versionId, for: appId)
+                            version = downloader.getCachedMiniAppVersion(appId: appId, versionId: "")
+                        case .failure:
+                            break
+                        }
+                    }
+                    expect(version).toEventually(equal("Mac"), timeout: 20)
                 }
             }
         }
