@@ -15,6 +15,7 @@ class SettingsTableViewController: UITableViewController {
         self.textFieldAppID.delegate = self
         self.textFieldSubKey.delegate = self
         addTapGesture()
+        addBuildVersionLabel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -211,6 +212,29 @@ class SettingsTableViewController: UITableViewController {
             return
         }
         self.invalidSubscriptionKeyLabel.isHidden = !value.isEmpty
+    }
+
+    func addBuildVersionLabel() {
+        let buildLabel = UILabel()
+        buildLabel.text = getBuildVersionText()
+        buildLabel.textAlignment = .center
+        buildLabel.textColor = .gray
+        tableView.addSubview(buildLabel)
+        buildLabel.translatesAutoresizingMaskIntoConstraints = false
+        buildLabel.bottomAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        buildLabel.widthAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.widthAnchor).isActive = true
+    }
+
+    func getBuildVersionText() -> String {
+        var versionText = ""
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            versionText.append("Build Version: \(version) - ")
+
+        }
+        if let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            versionText.append("(\(build))")
+        }
+        return versionText
     }
 }
 
