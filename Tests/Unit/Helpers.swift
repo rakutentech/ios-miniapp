@@ -97,6 +97,10 @@ class MockManifestDownloader: ManifestDownloader {
 
     override func fetchManifest(apiClient: MiniAppClient, appId: String, versionId: String, completionHandler: @escaping (Result<ManifestResponse, Error>) -> Void) {
 
+        if error != nil {
+            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+        }
+
         apiClient.getAppManifest(appId: appId, versionId: versionId) { (result) in
             switch result {
             case .success(let responseData):
