@@ -5,7 +5,7 @@ import Nimble
 class URLSchemeHandlerTests: QuickSpec {
     override func spec() {
         describe("URL Scheme Handler") {
-            let schemeHandler = URLSchemeHandler()
+            let schemeHandler = URLSchemeHandler(versionId: "version-id")
             var components = URLComponents(string: "mscheme.MINI_APP_ID")
             context("when getAppIdFromScheme is called with scheme") {
                 it("will return mini app id") {
@@ -41,16 +41,9 @@ class URLSchemeHandlerTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     downloader.download(appId: "Apple", versionId: "Mac") { (_) in }
                     let fileURL = schemeHandler.getFilePath(relativeFilePath: "HelloWorld.txt", appId: "Apple")
-                    var expectedFilePath = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "Mac")
+                    var expectedFilePath = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "version-id")
                     expectedFilePath.appendPathComponent("HelloWorld.txt")
                     expect(fileURL).toEventually(equal(expectedFilePath))
-                }
-            }
-            context("when getFilePath is called with path that doesn't exists") {
-                it("will return root file path") {
-                    components?.path = ""
-                    let fileURL = schemeHandler.getFilePath(relativeFilePath: "/images/home.png", appId: "MINI_APP_ID")
-                    expect(fileURL).toEventually(beNil())
                 }
             }
         }

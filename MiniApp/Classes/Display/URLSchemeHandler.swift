@@ -3,6 +3,12 @@ import WebKit
 /// This class helps to handle Custom URL schemes that is Registered in MiniAppWebView class
 class URLSchemeHandler: NSObject, WKURLSchemeHandler {
 
+    let versionId: String
+
+    init(versionId: String) {
+        self.versionId = versionId
+    }
+
     func webView(_ webView: WKWebView, start urlSchemeTask: WKURLSchemeTask) {
 
         if urlSchemeTask.request.url != nil {
@@ -12,13 +18,13 @@ class URLSchemeHandler: NSObject, WKURLSchemeHandler {
                 }
                 let miniAppId = getAppIdFromScheme(scheme: scheme)
                 let relativeFilePath = getFileName(url: urlSchemeTask.request.url)
-                guard let miniAppFilePath = getFilePath(relativeFilePath: relativeFilePath, appId: miniAppId) else {
-                    return
+                let filePath = getFilePath(relativeFilePath: relativeFilePath, appId: miniAppId)
+                let data = try Data(contentsOf: filePath)
+                DispatchQueue.main.async {
+                    urlSchemeTask.didReceive(URLResponse(url: urlSchemeTask.request.url!, mimeType: "text/html", expectedContentLength: data.count, textEncodingName: nil))
+                    urlSchemeTask.didReceive(data)
+                    urlSchemeTask.didFinish()
                 }
-                let data = try Data(contentsOf: miniAppFilePath)
-                urlSchemeTask.didReceive(URLResponse(url: urlSchemeTask.request.url!, mimeType: "text/html", expectedContentLength: data.count, textEncodingName: nil))
-                urlSchemeTask.didReceive(data)
-                urlSchemeTask.didFinish()
             } catch let error as NSError {
                 print("Error: ", error)
             }
@@ -53,10 +59,7 @@ class URLSchemeHandler: NSObject, WKURLSchemeHandler {
     /// - Parameters:
     ///   - relativeFilePath: Relative file path for a request URL
     ///   - appId: Mini app ID
-    func getFilePath(relativeFilePath: String, appId: String) -> URL? {
-        guard let miniAppPath = FileManager.getMiniAppVersionDirectory(usingAppId: appId) else {
-            return nil
-        }
-        return miniAppPath.appendingPathComponent(relativeFilePath)
+    func getFilePath(relativeFilePath: String, appId: String) -> URL {
+        return FileManager.getMiniAppVersionDirectory(with: appId, and: self.versionId).appendingPathComponent(relativeFilePath)
     }
 }
