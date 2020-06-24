@@ -36,6 +36,8 @@
 		388FEEE623DEABCF0062382F /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388FEEE523DEABCF0062382F /* EnvironmentTests.swift */; };
 		3899C2C0242331900087A619 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3899C2BF242331900087A619 /* URLSchemeHandlerTests.swift */; };
 		389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */; };
+		38A2E93724A2E2A100E58233 /* MiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A2E93524A2E2A100E58233 /* MiniAppViewTests.swift */; };
+		38A2E93824A2E2A100E58233 /* MimeTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A2E93624A2E2A100E58233 /* MimeTypesTests.swift */; };
 		38F3B7F024192E7300914E37 /* UrlParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3B7EF24192E7300914E37 /* UrlParserTests.swift */; };
 		38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4423D554FE00F2C1CE /* Helpers.swift */; };
 		38F73B4723D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */; };
@@ -84,6 +86,8 @@
 		388FEEE523DEABCF0062382F /* EnvironmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentTests.swift; sourceTree = "<group>"; };
 		3899C2BF242331900087A619 /* URLSchemeHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemeHandlerTests.swift; sourceTree = "<group>"; };
 		389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppClientTests.swift; sourceTree = "<group>"; };
+		38A2E93524A2E2A100E58233 /* MiniAppViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewTests.swift; sourceTree = "<group>"; };
+		38A2E93624A2E2A100E58233 /* MimeTypesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MimeTypesTests.swift; sourceTree = "<group>"; };
 		38F3B7EF24192E7300914E37 /* UrlParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlParserTests.swift; sourceTree = "<group>"; };
 		38F73B4423D554FE00F2C1CE /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppInfoFetcherTests.swift; sourceTree = "<group>"; };
@@ -126,6 +130,8 @@
 		389FA22E23D01A3900BC3120 /* Unit */ = {
 			isa = PBXGroup;
 			children = (
+				38A2E93624A2E2A100E58233 /* MimeTypesTests.swift */,
+				38A2E93524A2E2A100E58233 /* MiniAppViewTests.swift */,
 				389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */,
 				38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */,
 				38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */,
@@ -340,7 +346,9 @@
 				188F5923243DCBAB0042618E /* DisplayNavigationController.swift in Sources */,
 				1867996B243EF6C200CD6A8E /* ImageCache.swift in Sources */,
 				18C59F2B241094F600F66632 /* SettingsTableViewController.swift in Sources */,
+				38A2E93824A2E2A100E58233 /* MimeTypesTests.swift in Sources */,
 				3878D4D623B44F85001E27F8 /* ViewController.swift in Sources */,
+				38A2E93724A2E2A100E58233 /* MiniAppViewTests.swift in Sources */,
 				386A913C23F653E800F5DB1B /* DisplayController.swift in Sources */,
 				38777D9323F67BD2008716A7 /* Progress+UIViewController.swift in Sources */,
 				18C59F2D2410ADE300F66632 /* Config.swift in Sources */,
