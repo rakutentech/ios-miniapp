@@ -94,7 +94,12 @@ internal class RealMiniApp {
 }
 
 extension RealMiniApp: MiniAppMessageProtocol {
+    func requestPermission(completionHandler: @escaping (Result<String, Error>) -> Void) {
+        let error: NSError = NSError.init(domain: "MiniAppMessageBridge has not been implemented by the host app", code: 0, userInfo: nil)
+        completionHandler(.failure(error as Error))
+    }
+
     func getUniqueId() -> String {
-        return "MiniAppMessageBridge has not been implemented"
+        return "MiniAppMessageBridge has not been implemented by the host app"
     }
 }

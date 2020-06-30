@@ -1,5 +1,6 @@
 import UIKit
 import MiniApp
+import CoreLocation
 
 class ViewController: UITableViewController {
 
@@ -8,6 +9,8 @@ class ViewController: UITableViewController {
     var currentMiniAppView: MiniAppDisplayProtocol?
     let imageCache = ImageCache()
     let config = Config.getCurrent()
+    let locationManager = CLLocationManager()
+    var permissionHandlerObj: PermissionCompletionHandler?
 
     override func viewDidLoad() {
         super.viewDidLoad()

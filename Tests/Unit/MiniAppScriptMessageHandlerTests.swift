@@ -3,6 +3,7 @@ import Nimble
 import WebKit
 @testable import MiniApp
 
+// swiftlint:disable function_body_length
 class MiniAppScriptMessageHandlerTests: QuickSpec {
 
     override func spec() {
@@ -11,47 +12,77 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             let mockMessageInterface = MockMessageInterface()
 
             let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
-            context("when user controller recieve valid action and id") {
+            context("when user controller receive valid action and id") {
                 it("will return unique id") {
                     mockMessageInterface.mockUniqueId = false
-                    let mockMessage = MockWKScriptMessage(name: "getUniqueId", body: "{\"action\":\"getUniqueId\",\"id\":\"12345\"}" as AnyObject)
+                    let mockMessage = MockWKScriptMessage(name: "getUniqueId", body: "{\"action\": \"getUniqueId\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.messageId).toEventually(equal("12345"))
                     expect(callbackProtocol.response).toEventuallyNot(beNil())
                 }
             }
-            context("when user controller recieve valid action and id but failed to retrieve unique id") {
+            context("when user controller receive valid action and id but failed to retrieve unique id") {
                 it("will return error") {
                     mockMessageInterface.mockUniqueId = true
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
-                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\":\"getUniqueId\",\"id\":\"12345\"}" as AnyObject)
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getUniqueId\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.messageId).toEventually(equal("12345"))
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.internalError.rawValue))                }
             }
-            context("when handleBridgeMessage recieve invalid action, valid id") {
+            context("when handleBridgeMessage receive invalid action, valid id") {
                 it("will return error") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
-                    let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123")
+                    let requestParam = RequestParameters(permission: "location")
+                    let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
                 }
             }
-            context("when handleBridgeMessage recieve valid action, invalid id") {
+            context("when handleBridgeMessage receive valid action, invalid id") {
                 it("will return error") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
-                    let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "")
+                    let requestParam = RequestParameters(permission: "location")
+                    let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
                 }
             }
-            context("when handleActionCommand recieve valid action, but failed to retrieve unique id") {
+            context("when handleActionCommand receive valid action, but failed to retrieve unique id") {
                 it("will return error") {
                     mockMessageInterface.mockUniqueId = true
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
                     scriptMessageHandler.sendUniqueId(messageId: "1234")
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.internalError.rawValue))
                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user allowed the permission") {
+                 it("will return error") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
+                    mockMessageInterface.locationAllowed = true
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.response).toEventually(equal("Allowed"))
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user denied the permission") {
+                 it("will return denied") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
+                    mockMessageInterface.locationAllowed = false
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(equal("Denied"))
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user skipped the permission") {
+                 it("will return NotDetermined") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
+                    mockMessageInterface.locationAllowed = false
+                    mockMessageInterface.permissionError = MiniAppPermissionResult.notDetermined
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(equal("NotDetermined"))
+                 }
             }
         }
     }
