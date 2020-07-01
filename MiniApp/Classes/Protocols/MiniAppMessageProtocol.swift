@@ -9,5 +9,5 @@ public protocol MiniAppMessageProtocol: class {
 
     /// Interface that should be implemented in the host app that handles the code to request any permission and the
     /// result (allowed/denied) should be returned.
-    func requestPermission(completionHandler: @escaping (Result<String, Error>) -> Void)
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void)
 }

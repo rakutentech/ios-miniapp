@@ -4,22 +4,24 @@ import CoreLocation
 extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
     typealias PermissionCompletionHandler = (((Result<String, Error>)) -> Void)
 
-    func requestPermission(completionHandler: @escaping (Result<String, Error>) -> Void) {
-        locationManager.delegate = self
-        let locStatus = CLLocationManager.authorizationStatus()
-        permissionHandlerObj = completionHandler
-        switch locStatus {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        case .denied:
-            displayLocationDisabledAlert()
-            completionHandler(.failure(MiniAppPermissionResult.denied))
-        case .authorizedAlways, .authorizedWhenInUse:
-            completionHandler(.success("allowed"))
-        case .restricted:
-            completionHandler(.failure(MiniAppPermissionResult.restricted))
-        @unknown default:
-        break
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
+        switch permissionType {
+        case .location:
+            let locStatus = CLLocationManager.authorizationStatus()
+            permissionHandlerObj = completionHandler
+            switch locStatus {
+            case .notDetermined:
+                locationManager.requestWhenInUseAuthorization()
+            case .denied:
+                displayLocationDisabledAlert()
+                completionHandler(.failure(MiniAppPermissionResult.denied))
+            case .authorizedAlways, .authorizedWhenInUse:
+                completionHandler(.success("allowed"))
+            case .restricted:
+                completionHandler(.failure(MiniAppPermissionResult.restricted))
+            @unknown default:
+            break
+            }
         }
     }
 

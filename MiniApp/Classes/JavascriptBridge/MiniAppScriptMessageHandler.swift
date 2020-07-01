@@ -57,7 +57,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
             return
         }
-        let requestPermissionType = MiniAppJSPermissionType(rawValue: requestParamValue)
+        let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue)
 
         switch requestPermissionType {
         case .location:
@@ -68,7 +68,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func getPermissionResult(requestParam: String, callbackId: String) {
-        hostAppMessageDelegate?.requestPermission { (result) in
+        hostAppMessageDelegate?.requestPermission(permissionType: MiniAppPermissionType(rawValue: requestParam)!) { (result) in
             switch result {
             case .success:
                 self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Allowed")

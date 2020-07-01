@@ -171,7 +171,7 @@ class MockMessageInterface: MiniAppMessageProtocol {
         }
     }
 
-    func requestPermission(completionHandler: @escaping (Result<String, Error>) -> Void) {
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
         if locationAllowed {
             completionHandler(.success("Allowed"))
         } else {

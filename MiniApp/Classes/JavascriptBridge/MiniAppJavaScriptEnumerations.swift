@@ -14,7 +14,7 @@ enum MiniAppJavaScriptError: String {
     case invalidPermissionType
 }
 
-enum MiniAppJSPermissionType: String {
+public enum MiniAppPermissionType: String {
     case location
 }
 
