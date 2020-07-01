@@ -10,7 +10,6 @@ class URLSchemeHandler: NSObject, WKURLSchemeHandler {
     }
 
     func webView(_ webView: WKWebView, start urlSchemeTask: WKURLSchemeTask) {
-
         if urlSchemeTask.request.url != nil {
             do {
                 guard let scheme = webView.url?.scheme else {
@@ -21,7 +20,7 @@ class URLSchemeHandler: NSObject, WKURLSchemeHandler {
                 let filePath = getFilePath(relativeFilePath: relativeFilePath, appId: miniAppId)
                 let data = try Data(contentsOf: filePath)
                 DispatchQueue.main.async {
-                    urlSchemeTask.didReceive(URLResponse(url: urlSchemeTask.request.url!, mimeType: "text/html", expectedContentLength: data.count, textEncodingName: nil))
+                    urlSchemeTask.didReceive(URLResponse(url: urlSchemeTask.request.url!, mimeType: filePath.pathExtension.mimeType(), expectedContentLength: data.count, textEncodingName: nil))
                     urlSchemeTask.didReceive(data)
                     urlSchemeTask.didFinish()
                 }
