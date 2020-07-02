@@ -180,7 +180,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func configure(mode: TestMode) {
-        self.endPointSegmentedControl.insertSegment(withTitle: mode.stringValue(), at:  mode.rawValue, animated: false)
+        self.endPointSegmentedControl.insertSegment(withTitle: mode.stringValue(), at: mode.rawValue, animated: false)
     }
 
     func getTextFieldValue(key: Config.Key, placeholderText: String?) -> String? {
