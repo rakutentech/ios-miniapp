@@ -34,6 +34,7 @@ script:
 - bundle exec danger
 
 after_success:
+- bash <(curl -s https://codecov.io/bash) -J '^MiniApp$' -X gcov
 # Upload code coverage
 - bundle exec jazzy
   --xcodebuild-arguments -scheme,Tests
