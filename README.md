@@ -38,7 +38,12 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ### Custom parameters
 
-In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (RASApplicationIdentifier, RASProjectSubscriptionKey) or by taping the top right configuration icon in the example application. Also we don't currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (RMAAPIEndpoint)
+In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (`RASApplicationIdentifier`, `RASProjectSubscriptionKey`) or by taping the top right configuration icon in the example application. Also we don't currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (`RMAAPIEndpoint`)
+
+### Testing mode
+
+The SDK can be configured to load MiniApps in 2 modes : Publishing mode and Testing mode. Publishing mode only allows access to the last published version of your MiniApps, whereas Testing mode allows you to load all your MiniApps versions, independentlty of their state on RAS console. To configure the loading mode, you can either do it in the .plist file with the configuration variable `IsTestMode`, or by taping the top right configuration icon in the example application.
+
 
 # Installation
 
@@ -50,11 +55,14 @@ pod 'MiniApp'
 
 # Configuration
 
-In your project configuration .plist you should add 2 custom string target properties :
+In your project configuration .plist you should add 3 custom string target properties :
 
 - `RASApplicationIdentifier` - to set your MiniApp host application identifier
 - `RASProjectSubscriptionKey` - to set your MiniApp subscription key
 - `RMAAPIEndpoint` - to provide your own Base URL for API requests
+
+And a custom boolean target property:
+- `IsTestMode` - to chose the loading mode of the API (true: testing, false: publishing)
 
 
 If you don't want to use project settings, you have to pass this informations one by one to the `Config.userDefaults` using a `Config.Key` as key:
@@ -65,10 +73,28 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 
 # Usage
 
+* [Overriding configuration on runtime](#runtime-conf)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Create a MiniApp](#create-mini-app)
 
+<div id="runtime-conf"></div>
+
+### Overriding configuration on runtime
+
+Every call to the API can be done with default parameters retrieved from the project .plist configuratin file, or by providing a `MiniAppSdkConfig` object during the call. Here is a simple example class we use to create the configuration in samples below:
+
+```swift
+class Config: NSObject {
+    class func getCustom() -> MiniAppSdkConfig {
+        return MiniAppSdkConfig(baseUrl: "https://your.custom.url"
+                                rasAppId: "your_RAS_App_id",
+                                subscriptionKey: "your_subscription_key",
+                                hostAppVersion: "your_custom_version",
+                                isTestMode: true)
+    }
+}
+```
 
 <div id="load-miniapp-list"></div>
 
@@ -85,7 +111,7 @@ MiniApp.shared().list { (result) in
 or
 
 ```swift
-MiniApp.shared(with: Config.getCurrent()).list { (result) in
+MiniApp.shared(with: Config.getCustom()).list { (result) in
 	...
 }
 ```
@@ -102,7 +128,7 @@ MiniApp.shared().info(miniAppId: miniAppID) { (result) in
 or
 
 ```swift
-MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) in
+MiniApp.shared(with: Config.getCustom()).info(miniAppId: miniAppID) { (result) in
 	...
 }
 ```

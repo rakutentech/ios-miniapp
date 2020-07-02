@@ -170,6 +170,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func configureMode() {
+        self.endPointSegmentedControl.numberOfSegments = TestMode.allCases.count
         TestMode.allCases.forEach { configure(mode: $0) }
         if let index = Config.userDefaults?.value(forKey: Config.Key.isTestMode.rawValue) {
             self.endPointSegmentedControl.selectedSegmentIndex = (index as? Bool)?.intValue ?? TestMode.DEFAULT.rawValue
