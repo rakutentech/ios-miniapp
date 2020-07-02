@@ -4,8 +4,8 @@ internal class RealMiniAppView: UIView, MiniAppDisplayProtocol, MiniAppCallbackP
     internal var webView: WKWebView
     internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
 
-    init(miniAppId: String, hostAppMessageDelegate: MiniAppMessageProtocol) {
-        webView = MiniAppWebView(miniAppId: miniAppId)
+    init(miniAppId: String, versionId: String, hostAppMessageDelegate: MiniAppMessageProtocol) {
+        webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         super.init(frame: .zero)
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self, hostAppMessageDelegate: hostAppMessageDelegate)

@@ -20,4 +20,12 @@ class MiniAppStatus {
     func isDownloaded(key: String) -> Bool {
         return defaults?.bool(forKey: key) ?? false
     }
+
+    func setCachedVersion(_ version: String, for key: String) {
+        defaults?.setValue(version, forKey: key)
+    }
+
+    func getCachedVersion(key: String) -> String {
+        return defaults?.string(forKey: key) ?? ""
+    }
 }
