@@ -11,6 +11,34 @@ class SettingsTableViewController: UITableViewController {
     weak var configUpdateDelegate: SettingsDelegate?
     let predefinedKeys: [String] = ["RAS_APPLICATION_IDENTIFIER", "RAS_SUBSCRIPTION_KEY", ""]
 
+    enum TestMode: Int, CaseIterable {
+        case PUBLISHING,
+        TESTING,
+        DEFAULT
+
+        func stringValue() -> String {
+            switch self {
+            case .PUBLISHING:
+                return NSLocalizedString("test_mode_publishing", comment: "")
+            case .TESTING:
+                return NSLocalizedString("test_mode_testing", comment: "")
+            case .DEFAULT:
+                return NSLocalizedString("test_mode_default", comment: "")
+            }
+        }
+
+        func isTestMode() -> Bool {
+            switch self {
+            case .PUBLISHING:
+                return false
+            case .TESTING:
+                return false
+            default:
+                return Bundle.main.infoDictionary?[Config.Key.isTestMode.rawValue] as? Bool ?? false
+            }
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textFieldAppID.delegate = self
@@ -25,16 +53,23 @@ class SettingsTableViewController: UITableViewController {
         toggleSaveButton()
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Test Mode (plist: \(TestMode.DEFAULT.isTestMode() ? TestMode.TESTING.stringValue() : TestMode.PUBLISHING.stringValue()))"
+        case 1:
+            return "RAS"
+        default:
+            return ""
+        }
+    }
+
     func resetFields() {
         self.invalidHostAppIdLabel.isHidden = true
         self.invalidSubscriptionKeyLabel.isHidden = true
         configure(field: self.textFieldAppID, for: .applicationIdentifier)
         configure(field: self.textFieldSubKey, for: .subscriptionKey)
-        self.endPointSegmentedControl.selectedSegmentIndex = (Config.userDefaults?.bool(forKey: Config.Key.isTestMode.rawValue) ?? false).intValue
-    }
-
-    @IBAction func endPointChanged(_ sender: UISegmentedControl) {
-
+        configureMode()
     }
 
     @IBAction func actionResetConfig(_ sender: Any) {
@@ -45,12 +80,19 @@ class SettingsTableViewController: UITableViewController {
     @IBAction func actionSaveConfig() {
         if isValueEntered(text: self.textFieldAppID.text, key: .applicationIdentifier) && isValueEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
             if self.textFieldAppID.text!.isValidUUID() {
+                var isTest: Bool
+                let selectedMode = TestMode(rawValue: self.endPointSegmentedControl.selectedSegmentIndex)
+                if selectedMode == .DEFAULT {
+                    isTest = TestMode.DEFAULT.isTestMode()
+                } else {
+                    isTest = selectedMode?.rawValue.boolValue ?? false
+                }
                 fetchAppList(withConfig:
                         createConfig(
                             hostAppId: self.textFieldAppID.text!,
                             subscriptionKey: self.textFieldSubKey.text!,
-                            loadTestVersions: self.endPointSegmentedControl.selectedSegmentIndex == 1
-                    )
+                            loadTestVersions: isTest
+                        )
                 )
             }
             displayInvalidValueErrorMessage(forKey: .applicationIdentifier)
@@ -93,7 +135,8 @@ class SettingsTableViewController: UITableViewController {
     func saveCustomConfiguration(responseData: [MiniAppInfo]?) {
         self.save(field: self.textFieldAppID, for: .applicationIdentifier)
         self.save(field: self.textFieldSubKey, for: .subscriptionKey)
-        Config.userDefaults?.set(self.endPointSegmentedControl.selectedSegmentIndex == 1, forKey: Config.Key.isTestMode.rawValue)
+        self.saveMode()
+
         self.displayAlert(title: NSLocalizedString("message_save_title", comment: ""),
             message: NSLocalizedString("message_save_text", comment: ""),
             autoDismiss: true) { _ in
@@ -126,6 +169,19 @@ class SettingsTableViewController: UITableViewController {
         field?.text = getTextFieldValue(key: key, placeholderText: field?.placeholder)
     }
 
+    func configureMode() {
+        TestMode.allCases.forEach { configure(mode: $0) }
+        if let index = Config.userDefaults?.value(forKey: Config.Key.isTestMode.rawValue) {
+            self.endPointSegmentedControl.selectedSegmentIndex = (index as? Bool)?.intValue ?? TestMode.DEFAULT.rawValue
+        } else {
+            self.endPointSegmentedControl.selectedSegmentIndex = TestMode.DEFAULT.rawValue
+        }
+    }
+
+    func configure(mode: TestMode) {
+        self.endPointSegmentedControl.setTitle(mode.stringValue(), forSegmentAt: mode.rawValue)
+    }
+
     func getTextFieldValue(key: Config.Key, placeholderText: String?) -> String? {
         if predefinedKeys.contains(placeholderText ?? "") {
             return Config.userDefaults?.string(forKey: key.rawValue) ?? ""
@@ -147,6 +203,15 @@ class SettingsTableViewController: UITableViewController {
             Config.userDefaults?.set(textField.text, forKey: key.rawValue)
         } else {
             Config.userDefaults?.removeObject(forKey: key.rawValue)
+        }
+    }
+
+    func saveMode() {
+        let selectedMode = self.endPointSegmentedControl.selectedSegmentIndex
+        if selectedMode == TestMode.DEFAULT.rawValue {
+            Config.userDefaults?.removeObject(forKey: Config.Key.isTestMode.rawValue)
+        } else {
+            Config.userDefaults?.set(selectedMode.boolValue, forKey: Config.Key.isTestMode.rawValue)
         }
     }
 
@@ -229,14 +294,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func addBuildVersionLabel() {
-        let buildLabel = UILabel()
-        buildLabel.text = getBuildVersionText()
-        buildLabel.textAlignment = .center
-        buildLabel.textColor = .gray
-        tableView.addSubview(buildLabel)
-        buildLabel.translatesAutoresizingMaskIntoConstraints = false
-        buildLabel.bottomAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        buildLabel.widthAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.widthAnchor).isActive = true
+        self.navigationItem.prompt = getBuildVersionText()
     }
 
     func getBuildVersionText() -> String {

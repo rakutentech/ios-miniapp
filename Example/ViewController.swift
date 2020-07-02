@@ -1,11 +1,14 @@
 import UIKit
 import MiniApp
 
-class ViewController: UITableViewController {
+class ViewController: UIViewController {
+
+    @IBOutlet weak var tableView: UITableView!
+    let refreshControl = UIRefreshControl()
 
     var decodeResponse: [MiniAppInfo]? {
         didSet {
-            if let list = self.decodeResponse, Config.userDefaults?.bool(forKey: Config.Key.isTestMode.rawValue) ?? false {
+            if let list = self.decodeResponse, !(Config.userDefaults?.bool(forKey: Config.Key.isTestMode.rawValue) ?? false) {
                 self.miniAppsSection = nil
                 self.miniApps = ["": list]
             } else {
@@ -26,6 +29,8 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         self.navigationController?.viewControllers = [self]
         self.navigationItem.hidesBackButton = true
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+        self.tableView.refreshControl = refreshControl
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -66,22 +71,22 @@ extension ViewController {
 }
 
 // MARK: - UITableViewControllerDelegate
-extension ViewController {
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let miniAppsSection = self.miniAppsSection {
             return miniAppsSection[section]
         }
         return nil
     }
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return miniApps?[miniAppsSection?[section] ?? ""]?.count ?? 0
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return miniAppsSection?.count ?? 1
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppCell", for: indexPath) as? MiniAppCell {
             let miniAppDetail = miniApps?[miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row]
             cell.titleLabel?.text = miniAppDetail?.displayName
@@ -95,15 +100,7 @@ extension ViewController {
         return UITableViewCell()
     }
 
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return getHeaderView()
-    }
-
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60.0
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         self.showProgressIndicator {
             if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
@@ -111,18 +108,6 @@ extension ViewController {
                 self.fetchMiniApp(for: miniAppInfo)
             }
         }
-    }
-
-    func getHeaderView() -> UIView? {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 60))
-        let miniAppByIdButton = UIButton(frame: headerView.bounds)
-        miniAppByIdButton.setTitle("Display Miniapp from ID", for: .normal)
-        miniAppByIdButton.contentHorizontalAlignment = .center
-        miniAppByIdButton.autoresizingMask = .flexibleWidth
-        miniAppByIdButton.addTarget(self, action: #selector(actionShowMiniAppById), for: .touchUpInside)
-        headerView.addSubview(miniAppByIdButton)
-        headerView.backgroundColor = #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
-        return headerView
     }
 }
 

@@ -81,7 +81,10 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         return session.startDataTask(with: urlRequest) { (result) in
             switch result {
             case .success(let responseData):
-                if !(200...299).contains(responseData.httpResponse.statusCode) {
+                let statusCode = responseData.httpResponse.statusCode
+                MiniAppLogger.d("[\(statusCode)] urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n🟢\(String(data: responseData.data, encoding: .utf8) ?? "Empty response")")
+
+                if !(200...299).contains(statusCode) {
                     return completionHandler(.failure(
                         self.handleHttpResponse(responseData: responseData.data,
                                                 httpResponse: responseData.httpResponse)
@@ -90,6 +93,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                 return completionHandler(.success(ResponseData(responseData.data,
                                                                responseData.httpResponse)))
             case .failure(let error):
+                MiniAppLogger.d("urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n🔴 Failure")
                 return completionHandler(.failure(error))
             }
         }
