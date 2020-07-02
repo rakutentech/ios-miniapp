@@ -170,7 +170,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func configureMode() {
-        self.endPointSegmentedControl.numberOfSegments = TestMode.allCases.count
+        self.endPointSegmentedControl.removeAllSegments()
         TestMode.allCases.forEach { configure(mode: $0) }
         if let index = Config.userDefaults?.value(forKey: Config.Key.isTestMode.rawValue) {
             self.endPointSegmentedControl.selectedSegmentIndex = (index as? Bool)?.intValue ?? TestMode.DEFAULT.rawValue
@@ -180,7 +180,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func configure(mode: TestMode) {
-        self.endPointSegmentedControl.setTitle(mode.stringValue(), forSegmentAt: mode.rawValue)
+        self.endPointSegmentedControl.insertSegment(withTitle: mode.stringValue(), at:  mode.rawValue, animated: false)
     }
 
     func getTextFieldValue(key: Config.Key, placeholderText: String?) -> String? {
