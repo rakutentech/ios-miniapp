@@ -12,11 +12,15 @@ internal class RealMiniApp {
 
     init(with settings: MiniAppSdkConfig?) {
         self.miniAppInfoFetcher = MiniAppInfoFetcher()
-        self.miniAppClient = MiniAppClient(baseUrl: settings?.url, rasAppId: settings?.rasAppId, subscriptionKey: settings?.subscriptionKey, hostAppVersion: settings?.hostAppVersion)
+        self.miniAppClient = RealMiniApp.createClient(from: settings)
         self.manifestDownloader = ManifestDownloader()
         self.miniAppStatus = MiniAppStatus()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer()
+    }
+
+    class func createClient(from settings: MiniAppSdkConfig?) -> MiniAppClient {
+        return MiniAppClient(baseUrl: settings?.baseUrl, rasAppId: settings?.rasAppId, subscriptionKey: settings?.subscriptionKey, hostAppVersion: settings?.hostAppVersion)
     }
 
     func update(with settings: MiniAppSdkConfig?) {

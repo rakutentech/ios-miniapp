@@ -20,6 +20,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>IsTestMode</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>RASApplicationIdentifier</key>
@@ -27,8 +29,6 @@
 	<key>RASProjectSubscriptionKey</key>
 	<string>RAS_SUBSCRIPTION_KEY</string>
 	<key>RMAAPIEndpoint</key>
-	<string>https://www.example.com</string>
-	<key>RMAAPITestEndpoint</key>
 	<string>https://www.example.com</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

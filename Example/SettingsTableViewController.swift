@@ -29,7 +29,7 @@ class SettingsTableViewController: UITableViewController {
         self.invalidSubscriptionKeyLabel.isHidden = true
         configure(field: self.textFieldAppID, for: .applicationIdentifier)
         configure(field: self.textFieldSubKey, for: .subscriptionKey)
-        self.endPointSegmentedControl.selectedSegmentIndex = Config.userDefaults?.bool(forKey: Config.Key.loadTestVersions.rawValue) ?? false ? 1 : 0
+        self.endPointSegmentedControl.selectedSegmentIndex = (Config.userDefaults?.bool(forKey: Config.Key.isTestMode.rawValue) ?? false).intValue
     }
 
     @IBAction func endPointChanged(_ sender: UISegmentedControl) {
@@ -92,7 +92,7 @@ class SettingsTableViewController: UITableViewController {
     func saveCustomConfiguration(responseData: [MiniAppInfo]?) {
         self.save(field: self.textFieldAppID, for: .applicationIdentifier)
         self.save(field: self.textFieldSubKey, for: .subscriptionKey)
-        Config.userDefaults?.set(self.endPointSegmentedControl.selectedSegmentIndex == 1, forKey: Config.Key.loadTestVersions.rawValue)
+        Config.userDefaults?.set(self.endPointSegmentedControl.selectedSegmentIndex == 1, forKey: Config.Key.isTestMode.rawValue)
         self.displayAlert(title: NSLocalizedString("message_save_title", comment: ""),
             message: NSLocalizedString("message_save_text", comment: ""),
             autoDismiss: true) { _ in
@@ -106,10 +106,11 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func createConfig(hostAppId: String, subscriptionKey: String, loadTestVersions: Bool) -> MiniAppSdkConfig {
-        return MiniAppSdkConfig(loadTestVersions: loadTestVersions,
+        return MiniAppSdkConfig(
             rasAppId: hostAppId,
             subscriptionKey: subscriptionKey,
-            hostAppVersion: Bundle.main.infoDictionary?[Config.Key.version.rawValue] as? String)
+            hostAppVersion: Bundle.main.infoDictionary?[Config.Key.version.rawValue] as? String,
+            isTestMode: loadTestVersions)
     }
 
     /// Adding Tap gesture to dismiss the Keyboard

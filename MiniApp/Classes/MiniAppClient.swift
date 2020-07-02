@@ -6,20 +6,23 @@ protocol SessionProtocol {
     func startDownloadTask(downloadUrl: URL)
 }
 
-class MiniAppClient: NSObject, URLSessionDownloadDelegate {
+internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     let listingApi: ListingApi
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
     var environment: Environment
+    private var testPath: String {
+        self.environment.isTestMode ? "test" : ""
+    }
     weak var delegate: MiniAppDownloaderProtocol?
 
-    convenience override init() {
+    private convenience override init() {
         self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
     }
 
-    convenience init(baseUrl: String? = nil, testBaseUrl: String? = nil, loadTestVersions: Bool? = false, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil) {
-        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion))
+    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
     }
 
     init(with config: MiniAppSdkConfig) {
@@ -30,11 +33,11 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     func updateEnvironment(with config: MiniAppSdkConfig?) {
-        self.environment.customUrl = config?.url
+        self.environment.customUrl = config?.baseUrl
         self.environment.customAppId = config?.rasAppId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion
-        self.environment.loadTestVersions = config?.loadTestVersions
+        self.environment.customIsTestMode = config?.isTestMode ?? false
     }
 
     lazy var session: SessionProtocol = {
@@ -43,7 +46,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
-        guard let urlRequest = self.listingApi.createURLRequest() else {
+        guard let urlRequest = self.listingApi.createURLRequest(testPath: self.testPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
@@ -51,7 +54,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func getMiniApp(_ miniAppId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
-        guard let urlRequest = self.listingApi.createURLRequest(for: miniAppId) else {
+        guard let urlRequest = self.listingApi.createURLRequest(for: miniAppId, testPath: self.testPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
@@ -82,7 +85,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                     return completionHandler(.failure(
                         self.handleHttpResponse(responseData: responseData.data,
                                                 httpResponse: responseData.httpResponse)
-                    ))
+                        ))
                 }
                 return completionHandler(.success(ResponseData(responseData.data,
                                                                responseData.httpResponse)))
@@ -100,13 +103,13 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         case 401, 403:
             guard let errorModel = ResponseDecoder.decode(decodeType: UnauthorizedData.self,
                                                           data: responseData) else {
-                return NSError.unknownServerError(httpResponse: httpResponse)
+                                                            return NSError.unknownServerError(httpResponse: httpResponse)
             }
             message = "\(errorModel.error): \(errorModel.errorDescription)"
         default:
             guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self,
                                                           data: responseData) else {
-                return NSError.unknownServerError(httpResponse: httpResponse)
+                                                            return NSError.unknownServerError(httpResponse: httpResponse)
             }
             message = errorModel.message
         }
