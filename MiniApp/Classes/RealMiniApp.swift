@@ -5,6 +5,7 @@ internal class RealMiniApp {
     var manifestDownloader: ManifestDownloader
     var displayer: Displayer
     var miniAppStatus: MiniAppStatus
+    let offlineErrorCodeList: [Int] = [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut]
 
     convenience init() {
         self.init(with: nil)
@@ -12,15 +13,15 @@ internal class RealMiniApp {
 
     init(with settings: MiniAppSdkConfig?) {
         self.miniAppInfoFetcher = MiniAppInfoFetcher()
-        self.miniAppClient = RealMiniApp.createClient(from: settings)
+        self.miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl,
+                                           rasAppId: settings?.rasAppId,
+                                           subscriptionKey: settings?.subscriptionKey,
+                                           hostAppVersion: settings?.hostAppVersion,
+                                           isTestMode: settings?.isTestMode)
         self.manifestDownloader = ManifestDownloader()
         self.miniAppStatus = MiniAppStatus()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer()
-    }
-
-    class func createClient(from settings: MiniAppSdkConfig?) -> MiniAppClient {
-        return MiniAppClient(baseUrl: settings?.baseUrl, rasAppId: settings?.rasAppId, subscriptionKey: settings?.subscriptionKey, hostAppVersion: settings?.hostAppVersion)
     }
 
     func update(with settings: MiniAppSdkConfig?) {
@@ -52,15 +53,8 @@ internal class RealMiniApp {
                 }
                 self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
-                let createError = error as NSError
-                if Constants.offlineErrorCodeList.contains(createError.code) {
-                    if self.miniAppDownloader.getCachedMiniApp(appId: appInfo.id) == nil {
-                        return completionHandler(.failure(error))
-                    }
-                    self.getMiniAppView(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
-                }
-                completionHandler(.failure(error))
-        }}
+                self.handleError(appId: appInfo.id, versionId: appInfo.version.versionId, error: error, completionHandler: completionHandler, messageInterface: messageInterface)
+            } }
     }
 
     /// Download Mini app for a given Mini app info object
@@ -74,17 +68,32 @@ internal class RealMiniApp {
             case .success:
                 self.getMiniAppView(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
-                completionHandler(.failure(error))
+                self.handleError(appId: appInfo.id, versionId: appInfo.version.versionId, error: error, completionHandler: completionHandler, messageInterface: messageInterface)
             }
         }
     }
 
     func getMiniAppView(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol? = nil) {
         DispatchQueue.main.async {
-            let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id, hostAppMessageDelegate: messageInterface ?? self)
+            let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id, versionId: appInfo.version.versionId, hostAppMessageDelegate: messageInterface ?? self)
             self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
+            self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
             completionHandler(.success(miniAppDisplayProtocol))
         }
+    }
+
+    func handleError(appId: String, versionId: String, error: Error, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol? = nil) {
+        let downloadError = error as NSError
+        if self.offlineErrorCodeList.contains(downloadError.code) {
+            guard let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: appId, versionId: versionId) else {
+                return completionHandler(.failure(downloadError))
+            }
+            DispatchQueue.main.async {
+                let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId, versionId: cachedVersion, hostAppMessageDelegate: messageInterface ?? self)
+                completionHandler(.success(miniAppDisplayProtocol))
+            }
+        }
+        return completionHandler(.failure(error))
     }
 }
 

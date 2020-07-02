@@ -38,23 +38,12 @@ class MiniAppDownloader {
                          }
                      }
                  case .failure(let error):
-                    self.handleDownloadError(appId: appId, error: error, completionHandler: completionHandler)
+                    completionHandler(.failure(error))
                  }
              }
         } else {
             completionHandler(.success(miniAppStoragePath))
         }
-    }
-
-    func handleDownloadError(appId: String, error: Error, completionHandler: @escaping (Result<URL, Error>) -> Void) {
-        let downloadError = error as NSError
-        if Constants.offlineErrorCodeList.contains(downloadError.code) {
-           guard let miniAppPath = self.getCachedMiniApp(appId: appId) else {
-               return completionHandler(.failure(downloadError))
-           }
-           completionHandler(.success(miniAppPath))
-        }
-        return completionHandler(.failure(error))
     }
 
     func isMiniAppAlreadyDownloaded(appId: String, versionId: String) -> Bool {
@@ -70,17 +59,27 @@ class MiniAppDownloader {
 
     /// Check if there is any old version of mini app cached for a given app ID
     /// - Parameter appId: App ID for which the version directory path to be fetched
+    /// - Parameter versionId: Version ID of the app info
     /// - Returns: URL of the available cached version for a given mini app ID
-    func getCachedMiniApp(appId: String) -> URL? {
-        guard let versionDirectory = FileManager.getMiniAppVersionDirectory(usingAppId: appId) else {
+    func getCachedMiniAppVersion(appId: String, versionId: String) -> String? {
+        if !isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId) {
+            let cachedVersion = self.miniAppStatus.getCachedVersion(key: appId)
+            if !cachedVersion.isEmpty {
+                var isDirectory: ObjCBool = true
+                let miniAppPath = FileManager.getMiniAppVersionDirectory(with: appId, and: cachedVersion)
+                if FileManager.default.fileExists(atPath: miniAppPath.path, isDirectory: &isDirectory) {
+                    return cachedVersion
+                }
+            }
             return nil
-        }
-        var isDirectory: ObjCBool = true
-        if FileManager.default.fileExists(atPath: versionDirectory.path, isDirectory: &isDirectory) {
-            return versionDirectory
         } else {
-            return nil
+            let versionDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+            var isDirectory: ObjCBool = true
+            if FileManager.default.fileExists(atPath: versionDirectory.path, isDirectory: &isDirectory) {
+                return versionId
+            }
         }
+        return nil
     }
 
     private func startDownloadingFiles(urls: [String], to miniAppPath: URL, completionHandler: @escaping (Result<URL, Error>) -> Void) {
