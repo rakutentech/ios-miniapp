@@ -80,13 +80,9 @@ class SettingsTableViewController: UITableViewController {
     @IBAction func actionSaveConfig() {
         if isValueEntered(text: self.textFieldAppID.text, key: .applicationIdentifier) && isValueEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
             if self.textFieldAppID.text!.isValidUUID() {
-                var isTest: Bool
                 let selectedMode = TestMode(rawValue: self.endPointSegmentedControl.selectedSegmentIndex)
-                if selectedMode == .DEFAULT {
-                    isTest = TestMode.DEFAULT.isTestMode()
-                } else {
-                    isTest = selectedMode?.rawValue.boolValue ?? false
-                }
+                let isTest = selectedMode?.isTestMode() ?? false
+
                 fetchAppList(withConfig:
                         createConfig(
                             hostAppId: self.textFieldAppID.text!,
