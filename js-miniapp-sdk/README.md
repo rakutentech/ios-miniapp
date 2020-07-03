@@ -36,7 +36,7 @@ You can alternatively use the bundled script file to use the SDK. When using the
 First, download the bundled script file from the [releases page](https://github.com/rakutentech/js-miniapp/releases). You can then include it as a normal `<script>` tag in your HTML:
 
 ```html
-<script src=“miniapp.bundle.js></script>
+<script src="miniapp.bundle.js"></script>
 ```
 
 Then you can acces the SDK methods via `window.MiniApp`.
@@ -57,6 +57,27 @@ miniApp.getUniqueId()
 		console.log(id);
 	}).catch(error => {
 		console.error(error);
+	});
+```
+
+### 3. Request Permissions
+
+There must be permission requests from miniapp to access some mobile components and data.
+
+| Permission | Method | Description |
+| --- | --- | --- |
+| LOCATION | `requestLocationPermission()` | The current location of the device.<br>Data position can be accessible via geolocation request. |
+
+#### Usage example
+
+Simply call available permission request methods from `miniApp`.
+
+```javascript
+miniApp.requestLocationPermission()
+	.then(success => {
+		console.log(success); // Allowed.
+	}).catch(error => {
+		console.error(error); // Permission is not granted due to many circumstances.
 	});
 ```
 
