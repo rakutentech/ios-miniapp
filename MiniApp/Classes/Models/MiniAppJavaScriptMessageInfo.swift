@@ -1,9 +1,9 @@
-struct MiniAppJavaScriptMessageInfo: Codable {
+struct MiniAppJavaScriptMessageInfo: Decodable {
     let action: String
     let id: String
-    let param: RequestParameters
+    let param: RequestParameters?
 }
 
-struct RequestParameters: Codable {
+struct RequestParameters: Decodable {
     let permission: String
 }

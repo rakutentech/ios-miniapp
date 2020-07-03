@@ -93,6 +93,7 @@ MiniAppBridge.getUniqueId = function() {
   return new Promise(function(resolve, reject) {
     return MiniAppBridge.exec(
       "getUniqueId",
+      null,
       function(id) { return resolve(id) },
       function (error) { return reject(error) }
     );
