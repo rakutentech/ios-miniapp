@@ -1,9 +1,9 @@
 PODS:
   - MiniApp (1.1.1):
     - ZIPFoundation
-  - Nimble (8.0.5)
-  - Quick (2.2.0)
-  - ZIPFoundation (0.9.10)
+  - Nimble (8.1.1)
+  - Quick (3.0.0)
+  - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
   - MiniApp (from `./`)
@@ -22,9 +22,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MiniApp: 939a59774f681889106d94d1a44786e418ce6ccc
-  Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
-  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
-  ZIPFoundation: 249fa8890597086cd536bb2df5c9804d84e122b0
+  Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
+  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
+  ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
 PODFILE CHECKSUM: 73865deea491c41e4c4edff3bff606af1e29d969
 
