@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/rakutentech/ios-miniapp.svg?branch=master)](https://travis-ci.org/rakutentech/ios-miniapp)
+[![codecov](https://codecov.io/gh/rakutentech/ios-miniapp/branch/master/graph/badge.svg)](https://codecov.io/gh/rakutentech/ios-miniapp)
+[![ios](https://cocoapod-badges.herokuapp.com/p/MiniApp/badge.png)](https://cocoapods.org/pods/MiniApp)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
@@ -62,7 +64,7 @@ In your project configuration .plist you should add 3 custom string target prope
 - `RMAAPIEndpoint` - to provide your own Base URL for API requests
 
 And a custom boolean target property:
-- `RMAIsTestMode` - to chose the loading mode of the API (true: testing, false: published)
+- `RMAIsTestMode` - to choose the loading mode of the API (true: testing, false: published)
 
 
 If you don't want to use project settings, you have to pass this informations one by one to the `Config.userDefaults` using a `Config.Key` as key:
