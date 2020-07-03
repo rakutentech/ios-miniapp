@@ -10,7 +10,7 @@ internal class Environment {
             version = "CFBundleShortVersionString",
             subscriptionKey = "RASProjectSubscriptionKey",
             endpoint = "RMAAPIEndpoint",
-            isTestMode = "IsTestMode"
+            isTestMode = "RMAIsTestMode"
     }
 
     let bundle: EnvironmentProtocol

@@ -20,6 +20,6 @@
 "ok" = "OK";
 "cancel" = "Cancel";
 
-"test_mode_publishing" = "Production";
-"test_mode_testing" = "Test";
+"test_mode_publishing" = "Published";
+"test_mode_testing" = "Testing";
 "test_mode_default" = "Default";

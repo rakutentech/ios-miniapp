@@ -20,7 +20,7 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>IsTestMode</key>
+	<key>RMAIsTestMode</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

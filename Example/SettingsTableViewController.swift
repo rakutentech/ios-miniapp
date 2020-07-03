@@ -56,7 +56,7 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return "Test Mode (plist: \(TestMode.DEFAULT.isTestMode() ? TestMode.TESTING.stringValue() : TestMode.PUBLISHING.stringValue()))"
+            return "Test Mode (plist default: \(TestMode.DEFAULT.isTestMode() ? TestMode.TESTING.stringValue() : TestMode.PUBLISHING.stringValue()))"
         case 1:
             return "RAS"
         default:
