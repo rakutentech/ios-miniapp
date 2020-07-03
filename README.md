@@ -62,7 +62,7 @@ In your project configuration .plist you should add 3 custom string target prope
 - `RMAAPIEndpoint` - to provide your own Base URL for API requests
 
 And a custom boolean target property:
-- `RMAIsTestMode` - to chose the loading mode of the API (true: testing, false: published)
+- `RMAIsTestMode` - to choose the loading mode of the API (true: testing, false: published)
 
 
 If you don't want to use project settings, you have to pass this informations one by one to the `Config.userDefaults` using a `Config.Key` as key:

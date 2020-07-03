@@ -32,7 +32,7 @@ class SettingsTableViewController: UITableViewController {
             case .PUBLISHING:
                 return false
             case .TESTING:
-                return false
+                return true
             default:
                 return Bundle.main.infoDictionary?[Config.Key.isTestMode.rawValue] as? Bool ?? false
             }
