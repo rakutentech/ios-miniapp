@@ -129,7 +129,7 @@ class MockBundle: EnvironmentProtocol {
 
     func bool(for key: String) -> Bool? {
         switch key {
-        case "IsTestMode":
+        case "RMAIsTestMode":
             return mockTestMode
         default:
             return nil

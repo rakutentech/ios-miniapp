@@ -7,7 +7,7 @@ class Config: NSObject {
         version = "CFBundleShortVersionString",
         subscriptionKey = "RASProjectSubscriptionKey",
         endpoint = "RMAAPIEndpoint",
-        isTestMode  = "IsTestMode"
+        isTestMode  = "RMAIsTestMode"
     }
 
     static let userDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings")

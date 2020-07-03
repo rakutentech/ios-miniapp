@@ -245,7 +245,7 @@ class MiniAppClientTests: QuickSpec {
             let versionKey = "CFBundleShortVersionString"
             let subscriptionKey = "RASProjectSubscriptionKey"
             let endpointKey = "RMAAPIEndpoint"
-            let isTestMode = "IsTestMode"
+            let isTestMode = "RMAIsTestMode"
             let bundle = Bundle.main as EnvironmentProtocol
             let testURL = "http://dummy.url"
             let testID = "testID"
