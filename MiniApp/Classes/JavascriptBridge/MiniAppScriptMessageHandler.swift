@@ -20,7 +20,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
             if let messageBody = message.body as? String {
                 let bodyData: Data = messageBody.data(using: .utf8)!
-                let responseJson = try? JSONDecoder().decode(MiniAppJavaScriptMessageInfo.self, from: bodyData)
+                let responseJson = ResponseDecoder.decode(decodeType: MiniAppJavaScriptMessageInfo.self, data: bodyData)
                 handleBridgeMessage(responseJson: responseJson)
             }
     }
@@ -31,13 +31,16 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             executeJavaScriptCallback(responseStatus: .onError, messageId: "", response: MiniAppJavaScriptError.unexpectedMessageFormat.rawValue)
             return
         }
-        handleActionCommand(action: MiniAppJSActionCommand(rawValue: actionCommand)!, callbackId: callbackId)
+        let requestParam = responseJson?.param ?? nil
+        handleActionCommand(action: MiniAppJSActionCommand(rawValue: actionCommand)!, requestParam: requestParam, callbackId: callbackId)
     }
 
-    func handleActionCommand(action: MiniAppJSActionCommand, callbackId: String) {
+    func handleActionCommand(action: MiniAppJSActionCommand, requestParam: RequestParameters?, callbackId: String) {
         switch action {
         case .getUniqueId:
             sendUniqueId(messageId: callbackId)
+        case .requestPermission:
+            requestPermission(requestParam: requestParam, callbackId: callbackId)
         }
     }
 
@@ -47,6 +50,37 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             return
         }
         executeJavaScriptCallback(responseStatus: .onSuccess, messageId: messageId, response: uniqueId)
+    }
+
+    func requestPermission(requestParam: RequestParameters?, callbackId: String) {
+        guard let requestParamValue = requestParam?.permission else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            return
+        }
+        guard let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue) else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            return
+        }
+
+        switch requestPermissionType {
+        case .location:
+            getPermissionResult(requestPermissionType: requestPermissionType, callbackId: callbackId)
+        }
+    }
+
+    func getPermissionResult(requestPermissionType: MiniAppPermissionType, callbackId: String) {
+        hostAppMessageDelegate?.requestPermission(permissionType: requestPermissionType) { (result) in
+            switch result {
+            case .success:
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Allowed")
+            case .failure(let error):
+                if !error.localizedDescription.isEmpty {
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                    return
+                }
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppPermissionResult.denied.localizedDescription)
+            }
+        }
     }
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {

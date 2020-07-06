@@ -41,5 +41,7 @@
 	<string>RAS_SUBSCRIPTION_KEY</string>
 	<key>RMAAPIEndpoint</key>
 	<string>https://www.example.com</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Demo app helps you find more information near you</string>
 </dict>
 </plist>
