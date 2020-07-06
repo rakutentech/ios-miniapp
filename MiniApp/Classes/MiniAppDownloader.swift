@@ -127,15 +127,7 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
         MiniAppLogger.d("MiniApp dl time: \(Date().timeIntervalSince(time))")
         guard let error = miniAppStorage.save(sourcePath: sourcePath, destinationPath: filePath) else {
             MiniAppLogger.d("MiniApp save time: \(Date().timeIntervalSince(time))")
-            if let directory = urlToDirectoryMap[destinationPath]?.miniAppDirectoryPath, (filePath.absoluteString as NSString).pathExtension.lowercased() == "zip" {
-                do {
-                    try FileManager.default.unzipItem(at: filePath, to: directory, skipCRC32: true)
-                    MiniAppLogger.d("MiniApp unzip time: \(Date().timeIntervalSince(time))")
-                } catch let err {
-                    MiniAppLogger.e("error unzipping archive", err)
-                    urlToDirectoryMap[destinationPath]?.completionHanlder(.failure(err))
-                }
-            }
+            unzipFile(fromURL: destinationPath, to: filePath)
             return
         }
 
@@ -162,5 +154,17 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
             return
         }
         completionHandler?(.failure(error))
+    }
+
+    internal func unzipFile(fromURL destinationPath: String, to filePath: URL) {
+        if let directory = urlToDirectoryMap[destinationPath]?.miniAppDirectoryPath, (filePath.absoluteString as NSString).pathExtension.lowercased() == "zip" {
+            do {
+                try FileManager.default.unzipItem(at: filePath, to: directory, skipCRC32: true)
+                MiniAppLogger.d("MiniApp unzip time: \(Date().timeIntervalSince(time))")
+            } catch let err {
+                MiniAppLogger.e("error unzipping archive", err)
+                urlToDirectoryMap[destinationPath]?.completionHanlder(.failure(err))
+            }
+        }
     }
 }

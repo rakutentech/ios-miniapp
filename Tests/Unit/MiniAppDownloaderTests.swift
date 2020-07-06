@@ -251,5 +251,13 @@ class MiniAppDownloaderTests: QuickSpec {
                 }
             }
         }
+
+        describe("mini app downloader") {
+            context("when receiving a zip file") {
+                it("unzips ip") {
+                    
+                }
+            }
+        }
     }
 }
