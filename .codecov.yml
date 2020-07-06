@@ -1,2 +1,4 @@
 ignore:
-   - "fastlane/report.xml"
+   - "Pods"
+   - "Tests"
+   - "Example"
