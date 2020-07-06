@@ -42,7 +42,7 @@ In order to load your MiniApp, you will have to use your own Host App ID and you
 
 ### Testing mode
 
-The SDK can be configured to load MiniApps in 2 modes : Published mode and Testing mode. Published mode only allows access to the last published version of your MiniApps, whereas Testing mode allows you to load all your MiniApps versions, independentlty of their state on RAS console. To configure the loading mode, you can either do it in the .plist file with the configuration variable `RMAIsTestMode`, or by taping the top right configuration icon in the example application.
+The SDK can be configured to load MiniApps in 2 modes : Published mode and Testing mode. Published mode only allows access to the last published version of your MiniApps, whereas Testing mode allows you to load all your MiniApps versions, as long as they are in `Testing` state on RAS console. To configure the loading mode, you can either do it in the .plist file with the configuration variable `RMAIsTestMode`, or by taping the top right configuration icon in the example application.
 
 
 # Installation
@@ -61,8 +61,8 @@ In your project configuration .plist you should add 3 custom string target prope
 - `RASProjectSubscriptionKey` - to set your MiniApp subscription key
 - `RMAAPIEndpoint` - to provide your own Base URL for API requests
 
-And a custom boolean target property:
-- `RMAIsTestMode` - to choose the loading mode of the API (true: testing, false: published)
+And a custom boolean target property (optional, default is `false`):
+- `RMAIsTestMode` - to choose the loading mode of the API (`true`: testing, `false`: published)
 
 
 If you don't want to use project settings, you have to pass this informations one by one to the `Config.userDefaults` using a `Config.Key` as key:
@@ -169,6 +169,18 @@ extension ViewController: MiniAppMessageProtocol {
 See the *LICENSE* file for more info.
 
 ## Changelog
+
+### 1.x.x (YYYY-mm-dd)
+
+**SDK**
+- *Feature:* Possibility to load `testing` Mini Apps from RAS
+
+**Sample App**
+- *Feature:* Implemention of the `testing` Mini Apps SDK feature
+
+**Sample App**
+- *Bugfix:* First time settings success dialog dismissed before tapping OK
+- *Bugfix:* "Display MiniApp" button was not visible when scrolling in the list Mini Apps
 
 ### 1.1.1 (2020-06-11)
 

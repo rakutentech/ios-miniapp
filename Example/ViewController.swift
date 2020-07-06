@@ -14,7 +14,7 @@ class ViewController: UIViewController {
             } else {
                 self.miniApps = nil
                 self.miniAppsSection = self.decodeResponse?.map { $0.displayName ?? "-" }
-                self.miniApps = self.decodeResponse?.dictionnaryFilteredBy(index: { $0.displayName ?? "-" })
+                self.miniApps = self.decodeResponse?.dictionaryFilteredBy(index: { $0.displayName ?? "-" })
             }
 
         }

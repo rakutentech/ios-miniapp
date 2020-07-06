@@ -1,5 +1,5 @@
 extension Array {
-    public func dictionnaryFilteredBy<Key: Hashable> (index selectKey: (Element) -> Key) -> [Key: [Element]] {
+    public func dictionaryFilteredBy<Key: Hashable> (index selectKey: (Element) -> Key) -> [Key: [Element]] {
         var dict = [Key: [Element]]()
         for element in self {
             if dict[selectKey(element)] != nil {
