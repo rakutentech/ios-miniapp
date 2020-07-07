@@ -84,11 +84,11 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 
 ### Overriding configuration on runtime
 
-Every call to the API can be done with default parameters retrieved from the project .plist configuratin file, or by providing a `MiniAppSdkConfig` object during the call. Here is a simple example class we use to create the configuration in samples below:
+Every call to the API can be done with default parameters retrieved from the project .plist configuration file, or by providing a `MiniAppSdkConfig` object during the call. Here is a simple example class we use to create the configuration in samples below:
 
 ```swift
 class Config: NSObject {
-    class func getCustom() -> MiniAppSdkConfig {
+    class func getCurrent() -> MiniAppSdkConfig {
         return MiniAppSdkConfig(baseUrl: "https://your.custom.url"
                                 rasAppId: "your_RAS_App_id",
                                 subscriptionKey: "your_subscription_key",
@@ -113,7 +113,7 @@ MiniApp.shared().list { (result) in
 or
 
 ```swift
-MiniApp.shared(with: Config.getCustom()).list { (result) in
+MiniApp.shared(with: Config.getCurrent()).list { (result) in
 	...
 }
 ```
@@ -130,7 +130,7 @@ MiniApp.shared().info(miniAppId: miniAppID) { (result) in
 or
 
 ```swift
-MiniApp.shared(with: Config.getCustom()).info(miniAppId: miniAppID) { (result) in
+MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) in
 	...
 }
 ```
