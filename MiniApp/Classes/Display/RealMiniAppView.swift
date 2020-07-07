@@ -10,11 +10,12 @@ internal class RealMiniAppView: UIView, MiniAppDisplayProtocol, MiniAppCallbackP
         super.init(frame: .zero)
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self, hostAppMessageDelegate: hostAppMessageDelegate)
         webView.configuration.userContentController.addBridgingJavaScript()
+        webView.uiDelegate = self
         addSubview(webView)
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
 
     override public func layoutSubviews() {
