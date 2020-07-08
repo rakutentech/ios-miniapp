@@ -13,7 +13,11 @@ internal class RealMiniApp {
 
     init(with settings: MiniAppSdkConfig?) {
         self.miniAppInfoFetcher = MiniAppInfoFetcher()
-        self.miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl, rasAppId: settings?.rasAppId, subscriptionKey: settings?.subscriptionKey, hostAppVersion: settings?.hostAppVersion)
+        self.miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl,
+                                           rasAppId: settings?.rasAppId,
+                                           subscriptionKey: settings?.subscriptionKey,
+                                           hostAppVersion: settings?.hostAppVersion,
+                                           isTestMode: settings?.isTestMode)
         self.manifestDownloader = ManifestDownloader()
         self.miniAppStatus = MiniAppStatus()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
@@ -50,7 +54,7 @@ internal class RealMiniApp {
                 self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
                 self.handleError(appId: appInfo.id, versionId: appInfo.version.versionId, error: error, completionHandler: completionHandler, messageInterface: messageInterface)
-        }}
+            } }
     }
 
     /// Download Mini app for a given Mini app info object

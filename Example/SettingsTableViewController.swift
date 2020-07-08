@@ -3,12 +3,36 @@ import MiniApp
 
 class SettingsTableViewController: UITableViewController {
 
+    @IBOutlet weak var endPointSegmentedControl: UISegmentedControl!
     @IBOutlet weak var textFieldAppID: UITextField!
     @IBOutlet weak var textFieldSubKey: UITextField!
     @IBOutlet weak var invalidHostAppIdLabel: UILabel!
     @IBOutlet weak var invalidSubscriptionKeyLabel: UILabel!
     weak var configUpdateDelegate: SettingsDelegate?
     let predefinedKeys: [String] = ["RAS_APPLICATION_IDENTIFIER", "RAS_SUBSCRIPTION_KEY", ""]
+
+    enum TestMode: Int, CaseIterable {
+        case PUBLISHING,
+        TESTING
+
+        func stringValue() -> String {
+            switch self {
+            case .PUBLISHING:
+                return NSLocalizedString("test_mode_publishing", comment: "")
+            case .TESTING:
+                return NSLocalizedString("test_mode_testing", comment: "")
+            }
+        }
+
+        func isTestMode() -> Bool {
+            switch self {
+            case .PUBLISHING:
+                return false
+            case .TESTING:
+                return true
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,11 +48,23 @@ class SettingsTableViewController: UITableViewController {
         toggleSaveButton()
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Test Mode"
+        case 1:
+            return "RAS"
+        default:
+            return ""
+        }
+    }
+
     func resetFields() {
         self.invalidHostAppIdLabel.isHidden = true
         self.invalidSubscriptionKeyLabel.isHidden = true
         configure(field: self.textFieldAppID, for: .applicationIdentifier)
         configure(field: self.textFieldSubKey, for: .subscriptionKey)
+        configureMode()
     }
 
     @IBAction func actionResetConfig(_ sender: Any) {
@@ -39,7 +75,16 @@ class SettingsTableViewController: UITableViewController {
     @IBAction func actionSaveConfig() {
         if isValueEntered(text: self.textFieldAppID.text, key: .applicationIdentifier) && isValueEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
             if self.textFieldAppID.text!.isValidUUID() {
-                fetchAppList(withConfig: createConfig(hostAppId: self.textFieldAppID.text!, subscriptionKey: self.textFieldSubKey.text!))
+                let selectedMode = TestMode(rawValue: self.endPointSegmentedControl.selectedSegmentIndex)
+                let isTest = selectedMode?.isTestMode() ?? false
+
+                fetchAppList(withConfig:
+                        createConfig(
+                            hostAppId: self.textFieldAppID.text!,
+                            subscriptionKey: self.textFieldSubKey.text!,
+                            loadTestVersions: isTest
+                        )
+                )
             }
             displayInvalidValueErrorMessage(forKey: .applicationIdentifier)
         }
@@ -81,23 +126,26 @@ class SettingsTableViewController: UITableViewController {
     func saveCustomConfiguration(responseData: [MiniAppInfo]?) {
         self.save(field: self.textFieldAppID, for: .applicationIdentifier)
         self.save(field: self.textFieldSubKey, for: .subscriptionKey)
+        self.saveMode()
+
         self.displayAlert(title: NSLocalizedString("message_save_title", comment: ""),
             message: NSLocalizedString("message_save_text", comment: ""),
             autoDismiss: true) { _ in
-                self.dismiss(animated: true, completion: nil)
-                guard let miniAppList = responseData else {
-                    self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: nil)
-                    return
-                }
-                self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: miniAppList)
+            self.dismiss(animated: true, completion: nil)
+            guard let miniAppList = responseData else {
+                self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: nil)
+                return
             }
+            self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: miniAppList)
+        }
     }
 
-    func createConfig(hostAppId: String, subscriptionKey: String) -> MiniAppSdkConfig {
-        return MiniAppSdkConfig(baseUrl: Bundle.main.infoDictionary?[Config.Key.endpoint.rawValue] as? String,
-                                rasAppId: hostAppId,
-                                subscriptionKey: subscriptionKey,
-                                hostAppVersion: Bundle.main.infoDictionary?[Config.Key.version.rawValue] as? String)
+    func createConfig(hostAppId: String, subscriptionKey: String, loadTestVersions: Bool) -> MiniAppSdkConfig {
+        return MiniAppSdkConfig(
+            rasAppId: hostAppId,
+            subscriptionKey: subscriptionKey,
+            hostAppVersion: Bundle.main.infoDictionary?[Config.Key.version.rawValue] as? String,
+            isTestMode: loadTestVersions)
     }
 
     /// Adding Tap gesture to dismiss the Keyboard
@@ -110,6 +158,21 @@ class SettingsTableViewController: UITableViewController {
     func configure(field: UITextField?, for key: Config.Key) {
         field?.placeholder = Bundle.main.infoDictionary?[key.rawValue] as? String
         field?.text = getTextFieldValue(key: key, placeholderText: field?.placeholder)
+    }
+
+    func configureMode() {
+        self.endPointSegmentedControl.removeAllSegments()
+        TestMode.allCases.forEach { configure(mode: $0) }
+        let defaultMode = (Bundle.main.infoDictionary?[Config.Key.isTestMode.rawValue] as? Bool ?? false).intValue
+        if let index = Config.userDefaults?.value(forKey: Config.Key.isTestMode.rawValue) {
+            self.endPointSegmentedControl.selectedSegmentIndex = (index as? Bool)?.intValue ?? defaultMode
+        } else {
+            self.endPointSegmentedControl.selectedSegmentIndex = defaultMode
+        }
+    }
+
+    func configure(mode: TestMode) {
+        self.endPointSegmentedControl.insertSegment(withTitle: mode.stringValue(), at: mode.rawValue, animated: false)
     }
 
     func getTextFieldValue(key: Config.Key, placeholderText: String?) -> String? {
@@ -136,6 +199,11 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
+    func saveMode() {
+        let selectedMode = self.endPointSegmentedControl.selectedSegmentIndex
+        Config.userDefaults?.set(selectedMode.boolValue, forKey: Config.Key.isTestMode.rawValue)
+    }
+
     func isValueEntered(text: String?, key: Config.Key) -> Bool {
         guard let textFieldValue = text, !textFieldValue.isEmpty else {
             displayNoValueFoundErrorMessage(forKey: key)
@@ -147,29 +215,29 @@ class SettingsTableViewController: UITableViewController {
     func displayInvalidValueErrorMessage(forKey: Config.Key) {
         switch forKey {
         case .applicationIdentifier:
-        displayAlert(title: NSLocalizedString("error_title", comment: ""),
-            message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
-            autoDismiss: true)
+            displayAlert(title: NSLocalizedString("error_title", comment: ""),
+                message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
+                autoDismiss: true)
         case .subscriptionKey:
-        displayAlert(title: NSLocalizedString("error_title", comment: ""),
-            message: NSLocalizedString("error_incorrect_subscription_key_message", comment: ""),
-            autoDismiss: false)
+            displayAlert(title: NSLocalizedString("error_title", comment: ""),
+                message: NSLocalizedString("error_incorrect_subscription_key_message", comment: ""),
+                autoDismiss: false)
         default:
-        break
+            break
         }
     }
     func displayNoValueFoundErrorMessage(forKey: Config.Key) {
         switch forKey {
         case .applicationIdentifier:
-        displayAlert(title: NSLocalizedString("error_title", comment: ""),
-            message: NSLocalizedString("error_empty_appid_key_message", comment: ""),
-            autoDismiss: true)
+            displayAlert(title: NSLocalizedString("error_title", comment: ""),
+                message: NSLocalizedString("error_empty_appid_key_message", comment: ""),
+                autoDismiss: true)
         case .subscriptionKey:
-        displayAlert(title: NSLocalizedString("error_title", comment: ""),
-            message: NSLocalizedString("error_empty_subscription_key_message", comment: ""),
-            autoDismiss: false)
+            displayAlert(title: NSLocalizedString("error_title", comment: ""),
+                message: NSLocalizedString("error_empty_subscription_key_message", comment: ""),
+                autoDismiss: false)
         default:
-        break
+            break
         }
     }
 
@@ -215,14 +283,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func addBuildVersionLabel() {
-        let buildLabel = UILabel()
-        buildLabel.text = getBuildVersionText()
-        buildLabel.textAlignment = .center
-        buildLabel.textColor = .gray
-        tableView.addSubview(buildLabel)
-        buildLabel.translatesAutoresizingMaskIntoConstraints = false
-        buildLabel.bottomAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        buildLabel.widthAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.widthAnchor).isActive = true
+        self.navigationItem.prompt = getBuildVersionText()
     }
 
     func getBuildVersionText() -> String {
