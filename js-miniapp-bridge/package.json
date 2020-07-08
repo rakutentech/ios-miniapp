@@ -1,6 +1,6 @@
 {
   "name": "js-miniapp-bridge",
-  "version": "0.1.0",
+  "version": "1.1.0-alpha",
   "description": "Mini App JavaScript Bridge",
   "main": "build/src/index.js",
   "dependencies": {},
