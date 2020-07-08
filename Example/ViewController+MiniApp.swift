@@ -5,7 +5,7 @@ extension ViewController {
         showProgressIndicator(silently: inBackground) {
             MiniApp.shared(with: Config.getCurrent()).list { (result) in
                 DispatchQueue.main.async {
-                    self.refreshControl?.endRefreshing()
+                    self.tableView.refreshControl?.endRefreshing()
                 }
                 switch result {
                 case .success(let responseData):

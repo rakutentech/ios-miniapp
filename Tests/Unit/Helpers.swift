@@ -125,6 +125,16 @@ class MockBundle: EnvironmentProtocol {
     var mockSubscriptionKey: String?
     var mockAppVersion: String?
     var mockEndpoint: String?
+    var mockTestMode: Bool?
+
+    func bool(for key: String) -> Bool? {
+        switch key {
+        case "RMAIsTestMode":
+            return mockTestMode
+        default:
+            return nil
+        }
+    }
 
     func value(for key: String) -> String? {
         switch key {

@@ -1,7 +1,7 @@
 PODS:
-  - MiniApp (1.1.0)
-  - Nimble (8.0.5)
-  - Quick (2.2.0)
+  - MiniApp (1.1.1)
+  - Nimble (8.1.1)
+  - Quick (3.0.0)
 
 DEPENDENCIES:
   - MiniApp (from `./`)
@@ -18,9 +18,9 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  MiniApp: da41ebc93b808d56c62c60704ed55cd789b8d272
-  Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
-  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
+  MiniApp: 99cfcb260d9d4d0eeb9e919c0394dd0e18d2a492
+  Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
+  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
 
 PODFILE CHECKSUM: 73865deea491c41e4c4edff3bff606af1e29d969
 

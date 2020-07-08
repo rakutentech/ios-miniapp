@@ -43,6 +43,17 @@ class MiniAppClientTests: QuickSpec {
         miniAppClient.getMiniAppsList(completionHandler: completion)
     }
 
+    func executeSessionWithBadEnvironment(data: [String: Any]? = nil, statusCode: Int = 200, error: NSError? = nil, completion: @escaping (Result<ResponseData, Error>) -> Void) {
+        let mockSession = MockSession(data: data, statusCode: statusCode, error: error)
+        let mockBundle = MockBundle()
+        mockBundle.mockAppVersion = "1.0"
+        let environment = Environment(bundle: mockBundle)
+        let miniAppClient = MiniAppClient()
+        miniAppClient.environment = environment
+        miniAppClient.session = mockSession
+        miniAppClient.getMiniAppsList(completionHandler: completion)
+    }
+
     override func spec() {
         describe("start data task") {
             context("when network response contains valid data") {
@@ -143,15 +154,29 @@ class MiniAppClientTests: QuickSpec {
                     expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: 2)
                 }
             }
+            context("when environment is invalid") {
+                var testError: NSError?
+                it("will pass an error to completion handler with expected code") {
+                    self.executeSession(data: ["error_code": 404, "message": "error message"], statusCode: 404) { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    }
+                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: 2)
+                }
+            }
         }
         describe("fetch manifest information") {
             context("for a valid mini app") {
                 var testResult: ResponseData?
                 it("should return list of files of mini app") {
                     let mockSession = MockSession(data: ["id": "123",
-                                                      "versionTag": "1.0",
-                                                      "name": "Sample",
-                                                      "files": ["http://www.example.com"]])
+                        "versionTag": "1.0",
+                        "name": "Sample",
+                        "files": ["http://www.example.com"]])
                     let miniAppClient = MiniAppClient()
                     miniAppClient.session = mockSession
                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
@@ -220,6 +245,7 @@ class MiniAppClientTests: QuickSpec {
             let versionKey = "CFBundleShortVersionString"
             let subscriptionKey = "RASProjectSubscriptionKey"
             let endpointKey = "RMAAPIEndpoint"
+            let isTestMode = "RMAIsTestMode"
             let bundle = Bundle.main as EnvironmentProtocol
             let testURL = "http://dummy.url"
             let testID = "testID"
@@ -234,17 +260,19 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
+                    expect(miniAppClient.environment.isTestMode).to(equal(bundle.bool(for: isTestMode)))
                 }
             }
 
             context("when a configuration is provided") {
                 it("it uses configuration values as environment") {
-                    let miniAppClient = MiniAppClient(with: MiniAppSdkConfig(baseUrl: testURL, rasAppId: testID, subscriptionKey: testKey, hostAppVersion: testVersion))
+                    let miniAppClient = MiniAppClient(with: MiniAppSdkConfig(baseUrl: testURL, rasAppId: testID, subscriptionKey: testKey, hostAppVersion: testVersion, isTestMode: true))
 
                     expect(miniAppClient.environment.appId).to(equal(testID))
                     expect(miniAppClient.environment.appVersion).to(equal(testVersion))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(testKey))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
+                    expect(miniAppClient.environment.isTestMode).to(be(true))
                 }
             }
 
@@ -262,12 +290,13 @@ class MiniAppClientTests: QuickSpec {
             context("when we update configuration after creating client") {
                 it("it uses configuration values as environment") {
                     let miniAppClient = MiniAppClient()
-                    miniAppClient.updateEnvironment(with: MiniAppSdkConfig(baseUrl: testURL, rasAppId: testID, subscriptionKey: testKey, hostAppVersion: testVersion))
+                    miniAppClient.updateEnvironment(with: MiniAppSdkConfig(baseUrl: testURL, rasAppId: testID, subscriptionKey: testKey, hostAppVersion: testVersion, isTestMode: true))
 
                     expect(miniAppClient.environment.appId).to(equal(testID))
                     expect(miniAppClient.environment.appVersion).to(equal(testVersion))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(testKey))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
+                    expect(miniAppClient.environment.isTestMode).to(be(true))
                 }
             }
 
@@ -280,6 +309,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
+                    expect(miniAppClient.environment.isTestMode).to(equal(bundle.bool(for: isTestMode)))
                 }
             }
         }
