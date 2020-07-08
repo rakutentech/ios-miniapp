@@ -62,11 +62,11 @@ miniApp.getUniqueId()
 
 ### 3. Request Permissions
 
-There must be permission requests from miniapp to access some mobile components and data.
+There must be permission requests from miniapp to access some mobile components and data. Users can revoke a permission at any time, so you must always request the permission every time before you use the associated API.
 
 | Permission | Method | Description |
 | --- | --- | --- |
-| LOCATION | `requestLocationPermission()` | The current location of the device.<br>Data position can be accessible via geolocation request. |
+| LOCATION | `requestLocationPermission()` | The current location of the device.<br>Data position can be accessible via geolocation request (`navigator.geolocation`). |
 
 #### Usage example
 

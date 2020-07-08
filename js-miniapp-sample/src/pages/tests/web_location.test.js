@@ -3,6 +3,7 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import MiniApp from 'js-miniapp-sdk';
 
 import { wrapTheme } from '../../tests/test-utils';
 import WebLocation from './../web_location';
@@ -26,6 +27,7 @@ describe('web_location', () => {
   beforeEach(() => {
     render(wrapTheme(<WebLocation />));
     navigator.geolocation = mockGeolocation;
+    MiniApp.requestLocationPermission = jest.fn().mockResolvedValue('');
   });
 
   test('should load web_location component without location details', () => {
@@ -37,9 +39,9 @@ describe('web_location', () => {
     ).toBeTruthy();
   });
 
-  test('should fetch display location', () => {
+  test('should fetch display location', async() => {
     expect(screen.queryByTestId('location-container')).not.toBeInTheDocument();
-    userEvent.click(screen.getByTestId('turn-on'));
+    await userEvent.click(screen.getByTestId('turn-on'));
     expect(screen.queryByTestId('location-container')).toBeInTheDocument();
     expect(
       screen.getByText(`${dummyCoOridinates.latitude}`)
@@ -49,10 +51,10 @@ describe('web_location', () => {
     ).toBeInTheDocument();
   });
 
-  test('should turn off geo-location', () => {
-    userEvent.click(screen.getByTestId('turn-on'));
+  test('should turn off geo-location',async () => {
+    await userEvent.click(screen.getByTestId('turn-on'));
     expect(screen.queryByTestId('location-container')).toBeInTheDocument();
-    userEvent.click(screen.getByTestId('turn-off'));
+    await userEvent.click(screen.getByTestId('turn-off'));
     expect(screen.queryByTestId('location-container')).not.toBeInTheDocument();
   });
 });

@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import { act, renderHook } from '@testing-library/react-hooks';
+import MiniApp from 'js-miniapp-sdk';
 
 import useGeoLocation from './useGeoLocation';
 
@@ -23,6 +24,7 @@ describe('useGeoLocation', () => {
   beforeEach(() => {
     result = renderHook(() => useGeoLocation()).result;
     navigator.geolocation = mockGeolocation;
+    MiniApp.requestLocationPermission = jest.fn().mockResolvedValue('');
   });
 
   test('should initialize location hook', () => {
@@ -31,17 +33,31 @@ describe('useGeoLocation', () => {
     expect(state.location).toBeUndefined();
   });
 
-  test('should watch location coordinates', () => {
+  test('should watch location coordinates when permission granted', async () => {
+    MiniApp.requestLocationPermission = jest.fn().mockResolvedValue('');
+
     let [state, watch] = result.current;
-    act(() => watch());
+    await act(() => watch());
     [state] = result.current;
+
     expect(state.isWatching).toEqual(true);
     expect(state.location).toEqual(dummyCoOridinates);
   });
 
-  test('should stop watching location coordinates', () => {
+  test('should not watch location when permission not granted', async () => {
+    MiniApp.requestLocationPermission = jest.fn().mockRejectedValue('');
+
+    let [state, watch] = result.current;
+    await act(() => watch());
+    [state] = result.current;
+
+    expect(state.isWatching).toEqual(false);
+    expect(state.location).not.toEqual(dummyCoOridinates);
+  });
+
+  test('should stop watching location coordinates', async () => {
     let [state, watch, unwatch] = result.current;
-    act(() => watch());
+    await act(() => watch());
     [state] = result.current;
     expect(state.isWatching).toEqual(true);
     expect(state.location).toEqual(dummyCoOridinates);
