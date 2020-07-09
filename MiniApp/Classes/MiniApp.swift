@@ -1,3 +1,16 @@
+protocol MiniAppNavigationDelegate: class {
+    func miniAppNavigation(canUse actions: [MiniAppNavigationAction])
+    func miniAppNavigation(didTrigger action: MiniAppNavigationAction)
+}
+
+enum MiniAppNavigationAction {
+    case back, forward
+}
+
+enum MiniAppNavigationVisibility {
+    case never, auto, always
+}
+
 /// Mini App Public API methods
 public class MiniApp: NSObject {
     private static let shared = MiniApp()
