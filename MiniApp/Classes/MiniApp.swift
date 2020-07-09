@@ -1,16 +1,3 @@
-protocol MiniAppNavigationDelegate: class {
-    func miniAppNavigation(canUse actions: [MiniAppNavigationAction])
-    func miniAppNavigation(didTrigger action: MiniAppNavigationAction)
-}
-
-enum MiniAppNavigationAction {
-    case back, forward
-}
-
-enum MiniAppNavigationVisibility {
-    case never, auto, always
-}
-
 /// Mini App Public API methods
 public class MiniApp: NSObject {
     private static let shared = MiniApp()
@@ -21,8 +8,8 @@ public class MiniApp: NSObject {
     ///
     /// - Parameters:
     ///     -   settings: A MiniAppSdkConfig object containing values to override default config settings.
-    public class func shared(with settings: MiniAppSdkConfig? = nil) -> MiniApp {
-        shared.realMiniApp.update(with: settings)
+    public class func shared(with settings: MiniAppSdkConfig? = nil, and navigationSettings: MiniAppNavigationConfig? = nil) -> MiniApp {
+        shared.realMiniApp.update(with: settings, and: navigationSettings)
         return shared
     }
 

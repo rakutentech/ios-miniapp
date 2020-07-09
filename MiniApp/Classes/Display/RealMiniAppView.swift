@@ -24,7 +24,6 @@ internal class RealMiniAppView: UIView {
         }
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self, hostAppMessageDelegate: hostAppMessageDelegate)
         webView.configuration.userContentController.addBridgingJavaScript()
-        webView.addObserver(self, forKeyPath: "loading", options: .new, context: nil)
         self.navigationDelegate = navigationDelegate
         addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,12 +37,6 @@ internal class RealMiniAppView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        if (keyPath == "loading") {
-            MiniAppLogger.d("loading")
-        }
     }
 
     func refreshNavBar() {
@@ -117,7 +110,6 @@ extension RealMiniAppView: MiniAppNavigationBarDelegate {
                 self.webView.goForward()
             }
         }
-        refreshNavBar()
     }
 }
 

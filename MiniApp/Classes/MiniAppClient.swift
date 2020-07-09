@@ -12,6 +12,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
     var environment: Environment
+    var navigationSettings: MiniAppNavigationConfig?
     private var testPath: String {
         self.environment.isTestMode ? "test" : ""
     }
@@ -21,23 +22,26 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
     }
 
-    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
-        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
+    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = false, displayNavBar: MiniAppNavigationVisibility = .auto, navigationDelegate: MiniAppNavigationDelegate? = nil, navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode),
+            and: MiniAppNavigationConfig(navigationBarVisibility: displayNavBar, navigationDelegate: navigationDelegate, customNavigationView: navigationView))
     }
 
-    init(with config: MiniAppSdkConfig) {
+    init(with config: MiniAppSdkConfig, and navigationSettings: MiniAppNavigationConfig? = nil) {
         self.environment = Environment(with: config)
         self.listingApi = ListingApi(environment: self.environment)
         self.manifestApi = ManifestApi(environment: self.environment)
         self.downloadApi = DownloadApi(environment: self.environment)
+        self.navigationSettings = navigationSettings
     }
 
-    func updateEnvironment(with config: MiniAppSdkConfig?) {
+    func updateEnvironment(with config: MiniAppSdkConfig?, and navigationSettings: MiniAppNavigationConfig? = nil) {
         self.environment.customUrl = config?.baseUrl
         self.environment.customAppId = config?.rasAppId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion
         self.environment.customIsTestMode = config?.isTestMode ?? false
+        self.navigationSettings = navigationSettings
     }
 
     lazy var session: SessionProtocol = {
@@ -87,11 +91,11 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                 if !(200...299).contains(statusCode) {
                     return completionHandler(.failure(
                         self.handleHttpResponse(responseData: responseData.data,
-                                                httpResponse: responseData.httpResponse)
-                        ))
+                            httpResponse: responseData.httpResponse)
+                    ))
                 }
                 return completionHandler(.success(ResponseData(responseData.data,
-                                                               responseData.httpResponse)))
+                    responseData.httpResponse)))
             case .failure(let error):
                 MiniAppLogger.d("urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n🔴 Failure")
                 return completionHandler(.failure(error))
@@ -106,14 +110,14 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         switch code {
         case 401, 403:
             guard let errorModel = ResponseDecoder.decode(decodeType: UnauthorizedData.self,
-                                                          data: responseData) else {
-                                                            return NSError.unknownServerError(httpResponse: httpResponse)
+                data: responseData) else {
+                return NSError.unknownServerError(httpResponse: httpResponse)
             }
             message = "\(errorModel.error): \(errorModel.errorDescription)"
         default:
             guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self,
-                                                          data: responseData) else {
-                                                            return NSError.unknownServerError(httpResponse: httpResponse)
+                data: responseData) else {
+                return NSError.unknownServerError(httpResponse: httpResponse)
             }
             message = errorModel.message
         }
