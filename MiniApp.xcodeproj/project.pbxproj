@@ -40,7 +40,7 @@
 		388FEEE623DEABCF0062382F /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388FEEE523DEABCF0062382F /* EnvironmentTests.swift */; };
 		389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */; };
 		38A2E93A24A2E3E600E58233 /* MimeTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */; };
-		38BB439724BCB3C200DD0813 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB439624BCB3C200DD0813 /* URLSchemeHandlerTests.swift */; };
+		38BB439824BCB76B00DD0813 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB439624BCB3C200DD0813 /* URLSchemeHandlerTests.swift */; };
 		38CF103124BCAA680079BE57 /* LocalServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CF103024BCAA680079BE57 /* LocalServerTests.swift */; };
 		38F3B7F024192E7300914E37 /* UrlParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3B7EF24192E7300914E37 /* UrlParserTests.swift */; };
 		38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4423D554FE00F2C1CE /* Helpers.swift */; };
@@ -357,7 +357,6 @@
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
 				188F5923243DCBAB0042618E /* DisplayNavigationController.swift in Sources */,
 				1867996B243EF6C200CD6A8E /* ImageCache.swift in Sources */,
-				38BB439724BCB3C200DD0813 /* URLSchemeHandlerTests.swift in Sources */,
 				38033DD724AB2E3200207330 /* ViewController+MiniAppMessageProtocol.swift in Sources */,
 				18C59F2B241094F600F66632 /* SettingsTableViewController.swift in Sources */,
 				185DBD6024AD5A8400CD2094 /* Array+MiniApp.swift in Sources */,
@@ -377,6 +376,7 @@
 				3862EFA823EA5752004D518C /* MiniApp+URLRequestTests.swift in Sources */,
 				38F3B7F024192E7300914E37 /* UrlParserTests.swift in Sources */,
 				389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */,
+				38BB439824BCB76B00DD0813 /* URLSchemeHandlerTests.swift in Sources */,
 				18D764392419D08600150A30 /* Config.swift in Sources */,
 				38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */,
 				38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */,
