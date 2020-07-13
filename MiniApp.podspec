@@ -18,6 +18,9 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '11.0'
 
   s.source_files = 'MiniApp/Classes/**/*'
-  s.resources = "MiniApp/Classes/JavascriptBridge/bridge.js"
+  s.resources = ["MiniApp/Classes/JavascriptBridge/bridge.js",
+                "MiniApp/Classes/Resources/Certificates.p12",
+                "MiniApp/Classes/Resources/miniapp-server.der"]
+  s.dependency 'Telegraph'
 
 end
