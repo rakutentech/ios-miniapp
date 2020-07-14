@@ -10,7 +10,7 @@ internal class Displayer {
             miniAppId: miniAppId,
             versionId: versionId,
             hostAppMessageDelegate: hostAppMessageDelegate,
-            displayNavBar: navConfig?.navigationBarVisibility ?? .auto,
+            displayNavBar: navConfig?.navigationBarVisibility ?? .never,
             navigationDelegate: navConfig?.navigationDelegate,
             navigationView: navConfig?.navigationView)
     }

@@ -12,7 +12,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
     var environment: Environment
-    var navigationSettings: MiniAppNavigationConfig?
+    //var navigationSettings: MiniAppNavigationConfig?
     private var testPath: String {
         self.environment.isTestMode ? "test" : ""
     }
@@ -22,26 +22,23 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
     }
 
-    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = false, displayNavBar: MiniAppNavigationVisibility = .auto, navigationDelegate: MiniAppNavigationDelegate? = nil, navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
-        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode),
-            and: MiniAppNavigationConfig(navigationBarVisibility: displayNavBar, navigationDelegate: navigationDelegate, customNavigationView: navigationView))
+    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
     }
 
-    init(with config: MiniAppSdkConfig, and navigationSettings: MiniAppNavigationConfig? = nil) {
+    init(with config: MiniAppSdkConfig) {
         self.environment = Environment(with: config)
         self.listingApi = ListingApi(environment: self.environment)
         self.manifestApi = ManifestApi(environment: self.environment)
         self.downloadApi = DownloadApi(environment: self.environment)
-        self.navigationSettings = navigationSettings
     }
 
-    func updateEnvironment(with config: MiniAppSdkConfig?, and navigationSettings: MiniAppNavigationConfig? = nil) {
+    func updateEnvironment(with config: MiniAppSdkConfig?) {
         self.environment.customUrl = config?.baseUrl
         self.environment.customAppId = config?.rasAppId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion
         self.environment.customIsTestMode = config?.isTestMode ?? false
-        self.navigationSettings = navigationSettings
     }
 
     lazy var session: SessionProtocol = {

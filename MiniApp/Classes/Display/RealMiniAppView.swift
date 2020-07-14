@@ -6,22 +6,35 @@ internal class RealMiniAppView: UIView {
     internal var navBar: (UIView & MiniAppNavigationDelegate)?
     internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
-    private var webViewBottomConstraintStandalone: NSLayoutConstraint?
-    private var wevViewBottonConstraintWithNavBar: NSLayoutConstraint?
-    private var navBarVisibility: MiniAppNavigationVisibility
+    internal var webViewBottomConstraintStandalone: NSLayoutConstraint?
+    internal var wevViewBottonConstraintWithNavBar: NSLayoutConstraint?
+    internal var navBarVisibility: MiniAppNavigationVisibility
+    internal var isNavBarCustom = false
 
-    init(miniAppId: String, versionId: String, hostAppMessageDelegate: MiniAppMessageProtocol, displayNavBar: MiniAppNavigationVisibility = .auto, navigationDelegate: MiniAppNavigationDelegate? = nil, navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+    init(
+        miniAppId: String,
+        versionId: String,
+        hostAppMessageDelegate: MiniAppMessageProtocol,
+        displayNavBar: MiniAppNavigationVisibility = .never,
+        navigationDelegate: MiniAppNavigationDelegate? = nil,
+        navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         super.init(frame: .zero)
 
-        if navigationView == nil, navBarVisibility != .never {
-            webView.navigationDelegate = self
-            navBar = MiniAppNavigationBar(frame: .zero, delegate: self)
-        } else {
-            navBar = navigationView
+        webView.navigationDelegate = self
+
+        if navBarVisibility != .never {
+            if let nav = navigationView {
+                navBar = nav
+                isNavBarCustom = true
+            } else {
+                navBar = MiniAppNavigationBar(frame: .zero)
+            }
         }
+        navBar?.miniAppNavigation(delegate: self)
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self, hostAppMessageDelegate: hostAppMessageDelegate)
         webView.configuration.userContentController.addBridgingJavaScript()
         self.navigationDelegate = navigationDelegate
@@ -31,8 +44,11 @@ internal class RealMiniAppView: UIView {
         webViewBottomConstraintStandalone = webView.layoutAttachBottom()
         webView.layoutAttachLeading()
         webView.layoutAttachTrailing()
-        wevViewBottonConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
-        webViewBottomConstraintStandalone?.isActive = false
+        if !isNavBarCustom {
+            wevViewBottonConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
+            webViewBottomConstraintStandalone?.isActive = false
+        }
+
     }
 
     required init?(coder: NSCoder) {
@@ -49,11 +65,6 @@ internal class RealMiniAppView: UIView {
         }
         navigationDelegate?.miniAppNavigation(canUse: actionsAvailable)
         if actionsAvailable.count == 0 && navBarVisibility != .never {
-            webView.constraints.forEach { c in
-                if (c.firstItem as? UIView == webView || c.secondItem as? UIView == navBar) {
-                    webView.removeConstraint(c)
-                }
-            }
             webViewBottomConstraintStandalone?.isActive = navBarVisibility == .auto
             wevViewBottonConstraintWithNavBar?.isActive = navBarVisibility == .always
             navBar?.removeFromSuperview()
@@ -67,8 +78,8 @@ internal class RealMiniAppView: UIView {
                 if navBarVisibility != .never {
                     addSubview(nav)
                     nav.translatesAutoresizingMaskIntoConstraints = false
-                    webViewBottomConstraintStandalone?.isActive = navBarVisibility == .always
-                    wevViewBottonConstraintWithNavBar?.isActive = navBarVisibility == .auto
+                    webViewBottomConstraintStandalone?.isActive = false || isNavBarCustom
+                    wevViewBottonConstraintWithNavBar?.isActive = true && !isNavBarCustom
                     nav.layoutAttachBottom()
                     nav.layoutAttachLeading()
                     nav.layoutAttachTrailing()
@@ -99,14 +110,14 @@ extension RealMiniAppView: MiniAppCallbackProtocol {
 }
 
 extension RealMiniAppView: MiniAppNavigationBarDelegate {
-    func miniAppNavigationBar(_ miniApp: MiniAppNavigationBar, didTriggerAction action: MiniAppNavigationAction) {
+    func miniAppNavigationBar(_ navBar: UIView & MiniAppNavigationDelegate, didTriggerAction action: MiniAppNavigationAction) {
         switch action {
         case .back:
-            if (self.webView.canGoBack) {
+            if self.webView.canGoBack {
                 self.webView.goBack()
             }
         case .forward:
-            if (self.webView.canGoForward) {
+            if self.webView.canGoForward {
                 self.webView.goForward()
             }
         }

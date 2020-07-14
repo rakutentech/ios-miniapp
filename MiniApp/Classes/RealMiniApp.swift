@@ -24,8 +24,9 @@ internal class RealMiniApp {
         self.displayer = Displayer(navigationSettings)
     }
 
-    func update(with settings: MiniAppSdkConfig?, and navigationSettings: MiniAppNavigationConfig? = nil) {
-        self.miniAppClient.updateEnvironment(with: settings, and: navigationSettings)
+    func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
+        self.miniAppClient.updateEnvironment(with: settings)
+        self.displayer.navConfig = navigationSettings
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {

@@ -23,13 +23,13 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mGE-Ms-ak6">
                     <rect key="frame" x="0.0" y="0.0" width="453" height="44"/>
                     <items>
-                        <barButtonItem systemItem="rewind" id="jAe-he-ypq">
+                        <barButtonItem title="Back" image="arrow_left-24" id="jAe-he-ypq">
                             <connections>
                                 <action selector="buttonTaped:" destination="-1" id="xPS-YW-nCb"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="XWk-sH-cwv"/>
-                        <barButtonItem systemItem="fastForward" id="UDs-oo-Fq5">
+                        <barButtonItem title="Next" image="arrow_right-24" id="UDs-oo-Fq5">
                             <connections>
                                 <action selector="buttonTaped:" destination="-1" id="r7l-oD-JTe"/>
                             </connections>
@@ -50,4 +50,8 @@
             <point key="canvasLocation" x="165.94202898550725" y="-169.75446428571428"/>
         </view>
     </objects>
+    <resources>
+        <image name="arrow_left-24" width="24" height="24"/>
+        <image name="arrow_right-24" width="24" height="24"/>
+    </resources>
 </document>

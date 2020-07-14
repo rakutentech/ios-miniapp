@@ -277,6 +277,33 @@
                                     <action selector="actionShowMiniAppById" destination="BQV-uy-8GQ" eventType="touchUpInside" id="5tX-AM-Le9"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NHb-gq-ddn" customClass="CustomNavigationView" customModule="MiniApp_Example" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="538" width="375" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bsp-YN-mkU">
+                                        <rect key="frame" x="30" y="0.0" width="50" height="50"/>
+                                        <color key="backgroundColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="1KR-bz-Ie7"/>
+                                            <constraint firstAttribute="height" constant="50" id="wRR-Xk-yMh"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="back"/>
+                                        <connections>
+                                            <action selector="actionGoBack" destination="NHb-gq-ddn" eventType="touchUpInside" id="3pP-k9-wi4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Bsp-YN-mkU" secondAttribute="bottom" constant="30" id="idc-D5-4yr"/>
+                                    <constraint firstItem="Bsp-YN-mkU" firstAttribute="top" secondItem="NHb-gq-ddn" secondAttribute="top" id="lnG-S3-Fsm"/>
+                                    <constraint firstItem="Bsp-YN-mkU" firstAttribute="leading" secondItem="NHb-gq-ddn" secondAttribute="leading" constant="30" id="y0q-6e-y41"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="backButton" destination="Bsp-YN-mkU" id="WWo-Q5-E2s"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -286,7 +313,10 @@
                             <constraint firstItem="HNb-U8-jdX" firstAttribute="top" secondItem="XCF-cL-5kF" secondAttribute="bottom" id="MiR-RI-Sut"/>
                             <constraint firstAttribute="trailing" secondItem="sJz-Kx-mqo" secondAttribute="trailing" id="T3B-ou-l6f"/>
                             <constraint firstItem="tdn-rl-TH3" firstAttribute="top" secondItem="sJz-Kx-mqo" secondAttribute="bottom" id="XQ6-cY-gVJ"/>
+                            <constraint firstItem="NHb-gq-ddn" firstAttribute="leading" secondItem="gi6-MZ-FFD" secondAttribute="leading" id="cgc-Ql-GPo"/>
                             <constraint firstAttribute="trailing" secondItem="HNb-U8-jdX" secondAttribute="trailing" id="fFr-kH-Py7"/>
+                            <constraint firstItem="tdn-rl-TH3" firstAttribute="top" secondItem="NHb-gq-ddn" secondAttribute="bottom" id="jco-jQ-YVg"/>
+                            <constraint firstAttribute="trailing" secondItem="NHb-gq-ddn" secondAttribute="trailing" id="qvL-Xq-mYR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Mini App Sample" id="hBN-sq-KdF">
@@ -297,13 +327,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="customNav" destination="NHb-gq-ddn" id="C9j-xd-iCe"/>
                         <outlet property="tableView" destination="sJz-Kx-mqo" id="rMe-wu-j5y"/>
                         <segue destination="eW9-Vs-PTN" kind="presentation" identifier="DisplayMiniApp" modalPresentationStyle="fullScreen" id="Ynv-ER-hz3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uT2-AT-aJO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="129" y="358"/>
+            <point key="canvasLocation" x="128.80000000000001" y="357.57121439280365"/>
         </scene>
         <!--Display Navigation Controller-->
         <scene sceneID="zzX-v6-zei">
@@ -507,6 +538,7 @@
         <image name="Rakuten" width="90" height="90"/>
         <image name="Settings" width="24" height="24"/>
         <image name="app-list" width="24" height="24"/>
+        <image name="back" width="32" height="32"/>
         <image name="curved-arrow" width="170.66667175292969" height="170.66667175292969"/>
     </resources>
 </document>

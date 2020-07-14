@@ -1,9 +1,5 @@
 import UIKit
 
-internal protocol MiniAppNavigationBarDelegate: class {
-    func miniAppNavigationBar(_ miniApp: MiniAppNavigationBar, didTriggerAction action: MiniAppNavigationAction)
-}
-
 internal class MiniAppNavigationBar: UIView {
 
     @IBOutlet var contentView: UIView!
@@ -21,11 +17,6 @@ internal class MiniAppNavigationBar: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-    }
-
-    convenience init(frame: CGRect, delegate:MiniAppNavigationBarDelegate) {
-        self.init(frame: frame)
-        self.delegate = delegate
         initialize()
     }
 
@@ -44,11 +35,15 @@ internal class MiniAppNavigationBar: UIView {
         default:
             break
         }
-        self.miniAppNavigation(didTrigger: action)
+        self.delegate?.miniAppNavigationBar(self, didTriggerAction: action)
     }
 }
 
 extension MiniAppNavigationBar: MiniAppNavigationDelegate {
+    func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
+        self.delegate = delegate
+    }
+
     func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
         buttons = []
         actions.forEach { (action) in
@@ -62,10 +57,4 @@ extension MiniAppNavigationBar: MiniAppNavigationDelegate {
         }
         self.toolBar.items = buttons
     }
-
-    func miniAppNavigation(didTrigger action: MiniAppNavigationAction) {
-        self.delegate?.miniAppNavigationBar(self, didTriggerAction: action)
-    }
-
-
 }
