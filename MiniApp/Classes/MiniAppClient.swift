@@ -12,7 +12,6 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
     var environment: Environment
-    //var navigationSettings: MiniAppNavigationConfig?
     private var testPath: String {
         self.environment.isTestMode ? "test" : ""
     }
@@ -88,11 +87,11 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                 if !(200...299).contains(statusCode) {
                     return completionHandler(.failure(
                         self.handleHttpResponse(responseData: responseData.data,
-                            httpResponse: responseData.httpResponse)
-                    ))
+                                                httpResponse: responseData.httpResponse)
+                        ))
                 }
                 return completionHandler(.success(ResponseData(responseData.data,
-                    responseData.httpResponse)))
+                                                               responseData.httpResponse)))
             case .failure(let error):
                 MiniAppLogger.d("urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n🔴 Failure")
                 return completionHandler(.failure(error))
@@ -107,14 +106,14 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         switch code {
         case 401, 403:
             guard let errorModel = ResponseDecoder.decode(decodeType: UnauthorizedData.self,
-                data: responseData) else {
-                return NSError.unknownServerError(httpResponse: httpResponse)
+                                                          data: responseData) else {
+                                                            return NSError.unknownServerError(httpResponse: httpResponse)
             }
             message = "\(errorModel.error): \(errorModel.errorDescription)"
         default:
             guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self,
-                data: responseData) else {
-                return NSError.unknownServerError(httpResponse: httpResponse)
+                                                          data: responseData) else {
+                                                            return NSError.unknownServerError(httpResponse: httpResponse)
             }
             message = errorModel.message
         }
