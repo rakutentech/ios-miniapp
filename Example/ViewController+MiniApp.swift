@@ -1,14 +1,5 @@
 import MiniApp
 
-extension ViewController: MiniAppMessageProtocol {
-    func getUniqueId() -> String {
-        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
-            return ""
-        }
-        return deviceId
-    }
-}
-
 extension ViewController {
     func fetchAppList(inBackground: Bool) {
         showProgressIndicator(silently: inBackground) {

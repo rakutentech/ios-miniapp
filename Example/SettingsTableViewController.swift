@@ -13,8 +13,7 @@ class SettingsTableViewController: UITableViewController {
 
     enum TestMode: Int, CaseIterable {
         case PUBLISHING,
-        TESTING,
-        DEFAULT
+        TESTING
 
         func stringValue() -> String {
             switch self {
@@ -22,8 +21,6 @@ class SettingsTableViewController: UITableViewController {
                 return NSLocalizedString("test_mode_publishing", comment: "")
             case .TESTING:
                 return NSLocalizedString("test_mode_testing", comment: "")
-            case .DEFAULT:
-                return NSLocalizedString("test_mode_default", comment: "")
             }
         }
 
@@ -33,8 +30,6 @@ class SettingsTableViewController: UITableViewController {
                 return false
             case .TESTING:
                 return true
-            default:
-                return Bundle.main.infoDictionary?[Config.Key.isTestMode.rawValue] as? Bool ?? false
             }
         }
     }
@@ -56,7 +51,7 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return "Test Mode (plist default: \(TestMode.DEFAULT.isTestMode() ? TestMode.TESTING.stringValue() : TestMode.PUBLISHING.stringValue()))"
+            return "Test Mode"
         case 1:
             return "RAS"
         default:
@@ -168,10 +163,11 @@ class SettingsTableViewController: UITableViewController {
     func configureMode() {
         self.endPointSegmentedControl.removeAllSegments()
         TestMode.allCases.forEach { configure(mode: $0) }
+        let defaultMode = (Bundle.main.infoDictionary?[Config.Key.isTestMode.rawValue] as? Bool ?? false).intValue
         if let index = Config.userDefaults?.value(forKey: Config.Key.isTestMode.rawValue) {
-            self.endPointSegmentedControl.selectedSegmentIndex = (index as? Bool)?.intValue ?? TestMode.DEFAULT.rawValue
+            self.endPointSegmentedControl.selectedSegmentIndex = (index as? Bool)?.intValue ?? defaultMode
         } else {
-            self.endPointSegmentedControl.selectedSegmentIndex = TestMode.DEFAULT.rawValue
+            self.endPointSegmentedControl.selectedSegmentIndex = defaultMode
         }
     }
 
@@ -205,11 +201,7 @@ class SettingsTableViewController: UITableViewController {
 
     func saveMode() {
         let selectedMode = self.endPointSegmentedControl.selectedSegmentIndex
-        if selectedMode == TestMode.DEFAULT.rawValue {
-            Config.userDefaults?.removeObject(forKey: Config.Key.isTestMode.rawValue)
-        } else {
-            Config.userDefaults?.set(selectedMode.boolValue, forKey: Config.Key.isTestMode.rawValue)
-        }
+        Config.userDefaults?.set(selectedMode.boolValue, forKey: Config.Key.isTestMode.rawValue)
     }
 
     func isValueEntered(text: String?, key: Config.Key) -> Bool {

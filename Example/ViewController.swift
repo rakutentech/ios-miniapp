@@ -1,5 +1,6 @@
 import UIKit
 import MiniApp
+import CoreLocation
 
 class ViewController: UIViewController {
 
@@ -14,7 +15,7 @@ class ViewController: UIViewController {
             } else {
                 self.miniApps = nil
                 self.miniAppsSection = self.decodeResponse?.map { $0.displayName ?? "-" }
-                self.miniApps = self.decodeResponse?.dictionnaryFilteredBy(index: { $0.displayName ?? "-" })
+                self.miniApps = self.decodeResponse?.dictionaryFilteredBy(index: { $0.displayName ?? "-" })
             }
 
         }
@@ -24,6 +25,9 @@ class ViewController: UIViewController {
     var currentMiniAppInfo: MiniAppInfo?
     var currentMiniAppView: MiniAppDisplayProtocol?
     let imageCache = ImageCache()
+    let config = Config.getCurrent()
+    let locationManager = CLLocationManager()
+    var permissionHandlerObj: PermissionCompletionHandler?
 
     override func viewDidLoad() {
         super.viewDidLoad()

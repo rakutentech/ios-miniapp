@@ -167,6 +167,9 @@ class MockFile {
 
 class MockMessageInterface: MiniAppMessageProtocol {
     var mockUniqueId: Bool = false
+    var locationAllowed: Bool = false
+    var permissionError: Error?
+
     func getUniqueId() -> String {
         if mockUniqueId {
             return ""
@@ -175,6 +178,18 @@ class MockMessageInterface: MiniAppMessageProtocol {
                 return ""
             }
             return deviceId
+        }
+    }
+
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
+        if locationAllowed {
+            completionHandler(.success("Allowed"))
+        } else {
+            if permissionError != nil {
+                completionHandler(.failure(permissionError!))
+                return
+            }
+            completionHandler(.failure(MiniAppPermissionResult.denied))
         }
     }
 }
