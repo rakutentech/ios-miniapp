@@ -19,5 +19,6 @@ Pod::Spec.new do |s|
 
   s.source_files = 'MiniApp/Classes/**/*'
   s.resources = "MiniApp/Classes/JavascriptBridge/bridge.js"
+  s.resource_bundle = {"Localization" => ["MiniApp/*.lproj/*.strings"]}
 
 end

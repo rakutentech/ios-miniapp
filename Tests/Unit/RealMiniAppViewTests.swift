@@ -8,7 +8,7 @@ class RealMiniAppViewTests: QuickSpec {
     override func spec() {
         describe("Mini App view") {
             let mockMessageInterface = MockMessageInterface()
-            let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface)
+            let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
 
             context("when initialized with valid parameters") {
                 it("will return MiniAppView object") {
@@ -30,7 +30,7 @@ class RealMiniAppViewTests: QuickSpec {
         }
         describe("WKUIDelegate") {
             let mockMessageInterface = MockMessageInterface()
-            let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface)
+            let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
 
             context("when webview is loaded with alert javascript dialog") {
                 it("will show native alert with request message") {
@@ -59,7 +59,7 @@ class RealMiniAppViewTests: QuickSpec {
         }
         describe("WKUIDelegate") {
             let mockMessageInterface = MockMessageInterface()
-            let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface)
+            let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with confirm javascript dialog") {
                 it("will show native alert with request message and ok button is tapped") {
                     let html = """
@@ -113,7 +113,7 @@ class RealMiniAppViewTests: QuickSpec {
         }
         describe("WKUIDelegate") {
                 let mockMessageInterface = MockMessageInterface()
-                let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface)
+                let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with prompt javascript dialog") {
                 it("will show native alert with request message and cancel button is tapped") {
                     let html = """

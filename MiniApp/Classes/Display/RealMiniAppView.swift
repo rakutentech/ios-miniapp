@@ -3,8 +3,10 @@ import WebKit
 internal class RealMiniAppView: UIView, MiniAppDisplayProtocol, MiniAppCallbackProtocol {
     internal var webView: WKWebView
     internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
+    internal var miniAppTitle: String
 
-    init(miniAppId: String, versionId: String, hostAppMessageDelegate: MiniAppMessageProtocol) {
+    init(miniAppId: String, versionId: String, miniAppTitle: String, hostAppMessageDelegate: MiniAppMessageProtocol) {
+        self.miniAppTitle = miniAppTitle
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         super.init(frame: .zero)

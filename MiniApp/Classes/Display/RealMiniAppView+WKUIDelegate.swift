@@ -5,7 +5,7 @@ extension RealMiniAppView: WKUIDelegate {
                  runJavaScriptAlertPanelWithMessage message: String,
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping () -> Void) {
-        let alertController = UIAlertController(title: "Info", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: self.miniAppTitle, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
         completionHandler()
@@ -15,7 +15,7 @@ extension RealMiniAppView: WKUIDelegate {
                  runJavaScriptConfirmPanelWithMessage message: String,
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (Bool) -> Void) {
-        let alertController = UIAlertController(title: "Info", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: self.miniAppTitle, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
             completionHandler(true)
         }))
@@ -29,7 +29,7 @@ extension RealMiniAppView: WKUIDelegate {
                  defaultText: String?,
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (String?) -> Void) {
-        let alertController = UIAlertController(title: nil, message: prompt, preferredStyle: .alert)
+        let alertController = UIAlertController(title: self.miniAppTitle, message: prompt, preferredStyle: .alert)
         alertController.addTextField { (textField) in
             textField.text = defaultText
         }
