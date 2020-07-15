@@ -260,7 +260,7 @@ class MockNavigationView: UIView, MiniAppNavigationDelegate {
             case .back:
                 hasReceivedBack = true
             case .forward:
-                hasReceivedForwrad = true
+                hasReceivedForward = true
             }
         }
     }
