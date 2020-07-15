@@ -241,11 +241,11 @@ class MockNavigationView: UIView, MiniAppNavigationDelegate {
     var hasReceivedForwrad: Bool = true
 
     func actionGoBack() {
-        delegate?.miniAppNavigationBar(self, didTriggerAction: .back)
+        delegate?.miniAppNavigationBar(didTriggerAction: .back)
     }
 
     func actionGoForward() {
-        delegate?.miniAppNavigationBar(self, didTriggerAction: .forward)
+        delegate?.miniAppNavigationBar(didTriggerAction: .forward)
     }
 
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {

@@ -20,10 +20,9 @@ class Config: NSObject {
             isTestMode: Config.userDefaults?.bool(forKey: Config.Key.isTestMode.rawValue))
     }
 
-    class func getNavConfig(customView: (UIView & MiniAppNavigationDelegate)? = nil) -> MiniAppNavigationConfig {
-        return MiniAppNavigationConfig(
-            navigationBarVisibility: .always,
-            navigationDelegate: customView,
-            customNavigationView: customView)
+    /// Returns a `MiniAppNavigationConfig` with default values
+    /// See `DisplayController` class on how to communicate navigation events to `MiniAppView`
+    class func getNavConfig() -> MiniAppNavigationConfig {
+        return MiniAppNavigationConfig()
     }
 }

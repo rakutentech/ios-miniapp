@@ -84,6 +84,9 @@ internal class RealMiniAppView: UIView {
                     nav.layoutAttachLeading()
                     nav.layoutAttachTrailing()
                 }
+            } else {
+                wevViewBottonConstraintWithNavBar?.isActive = false
+                webViewBottomConstraintStandalone?.isActive = true
             }
         }
     }
@@ -94,6 +97,15 @@ internal class RealMiniAppView: UIView {
 }
 
 extension RealMiniAppView: MiniAppDisplayProtocol {
+    func getMiniAppNavigationBarDelegate() -> MiniAppNavigationBarDelegate? {
+        return self
+    }
+
+    func setMiniAppNavigationDelegate(_ delegate: MiniAppNavigationDelegate) {
+        self.navigationDelegate = delegate
+        refreshNavBar()
+    }
+
     public func getMiniAppView() -> UIView {
         return self
     }
@@ -110,7 +122,7 @@ extension RealMiniAppView: MiniAppCallbackProtocol {
 }
 
 extension RealMiniAppView: MiniAppNavigationBarDelegate {
-    func miniAppNavigationBar(_ navBar: UIView & MiniAppNavigationDelegate, didTriggerAction action: MiniAppNavigationAction) {
+    func miniAppNavigationBar(didTriggerAction action: MiniAppNavigationAction) {
         switch action {
         case .back:
             if self.webView.canGoBack {

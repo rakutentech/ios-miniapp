@@ -5,7 +5,6 @@ import CoreLocation
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet var customNav: CustomNavigationView!
     let refreshControl = UIRefreshControl()
 
     var decodeResponse: [MiniAppInfo]? {
@@ -35,8 +34,6 @@ class ViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
-        customNav.removeFromSuperview()
-        customNav.backButton.layer.cornerRadius = 25
     }
 
     override func viewDidAppear(_ animated: Bool) {

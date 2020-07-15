@@ -7,4 +7,6 @@ public protocol MiniAppDisplayProtocol {
 
     /// Get the view of the Mini app
     func getMiniAppView() -> UIView
+    func setMiniAppNavigationDelegate(_ delegate: MiniAppNavigationDelegate)
+    func getMiniAppNavigationBarDelegate() -> MiniAppNavigationBarDelegate?
 }

@@ -32,9 +32,8 @@ public protocol MiniAppNavigationDelegate: class {
 /// A delegate implemented by the Mini App view to get the actions triggered by UI
 public protocol MiniAppNavigationBarDelegate: class {
     /// Method to call when a user want to interract with Mini App navigation history
-    ///    - navBar: the navigation view that triggered the action
     ///    - action: the action requested (go back or go forward)
-    func miniAppNavigationBar(_ navBar: UIView & MiniAppNavigationDelegate, didTriggerAction action: MiniAppNavigationAction)
+    func miniAppNavigationBar(didTriggerAction action: MiniAppNavigationAction)
 }
 
 // MARK: - Enums
