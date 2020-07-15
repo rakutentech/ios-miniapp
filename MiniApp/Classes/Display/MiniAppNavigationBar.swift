@@ -4,7 +4,7 @@ internal class MiniAppNavigationBar: UIView {
 
     @IBOutlet var contentView: UIView!
     @IBOutlet var backButton: UIBarButtonItem!
-    @IBOutlet var nextButton: UIBarButtonItem!
+    @IBOutlet var forwardButton: UIBarButtonItem!
     @IBOutlet var spacer: UIBarButtonItem!
     @IBOutlet var toolBar: UIToolbar!
     weak var delegate: MiniAppNavigationBarDelegate?
@@ -30,7 +30,7 @@ internal class MiniAppNavigationBar: UIView {
         switch sender {
         case backButton:
             action = .back
-        case nextButton:
+        case forwardButton:
             action = .forward
         default:
             break
@@ -52,7 +52,7 @@ extension MiniAppNavigationBar: MiniAppNavigationDelegate {
                 buttons.append(backButton)
             case .forward:
                 buttons.append(spacer)
-                buttons.append(nextButton)
+                buttons.append(forwardButton)
             }
         }
         self.toolBar.items = buttons
