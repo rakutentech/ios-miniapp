@@ -30,6 +30,8 @@
 	<string>RAS_SUBSCRIPTION_KEY</string>
 	<key>RMAAPIEndpoint</key>
 	<string>https://www.example.com</string>
+	<key>HostAppUserAgentInfo</key>
+	<string>HOSTAPPNAME_AND_VERSION</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
