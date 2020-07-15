@@ -238,7 +238,7 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackProtocol {
 class MockNavigationView: UIView, MiniAppNavigationDelegate {
     weak var delegate: MiniAppNavigationBarDelegate?
     var hasReceivedBack: Bool = false
-    var hasReceivedForwrad: Bool = true
+    var hasReceivedForward: Bool = true
 
     func actionGoBack() {
         delegate?.miniAppNavigationBar(didTriggerAction: .back)
@@ -253,7 +253,7 @@ class MockNavigationView: UIView, MiniAppNavigationDelegate {
     }
 
     func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
-        hasReceivedForwrad = false
+        hasReceivedForward = false
         hasReceivedBack = false
         actions.forEach { (action) in
             switch action {
