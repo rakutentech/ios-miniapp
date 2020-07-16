@@ -61,8 +61,8 @@ pod 'MiniApp'
 
 In your project configuration .plist you should add below Key/Value :
 
-| Key                          | Type    | Description                                                     | Optional| Default å|
-|------------------------------|---------|-----------------------------------------------------------------|---------|---------|
+| Key                          | Type    | Description                                                     | Optional| Default |
+| :----                        | :----:  | :----                                                           |:----:   |:----:   |
 | RASApplicationIdentifier     | String  | `Set your MiniApp host application identifier`                  |NO       |`none`   |
 | RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
 | RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
