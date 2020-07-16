@@ -67,7 +67,7 @@ In your project configuration .plist you should add below Key/Value :
 | RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
 | RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
 | RMAIsTestMode                | String  | `Loading mode of the API (`true`: testing, `false`: published)` |NO       |false    |
-| HostAppUserAgentInfo         | String  | `Host app name and version info that is added in User agent`    |YES      |`none`   |
+| RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent` |YES      |`none`   |
 
 If you don't want to use project settings, you have to pass this informations one by one to the `Config.userDefaults` using a `Config.Key` as key:
 
@@ -198,6 +198,7 @@ See the *LICENSE* file for more info.
 
 **SDK**
 - *Feature:* Possibility to load `testing` Mini Apps from RAS
+- *Feature:* Ability to add a custom string(RMAHostAppUserAgentInfo) that will get appended in the User agent.
 
 **Sample App**
 - *Feature:* Implemention of the `testing` Mini Apps SDK feature

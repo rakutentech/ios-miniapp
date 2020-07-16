@@ -11,7 +11,7 @@ internal class Environment {
             subscriptionKey = "RASProjectSubscriptionKey",
             endpoint = "RMAAPIEndpoint",
             isTestMode = "RMAIsTestMode",
-            hostAppUserAgentInfo = "HostAppUserAgentInfo"
+            hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
     }
 
     let bundle: EnvironmentProtocol
@@ -54,7 +54,7 @@ internal class Environment {
     }
 
     var hostAppUserAgentInfo: String {
-        return value(for: .none, fallback: .hostAppUserAgentInfo)
+        return value(for: customHostAppUserAgentInfo, fallback: .hostAppUserAgentInfo)
     }
 
     var baseUrl: URL? {

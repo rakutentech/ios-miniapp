@@ -147,7 +147,7 @@ class MockBundle: EnvironmentProtocol {
             return mockAppVersion
         case "RMAAPIEndpoint":
             return mockEndpoint
-        case "HostAppUserAgentInfo":
+        case "RMAHostAppUserAgentInfo":
             return mockHostAppUserAgentInfo
         default:
             return nil

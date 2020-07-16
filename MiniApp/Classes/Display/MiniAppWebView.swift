@@ -13,12 +13,14 @@ internal class MiniAppWebView: WKWebView {
         self.init(frame: .zero, configuration: config)
         contentMode = .scaleToFill
         load(urlRequest)
-        evaluateJavaScript("navigator.userAgent") { [weak self] (result, error) in
-            if error != nil {
-                return
-            }
-            if let userAgent = result as? String {
-                self?.customUserAgent = userAgent + " " + environment.hostAppUserAgentInfo
+        if !environment.hostAppUserAgentInfo.isEmpty && environment.hostAppUserAgentInfo != "NONE" {
+            evaluateJavaScript("navigator.userAgent") { [weak self] (result, error) in
+                if error != nil {
+                    return
+                }
+                if let userAgent = result as? String {
+                    self?.customUserAgent = userAgent + " " + environment.hostAppUserAgentInfo
+                }
             }
         }
     }
