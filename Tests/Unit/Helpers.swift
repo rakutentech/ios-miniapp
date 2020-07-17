@@ -134,6 +134,7 @@ class MockBundle: EnvironmentProtocol {
     var mockAppVersion: String?
     var mockEndpoint: String?
     var mockTestMode: Bool?
+    var mockHostAppUserAgentInfo: String?
 
     func bool(for key: String) -> Bool? {
         switch key {
@@ -154,6 +155,8 @@ class MockBundle: EnvironmentProtocol {
             return mockAppVersion
         case "RMAAPIEndpoint":
             return mockEndpoint
+        case "RMAHostAppUserAgentInfo":
+            return mockHostAppUserAgentInfo
         default:
             return nil
         }
@@ -298,4 +301,12 @@ func deleteMockMiniApp(appId: String, versionId: String) {
 
 func deleteStatusPreferences() {
     UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
+}
+
+func tapAlertButton(title: String, actions: [UIAlertAction]?) {
+    typealias AlertHandler = @convention(block) (UIAlertAction) -> Void
+
+    guard let action = actions?.first(where: {$0.title == title}), let block = action.value(forKey: "handler") else { return }
+    let handler = unsafeBitCast(block as AnyObject, to: AlertHandler.self)
+    handler(action)
 }

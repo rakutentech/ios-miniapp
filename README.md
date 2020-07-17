@@ -16,9 +16,19 @@ This open-source library allows you to integrate a Rakuten MiniApp into your iOS
 
 All the MiniApp files downloaded by the MiniApp iOS library are cached locally for efficiency
 
-## Getting started
+# Getting started
 
-### Requirements
+* [Requirements](#requirements)
+* [Documentation](#documentation)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Usage](#usage)
+* [Sample App](#sample-app)
+* [Changelog](#change-log)
+
+<div id="requirements"></div>
+
+## Requirements
 
 This module supports **iOS 11.0 and above**. It has been tested on iOS 11.0 and above.
 
@@ -30,22 +40,13 @@ In order to run your MiniApp you will have to provide the following,
 * Subscription key (RASProjectSubscriptionKey)
 * Base URL for API requests to the library (RMAAPIEndpoint)
 
+<div id="documentation"></div>
+
 # Documentation
 
 Generated documentation for this SDK can be found at https://rakutentech.github.io/ios-miniapp/
 
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-### Custom parameters
-
-In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (`RASApplicationIdentifier`, `RASProjectSubscriptionKey`) or by taping the top right configuration icon in the example application. Also we don't currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (`RMAAPIEndpoint`)
-
-### Testing mode
-
-The SDK can be configured to load MiniApps in 2 modes : Published mode and Testing mode. Published mode only allows access to the last published version of your MiniApps, whereas Testing mode allows you to load all your MiniApps versions, as long as they are in `Testing` state on RAS console. To configure the loading mode, you can either do it in the .plist file with the configuration variable `RMAIsTestMode`, or by taping the top right configuration icon in the example application.
-
+<div id="installation"></div>
 
 # Installation
 
@@ -54,24 +55,27 @@ MiniApp is available through [CocoaPods](https://cocoapods.org). To install it, 
 ```ruby
 pod 'MiniApp'
 ```
+<div id="configuration"></div>
 
 # Configuration
 
-In your project configuration .plist you should add 3 custom string target properties :
+In your project configuration .plist you should add below Key/Value :
 
-- `RASApplicationIdentifier` - to set your MiniApp host application identifier
-- `RASProjectSubscriptionKey` - to set your MiniApp subscription key
-- `RMAAPIEndpoint` - to provide your own Base URL for API requests
-
-And a custom boolean target property (optional, default is `false`):
-- `RMAIsTestMode` - to choose the loading mode of the API (`true`: testing, `false`: published)
-
+| Key                          | Type    | Description                                                     | Optional| Default |
+| :----                        | :----:  | :----                                                           |:----:   |:----:   |
+| RASApplicationIdentifier     | String  | `Set your MiniApp host application identifier`                  |NO       |`none`   |
+| RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
+| RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
+| RMAIsTestMode                | String  | `Loading mode of the API (`true`: testing, `false`: published)` |NO       |false    |
+| RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent` |YES      |`none`   |
 
 If you don't want to use project settings, you have to pass this informations one by one to the `Config.userDefaults` using a `Config.Key` as key:
 
 ```swift
 Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawValue)
 ```
+
+<div id="usage"></div>
 
 # Usage
 
@@ -95,7 +99,8 @@ class Config: NSObject {
                                 rasAppId: "your_RAS_App_id",
                                 subscriptionKey: "your_subscription_key",
                                 hostAppVersion: "your_custom_version",
-                                isTestMode: true)
+                                isTestMode: true,
+                                hostAppUserAgentInfo: "host_app_name_and_version")
     }
 }
 ```
@@ -192,17 +197,35 @@ MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(mi
 }
 ```
 
+<div id="sample-app"></div>
+
+# Example
+
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
+
+### Custom parameters
+
+In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (`RASApplicationIdentifier`, `RASProjectSubscriptionKey`) or by taping the top right configuration icon in the example application. Also we don't currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (`RMAAPIEndpoint`)
+
+### Testing mode
+
+The SDK can be configured to load MiniApps in 2 modes : Published mode and Testing mode. Published mode only allows access to the last published version of your MiniApps, whereas Testing mode allows you to load all your MiniApps versions, as long as they are in `Testing` state on RAS console. To configure the loading mode, you can either do it in the .plist file with the configuration variable `RMAIsTestMode`, or by taping the top right configuration icon in the example application.
+
+
 ## License
 
 See the *LICENSE* file for more info.
 
-## Changelog
+<div id="change-log"></div>
+
+# Changelog
 
 ### 1.x.x (YYYY-mm-dd)
 
 **SDK**
 - *Feature:* Possibility to load `testing` Mini Apps from RAS
 - *Feature:* Possibility to use back and forward navigation inside MiniApp with SDK default UI or custom client provided UI
+- *Feature:* Ability to add a custom string(RMAHostAppUserAgentInfo) that will get appended in the User agent.
 
 **Sample App**
 - *Feature:* Implemention of the `testing` Mini Apps SDK feature

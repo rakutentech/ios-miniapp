@@ -3,27 +3,30 @@ import WebKit
 internal class RealMiniAppView: UIView {
 
     internal var webView: WKWebView
+    internal var miniAppTitle: String
     internal var navBar: (UIView & MiniAppNavigationDelegate)?
-    internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
-    internal weak var navigationDelegate: MiniAppNavigationDelegate?
     internal var webViewBottomConstraintStandalone: NSLayoutConstraint?
     internal var wevViewBottonConstraintWithNavBar: NSLayoutConstraint?
     internal var navBarVisibility: MiniAppNavigationVisibility
     internal var isNavBarCustom = false
 
+    internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
+    internal weak var navigationDelegate: MiniAppNavigationDelegate?
+
     init(
         miniAppId: String,
         versionId: String,
+        miniAppTitle: String,
         hostAppMessageDelegate: MiniAppMessageProtocol,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
 
+        self.miniAppTitle = miniAppTitle
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         super.init(frame: .zero)
-
         webView.navigationDelegate = self
 
         if navBarVisibility != .never {
@@ -37,6 +40,7 @@ internal class RealMiniAppView: UIView {
         navBar?.miniAppNavigation(delegate: self)
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self, hostAppMessageDelegate: hostAppMessageDelegate)
         webView.configuration.userContentController.addBridgingJavaScript()
+        webView.uiDelegate = self
         self.navigationDelegate = navigationDelegate
         addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,7 +56,7 @@ internal class RealMiniAppView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
 
     func refreshNavBar() {

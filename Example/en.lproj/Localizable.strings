@@ -1,6 +1,3 @@
-"Ok_title" = "OK";
-"Cancel_title" = "Cancel";
-
 "error_title" = "Error";
 "error_list_message" = "Couldn't retrieve Miniapp list, please try again later";
 "error_single_message" = "Couldn't retrieve Miniapp info, please try again later";
@@ -25,3 +22,4 @@
 
 "test_mode_publishing" = "Published";
 "test_mode_testing" = "Testing";
+"test_mode_default" = "Default";

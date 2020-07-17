@@ -19,6 +19,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'MiniApp/Classes/**/*.swift'
   s.resources = 'MiniApp/**/*.{xcassets,js,pdf,xib}'
+  s.resource_bundle = {"Localization" => ["MiniApp/*.lproj/*.strings"]}
 
   s.dependency 'ZIPFoundation'
 

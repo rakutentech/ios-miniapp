@@ -31,6 +31,13 @@ public class MiniAppSdkConfig {
             }
         }
     }
+    var hostAppUserAgentInfo: String? {
+        didSet {
+            if hostAppUserAgentInfo?.count ?? 0 == 0 {
+                hostAppVersion = nil
+            }
+        }
+    }
 
     /// Initialize a MiniAppSdkConfig object that can be used to configure a MiniApp client. All the parameters are optional.
     /// If a parameter is omitted the client will fallback its value to the configuration values provided into the project configuration .plist
@@ -42,16 +49,19 @@ public class MiniAppSdkConfig {
     ///   - rasAppId: the Rakuten Studio Host App ID
     ///   - subscriptionKey: the Rakuten Studio Subscription Key
     ///   - hostAppVersion: the Rakuten Studio Host App version
-    ///
+    ///   - hostAppUserAgentInfo: Host app name and version - Host app info in which this SDK is integrated
+
     public init(baseUrl: String? = nil,
                 rasAppId: String? = nil,
                 subscriptionKey: String? = nil,
                 hostAppVersion: String? = nil,
-                isTestMode: Bool? = false) {
+                isTestMode: Bool? = false,
+                hostAppUserAgentInfo: String? = nil) {
         self.isTestMode = isTestMode
         self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
         self.rasAppId = rasAppId?.count ?? 0 > 0 ? rasAppId : nil
         self.subscriptionKey = subscriptionKey?.count ?? 0 > 0 ? subscriptionKey : nil
         self.hostAppVersion = hostAppVersion?.count ?? 0 > 0 ? hostAppVersion : nil
+        self.hostAppUserAgentInfo = hostAppUserAgentInfo?.count ?? 0 > 0 ? hostAppUserAgentInfo : nil
     }
 }
