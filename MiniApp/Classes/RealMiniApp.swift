@@ -11,7 +11,7 @@ internal class RealMiniApp {
         self.init(with: nil)
     }
 
-    init(with settings: MiniAppSdkConfig?) {
+    init(with settings: MiniAppSdkConfig?, and navigationSettings: MiniAppNavigationConfig? = nil) {
         self.miniAppInfoFetcher = MiniAppInfoFetcher()
         self.miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl,
                                            rasAppId: settings?.rasAppId,
@@ -21,11 +21,12 @@ internal class RealMiniApp {
         self.manifestDownloader = ManifestDownloader()
         self.miniAppStatus = MiniAppStatus()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
-        self.displayer = Displayer()
+        self.displayer = Displayer(navigationSettings)
     }
 
-    func update(with settings: MiniAppSdkConfig?) {
+    func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
         self.miniAppClient.updateEnvironment(with: settings)
+        self.displayer.navConfig = navigationSettings
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
