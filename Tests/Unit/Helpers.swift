@@ -75,13 +75,13 @@ class MockAPIClient: MiniAppClient {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
-        
+
         let mockSourceFileURL: URL
         if let zip = zipFile {
             mockSourceFileURL = URL(fileURLWithPath: zip)
-        }else if let file = MockFile.createTestFile(fileName: fileName){
+        } else if let file = MockFile.createTestFile(fileName: fileName) {
             mockSourceFileURL = file
-        }else {
+        } else {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
