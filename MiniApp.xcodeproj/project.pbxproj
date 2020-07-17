@@ -42,6 +42,7 @@
 		38BB439824BCB76B00DD0813 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB439624BCB3C200DD0813 /* URLSchemeHandlerTests.swift */; };
 		38CF103124BCAA680079BE57 /* LocalServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CF103024BCAA680079BE57 /* LocalServerTests.swift */; };
 		38B14AB724BEF54D00EEE20D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 38B14AB924BEF54D00EEE20D /* Localizable.strings */; };
+		38D0C7C624C1A00000384422 /* MiniAppSdkConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0C7C524C1A00000384422 /* MiniAppSdkConfigTests.swift */; };
 		38F3B7F024192E7300914E37 /* UrlParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3B7EF24192E7300914E37 /* UrlParserTests.swift */; };
 		38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4423D554FE00F2C1CE /* Helpers.swift */; };
 		38F73B4723D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */; };
@@ -96,7 +97,8 @@
 		389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppClientTests.swift; sourceTree = "<group>"; };
 		38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypesTests.swift; sourceTree = "<group>"; };
 		38B14AB824BEF54D00EEE20D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		38CF103024BCAA680079BE57 /* LocalServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalServerTests.swift; sourceTree = "<group>"; };
+    38CF103024BCAA680079BE57 /* LocalServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalServerTests.swift; sourceTree = "<group>"; };
+    38D0C7C524C1A00000384422 /* MiniAppSdkConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSdkConfigTests.swift; sourceTree = "<group>"; };
 		38F3B7EF24192E7300914E37 /* UrlParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlParserTests.swift; sourceTree = "<group>"; };
 		38F73B4423D554FE00F2C1CE /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppInfoFetcherTests.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				183E680C2499D42300BAADB2 /* MiniAppLoggerTests.swift */,
 				38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */,
 				38CF103024BCAA680079BE57 /* LocalServerTests.swift */,
+				38D0C7C524C1A00000384422 /* MiniAppSdkConfigTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */,
 				38F73B4723D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift in Sources */,
 				388FEEE623DEABCF0062382F /* EnvironmentTests.swift in Sources */,
+				38D0C7C624C1A00000384422 /* MiniAppSdkConfigTests.swift in Sources */,
 				38A2E93A24A2E3E600E58233 /* MimeTypesTests.swift in Sources */,
 				3862EFB523EAF6B8004D518C /* MiniApp+NSErrorTests.swift in Sources */,
 				183E680E2499D49A00BAADB2 /* MiniAppLoggerTests.swift in Sources */,

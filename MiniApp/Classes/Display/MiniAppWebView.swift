@@ -9,5 +9,15 @@ internal class MiniAppWebView: WKWebView {
         self.init(frame: .zero, configuration: config)
         self.allowsBackForwardNavigationGestures = true
         contentMode = .scaleToFill
+        if !environment.hostAppUserAgentInfo.isEmpty && environment.hostAppUserAgentInfo != "NONE" {
+            evaluateJavaScript("navigator.userAgent") { [weak self] (result, error) in
+                if error != nil {
+                    return
+                }
+                if let userAgent = result as? String {
+                    self?.customUserAgent = userAgent + " " + environment.hostAppUserAgentInfo
+                }
+            }
+        }
     }
 }

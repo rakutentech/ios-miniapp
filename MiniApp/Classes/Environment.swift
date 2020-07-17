@@ -10,7 +10,8 @@ internal class Environment {
             version = "CFBundleShortVersionString",
             subscriptionKey = "RASProjectSubscriptionKey",
             endpoint = "RMAAPIEndpoint",
-            isTestMode = "RMAIsTestMode"
+            isTestMode = "RMAIsTestMode",
+            hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
     }
 
     let bundle: EnvironmentProtocol
@@ -20,6 +21,7 @@ internal class Environment {
     var customAppVersion: String?
     var customSubscriptionKey: String?
     var customIsTestMode: Bool?
+    var customHostAppUserAgentInfo: String?
 
     init(bundle: EnvironmentProtocol = Bundle.main) {
         self.bundle = bundle
@@ -32,6 +34,7 @@ internal class Environment {
         self.customSubscriptionKey = config.subscriptionKey
         self.customAppVersion = config.hostAppVersion
         self.customIsTestMode = config.isTestMode
+        self.customHostAppUserAgentInfo = config.hostAppUserAgentInfo
     }
 
     var appId: String {
@@ -48,6 +51,10 @@ internal class Environment {
 
     var isTestMode: Bool {
         return bool(for: customIsTestMode, fallback: .isTestMode)
+    }
+
+    var hostAppUserAgentInfo: String {
+        return value(for: customHostAppUserAgentInfo, fallback: .hostAppUserAgentInfo)
     }
 
     var baseUrl: URL? {

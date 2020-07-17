@@ -43,6 +43,13 @@ class EnvironmentTests: QuickSpec {
 
                 expect(environment.baseUrl?.absoluteString).to(equal("https://example-endpoint.com"))
             }
+            it("will return host app info") {
+                let mockBundle = MockBundle()
+                mockBundle.mockHostAppUserAgentInfo = "Demo app v1.1"
+                let environment = Environment(bundle: mockBundle)
+
+                expect(environment.hostAppUserAgentInfo).to(equal("Demo app v1.1"))
+            }
         }
         context("when bundle does not have valid key values") {
             let mockBundle = MockBundle()
@@ -50,6 +57,7 @@ class EnvironmentTests: QuickSpec {
             mockBundle.mockSubscriptionKey = nil
             mockBundle.mockEndpoint = nil
             mockBundle.mockAppVersion = nil
+            mockBundle.mockHostAppUserAgentInfo = nil
             mockBundle.mockValueNotFound = "Value Not Found"
             let environment = Environment(bundle: mockBundle)
             it("will return app id as nil") {
@@ -63,6 +71,9 @@ class EnvironmentTests: QuickSpec {
             }
             it("will return app version as nil") {
                 expect(environment.appVersion).to(equal(mockBundle.valueNotFound))
+            }
+            it("will return host app info value not found") {
+                expect(environment.hostAppUserAgentInfo).to(equal(mockBundle.valueNotFound))
             }
         }
     }
