@@ -25,7 +25,6 @@ class ViewController: UIViewController {
     var currentMiniAppInfo: MiniAppInfo?
     var currentMiniAppView: MiniAppDisplayProtocol?
     let imageCache = ImageCache()
-    let config = Config.getCurrent()
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
 

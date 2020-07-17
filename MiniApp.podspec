@@ -16,11 +16,12 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/rakutentech/ios-miniapp.git", :tag => 'v' + s.version.to_s }
 
   s.ios.deployment_target = '11.0'
-
-  s.source_files = 'MiniApp/Classes/**/*'
-  s.resources = ["MiniApp/Classes/JavascriptBridge/bridge.js",
+  
+  s.source_files = 'MiniApp/Classes/**/*.swift'
+  s.resources = ["MiniApp/**/*.{xcassets,js,pdf,xib}",
                 "MiniApp/Classes/Resources/Certificates.p12",
                 "MiniApp/Classes/Resources/miniapp-server.der"]
+  s.resource_bundle = {"Localization" => ["MiniApp/*.lproj/*.strings"]}
   s.dependency 'Telegraph'
 
 end
