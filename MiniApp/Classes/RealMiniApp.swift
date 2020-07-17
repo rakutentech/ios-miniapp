@@ -54,7 +54,12 @@ internal class RealMiniApp {
                 }
                 self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
-                self.handleError(appId: appInfo.id, versionId: appInfo.version.versionId, error: error, completionHandler: completionHandler, messageInterface: messageInterface)
+                self.handleError(appId: appInfo.id,
+                                 versionId: appInfo.version.versionId,
+                                 miniAppTitle: appInfo.displayName ?? "Mini app",
+                                 error: error,
+                                 completionHandler: completionHandler,
+                                 messageInterface: messageInterface)
             } }
     }
 
@@ -69,28 +74,41 @@ internal class RealMiniApp {
             case .success:
                 self.getMiniAppView(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
-                self.handleError(appId: appInfo.id, versionId: appInfo.version.versionId, error: error, completionHandler: completionHandler, messageInterface: messageInterface)
+                self.handleError(appId: appInfo.id,
+                                 versionId: appInfo.version.versionId,
+                                 miniAppTitle: appInfo.displayName ?? "Mini app",
+                                 error: error,
+                                 completionHandler: completionHandler,
+                                 messageInterface: messageInterface)
             }
         }
     }
 
     func getMiniAppView(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol? = nil) {
         DispatchQueue.main.async {
-            let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id, versionId: appInfo.version.versionId, hostAppMessageDelegate: messageInterface ?? self)
+            let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
+                                                                       versionId: appInfo.version.versionId,
+                                                                       miniAppTitle: appInfo.displayName ?? "Mini app",
+                                                                       hostAppMessageDelegate: messageInterface ?? self)
             self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
             self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
             completionHandler(.success(miniAppDisplayProtocol))
         }
     }
 
-    func handleError(appId: String, versionId: String, error: Error, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol? = nil) {
+    func handleError(appId: String,
+                     versionId: String,
+                     miniAppTitle: String,
+                     error: Error,
+                     completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
+                     messageInterface: MiniAppMessageProtocol? = nil) {
         let downloadError = error as NSError
         if self.offlineErrorCodeList.contains(downloadError.code) {
             guard let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: appId, versionId: versionId) else {
                 return completionHandler(.failure(downloadError))
             }
             DispatchQueue.main.async {
-                let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId, versionId: cachedVersion, hostAppMessageDelegate: messageInterface ?? self)
+                let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId, versionId: cachedVersion, miniAppTitle: miniAppTitle, hostAppMessageDelegate: messageInterface ?? self)
                 completionHandler(.success(miniAppDisplayProtocol))
             }
         }
