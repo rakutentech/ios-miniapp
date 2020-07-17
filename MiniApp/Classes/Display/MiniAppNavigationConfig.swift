@@ -33,7 +33,9 @@ public protocol MiniAppNavigationDelegate: class {
 public protocol MiniAppNavigationBarDelegate: class {
     /// Method to call when a user want to interract with Mini App navigation history
     ///    - action: the action requested (go back or go forward)
-    func miniAppNavigationBar(didTriggerAction action: MiniAppNavigationAction)
+    /// Returns if action has been triggered or not
+    @discardableResult
+    func miniAppNavigationBar(didTriggerAction action: MiniAppNavigationAction) -> Bool
 }
 
 // MARK: - Enums

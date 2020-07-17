@@ -16,7 +16,7 @@ class DisplayController: UIViewController {
 
         let view = miniAppDisplay.getMiniAppView()
         view.frame = self.view.bounds
-        self.navBarDelegate = miniAppDisplay.getMiniAppNavigationBarDelegate()
+        self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
         self.view.addSubview(view)
     }
 
@@ -27,7 +27,9 @@ class DisplayController: UIViewController {
     @IBAction func navigate(_ sender: UIBarButtonItem) {
         switch sender {
         case backButton:
-            self.navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back)
+            if !(self.navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back) ?? false) {
+                self.dismiss(animated: true, completion: nil)
+            }
         case forwardButton:
             self.navBarDelegate?.miniAppNavigationBar(didTriggerAction: .forward)
         default:
