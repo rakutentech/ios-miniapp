@@ -108,12 +108,27 @@ class RealMiniAppTests: QuickSpec {
                     expect(realMiniApp.miniAppClient.environment.customAppVersion) == "dummyHostVersion"
                 }
             }
+            context("when I update RealMiniApp with MiniAppNavigationConfig") {
+                let dummyView = MockNavigationView(frame: .zero)
+                let config = MiniAppNavigationConfig()
+                config.navigationBarVisibility = .always
+                config.navigationDelegate = dummyView
+                config.navigationView = dummyView
+
+                it("will take the new navigation settings in account") {
+                    realMiniApp.update(with: nil, navigationSettings: config)
+                    expect(realMiniApp.displayer.navConfig?.navigationBarVisibility) == .always
+                    expect(realMiniApp.displayer.navConfig?.navigationDelegate).to(beAKindOf(MiniAppNavigationDelegate.self))
+                    expect(realMiniApp.displayer.navConfig?.navigationView).to(beAKindOf(MiniAppNavigationDelegate.self))
+
+                }
+            }
             context("when set config parameters of MiniAppSdkConfig passed to RealMiniApp to empty values") {
                 let config = MiniAppSdkConfig(rasAppId: "dummyId", subscriptionKey: "dummyKey", hostAppVersion: "dummyHostVersion")
                 config.rasAppId = nil
                 config.subscriptionKey = nil
                 config.hostAppVersion = nil
-
+                config.baseUrl = nil
                 it("will reset environment to default") {
                     realMiniApp.update(with: config)
                     expect(realMiniApp.miniAppClient.environment.customUrl).to(beNil())
