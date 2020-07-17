@@ -3,14 +3,15 @@ import WebKit
 internal class RealMiniAppView: UIView {
 
     internal var webView: WKWebView
-    internal var navBar: (UIView & MiniAppNavigationDelegate)?
-    internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
     internal var miniAppTitle: String
-    internal weak var navigationDelegate: MiniAppNavigationDelegate?
+    internal var navBar: (UIView & MiniAppNavigationDelegate)?
     internal var webViewBottomConstraintStandalone: NSLayoutConstraint?
     internal var wevViewBottonConstraintWithNavBar: NSLayoutConstraint?
     internal var navBarVisibility: MiniAppNavigationVisibility
     internal var isNavBarCustom = false
+
+    internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
+    internal weak var navigationDelegate: MiniAppNavigationDelegate?
 
     init(
         miniAppId: String,
@@ -20,12 +21,12 @@ internal class RealMiniAppView: UIView {
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
-      
+
+        self.miniAppTitle = miniAppTitle
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         super.init(frame: .zero)
-
         webView.navigationDelegate = self
 
         if navBarVisibility != .never {

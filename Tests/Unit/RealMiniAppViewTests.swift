@@ -12,7 +12,7 @@ class RealMiniAppViewTests: QuickSpec {
 
             context("when initialized with valid parameters") {
                 it("will return MiniAppView object") {
-                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface)
+                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface)
                     expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self))
                 }
             }
@@ -175,14 +175,14 @@ class RealMiniAppViewNavigationTests: QuickSpec {
             let mockMessageInterface = MockMessageInterface()
             context("when initialized with navigation parameter set to never") {
                 it("will return MiniAppView without navigation") {
-                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface, displayNavBar: .never)
+                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface, displayNavBar: .never)
                     miniAppView.refreshNavBar()
                     expect(miniAppView.navBar).to(beNil())
                 }
             }
             context("when initialized with navigation parameter set to always") {
                 it("will return MiniAppView with navigation visible") {
-                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface, displayNavBar: .always)
+                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface, displayNavBar: .always)
                     miniAppView.refreshNavBar()
                     expect(miniAppView.navBar).to(beAKindOf(MiniAppNavigationBar.self))
                     let bar = (miniAppView.navBar as? MiniAppNavigationBar)
@@ -194,7 +194,7 @@ class RealMiniAppViewNavigationTests: QuickSpec {
             }
             context("when initialized with navigation parameter set to auto") {
                 it("will return MiniAppView with navigation hidden") {
-                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface, displayNavBar: .auto)
+                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface, displayNavBar: .auto)
                     miniAppView.refreshNavBar()
                     expect(miniAppView.navBar).toNot(beNil())
                     expect(miniAppView.wevViewBottonConstraintWithNavBar?.isActive).toNot(beTrue())
@@ -213,7 +213,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to never") {
                 it("will return MiniAppView without navigation") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id",
+                        miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .never, navigationDelegate: customNav, navigationView: customNav)
                     miniAppView.refreshNavBar()
@@ -223,7 +223,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to always") {
                 it("will return MiniAppView with navigation visible") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .always, navigationDelegate: customNav, navigationView: customNav)
                     miniAppView.refreshNavBar()
                     customNav.actionGoBack()
@@ -235,7 +235,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to auto") {
                 it("will return MiniAppView with navigation hidden") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .auto, navigationDelegate: customNav, navigationView: customNav)
                     miniAppView.refreshNavBar()
                     let webvtest = MockNavigationWebView(miniAppId: "test", versionId: "test")
