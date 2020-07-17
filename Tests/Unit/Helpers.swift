@@ -126,6 +126,7 @@ class MockBundle: EnvironmentProtocol {
     var mockAppVersion: String?
     var mockEndpoint: String?
     var mockTestMode: Bool?
+    var mockHostAppUserAgentInfo: String?
 
     func bool(for key: String) -> Bool? {
         switch key {
@@ -146,6 +147,8 @@ class MockBundle: EnvironmentProtocol {
             return mockAppVersion
         case "RMAAPIEndpoint":
             return mockEndpoint
+        case "RMAHostAppUserAgentInfo":
+            return mockHostAppUserAgentInfo
         default:
             return nil
         }
