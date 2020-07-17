@@ -35,7 +35,9 @@ internal class MiniAppNavigationBar: UIView {
         default:
             break
         }
-        self.delegate?.miniAppNavigationBar(didTriggerAction: action)
+        if action != nil {
+            self.delegate?.miniAppNavigationBar(didTriggerAction: action)
+        }
     }
 }
 

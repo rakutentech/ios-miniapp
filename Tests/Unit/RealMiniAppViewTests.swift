@@ -38,7 +38,11 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                 it("will return MiniAppView with navigation visible") {
                     let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", hostAppMessageDelegate: mockMessageInterface, displayNavBar: .always)
                     miniAppView.refreshNavBar()
-                    expect(miniAppView.navBar).toNot(beNil())
+                    expect(miniAppView.navBar).to(beAKindOf(MiniAppNavigationBar.self))
+                    let bar = (miniAppView.navBar as? MiniAppNavigationBar)
+                    bar?.buttonTaped(bar!.backButton)
+                    bar?.buttonTaped(bar!.forwardButton)
+                    bar?.buttonTaped(UIBarButtonItem())
                     expect(miniAppView.wevViewBottonConstraintWithNavBar?.isActive).to(beTrue())
                 }
             }
