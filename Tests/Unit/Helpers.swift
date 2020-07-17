@@ -294,3 +294,11 @@ func deleteMockMiniApp(appId: String, versionId: String) {
 func deleteStatusPreferences() {
     UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
 }
+
+func tapAlertButton(title: String, actions: [UIAlertAction]?) {
+    typealias AlertHandler = @convention(block) (UIAlertAction) -> Void
+
+    guard let action = actions?.first(where: {$0.title == title}), let block = action.value(forKey: "handler") else { return }
+    let handler = unsafeBitCast(block as AnyObject, to: AlertHandler.self)
+    handler(action)
+}
