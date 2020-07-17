@@ -6,6 +6,7 @@ class MockAPIClient: MiniAppClient {
     var manifestData: Data?
     var error: Error?
     var request: URLRequest?
+    var zipFile: String?
     var headers: [String: String]?
 
     override func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
@@ -74,7 +75,13 @@ class MockAPIClient: MiniAppClient {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
-        guard let mockSourceFileURL = MockFile.createTestFile(fileName: fileName) else {
+        
+        let mockSourceFileURL: URL
+        if let zip = zipFile {
+            mockSourceFileURL = URL(fileURLWithPath: zip)
+        }else if let file = MockFile.createTestFile(fileName: fileName){
+            mockSourceFileURL = file
+        }else {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
@@ -87,7 +94,8 @@ class MockAPIClient: MiniAppClient {
             return
         }
         delegate?.downloadFileTaskCompleted(url: url, error: error)
-    } }
+    }
+}
 
 class MockManifestDownloader: ManifestDownloader {
     var data: Data?

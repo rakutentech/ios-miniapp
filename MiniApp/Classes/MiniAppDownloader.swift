@@ -157,10 +157,11 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
     }
 
     internal func unzipFile(fromURL destinationPath: String, to filePath: URL) {
-        if let directory = urlToDirectoryMap[destinationPath]?.miniAppDirectoryPath, (filePath.absoluteString as NSString).pathExtension.lowercased() == "zip" {
+        if let directory = urlToDirectoryMap[destinationPath]?.miniAppDirectoryPath, filePath.fileExtension() == "zip" {
             do {
                 try FileManager.default.unzipItem(at: filePath, to: directory, skipCRC32: true)
                 MiniAppLogger.d("MiniApp unzip time: \(Date().timeIntervalSince(time))")
+                try FileManager.default.removeItem(at: filePath)
             } catch let err {
                 MiniAppLogger.e("error unzipping archive", err)
                 urlToDirectoryMap[destinationPath]?.completionHanlder(.failure(err))
