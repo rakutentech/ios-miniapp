@@ -48,7 +48,10 @@ extension RealMiniAppView: WKUIDelegate {
 
     func getLocalizedString(title: String) -> String {
         let path = Bundle(for: MiniApp.self).path(forResource: "Localization", ofType: "bundle")!
-        let podBundle = Bundle(path: path) ?? Bundle.main
-        return NSLocalizedString(title, bundle: podBundle, comment: "")
+        guard let podBundle = Bundle(path: path) else {
+            return ""
+        }
+        let defaultValue = NSLocalizedString(title, bundle: podBundle, comment: "")
+        return NSLocalizedString(title, tableName: "Localizable", bundle: Bundle.main, value: defaultValue, comment: "")
     }
 }
