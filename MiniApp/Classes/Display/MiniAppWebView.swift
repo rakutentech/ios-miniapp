@@ -11,6 +11,7 @@ internal class MiniAppWebView: WKWebView {
         config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         config.setURLSchemeHandler(URLSchemeHandler(versionId: versionId), forURLScheme: schemeName)
         self.init(frame: .zero, configuration: config)
+        self.allowsBackForwardNavigationGestures = true
         contentMode = .scaleToFill
         load(urlRequest)
         if !environment.hostAppUserAgentInfo.isEmpty && environment.hostAppUserAgentInfo != "NONE" {

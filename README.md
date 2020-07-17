@@ -83,6 +83,8 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Create a MiniApp](#create-mini-app)
+* [Communicate with MiniApp](#MiniAppMessageProtocol)
+* [Customize history navigation](#navigation)
 
 <div id="runtime-conf"></div>
 
@@ -155,6 +157,7 @@ MiniApp.shared().create(appInfo: info, completionHandler: { (result) in
             }
 }, messageInterface: self)
 ```
+<div id="MiniAppMessageProtocol"></div>
 
 ### Implement the MiniAppMessageProtocol in your View Controller
 
@@ -168,6 +171,29 @@ extension ViewController: MiniAppMessageProtocol {
         }
         return deviceId
     }
+}
+```
+<div id="navigation"></div>
+
+### Add a web navigation interface to the MiniApp view
+
+MiniApp iOS SDK provides a fully customizable way to implement a navigation interface inside your html pages with a `MiniAppNavigationConfig` object. The class takes 3 arguments:
+
+- `navigationBarVisibility` : 
+    - never = the UI will never be shown
+    - auto = navigation UI is only shown when a back or forward action is availabe
+    - always = navigation UI is always present
+- `navigationDelegate` : A delegate that will receive MiniApp view instructions about available navigation options
+- `customNavigationView` : A view implementing `MiniAppNavigationDelegate` that will be overlayed to the bottom of the MiniApp view
+
+```swift
+let navConfig = MiniAppNavigationConfig(
+                    navigationBarVisibility: .always,
+                    navigationDelegate: myCustomView,
+                    customNavigationView: mCustomView)
+
+MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(miniAppId: miniAppID) { (result) in
+...
 }
 ```
 
@@ -198,10 +224,12 @@ See the *LICENSE* file for more info.
 
 **SDK**
 - *Feature:* Possibility to load `testing` Mini Apps from RAS
+- *Feature:* Possibility to use back and forward navigation inside MiniApp with SDK default UI or custom client provided UI
 - *Feature:* Ability to add a custom string(RMAHostAppUserAgentInfo) that will get appended in the User agent.
 
 **Sample App**
 - *Feature:* Implemention of the `testing` Mini Apps SDK feature
+- *Feature:* Added example of custom view to navigate backward inside MiniApp
 
 **Sample App**
 - *Bugfix:* First time settings success dialog dismissed before tapping OK

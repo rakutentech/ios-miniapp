@@ -23,7 +23,7 @@ class MockAPIClient: MiniAppClient {
 
         self.request = urlRequest
         if let httpResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
-            return  completionHandler(.success(ResponseData(data, httpResponse)))
+            return completionHandler(.success(ResponseData(data, httpResponse)))
         }
     }
 
@@ -42,7 +42,7 @@ class MockAPIClient: MiniAppClient {
 
         self.request = urlRequest
         if let httpResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
-            return  completionHandler(.success(ResponseData(data, httpResponse)))
+            return completionHandler(.success(ResponseData(data, httpResponse)))
         }
     }
 
@@ -61,7 +61,7 @@ class MockAPIClient: MiniAppClient {
 
         self.request = urlRequest
         if let httpResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
-            return  completionHandler(.success(ResponseData(responseData, httpResponse)))
+            return completionHandler(.success(ResponseData(responseData, httpResponse)))
         }
     }
 
@@ -74,7 +74,7 @@ class MockAPIClient: MiniAppClient {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
-        guard let mockSourceFileURL =  MockFile.createTestFile(fileName: fileName) else {
+        guard let mockSourceFileURL = MockFile.createTestFile(fileName: fileName) else {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
@@ -87,7 +87,7 @@ class MockAPIClient: MiniAppClient {
             return
         }
         delegate?.downloadFileTaskCompleted(url: url, error: error)
-    }}
+    } }
 
 class MockManifestDownloader: ManifestDownloader {
     var data: Data?
@@ -235,6 +235,52 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackProtocol {
     func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
         self.messageId = messageId
         self.errorMessage = errorMessage
+    }
+}
+
+class MockNavigationView: UIView, MiniAppNavigationDelegate {
+    weak var delegate: MiniAppNavigationBarDelegate?
+    var hasReceivedBack: Bool = false
+    var hasReceivedForward: Bool = true
+
+    func actionGoBack() {
+        delegate?.miniAppNavigationBar(didTriggerAction: .back)
+    }
+
+    func actionGoForward() {
+        delegate?.miniAppNavigationBar(didTriggerAction: .forward)
+    }
+
+    func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
+        self.delegate = delegate
+    }
+
+    func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
+        hasReceivedForward = false
+        hasReceivedBack = false
+        actions.forEach { (action) in
+            switch action {
+            case .back:
+                hasReceivedBack = true
+            case .forward:
+                hasReceivedForward = true
+            }
+        }
+    }
+}
+
+class MockNavigationWebView: MiniAppWebView {
+    override var canGoBack: Bool {
+        true
+    }
+    override var canGoForward: Bool {
+        true
+    }
+    override func goBack() -> WKNavigation? {
+        return nil
+    }
+    override func goForward() -> WKNavigation? {
+        return nil
     }
 }
 

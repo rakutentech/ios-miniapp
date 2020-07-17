@@ -303,7 +303,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uT2-AT-aJO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="129" y="358"/>
+            <point key="canvasLocation" x="128.80000000000001" y="357.57121439280365"/>
         </scene>
         <!--Display Navigation Controller-->
         <scene sceneID="zzX-v6-zei">
@@ -335,12 +335,28 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="lbI-VN-E8M">
+                        <leftBarButtonItems>
+                            <barButtonItem image="arrow_left-24" id="rAE-6E-57C">
+                                <connections>
+                                    <action selector="navigate:" destination="EFj-rP-o8F" id="7Ia-2Z-mfe"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="arrow_right-24" id="Kjw-ed-iRO">
+                                <connections>
+                                    <action selector="navigate:" destination="EFj-rP-o8F" id="e7I-zR-VZZ"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="z5z-gw-sOj">
                             <connections>
                                 <action selector="done:" destination="EFj-rP-o8F" id="M7M-iT-spD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="backButton" destination="rAE-6E-57C" id="jUU-V6-Ebx"/>
+                        <outlet property="forwardButton" destination="Kjw-ed-iRO" id="LPx-Wy-I3e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wmx-vD-Phy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -507,6 +523,8 @@
         <image name="Rakuten" width="90" height="90"/>
         <image name="Settings" width="24" height="24"/>
         <image name="app-list" width="24" height="24"/>
+        <image name="arrow_left-24" width="24" height="24"/>
+        <image name="arrow_right-24" width="24" height="24"/>
         <image name="curved-arrow" width="170.66667175292969" height="170.66667175292969"/>
     </resources>
 </document>
