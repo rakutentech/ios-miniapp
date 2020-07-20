@@ -6,7 +6,7 @@ extension RealMiniAppView: WKUIDelegate {
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping () -> Void) {
         let alertController = UIAlertController(title: self.miniAppTitle, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: getLocalizedString(title: "Ok_title"), style: .default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Ok_title".localizedString(), style: .default, handler: nil))
         UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
         completionHandler()
     }
@@ -16,10 +16,10 @@ extension RealMiniAppView: WKUIDelegate {
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (Bool) -> Void) {
         let alertController = UIAlertController(title: self.miniAppTitle, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: getLocalizedString(title: "Ok_title"), style: .default, handler: { (_) in
+        alertController.addAction(UIAlertAction(title: "Ok_title".localizedString(), style: .default, handler: { (_) in
             completionHandler(true)
         }))
-        alertController.addAction(UIAlertAction(title: getLocalizedString(title: "Cancel_title"), style: .cancel, handler: { (_) in
+        alertController.addAction(UIAlertAction(title: "Cancel_title".localizedString(), style: .cancel, handler: { (_) in
             completionHandler(false)
         }))
         UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
@@ -33,25 +33,16 @@ extension RealMiniAppView: WKUIDelegate {
         alertController.addTextField { (textField) in
             textField.text = defaultText
         }
-        alertController.addAction(UIAlertAction(title: getLocalizedString(title: "Ok_title"), style: .default, handler: { (_) in
+        alertController.addAction(UIAlertAction(title: "Ok_title".localizedString(), style: .default, handler: { (_) in
             if let text = alertController.textFields?.first?.text {
                 completionHandler(text)
             } else {
                 completionHandler(defaultText)
             }
         }))
-        alertController.addAction(UIAlertAction(title: getLocalizedString(title: "Cancel_title"), style: .cancel, handler: { (_) in
+        alertController.addAction(UIAlertAction(title: "Cancel_title".localizedString(), style: .cancel, handler: { (_) in
             completionHandler(nil)
         }))
         UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
-    }
-
-    func getLocalizedString(title: String) -> String {
-        let path = Bundle(for: MiniApp.self).path(forResource: "Localization", ofType: "bundle")!
-        guard let podBundle = Bundle(path: path) else {
-            return ""
-        }
-        let defaultValue = NSLocalizedString(title, bundle: podBundle, comment: "")
-        return NSLocalizedString(title, tableName: "Localizable", bundle: Bundle.main, value: defaultValue, comment: "")
     }
 }
