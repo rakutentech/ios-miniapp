@@ -19,7 +19,6 @@
 		18C59F2B241094F600F66632 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C59F2A241094F600F66632 /* SettingsTableViewController.swift */; };
 		18C59F2D2410ADE300F66632 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C59F2C2410ADE300F66632 /* Config.swift */; };
 		18D764392419D08600150A30 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C59F2C2410ADE300F66632 /* Config.swift */; };
-		38033DD724AB2E3200207330 /* ViewController+MiniAppMessageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38033DD624AB2E3200207330 /* ViewController+MiniAppMessageProtocol.swift */; };
 		380B69B0245000EA0054DD30 /* String+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B69AF245000EA0054DD30 /* String+MiniApp.swift */; };
 		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
 		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
@@ -32,6 +31,7 @@
 		3862EFB123EABC15004D518C /* MiniAppDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */; };
 		3862EFB523EAF6B8004D518C /* MiniApp+NSErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */; };
 		386A913C23F653E800F5DB1B /* DisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386A913B23F653E800F5DB1B /* DisplayController.swift */; };
+		3871A8DF24C1EE9400BEC6CF /* ViewController+MiniAppMessageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871A8DE24C1EE9400BEC6CF /* ViewController+MiniAppMessageProtocol.swift */; };
 		38777D9323F67BD2008716A7 /* Progress+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38777D9223F67BD2008716A7 /* Progress+UIViewController.swift */; };
 		3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878D4D123B44F85001E27F8 /* AppDelegate.swift */; };
 		3878D4D523B44F85001E27F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3878D4D223B44F85001E27F8 /* Images.xcassets */; };
@@ -73,7 +73,6 @@
 		188F5922243DCBAB0042618E /* DisplayNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplayNavigationController.swift; path = ../Example/DisplayNavigationController.swift; sourceTree = "<group>"; };
 		18C59F2A241094F600F66632 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = Example/SettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		18C59F2C2410ADE300F66632 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Example/Config.swift; sourceTree = SOURCE_ROOT; };
-		38033DD624AB2E3200207330 /* ViewController+MiniAppMessageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+MiniAppMessageProtocol.swift"; sourceTree = "<group>"; };
 		380B69AF245000EA0054DD30 /* String+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+MiniApp.swift"; path = "Example/String+MiniApp.swift"; sourceTree = SOURCE_ROOT; };
 		3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStatusTests.swift; sourceTree = "<group>"; };
 		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
@@ -86,6 +85,7 @@
 		3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppDownloaderTests.swift; sourceTree = "<group>"; };
 		3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniApp+NSErrorTests.swift"; sourceTree = "<group>"; };
 		386A913B23F653E800F5DB1B /* DisplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplayController.swift; path = Example/DisplayController.swift; sourceTree = SOURCE_ROOT; };
+		3871A8DE24C1EE9400BEC6CF /* ViewController+MiniAppMessageProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ViewController+MiniAppMessageProtocol.swift"; path = "Example/ViewController+MiniAppMessageProtocol.swift"; sourceTree = SOURCE_ROOT; };
 		38777D9223F67BD2008716A7 /* Progress+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Progress+UIViewController.swift"; path = "../Example/Progress+UIViewController.swift"; sourceTree = "<group>"; };
 		3878D4D123B44F85001E27F8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Example/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		3878D4D223B44F85001E27F8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Example/Images.xcassets; sourceTree = SOURCE_ROOT; };
@@ -189,10 +189,10 @@
 		607FACD21AFB9204008FA782 /* Example for MiniApp */ = {
 			isa = PBXGroup;
 			children = (
+				3871A8DE24C1EE9400BEC6CF /* ViewController+MiniAppMessageProtocol.swift */,
 				3878D4D123B44F85001E27F8 /* AppDelegate.swift */,
 				188974B72456B02F00042C97 /* FirstLaunchViewController.swift */,
 				3878D4D323B44F85001E27F8 /* ViewController.swift */,
-				38033DD624AB2E3200207330 /* ViewController+MiniAppMessageProtocol.swift */,
 				18694AD52449891800F97BAA /* ViewController+MiniApp.swift */,
 				188F5920243DC6470042618E /* MiniAppCell.swift */,
 				188F5922243DCBAB0042618E /* DisplayNavigationController.swift */,
@@ -360,9 +360,9 @@
 				188974B82456B02F00042C97 /* FirstLaunchViewController.swift in Sources */,
 				188F5921243DC6470042618E /* MiniAppCell.swift in Sources */,
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
+				3871A8DF24C1EE9400BEC6CF /* ViewController+MiniAppMessageProtocol.swift in Sources */,
 				188F5923243DCBAB0042618E /* DisplayNavigationController.swift in Sources */,
 				1867996B243EF6C200CD6A8E /* ImageCache.swift in Sources */,
-				38033DD724AB2E3200207330 /* ViewController+MiniAppMessageProtocol.swift in Sources */,
 				18C59F2B241094F600F66632 /* SettingsTableViewController.swift in Sources */,
 				185DBD6024AD5A8400CD2094 /* Array+MiniApp.swift in Sources */,
 				3878D4D623B44F85001E27F8 /* ViewController.swift in Sources */,
