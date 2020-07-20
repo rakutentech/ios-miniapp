@@ -1,3 +1,5 @@
+## CHANGELOG
+
 ### X.Y.Z (YYYY-mm-dd)
 
 **SDK**
@@ -10,10 +12,13 @@
 
 **SDK**
 - *Feature:* Possibility to use back and forward navigation inside MiniApp with SDK default UI or custom client provided UI
-- *Feature:* Ability to add a custom string(RMAHostAppUserAgentInfo) that will get appended in the User agent.
+- *Feature:* Ability to add a host app information string (RMAHostAppUserAgentInfo) that will get appended in the User agent.
+- *Feature:* Added support for `window.alert` JS dialogs in the mini app display
+- *Bugfix:* Fixed support for display of SVG file format in a mini app
 
 **Sample App**
 - *Feature:* Added example of custom view to navigate backward inside MiniApp
+- Added build information in App's setting screen
 - *Bugfix:* First time settings success dialog dismissed before tapping OK
 - *Bugfix:* "Display MiniApp" button was not visible when scrolling in the Mini Apps list
 
