@@ -24,7 +24,7 @@ class RealMiniAppViewTests: QuickSpec {
             context("when host app info is specified in plist") {
                 it("will add custom string in User agent") {
                     let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface)
-                    expect(miniAppView.webView.customUserAgent).toEventually(contain("HOSTAPPNAME_AND_VERSION"), timeout: 3)
+                    expect(miniAppView.webView.customUserAgent).toEventually(contain("MiniApp Demo App"), timeout: 6)
                 }
             }
             context("when RealMiniAppView is called with coder") {
