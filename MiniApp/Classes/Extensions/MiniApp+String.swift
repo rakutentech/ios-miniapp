@@ -4,7 +4,6 @@ extension String {
         return String(self.dropFirst(prefix.count))
     }
 
-    
     /// Function returns the Localized string for a given Key
     /// If the same key is added in the Host application, then the localizable string from the Host app is returned
     /// - Returns:Localized String from the Bundle
