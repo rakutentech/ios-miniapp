@@ -364,7 +364,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nbundleShortVersionString=$(/usr/libexec/PlistBuddy -c \"print:CFBundleShortVersionString\" \"$CONFIGURATION_BUILD_DIR/$INFOPLIST_PATH\")\nversionString=$(/usr/libexec/PlistBuddy -c \"print:CFBundleVersion\" \"$CONFIGURATION_BUILD_DIR/$INFOPLIST_PATH\")\n/usr/libexec/PlistBuddy -c \"Set RMAHostAppUserAgentInfo MiniApp Demo App/$bundleShortVersionString($versionString)\" \"$CONFIGURATION_BUILD_DIR/$INFOPLIST_PATH\"\n";
+			shellScript = "bundleShortVersionString=$(/usr/libexec/PlistBuddy -c \"print:CFBundleShortVersionString\" \"$CONFIGURATION_BUILD_DIR/$INFOPLIST_PATH\")\nversionString=$(/usr/libexec/PlistBuddy -c \"print:CFBundleVersion\" \"$CONFIGURATION_BUILD_DIR/$INFOPLIST_PATH\")\n/usr/libexec/PlistBuddy -c \"Set RMAHostAppUserAgentInfo MiniApp Demo App/$bundleShortVersionString($versionString)\" \"$CONFIGURATION_BUILD_DIR/$INFOPLIST_PATH\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
