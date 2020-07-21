@@ -111,8 +111,9 @@ internal class RealMiniApp {
                 let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId, versionId: cachedVersion, miniAppTitle: miniAppTitle, hostAppMessageDelegate: messageInterface ?? self)
                 completionHandler(.success(miniAppDisplayProtocol))
             }
+        } else {
+            completionHandler(.failure(error))
         }
-        return completionHandler(.failure(error))
     }
 }
 
