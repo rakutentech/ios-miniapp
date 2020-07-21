@@ -6,15 +6,17 @@
 
 # MiniApp
 
-This open-source library allows you to integrate a Rakuten MiniApp into your iOS applications. It also provides more features to interact with the native application via bridge.
+This open-source library allows you to integrate Mini App ecosystem into your iOS applications. 
+Mini App SDK also facilitates communication between a mini app and the host app via a message bridge.
 
 ## Features
 
 - Load MiniApp list
-- Load MiniApp meta-informations
+- Load MiniApp metadata
 - Create a MiniApp view
+- Facilitate comm between host app and mini app
 
-All the MiniApp files downloaded by the MiniApp iOS library are cached locally for efficiency
+All the MiniApp files downloaded by the MiniApp iOS library are cached locally
 
 # Getting started
 
@@ -39,6 +41,7 @@ In order to run your MiniApp you will have to provide the following,
 * MiniApp host application identifier (RASApplicationIdentifier)
 * Subscription key (RASProjectSubscriptionKey)
 * Base URL for API requests to the library (RMAAPIEndpoint)
+* Preference, if you want to make use of Test API Endpoints in your application or not
 
 <div id="documentation"></div>
 
@@ -50,7 +53,7 @@ Generated documentation for this SDK can be found at https://rakutentech.github.
 
 # Installation
 
-MiniApp is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
+Mini App SDK is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'MiniApp'
@@ -69,7 +72,7 @@ In your project configuration .plist you should add below Key/Value :
 | RMAIsTestMode                | String  | `Loading mode of the API (`true`: testing, `false`: published)` |NO       |false    |
 | RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent` |YES      |`none`   |
 
-If you don't want to use project settings, you have to pass this informations one by one to the `Config.userDefaults` using a `Config.Key` as key:
+If you don't want to use project settings, you have to pass this information one by one to the `Config.userDefaults` using a `Config.Key` as key:
 
 ```swift
 Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawValue)
@@ -220,36 +223,4 @@ See the *LICENSE* file for more info.
 
 # Changelog
 
-### 1.x.x (YYYY-mm-dd)
-
-**SDK**
-- *Feature:* Possibility to load `testing` Mini Apps from RAS
-- *Feature:* Possibility to use back and forward navigation inside MiniApp with SDK default UI or custom client provided UI
-- *Feature:* Ability to add a custom string(RMAHostAppUserAgentInfo) that will get appended in the User agent.
-
-**Sample App**
-- *Feature:* Implemention of the `testing` Mini Apps SDK feature
-- *Feature:* Added example of custom view to navigate backward inside MiniApp
-
-**Sample App**
-- *Bugfix:* First time settings success dialog dismissed before tapping OK
-- *Bugfix:* "Display MiniApp" button was not visible when scrolling in the list Mini Apps
-
-### 1.1.1 (2020-06-11)
-
-**SDK**
-- no changes
-
-**Sample App**
-- *Bugfix:* First time settings success dialog dismissed before tapping OK
-- *Bugfix:* "Display MiniApp" button was not visible when scrolling in the list Mini Apps
-
-### 1.1.0 (2020-06-01)
-
-- Added JavaScript bridge for passing data between Mini App and Host App. Your App now must implement `MiniAppMessageProtocol` in your view controller and provide the implementation when calling `MiniApp#create`.
-- Deprecated `MiniApp#create(appInfo:completionHandler:)`. Your App should instead use `MiniApp#create(appInfo:completionHandler:messageInterface)`.
-- Added `getUniqueId` function to `MiniAppMessageProtocol`. This function should provide a unique identifier (unique to the user and device) to Mini Apps.
-
-### 1.0.0 (2020-04-27)
-
-- Initial release
+See the full [CHANGELOG](https://github.com/rakutentech/ios-miniapp/blob/master/CHANGELOG.md).
