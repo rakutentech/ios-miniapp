@@ -50,13 +50,18 @@ class SettingsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0:
-            return "Test Mode"
         case 1:
+            return "Test Mode"
+        case 0:
             return "RAS"
         default:
-            return ""
+            return nil
         }
+    }
+    // swiftlint:disable:next todo
+    //FIXME: remove to enable test mode after backend API is ready
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
 
     func resetFields() {
