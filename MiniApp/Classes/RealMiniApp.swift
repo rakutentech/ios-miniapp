@@ -112,7 +112,7 @@ internal class RealMiniApp {
                 completionHandler(.success(miniAppDisplayProtocol))
             }
         } else {
-            return completionHandler(.failure(error))
+            completionHandler(.failure(error))
         }
     }
 }
