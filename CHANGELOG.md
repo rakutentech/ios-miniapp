@@ -1,19 +1,11 @@
 ## CHANGELOG
 
-### X.Y.Z (YYYY-mm-dd)
-
-**SDK**
-- *Feature:* Possibility to load `testing` Mini Apps from RAS
-
-**Sample App**
-- *Feature:* Implementation of the `testing` Mini Apps SDK feature
-
 ### 1.2.0 (2020-07-21)
 
 **SDK**
 - *Feature:* Possibility to use back and forward navigation inside MiniApp with SDK default UI or custom client provided UI
 - *Feature:* Ability to add a host app information string (RMAHostAppUserAgentInfo) that will get appended in the User agent.
-- *Feature:* Added support for `window.alert` JS dialogs in the mini app display
+- *Feature:* Added support for `window.alert`, `window.confirm` and `window.prompt` JS dialogs in the mini app display
 - *Bugfix:* Fixed support for display of SVG file format in a mini app
 
 **Sample App**
