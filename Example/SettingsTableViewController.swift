@@ -58,7 +58,7 @@ class SettingsTableViewController: UITableViewController {
             return nil
         }
     }
-
+    // swiftlint:disable:next todo
     //FIXME: remove to enable test mode after v1.2 release
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
