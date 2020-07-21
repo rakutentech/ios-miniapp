@@ -130,8 +130,8 @@ jobs: # a collection of steps
             set -e
             if [[ ! $CIRCLE_TAG == *"-"* ]]; then
               git checkout gh-pages
-              cp -R publishableDocs/docs/. ./docs
-              cp -R publishableDocs/_versions/. ./_versions
+              cp -R ./js-miniapp-sdk/publishableDocs/docs/. ./docs
+              cp -R ./js-miniapp-sdk/publishableDocs/_versions/. ./_versions
               git add docs _versions
               git config user.name "CI Publisher"
               git config user.email "dev-opensource@mail.rakuten.com"
