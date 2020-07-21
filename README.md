@@ -223,4 +223,4 @@ See the *LICENSE* file for more info.
 
 # Changelog
 
-See the full [CHANGELOG](CHANGELOG.md).
+See the full [CHANGELOG](https://github.com/rakutentech/ios-miniapp/blob/master/CHANGELOG.md).
