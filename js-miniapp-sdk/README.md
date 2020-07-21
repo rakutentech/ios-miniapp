@@ -110,6 +110,4 @@ function getId() {
 
 ## Changelog
 
-### v1.0.0 (2020-5-13)
-
-- Initial release.
+See the full [CHANGELOG](https://github.com/rakutentech/js-miniapp/blob/master/js-miniapp-sdk/CHANGELOG.md).
