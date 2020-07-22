@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MiniApp'
-  s.version          = '1.1.1'
+  s.version          = '1.2.0'
   s.authors      = "Rakuten Ecosystem Mobile"
   s.summary      = "Rakuten's Mini App SDK"
   s.homepage     = "https://github.com/rakutentech/ios-miniapp"
