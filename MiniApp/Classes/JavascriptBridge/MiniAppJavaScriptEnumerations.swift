@@ -1,6 +1,7 @@
 enum MiniAppJSActionCommand: String {
     case getUniqueId
     case requestPermission
+    case getCurrentPosition
 }
 
 enum JavaScriptExecResult: String {

@@ -114,6 +114,22 @@ MiniAppBridge.requestPermission = function(permissionType) {
     );
   });
 };
+
+/**
+ Below code will override the navigator.geolocation.getCurrentPosition method
+ */
+navigator.geolocation.getCurrentPosition = function(success, error, options) {
+    return MiniAppBridge.exec(
+        "getCurrentPosition",
+        null,
+        function(value) {
+            var parsedData = JSON.parse(value)
+            success(parsedData)
+        },
+        error
+    );
+};
+
 window.MiniAppBridge = MiniAppBridge;
 
 // Exported for unit testing

@@ -1,5 +1,6 @@
 import Foundation
 import WebKit
+import CoreLocation
 
 protocol MiniAppCallbackProtocol: AnyObject {
     func didReceiveScriptMessageResponse(messageId: String, response: String)
@@ -8,6 +9,7 @@ protocol MiniAppCallbackProtocol: AnyObject {
 
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
+    var locationManager: LocationManager?
     weak var delegate: MiniAppCallbackProtocol?
     weak var hostAppMessageDelegate: MiniAppMessageProtocol?
 
@@ -41,6 +43,9 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             sendUniqueId(messageId: callbackId)
         case .requestPermission:
             requestPermission(requestParam: requestParam, callbackId: callbackId)
+        case .getCurrentPosition:
+            locationManager = LocationManager()
+            getCurrentPosition(callbackId: callbackId)
         }
     }
 
@@ -83,6 +88,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
+    func getCurrentPosition(callbackId: String) {
+        let responseString = "{\"coords\":{\"latitude\":\(locationManager?.location?.coordinate.latitude ?? 0),\"longitude\":\(locationManager?.location?.coordinate.longitude ?? 0)}}"
+        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: responseString)
+    }
+
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {
         switch responseStatus {
         case .onSuccess:
@@ -90,5 +100,17 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .onError:
             delegate?.didReceiveScriptMessageError(messageId: messageId, errorMessage: response)
         }
+    }
+}
+
+class LocationManager: NSObject, CLLocationManagerDelegate {
+    let manager: CLLocationManager
+    let location: CLLocation?
+
+    override init() {
+        manager = CLLocationManager()
+        location = manager.location
+        super.init()
+        manager.desiredAccuracy = kCLLocationAccuracyBest
     }
 }
