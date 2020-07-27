@@ -6,20 +6,23 @@ protocol SessionProtocol {
     func startDownloadTask(downloadUrl: URL)
 }
 
-class MiniAppClient: NSObject, URLSessionDownloadDelegate {
+internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     let listingApi: ListingApi
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
     var environment: Environment
+    private var testPath: String {
+        self.environment.isTestMode ? "test" : ""
+    }
     weak var delegate: MiniAppDownloaderProtocol?
 
-    convenience override init() {
+    private convenience override init() {
         self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
     }
 
-    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil) {
-        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion))
+    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
     }
 
     init(with config: MiniAppSdkConfig) {
@@ -34,6 +37,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.environment.customAppId = config?.rasAppId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion
+        self.environment.customIsTestMode = config?.isTestMode ?? false
     }
 
     lazy var session: SessionProtocol = {
@@ -42,7 +46,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
-        guard let urlRequest = self.listingApi.createURLRequest() else {
+        guard let urlRequest = self.listingApi.createURLRequest(testPath: self.testPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
@@ -50,7 +54,7 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func getMiniApp(_ miniAppId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
-        guard let urlRequest = self.listingApi.createURLRequest(for: miniAppId) else {
+        guard let urlRequest = self.listingApi.createURLRequest(for: miniAppId, testPath: self.testPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
@@ -77,15 +81,19 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         return session.startDataTask(with: urlRequest) { (result) in
             switch result {
             case .success(let responseData):
-                if !(200...299).contains(responseData.httpResponse.statusCode) {
+                let statusCode = responseData.httpResponse.statusCode
+                MiniAppLogger.d("[\(statusCode)] urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n🟢\(String(data: responseData.data, encoding: .utf8) ?? "Empty response")")
+
+                if !(200...299).contains(statusCode) {
                     return completionHandler(.failure(
                         self.handleHttpResponse(responseData: responseData.data,
                                                 httpResponse: responseData.httpResponse)
-                    ))
+                        ))
                 }
                 return completionHandler(.success(ResponseData(responseData.data,
                                                                responseData.httpResponse)))
             case .failure(let error):
+                MiniAppLogger.d("urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n🔴 Failure")
                 return completionHandler(.failure(error))
             }
         }
@@ -99,13 +107,13 @@ class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         case 401, 403:
             guard let errorModel = ResponseDecoder.decode(decodeType: UnauthorizedData.self,
                                                           data: responseData) else {
-                return NSError.unknownServerError(httpResponse: httpResponse)
+                                                            return NSError.unknownServerError(httpResponse: httpResponse)
             }
             message = "\(errorModel.error): \(errorModel.errorDescription)"
         default:
             guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self,
                                                           data: responseData) else {
-                return NSError.unknownServerError(httpResponse: httpResponse)
+                                                            return NSError.unknownServerError(httpResponse: httpResponse)
             }
             message = errorModel.message
         }

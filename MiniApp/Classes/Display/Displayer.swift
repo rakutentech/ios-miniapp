@@ -1,6 +1,18 @@
 internal class Displayer {
+    var navConfig: MiniAppNavigationConfig?
 
-    func getMiniAppView(miniAppId: String, hostAppMessageDelegate: MiniAppMessageProtocol) -> MiniAppDisplayProtocol {
-        return RealMiniAppView(miniAppId: miniAppId, hostAppMessageDelegate: hostAppMessageDelegate)
+    init(_ config: MiniAppNavigationConfig? = nil) {
+        self.navConfig = config
+    }
+
+    func getMiniAppView(miniAppId: String, versionId: String, miniAppTitle: String, hostAppMessageDelegate: MiniAppMessageProtocol) -> MiniAppDisplayProtocol {
+        return RealMiniAppView(
+          miniAppId: miniAppId,
+          versionId: versionId,
+          miniAppTitle: miniAppTitle,
+          hostAppMessageDelegate: hostAppMessageDelegate,
+          displayNavBar: navConfig?.navigationBarVisibility ?? .never,
+          navigationDelegate: navConfig?.navigationDelegate,
+          navigationView: navConfig?.navigationView)
     }
 }

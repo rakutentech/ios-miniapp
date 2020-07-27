@@ -2,7 +2,7 @@
 
 NOCOLOR='\033[0m'
 RED='\033[0;31m'
-SECRETS_FILE=Example/Example-Secrets.xcconfig
+SECRETS_FILE=../MiniApp-Secrets.xcconfig
 
 echo "Configuring project's build secrets in $SECRETS_FILE..."
 
@@ -17,9 +17,9 @@ do
   fi
 done
 
-CONFIG_URL=${RMA_API_ENDPOINT}
-SUBSCRIPTION_KEY=${RAS_PROJECT_SUBSCRIPTION_KEY}
-APP_ID=${RAS_APPLICATION_IDENTIFIER}
+RMA_API_ENDPOINT_SECRET=${RMA_API_ENDPOINT:=https:/\$()/www.example.com}
+RAS_PROJECT_SUBSCRIPTION_KEY_SECRET=${RAS_PROJECT_SUBSCRIPTION_KEY:=RAS_PROJECT_SUBSCRIPTION_KEY}
+RAS_APPLICATION_IDENTIFIER_SECRET=${RAS_APPLICATION_IDENTIFIER:=RAS_APPLICATION_IDENTIFIER}
 
 # Overwrite secrets xcconfig and add file header
 echo "// Secrets configuration for the app." > $SECRETS_FILE
@@ -31,9 +31,9 @@ echo "//" >> $SECRETS_FILE
 echo "// Add new secrets configuration in ./configure-secrets.sh" >> $SECRETS_FILE
 echo "//" >> $SECRETS_FILE
 echo "// In order to have the // in https://, we need to split it with an empty" >> $SECRETS_FILE
-echo "// variable substitution via $() e.g. ROOT_URL = https:/$()/www.endpoint.com" >> $SECRETS_FILE
+echo "// variable substitution via $() e.g. ROOT_URL = https:/\$()/www.endpoint.com" >> $SECRETS_FILE
 
 # Set secrets from environment variables
-echo "RMA_API_ENDPOINT = $CONFIG_URL" >> $SECRETS_FILE
-echo "RAS_PROJECT_SUBSCRIPTION_KEY = $SUBSCRIPTION_KEY" >> $SECRETS_FILE
-echo "RAS_APPLICATION_IDENTIFIER = $APP_ID" >> $SECRETS_FILE
+echo "RMA_API_ENDPOINT = $RMA_API_ENDPOINT_SECRET" >> $SECRETS_FILE
+echo "RAS_PROJECT_SUBSCRIPTION_KEY = $RAS_PROJECT_SUBSCRIPTION_KEY_SECRET" >> $SECRETS_FILE
+echo "RAS_APPLICATION_IDENTIFIER = $RAS_APPLICATION_IDENTIFIER_SECRET" >> $SECRETS_FILE

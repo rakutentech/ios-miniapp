@@ -1,20 +1,11 @@
 import MiniApp
 
-extension ViewController: MiniAppMessageProtocol {
-    func getUniqueId() -> String {
-        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
-            return ""
-        }
-        return deviceId
-    }
-}
-
 extension ViewController {
     func fetchAppList(inBackground: Bool) {
         showProgressIndicator(silently: inBackground) {
-            MiniApp.shared(with: Config.getCurrent()).list { (result) in
+            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig()).list { (result) in
                 DispatchQueue.main.async {
-                    self.refreshControl?.endRefreshing()
+                    self.tableView.refreshControl?.endRefreshing()
                 }
                 switch result {
                 case .success(let responseData):
@@ -37,7 +28,7 @@ extension ViewController {
 
     func fetchAppInfo(for miniAppID: String) {
         self.showProgressIndicator {
-            MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) in
+            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig()).info(miniAppId: miniAppID) { (result) in
                 switch result {
                 case .success(let responseData):
                     self.currentMiniAppInfo = responseData
@@ -53,7 +44,7 @@ extension ViewController {
     }
 
     func fetchMiniApp(for appInfo: MiniAppInfo) {
-        MiniApp.shared(with: Config.getCurrent()).create(appInfo: appInfo, completionHandler: { (result) in
+        MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig()).create(appInfo: appInfo, completionHandler: { (result) in
             switch result {
             case .success(let miniAppDisplay):
                 self.dismissProgressIndicator {

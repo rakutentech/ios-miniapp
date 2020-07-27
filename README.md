@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/rakutentech/ios-miniapp.svg?branch=master)](https://travis-ci.org/rakutentech/ios-miniapp)
+[![codecov](https://codecov.io/gh/rakutentech/ios-miniapp/branch/master/graph/badge.svg)](https://codecov.io/gh/rakutentech/ios-miniapp)
+[![ios](https://cocoapod-badges.herokuapp.com/p/MiniApp/badge.png)](https://cocoapods.org/pods/MiniApp)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
@@ -14,9 +16,19 @@ This open-source library allows you to integrate a Rakuten MiniApp into your iOS
 
 All the MiniApp files downloaded by the MiniApp iOS library are cached locally for efficiency
 
-## Getting started
+# Getting started
 
-### Requirements
+* [Requirements](#requirements)
+* [Documentation](#documentation)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Usage](#usage)
+* [Sample App](#sample-app)
+* [Changelog](#change-log)
+
+<div id="requirements"></div>
+
+## Requirements
 
 This module supports **iOS 11.0 and above**. It has been tested on iOS 11.0 and above.
 
@@ -28,17 +40,13 @@ In order to run your MiniApp you will have to provide the following,
 * Subscription key (RASProjectSubscriptionKey)
 * Base URL for API requests to the library (RMAAPIEndpoint)
 
+<div id="documentation"></div>
+
 # Documentation
 
 Generated documentation for this SDK can be found at https://rakutentech.github.io/ios-miniapp/
 
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-### Custom parameters
-
-In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (RASApplicationIdentifier, RASProjectSubscriptionKey) or by taping the top right configuration icon in the example application. Also we don't currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (RMAAPIEndpoint)
+<div id="installation"></div>
 
 # Installation
 
@@ -47,17 +55,19 @@ MiniApp is available through [CocoaPods](https://cocoapods.org). To install it, 
 ```ruby
 pod 'MiniApp'
 ```
+<div id="configuration"></div>
 
 # Configuration
 
-In your project configuration .plist you should add 2 custom string target properties :
+In your project configuration .plist you should add below Key/Value :
 
-| Key     | Value     |
-| :---:   | :---:     |
-| `RASApplicationIdentifier` | your MiniApp host application identifier |
-| `RASProjectSubscriptionKey` | your MiniApp subscription key |
-| `RMAAPIEndpoint` | your own Base URL for API requests |
-
+| Key                          | Type    | Description                                                     | Optional| Default |
+| :----                        | :----:  | :----                                                           |:----:   |:----:   |
+| RASApplicationIdentifier     | String  | `Set your MiniApp host application identifier`                  |NO       |`none`   |
+| RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
+| RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
+| RMAIsTestMode                | String  | `Loading mode of the API (`true`: testing, `false`: published)` |NO       |false    |
+| RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent` |YES      |`none`   |
 
 If you don't want to use project settings, you have to pass this informations one by one to the `Config.userDefaults` using a `Config.Key` as key:
 
@@ -65,22 +75,35 @@ If you don't want to use project settings, you have to pass this informations on
 Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawValue)
 ```
 
-## **Build/Run Example Application and Unit Tests**
-
-* Clone or fork the repo
-* `cd` to the repo folder
-* Set env vars `RMAAPIEndpoint` and `RASProjectSubscriptionKey` according to the internal integration guide
-* _Important Note_: `Example-Secrets.xcconfig` **MUST NOT** be committed to git - it is ignored by git in the repo's `.gitignore` file
-* Run `bundle install` then run `bundle exec pod install`
-* Open `RInAppMessaging.xcworkspace` in Xcode then build/run
-* To run the tests press key shortcut command-U
+<div id="usage"></div>
 
 # Usage
 
+* [Overriding configuration on runtime](#runtime-conf)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Create a MiniApp](#create-mini-app)
+* [Communicate with MiniApp](#MiniAppMessageProtocol)
+* [Customize history navigation](#navigation)
 
+<div id="runtime-conf"></div>
+
+### Overriding configuration on runtime
+
+Every call to the API can be done with default parameters retrieved from the project .plist configuration file, or by providing a `MiniAppSdkConfig` object during the call. Here is a simple example class we use to create the configuration in samples below:
+
+```swift
+class Config: NSObject {
+    class func getCurrent() -> MiniAppSdkConfig {
+        return MiniAppSdkConfig(baseUrl: "https://your.custom.url"
+                                rasAppId: "your_RAS_App_id",
+                                subscriptionKey: "your_subscription_key",
+                                hostAppVersion: "your_custom_version",
+                                isTestMode: true,
+                                hostAppUserAgentInfo: "host_app_name_and_version")
+    }
+}
+```
 
 <div id="load-miniapp-list"></div>
 
@@ -134,6 +157,7 @@ MiniApp.shared().create(appInfo: info, completionHandler: { (result) in
             }
 }, messageInterface: self)
 ```
+<div id="MiniAppMessageProtocol"></div>
 
 ### Implement the MiniAppMessageProtocol in your View Controller
 
@@ -149,12 +173,67 @@ extension ViewController: MiniAppMessageProtocol {
     }
 }
 ```
+<div id="navigation"></div>
+
+### Add a web navigation interface to the MiniApp view
+
+MiniApp iOS SDK provides a fully customizable way to implement a navigation interface inside your html pages with a `MiniAppNavigationConfig` object. The class takes 3 arguments:
+
+- `navigationBarVisibility` : 
+    - never = the UI will never be shown
+    - auto = navigation UI is only shown when a back or forward action is availabe
+    - always = navigation UI is always present
+- `navigationDelegate` : A delegate that will receive MiniApp view instructions about available navigation options
+- `customNavigationView` : A view implementing `MiniAppNavigationDelegate` that will be overlayed to the bottom of the MiniApp view
+
+```swift
+let navConfig = MiniAppNavigationConfig(
+                    navigationBarVisibility: .always,
+                    navigationDelegate: myCustomView,
+                    customNavigationView: mCustomView)
+
+MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(miniAppId: miniAppID) { (result) in
+...
+}
+```
+
+<div id="sample-app"></div>
+
+# Example
+
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
+
+### Custom parameters
+
+In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (`RASApplicationIdentifier`, `RASProjectSubscriptionKey`) or by taping the top right configuration icon in the example application. Also we don't currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (`RMAAPIEndpoint`)
+
+### Testing mode
+
+The SDK can be configured to load MiniApps in 2 modes : Published mode and Testing mode. Published mode only allows access to the last published version of your MiniApps, whereas Testing mode allows you to load all your MiniApps versions, as long as they are in `Testing` state on RAS console. To configure the loading mode, you can either do it in the .plist file with the configuration variable `RMAIsTestMode`, or by taping the top right configuration icon in the example application.
+
 
 ## License
 
 See the *LICENSE* file for more info.
 
-## Changelog
+<div id="change-log"></div>
+
+# Changelog
+
+### 1.x.x (YYYY-mm-dd)
+
+**SDK**
+- *Feature:* Possibility to load `testing` Mini Apps from RAS
+- *Feature:* Possibility to use back and forward navigation inside MiniApp with SDK default UI or custom client provided UI
+- *Feature:* Ability to add a custom string(RMAHostAppUserAgentInfo) that will get appended in the User agent.
+
+**Sample App**
+- *Feature:* Implemention of the `testing` Mini Apps SDK feature
+- *Feature:* Added example of custom view to navigate backward inside MiniApp
+
+**Sample App**
+- *Bugfix:* First time settings success dialog dismissed before tapping OK
+- *Bugfix:* "Display MiniApp" button was not visible when scrolling in the list Mini Apps
 
 ### 1.1.1 (2020-06-11)
 

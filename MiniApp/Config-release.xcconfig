@@ -1,4 +1,0 @@
-#include "Pods/Target Support Files/Pods-MiniApp_Example/Pods-MiniApp_Example.release.xcconfig"
-
-// IMPORTANT: Secrets MUST be added to Example-Secrets.xcconfig and that file MUST NOT be added to git.
-#include "Example-Secrets.xcconfig"

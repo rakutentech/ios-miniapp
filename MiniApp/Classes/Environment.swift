@@ -1,6 +1,7 @@
 internal protocol EnvironmentProtocol {
     var valueNotFound: String { get }
     func value(for key: String) -> String?
+    func bool(for key: String) -> Bool?
 }
 
 internal class Environment {
@@ -8,7 +9,9 @@ internal class Environment {
         case applicationIdentifier = "RASApplicationIdentifier",
             version = "CFBundleShortVersionString",
             subscriptionKey = "RASProjectSubscriptionKey",
-            endpoint = "RMAAPIEndpoint"
+            endpoint = "RMAAPIEndpoint",
+            isTestMode = "RMAIsTestMode",
+            hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
     }
 
     let bundle: EnvironmentProtocol
@@ -17,6 +20,8 @@ internal class Environment {
     var customAppId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
+    var customIsTestMode: Bool?
+    var customHostAppUserAgentInfo: String?
 
     init(bundle: EnvironmentProtocol = Bundle.main) {
         self.bundle = bundle
@@ -28,6 +33,8 @@ internal class Environment {
         self.customAppId = config.rasAppId
         self.customSubscriptionKey = config.subscriptionKey
         self.customAppVersion = config.hostAppVersion
+        self.customIsTestMode = config.isTestMode
+        self.customHostAppUserAgentInfo = config.hostAppUserAgentInfo
     }
 
     var appId: String {
@@ -42,8 +49,17 @@ internal class Environment {
         return value(for: customSubscriptionKey, fallback: .subscriptionKey)
     }
 
+    var isTestMode: Bool {
+        return bool(for: customIsTestMode, fallback: .isTestMode)
+    }
+
+    var hostAppUserAgentInfo: String {
+        return value(for: customHostAppUserAgentInfo, fallback: .hostAppUserAgentInfo)
+    }
+
     var baseUrl: URL? {
-        guard let endpointUrlString = (self.customUrl ?? bundle.value(for: Key.endpoint.rawValue)) else {
+        let defaultEndpoint = bundle.value(for: Key.endpoint.rawValue)
+        guard let endpointUrlString = (self.customUrl ?? defaultEndpoint) else {
             MiniAppLogger.e("Ensure RMAAPIEndpoint value in plist is valid")
             return nil
         }
@@ -52,5 +68,9 @@ internal class Environment {
 
     func value(for field: String?, fallback key: Key) -> String {
         return field ?? bundle.value(for: key.rawValue) ?? bundle.valueNotFound
+    }
+
+    func bool(for field: Bool?, fallback key: Key) -> Bool {
+        return field ?? bundle.bool(for: key.rawValue) ?? false
     }
 }
