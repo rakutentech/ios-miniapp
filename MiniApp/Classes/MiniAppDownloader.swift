@@ -1,5 +1,7 @@
 class MiniAppDownloader {
-
+    enum MiniAppArchiveError: Error {
+        case noRoot
+    }
     private var miniAppClient: MiniAppClient
     private var miniAppStorage: MiniAppStorage
     private var manifestDownloader: ManifestDownloader
@@ -28,22 +30,22 @@ class MiniAppDownloader {
         let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
         if !isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId) {
             self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
-                 switch result {
-                 case .success(let responseData):
-                     self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
-                         switch downloadResult {
-                         case .success:
-                             self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
+                switch result {
+                case .success(let responseData):
+                    self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
+                        switch downloadResult {
+                        case .success:
+                            self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
 
-                             fallthrough
-                         default:
-                             completionHandler(downloadResult)
-                         }
-                     }
-                 case .failure(let error):
+                            fallthrough
+                        default:
+                            completionHandler(downloadResult)
+                        }
+                    }
+                case .failure(let error):
                     completionHandler(.failure(error))
-                 }
-             }
+                }
+            }
         } else {
             completionHandler(.success(miniAppStoragePath))
         }
@@ -161,10 +163,18 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
             do {
                 try FileManager.default.unzipItem(at: filePath, to: directory, skipCRC32: true)
                 MiniAppLogger.d("MiniApp unzip time: \(Date().timeIntervalSince(time))")
-                try FileManager.default.removeItem(at: filePath)
+                if !FileManager.default.fileExists(atPath: "\(directory)/\(Constants.rootFileName)") {
+                    throw MiniAppArchiveError.noRoot
+                }
             } catch let err {
                 MiniAppLogger.e("error unzipping archive", err)
                 urlToDirectoryMap[destinationPath]?.completionHanlder(.failure(err))
+            }
+
+            do {
+                try FileManager.default.removeItem(at: filePath)
+            } catch let err {
+                MiniAppLogger.e("error deleting archive", err)
             }
         }
     }

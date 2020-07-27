@@ -21,7 +21,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  MiniApp: 8ecbdf62a2e62b4917f1e9a8d1aba28cd023832f
+  MiniApp: c886411d8c166f3bd0feb1b359bb853c9b8eb207
   Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
   Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197

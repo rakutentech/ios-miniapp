@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		183AF08124CE8D7D000ABCBF /* SmallMAerror.zip in Resources */ = {isa = PBXBuildFile; fileRef = 183AF08024CE8D7D000ABCBF /* SmallMAerror.zip */; };
 		183E680E2499D49A00BAADB2 /* MiniAppLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E680C2499D42300BAADB2 /* MiniAppLoggerTests.swift */; };
 		185DBD5E24AD50C300CD2094 /* Number+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185DBD5D24AD50C300CD2094 /* Number+MiniApp.swift */; };
 		185DBD6024AD5A8400CD2094 /* Array+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185DBD5F24AD5A8400CD2094 /* Array+MiniApp.swift */; };
@@ -62,6 +63,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		183AF08024CE8D7D000ABCBF /* SmallMAerror.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMAerror.zip; sourceTree = "<group>"; };
 		183E680C2499D42300BAADB2 /* MiniAppLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppLoggerTests.swift; sourceTree = "<group>"; };
 		185DBD5D24AD50C300CD2094 /* Number+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Number+MiniApp.swift"; path = "Example/Number+MiniApp.swift"; sourceTree = SOURCE_ROOT; };
 		185DBD5F24AD5A8400CD2094 /* Array+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Array+MiniApp.swift"; path = "Example/Array+MiniApp.swift"; sourceTree = SOURCE_ROOT; };
@@ -235,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				185DBD6124B2A06300CD2094 /* SmallMA.zip */,
+				183AF08024CE8D7D000ABCBF /* SmallMAerror.zip */,
 				607FACEA1AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -345,6 +348,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				183AF08124CE8D7D000ABCBF /* SmallMAerror.zip in Resources */,
 				185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
