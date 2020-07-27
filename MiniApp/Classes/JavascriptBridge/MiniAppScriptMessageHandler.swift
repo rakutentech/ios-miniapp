@@ -44,7 +44,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .requestPermission:
             requestPermission(requestParam: requestParam, callbackId: callbackId)
         case .getCurrentPosition:
-            locationManager = LocationManager()
+            locationManager = LocationManager(enableHighAccuracy: requestParam?.locationOptions?.enableHighAccuracy ?? false)
             getCurrentPosition(callbackId: callbackId)
         }
     }
@@ -89,8 +89,19 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func getCurrentPosition(callbackId: String) {
-        let responseString = "{\"coords\":{\"latitude\":\(locationManager?.location?.coordinate.latitude ?? 0),\"longitude\":\(locationManager?.location?.coordinate.longitude ?? 0)}}"
-        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: responseString)
+
+        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: getLocationInfo())
+    }
+
+    func getLocationInfo() -> String {
+        return  "{\"coords\":{\"latitude\":\(locationManager?.location?.coordinate.latitude ?? 0)" +
+        ",\"longitude\":\(locationManager?.location?.coordinate.longitude ?? 0)" +
+        ", \"altitude\":\(locationManager?.location?.altitude ?? 0)" +
+        ", \"altitudeAccuracy\":\(locationManager?.location?.verticalAccuracy ?? 0)" +
+        ", \"accuracy\":\(locationManager?.location?.horizontalAccuracy ?? 0)" +
+        ", \"speed\":\(locationManager?.location?.speed ?? 0)" +
+        ", \"heading\":\(locationManager?.location?.course ?? 0)" +
+        "}, \"timestamp\":\(Date().currentDate)}"
     }
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {
@@ -107,10 +118,10 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     let manager: CLLocationManager
     let location: CLLocation?
 
-    override init() {
+    init(enableHighAccuracy: Bool) {
         manager = CLLocationManager()
         location = manager.location
         super.init()
-        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.desiredAccuracy = enableHighAccuracy ? kCLLocationAccuracyBest : kCLLocationAccuracyHundredMeters
     }
 }
