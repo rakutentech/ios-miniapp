@@ -1,5 +1,5 @@
 PODS:
-  - MiniApp (1.1.1)
+  - MiniApp (1.2.0)
   - Nimble (8.1.1)
   - Quick (3.0.0)
 
@@ -18,10 +18,10 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  MiniApp: 62d99a571a6ea18265f5801000cb85da787ca3be
+  MiniApp: ce48edec48c17931c6632692e643cdd6629b3988
   Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
   Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
 
-PODFILE CHECKSUM: c537522e8e0b38628a8c44ad50d201a9808ac49e
+PODFILE CHECKSUM: ca9d5c9f0e66d29311ef20fb6d4ac797977bd6bf
 
 COCOAPODS: 1.9.3
