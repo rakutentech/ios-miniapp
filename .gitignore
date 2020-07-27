@@ -27,6 +27,3 @@ docs/
 
 # Use latest gem versions
 Gemfile.lock
-
-# Secrets
-*Secrets.xcconfig

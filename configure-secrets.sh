@@ -31,7 +31,7 @@ echo "//" >> $SECRETS_FILE
 echo "// Add new secrets configuration in ./configure-secrets.sh" >> $SECRETS_FILE
 echo "//" >> $SECRETS_FILE
 echo "// In order to have the // in https://, we need to split it with an empty" >> $SECRETS_FILE
-echo "// variable substitution via $() e.g. ROOT_URL = https:/\$()/www.endpoint.com" >> $SECRETS_FILE
+echo "// variable substitution via \$() e.g. ROOT_URL = https:/\$()/www.endpoint.com" >> $SECRETS_FILE
 
 # Set secrets from environment variables
 echo "RMA_API_ENDPOINT = $RMA_API_ENDPOINT_SECRET" >> $SECRETS_FILE
