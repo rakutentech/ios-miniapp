@@ -114,7 +114,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 }
 
-class LocationManager: NSObject, CLLocationManagerDelegate {
+class LocationManager: NSObject {
     let manager: CLLocationManager
     let location: CLLocation?
 
