@@ -102,8 +102,7 @@ class Config: NSObject {
                                 rasAppId: "your_RAS_App_id",
                                 subscriptionKey: "your_subscription_key",
                                 hostAppVersion: "your_custom_version",
-                                isTestMode: true,
-                                hostAppUserAgentInfo: "host_app_name_and_version")
+                                isTestMode: true")
     }
 }
 ```

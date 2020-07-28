@@ -21,7 +21,6 @@ internal class Environment {
     var customAppVersion: String?
     var customSubscriptionKey: String?
     var customIsTestMode: Bool?
-    var customHostAppUserAgentInfo: String?
 
     init(bundle: EnvironmentProtocol = Bundle.main) {
         self.bundle = bundle
@@ -34,7 +33,6 @@ internal class Environment {
         self.customSubscriptionKey = config.subscriptionKey
         self.customAppVersion = config.hostAppVersion
         self.customIsTestMode = config.isTestMode
-        self.customHostAppUserAgentInfo = config.hostAppUserAgentInfo
     }
 
     var appId: String {
@@ -54,7 +52,7 @@ internal class Environment {
     }
 
     var hostAppUserAgentInfo: String {
-        return value(for: customHostAppUserAgentInfo, fallback: .hostAppUserAgentInfo)
+        return value(for: .none, fallback: .hostAppUserAgentInfo)
     }
 
     var baseUrl: URL? {
