@@ -101,7 +101,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         ", \"accuracy\":\(locationManager?.location?.horizontalAccuracy ?? 0)" +
         ", \"speed\":\(locationManager?.location?.speed ?? 0)" +
         ", \"heading\":\(locationManager?.location?.course ?? 0)" +
-        "}, \"timestamp\":\(Date().currentDate)}"
+        "}, \"timestamp\":\(Date().epochInMilliseconds)}"
     }
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {
