@@ -11,7 +11,6 @@ before_install:
   # https://github.com/travis-ci/travis-ci/issues/6473 
   - pod outdated | awk '{ if ( $1 ~ /^-/ ) { print $0 } }' | awk '{ if ( $3 != $5 ) { pod update $2 } else { print "No updated needed it for" $2 } }'
 
-script:
   # First check if this is a build from master or a release and setup ENV variables
 - |
   if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]]; then
@@ -28,7 +27,8 @@ script:
     export RAS_PROJECT_SUBSCRIPTION_KEY=$RAS_PROJECT_SUBSCRIPTION_KEY_STG
     export RMA_API_ENDPOINT=$RMA_API_ENDPOINT_STG
   fi
-- bundle exec fastlane setup_env
+
+script:
 - travis_wait bundle exec fastlane ci
 - travis_wait bundle exec fastlane build_simulator
 - bundle exec danger
