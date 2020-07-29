@@ -5,6 +5,7 @@ class MiniAppDownloader {
     private var manifestDownloader: ManifestDownloader
     private var urlToDirectoryMap = [String: DownloadOperation]()
     private var miniAppStatus: MiniAppStatus
+    private var cacheVerifier: MiniAppCacheVerifier
 
     private var queue: OperationQueue = {
         let operationQueue = OperationQueue()
@@ -19,31 +20,48 @@ class MiniAppDownloader {
         self.miniAppStorage = MiniAppStorage()
         self.manifestDownloader = manifestDownloader
         self.miniAppStatus = status
+        self.cacheVerifier = MiniAppCacheVerifier()
     }
 
-    func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
-        let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
-        if !isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId) {
-            self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
-                 switch result {
-                 case .success(let responseData):
-                     self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
-                         switch downloadResult {
-                         case .success:
-                             self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
-
-                             fallthrough
-                         default:
-                             completionHandler(downloadResult)
-                         }
-                     }
-                 case .failure(let error):
-                    completionHandler(.failure(error))
-                 }
-             }
+    func verifyAndDownload(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+        if (isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId)) {
+            if (cacheVerifier.verify(appId: appId)) {
+                let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+                completionHandler(.success(miniAppStoragePath))
+            } else {
+                MiniAppLogger.d("Cached Mini App did not pass the hash verification. The Mini App will be re-downloaded.")
+                
+                self.miniAppStorage.cleanVersions(for: appId, differentFrom: "", status: self.miniAppStatus)
+                download(appId: appId, versionId: versionId, completionHandler: completionHandler)
+            }
         } else {
-            completionHandler(.success(miniAppStoragePath))
+            download(appId: appId, versionId: versionId, completionHandler: completionHandler)
         }
+    }
+    
+    private func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+                let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+        self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
+             switch result {
+             case .success(let responseData):
+                 self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
+                     switch downloadResult {
+                     case .success:
+                         DispatchQueue.main.async {
+                             self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
+                            
+                             self.cacheVerifier.storeHash(for: appId)
+                         }
+                         
+                         fallthrough
+                     default:
+                         completionHandler(downloadResult)
+                     }
+                 }
+             case .failure(let error):
+                completionHandler(.failure(error))
+             }
+         }
     }
 
     func isMiniAppAlreadyDownloaded(appId: String, versionId: String) -> Bool {

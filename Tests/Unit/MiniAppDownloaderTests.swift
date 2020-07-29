@@ -28,7 +28,7 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.download(appId: "Apple", versionId: "Mac") { (_) in }
+                    downloader.verifyAndDownload(appId: "Apple", versionId: "Mac") { (_) in }
                     let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "Mac")
                     var isDir: ObjCBool = true
                     expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: 10)
@@ -45,12 +45,12 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.download(appId: "Apple", versionId: "Mac") { (_) in }
+                    downloader.verifyAndDownload(appId: "Apple", versionId: "Mac") { (_) in }
                     mockManifestDownloader.error = NSError(domain: "URLErrorDomain", code: -1009, userInfo: nil)
                     mockAPIClient.data = nil
                     mockManifestDownloader.data = nil
                     var testError: NSError?
-                    downloader.download(appId: "Apple", versionId: "Mac1") { (result) in
+                    downloader.verifyAndDownload(appId: "Apple", versionId: "Mac1") { (result) in
                         switch result {
                         case .success:
                             break
@@ -75,8 +75,8 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.download(appId: "testApp", versionId: "1") { (_) in
-                        downloader.download(appId: "testApp", versionId: "2") { (_) in }
+                    downloader.verifyAndDownload(appId: "testApp", versionId: "1") { (_) in
+                        downloader.verifyAndDownload(appId: "testApp", versionId: "2") { (_) in }
                     }
 
                     let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "testApp", and: "2")
@@ -102,7 +102,7 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.download(appId: "Apple", versionId: "Mac") { (result) in
+                    downloader.verifyAndDownload(appId: "Apple", versionId: "Mac") { (result) in
                         switch result {
                         case .success:
                             break
@@ -130,7 +130,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var testError: NSError?
-                    downloader.download(appId: "Apple", versionId: "MacFails") { (result) in
+                    downloader.verifyAndDownload(appId: "Apple", versionId: "MacFails") { (result) in
                         switch result {
                         case .success:
                             break
@@ -151,7 +151,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     mockAPIClient.data = nil
                     var testError: NSError?
-                    downloader.download(appId: "Apple", versionId: "Mac") { (result) in
+                    downloader.verifyAndDownload(appId: "Apple", versionId: "Mac") { (result) in
                         switch result {
                         case .success:
                             break
@@ -185,7 +185,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var isDownloaded: Bool = false
-                    downloader.download(appId: appId, versionId: versionId) { (result) in
+                    downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
                         switch result {
                         case .success:
                             miniAppStatus.setDownloadStatus(true, appId: appId, versionId: versionId)
@@ -214,7 +214,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var version: String?
-                    downloader.download(appId: appId, versionId: versionId) { (result) in
+                    downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
                         switch result {
                         case .success:
                             miniAppStatus.setDownloadStatus(true, appId: appId, versionId: versionId)
@@ -237,7 +237,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var version: String?
-                    downloader.download(appId: appId, versionId: versionId) { (result) in
+                    downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
                         switch result {
                         case .success:
                             miniAppStatus.setDownloadStatus(true, appId: appId, versionId: versionId)
