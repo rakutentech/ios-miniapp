@@ -96,11 +96,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     func getLocationInfo() -> String {
         return  "{\"coords\":{\"latitude\":\(locationManager?.location?.coordinate.latitude ?? 0)" +
         ",\"longitude\":\(locationManager?.location?.coordinate.longitude ?? 0)" +
-        ", \"altitude\":\(locationManager?.location?.altitude ?? 0)" +
-        ", \"altitudeAccuracy\":\(locationManager?.location?.verticalAccuracy ?? 0)" +
+        ", \"altitude\":\(locationManager?.location?.altitude ?? "null" as Any)" +
+        ", \"altitudeAccuracy\":\(locationManager?.location?.verticalAccuracy ?? "null" as Any)" +
         ", \"accuracy\":\(locationManager?.location?.horizontalAccuracy ?? 0)" +
-        ", \"speed\":\(locationManager?.location?.speed ?? 0)" +
-        ", \"heading\":\(locationManager?.location?.course ?? 0)" +
+        ", \"speed\":\(locationManager?.location?.speed ?? "null" as Any)" +
+        ", \"heading\":\(locationManager?.location?.course ?? "null" as Any)" +
         "}, \"timestamp\":\(Date().epochInMilliseconds)}"
     }
 
