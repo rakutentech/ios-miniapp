@@ -20,18 +20,20 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>RMAIsTestMode</key>
-	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Demo app helps you find more information near you</string>
 	<key>RASApplicationIdentifier</key>
-	<string>RAS_APPLICATION_IDENTIFIER</string>
+	<string>$(RAS_APPLICATION_IDENTIFIER)</string>
 	<key>RASProjectSubscriptionKey</key>
-	<string>RAS_SUBSCRIPTION_KEY</string>
+	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY)</string>
 	<key>RMAAPIEndpoint</key>
-	<string>https://www.example.com</string>
+	<string>$(RMA_API_ENDPOINT)</string>
 	<key>RMAHostAppUserAgentInfo</key>
 	<string>MiniApp Demo App</string>
+	<key>RMAIsTestMode</key>
+	<false/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -45,7 +47,5 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Demo app helps you find more information near you</string>
 </dict>
 </plist>
