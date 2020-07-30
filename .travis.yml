@@ -2,6 +2,7 @@ language: swift
 xcode_workspace: MiniApp.xcworkspace
 xcode_scheme: Tests
 osx_image: xcode11.2
+os: osx
 
 cache:
   - bundler
@@ -84,8 +85,9 @@ after_success:
 deploy:
   # Deploy Docs to Github Pages when tagged as release
   provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
+  strategy: git
+  cleanup: false
+  token: $GITHUB_TOKEN
   keep_history: true
   local_dir: docs
   on:
