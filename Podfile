@@ -12,3 +12,7 @@ target 'MiniApp_Example' do
     pod 'Nimble'
   end
 end
+
+post_install do |installer|
+  system("./configure-secrets.sh")
+end
