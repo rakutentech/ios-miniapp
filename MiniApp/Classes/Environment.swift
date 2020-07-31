@@ -52,7 +52,7 @@ internal class Environment {
     }
 
     var hostAppUserAgentInfo: String {
-        return value(for: .none, fallback: .hostAppUserAgentInfo)
+        return bundle.value(for: Key.hostAppUserAgentInfo.rawValue) ?? bundle.valueNotFound
     }
 
     var baseUrl: URL? {
