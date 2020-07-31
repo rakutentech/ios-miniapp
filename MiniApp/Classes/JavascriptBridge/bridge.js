@@ -114,6 +114,24 @@ MiniAppBridge.requestPermission = function(permissionType) {
     );
   });
 };
+
+/**
+ Below code will override the navigator.geolocation.getCurrentPosition method for only iOS
+ */
+if (isPlatform.iOS()) {
+    navigator.geolocation.getCurrentPosition = function(success, error, options) {
+        return MiniAppBridge.exec(
+            "getCurrentPosition",
+            {locationOptions: options},
+            function(value) {
+                var parsedData = JSON.parse(value)
+                success(parsedData)
+            },
+            error
+        );
+    };
+}
+
 window.MiniAppBridge = MiniAppBridge;
 
 // Exported for unit testing
