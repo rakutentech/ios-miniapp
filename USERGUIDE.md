@@ -1,0 +1,154 @@
+# Configuration
+
+In your project configuration .plist you should add below Key/Value :
+
+| Key                          | Type    | Description                                                     | Optional| Default |
+| :----                        | :----:  | :----                                                           |:----:   |:----:   |
+| RASApplicationIdentifier     | String  | `Set your MiniApp host application identifier`                  |NO       |`none`   |
+| RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
+| RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
+| RMAIsTestMode                | String  | `Loading mode of the API (`true`: testing, `false`: published)` |NO       |false    |
+| RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent. The value specified in the plist is retrieved only at the build time.` |YES      |`none`   |
+
+If you don't want to use project settings, you have to pass this information one by one to the `Config.userDefaults` using a `Config.Key` as key:
+
+```swift
+Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawValue)
+```
+
+<div id="usage"></div>
+
+# Usage
+
+* [Overriding configuration on runtime](#runtime-conf)
+* [Load the Mini App list](#load-miniapp-list)
+* [Get a MiniAppInfo](#get-mini-appinfo)
+* [Create a MiniApp](#create-mini-app)
+* [Communicate with MiniApp](#MiniAppMessageProtocol)
+* [Customize history navigation](#navigation)
+
+<div id="runtime-conf"></div>
+
+### Overriding configuration on runtime
+
+Every call to the API can be done with default parameters retrieved from the project .plist configuration file, or by providing a `MiniAppSdkConfig` object during the call. Here is a simple example class we use to create the configuration in samples below:
+
+```swift
+class Config: NSObject {
+    class func getCurrent() -> MiniAppSdkConfig {
+        return MiniAppSdkConfig(baseUrl: "https://your.custom.url"
+                                rasAppId: "your_RAS_App_id",
+                                subscriptionKey: "your_subscription_key",
+                                hostAppVersion: "your_custom_version",
+                                isTestMode: true")
+    }
+}
+```
+*NOTE:* `RMAHostAppUserAgentInfo` cannot be configured at run time.
+
+
+<div id="load-miniapp-list"></div>
+
+### Load the `MiniApp` list:
+
+MiniApp library calls are done via the `MiniApp.shared()` singleton with or without a `MiniAppSdkConfig` instance (you can get the current one with `Config.getCurrent()`). If you don't provide a config instance, values in custom iOS target properties will be used by default. 
+
+```swift
+MiniApp.shared().list { (result) in
+	...
+}
+```
+
+or
+
+```swift
+MiniApp.shared(with: Config.getCurrent()).list { (result) in
+	...
+}
+```
+<div id="get-mini-appinfo"></div>
+
+### Getting a `MiniAppInfo` :
+
+```swift
+MiniApp.shared().info(miniAppId: miniAppID) { (result) in
+	...
+}
+```
+
+or
+
+```swift
+MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) in
+	...
+}
+```
+<div id="create-mini-app"></div>
+
+### Create a MiniApp for the given `MiniAppInfo` object :
+
+```swift
+MiniApp.shared().create(appInfo: info, completionHandler: { (result) in
+	switch result {
+            case .success(let miniAppDisplay):
+                let view = miniAppDisplay.getMiniAppView()
+                view.frame = self.view.bounds
+                self.view.addSubview(view)
+            case .failure(let error):
+                print("Error: ", error.localizedDescription)
+            }
+}, messageInterface: self)
+```
+<div id="MiniAppMessageProtocol"></div>
+
+### Implement the MiniAppMessageProtocol in your View Controller
+
+The `MiniAppMessageProtocol` is used for passing messages between the Mini App (JavaScript) and the Host App (your native iOS App) and vice versa. Your App must provide the implementation for these functions.
+
+```swift
+extension ViewController: MiniAppMessageProtocol {
+    func getUniqueId() -> String {
+        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+            return ""
+        }
+        return deviceId
+    }
+}
+```
+<div id="navigation"></div>
+
+### Add a web navigation interface to the MiniApp view
+
+MiniApp iOS SDK provides a fully customizable way to implement a navigation interface inside your html pages with a `MiniAppNavigationConfig` object. The class takes 3 arguments:
+
+- `navigationBarVisibility` : 
+    - never = the UI will never be shown
+    - auto = navigation UI is only shown when a back or forward action is available
+    - always = navigation UI is always present
+- `navigationDelegate` : A delegate that will receive MiniApp view instructions about available navigation options
+- `customNavigationView` : A view implementing `MiniAppNavigationDelegate` that will be overlayed to the bottom of the MiniApp view
+
+```swift
+let navConfig = MiniAppNavigationConfig(
+                    navigationBarVisibility: .always,
+                    navigationDelegate: myCustomView,
+                    customNavigationView: mCustomView)
+
+MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(miniAppId: miniAppID) { (result) in
+...
+}
+```
+
+<div id="sample-app"></div>
+
+# Example
+
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
+
+### Custom parameters
+
+In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (`RASApplicationIdentifier`, `RASProjectSubscriptionKey`) or by taping the top right configuration icon in the example application. Also we don't currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (`RMAAPIEndpoint`)
+
+### Testing mode
+
+The SDK can be configured to load MiniApps in 2 modes : Published mode and Testing mode. Published mode only allows access to the last published version of your MiniApps, whereas Testing mode allows you to load all your MiniApps versions, as long as they are in `Testing` state on RAS console. To configure the loading mode, you can either do it in the .plist file with the configuration variable `RMAIsTestMode`, or by taping the top right configuration icon in the example application.

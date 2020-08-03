@@ -6,7 +6,7 @@ internal class RealMiniAppView: UIView {
     internal var miniAppTitle: String
     internal var navBar: (UIView & MiniAppNavigationDelegate)?
     internal var webViewBottomConstraintStandalone: NSLayoutConstraint?
-    internal var wevViewBottonConstraintWithNavBar: NSLayoutConstraint?
+    internal var webViewBottonConstraintWithNavBar: NSLayoutConstraint?
     internal var navBarVisibility: MiniAppNavigationVisibility
     internal var isNavBarCustom = false
 
@@ -49,7 +49,7 @@ internal class RealMiniAppView: UIView {
         webView.layoutAttachLeading()
         webView.layoutAttachTrailing()
         if !isNavBarCustom {
-            wevViewBottonConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
+            webViewBottonConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
             webViewBottomConstraintStandalone?.isActive = false
         }
 
@@ -70,7 +70,7 @@ internal class RealMiniAppView: UIView {
         navigationDelegate?.miniAppNavigation(canUse: actionsAvailable)
         if actionsAvailable.count == 0 && navBarVisibility != .never {
             webViewBottomConstraintStandalone?.isActive = navBarVisibility == .auto
-            wevViewBottonConstraintWithNavBar?.isActive = navBarVisibility == .always
+            webViewBottonConstraintWithNavBar?.isActive = navBarVisibility == .always
             navBar?.removeFromSuperview()
         } else {
             if let nav = navBar {
@@ -83,13 +83,13 @@ internal class RealMiniAppView: UIView {
                     addSubview(nav)
                     nav.translatesAutoresizingMaskIntoConstraints = false
                     webViewBottomConstraintStandalone?.isActive = false || isNavBarCustom
-                    wevViewBottonConstraintWithNavBar?.isActive = true && !isNavBarCustom
+                    webViewBottonConstraintWithNavBar?.isActive = true && !isNavBarCustom
                     nav.layoutAttachBottom()
                     nav.layoutAttachLeading()
                     nav.layoutAttachTrailing()
                 }
             } else {
-                wevViewBottonConstraintWithNavBar?.isActive = false
+                webViewBottonConstraintWithNavBar?.isActive = false
                 webViewBottomConstraintStandalone?.isActive = true
             }
         }
