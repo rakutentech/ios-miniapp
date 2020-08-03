@@ -92,7 +92,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppCell", for: indexPath) as? MiniAppCell {
             let miniAppDetail = miniApps?[miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row]
-            cell.titleLabel?.text = miniAppDetail?.displayName
             cell.titleLabel?.text = miniAppDetail?.displayName ?? "Null"
             cell.detailedTextLabel?.text = "Version: " + (miniAppDetail?.version.versionTag ?? "N/A")
             cell.icon?.image = UIImage(named: "image_placeholder")

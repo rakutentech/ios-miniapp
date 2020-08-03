@@ -70,7 +70,7 @@ In your project configuration .plist you should add below Key/Value :
 | RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
 | RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
 | RMAIsTestMode                | String  | `Loading mode of the API (`true`: testing, `false`: published)` |NO       |false    |
-| RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent` |YES      |`none`   |
+| RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent. The value specified in the plist is retrieved only at the build time.` |YES      |`none`   |
 
 If you don't want to use project settings, you have to pass this information one by one to the `Config.userDefaults` using a `Config.Key` as key:
 
@@ -102,11 +102,12 @@ class Config: NSObject {
                                 rasAppId: "your_RAS_App_id",
                                 subscriptionKey: "your_subscription_key",
                                 hostAppVersion: "your_custom_version",
-                                isTestMode: true,
-                                hostAppUserAgentInfo: "host_app_name_and_version")
+                                isTestMode: true")
     }
 }
 ```
+*NOTE:* `RMAHostAppUserAgentInfo` cannot be configured at run time.
+
 
 <div id="load-miniapp-list"></div>
 
@@ -184,7 +185,7 @@ MiniApp iOS SDK provides a fully customizable way to implement a navigation inte
 
 - `navigationBarVisibility` : 
     - never = the UI will never be shown
-    - auto = navigation UI is only shown when a back or forward action is availabe
+    - auto = navigation UI is only shown when a back or forward action is available
     - always = navigation UI is always present
 - `navigationDelegate` : A delegate that will receive MiniApp view instructions about available navigation options
 - `customNavigationView` : A view implementing `MiniAppNavigationDelegate` that will be overlayed to the bottom of the MiniApp view
