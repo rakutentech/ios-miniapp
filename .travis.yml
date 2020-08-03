@@ -42,7 +42,7 @@ after_success:
   --module MiniApp
   --source-directory MiniApp
   --podspec MiniApp.podspec
-  --readme README.md
+  --readme USERGUIDE.md
 # Deploy Simulator build to App Center when merged to master (this script doesn't work from the `deploy` section)
 # Deploys to STG group if merging to master or deploys to prod group if this is a release
 - |

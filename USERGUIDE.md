@@ -1,4 +1,27 @@
-# Requirements
+# MiniApp
+
+This open-source library allows you to integrate Mini App ecosystem into your iOS applications. 
+Mini App SDK also facilitates communication between a mini app and the host app via a message bridge.
+
+## Features
+
+- Load MiniApp list
+- Load MiniApp metadata
+- Create a MiniApp view
+- Facilitate comm between host app and mini app
+
+All the MiniApp files downloaded by the MiniApp iOS library are cached locally
+
+## Getting started
+
+* [Requirements](#requirements)
+* [Documentation](https://rakutentech.github.io/ios-miniapp/)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Usage](#usage)
+* [Sample App](#example)
+
+## Requirements
 
 This module supports **iOS 11.0 and above**. It has been tested on iOS 11.0 and above.
 
@@ -12,7 +35,15 @@ In order to run your MiniApp you will have to provide the following,
 * Preference, if you want to make use of Test API Endpoints in your application or not
 
 
-# Configuration
+## Installation
+
+Mini App SDK is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
+
+```ruby
+pod 'MiniApp'
+```
+
+## Configuration
 
 In your project configuration .plist you should add below Key/Value :
 
@@ -21,7 +52,6 @@ In your project configuration .plist you should add below Key/Value :
 | RASApplicationIdentifier     | String  | `Set your MiniApp host application identifier`                  |NO       |`none`   |
 | RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
 | RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
-| RMAIsTestMode                | String  | `Loading mode of the API (`true`: testing, `false`: published)` |NO       |false    |
 | RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent. The value specified in the plist is retrieved only at the build time.` |YES      |`none`   |
 
 If you don't want to use project settings, you have to pass this information one by one to the `Config.userDefaults` using a `Config.Key` as key:
@@ -32,7 +62,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 
 <div id="usage"></div>
 
-# Usage
+## Usage
 
 * [Overriding configuration on runtime](#runtime-conf)
 * [Load the Mini App list](#load-miniapp-list)
@@ -155,7 +185,7 @@ MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(mi
 
 <div id="sample-app"></div>
 
-# Example
+## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
@@ -163,6 +193,12 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (`RASApplicationIdentifier`, `RASProjectSubscriptionKey`) or by taping the top right configuration icon in the example application. Also we don't currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (`RMAAPIEndpoint`)
 
-### Testing mode
+## License
 
-The SDK can be configured to load MiniApps in 2 modes : Published mode and Testing mode. Published mode only allows access to the last published version of your MiniApps, whereas Testing mode allows you to load all your MiniApps versions, as long as they are in `Testing` state on RAS console. To configure the loading mode, you can either do it in the .plist file with the configuration variable `RMAIsTestMode`, or by taping the top right configuration icon in the example application.
+See the *[LICENSE](https://github.com/rakutentech/ios-miniapp/blob/master/LICENSE)* file for more info.
+
+<div id="change-log"></div>
+
+## Changelog
+
+See the full [CHANGELOG](https://github.com/rakutentech/ios-miniapp/blob/master/CHANGELOG.md).
