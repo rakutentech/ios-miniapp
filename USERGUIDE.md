@@ -1,3 +1,17 @@
+# Requirements
+
+This module supports **iOS 11.0 and above**. It has been tested on iOS 11.0 and above.
+
+It is written in Swift 5.0 and can be used in compatible Xcode versions.
+
+In order to run your MiniApp you will have to provide the following,
+
+* MiniApp host application identifier (RASApplicationIdentifier)
+* Subscription key (RASProjectSubscriptionKey)
+* Base URL for API requests to the library (RMAAPIEndpoint)
+* Preference, if you want to make use of Test API Endpoints in your application or not
+
+
 # Configuration
 
 In your project configuration .plist you should add below Key/Value :

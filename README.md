@@ -20,30 +20,12 @@ All the MiniApp files downloaded by the MiniApp iOS library are cached locally
 
 # Getting started
 
-* [Requirements](#requirements)
+* [Requirements](USERGUIDE.md#requirements)
 * [Documentation](https://rakutentech.github.io/ios-miniapp/)
 * [Installation](#installation)
-* [Configuration](#configuration)
-* [Usage](#usage)
-* [Sample App](#sample-app)
-* [Changelog](#change-log)
-
-<div id="requirements"></div>
-
-## Requirements
-
-This module supports **iOS 11.0 and above**. It has been tested on iOS 11.0 and above.
-
-It is written in Swift 5.0 and can be used in compatible Xcode versions.
-
-In order to run your MiniApp you will have to provide the following,
-
-* MiniApp host application identifier (RASApplicationIdentifier)
-* Subscription key (RASProjectSubscriptionKey)
-* Base URL for API requests to the library (RMAAPIEndpoint)
-* Preference, if you want to make use of Test API Endpoints in your application or not
-
-<div id="installation"></div>
+* [Configuration](USERGUIDE.md#configuration)
+* [Usage](USERGUIDE.md#usage)
+* [Sample App](USERGUIDE.md#example)
 
 # Installation
 
@@ -52,11 +34,10 @@ Mini App SDK is available through [CocoaPods](https://cocoapods.org). To install
 ```ruby
 pod 'MiniApp'
 ```
-<div id="configuration"></div>
 
+How to implement on your iOS application? Check the [USERGUIDE](USERGUIDE.md)
 
-
-## License
+# License
 
 See the *[LICENSE](https://github.com/rakutentech/ios-miniapp/blob/master/LICENSE)* file for more info.
 
