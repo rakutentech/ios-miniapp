@@ -195,7 +195,7 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                     bar?.buttonTaped(bar!.backButton)
                     bar?.buttonTaped(bar!.forwardButton)
                     bar?.buttonTaped(UIBarButtonItem())
-                    expect(miniAppView.webViewBottonConstraintWithNavBar?.isActive).to(beTrue())
+                    expect(miniAppView.webViewBottomConstraintWithNavBar?.isActive).to(beTrue())
                 }
             }
             context("when initialized with navigation parameter set to auto") {
@@ -203,7 +203,7 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                     let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface, displayNavBar: .auto)
                     miniAppView.refreshNavBar()
                     expect(miniAppView.navBar).toNot(beNil())
-                    expect(miniAppView.webViewBottonConstraintWithNavBar?.isActive).toNot(beTrue())
+                    expect(miniAppView.webViewBottomConstraintWithNavBar?.isActive).toNot(beTrue())
                 }
             }
         }
