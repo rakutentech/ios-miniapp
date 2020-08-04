@@ -33,7 +33,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when handleBridgeMessage receive invalid action, valid id") {
                 it("will return error") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
-                    let requestParam = RequestParameters(permission: "location")
+                    let requestParam = RequestParameters(permission: "location", locationOptions: nil)
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
@@ -42,7 +42,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when handleBridgeMessage receive valid action, invalid id") {
                 it("will return error") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
-                    let requestParam = RequestParameters(permission: "location")
+                    let requestParam = RequestParameters(permission: "location", locationOptions: nil)
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
@@ -92,6 +92,24 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"ppp\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventually(equal("invalidPermissionType"))
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid getCurrentPosition command") {
+                 it("will return valid latitude and longitude values") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
+                    mockMessageInterface.locationAllowed = false
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.response).toEventually(contain("latitude"))
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid getCurrentPosition command") {
+                 it("will return valid latitude and longitude values") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
+                    mockMessageInterface.locationAllowed = false
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.response).toEventually(contain("longitude"))
                  }
             }
         }
