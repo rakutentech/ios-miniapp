@@ -29,12 +29,12 @@ internal class KeyStore {
             write(keys: keys)
         }
     }
-    
+
     func removeKey(for keyId: String) {
         var keysDic = keys()
-        
+
         keysDic?[keyId] = nil
-        
+
         if let keys = keysDic {
             write(keys: keys)
         }

@@ -2,37 +2,38 @@ import CommonCrypto
 
 internal class MiniAppCacheVerifier {
     let keystore = KeyStore()
-    
+
     func verify(appId: String) -> Bool {
         let cachedFilesHash = calculateHash(appId: appId)
         let storedHash = keystore.key(for: appId) ?? ""
-                
+
         return cachedFilesHash == storedHash
     }
-    
+
     func storeHash(for appId: String) {
         keystore.removeKey(for: appId)
         keystore.addKey(key: calculateHash(appId: appId), for: appId)
     }
-    
+
     private func calculateHash(appId: String) -> String {
         guard let directory = FileManager.getMiniAppVersionDirectory(usingAppId: appId) else {
             return ""
         }
+
         guard let enumerator = FileManager.default.enumerator(
-                at: directory,
-                includingPropertiesForKeys: [.creationDateKey, .isDirectoryKey],
-                options: [],
-                errorHandler: { (URL, Error) -> Bool in
-                    MiniAppLogger.d("There was an error while processing the Mini App files so hash generation has failed.")
-                    return false
+            at: directory,
+            includingPropertiesForKeys: [.creationDateKey, .isDirectoryKey],
+            options: [],
+            errorHandler: { (url, error) -> Bool in
+                MiniAppLogger.e("There was an error while processing the Mini App files \(url.absoluteString) so hash generation has failed.", error)
+                return false
             }) else {
             return ""
         }
 
         var hash = ""
         for case let url as URL in enumerator {
-            if (url.hasDirectoryPath) {
+            if url.hasDirectoryPath {
                 continue
             }
 
@@ -43,9 +44,9 @@ internal class MiniAppCacheVerifier {
     }
 
     private func sha256(string: String) -> String {
-        guard let messageData = string.data(using:String.Encoding.utf8) else { return "" }
+        guard let messageData = string.data(using: String.Encoding.utf8) else { return "" }
         var digestData = Data(count: Int(CC_SHA256_DIGEST_LENGTH))
-        
+
         _ = digestData.withUnsafeMutableBytes { (digestBytes) -> Bool in
             messageData.withUnsafeBytes({ (messageBytes) -> Bool in
                 _ = CC_SHA256(messageBytes.baseAddress, CC_LONG(messageData.count), digestBytes.bindMemory(to: UInt8.self).baseAddress)
