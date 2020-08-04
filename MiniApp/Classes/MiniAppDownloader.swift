@@ -167,7 +167,7 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
                 }
             } catch let err {
                 MiniAppLogger.e("error unzipping archive", err)
-                urlToDirectoryMap[destinationPath]?.completionHanlder(.failure(err))
+                urlToDirectoryMap[destinationPath]?.completionHandler(.failure(err))
             }
 
             do {
