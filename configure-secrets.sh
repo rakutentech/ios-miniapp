@@ -1,5 +1,14 @@
 #!/bin/sh -e
 
+#In order to have the // in https://, we need to split it with an empty variable substitution via $()
+secureDoubleSlashForXCConfig() {
+	ENDPOINT=$1
+	URL_DOUBLE_SLASH_TO_BE_REPLACED="\/\/"
+	BY_2_SLASHES_SPLITTED_BY_EMPTY_VARIABLE="/\$()/"
+
+	SECURE_DOUBLE_SLASH_FOR_XCCONFIG_RESULT="${ENDPOINT/$URL_DOUBLE_SLASH_TO_BE_REPLACED/$BY_2_SLASHES_SPLITTED_BY_EMPTY_VARIABLE}" 
+}
+
 NOCOLOR='\033[0m'
 RED='\033[0;31m'
 SECRETS_FILE=../MiniApp-Secrets.xcconfig
@@ -17,9 +26,8 @@ do
   fi
 done
 
-ENDPOINT=${RMA_API_ENDPOINT:=https://www.example.com}
-
-RMA_API_ENDPOINT_SECRET="${ENDPOINT/\/\///\$()/}" 
+secureDoubleSlashForXCConfig ${RMA_API_ENDPOINT:=https://www.example.com}
+RMA_API_ENDPOINT_SECRET=$SECURE_DOUBLE_SLASH_FOR_XCCONFIG_RESULT
 RAS_PROJECT_SUBSCRIPTION_KEY_SECRET=${RAS_PROJECT_SUBSCRIPTION_KEY:=RAS_PROJECT_SUBSCRIPTION_KEY}
 RAS_APPLICATION_IDENTIFIER_SECRET=${RAS_APPLICATION_IDENTIFIER:=RAS_APPLICATION_IDENTIFIER}
 
@@ -33,7 +41,7 @@ echo "//" >> $SECRETS_FILE
 echo "// Add new secrets configuration in ./configure-secrets.sh" >> $SECRETS_FILE
 echo "//" >> $SECRETS_FILE
 echo "// In order to have the // in https://, we need to split it with an empty" >> $SECRETS_FILE
-echo "// variable substitution via \$() e.g. ROOT_URL = https:/\$()/www.endpoint.com" >> $SECRETS_FILE
+echo "// variable substitution via \$() e.g. ROOT_URL = https:/\$()/www.example.com" >> $SECRETS_FILE
 
 # Set secrets from environment variables
 echo "RMA_API_ENDPOINT = $RMA_API_ENDPOINT_SECRET" >> $SECRETS_FILE
