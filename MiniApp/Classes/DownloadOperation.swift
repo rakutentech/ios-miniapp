@@ -3,11 +3,11 @@ class DownloadOperation {
 
     var fileStoragePath: URL
     var miniAppDirectoryPath: URL
-    var completionHanlder: DownloadCompletionHandler
+    var completionHandler: DownloadCompletionHandler
 
-    init(fileStoragePath: URL, miniAppDirectoryPath: URL, completionHanlder: @escaping DownloadCompletionHandler) {
+    init(fileStoragePath: URL, miniAppDirectoryPath: URL, completionHandler: @escaping DownloadCompletionHandler) {
         self.fileStoragePath = fileStoragePath
         self.miniAppDirectoryPath = miniAppDirectoryPath
-        self.completionHanlder = completionHanlder
+        self.completionHandler = completionHandler
     }
 }
