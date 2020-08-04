@@ -162,7 +162,9 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
             do {
                 try FileManager.default.unzipItem(at: filePath, to: directory, skipCRC32: true)
                 MiniAppLogger.d("MiniApp unzip time: \(Date().timeIntervalSince(time))")
-                if !FileManager.default.fileExists(atPath: "\(directory)/\(Constants.rootFileName)") {
+                let path = "\(directory.path)/\(Constants.rootFileName)"
+                MiniAppLogger.d("MiniApp unzip file: \(path)")
+                if !FileManager.default.fileExists(atPath: path) {
                     throw MiniAppArchiveError.noRoot
                 }
             } catch let err {
