@@ -23,7 +23,7 @@ public class MiniAppNavigationConfig {
 
 // MARK: - Delegates
 
-/// A delegate used by Mini App view to communicate about available actions based on current user interractions on the Mini App
+/// A delegate used by Mini App view to communicate about available actions based on current user interactions on the Mini App
 public protocol MiniAppNavigationDelegate: class {
     func miniAppNavigation(canUse actions: [MiniAppNavigationAction])
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate)
@@ -31,7 +31,7 @@ public protocol MiniAppNavigationDelegate: class {
 
 /// A delegate implemented by the Mini App view to get the actions triggered by UI
 public protocol MiniAppNavigationBarDelegate: class {
-    /// Method to call when a user want to interract with Mini App navigation history
+    /// Method to call when a user want to interact with Mini App navigation history
     ///    - action: the action requested (go back or go forward)
     /// Returns if action has been triggered or not
     @discardableResult
@@ -47,7 +47,7 @@ public enum MiniAppNavigationAction {
 
 /// An enum used to provide `MiniAppNavigationConfig` visibility option
 ///    - never = the UI will never be shown
-///    - auto = navigation UI is only shown when a back or forward action is availabe
+///    - auto = navigation UI is only shown when a back or forward action is availablse
 ///    - always = navigation UI is always present
 public enum MiniAppNavigationVisibility {
     case never, auto, always
