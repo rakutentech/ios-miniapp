@@ -37,19 +37,19 @@ internal class MiniAppCacheVerifier {
                 continue
             }
 
-            hash += sha256(url: url)
+            hash += sha512(url: url)
         }
 
-        return sha256(string: hash)
+        return sha512(string: hash)
     }
 
-    private func sha256(string: String) -> String {
+    private func sha512(string: String) -> String {
         guard let messageData = string.data(using: String.Encoding.utf8) else { return "" }
-        var digestData = Data(count: Int(CC_SHA256_DIGEST_LENGTH))
+        var digestData = Data(count: Int(CC_SHA512_DIGEST_LENGTH))
 
         _ = digestData.withUnsafeMutableBytes { (digestBytes) -> Bool in
             messageData.withUnsafeBytes({ (messageBytes) -> Bool in
-                _ = CC_SHA256(messageBytes.baseAddress, CC_LONG(messageData.count), digestBytes.bindMemory(to: UInt8.self).baseAddress)
+                _ = CC_SHA512(messageBytes.baseAddress, CC_LONG(messageData.count), digestBytes.bindMemory(to: UInt8.self).baseAddress)
                 return true
             })
         }
@@ -57,7 +57,7 @@ internal class MiniAppCacheVerifier {
         return digestData.base64EncodedString()
     }
 
-    private func sha256(url: URL) -> String {
+    private func sha512(url: URL) -> String {
         do {
             let bufferSize = 1024 * 1024
             let file = try FileHandle(forReadingFrom: url)
@@ -65,14 +65,14 @@ internal class MiniAppCacheVerifier {
                 file.closeFile()
             }
 
-            var context = CC_SHA256_CTX()
-            CC_SHA256_Init(&context)
+            var context = CC_SHA512_CTX()
+            CC_SHA512_Init(&context)
 
             while autoreleasepool(invoking: {
                 let data = file.readData(ofLength: bufferSize)
                 if data.count > 0 {
                     _ = data.withUnsafeBytes { (digestBytes) -> Bool in
-                        _ = CC_SHA256_Update(&context, digestBytes.bindMemory(to: UInt8.self).baseAddress, numericCast(data.count))
+                        _ = CC_SHA512_Update(&context, digestBytes.bindMemory(to: UInt8.self).baseAddress, numericCast(data.count))
                         return true
                     }
                     return true
@@ -81,15 +81,15 @@ internal class MiniAppCacheVerifier {
                 }
             }) { }
 
-            var digest = Data(count: Int(CC_SHA256_DIGEST_LENGTH))
+            var digest = Data(count: Int(CC_SHA512_DIGEST_LENGTH))
             _ = digest.withUnsafeMutableBytes { (digestBytes) -> Bool in
-                _ = CC_SHA256_Final(digestBytes.bindMemory(to: UInt8.self).baseAddress, &context)
+                _ = CC_SHA512_Final(digestBytes.bindMemory(to: UInt8.self).baseAddress, &context)
                 return true
             }
 
             return digest.base64EncodedString()
         } catch {
-            MiniAppLogger.d("Failed to calculate sha256 hash for Mini App files.")
+            MiniAppLogger.e("Failed to calculate sha512 hash for Mini App files.")
             return ""
         }
     }
