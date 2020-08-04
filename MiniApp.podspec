@@ -21,4 +21,6 @@ Pod::Spec.new do |s|
   s.resources = 'MiniApp/**/*.{xcassets,js,pdf,xib}'
   s.resource_bundle = {"Localization" => ["MiniApp/*.lproj/*.strings"]}
 
+  s.dependency 'RSDKUtils', '>= 1.1.0'
+
 end

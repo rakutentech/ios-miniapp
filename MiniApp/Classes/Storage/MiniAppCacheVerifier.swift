@@ -1,4 +1,5 @@
 import CommonCrypto
+import RSDKUtils
 
 internal class MiniAppCacheVerifier {
     let keystore = KeyStore()
