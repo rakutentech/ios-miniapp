@@ -1,9 +1,11 @@
 PODS:
   - MiniApp (1.2.0):
     - RSDKUtils (>= 1.1.0)
+    - ZIPFoundation
   - Nimble (8.1.1)
   - Quick (3.0.0)
   - RSDKUtils (1.1.0)
+  - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
   - MiniApp (from `./`)
@@ -15,16 +17,18 @@ SPEC REPOS:
     - Nimble
     - Quick
     - RSDKUtils
+    - ZIPFoundation
 
 EXTERNAL SOURCES:
   MiniApp:
     :path: "./"
 
 SPEC CHECKSUMS:
-  MiniApp: 864dcbaf70be8eaef0f6e09623392aaa62b0f1d9
+  MiniApp: e4eb95b14b6ff6b7ad79bbb8020f68aec76c6d8d
   Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
   Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
   RSDKUtils: 9940b99fa0494181b8ee2cfa2ac742bb0958b984
+  ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
 PODFILE CHECKSUM: ca9d5c9f0e66d29311ef20fb6d4ac797977bd6bf
 
