@@ -9,10 +9,12 @@
 /* Begin PBXBuildFile section */
 		183AF07A24CE6410000ABCBF /* Config-release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 183AF07824CE640F000ABCBF /* Config-release.xcconfig */; };
 		183AF07E24CE6430000ABCBF /* Config-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 183AF07C24CE642F000ABCBF /* Config-debug.xcconfig */; };
+		183AF08124CE8D7D000ABCBF /* SmallMAerror.zip in Resources */ = {isa = PBXBuildFile; fileRef = 183AF08024CE8D7D000ABCBF /* SmallMAerror.zip */; };
 		183AF08324CFCF37000ABCBF /* MiniAppStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183AF08224CFCF37000ABCBF /* MiniAppStorageTests.swift */; };
 		183E680E2499D49A00BAADB2 /* MiniAppLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E680C2499D42300BAADB2 /* MiniAppLoggerTests.swift */; };
 		185DBD5E24AD50C300CD2094 /* Number+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185DBD5D24AD50C300CD2094 /* Number+MiniApp.swift */; };
 		185DBD6024AD5A8400CD2094 /* Array+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185DBD5F24AD5A8400CD2094 /* Array+MiniApp.swift */; };
+		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		1867996B243EF6C200CD6A8E /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1867996A243EF6C200CD6A8E /* ImageCache.swift */; };
 		18694AD22449883300F97BAA /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18694AD12449883300F97BAA /* UIImageView+Extensions.swift */; };
 		18694AD62449891800F97BAA /* ViewController+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18694AD52449891800F97BAA /* ViewController+MiniApp.swift */; };
@@ -67,10 +69,12 @@
 /* Begin PBXFileReference section */
 		183AF07824CE640F000ABCBF /* Config-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-release.xcconfig"; sourceTree = "<group>"; };
 		183AF07C24CE642F000ABCBF /* Config-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-debug.xcconfig"; sourceTree = "<group>"; };
+		183AF08024CE8D7D000ABCBF /* SmallMAerror.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMAerror.zip; sourceTree = "<group>"; };
 		183AF08224CFCF37000ABCBF /* MiniAppStorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppStorageTests.swift; sourceTree = "<group>"; };
 		183E680C2499D42300BAADB2 /* MiniAppLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppLoggerTests.swift; sourceTree = "<group>"; };
 		185DBD5D24AD50C300CD2094 /* Number+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Number+MiniApp.swift"; path = "Example/Number+MiniApp.swift"; sourceTree = SOURCE_ROOT; };
 		185DBD5F24AD5A8400CD2094 /* Array+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Array+MiniApp.swift"; path = "Example/Array+MiniApp.swift"; sourceTree = SOURCE_ROOT; };
+		185DBD6124B2A06300CD2094 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
 		1867996A243EF6C200CD6A8E /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCache.swift; path = ../Example/ImageCache.swift; sourceTree = "<group>"; };
 		18694AD12449883300F97BAA /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImageView+Extensions.swift"; path = "Example/UIImageView+Extensions.swift"; sourceTree = SOURCE_ROOT; };
 		18694AD52449891800F97BAA /* ViewController+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ViewController+MiniApp.swift"; path = "Example/ViewController+MiniApp.swift"; sourceTree = SOURCE_ROOT; };
@@ -253,6 +257,8 @@
 		607FACE91AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				185DBD6124B2A06300CD2094 /* SmallMA.zip */,
+				183AF08024CE8D7D000ABCBF /* SmallMAerror.zip */,
 				607FACEA1AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -366,6 +372,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				183AF08124CE8D7D000ABCBF /* SmallMAerror.zip in Resources */,
+				185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
