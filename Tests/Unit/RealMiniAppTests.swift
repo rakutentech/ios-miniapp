@@ -154,7 +154,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -194,7 +194,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -228,7 +228,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -261,7 +261,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     realMiniApp.miniAppInfoFetcher = mockMiniAppInfoFetcher
@@ -297,7 +297,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)

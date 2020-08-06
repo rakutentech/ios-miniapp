@@ -3,7 +3,7 @@
  */
 struct UrlParser {
 
-    static let separatorKey: String = "map-published/"
+    static let separatorKey: String = "map-published-v2/"
     static let dropLimit = 2
 
     /**
