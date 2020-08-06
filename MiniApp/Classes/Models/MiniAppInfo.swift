@@ -1,7 +1,7 @@
 /// Model for a Mini App information
-public struct MiniAppInfo: Decodable {
+public struct MiniAppInfo: Codable {
     /// Unique identifier of a Miniapp
-    internal var id: String
+    public var id: String
     /// Name given for a Miniapp that will be displayed on the list
     public var displayName: String?
     /// App Icon associated for the Miniapp
@@ -18,7 +18,7 @@ public struct MiniAppInfo: Decodable {
 }
 
 /// Miniapp version information
-public struct Version: Decodable {
+public struct Version: Codable {
     /// Custom Tag name associated for every Miniapp which was given while uploading it in the platform
     public var versionTag: String
     /// Version number associated for every Miniapp which was given while uploading it in the platform
