@@ -13,7 +13,8 @@ internal class MiniAppLogger {
     /// Debug
     class func d(_ message: String) {
         #if DEBUG
-        print("🔍 \(message)")
+
+        print("🔍\(Date().timeIntervalSince1970) \(message)")
         #endif
     }
 

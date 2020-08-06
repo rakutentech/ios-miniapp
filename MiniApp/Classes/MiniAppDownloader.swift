@@ -1,10 +1,15 @@
 class MiniAppDownloader {
-
+    enum MiniAppArchiveError: Error {
+        case noRoot
+    }
     private var miniAppClient: MiniAppClient
     private var miniAppStorage: MiniAppStorage
     private var manifestDownloader: ManifestDownloader
     private var urlToDirectoryMap = [String: DownloadOperation]()
     private var miniAppStatus: MiniAppStatus
+    private var cacheVerifier: MiniAppCacheVerifier
+
+    private var time: Date
 
     private var queue: OperationQueue = {
         let operationQueue = OperationQueue()
@@ -19,30 +24,46 @@ class MiniAppDownloader {
         self.miniAppStorage = MiniAppStorage()
         self.manifestDownloader = manifestDownloader
         self.miniAppStatus = status
+        self.time = Date()
+        self.cacheVerifier = MiniAppCacheVerifier()
     }
 
-    func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
-        let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
-        if !isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId) {
-            self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
-                 switch result {
-                 case .success(let responseData):
-                     self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
-                         switch downloadResult {
-                         case .success:
-                             self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
+    func verifyAndDownload(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+        if isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId) {
+            if cacheVerifier.verify(appId: appId) {
+                let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+                completionHandler(.success(miniAppStoragePath))
+            } else {
+                MiniAppLogger.w("Cached Mini App did not pass the hash verification. The Mini App will be re-downloaded.")
 
-                             fallthrough
-                         default:
-                             completionHandler(downloadResult)
-                         }
-                     }
-                 case .failure(let error):
-                    completionHandler(.failure(error))
-                 }
-             }
+                self.miniAppStorage.cleanVersions(for: appId, differentFrom: "", status: self.miniAppStatus)
+                download(appId: appId, versionId: versionId, completionHandler: completionHandler)
+            }
         } else {
-            completionHandler(.success(miniAppStoragePath))
+            download(appId: appId, versionId: versionId, completionHandler: completionHandler)
+        }
+    }
+
+    private func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+        let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+        self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
+            switch result {
+            case .success(let responseData):
+                self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
+                    switch downloadResult {
+                    case .success:
+                        DispatchQueue.main.async {
+                            self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
+                            self.cacheVerifier.storeHash(for: appId)
+                        }
+                        fallthrough
+                    default:
+                        completionHandler(downloadResult)
+                    }
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
         }
     }
 
@@ -84,6 +105,8 @@ class MiniAppDownloader {
 
     private func startDownloadingFiles(urls: [String], to miniAppPath: URL, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         self.miniAppClient.delegate = self
+        time = Date()
+        MiniAppLogger.d("MiniApp dl start")
         for url in urls {
             guard let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
                 return
@@ -94,12 +117,13 @@ class MiniAppDownloader {
             }
             let filePath = miniAppPath.appendingPathComponent(fileDirectory)
             if !FileManager.default.fileExists(atPath: filePath.path) {
-                urlToDirectoryMap[urlString] = DownloadOperation(fileStoragePath: filePath, miniAppDirectoryPath: miniAppPath, completionHanlder: completionHandler)
+                urlToDirectoryMap[urlString] = DownloadOperation(fileStoragePath: filePath, miniAppDirectoryPath: miniAppPath, completionHandler: completionHandler)
                 queue.addOperation {
                     self.miniAppClient.download(url: urlString)
                 }
             }
         }
+
         if urlToDirectoryMap.isEmpty {
             completionHandler(.success(miniAppPath))
         }
@@ -118,10 +142,13 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
         guard let filePath = urlToDirectoryMap[destinationPath]?.fileStoragePath else {
             return
         }
+        MiniAppLogger.d("MiniApp dl time: \(Date().timeIntervalSince(time))")
         guard let error = miniAppStorage.save(sourcePath: sourcePath, destinationPath: filePath) else {
+            MiniAppLogger.d("MiniApp save time: \(Date().timeIntervalSince(time))")
+            unzipFile(fromURL: destinationPath, to: filePath)
             return
         }
-        urlToDirectoryMap[destinationPath]?.completionHanlder(.failure(error))
+        urlToDirectoryMap[destinationPath]?.completionHandler(.failure(error))
     }
 
     /// Delegate called whenever download task is completed/failed.
@@ -131,7 +158,7 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
     ///   - url: URL of the file which was downloaded
     ///   - error: Error information if the downloading is failed with error
     func downloadFileTaskCompleted(url: String, error: Error?) {
-        let completionHandler = urlToDirectoryMap[url]?.completionHanlder
+        let completionHandler = urlToDirectoryMap[url]?.completionHandler
         guard let error = error else {
             guard let miniAppDirectoryPath = urlToDirectoryMap[url]?.miniAppDirectoryPath else {
                 completionHandler?(.failure(NSError.downloadingFailed()))
@@ -144,5 +171,28 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
             return
         }
         completionHandler?(.failure(error))
+    }
+
+    internal func unzipFile(fromURL destinationPath: String, to filePath: URL) {
+        if let directory = urlToDirectoryMap[destinationPath]?.miniAppDirectoryPath, filePath.fileExtension() == "zip" {
+            do {
+                try FileManager.default.unzipItem(at: filePath, to: directory, skipCRC32: true)
+                MiniAppLogger.d("MiniApp unzip time: \(Date().timeIntervalSince(time))")
+                let path = "\(directory.path)/\(Constants.rootFileName)"
+                MiniAppLogger.d("MiniApp unzip file: \(path)")
+                if !FileManager.default.fileExists(atPath: path) {
+                    throw MiniAppArchiveError.noRoot
+                }
+            } catch let err {
+                MiniAppLogger.e("error unzipping archive", err)
+                urlToDirectoryMap[destinationPath]?.completionHandler(.failure(err))
+            }
+
+            do {
+                try FileManager.default.removeItem(at: filePath)
+            } catch let err {
+                MiniAppLogger.e("error deleting archive", err)
+            }
+        }
     }
 }

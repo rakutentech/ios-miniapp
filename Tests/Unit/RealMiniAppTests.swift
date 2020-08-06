@@ -3,6 +3,7 @@ import Nimble
 @testable import MiniApp
 
 // swiftlint:disable function_body_length
+// swiftlint:disable cyclomatic_complexity
 class RealMiniAppTests: QuickSpec {
 
     override func spec() {
@@ -14,6 +15,7 @@ class RealMiniAppTests: QuickSpec {
             }
             let realMiniApp = RealMiniApp()
             let mockAPIClient = MockAPIClient()
+            let mockMiniAppInfoFetcher = MockMiniAppInfoFetcher()
             realMiniApp.miniAppClient = mockAPIClient
             let mockManifestDownloader = MockManifestDownloader()
             let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
@@ -137,7 +139,7 @@ class RealMiniAppTests: QuickSpec {
                     expect(realMiniApp.miniAppClient.environment.customAppVersion).to(beNil())
                 }
             }
-            context("when createMiniApp is called with valid Mini App info but without MessageInterface") {
+            context("when createMiniApp is called with valid Mini App id but without MessageInterface") {
                 it("will return valid Mini App View instance with a default hostAppMessageDelegate and getUniqueId() will return an error message") {
                     let responseString = """
                     [{
@@ -158,7 +160,7 @@ class RealMiniAppTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     waitUntil { done in
-                        realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                             switch result {
                             case .success(let responseData):
                                 expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
@@ -177,7 +179,7 @@ class RealMiniAppTests: QuickSpec {
                 }
             }
 
-            context("when createMiniApp is called with valid Mini App info and real mini app validates with platform for the latest version and if the versions are same") {
+            context("when createMiniApp is called with valid Mini App id and real mini app validates with platform for the latest version and if the versions are same") {
                 it("will download mini app with the mini app info that is passed on") {
                     let responseString = """
                     [{
@@ -198,7 +200,7 @@ class RealMiniAppTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     var testResultData: MiniAppDisplayProtocol?
-                    realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                    realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                         switch result {
                         case .success(let responseData):
                             testResultData = responseData
@@ -210,7 +212,76 @@ class RealMiniAppTests: QuickSpec {
                 }
             }
 
-            context("when createMiniApp is called with valid Mini App info") {
+            context("when createMiniApp is called with valid Mini App id") {
+                it("will return valid Mini App View instance") {
+
+                    let responseString = """
+                    [{
+                        "id": "123",
+                        "displayName": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "455"
+                        }
+                      }]
+                    """
+                    let manifestResponse = """
+                      {
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
+                    waitUntil { done in
+                        realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
+                            switch result {
+                            case .success(let responseData):
+                                expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
+                                done()
+                            case .failure:
+                                fail("create MiniApp failure")
+                            }
+                        }, messageInterface: mockMessageInterface)
+                    }
+                }
+            }
+            context("when createMiniApp is called with valid Mini App Id but failed due to offline network error") {
+                it("will return error") {
+                    let responseString = """
+                    [{
+                        "id": "123",
+                        "displayName": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "455"
+                        }
+                      }]
+                    """
+                    let manifestResponse = """
+                      {
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                      }
+                    """
+                    realMiniApp.miniAppInfoFetcher = mockMiniAppInfoFetcher
+                    mockMiniAppInfoFetcher.error = NSError(domain: "URLErrorDomain", code: -1009, userInfo: nil)
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
+                    var testError: NSError?
+                    realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    }, messageInterface: mockMessageInterface)
+                    expect(testError?.code).toEventually(equal(-1009), timeout: 10)
+                    mockMiniAppInfoFetcher.error = nil
+                }
+            }
+            context("when createMiniApp is called with valid Mini App Info") {
                 it("will return valid Mini App View instance") {
 
                     let responseString = """
@@ -244,7 +315,7 @@ class RealMiniAppTests: QuickSpec {
                     }
                 }
             }
-            context("when createMiniApp is called with valid Mini App info but failed because of invalid URLs") {
+            context("when createMiniApp is called with valid Mini App id but failed because of invalid URLs") {
                 it("will return error") {
                     let responseString = """
                       {
@@ -253,7 +324,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     var testError: NSError?
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                    realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                             switch result {
                             case .success:
                                 break

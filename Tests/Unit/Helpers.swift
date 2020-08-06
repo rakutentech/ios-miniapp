@@ -6,6 +6,7 @@ class MockAPIClient: MiniAppClient {
     var manifestData: Data?
     var error: Error?
     var request: URLRequest?
+    var zipFile: String?
     var headers: [String: String]?
 
     override func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
@@ -74,7 +75,13 @@ class MockAPIClient: MiniAppClient {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
-        guard let mockSourceFileURL = MockFile.createTestFile(fileName: fileName) else {
+
+        let mockSourceFileURL: URL
+        if let zip = zipFile {
+            mockSourceFileURL = URL(fileURLWithPath: zip)
+        } else if let file = MockFile.createTestFile(fileName: fileName) {
+            mockSourceFileURL = file
+        } else {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
@@ -87,7 +94,32 @@ class MockAPIClient: MiniAppClient {
             return
         }
         delegate?.downloadFileTaskCompleted(url: url, error: error)
-    } }
+    }
+}
+
+class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
+    var data: Data?
+    var error: Error?
+
+    override func getInfo(miniAppId: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+
+        if error != nil {
+            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+        }
+        apiClient.getMiniApp(miniAppId) { (result) in
+            switch result {
+            case .success(let responseData):
+                guard let decodeResponse = ResponseDecoder.decode(decodeType: Array<MiniAppInfo>.self, data: responseData.data), let miniApp = decodeResponse.first else {
+                    return completionHandler(.failure(NSError.invalidResponseData()))
+                }
+                return completionHandler(.success(miniApp))
+
+            case .failure(let error):
+                return completionHandler(.failure(error))
+            }
+        }
+    }
+}
 
 class MockManifestDownloader: ManifestDownloader {
     var data: Data?
