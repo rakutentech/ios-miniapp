@@ -38,17 +38,17 @@ public class MiniApp: NSObject {
         return realMiniApp.getMiniApp(miniAppId: miniAppId, completionHandler: completionHandler)
     }
 
-    /// Create a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
+    /// Create a Mini App for the given mini appId, Mini app will be downloaded and cached in local.
     ///
     /// - Parameters:
-    ///   - appInfo: Mini App info object
+    ///   - appId: Mini AppId String value
     ///   - completionBlock: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
-    public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol) {
-        return realMiniApp.createMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
+    public func create(appId: String, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol) {
+        return realMiniApp.createMiniApp(appId: appId, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 
     /// Create a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
@@ -59,10 +59,11 @@ public class MiniApp: NSObject {
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
+    ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     @available(*, deprecated,
-    message:"Since version 1.1, you now need a MiniAppMessageProtocol that helps to communicate between Mini App and native application",
-    renamed: "create(appInfo:completionHandler:messageInterface:)")
-    public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void) {
-        return realMiniApp.createMiniApp(appInfo: appInfo, completionHandler: completionHandler)
+    message:"Since version 2.0, you can create a Mini app view using just the mini app id",
+    renamed: "create(appId:completionHandler:messageInterface:)")
+    public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol) {
+        return realMiniApp.createMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 }
