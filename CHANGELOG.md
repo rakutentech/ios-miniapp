@@ -1,11 +1,19 @@
 ## CHANGELOG
 
-### 2.0.x
+### 2.0.0 (2020-08-07)
 
 **SDK**
 - **Feature:** Added public interface to create a mini app using mini app id `MiniApp#create(appId:completionHandler:messageInterface)`
-- *Deprecated*: `MiniApp#create(appInfo:completionHandler:messageInterface)`. Your App should instead use `MiniApp#create(appId:completionHandler:messageInterface)`.
+- **Feature:** Mini App is now downloaded as a ZIP archive and extracted. This should improve the initial launch time on a Mini App with many files.
+- **Feature:** Add support for [`navigator.geolocation.getCurrentPosition`](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition) from JavaScript. Note that the other `geolocation` APIs (`gelocation.watchPosition` and `geolocation.clearWatch`) are currently not supported.
+- **Feature:** Enable localizable strings to be overriden by the Host App. This currently applies only to dialog button text.
+- **Fixed:** Prevent cache poisoning vulnerability by verifying cached Mini App files using a SHA512 hash.
+- **Deprecated:** `MiniApp#create(appInfo:completionHandler:messageInterface)`. Your App should instead use `MiniApp#create(appId:completionHandler:messageInterface)`.
+- **Removed:** `MiniApp#create(appInfo:completionHandler:)`. Your App should instead use `MiniApp#create(appId:completionHandler:messageInterface)`.
+- **Removed:** Runtime config option for the User Agent string. This can now be set only by using the `RMAHostAppUserAgentInfo` setting in your '.plist' file.
 
+**Sample App**
+- No changes
 
 ### 1.2.0 (2020-07-21)
 
