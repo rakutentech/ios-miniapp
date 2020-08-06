@@ -97,6 +97,30 @@ class MockAPIClient: MiniAppClient {
     }
 }
 
+class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
+    var data: Data?
+    var error: Error?
+
+    override func getInfo(miniAppId: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+
+        if error != nil {
+            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+        }
+        apiClient.getMiniApp(miniAppId) { (result) in
+            switch result {
+            case .success(let responseData):
+                guard let decodeResponse = ResponseDecoder.decode(decodeType: Array<MiniAppInfo>.self, data: responseData.data), let miniApp = decodeResponse.first else {
+                    return completionHandler(.failure(NSError.invalidResponseData()))
+                }
+                return completionHandler(.success(miniApp))
+
+            case .failure(let error):
+                return completionHandler(.failure(error))
+            }
+        }
+    }
+}
+
 class MockManifestDownloader: ManifestDownloader {
     var data: Data?
     var error: Error?
