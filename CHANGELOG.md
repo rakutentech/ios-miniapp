@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### 2.0.x
+
+**SDK**
+- *Feature:* Added public interface to create a mini app using mini app id `MiniApp#create(appId:completionHandler:messageInterface)`
+- <span style="color:brown">*Deprecated*:</span> `MiniApp#create(appInfo:completionHandler:messageInterface)`. Your App should instead use `MiniApp#create(appId:completionHandler:messageInterface)`.
+
+
 ### 1.2.0 (2020-07-21)
 
 **SDK**
