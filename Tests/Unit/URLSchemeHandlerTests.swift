@@ -39,7 +39,7 @@ class URLSchemeHandlerTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.download(appId: "Apple", versionId: "Mac") { (_) in }
+                    downloader.verifyAndDownload(appId: "Apple", versionId: "Mac") { (_) in }
                     let fileURL = schemeHandler.getFilePath(relativeFilePath: "HelloWorld.txt", appId: "Apple")
                     var expectedFilePath = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "version-id")
                     expectedFilePath.appendPathComponent("HelloWorld.txt")
