@@ -129,10 +129,10 @@ MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) 
 ```
 <div id="create-mini-app"></div>
 
-### Create a MiniApp for the given `MiniAppInfo` object :
+### Create a MiniApp for the given `MiniAppId` :
 
 ```swift
-MiniApp.shared().create(appInfo: info, completionHandler: { (result) in
+MiniApp.shared().create(appId: String, completionHandler: { (result) in
 	switch result {
             case .success(let miniAppDisplay):
                 let view = miniAppDisplay.getMiniAppView()
