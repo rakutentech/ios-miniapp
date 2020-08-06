@@ -158,7 +158,7 @@ class RealMiniAppTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     waitUntil { done in
-                        realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                             switch result {
                             case .success(let responseData):
                                 expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
@@ -198,7 +198,7 @@ class RealMiniAppTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     var testResultData: MiniAppDisplayProtocol?
-                    realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                    realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                         switch result {
                         case .success(let responseData):
                             testResultData = responseData
@@ -232,7 +232,7 @@ class RealMiniAppTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     waitUntil { done in
-                        realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                             switch result {
                             case .success(let responseData):
                                 expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
@@ -253,7 +253,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     var testError: NSError?
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                    realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                             switch result {
                             case .success:
                                 break

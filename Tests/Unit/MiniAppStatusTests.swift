@@ -39,6 +39,22 @@ class MiniAppStatusTests: QuickSpec {
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
                 }
             }
+            context("when mini app info is saved") {
+                it("will return the miniapp info for a valid mini app id") {
+                    let miniAppStatus = MiniAppStatus()
+                    miniAppStatus.saveMiniAppInfo(appInfo: mockMiniAppInfo, key: mockMiniAppInfo.id)
+                    let retrievedMiniAppInfo = miniAppStatus.getMiniAppInfo(appId: mockMiniAppInfo.id)
+                    expect(retrievedMiniAppInfo?.id).toEventually(equal(mockMiniAppInfo.id))
+                    expect(retrievedMiniAppInfo?.version.versionId).toEventually(equal(mockMiniAppInfo.version.versionId))
+                    UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
+                }
+                it("will return nil for a invalid mini app id") {
+                    let miniAppStatus = MiniAppStatus()
+                    let retrievedMiniAppInfo = miniAppStatus.getMiniAppInfo(appId: "123")
+                    expect(retrievedMiniAppInfo).toEventually(beNil())
+                    UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
+                }
+            }
         }
     }
 }
