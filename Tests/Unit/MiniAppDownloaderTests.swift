@@ -265,7 +265,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.zipFile = Bundle(for: type(of: self)).path(forResource: "SmallMA", ofType: "zip") ?? ""
-                    downloader.download(appId: appId, versionId: versionId) { (_) in }
+                    downloader.verifyAndDownload(appId: appId, versionId: versionId) { (_) in }
                     let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                     expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/index.html")).toEventually(beTrue(), timeout: 10)
                     expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/script.js")).toEventually(beTrue(), timeout: 3)
@@ -285,7 +285,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.zipFile = Bundle(for: type(of: self)).path(forResource: "SmallMAerror", ofType: "zip") ?? ""
                     var error: Error?
-                    downloader.download(appId: appId, versionId: versionId) { (result) in
+                    downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
                         switch result {
                         case .success:
                            break

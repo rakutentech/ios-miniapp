@@ -39,33 +39,31 @@ class MiniAppDownloader {
                 self.miniAppStorage.cleanVersions(for: appId, differentFrom: "", status: self.miniAppStatus)
                 download(appId: appId, versionId: versionId, completionHandler: completionHandler)
             }
+        } else {
+            download(appId: appId, versionId: versionId, completionHandler: completionHandler)
         }
     }
 
-    func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+    private func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
-        if !isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId) {
-            self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
-                switch result {
-                case .success(let responseData):
-                    self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
-                        switch downloadResult {
-                        case .success:
-                            DispatchQueue.main.async {
-                                self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
-                                self.cacheVerifier.storeHash(for: appId)
-                            }
-                            fallthrough
-                        default:
-                            completionHandler(downloadResult)
+        self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
+            switch result {
+            case .success(let responseData):
+                self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
+                    switch downloadResult {
+                    case .success:
+                        DispatchQueue.main.async {
+                            self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
+                            self.cacheVerifier.storeHash(for: appId)
                         }
+                        fallthrough
+                    default:
+                        completionHandler(downloadResult)
                     }
-                case .failure(let error):
-                    completionHandler(.failure(error))
                 }
+            case .failure(let error):
+                completionHandler(.failure(error))
             }
-        } else {
-            download(appId: appId, versionId: versionId, completionHandler: completionHandler)
         }
     }
 
