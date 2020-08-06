@@ -7,13 +7,14 @@ class MiniAppDownloaderTests: QuickSpec {
 
     override func spec() {
         let miniAppStatus = MiniAppStatus()
-        let appId = "Apple"
-        let versionId = "Mac"
+        let appId = "TestMiniApp"
+        let versionId = "\(Date().timeIntervalSince1970)"
         let mockAPIClient = MockAPIClient()
         let mockManifestDownloader = MockManifestDownloader()
         let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
+
         afterEach {
-            deleteMockMiniApp(appId: "Apple", versionId: "Mac")
+            deleteMockMiniApp(appId: appId, versionId: versionId)
             deleteStatusPreferences()
         }
         describe("mini app folder will be created") {
@@ -28,8 +29,8 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.download(appId: "Apple", versionId: "Mac") { (_) in }
-                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "Mac")
+                    downloader.download(appId: appId, versionId: versionId) { (_) in }
+                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                     var isDir: ObjCBool = true
                     expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: 10)
                 }
@@ -45,12 +46,12 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.download(appId: "Apple", versionId: "Mac") { (_) in }
+                    downloader.download(appId: appId, versionId: versionId) { (_) in }
                     mockManifestDownloader.error = NSError(domain: "URLErrorDomain", code: -1009, userInfo: nil)
                     mockAPIClient.data = nil
                     mockManifestDownloader.data = nil
                     var testError: NSError?
-                    downloader.download(appId: "Apple", versionId: "Mac1") { (result) in
+                    downloader.download(appId: appId, versionId: "\(versionId).1") { (result) in
                         switch result {
                         case .success:
                             break
@@ -75,12 +76,12 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.download(appId: "testApp", versionId: "1") { (_) in
-                        downloader.download(appId: "testApp", versionId: "2") { (_) in }
+                    downloader.download(appId: appId, versionId: "\(versionId).1") { (_) in
+                        downloader.download(appId: appId, versionId: "\(versionId).2") { (_) in }
                     }
 
-                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "testApp", and: "2")
-                    let oldMiniAppDirectory = FileManager.getMiniAppVersionDirectory(with: "testApp", and: "1")
+                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: "\(versionId).2")
+                    let oldMiniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: "\(versionId).1")
                     var isDir: ObjCBool = true
 
                     expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: 10)
@@ -102,7 +103,7 @@ class MiniAppDownloaderTests: QuickSpec {
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.download(appId: "Apple", versionId: "Mac") { (result) in
+                    downloader.download(appId: appId, versionId: versionId) { (result) in
                         switch result {
                         case .success:
                             break
@@ -110,7 +111,7 @@ class MiniAppDownloaderTests: QuickSpec {
                             break
                         }
                     }
-                    let miniAppPath = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "Mac")
+                    let miniAppPath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                     let expectedPath = miniAppPath.appendingPathComponent("HelloWorld.txt")
                     expect(FileManager.default.fileExists(atPath: expectedPath.path)).toEventually(equal(true), timeout: 10)
                 }
@@ -130,7 +131,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var testError: NSError?
-                    downloader.download(appId: "Apple", versionId: "MacFails") { (result) in
+                    downloader.download(appId: appId, versionId: "\(versionId).fail") { (result) in
                         switch result {
                         case .success:
                             break
@@ -151,7 +152,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     mockAPIClient.data = nil
                     var testError: NSError?
-                    downloader.download(appId: "Apple", versionId: "Mac") { (result) in
+                    downloader.download(appId: appId, versionId: versionId) { (result) in
                         switch result {
                         case .success:
                             break
@@ -166,18 +167,18 @@ class MiniAppDownloaderTests: QuickSpec {
 
         describe("mini app downloader") {
             context("when isMiniAppAlreadyDownloaded is called with valid appId and versionId - which is not downloaded") {
-              it("will return false") {
-                miniAppStatus.setDownloadStatus(true, for: "mini-app/testing")
-                let mockAPIClient = MockAPIClient()
-                let mockManifestDownloader = MockManifestDownloader()
-                let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                let isDownloaded = downloader.isMiniAppAlreadyDownloaded(appId: "mini-app", versionId: "testing")
-                expect(isDownloaded).toEventually(equal(false))
-                UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
-              }
+                it("will return false") {
+                    miniAppStatus.setDownloadStatus(true, for: "mini-app/testing")
+                    let mockAPIClient = MockAPIClient()
+                    let mockManifestDownloader = MockManifestDownloader()
+                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
+                    let isDownloaded = downloader.isMiniAppAlreadyDownloaded(appId: "mini-app", versionId: "testing")
+                    expect(isDownloaded).toEventually(equal(false))
+                    UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
+                }
             }
             context("when isMiniAppAlreadyDownloaded is called with valid appId and versionId - which is  downloaded") {
-              it("will return true") {
+                it("will return true") {
                     let responseString = """
                     {
                       "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
@@ -224,7 +225,7 @@ class MiniAppDownloaderTests: QuickSpec {
                             break
                         }
                     }
-                    expect(version).toEventually(equal("Mac"), timeout: 20)
+                    expect(version).toEventually(equal(versionId), timeout: 20)
                 }
             }
             context("when getCachedMiniAppVersion is called with valid mini app id and empty version id") {
@@ -247,7 +248,54 @@ class MiniAppDownloaderTests: QuickSpec {
                             break
                         }
                     }
-                    expect(version).toEventually(equal("Mac"), timeout: 20)
+                    expect(version).toEventually(equal(versionId), timeout: 20)
+                }
+            }
+        }
+        describe("mini app downloader") {
+            context("when receiving a zip file") {
+                it("unzips ip and delete archive") {
+                    let mockAPIClient = MockAPIClient()
+                    let mockManifestDownloader = MockManifestDownloader()
+                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
+                    let responseString = """
+                      {
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/SmallMA.zip"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.zipFile = Bundle(for: type(of: self)).path(forResource: "SmallMA", ofType: "zip") ?? ""
+                    downloader.download(appId: appId, versionId: versionId) { (_) in }
+                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/index.html")).toEventually(beTrue(), timeout: 10)
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/script.js")).toEventually(beTrue(), timeout: 3)
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/SmallMA.zip")).toNotEventually(beTrue(), timeout: 3)
+                }
+            }
+            context("when receiving a corrupted zip file") {
+                it("tries to unzips ip and delete archive") {
+                    let mockAPIClient = MockAPIClient()
+                    let mockManifestDownloader = MockManifestDownloader()
+                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
+                    let responseString = """
+                      {
+                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/SmallMAerror.zip"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.zipFile = Bundle(for: type(of: self)).path(forResource: "SmallMAerror", ofType: "zip") ?? ""
+                    var error: Error?
+                    downloader.download(appId: appId, versionId: versionId) { (result) in
+                        switch result {
+                        case .success:
+                           break
+                        case .failure(let failed):
+                            error = failed
+                        }
+                    }
+                    expect(error).toNotEventually(beNil(), timeout: 3)
+                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/SmallMAerror.zip")).toNotEventually(beTrue(), timeout: 3)
                 }
             }
         }
