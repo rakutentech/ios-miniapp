@@ -1,131 +1,131 @@
 {
   "warnings": [
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MimeTypes.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/Display/MimeTypes.swift",
       "line": 28,
       "symbol": "String.mimeType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
       "line": 14,
       "symbol": "MiniAppNavigationConfig.init(navigationBarVisibility:navigationDelegate:customNavigationView:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
       "line": 28,
       "symbol": "MiniAppNavigationDelegate.miniAppNavigation(canUse:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
       "line": 29,
       "symbol": "MiniAppNavigationDelegate.miniAppNavigation(delegate:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
       "line": 45,
       "symbol": "MiniAppNavigationAction.back",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
       "line": 45,
       "symbol": "MiniAppNavigationAction.forward",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
       "line": 53,
       "symbol": "MiniAppNavigationVisibility.always",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
       "line": 53,
       "symbol": "MiniAppNavigationVisibility.auto",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
       "line": 53,
       "symbol": "MiniAppNavigationVisibility.never",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/RealMiniAppView.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/Display/RealMiniAppView.swift",
       "line": 135,
       "symbol": "RealMiniAppView.webView(_:didFinish:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 17,
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 18,
       "symbol": "MiniAppPermissionType",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 18,
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 19,
       "symbol": "MiniAppPermissionType.location",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 21,
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 22,
       "symbol": "MiniAppPermissionResult",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 22,
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 23,
       "symbol": "MiniAppPermissionResult.denied",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 23,
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 24,
       "symbol": "MiniAppPermissionResult.notDetermined",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 24,
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 25,
       "symbol": "MiniAppPermissionResult.restricted",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 27,
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 28,
       "symbol": "MiniAppPermissionResult",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/MiniAppSdkConfig.swift",
+      "file": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp/Classes/MiniAppSdkConfig.swift",
       "line": 3,
       "symbol": "MiniAppSdkConfig",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp"
+  "source_directory": "/Users/cory.caywood/Desktop/Repos/GITHUB/ios-miniapps/MiniApp"
 }

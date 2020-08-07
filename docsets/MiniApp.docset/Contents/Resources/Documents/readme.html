@@ -16,7 +16,7 @@
     <a title="README  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp 1.2.0 Docs</a> (60% documented)</p>
+        <p><a href="index.html">MiniApp 2.0.0 Docs</a> (61% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -42,6 +42,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="readme.html">README</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="userguide.html">USERGUIDE</a>
               </li>
             </ul>
           </li>
@@ -140,221 +143,23 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 <h1 id='getting-started' class='heading'>Getting started</h1>
 
 <ul>
-<li><a href="#requirements">Requirements</a></li>
-<li><a href="#documentation">Documentation</a></li>
+<li><a href="USERGUIDE.md#requirements">Requirements</a></li>
+<li><a href="https://rakutentech.github.io/ios-miniapp/">Documentation</a></li>
 <li><a href="#installation">Installation</a></li>
-<li><a href="#configuration">Configuration</a></li>
-<li><a href="#usage">Usage</a></li>
-<li><a href="#sample-app">Sample App</a></li>
-<li><a href="#change-log">Changelog</a></li>
+<li><a href="USERGUIDE.md#configuration">Configuration</a></li>
+<li><a href="USERGUIDE.md#usage">Usage</a></li>
+<li><a href="USERGUIDE.md#example">Sample App</a></li>
 </ul>
-
-<div id="requirements"></div>
-<h2 id='requirements' class='heading'>Requirements</h2>
-
-<p>This module supports <strong>iOS 11.0 and above</strong>. It has been tested on iOS 11.0 and above.</p>
-
-<p>It is written in Swift 5.0 and can be used in compatible Xcode versions.</p>
-
-<p>In order to run your MiniApp you will have to provide the following,</p>
-
-<ul>
-<li>MiniApp host application identifier (RASApplicationIdentifier)</li>
-<li>Subscription key (RASProjectSubscriptionKey)</li>
-<li>Base URL for API requests to the library (RMAAPIEndpoint)</li>
-<li>Preference, if you want to make use of Test API Endpoints in your application or not</li>
-</ul>
-
-<div id="documentation"></div>
-<h1 id='documentation' class='heading'>Documentation</h1>
-
-<p>Generated documentation for this SDK can be found at <a href="https://rakutentech.github.io/ios-miniapp/">https://rakutentech.github.io/ios-miniapp/</a></p>
-
-<div id="installation"></div>
 <h1 id='installation' class='heading'>Installation</h1>
 
 <p>Mini App SDK is available through <a href="https://cocoapods.org">CocoaPods</a>. To install it, simply add the following line to your Podfile:</p>
 <pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'MiniApp'</span>
 </code></pre>
 
-<div id="configuration"></div>
-<h1 id='configuration' class='heading'>Configuration</h1>
+<p>How to implement on your iOS application? Check the <a href="USERGUIDE.md">USERGUIDE</a></p>
+<h1 id='license' class='heading'>License</h1>
 
-<p>In your project configuration .plist you should add below Key/Value :</p>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Key</th>
-<th style="text-align: center">Type</th>
-<th style="text-align: left">Description</th>
-<th style="text-align: center">Optional</th>
-<th style="text-align: center">Default</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">RASApplicationIdentifier</td>
-<td style="text-align: center">String</td>
-<td style="text-align: left"><code>Set your MiniApp host application identifier</code></td>
-<td style="text-align: center">NO</td>
-<td style="text-align: center"><code>none</code></td>
-</tr>
-<tr>
-<td style="text-align: left">RASProjectSubscriptionKey</td>
-<td style="text-align: center">String</td>
-<td style="text-align: left"><code>Set your MiniApp subscription key</code></td>
-<td style="text-align: center">NO</td>
-<td style="text-align: center"><code>none</code></td>
-</tr>
-<tr>
-<td style="text-align: left">RMAAPIEndpoint</td>
-<td style="text-align: center">String</td>
-<td style="text-align: left"><code>Provide your own Base URL for API requests</code></td>
-<td style="text-align: center">NO</td>
-<td style="text-align: center"><code>none</code></td>
-</tr>
-<tr>
-<td style="text-align: left">RMAIsTestMode</td>
-<td style="text-align: center">String</td>
-<td style="text-align: left"><code>Loading mode of the API (</code>true<code>: testing,</code>false<code>: published)</code></td>
-<td style="text-align: center">NO</td>
-<td style="text-align: center">false</td>
-</tr>
-<tr>
-<td style="text-align: left">RMAHostAppUserAgentInfo</td>
-<td style="text-align: center">String</td>
-<td style="text-align: left"><code>Host app name and version info that is appended in User agent</code></td>
-<td style="text-align: center">YES</td>
-<td style="text-align: center"><code>none</code></td>
-</tr>
-</tbody></table>
-
-<p>If you don&rsquo;t want to use project settings, you have to pass this information one by one to the <code>Config.userDefaults</code> using a <code>Config.Key</code> as key:</p>
-<pre class="highlight swift"><code><span class="kt">Config</span><span class="o">.</span><span class="n">userDefaults</span><span class="p">?</span><span class="o">.</span><span class="nf">set</span><span class="p">(</span><span class="s">"MY_CUSTOM_ID"</span><span class="p">,</span> <span class="nv">forKey</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="kt">Key</span><span class="o">.</span><span class="n">subscriptionKey</span><span class="o">.</span><span class="n">rawValue</span><span class="p">)</span>
-</code></pre>
-
-<div id="usage"></div>
-<h1 id='usage' class='heading'>Usage</h1>
-
-<ul>
-<li><a href="#runtime-conf">Overriding configuration on runtime</a></li>
-<li><a href="#load-miniapp-list">Load the Mini App list</a></li>
-<li><a href="#get-mini-appinfo">Get a MiniAppInfo</a></li>
-<li><a href="#create-mini-app">Create a MiniApp</a></li>
-<li><a href="#MiniAppMessageProtocol">Communicate with MiniApp</a></li>
-<li><a href="#navigation">Customize history navigation</a></li>
-</ul>
-
-<div id="runtime-conf"></div>
-<h3 id='overriding-configuration-on-runtime' class='heading'>Overriding configuration on runtime</h3>
-
-<p>Every call to the API can be done with default parameters retrieved from the project .plist configuration file, or by providing a <code><a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a></code> object during the call. Here is a simple example class we use to create the configuration in samples below:</p>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Config</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
-    <span class="kd">class</span> <span class="kd">func</span> <span class="nf">getCurrent</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">MiniAppSdkConfig</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="kt">MiniAppSdkConfig</span><span class="p">(</span><span class="nv">baseUrl</span><span class="p">:</span> <span class="s">"https://your.custom.url"</span>
-                                <span class="nv">rasAppId</span><span class="p">:</span> <span class="s">"your_RAS_App_id"</span><span class="p">,</span>
-                                <span class="nv">subscriptionKey</span><span class="p">:</span> <span class="s">"your_subscription_key"</span><span class="p">,</span>
-                                <span class="nv">hostAppVersion</span><span class="p">:</span> <span class="s">"your_custom_version"</span><span class="p">,</span>
-                                <span class="nv">isTestMode</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-                                <span class="nv">hostAppUserAgentInfo</span><span class="p">:</span> <span class="s">"host_app_name_and_version"</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-
-<div id="load-miniapp-list"></div>
-<h3 id='load-the-code-miniapp-code-list' class='heading'>Load the <code><a href="Classes/MiniApp.html">MiniApp</a></code> list:</h3>
-
-<p>MiniApp library calls are done via the <code>MiniApp.shared()</code> singleton with or without a <code><a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a></code> instance (you can get the current one with <code>Config.getCurrent()</code>). If you don&rsquo;t provide a config instance, values in custom iOS target properties will be used by default. </p>
-<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="n">list</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
-    <span class="o">...</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>or</p>
-<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">())</span><span class="o">.</span><span class="n">list</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
-    <span class="o">...</span>
-<span class="p">}</span>
-</code></pre>
-
-<div id="get-mini-appinfo"></div>
-<h3 id='getting-a-code-miniappinfo-code' class='heading'>Getting a <code><a href="Structs/MiniAppInfo.html">MiniAppInfo</a></code> :</h3>
-<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
-    <span class="o">...</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>or</p>
-<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">())</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
-    <span class="o">...</span>
-<span class="p">}</span>
-</code></pre>
-
-<div id="create-mini-app"></div>
-<h3 id='create-a-miniapp-for-the-given-code-miniappinfo-code-object' class='heading'>Create a MiniApp for the given <code><a href="Structs/MiniAppInfo.html">MiniAppInfo</a></code> object :</h3>
-<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">appInfo</span><span class="p">:</span> <span class="n">info</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
-    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">miniAppDisplay</span><span class="p">):</span>
-                <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="n">miniAppDisplay</span><span class="o">.</span><span class="nf">getMiniAppView</span><span class="p">()</span>
-                <span class="n">view</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">bounds</span>
-                <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
-            <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
-                <span class="nf">print</span><span class="p">(</span><span class="s">"Error: "</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="p">)</span>
-            <span class="p">}</span>
-<span class="p">},</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
-</code></pre>
-
-<div id="MiniAppMessageProtocol"></div>
-<h3 id='implement-the-miniappmessageprotocol-in-your-view-controller' class='heading'>Implement the MiniAppMessageProtocol in your View Controller</h3>
-
-<p>The <code><a href="Protocols/MiniAppMessageProtocol.html">MiniAppMessageProtocol</a></code> is used for passing messages between the Mini App (JavaScript) and the Host App (your native iOS App) and vice versa. Your App must provide the implementation for these functions.</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageProtocol</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">getUniqueId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
-        <span class="k">guard</span> <span class="k">let</span> <span class="nv">deviceId</span> <span class="o">=</span> <span class="kt">UIDevice</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">identifierForVendor</span><span class="p">?</span><span class="o">.</span><span class="n">uuidString</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="s">""</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">deviceId</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-
-<div id="navigation"></div>
-<h3 id='add-a-web-navigation-interface-to-the-miniapp-view' class='heading'>Add a web navigation interface to the MiniApp view</h3>
-
-<p>MiniApp iOS SDK provides a fully customizable way to implement a navigation interface inside your html pages with a <code><a href="Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a></code> object. The class takes 3 arguments:</p>
-
-<ul>
-<li><code>navigationBarVisibility</code> : 
-
-<ul>
-<li>never = the UI will never be shown</li>
-<li>auto = navigation UI is only shown when a back or forward action is availabe</li>
-<li>always = navigation UI is always present</li>
-</ul></li>
-<li><code>navigationDelegate</code> : A delegate that will receive MiniApp view instructions about available navigation options</li>
-<li><code>customNavigationView</code> : A view implementing <code><a href="Protocols/MiniAppNavigationDelegate.html">MiniAppNavigationDelegate</a></code> that will be overlayed to the bottom of the MiniApp view</li>
-</ul>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">navConfig</span> <span class="o">=</span> <span class="kt">MiniAppNavigationConfig</span><span class="p">(</span>
-                    <span class="nv">navigationBarVisibility</span><span class="p">:</span> <span class="o">.</span><span class="n">always</span><span class="p">,</span>
-                    <span class="nv">navigationDelegate</span><span class="p">:</span> <span class="n">myCustomView</span><span class="p">,</span>
-                    <span class="nv">customNavigationView</span><span class="p">:</span> <span class="n">mCustomView</span><span class="p">)</span>
-
-<span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">(),</span> <span class="nv">navigationSettings</span><span class="p">:</span> <span class="n">navConfig</span><span class="p">)</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
-<span class="o">...</span>
-<span class="p">}</span>
-</code></pre>
-
-<div id="sample-app"></div>
-<h1 id='example' class='heading'>Example</h1>
-
-<p>To run the example project, clone the repo, and run <code>pod install</code> from the Example directory first.</p>
-<h3 id='custom-parameters' class='heading'>Custom parameters</h3>
-
-<p>In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (<code>RASApplicationIdentifier</code>, <code>RASProjectSubscriptionKey</code>) or by taping the top right configuration icon in the example application. Also we don&rsquo;t currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (<code>RMAAPIEndpoint</code>)</p>
-<h3 id='testing-mode' class='heading'>Testing mode</h3>
-
-<p>The SDK can be configured to load MiniApps in 2 modes : Published mode and Testing mode. Published mode only allows access to the last published version of your MiniApps, whereas Testing mode allows you to load all your MiniApps versions, as long as they are in <code>Testing</code> state on RAS console. To configure the loading mode, you can either do it in the .plist file with the configuration variable <code>RMAIsTestMode</code>, or by taping the top right configuration icon in the example application.</p>
-<h2 id='license' class='heading'>License</h2>
-
-<p>See the <em>LICENSE</em> file for more info.</p>
+<p>See the <em><a href="https://github.com/rakutentech/ios-miniapp/blob/master/LICENSE">LICENSE</a></em> file for more info.</p>
 
 <div id="change-log"></div>
 <h1 id='changelog' class='heading'>Changelog</h1>
@@ -364,7 +169,7 @@ Mini App SDK also facilitates communication between a mini app and the host app 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-07-22)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-08-07)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

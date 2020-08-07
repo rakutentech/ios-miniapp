@@ -16,7 +16,7 @@
     <a title="CHANGELOG  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp 1.2.0 Docs</a> (60% documented)</p>
+        <p><a href="index.html">MiniApp 2.0.0 Docs</a> (61% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -42,6 +42,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="readme.html">README</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="userguide.html">USERGUIDE</a>
               </li>
             </ul>
           </li>
@@ -119,13 +122,33 @@
           <section class="section">
             
             <h2 id='changelog' class='heading'>CHANGELOG</h2>
+<h3 id='2-0-0-2020-08-07' class='heading'>2.0.0 (2020-08-07)</h3>
+
+<p><strong>SDK</strong></p>
+
+<ul>
+<li><strong>Feature:</strong> Added public interface to create a mini app using mini app id <code>MiniApp#create(appId:completionHandler:messageInterface)</code></li>
+<li><strong>Feature:</strong> Mini App is now downloaded as a ZIP archive and extracted. This should improve the initial launch time on a Mini App with many files.</li>
+<li><strong>Feature:</strong> Add support for <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition"><code>navigator.geolocation.getCurrentPosition</code></a> from JavaScript. Note that the other <code>geolocation</code> APIs (<code>gelocation.watchPosition</code> and <code>geolocation.clearWatch</code>) are currently not supported.</li>
+<li><strong>Feature:</strong> Enable localizable strings to be overriden by the Host App. This currently applies only to dialog button text.</li>
+<li><strong>Fixed:</strong> Prevent cache poisoning vulnerability by verifying cached Mini App files using a SHA512 hash.</li>
+<li><strong>Deprecated:</strong> <code>MiniApp#create(appInfo:completionHandler:messageInterface)</code>. Your App should instead use <code>MiniApp#create(appId:completionHandler:messageInterface)</code>.</li>
+<li><strong>Removed:</strong> <code>MiniApp#create(appInfo:completionHandler:)</code>. Your App should instead use <code>MiniApp#create(appId:completionHandler:messageInterface)</code>.</li>
+<li><strong>Removed:</strong> Runtime config option for the User Agent string. This can now be set only by using the <code>RMAHostAppUserAgentInfo</code> setting in your &lsquo;.plist&rsquo; file.</li>
+</ul>
+
+<p><strong>Sample App</strong></p>
+
+<ul>
+<li>No changes</li>
+</ul>
 <h3 id='1-2-0-2020-07-21' class='heading'>1.2.0 (2020-07-21)</h3>
 
 <p><strong>SDK</strong></p>
 
 <ul>
-<li><em>Feature:</em> Possibility to use back and forward navigation inside MiniApp with SDK default UI or custom client provided UI</li>
-<li><em>Feature:</em> Ability to add a host app information string (RMAHostAppUserAgentInfo) that will get appended in the User agent.</li>
+<li><em>Feature:</em> Possibility to use back and forward navigation inside MiniApp with SDK default UI or custom client provided UI - <a href="USERGUIDE.md#navigation">See here</a></li>
+<li><em>Feature:</em> Ability to add a host app information string (RMAHostAppUserAgentInfo) that will get appended in the User agent. - <a href="USERGUIDE.md#configuration">See here</a></li>
 <li><em>Feature:</em> Added support for <code>window.alert</code>, <code>window.confirm</code> and <code>window.prompt</code> JS dialogs in the mini app display</li>
 <li><em>Bugfix:</em> Fixed support for display of SVG file format in a mini app</li>
 </ul>
@@ -133,7 +156,7 @@
 <p><strong>Sample App</strong></p>
 
 <ul>
-<li><em>Feature:</em> Added example of custom view to navigate backward inside MiniApp</li>
+<li><em>Feature:</em> Added example of custom view to navigate backward inside MiniApp - <a href="USERGUIDE.md#navigation">See here</a></li>
 <li>Added build information in App&rsquo;s setting screen</li>
 <li><em>Bugfix:</em> First time settings success dialog dismissed before tapping OK</li>
 <li><em>Bugfix:</em> &ldquo;Display MiniApp&rdquo; button was not visible when scrolling in the Mini Apps list</li>
@@ -155,7 +178,7 @@
 <h3 id='1-1-0-2020-06-01' class='heading'>1.1.0 (2020-06-01)</h3>
 
 <ul>
-<li>Added JavaScript bridge for passing data between Mini App and Host App. Your App now must implement <code><a href="Protocols/MiniAppMessageProtocol.html">MiniAppMessageProtocol</a></code> in your view controller and provide the implementation when calling <code>MiniApp#create</code>.</li>
+<li>Added JavaScript bridge for passing data between Mini App and Host App. Your App now must implement <code><a href="Protocols/MiniAppMessageProtocol.html">MiniAppMessageProtocol</a></code> in your view controller and provide the implementation when calling <code>MiniApp#create</code>. - <a href="USERGUIDE.md#MiniAppMessageProtocol">See here</a></li>
 <li>Deprecated <code>MiniApp#create(appInfo:completionHandler:)</code>. Your App should instead use <code>MiniApp#create(appInfo:completionHandler:messageInterface)</code>.</li>
 <li>Added <code>getUniqueId</code> function to <code><a href="Protocols/MiniAppMessageProtocol.html">MiniAppMessageProtocol</a></code>. This function should provide a unique identifier (unique to the user and device) to Mini Apps.</li>
 </ul>
@@ -168,7 +191,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-07-22)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-08-07)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

@@ -16,7 +16,7 @@
     <a title="MiniApp  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp 1.2.0 Docs</a> (60% documented)</p>
+        <p><a href="index.html">MiniApp 2.0.0 Docs</a> (61% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -42,6 +42,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="readme.html">README</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="userguide.html">USERGUIDE</a>
               </li>
             </ul>
           </li>
@@ -118,12 +121,7 @@
         <section>
           <section class="section">
             
-            <p><a href="https://travis-ci.org/rakutentech/ios-miniapp"><img src="https://travis-ci.org/rakutentech/ios-miniapp.svg?branch=master" alt="Build Status"></a>
-<a href="https://codecov.io/gh/rakutentech/ios-miniapp"><img src="https://codecov.io/gh/rakutentech/ios-miniapp/branch/master/graph/badge.svg" alt="codecov"></a>
-<a href="https://cocoapods.org/pods/MiniApp"><img src="https://cocoapod-badges.herokuapp.com/p/MiniApp/badge.png" alt="ios"></a>
-<a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome"></a>
-<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a></p>
-<h1 id='miniapp' class='heading'>MiniApp</h1>
+            <h1 id='miniapp' class='heading'>MiniApp</h1>
 
 <p>This open-source library allows you to integrate Mini App ecosystem into your iOS applications. 
 Mini App SDK also facilitates communication between a mini app and the host app via a message bridge.</p>
@@ -137,19 +135,16 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 </ul>
 
 <p>All the MiniApp files downloaded by the MiniApp iOS library are cached locally</p>
-<h1 id='getting-started' class='heading'>Getting started</h1>
+<h2 id='getting-started' class='heading'>Getting started</h2>
 
 <ul>
 <li><a href="#requirements">Requirements</a></li>
-<li><a href="#documentation">Documentation</a></li>
+<li><a href="https://rakutentech.github.io/ios-miniapp/">Documentation</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#configuration">Configuration</a></li>
 <li><a href="#usage">Usage</a></li>
-<li><a href="#sample-app">Sample App</a></li>
-<li><a href="#change-log">Changelog</a></li>
+<li><a href="#example">Sample App</a></li>
 </ul>
-
-<div id="requirements"></div>
 <h2 id='requirements' class='heading'>Requirements</h2>
 
 <p>This module supports <strong>iOS 11.0 and above</strong>. It has been tested on iOS 11.0 and above.</p>
@@ -164,21 +159,12 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 <li>Base URL for API requests to the library (RMAAPIEndpoint)</li>
 <li>Preference, if you want to make use of Test API Endpoints in your application or not</li>
 </ul>
-
-<div id="documentation"></div>
-<h1 id='documentation' class='heading'>Documentation</h1>
-
-<p>Generated documentation for this SDK can be found at <a href="https://rakutentech.github.io/ios-miniapp/">https://rakutentech.github.io/ios-miniapp/</a></p>
-
-<div id="installation"></div>
-<h1 id='installation' class='heading'>Installation</h1>
+<h2 id='installation' class='heading'>Installation</h2>
 
 <p>Mini App SDK is available through <a href="https://cocoapods.org">CocoaPods</a>. To install it, simply add the following line to your Podfile:</p>
 <pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'MiniApp'</span>
 </code></pre>
-
-<div id="configuration"></div>
-<h1 id='configuration' class='heading'>Configuration</h1>
+<h2 id='configuration' class='heading'>Configuration</h2>
 
 <p>In your project configuration .plist you should add below Key/Value :</p>
 
@@ -213,16 +199,9 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 <td style="text-align: center"><code>none</code></td>
 </tr>
 <tr>
-<td style="text-align: left">RMAIsTestMode</td>
-<td style="text-align: center">String</td>
-<td style="text-align: left"><code>Loading mode of the API (</code>true<code>: testing,</code>false<code>: published)</code></td>
-<td style="text-align: center">NO</td>
-<td style="text-align: center">false</td>
-</tr>
-<tr>
 <td style="text-align: left">RMAHostAppUserAgentInfo</td>
 <td style="text-align: center">String</td>
-<td style="text-align: left"><code>Host app name and version info that is appended in User agent</code></td>
+<td style="text-align: left"><code>Host app name and version info that is appended in User agent. The value specified in the plist is retrieved only at the build time.</code></td>
 <td style="text-align: center">YES</td>
 <td style="text-align: center"><code>none</code></td>
 </tr>
@@ -233,7 +212,7 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 </code></pre>
 
 <div id="usage"></div>
-<h1 id='usage' class='heading'>Usage</h1>
+<h2 id='usage' class='heading'>Usage</h2>
 
 <ul>
 <li><a href="#runtime-conf">Overriding configuration on runtime</a></li>
@@ -254,11 +233,12 @@ Mini App SDK also facilitates communication between a mini app and the host app 
                                 <span class="nv">rasAppId</span><span class="p">:</span> <span class="s">"your_RAS_App_id"</span><span class="p">,</span>
                                 <span class="nv">subscriptionKey</span><span class="p">:</span> <span class="s">"your_subscription_key"</span><span class="p">,</span>
                                 <span class="nv">hostAppVersion</span><span class="p">:</span> <span class="s">"your_custom_version"</span><span class="p">,</span>
-                                <span class="nv">isTestMode</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-                                <span class="nv">hostAppUserAgentInfo</span><span class="p">:</span> <span class="s">"host_app_name_and_version"</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
+                                <span class="nv">isTestMode</span><span class="p">:</span> <span class="kc">true</span><span class="s">")
+    }
+}
+</span></code></pre>
+
+<p><em>NOTE:</em> <code>RMAHostAppUserAgentInfo</code> cannot be configured at run time.</p>
 
 <div id="load-miniapp-list"></div>
 <h3 id='load-the-code-miniapp-code-list' class='heading'>Load the <code><a href="Classes/MiniApp.html">MiniApp</a></code> list:</h3>
@@ -289,8 +269,8 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 </code></pre>
 
 <div id="create-mini-app"></div>
-<h3 id='create-a-miniapp-for-the-given-code-miniappinfo-code-object' class='heading'>Create a MiniApp for the given <code><a href="Structs/MiniAppInfo.html">MiniAppInfo</a></code> object :</h3>
-<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">appInfo</span><span class="p">:</span> <span class="n">info</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+<h3 id='create-a-miniapp-for-the-given-code-miniappid-code' class='heading'>Create a MiniApp for the given <code>MiniAppId</code> :</h3>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">appId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
     <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
             <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">miniAppDisplay</span><span class="p">):</span>
                 <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="n">miniAppDisplay</span><span class="o">.</span><span class="nf">getMiniAppView</span><span class="p">()</span>
@@ -326,7 +306,7 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 
 <ul>
 <li>never = the UI will never be shown</li>
-<li>auto = navigation UI is only shown when a back or forward action is availabe</li>
+<li>auto = navigation UI is only shown when a back or forward action is available</li>
 <li>always = navigation UI is always present</li>
 </ul></li>
 <li><code>navigationDelegate</code> : A delegate that will receive MiniApp view instructions about available navigation options</li>
@@ -343,28 +323,25 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 </code></pre>
 
 <div id="sample-app"></div>
-<h1 id='example' class='heading'>Example</h1>
+<h2 id='example' class='heading'>Example</h2>
 
 <p>To run the example project, clone the repo, and run <code>pod install</code> from the Example directory first.</p>
 <h3 id='custom-parameters' class='heading'>Custom parameters</h3>
 
 <p>In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (<code>RASApplicationIdentifier</code>, <code>RASProjectSubscriptionKey</code>) or by taping the top right configuration icon in the example application. Also we don&rsquo;t currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (<code>RMAAPIEndpoint</code>)</p>
-<h3 id='testing-mode' class='heading'>Testing mode</h3>
-
-<p>The SDK can be configured to load MiniApps in 2 modes : Published mode and Testing mode. Published mode only allows access to the last published version of your MiniApps, whereas Testing mode allows you to load all your MiniApps versions, as long as they are in <code>Testing</code> state on RAS console. To configure the loading mode, you can either do it in the .plist file with the configuration variable <code>RMAIsTestMode</code>, or by taping the top right configuration icon in the example application.</p>
 <h2 id='license' class='heading'>License</h2>
 
-<p>See the <em>LICENSE</em> file for more info.</p>
+<p>See the <em><a href="https://github.com/rakutentech/ios-miniapp/blob/master/LICENSE">LICENSE</a></em> file for more info.</p>
 
 <div id="change-log"></div>
-<h1 id='changelog' class='heading'>Changelog</h1>
+<h2 id='changelog' class='heading'>Changelog</h2>
 
 <p>See the full <a href="https://github.com/rakutentech/ios-miniapp/blob/master/CHANGELOG.md">CHANGELOG</a>.</p>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-07-22)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-08-07)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
