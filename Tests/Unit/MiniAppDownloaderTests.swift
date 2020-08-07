@@ -25,7 +25,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -42,7 +42,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -72,7 +72,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -98,8 +98,8 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt",
-                                    "https://google.com/map-published/min-abc/ver-abc/Testing.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt",
+                                    "https://google.com/map-published-v2/min-abc/ver-abc/Testing.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -126,7 +126,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["http://example.com/map-published/min-abc/ver-abc/Mac/Testing.txt"]
+                        "manifest": ["http://example.com/map-published-v2/min-abc/ver-abc/Mac/Testing.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -181,7 +181,7 @@ class MiniAppDownloaderTests: QuickSpec {
                 it("will return true") {
                     let responseString = """
                     {
-                      "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                      "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                     }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -210,7 +210,7 @@ class MiniAppDownloaderTests: QuickSpec {
                 it("will return version that is already downloaded") {
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -233,7 +233,7 @@ class MiniAppDownloaderTests: QuickSpec {
 
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -260,7 +260,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/SmallMA.zip"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/SmallMA.zip"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -279,7 +279,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published/min-abc/ver-abc/SmallMAerror.zip"]
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/SmallMAerror.zip"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
