@@ -7,7 +7,7 @@ class UrlParserTests: QuickSpec {
         describe("Url parser") {
             context("when getFileStoragePath is called with valid url") {
                 it("will returns the path to store the file") {
-                    let urlString = "https://www.example.com/map-published/mini-abc/ver-abc/img/onload/file.png"
+                    let urlString = "https://www.example.com/map-published-v2/mini-abc/ver-abc/img/onload/file.png"
                     let path = UrlParser.getFileStoragePath(from: urlString)
                     expect(path).toEventually(equal("img/onload/file.png"))
                 }
@@ -21,7 +21,7 @@ class UrlParserTests: QuickSpec {
             }
             context("when getFileStoragePath is called with invalid url") {
                 it("will return nil") {
-                    let urlString = "https://www.example.com/map-published/"
+                    let urlString = "https://www.example.com/map-published-v2/"
                     let path = UrlParser.getFileStoragePath(from: urlString)
                     expect(path).toEventually(beNil())
                 }
