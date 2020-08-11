@@ -15,6 +15,10 @@ enum MiniAppJavaScriptError: String {
     case invalidPermissionType
 }
 
+enum MiniAppSupportedSchemes: String {
+    case tel
+}
+
 public enum MiniAppPermissionType: String {
     case location
 }

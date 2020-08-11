@@ -125,6 +125,25 @@ internal class RealMiniAppView: UIView, URLSessionDelegate {
     deinit {
         webView.configuration.userContentController.removeMessageHandler()
     }
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let requestUrl = navigationAction.request.url {
+            validateScheme(requestURL: requestUrl, decisionHandler: decisionHandler)
+        } else {
+            decisionHandler(.cancel)
+        }
+    }
+
+    func validateScheme(requestURL: URL, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        let schemeType = MiniAppSupportedSchemes(rawValue: requestURL.scheme!)
+        switch schemeType {
+        case .tel:
+            UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
+            decisionHandler(.cancel)
+        default:
+            decisionHandler(.allow)
+        }
+    }
 }
 
 extension RealMiniAppView: MiniAppDisplayProtocol {
