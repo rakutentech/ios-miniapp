@@ -1,3 +1,5 @@
+[![npm version](https://img.shields.io/npm/v/js-miniapp-sdk.svg?style=flat)](https://www.npmjs.com/package/js-miniapp-sdk)
+[![CircleCI](https://circleci.com/gh/rakutentech/js-miniapp.svg?style=svg)](https://circleci.com/gh/rakutentech/js-miniapp)
 [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
@@ -28,3 +30,18 @@ The repo is split into three packages:
 - `yarn sdk buildSdk`
 - `yarn sdk fix`
 - `yarn sdk test`
+
+## Continuous Integration and Deployment
+
+[CircleCI](https://circleci.com/gh/rakutentech/js-miniapp) is used for building and testing the project for every pull request. It is also used for publishing the JavaScript SDK.
+
+### SDK Release
+
+The following describes the steps performed by CI when releasing a new version of the SDK ([js-miniapp-sdk](js-miniapp-sdk)).
+
+1. A Git tag is pushed to repo which is in the format `vX.X.X` and triggers the CI to start.
+2. Build project, run tests, linting, etc.
+3. Pause for user verification of release.
+4. If approved, publish the JS SDK to [NPM](https://www.npmjs.com/package/js-miniapp-sdk).
+5. Publish documentation to the [Github Pages site](https://rakutentech.github.io/js-miniapp/docs/1.1/).
+6. Publish a release to [Github Releases page](https://github.com/rakutentech/js-miniapp/releases) and attach a JavaScript bundle of the SDK (`miniapp.bundle.js`).
