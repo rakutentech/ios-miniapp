@@ -9,8 +9,15 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var invalidHostAppIdLabel: UILabel!
     @IBOutlet weak var invalidSubscriptionKeyLabel: UILabel!
     weak var configUpdateDelegate: SettingsDelegate?
+    @IBOutlet weak var accountIcon: UIImageView!
+
     let predefinedKeys: [String] = ["RAS_APPLICATION_IDENTIFIER", "RAS_SUBSCRIPTION_KEY", ""]
 
+    enum SectionHeader: Int {
+        case RAS = 0
+        case profile = 1
+        case testMode = 2
+    }
     enum TestMode: Int, CaseIterable {
         case PUBLISHING,
         TESTING
@@ -45,23 +52,8 @@ class SettingsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         resetFields()
+        self.accountIcon.roundedCornerImageView()
         toggleSaveButton()
-    }
-
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 1:
-            return "Test Mode"
-        case 0:
-            return "RAS"
-        default:
-            return nil
-        }
-    }
-    // swiftlint:disable:next todo
-    //FIXME: remove to enable test mode after backend API is ready
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
     }
 
     func resetFields() {
@@ -306,4 +298,24 @@ class SettingsTableViewController: UITableViewController {
 
 protocol SettingsDelegate: class {
     func didSettingsUpdated(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]?)
+}
+
+extension SettingsTableViewController {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case SectionHeader.testMode.rawValue:
+            return "Test Mode"
+        case SectionHeader.profile.rawValue:
+            return ""
+        case SectionHeader.RAS.rawValue:
+            return "RAS"
+        default:
+            return nil
+        }
+    }
+    // swiftlint:disable:next todo
+    //FIXME: remove to enable test mode after backend API is ready
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
 }
