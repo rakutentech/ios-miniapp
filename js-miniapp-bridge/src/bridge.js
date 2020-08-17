@@ -2,6 +2,12 @@ var MiniAppBridge = {};
 MiniAppBridge.messageQueue = [];
 var uniqueId = Math.random();
 
+var GeolocationPositionError = {
+  PERMISSION_DENIED: 1,
+  POSITION_UNAVAILABLE: 2,
+  TIMEOUT: 3,
+}
+
 var isPlatform = {
   Android: function() {
     return navigator.userAgent.match(/Android/i);
@@ -114,6 +120,31 @@ MiniAppBridge.requestPermission = function(permissionType) {
     );
   });
 };
+
+/**
+ Below code will override the navigator.geolocation.getCurrentPosition method for only iOS
+ */
+if (isPlatform.iOS()) {
+    navigator.geolocation.getCurrentPosition = function(success, error, options) {
+        return MiniAppBridge.exec(
+            "getCurrentPosition",
+            {locationOptions: options},
+            function(value) {
+                try {
+                    var parsedData = JSON.parse(value)
+                    success(parsedData)
+                } catch(error) {
+                    error({
+                        code: GeolocationPositionError.POSITION_UNAVAILABLE,
+                        message: "Failed to parse location object from MiniAppBridge: " + error
+                    })
+                }
+            },
+            error
+        );
+    };
+}
+
 window.MiniAppBridge = MiniAppBridge;
 
 // Exported for unit testing
