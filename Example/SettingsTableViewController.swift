@@ -9,7 +9,6 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var invalidHostAppIdLabel: UILabel!
     @IBOutlet weak var invalidSubscriptionKeyLabel: UILabel!
     weak var configUpdateDelegate: SettingsDelegate?
-    @IBOutlet weak var accountIcon: UIImageView!
 
     let predefinedKeys: [String] = ["RAS_APPLICATION_IDENTIFIER", "RAS_SUBSCRIPTION_KEY", ""]
 
@@ -47,12 +46,12 @@ class SettingsTableViewController: UITableViewController {
         self.textFieldSubKey.delegate = self
         addTapGesture()
         addBuildVersionLabel()
+        self.tableView.separatorStyle = .singleLine
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         resetFields()
-        self.accountIcon.roundedCornerImageView()
         toggleSaveButton()
     }
 

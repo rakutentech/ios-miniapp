@@ -50,6 +50,7 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
         displayNameTextField.isEnabled = !displayNameTextField.isEnabled
         editPhotoButton.isEnabled = !editPhotoButton.isEnabled
         editPhotoButton.isHidden  = !editPhotoButton.isHidden
+        self.displayNameTextField.becomeFirstResponder()
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
