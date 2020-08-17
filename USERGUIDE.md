@@ -19,7 +19,6 @@ All the MiniApp files downloaded by the MiniApp iOS library are cached locally
 * [Installation](#installation)
 * [Configuration](#configuration)
 * [Usage](#usage)
-* [Sample App](#example)
 
 ## Requirements
 
@@ -182,20 +181,6 @@ MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(mi
 ...
 }
 ```
-
-<div id="sample-app"></div>
-
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-### Custom parameters
-
-In order to load your MiniApp, you will have to use your own Host App ID and your Subscription key. These can either be set in project configuration plist (`RASApplicationIdentifier`, `RASProjectSubscriptionKey`) or by taping the top right configuration icon in the example application. Also we don't currently host a public API, so you will need to provide your own Base URL for API requests by setting it in project configuration plist (`RMAAPIEndpoint`)
-
-## License
-
-See the *[LICENSE](https://github.com/rakutentech/ios-miniapp/blob/master/LICENSE)* file for more info.
 
 <div id="change-log"></div>
 
