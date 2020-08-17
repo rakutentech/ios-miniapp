@@ -33,7 +33,7 @@
   "scripts": {
     "lint": "gts check",
     "clean": "gts clean",
-    "compile": "tsc -p . && browserify ./build/src/index.js --standalone MiniApp > build/miniapp.bundle.js ",
+    "compile": "tsc -p . && browserify ./build/src/index.js --standalone MiniApp > build/miniapp.bundle.js",
     "prebuild": "npm run clean && npm run lint",
     "buildSdk": "npm run lint && npm run compile && npm run test",
     "fix": "gts fix",

@@ -26,7 +26,7 @@ jobs: # a collection of steps
       - run: # run tests
           name: test
           command: yarn sdk test
-      - run: 
+      - run:
           name: Generate Docs
           command: yarn sdk docs
       - run: # run coverage report
@@ -79,6 +79,33 @@ jobs: # a collection of steps
       - run:
           name: Lint
           command: yarn bridge lint
+      - run:
+          name: Compile
+          command: yarn bridge compile
+      - persist_to_workspace:
+          root: ~/mini-js-bridge
+          paths:
+            - js-miniapp-bridge/build/
+
+  export-bridge:
+    working_directory: ~/mini-js-bridge
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Export
+          command: |
+            set -e
+            cp js-miniapp-bridge/build/src/android/bridge.js js-miniapp-bridge/export/android/
+            cp js-miniapp-bridge/build/src/ios/bridge.js js-miniapp-bridge/export/ios/
+            git add js-miniapp-bridge/export
+            git config user.name "CI Publisher"
+            git config user.email "dev-opensource@mail.rakuten.com"
+            git commit -m "export bridge resource [ci skip]"
+            git push origin master
 
   build-sample: # builds  & tests the sample app against latest sdk build.
     working_directory: ~/js-miniapp-sample
@@ -164,6 +191,12 @@ workflows:
             branches:
               only: /.*/
       - build-bridge
+      - export-bridge:
+          requires:
+           - build-bridge
+          filters:
+            branches:
+              only: master
       - build-sample
       - sdk-release-verification:
           type: approval
