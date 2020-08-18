@@ -3,6 +3,7 @@ import React from 'react';
 import ChatIcon from '@material-ui/icons/Chat';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import HomeIcon from '@material-ui/icons/Home';
+import LaptopWindowsIcon from '@material-ui/icons/LaptopWindows';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import PersonIcon from '@material-ui/icons/Person';
@@ -12,11 +13,12 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AuthToken from './pages/auth-token';
 import TalkToChatBot from './pages/chatbot';
 import FetchCredentials from './pages/fetch-credentials';
-import Landing from "./pages/landing";
+import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
 import UserDetails from './pages/user-details';
 import UuidFetcher from './pages/uuid_sdk';
 import WebLocation from './pages/web_location';
+import WindowActions from './pages/window_actions';
 
 const navItems = [
   {
@@ -66,6 +68,12 @@ const navItems = [
     label: 'Fetch Credentials',
     navLink: '/fetch_credentials',
     component: FetchCredentials,
+  },
+  {
+    icon: <LaptopWindowsIcon />,
+    label: 'Window Actions',
+    navLink: '/window_actions',
+    component: WindowActions,
   },
 ];
 
