@@ -64,7 +64,13 @@
                             <outlet property="delegate" destination="EbT-N7-P7c" id="ht7-BY-DJp"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Contacts" id="C6l-RX-xpd"/>
+                    <navigationItem key="navigationItem" title="Contacts" id="C6l-RX-xpd">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ncu-87-b4w">
+                            <connections>
+                                <action selector="addContact" destination="EbT-N7-P7c" id="ISB-GC-LOS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NzY-8s-hjT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
