@@ -25,6 +25,24 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
         }
     }
 
+    func requestCustomPermissions(permissions: [MiniAppCustomPermissionType], completionHandler: @escaping (Result<String, Error>) -> Void) {
+        var permissionsString: String = ""
+        permissions.forEach() {
+            permissionsString.append($0.rawValue + ", ")
+        }
+        let permissionAlertTitle = "Allow " + self.currentMiniAppTitle! + " to access your " + permissionsString + "?"
+
+        let alert = UIAlertController(title: permissionAlertTitle, message: "You can also toggle the permissions from the settings", preferredStyle: .alert)
+        let allowAction = UIAlertAction(title: "Allow", style: .default, handler: nil)
+        let dontAllowAction = UIAlertAction(title: "Don't Allow", style: .cancel, handler: nil)
+        alert.addAction(allowAction)
+        alert.addAction(dontAllowAction)
+
+        DispatchQueue.main.async {
+            self.displayController?.present(alert, animated: true, completion: nil)
+        }
+    }
+
     func getUniqueId() -> String {
         guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
             return ""

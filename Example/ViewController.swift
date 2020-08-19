@@ -27,6 +27,8 @@ class ViewController: UIViewController {
     let imageCache = ImageCache()
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
+    var currentMiniAppTitle: String?
+    var displayController: DisplayNavigationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +55,7 @@ class ViewController: UIViewController {
             displayController?.miniAppDisplay = miniAppDisplay
             self.currentMiniAppInfo = nil
             self.currentMiniAppView = nil
+            self.displayController = displayController
         } else if segue.identifier == "CustomConfiguration" {
             if let navigationController = segue.destination as? UINavigationController,
                 let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
@@ -108,6 +111,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
                 self.currentMiniAppInfo = miniAppInfo
                 self.fetchMiniApp(for: miniAppInfo)
+                self.currentMiniAppTitle = miniAppInfo.displayName
             }
         }
     }

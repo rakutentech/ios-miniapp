@@ -1,7 +1,8 @@
 enum MiniAppJSActionCommand: String {
     case getUniqueId
-    case requestPermission
     case getCurrentPosition
+    case requestPermission
+    case requestCustomPermissions
 }
 
 enum JavaScriptExecResult: String {
@@ -21,6 +22,12 @@ enum MiniAppSupportedSchemes: String {
 
 public enum MiniAppPermissionType: String {
     case location
+}
+
+public enum MiniAppCustomPermissionType: String {
+    case userName = "User Name"
+    case profilePhoto = "Profile Photo"
+    case contactsList = "Contacts List"
 }
 
 public enum MiniAppPermissionResult: Error {

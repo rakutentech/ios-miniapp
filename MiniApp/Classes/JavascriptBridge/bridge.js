@@ -108,7 +108,7 @@ MiniAppBridge.requestPermission = function(permissionType) {
   return new Promise(function(resolve, reject) {
     return MiniAppBridge.exec(
       "requestPermission",
-      {permission: permissionType},
+      {permission: [permissionType]},
       function(success) { return resolve(success) },
       function (error) { return reject(error) }
     );
@@ -131,6 +131,17 @@ if (isPlatform.iOS()) {
         );
     };
 }
+
+MiniAppBridge.requestCustomPermissions = function(permissionType) {
+  return new Promise(function(resolve, reject) {
+    return MiniAppBridge.exec(
+      "requestCustomPermissions",
+      {permission: permissionType},
+      function(success) { return resolve(success) },
+      function (error) { return reject(error) }
+    );
+  });
+};
 
 window.MiniAppBridge = MiniAppBridge;
 

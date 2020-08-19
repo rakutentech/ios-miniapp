@@ -203,6 +203,7 @@ class MockFile {
 class MockMessageInterface: MiniAppMessageProtocol {
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
+    var customPermissions: Bool = false
     var permissionError: Error?
 
     func getUniqueId() -> String {
@@ -218,6 +219,18 @@ class MockMessageInterface: MiniAppMessageProtocol {
 
     func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
         if locationAllowed {
+            completionHandler(.success("Allowed"))
+        } else {
+            if permissionError != nil {
+                completionHandler(.failure(permissionError!))
+                return
+            }
+            completionHandler(.failure(MiniAppPermissionResult.denied))
+        }
+    }
+    
+    func requestCustomPermissions(permissions: [MiniAppCustomPermissionType], completionHandler: @escaping (Result<String, Error>) -> Void) {
+        if customPermissions {
             completionHandler(.success("Allowed"))
         } else {
             if permissionError != nil {

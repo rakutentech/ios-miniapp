@@ -46,6 +46,9 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .getCurrentPosition:
             locationManager = LocationManager(enableHighAccuracy: requestParam?.locationOptions?.enableHighAccuracy ?? false)
             getCurrentPosition(callbackId: callbackId)
+        case .requestCustomPermissions:
+            requestCustomPermissions(requestParam: requestParam, callbackId: callbackId)
+            break
         }
     }
 
@@ -62,7 +65,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
             return
         }
-        guard let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue) else {
+        guard let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue[0]) else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
             return
         }
@@ -71,6 +74,45 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .location:
             getPermissionResult(requestPermissionType: requestPermissionType, callbackId: callbackId)
         }
+    }
+    
+    func requestCustomPermissions(requestParam: RequestParameters?, callbackId: String) {
+        guard let requestParamValue = requestParam?.permission else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            return
+        }
+
+        guard let permissionList = getCustomPermissionList(permissionList: requestParamValue), permissionList.count > 0 else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            return
+        }
+        getCustomPermissionResult(customPermissionsList: permissionList, callbackId: callbackId)
+    }
+
+    func getCustomPermissionResult(customPermissionsList: [MiniAppCustomPermissionType], callbackId: String) {
+        hostAppMessageDelegate?.requestCustomPermissions(permissions: customPermissionsList) { (result) in
+           switch result {
+           case .success:
+               self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Allowed")
+           case .failure(let error):
+               if !error.localizedDescription.isEmpty {
+                   self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                   return
+               }
+               self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppPermissionResult.denied.localizedDescription)
+           }
+        }
+    }
+
+    func getCustomPermissionList(permissionList: [String]) -> [MiniAppCustomPermissionType]? {
+        var customPermissionsList: [MiniAppCustomPermissionType] = []
+        permissionList.forEach() {
+            guard let permissionType = MiniAppCustomPermissionType(rawValue: $0) else {
+                return
+            }
+            customPermissionsList.append(MiniAppCustomPermissionType(rawValue: permissionType.rawValue)!)
+        }
+        return customPermissionsList
     }
 
     func getPermissionResult(requestPermissionType: MiniAppPermissionType, callbackId: String) {
