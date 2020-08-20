@@ -13,5 +13,5 @@ public protocol MiniAppMessageProtocol: class {
 
     /// Interface that should be implemented in the host app to handle the Custom Permissions.
     /// Host app is responsible to display the alert/dialog with the [MiniAppCustomPermissionType] permissions to the user and the result should be returned back to the SDK
-    func requestCustomPermissions(permissions: [MiniAppCustomPermissionType], completionHandler: @escaping (Result<String, Error>) -> Void)
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], Error>) -> Void)
 }

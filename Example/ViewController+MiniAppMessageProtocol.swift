@@ -2,6 +2,7 @@ import MiniApp
 import CoreLocation
 
 extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
+
     typealias PermissionCompletionHandler = (((Result<String, Error>)) -> Void)
 
     func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
@@ -25,10 +26,10 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
         }
     }
 
-    func requestCustomPermissions(permissions: [MiniAppCustomPermissionType], completionHandler: @escaping (Result<String, Error>) -> Void) {
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], Error>) -> Void) {
         var permissionsString: String = ""
-        permissions.forEach() {
-            permissionsString.append($0.rawValue + ", ")
+        permissions.forEach {
+            permissionsString.append($0.permissionName.rawValue + ", ")
         }
         let permissionAlertTitle = "Allow " + self.currentMiniAppTitle! + " to access your " + permissionsString + "?"
 

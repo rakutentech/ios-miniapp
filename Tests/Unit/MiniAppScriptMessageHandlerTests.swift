@@ -33,7 +33,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when handleBridgeMessage receive invalid action, valid id") {
                 it("will return error") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
-                    let requestParam = RequestParameters(permission: ["location"], locationOptions: nil)
+                    let requestParam = RequestParameters(permission: ["location"], locationOptions: nil, permissionDescription: "")
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
@@ -42,7 +42,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when handleBridgeMessage receive valid action, invalid id") {
                 it("will return error") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
-                    let requestParam = RequestParameters(permission: ["location"], locationOptions: nil)
+                    let requestParam = RequestParameters(permission: ["location"], locationOptions: nil, permissionDescription: "")
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))

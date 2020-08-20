@@ -228,10 +228,10 @@ class MockMessageInterface: MiniAppMessageProtocol {
             completionHandler(.failure(MiniAppPermissionResult.denied))
         }
     }
-    
-    func requestCustomPermissions(permissions: [MiniAppCustomPermissionType], completionHandler: @escaping (Result<String, Error>) -> Void) {
+
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], Error>) -> Void) {
         if customPermissions {
-            completionHandler(.success("Allowed"))
+            completionHandler(.failure(permissionError!))
         } else {
             if permissionError != nil {
                 completionHandler(.failure(permissionError!))

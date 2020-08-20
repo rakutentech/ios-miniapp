@@ -25,9 +25,27 @@ public enum MiniAppPermissionType: String {
 }
 
 public enum MiniAppCustomPermissionType: String {
-    case userName = "User Name"
-    case profilePhoto = "Profile Photo"
-    case contactsList = "Contacts List"
+    case userName = "rakuten.miniapp.user.USER_NAME"
+    case profilePhoto = "rakuten.miniapp.user.PROFILE_PHOTO"
+    case contactsList = "rakuten.miniapp.user.CONTACT_LIST"
+
+    var title: String {
+        switch self {
+        case .userName:
+        return "User Name"
+        case .profilePhoto:
+        return "Profile Photo"
+        case .contactsList:
+        return "Contact List"
+        }
+    }
+}
+
+public enum MiniAppCustomPermissionResult: Error {
+    case allowed
+    case denied
+    case notDetermined
+    case permissionNotAvailable
 }
 
 public enum MiniAppPermissionResult: Error {
