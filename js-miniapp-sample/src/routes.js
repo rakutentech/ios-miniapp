@@ -16,9 +16,9 @@ import FetchCredentials from './pages/fetch-credentials';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
 import UserDetails from './pages/user-details';
-import UuidFetcher from './pages/uuid_sdk';
-import WebLocation from './pages/web_location';
-import WindowActions from './pages/window_actions';
+import UuidFetcher from './pages/uuid-sdk';
+import WebLocation from './pages/web-location';
+import WindowActions from './pages/window-actions';
 
 const navItems = [
   {

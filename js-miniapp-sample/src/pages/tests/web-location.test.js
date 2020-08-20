@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 import MiniApp from 'js-miniapp-sdk';
 
 import { wrapTheme } from '../../tests/test-utils';
-import WebLocation from './../web_location';
+import WebLocation from './../web-location';
 
 describe('web_location', () => {
   const dummyCoOridinates = {

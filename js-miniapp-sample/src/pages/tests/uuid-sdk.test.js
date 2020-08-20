@@ -9,7 +9,7 @@ import {
   screen,
   wrapTheme,
 } from '../../tests/test-utils';
-import UuidFetcher from './../uuid_sdk';
+import UuidFetcher from '../uuid-sdk';
 
 describe('uuid from mobile sdk', () => {
   beforeEach(() => {
