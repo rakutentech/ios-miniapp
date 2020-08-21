@@ -67,7 +67,7 @@
                     <navigationItem key="navigationItem" title="Contacts" id="C6l-RX-xpd">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ncu-87-b4w">
                             <connections>
-                                <action selector="addContact" destination="EbT-N7-P7c" id="ISB-GC-LOS"/>
+                                <action selector="addContact" destination="EbT-N7-P7c" id="R7x-8i-uAf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

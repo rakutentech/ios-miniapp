@@ -63,14 +63,13 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
         setProfileImage(image: image)
     }
 
-    func saveProfileSettings(forKey key: String = "ProfileImage") -> Bool {
+    func saveProfileSettings(forKey key: String = "ProfileSettings") -> Bool {
         let name = displayNameTextField.text?.trimTrailingWhitespaces()
         guard let userDisplayName = name, !userDisplayName.isEmpty else {
             self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_user_profile_name_not_found", comment: ""))
             return false
         }
-
-        if let data = try? PropertyListEncoder().encode(UserProfileModel(displayName: userDisplayName, profileImage: self.userProfileImage)) {
+        if let data = try? PropertyListEncoder().encode(UserProfileModel(displayName: userDisplayName, profileImageURI: self.userProfileImage?.dataURI())) {
             UserDefaults.standard.set(data, forKey: key)
             return true
         }
@@ -81,10 +80,11 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
         if let userProfile = UserDefaults.standard.data(forKey: key) {
             let userProfileData = try? PropertyListDecoder().decode(UserProfileModel.self, from: userProfile)
             self.displayNameTextField.text = userProfileData?.displayName
-            guard let imageData = userProfileData?.profileImageData else {
+
+            guard let imageData = userProfileData?.profileImageURI else {
                 return nil
             }
-            return UIImage(data: imageData)
+            return imageData.convertBase64ToImage()
         }
         return nil
     }
@@ -99,10 +99,10 @@ extension UIImageView {
 
 struct UserProfileModel: Codable {
     var displayName: String?
-    var profileImageData: Data?
+    var profileImageURI: String?
 
-    init(displayName: String, profileImage: UIImage?) {
+    init(displayName: String, profileImageURI: String?) {
         self.displayName = displayName
-        self.profileImageData = profileImage?.pngData()
+        self.profileImageURI = profileImageURI
     }
 }

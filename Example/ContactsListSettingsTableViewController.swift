@@ -44,7 +44,47 @@ class ContactsListSettingsTableViewController: UITableViewController {
     }
 
     @IBAction func addContact() {
-        userContactList.append(UUID().uuidString)
-        self.tableView.reloadData()
+        self.addCustomContactId(title: "Please enter the custom ID you would like to add in Contacts", message: "")
+    }
+
+    func addCustomContactId(title: String, message: String) {
+        DispatchQueue.main.async {
+            self.getInputFromAlertWithTextField(title: title, message: message) { (_, textField) in
+                if let textField = textField, let contactId = textField.text, contactId.count > 0, !contactId.trimTrailingWhitespaces().isEmpty {
+                    self.userContactList.append(contactId)
+                    self.tableView.reloadData()
+                } else {
+                    self.addCustomContactId(title: "Invalid Contact ID, please try again", message: "Enter valid contact and select Ok")
+                }
+            }
+        }
+    }
+
+    func getInputFromAlertWithTextField(title: String? = nil, message: String? = nil, keyboardType: UIKeyboardType? = .asciiCapable, handler: ((UIAlertAction, UITextField?) -> Void)? = nil) {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            let alert = UIAlertController(title: title,
+                message: message,
+                preferredStyle: .alert)
+            alert.addTextField { (textField) in
+                textField.delegate = self
+                if let type = keyboardType {
+                    textField.keyboardType = type
+                }
+            }
+
+            let okAction = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default) { (action) in
+                if !alert.textFields![0].text!.isEmpty {
+                    handler?(action, alert.textFields?.first)
+                } else {
+                    handler?(action, nil)
+                }
+            }
+            okAction.isEnabled = false
+            alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: { (_) in
+                    self.dismiss(animated: true, completion: nil)
+                }))
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }

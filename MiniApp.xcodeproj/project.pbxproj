@@ -27,6 +27,7 @@
 		380B69B0245000EA0054DD30 /* String+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B69AF245000EA0054DD30 /* String+MiniApp.swift */; };
 		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
 		381CA63024EABF58001DD858 /* ContactsListSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381CA62F24EABF58001DD858 /* ContactsListSettingsTableViewController.swift */; };
+		381CA63424EF74E8001DD858 /* MiniApp+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381CA63324EF74E8001DD858 /* MiniApp+UIImage.swift */; };
 		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
 		38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */; };
 		38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */; };
@@ -88,6 +89,7 @@
 		380B69AF245000EA0054DD30 /* String+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+MiniApp.swift"; path = "Example/String+MiniApp.swift"; sourceTree = SOURCE_ROOT; };
 		3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStatusTests.swift; sourceTree = "<group>"; };
 		381CA62F24EABF58001DD858 /* ContactsListSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactsListSettingsTableViewController.swift; path = Example/ContactsListSettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		381CA63324EF74E8001DD858 /* MiniApp+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MiniApp+UIImage.swift"; path = "Example/MiniApp+UIImage.swift"; sourceTree = SOURCE_ROOT; };
 		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
 		38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestAPITests.swift; sourceTree = "<group>"; };
 		38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestDownloaderTests.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				185DBD5F24AD5A8400CD2094 /* Array+MiniApp.swift */,
 				185DBD5D24AD50C300CD2094 /* Number+MiniApp.swift */,
 				380B69AF245000EA0054DD30 /* String+MiniApp.swift */,
+				381CA63324EF74E8001DD858 /* MiniApp+UIImage.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				3878D4D223B44F85001E27F8 /* Images.xcassets */,
@@ -411,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18694AD22449883300F97BAA /* UIImageView+Extensions.swift in Sources */,
+				381CA63424EF74E8001DD858 /* MiniApp+UIImage.swift in Sources */,
 				383C625524E641E10075192F /* UserSettingsTableViewController.swift in Sources */,
 				18694AD62449891800F97BAA /* ViewController+MiniApp.swift in Sources */,
 				188974B82456B02F00042C97 /* FirstLaunchViewController.swift in Sources */,
