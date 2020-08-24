@@ -38,7 +38,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
         if editingStyle == .delete {
             if userContactList.indices.contains(indexPath.row) {
                 userContactList.remove(at: indexPath.row)
-                self.tableView.reloadData()
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         }
     }
