@@ -1,8 +1,6 @@
 # js-miniapp-sample
 
-This is the boilerplate for the MiniAppBuild Team.
-
-The project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The sample app was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Table of contents
 
@@ -16,7 +14,6 @@ The project was bootstrapped with [Create React App](https://github.com/facebook
   - [Flow](#flow)
   - [Custom Environment Variables](#custom-environment-variables)
   - [Code Formatting](#code-formatting)
-  - [Others](#others)
 
 ## Installation
 
@@ -84,7 +81,3 @@ to unpackage and run a production build on your local computer:
 - The following dev-dependencies have been installed for this purpose: `husky, lint-staged, prettier`
 - Whenever we make a commit Prettier will format the changed files automatically.
 - You might want to integrate Prettier in your favorite editor as well. Please check the [Prettier Editor Integration](https://prettier.io/docs/en/editors.html).
-
-## Others
-
-- You can have a look at the create-react-app repo [here](https://github.com/facebook/create-react-app)
