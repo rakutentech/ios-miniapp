@@ -10,6 +10,7 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import PersonIcon from '@material-ui/icons/Person';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import MediaIcon from '@material-ui/icons/MusicVideo';
 
 import AuthToken from './pages/auth-token';
 import TalkToChatBot from './pages/chatbot';
@@ -21,6 +22,7 @@ import UserDetails from './pages/user-details';
 import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
+import Media from './pages/media';
 
 const navItems = [
   {
@@ -82,6 +84,12 @@ const navItems = [
     label: 'URI Schemes',
     navLink: '/uri_schemes',
     component: UriSchemes,
+  },
+  {
+    icon: <MediaIcon />,
+    label: 'Media',
+    navLink: '/media',
+    component: Media,
   },
 ];
 

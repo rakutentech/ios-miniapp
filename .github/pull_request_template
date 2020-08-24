@@ -6,5 +6,6 @@ Explain your rationale of technical decisions you made (unless discussed before)
 Add links to github/jira issues, design documents and other relevant resources (e.g. previous discussions, platform/tool documentation etc.)
 
 # Checklist
-- [ ] I wrote/updated tests for new/changed code
-- [ ] I ran `npm run build` without issues
+- [ ] I wrote/updated tests for new/changed code.
+- [ ] I ran `yarn sdk buildSdk` and `yarn bridge buildBridge` without issues.
+- [ ] I ran `yarn sample prettify` and `yarn sample build` without issues.

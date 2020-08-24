@@ -16,7 +16,7 @@ describe('web_location', () => {
   const mockGeolocation = {
     watchPosition: jest.fn(),
     clearWatch: jest.fn(),
-    getCurrentPosition: jest.fn().mockImplementation(success =>
+    getCurrentPosition: jest.fn().mockImplementation((success) =>
       Promise.resolve(
         success({
           coords: dummyCoOridinates,
@@ -39,7 +39,7 @@ describe('web_location', () => {
     ).toBeTruthy();
   });
 
-  test('should fetch display location', async() => {
+  test('should fetch display location', async () => {
     expect(screen.queryByTestId('location-container')).not.toBeInTheDocument();
     await userEvent.click(screen.getByTestId('turn-on'));
     expect(screen.queryByTestId('location-container')).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe('web_location', () => {
     ).toBeInTheDocument();
   });
 
-  test('should turn off geo-location',async () => {
+  test('should turn off geo-location', async () => {
     await userEvent.click(screen.getByTestId('turn-on'));
     expect(screen.queryByTestId('location-container')).toBeInTheDocument();
     await userEvent.click(screen.getByTestId('turn-off'));
