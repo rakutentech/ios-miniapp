@@ -63,7 +63,7 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
         setProfileImage(image: image)
     }
 
-    func saveProfileSettings(forKey key: String = "ProfileSettings") -> Bool {
+    func saveProfileSettings(forKey key: String = "ProfileImage") -> Bool {
         let name = displayNameTextField.text?.trimTrailingWhitespaces()
         guard let userDisplayName = name, !userDisplayName.isEmpty else {
             self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_user_profile_name_not_found", comment: ""))
