@@ -18,3 +18,11 @@ struct CustomPermissions: Decodable {
     let name: String?
     let description: String?
 }
+
+struct MiniAppCustomPermissionsResponse: Codable {
+    let permissions: [MiniAppCustomPermissionsListResponse]
+}
+
+struct MiniAppCustomPermissionsListResponse: Codable {
+    let name, isGranted: String
+}

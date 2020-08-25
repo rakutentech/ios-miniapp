@@ -132,6 +132,14 @@ internal class RealMiniApp {
             completionHandler(.failure(error))
         }
     }
+
+    func retrieveCustomPermissions(forMiniApp id: String) -> [MASDKCustomPermissionModel]? {
+        return self.miniAppStatus.getCustomPermissions(forMiniApp: id)
+    }
+
+    func storeCustomPermissions(forMiniApp id: String, permissionList: [MASDKCustomPermissionModel]) {
+        return self.miniAppStatus.setCustomPermissions(forMiniApp: id, permissionList: permissionList)
+    }
 }
 
 extension RealMiniApp: MiniAppMessageProtocol {

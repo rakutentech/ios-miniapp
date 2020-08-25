@@ -41,26 +41,41 @@ extension MiniAppScriptMessageHandler {
     }
 
     func sendCustomPermissionsJsonResponse(result: [MASDKCustomPermissionModel], callbackId: String) {
-        let responseDict = Dictionary(result.map { ($0.permissionName.title, $0.isPermissionGranted) }) { first, _ in first }
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: responseDict, options: .prettyPrinted) else {
+        guard let responseString = getSuccessResponseJson(result: result) else {
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppPermissionResult.denied.localizedDescription)
             return
         }
-        guard let jsonDataString = String(data: jsonData, encoding: .utf8) else {
-            return
+        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: responseString)
+    }
+
+    func getSuccessResponseJson(result: [MASDKCustomPermissionModel]) -> String? {
+        var permissionListResponse = [MiniAppCustomPermissionsListResponse]()
+        result.forEach {
+            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, isGranted: $0.isPermissionGranted.rawValue))
         }
-        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: jsonDataString)
-     }
+        if permissionListResponse.count > 0 {
+            let responseObject = MiniAppCustomPermissionsResponse(permissions: permissionListResponse)
+            do {
+                let jsonData = try JSONEncoder().encode(responseObject)
+                return String(data: jsonData, encoding: .utf8)!
+            } catch let error {
+                print(error)
+                return nil
+            }
+        }
+        return nil
+    }
 }
 
 /// MASDKCustomPermissionModel helps to communicate with the Host app back and forth when Custom Permissions are requested by a Mini App.
 /// When Custom Permissions received from Mini app, this class is used by SDK to define the type of custom permissions that is requested and
 /// the same is returned by Host app with isPermissionGranted values updated (Value returned after user responded to the list of permissions)
-public class MASDKCustomPermissionModel {
+public class MASDKCustomPermissionModel: Codable {
     public var permissionName: MiniAppCustomPermissionType
-    public var isPermissionGranted: MiniAppCustomPermissionResult
+    public var isPermissionGranted: MiniAppCustomPermissionGrantedStatus
     public var permissionDescription: String?
 
-    init(permissionName: MiniAppCustomPermissionType, isPermissionGranted: MiniAppCustomPermissionResult = .notDetermined, permissionRequestDescription: String? = "") {
+    init(permissionName: MiniAppCustomPermissionType, isPermissionGranted: MiniAppCustomPermissionGrantedStatus = .allowed, permissionRequestDescription: String? = "") {
         self.permissionName = permissionName
         self.isPermissionGranted = isPermissionGranted
         self.permissionDescription = permissionRequestDescription

@@ -27,20 +27,13 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
     }
 
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], Error>) -> Void) {
-        var permissionsString: String = ""
-        permissions.forEach {
-            permissionsString.append($0.permissionName.rawValue + ", ")
-        }
-        let permissionAlertTitle = "Allow " + self.currentMiniAppTitle! + " to access your " + permissionsString + "?"
-
-        let alert = UIAlertController(title: permissionAlertTitle, message: "You can also toggle the permissions from the settings", preferredStyle: .alert)
-        let allowAction = UIAlertAction(title: "Allow", style: .default, handler: nil)
-        let dontAllowAction = UIAlertAction(title: "Don't Allow", style: .cancel, handler: nil)
-        alert.addAction(allowAction)
-        alert.addAction(dontAllowAction)
-
-        DispatchQueue.main.async {
-            self.displayController?.present(alert, animated: true, completion: nil)
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomPermissionsTableViewController") as? CustomPermissionsTableViewController {
+            viewController.customPermissionHandlerObj = completionHandler
+            viewController.permissionsRequestList = permissions
+            viewController.miniAppTitle = self.currentMiniAppTitle ?? "MiniApp"
+            let navController = UINavigationController(rootViewController: viewController)
+            navController.modalPresentationStyle = .fullScreen
+            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
         }
     }
 

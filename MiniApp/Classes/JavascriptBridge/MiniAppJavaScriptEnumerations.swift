@@ -24,12 +24,12 @@ public enum MiniAppPermissionType: String {
     case location
 }
 
-public enum MiniAppCustomPermissionType: String {
+public enum MiniAppCustomPermissionType: String, Codable {
     case userName = "rakuten.miniapp.user.USER_NAME"
     case profilePhoto = "rakuten.miniapp.user.PROFILE_PHOTO"
     case contactsList = "rakuten.miniapp.user.CONTACT_LIST"
 
-    var title: String {
+    public var title: String {
         switch self {
         case .userName:
         return "User Name"
@@ -41,11 +41,10 @@ public enum MiniAppCustomPermissionType: String {
     }
 }
 
-public enum MiniAppCustomPermissionResult: Error {
-    case allowed
-    case denied
-    case notDetermined
-    case permissionNotAvailable
+public enum MiniAppCustomPermissionGrantedStatus: String, Codable {
+    case allowed = "ALLOWED"
+    case denied = "DENIED"
+    case permissionNotAvailable = "PERMISSION_NOT_AVAILABLE"
 }
 
 public enum MiniAppPermissionResult: Error {
