@@ -60,7 +60,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                  it("will return error") {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
                     mockMessageInterface.locationAllowed = true
-                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": [\"location\"]}, \"id\":\"12345\"}" as AnyObject)
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.response).toEventually(equal("Allowed"))
                  }
@@ -69,7 +69,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                  it("will return denied") {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
                     mockMessageInterface.locationAllowed = false
-                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": [\"location\"]}, \"id\":\"12345\"}" as AnyObject)
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventually(equal("Denied") || equal("NotDetermined"))
                  }
@@ -79,7 +79,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
                     mockMessageInterface.locationAllowed = false
                     mockMessageInterface.permissionError = MiniAppPermissionResult.notDetermined
-                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": [\"location\"]}, \"id\":\"12345\"}" as AnyObject)
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventually(equal("NotDetermined"))
                  }
@@ -89,7 +89,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface)
                     mockMessageInterface.locationAllowed = false
                     mockMessageInterface.permissionError = MiniAppPermissionResult.notDetermined
-                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": [\"ppp\"]}, \"id\":\"12345\"}" as AnyObject)
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"ppp\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventually(equal("invalidPermissionType"))
                  }
