@@ -1,13 +1,12 @@
 extension MiniAppScriptMessageHandler {
     func requestCustomPermissions(requestParam: RequestParameters?, callbackId: String) {
-        guard let requestParamValue = requestParam?.permission else {
+        guard let requestParamValue = requestParam?.customPermissions else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
             return
         }
 
         guard let permissionRequestModelList = prepareCustomPermissionModelList(
-            permissionList: requestParamValue,
-            permissionDescription: requestParam?.permissionDescription),
+            permissionList: requestParamValue),
             permissionRequestModelList.count > 0 else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
             return
@@ -15,13 +14,13 @@ extension MiniAppScriptMessageHandler {
         getCustomPermissionResult(customPermissionRequestList: permissionRequestModelList, callbackId: callbackId)
     }
 
-    func prepareCustomPermissionModelList(permissionList: [String], permissionDescription: String?) -> [MASDKCustomPermissionModel]? {
+    func prepareCustomPermissionModelList(permissionList: [CustomPermissions]) -> [MASDKCustomPermissionModel]? {
         var customPermissionRequestList: [MASDKCustomPermissionModel] = []
         permissionList.forEach {
-            guard let permissionType = MiniAppCustomPermissionType(rawValue: $0) else {
+            guard let permissionType = MiniAppCustomPermissionType(rawValue: $0.name ?? "") else {
                 return
             }
-            customPermissionRequestList.append(MASDKCustomPermissionModel(permissionName: permissionType, permissionRequestDescription: permissionDescription))
+            customPermissionRequestList.append(MASDKCustomPermissionModel(permissionName: permissionType, permissionRequestDescription: $0.description))
         }
         return customPermissionRequestList
     }

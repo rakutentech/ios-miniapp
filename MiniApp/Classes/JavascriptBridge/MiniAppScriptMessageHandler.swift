@@ -64,7 +64,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
             return
         }
-        guard let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue[0]) else {
+        guard let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue) else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
             return
         }
