@@ -26,9 +26,12 @@
 		18D764392419D08600150A30 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C59F2C2410ADE300F66632 /* Config.swift */; };
 		380B69B0245000EA0054DD30 /* String+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B69AF245000EA0054DD30 /* String+MiniApp.swift */; };
 		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
+		381CA63024EABF58001DD858 /* ContactsListSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381CA62F24EABF58001DD858 /* ContactsListSettingsTableViewController.swift */; };
+		381CA63424EF74E8001DD858 /* MiniApp+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381CA63324EF74E8001DD858 /* MiniApp+UIImage.swift */; };
 		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
 		38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */; };
 		38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */; };
+		383C625524E641E10075192F /* UserSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383C625424E641E10075192F /* UserSettingsTableViewController.swift */; };
 		3850AE722434E02D0046978C /* RealMiniAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3850AE712434E02D0046978C /* RealMiniAppTests.swift */; };
 		385C25CA23F2E8BA00D61206 /* DisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25C923F2E8BA00D61206 /* DisplayerTests.swift */; };
 		385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */; };
@@ -85,9 +88,12 @@
 		18C59F2C2410ADE300F66632 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Example/Config.swift; sourceTree = SOURCE_ROOT; };
 		380B69AF245000EA0054DD30 /* String+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+MiniApp.swift"; path = "Example/String+MiniApp.swift"; sourceTree = SOURCE_ROOT; };
 		3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStatusTests.swift; sourceTree = "<group>"; };
+		381CA62F24EABF58001DD858 /* ContactsListSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactsListSettingsTableViewController.swift; path = Example/ContactsListSettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		381CA63324EF74E8001DD858 /* MiniApp+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MiniApp+UIImage.swift"; path = "Example/MiniApp+UIImage.swift"; sourceTree = SOURCE_ROOT; };
 		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
 		38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestAPITests.swift; sourceTree = "<group>"; };
 		38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestDownloaderTests.swift; sourceTree = "<group>"; };
+		383C625424E641E10075192F /* UserSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserSettingsTableViewController.swift; path = Example/UserSettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		3850AE712434E02D0046978C /* RealMiniAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMiniAppTests.swift; sourceTree = "<group>"; };
 		385C25C923F2E8BA00D61206 /* DisplayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayerTests.swift; sourceTree = "<group>"; };
 		385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewTests.swift; sourceTree = "<group>"; };
@@ -220,6 +226,8 @@
 				188F5922243DCBAB0042618E /* DisplayNavigationController.swift */,
 				386A913B23F653E800F5DB1B /* DisplayController.swift */,
 				18C59F2A241094F600F66632 /* SettingsTableViewController.swift */,
+				383C625424E641E10075192F /* UserSettingsTableViewController.swift */,
+				381CA62F24EABF58001DD858 /* ContactsListSettingsTableViewController.swift */,
 				38777D9223F67BD2008716A7 /* Progress+UIViewController.swift */,
 				18694AD12449883300F97BAA /* UIImageView+Extensions.swift */,
 				1867996A243EF6C200CD6A8E /* ImageCache.swift */,
@@ -227,6 +235,7 @@
 				185DBD5F24AD5A8400CD2094 /* Array+MiniApp.swift */,
 				185DBD5D24AD50C300CD2094 /* Number+MiniApp.swift */,
 				380B69AF245000EA0054DD30 /* String+MiniApp.swift */,
+				381CA63324EF74E8001DD858 /* MiniApp+UIImage.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				3878D4D223B44F85001E27F8 /* Images.xcassets */,
@@ -405,6 +414,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				18694AD22449883300F97BAA /* UIImageView+Extensions.swift in Sources */,
+				381CA63424EF74E8001DD858 /* MiniApp+UIImage.swift in Sources */,
+				383C625524E641E10075192F /* UserSettingsTableViewController.swift in Sources */,
 				18694AD62449891800F97BAA /* ViewController+MiniApp.swift in Sources */,
 				188974B82456B02F00042C97 /* FirstLaunchViewController.swift in Sources */,
 				188F5921243DC6470042618E /* MiniAppCell.swift in Sources */,
@@ -412,6 +423,7 @@
 				3871A8DF24C1EE9400BEC6CF /* ViewController+MiniAppMessageProtocol.swift in Sources */,
 				188F5923243DCBAB0042618E /* DisplayNavigationController.swift in Sources */,
 				1867996B243EF6C200CD6A8E /* ImageCache.swift in Sources */,
+				381CA63024EABF58001DD858 /* ContactsListSettingsTableViewController.swift in Sources */,
 				18C59F2B241094F600F66632 /* SettingsTableViewController.swift in Sources */,
 				185DBD6024AD5A8400CD2094 /* Array+MiniApp.swift in Sources */,
 				3878D4D623B44F85001E27F8 /* ViewController.swift in Sources */,

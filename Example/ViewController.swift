@@ -36,6 +36,7 @@ class ViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
+        locationManager.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
