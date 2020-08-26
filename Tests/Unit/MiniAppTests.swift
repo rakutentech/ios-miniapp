@@ -1,0 +1,61 @@
+import Quick
+import Nimble
+@testable import MiniApp
+
+class MiniAppTests: QuickSpec {
+
+    override func spec() {
+        describe("MiniApp tests") {
+            context("when getPermissions is called with empty mini app id") {
+                it("will return nil") {
+                    let miniAppCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: "")
+                    expect(miniAppCustomPermissions).toEventually(beNil())
+                }
+            }
+            context("when getPermissions is called with valid mini app id that has stored permissions") {
+                it("will return list of custom permissions") {
+                    let userNamePermission = MASDKCustomPermissionModel(permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.contactsList.rawValue)!)
+                    let profilePhotoPermission = MASDKCustomPermissionModel(
+                        permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.profilePhoto.rawValue)!,
+                        isPermissionGranted: MiniAppCustomPermissionGrantedStatus.denied)
+                    MiniApp.shared().setCustomPermissions(forMiniApp: "123", permissionList: [userNamePermission, profilePhotoPermission])
+                    let miniAppCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: "123")
+
+                    expect(miniAppCustomPermissions).toEventuallyNot(beNil())
+                    expect(miniAppCustomPermissions?[0].permissionName.rawValue).toEventually(equal("rakuten.miniapp.user.CONTACT_LIST"))
+                    expect(miniAppCustomPermissions?[0].isPermissionGranted.rawValue).toEventually(equal("ALLOWED"))
+                    expect(miniAppCustomPermissions?[1].permissionName.rawValue).toEventually(equal("rakuten.miniapp.user.PROFILE_PHOTO"))
+                    expect(miniAppCustomPermissions?[1].isPermissionGranted.rawValue).toEventually(equal("DENIED"))
+                    UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
+                }
+            }
+            context("when info method is called with empty mini app id") {
+                it("will return nil") {
+                    var testError: NSError?
+                    MiniApp.shared().info(miniAppId: "") { (result) in
+                        switch result {
+                        case .success: break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    }
+                    expect(testError?.localizedDescription).toEventually(equal("Invalid AppID error"), timeout: 2)
+                }
+            }
+            context("when info method is called with valid mini app id") {
+                it("will return nil") {
+                    var testError: NSError?
+                    MiniApp.shared().info(miniAppId: "1234") { (result) in
+                        switch result {
+                        case .success: break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    }
+                    expect(testError?.code).toEventually(equal(400), timeout: 10)
+                }
+            }
+
+        }
+    }
+}

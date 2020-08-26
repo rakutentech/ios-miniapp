@@ -231,13 +231,13 @@ class MockMessageInterface: MiniAppMessageProtocol {
 
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], Error>) -> Void) {
         if customPermissions {
-            completionHandler(.failure(permissionError!))
+            completionHandler(.success(permissions))
         } else {
             if permissionError != nil {
                 completionHandler(.failure(permissionError!))
                 return
             }
-            completionHandler(.failure(MiniAppPermissionResult.denied))
+            completionHandler(.failure(MiniAppPermissionResult.restricted))
         }
     }
 }
@@ -338,6 +338,8 @@ func deleteMockMiniApp(appId: String, versionId: String) {
 
 func deleteStatusPreferences() {
     UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
+    UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppCustomPermissions")
+
 }
 
 func tapAlertButton(title: String, actions: [UIAlertAction]?) {

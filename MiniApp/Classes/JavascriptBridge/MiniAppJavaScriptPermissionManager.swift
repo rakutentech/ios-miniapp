@@ -4,7 +4,6 @@ extension MiniAppScriptMessageHandler {
         userRespondedRequestList.removeAll()
         guard let requestParamValue = requestParam?.customPermissions else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppCustomPermissionError(customPermissionError: .invalidCustomPermissionRequest))
-
             return
         }
 

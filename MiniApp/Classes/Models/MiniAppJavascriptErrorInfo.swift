@@ -20,7 +20,7 @@ public enum MiniAppCustomPermissionError: String, Codable {
         case .invalidCustomPermissionsList:
         return "Error in list of Custom permissions that is passed, please check whether valid permission associated with name "
         case .hostAppError:
-        return ""
+        return "Host app Error"
         case .unknownError:
         return "Unknown error occurred, please try again"
         }

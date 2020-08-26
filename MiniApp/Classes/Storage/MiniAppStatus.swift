@@ -49,13 +49,15 @@ class MiniAppStatus {
 
     func setCustomPermissions(forMiniApp id: String, permissionList: [MASDKCustomPermissionModel]) {
         var permissionsToStore = permissionList
-        if let storedPermissions = getCustomPermissions(forMiniApp: id) {
-            storedPermissions.forEach {
-                permissionsToStore.append($0)
+        if !id.isEmpty {
+            if let storedPermissions = getCustomPermissions(forMiniApp: id) {
+                storedPermissions.forEach {
+                    permissionsToStore.append($0)
+                }
             }
-        }
-        if let data = try? PropertyListEncoder().encode(permissionsToStore) {
-            self.miniAppCustomPermissionsDefaults?.set(data, forKey: id)
+            if let data = try? PropertyListEncoder().encode(permissionsToStore) {
+                self.miniAppCustomPermissionsDefaults?.set(data, forKey: id)
+            }
         }
     }
 

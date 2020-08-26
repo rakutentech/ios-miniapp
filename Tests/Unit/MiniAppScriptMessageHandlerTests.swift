@@ -12,6 +12,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             let mockMessageInterface = MockMessageInterface()
 
             let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+            afterEach {
+                deleteStatusPreferences()
+            }
             context("when user controller receive valid action and id") {
                 it("will return unique id") {
                     mockMessageInterface.mockUniqueId = false
@@ -110,6 +113,96 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.response).toEventually(contain("longitude"))
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid custom permissions command") {
+                 it("will return response with name and isGranted status for all permission that is requested") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+                    mockMessageInterface.customPermissions = true
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"customPermissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
+                            "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: 10)
+                    guard let responseData: Data = callbackProtocol.response?.data(using: .utf8) else {
+                        return
+                    }
+                    let decodedObj = try JSONDecoder().decode(MiniAppCustomPermissionsResponse.self, from: responseData)
+                    expect(decodedObj.permissions[0].name).toEventually(equal("rakuten.miniapp.user.USER_NAME"), timeout: 10)
+                    expect(decodedObj.permissions[0].isGranted).toEventually(equal("ALLOWED"), timeout: 10)
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid custom permissions command but invalid permission object title instead of name") {
+                 it("will return error response with error title and description for permission that is requested") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+                    mockMessageInterface.customPermissions = true
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"customPermissions\":" + "[{\"title\":\"rakuten.miniapp.user.USER_NAME\"," +
+                            "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
+                    guard let responseData: Data = callbackProtocol.errorMessage?.data(using: .utf8) else {
+                        return
+                    }
+                    let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: responseData)
+                    expect(decodedObj.error.title).toEventually(equal(MiniAppCustomPermissionError.invalidCustomPermissionsList), timeout: 10)
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid custom permissions command but only one unknown custom permission") {
+                 it("will return error response with error title and description for permission that is requested") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+                    mockMessageInterface.customPermissions = true
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"customPermissions\":" + "[{\"name\":\"rakuten.miniapp.user.LOCATION\"," +
+                            "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
+                    guard let responseData: Data = callbackProtocol.errorMessage?.data(using: .utf8) else {
+                        return
+                    }
+                    let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: responseData)
+                    expect(decodedObj.error.title).toEventually(equal(MiniAppCustomPermissionError.invalidCustomPermissionsList), timeout: 10)
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid custom permissions command but  no custom permissions requested") {
+                 it("will return error response with error title and description for permission that is requested") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+                    mockMessageInterface.customPermissions = true
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"customPermissions\": null},\"id\":\"1.0343410245054572\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
+                    guard let responseData: Data = callbackProtocol.errorMessage?.data(using: .utf8) else {
+                        return
+                    }
+                    let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: responseData)
+                    expect(decodedObj.error.title).toEventually(equal(MiniAppCustomPermissionError.invalidCustomPermissionRequest), timeout: 10)
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid custom permissions command but there is an error in the host app delegate") {
+                 it("will return error response") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+                    mockMessageInterface.customPermissions = false
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"customPermissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
+                            "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
+                    expect(callbackProtocol.errorMessage).toEventually(equal("Restricted") || equal("NotDetermined"))
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid custom permissions command but there is an error in the host app delegate") {
+                 it("will return error response") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+                    mockMessageInterface.customPermissions = false
+                    scriptMessageHandler.sendSuccessResponse(result: [MiniAppCustomPermissionsListResponse(name: "rakuten.miniapp.user.PROFILE_PHOTO", isGranted: "DENIED")], callbackId: "test")
+                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: 10)
+                    guard let responseData: Data = callbackProtocol.response?.data(using: .utf8) else {
+                        return
+                    }
+                    let decodedObj = try JSONDecoder().decode(MiniAppCustomPermissionsResponse.self, from: responseData)
+                    expect(decodedObj.permissions[0].name).toEventually(equal("rakuten.miniapp.user.PROFILE_PHOTO"), timeout: 10)
+                    expect(decodedObj.permissions[0].isGranted).toEventually(equal("DENIED"), timeout: 10)
                  }
             }
         }
