@@ -12,10 +12,16 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var locationManager: LocationManager?
     weak var delegate: MiniAppCallbackProtocol?
     weak var hostAppMessageDelegate: MiniAppMessageProtocol?
+    var miniAppStatus: MiniAppStatus
+    var miniAppId: String
+    var userRespondedRequestList = [MASDKCustomPermissionModel]()
+    var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
 
-    init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol) {
+    init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol, miniAppId: String) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
+        self.miniAppStatus = MiniAppStatus()
+        self.miniAppId = miniAppId
         super.init()
     }
 

@@ -32,7 +32,7 @@ class CustomPermissionsTableViewController: UITableViewController {
     }
 
     @objc func dontAllowPermissions() {
-        let alert = UIAlertController(title: "Are you sure you don't want to allow any of the permissions below?", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Are you sure you don't want to allow any of the permissions?", message: "", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (_) in
             self.permissionsRequestList?.forEach {
                 $0.isPermissionGranted = .denied

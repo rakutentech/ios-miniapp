@@ -1,23 +1,58 @@
 extension MiniAppScriptMessageHandler {
     func requestCustomPermissions(requestParam: RequestParameters?, callbackId: String) {
+        cachedUnknownCustomPermissionRequest.removeAll()
+        userRespondedRequestList.removeAll()
         guard let requestParamValue = requestParam?.customPermissions else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppCustomPermissionError(customPermissionError: .invalidCustomPermissionRequest))
+
             return
         }
 
-        guard let permissionRequestModelList = prepareCustomPermissionModelList(
+        guard let miniAppPermissionRequestModelList = prepareCustomPermissionsRequestModelList(
             permissionList: requestParamValue),
-            permissionRequestModelList.count > 0 else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            miniAppPermissionRequestModelList.count > 0 else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppCustomPermissionError(customPermissionError: .invalidCustomPermissionsList))
             return
         }
-        getCustomPermissionResult(customPermissionRequestList: permissionRequestModelList, callbackId: callbackId)
+        checkCustomPermissionsRequestStatusInCache(miniAppPermissionRequestModelList: miniAppPermissionRequestModelList, callbackId: callbackId)
     }
 
-    func prepareCustomPermissionModelList(permissionList: [CustomPermissions]) -> [MASDKCustomPermissionModel]? {
+    func checkCustomPermissionsRequestStatusInCache(miniAppPermissionRequestModelList: [MASDKCustomPermissionModel], callbackId: String) {
+        /// storedPermissionsList - List of Permissions that is already stored in the cache
+        if let storedPermissionsList = self.miniAppStatus.getCustomPermissions(forMiniApp: self.miniAppId) {
+            /// filteredRequestModelList - List of Permissions that user hasn't responded yet.
+            let userNotRespondedRequestList = miniAppPermissionRequestModelList.filter {
+                !storedPermissionsList.contains($0)
+            }
+            userRespondedRequestList = storedPermissionsList.filter { miniAppPermissionRequestModelList.contains($0)
+            }
+            /// If the User hasn't responded to more than one permission that is requested, request Host app to request Custom Permissions
+            if userNotRespondedRequestList.count > 0 {
+                requestHostApp(customPermissionRequestList: userNotRespondedRequestList, callbackId: callbackId)
+            } else {
+                /// If the user has already responded to all the permissions that is requested filteredRequestModelList
+                /// will be 0 and the below code will filter the list of permissions(requested) from the stored permissions
+                /// and the same will be returned as cached response.
+                self.sendCachedSuccessResponse(result: userRespondedRequestList, callbackId: callbackId)
+            }
+        } else {
+            /// if User hasn't responded to any Custom permissions before
+            requestHostApp(customPermissionRequestList: miniAppPermissionRequestModelList, callbackId: callbackId)
+        }
+    }
+
+    /// List of Custom permissions that is requested from MIniapp is changed to array of Model class (including name, description and status) and the same will be sent to Host app
+    /// - Parameter permissionList: List of permissions request from the Mini app
+    /// - Returns: List of MASDKCustomPermissionModel that contains the details of every permissions
+    func prepareCustomPermissionsRequestModelList(permissionList: [MiniAppCustomPermissionsRequest]) -> [MASDKCustomPermissionModel]? {
         var customPermissionRequestList: [MASDKCustomPermissionModel] = []
         permissionList.forEach {
             guard let permissionType = MiniAppCustomPermissionType(rawValue: $0.name ?? "") else {
+                cachedUnknownCustomPermissionRequest.append(
+                    MiniAppCustomPermissionsListResponse(
+                        name: $0.name ?? "UNKNOWN_REQUEST",
+                        isGranted:
+                        MiniAppCustomPermissionGrantedStatus.permissionNotAvailable.rawValue))
                 return
             }
             customPermissionRequestList.append(MASDKCustomPermissionModel(permissionName: permissionType, permissionRequestDescription: $0.description))
@@ -25,52 +60,91 @@ extension MiniAppScriptMessageHandler {
         return customPermissionRequestList
     }
 
-    func getCustomPermissionResult(customPermissionRequestList: [MASDKCustomPermissionModel], callbackId: String) {
+    /// Request Host app to implement requestCustomPermissions delegate to request Custom Permissions
+    /// - Parameters:
+    ///   - customPermissionRequestList: List of MASDKCustomPermissionModel which contains the meta info of every custom permission that is requested
+    ///   - callbackId: Callback ID that is used to send success/error response back to Miniapp
+    func requestHostApp(customPermissionRequestList: [MASDKCustomPermissionModel], callbackId: String) {
         hostAppMessageDelegate?.requestCustomPermissions(permissions: customPermissionRequestList) { (result) in
            switch result {
            case .success(let result):
+                self.miniAppStatus.setCustomPermissions(forMiniApp: self.miniAppId, permissionList: result)
                 self.sendCustomPermissionsJsonResponse(result: result, callbackId: callbackId)
            case .failure(let error):
                if !error.localizedDescription.isEmpty {
                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
                    return
                }
-               self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppPermissionResult.denied.localizedDescription)
+               self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppCustomPermissionError(customPermissionError: .hostAppError))
            }
         }
     }
 
+    func sendCachedSuccessResponse(result: [MASDKCustomPermissionModel], callbackId: String) {
+        var permissionListResponse = [MiniAppCustomPermissionsListResponse]()
+        result.forEach {
+            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, isGranted: $0.isPermissionGranted.rawValue))
+        }
+        cachedUnknownCustomPermissionRequest.forEach {
+            permissionListResponse.append($0)
+        }
+        sendSuccessResponse(result: permissionListResponse, callbackId: callbackId)
+    }
+
     func sendCustomPermissionsJsonResponse(result: [MASDKCustomPermissionModel], callbackId: String) {
-        guard let responseString = getSuccessResponseJson(result: result) else {
-            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppPermissionResult.denied.localizedDescription)
+        sendSuccessResponse(result: retrieveAllPermissionsMiniAppRequested(result: result), callbackId: callbackId)
+    }
+
+    func sendSuccessResponse(result: [MiniAppCustomPermissionsListResponse], callbackId: String) {
+        guard let responseString = getJsonSuccessResponse(result: result) else {
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppCustomPermissionError(customPermissionError: .unknownError))
             return
         }
         self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: responseString)
     }
 
-    func getSuccessResponseJson(result: [MASDKCustomPermissionModel]) -> String? {
+    /// Accumulate All Permissions that is requested from a Mini app. Following items are appended in the list
+    ///  - List of Permissions that is responded by the user
+    ///  - List of permissions that is already responded by the user but the mini app added in the request list
+    ///  - List of Unknown Permissions that is requested by the Mini app
+    /// - Parameter result: List of Permissions that is responded by the user
+    /// - Returns: [MiniAppCustomPermissionsListResponse] that will be used by the JSONEncoder
+    func retrieveAllPermissionsMiniAppRequested(result: [MASDKCustomPermissionModel]) -> [MiniAppCustomPermissionsListResponse] {
         var permissionListResponse = [MiniAppCustomPermissionsListResponse]()
         result.forEach {
             permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, isGranted: $0.isPermissionGranted.rawValue))
         }
-        if permissionListResponse.count > 0 {
-            let responseObject = MiniAppCustomPermissionsResponse(permissions: permissionListResponse)
-            do {
-                let jsonData = try JSONEncoder().encode(responseObject)
-                return String(data: jsonData, encoding: .utf8)!
-            } catch let error {
-                print(error)
-                return nil
-            }
+        userRespondedRequestList.forEach {
+            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, isGranted: $0.isPermissionGranted.rawValue))
         }
-        return nil
+        cachedUnknownCustomPermissionRequest.forEach {
+            permissionListResponse.append($0)
+        }
+        return permissionListResponse
+    }
+
+    /// For a given [MiniAppCustomPermissionsListResponse], this method will use JSONEncoder to encode the [objects] to JSON string
+    /// - Parameter result: [MiniAppCustomPermissionsListResponse] that contains the name and isGranted status of every permission that will be sent back to the Mini app as JSON
+    /// - Returns: JSON Response string
+    func getJsonSuccessResponse(result: [MiniAppCustomPermissionsListResponse]) -> String? {
+        let responseObject = MiniAppCustomPermissionsResponse(permissions: result)
+        do {
+            let jsonData = try JSONEncoder().encode(responseObject)
+            return String(data: jsonData, encoding: .utf8)!
+        } catch let error {
+            return error.localizedDescription
+        }
     }
 }
 
 /// MASDKCustomPermissionModel helps to communicate with the Host app back and forth when Custom Permissions are requested by a Mini App.
 /// When Custom Permissions received from Mini app, this class is used by SDK to define the type of custom permissions that is requested and
 /// the same is returned by Host app with isPermissionGranted values updated (Value returned after user responded to the list of permissions)
-public class MASDKCustomPermissionModel: Codable {
+public class MASDKCustomPermissionModel: Codable, Equatable {
+    public static func == (lhs: MASDKCustomPermissionModel, rhs: MASDKCustomPermissionModel) -> Bool {
+        return lhs.permissionName == rhs.permissionName
+    }
+
     public var permissionName: MiniAppCustomPermissionType
     public var isPermissionGranted: MiniAppCustomPermissionGrantedStatus
     public var permissionDescription: String?
