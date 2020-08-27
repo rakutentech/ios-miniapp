@@ -77,7 +77,7 @@ class MiniAppStatusTests: QuickSpec {
                     miniAppCustomPermissionList = miniAppStatus.getCustomPermissions(forMiniApp: "123")
                     expect(miniAppCustomPermissionList?[1].isPermissionGranted.rawValue).toEventually(equal("ALLOWED"))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
-                    
+
                 }
             }
         }
