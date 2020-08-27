@@ -67,13 +67,17 @@ class MiniAppStatusTests: QuickSpec {
                     let profilePhotoPermission = MASDKCustomPermissionModel(
                         permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.profilePhoto.rawValue)!, isPermissionGranted: MiniAppCustomPermissionGrantedStatus.denied)
                     miniAppStatus.setCustomPermissions(forMiniApp: "123", permissionList: [userNamePermission, profilePhotoPermission])
-                    let miniAppCustomPermissionList = miniAppStatus.getCustomPermissions(forMiniApp: "123")
+                    var miniAppCustomPermissionList = miniAppStatus.getCustomPermissions(forMiniApp: "123")
                     expect(miniAppCustomPermissionList?[0].permissionName.rawValue).toEventually(equal("rakuten.miniapp.user.USER_NAME"))
                     expect(miniAppCustomPermissionList?[0].isPermissionGranted.rawValue).toEventually(equal("ALLOWED"))
                     expect(miniAppCustomPermissionList?[1].permissionName.rawValue).toEventually(equal("rakuten.miniapp.user.PROFILE_PHOTO"))
                     expect(miniAppCustomPermissionList?[1].isPermissionGranted.rawValue).toEventually(equal("DENIED"))
+                    profilePhotoPermission.isPermissionGranted = .allowed
+                    miniAppStatus.setCustomPermissions(forMiniApp: "123", permissionList: [profilePhotoPermission])
+                    miniAppCustomPermissionList = miniAppStatus.getCustomPermissions(forMiniApp: "123")
+                    expect(miniAppCustomPermissionList?[1].isPermissionGranted.rawValue).toEventually(equal("ALLOWED"))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
-
+                    
                 }
             }
         }
