@@ -17,8 +17,8 @@ class CustomPermissionsTableViewController: UITableViewController {
     }
 
     func addBarButtonItems() {
-        let allowBarButtonItem = UIBarButtonItem(title: "Allow", style: .done, target: self, action: #selector(allowPermissions))
-        let dontAllowBarButtonItem = UIBarButtonItem(title: "Don't Allow", style: .done, target: self, action: #selector(dontAllowPermissions))
+        let allowBarButtonItem = UIBarButtonItem(title: NSLocalizedString("title_allow", comment: ""), style: .done, target: self, action: #selector(allowPermissions))
+        let dontAllowBarButtonItem = UIBarButtonItem(title: NSLocalizedString("title_dont_allow", comment: ""), style: .done, target: self, action: #selector(dontAllowPermissions))
         self.navigationItem.rightBarButtonItem  = allowBarButtonItem
         self.navigationItem.leftBarButtonItem  = dontAllowBarButtonItem
     }
@@ -33,14 +33,14 @@ class CustomPermissionsTableViewController: UITableViewController {
 
     @objc func dontAllowPermissions() {
         let alert = UIAlertController(title: "Are you sure you don't want to allow any of the permissions?", message: "", preferredStyle: .alert)
-        let yesAction = UIAlertAction(title: "Yes", style: .default) { (_) in
+        let yesAction = UIAlertAction(title: NSLocalizedString("yes", comment: ""), style: .default) { (_) in
             self.permissionsRequestList?.forEach {
                 $0.isPermissionGranted = .denied
             }
             self.customPermissionHandlerObj?(.success(self.permissionsRequestList!))
             self.dismiss(animated: true, completion: nil)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel)
         alert.addAction(cancelAction)
         alert.addAction(yesAction)
         self.present(alert, animated: true, completion: nil)

@@ -28,7 +28,6 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
-    var displayController: DisplayNavigationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +55,6 @@ class ViewController: UIViewController {
             displayController?.miniAppDisplay = miniAppDisplay
             self.currentMiniAppInfo = nil
             self.currentMiniAppView = nil
-            self.displayController = displayController
         } else if segue.identifier == "CustomConfiguration" {
             if let navigationController = segue.destination as? UINavigationController,
                 let customSettingsController = navigationController.topViewController as? SettingsTableViewController {

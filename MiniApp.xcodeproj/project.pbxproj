@@ -31,10 +31,14 @@
 		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
 		38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */; };
 		38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */; };
+		382B95FF24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382B95FE24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift */; };
+		382B960124F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382B960024F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift */; };
+		382B960324F6DAC500DA8B7D /* MiniAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382B960224F6DAC500DA8B7D /* MiniAppTests.swift */; };
 		383C625524E641E10075192F /* UserSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383C625424E641E10075192F /* UserSettingsTableViewController.swift */; };
 		3850AE722434E02D0046978C /* RealMiniAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3850AE712434E02D0046978C /* RealMiniAppTests.swift */; };
 		385C25CA23F2E8BA00D61206 /* DisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25C923F2E8BA00D61206 /* DisplayerTests.swift */; };
 		385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */; };
+		38611CFF24F7E6FD00793F06 /* UIViewController+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38611CFE24F7E6FD00793F06 /* UIViewController+MiniApp.swift */; };
 		3862EFA823EA5752004D518C /* MiniApp+URLRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */; };
 		3862EFB123EABC15004D518C /* MiniAppDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */; };
 		3862EFB523EAF6B8004D518C /* MiniApp+NSErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */; };
@@ -94,10 +98,14 @@
 		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
 		38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestAPITests.swift; sourceTree = "<group>"; };
 		38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestDownloaderTests.swift; sourceTree = "<group>"; };
+		382B95FE24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppJavascriptErrorInfoTests.swift; sourceTree = "<group>"; };
+		382B960024F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppJavascriptEnumerationTests.swift; sourceTree = "<group>"; };
+		382B960224F6DAC500DA8B7D /* MiniAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppTests.swift; sourceTree = "<group>"; };
 		383C625424E641E10075192F /* UserSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserSettingsTableViewController.swift; path = Example/UserSettingsTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		3850AE712434E02D0046978C /* RealMiniAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMiniAppTests.swift; sourceTree = "<group>"; };
 		385C25C923F2E8BA00D61206 /* DisplayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayerTests.swift; sourceTree = "<group>"; };
 		385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewTests.swift; sourceTree = "<group>"; };
+		38611CFE24F7E6FD00793F06 /* UIViewController+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIViewController+MiniApp.swift"; path = "Example/UIViewController+MiniApp.swift"; sourceTree = SOURCE_ROOT; };
 		3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniApp+URLRequestTests.swift"; sourceTree = "<group>"; };
 		3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppDownloaderTests.swift; sourceTree = "<group>"; };
 		3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniApp+NSErrorTests.swift"; sourceTree = "<group>"; };
@@ -191,6 +199,9 @@
 				38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */,
 				38D0C7C524C1A00000384422 /* MiniAppSdkConfigTests.swift */,
 				3871A8E024C54AD600BEC6CF /* MiniApp+StringTests.swift */,
+				382B95FE24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift */,
+				382B960024F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift */,
+				382B960224F6DAC500DA8B7D /* MiniAppTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -238,6 +249,7 @@
 				185DBD5F24AD5A8400CD2094 /* Array+MiniApp.swift */,
 				185DBD5D24AD50C300CD2094 /* Number+MiniApp.swift */,
 				380B69AF245000EA0054DD30 /* String+MiniApp.swift */,
+				38611CFE24F7E6FD00793F06 /* UIViewController+MiniApp.swift */,
 				381CA63324EF74E8001DD858 /* MiniApp+UIImage.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -418,6 +430,7 @@
 			files = (
 				18694AD22449883300F97BAA /* UIImageView+Extensions.swift in Sources */,
 				381CA63424EF74E8001DD858 /* MiniApp+UIImage.swift in Sources */,
+				38611CFF24F7E6FD00793F06 /* UIViewController+MiniApp.swift in Sources */,
 				383C625524E641E10075192F /* UserSettingsTableViewController.swift in Sources */,
 				38A6C05324F506E900BAC715 /* CustomPermissionsTableViewController.swift in Sources */,
 				18694AD62449891800F97BAA /* ViewController+MiniApp.swift in Sources */,
@@ -443,13 +456,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				382B960324F6DAC500DA8B7D /* MiniAppTests.swift in Sources */,
 				3862EFA823EA5752004D518C /* MiniApp+URLRequestTests.swift in Sources */,
 				38F3B7F024192E7300914E37 /* UrlParserTests.swift in Sources */,
 				183AF08324CFCF37000ABCBF /* MiniAppStorageTests.swift in Sources */,
 				389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */,
 				18D764392419D08600150A30 /* Config.swift in Sources */,
 				38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */,
+				382B95FF24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift in Sources */,
 				38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */,
+				382B960124F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift in Sources */,
 				3899C2C0242331900087A619 /* URLSchemeHandlerTests.swift in Sources */,
 				3850AE722434E02D0046978C /* RealMiniAppTests.swift in Sources */,
 				38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */,

@@ -33,7 +33,7 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
             viewController.miniAppTitle = self.currentMiniAppTitle ?? "MiniApp"
             let navController = UINavigationController(rootViewController: viewController)
             navController.modalPresentationStyle = .fullScreen
-            UIApplication.topViewController()?.present(navController, animated: true, completion: nil)
+            UIViewController.topViewController()?.present(navController, animated: true, completion: nil)
         }
     }
 
