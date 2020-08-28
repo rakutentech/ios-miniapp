@@ -3,6 +3,8 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { AdTypes } from '../src/types/adTypes';
+import { InterstitialAdResponse } from '../src/types/responseTypes/interstitial';
 import { MiniAppImp } from '../src/miniapp';
 import { MiniAppPermissionType } from '../src/MiniAppPermissionType';
 
@@ -12,6 +14,7 @@ const window: any = {};
 window.MiniAppBridge = {
   getUniqueId: sinon.stub(),
   requestPermission: sinon.stub(),
+  showInterstitialAd: sinon.stub(),
 };
 const miniApp = new MiniAppImp();
 
@@ -40,5 +43,26 @@ describe('requestPermission', () => {
     return expect(miniApp.requestLocationPermission()).to.eventually.equal(
       'Denied'
     );
+  });
+});
+
+describe('showInterstitialAd', () => {
+  it('should retrieve InterstitialAdResponse type of result from the Mini App Bridge', () => {
+    const response: InterstitialAdResponse = {
+      adType: AdTypes.INTERSTITIAL,
+    };
+
+    window.MiniAppBridge.showInterstitialAd.resolves(response);
+    return expect(miniApp.showInterstitialAd()).to.eventually.equal(response);
+  });
+
+  it('should retrive error response from the Mini App Bridge', () => {
+    const error: Error = {
+      message: 'Unknown error occured',
+      name: 'Bridge error',
+    };
+
+    window.MiniAppBridge.showInterstitialAd.resolves(error);
+    return expect(miniApp.showInterstitialAd()).to.eventually.equal(error);
   });
 });
