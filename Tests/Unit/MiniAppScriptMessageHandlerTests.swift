@@ -36,7 +36,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when handleBridgeMessage receive invalid action, valid id") {
                 it("will return error") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
-                    let requestParam = RequestParameters(permission: "location", customPermissions: nil, locationOptions: nil)
+                    let requestParam = RequestParameters(permission: "location", permissions: nil, locationOptions: nil)
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
@@ -45,7 +45,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when handleBridgeMessage receive valid action, invalid id") {
                 it("will return error") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
-                    let requestParam = RequestParameters(permission: "location", customPermissions: nil, locationOptions: nil)
+                    let requestParam = RequestParameters(permission: "location", permissions: nil, locationOptions: nil)
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
@@ -120,7 +120,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
-                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"customPermissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
                             "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: 10)
@@ -137,7 +137,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
-                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"customPermissions\":" + "[{\"title\":\"rakuten.miniapp.user.USER_NAME\"," +
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"title\":\"rakuten.miniapp.user.USER_NAME\"," +
                             "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
@@ -153,7 +153,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
-                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"customPermissions\":" + "[{\"name\":\"rakuten.miniapp.user.LOCATION\"," +
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"name\":\"rakuten.miniapp.user.LOCATION\"," +
                             "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
@@ -169,7 +169,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
-                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"customPermissions\": null},\"id\":\"1.0343410245054572\"}" as AnyObject)
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\": null},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
                     guard let responseData: Data = callbackProtocol.errorMessage?.data(using: .utf8) else {
@@ -184,7 +184,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
                     mockMessageInterface.customPermissions = false
                     let mockMessage = MockWKScriptMessage(
-                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"customPermissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
                             "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)

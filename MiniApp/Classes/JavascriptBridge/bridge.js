@@ -136,7 +136,7 @@ MiniAppBridge.requestCustomPermissions = function(permissionType) {
   return new Promise(function(resolve, reject) {
     return MiniAppBridge.exec(
       "requestCustomPermissions",
-      {customPermissions: permissionType},
+      {permissions: permissionType},
       function(success) { return resolve(success) },
       function (error) { return reject(error) }
     );

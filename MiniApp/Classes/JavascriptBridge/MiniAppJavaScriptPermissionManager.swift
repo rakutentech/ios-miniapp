@@ -1,8 +1,8 @@
 extension MiniAppScriptMessageHandler {
     func requestCustomPermissions(requestParam: RequestParameters?, callbackId: String) {
         cachedUnknownCustomPermissionRequest.removeAll()
-        userRespondedRequestList.removeAll()
-        guard let requestParamValue = requestParam?.customPermissions else {
+        userAlreadyRespondedRequestList.removeAll()
+        guard let requestParamValue = requestParam?.permissions else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppCustomPermissionError(customPermissionError: .invalidCustomPermissionRequest))
             return
         }
@@ -17,22 +17,24 @@ extension MiniAppScriptMessageHandler {
     }
 
     func checkCustomPermissionsRequestStatusInCache(miniAppPermissionRequestModelList: [MASDKCustomPermissionModel], callbackId: String) {
-        /// storedPermissionsList - List of Permissions that is already stored in the cache
-        if let storedPermissionsList = self.miniAppStatus.getCustomPermissions(forMiniApp: self.miniAppId) {
-            /// filteredRequestModelList - List of Permissions that user hasn't responded yet.
+        if let cachedPermissionsList = self.miniAppKeyStore.getCustomPermissions(forMiniApp: self.miniAppId) {
+
+            let allowedList = cachedPermissionsList.filter {
+                $0.isPermissionGranted == .allowed
+            }
+
+            userAlreadyRespondedRequestList = allowedList.filter {
+                miniAppPermissionRequestModelList.contains($0)
+            }
+
             let userNotRespondedRequestList = miniAppPermissionRequestModelList.filter {
-                !storedPermissionsList.contains($0)
+                !allowedList.contains($0)
             }
-            userRespondedRequestList = storedPermissionsList.filter { miniAppPermissionRequestModelList.contains($0)
-            }
-            /// If the User hasn't responded to more than one permission that is requested, request Host app to request Custom Permissions
+
             if userNotRespondedRequestList.count > 0 {
                 requestHostApp(customPermissionRequestList: userNotRespondedRequestList, callbackId: callbackId)
             } else {
-                /// If the user has already responded to all the permissions that is requested filteredRequestModelList
-                /// will be 0 and the below code will filter the list of permissions(requested) from the stored permissions
-                /// and the same will be returned as cached response.
-                self.sendCachedSuccessResponse(result: userRespondedRequestList, callbackId: callbackId)
+                self.sendCachedSuccessResponse(result: userAlreadyRespondedRequestList, callbackId: callbackId)
             }
         } else {
             /// if User hasn't responded to any Custom permissions before
@@ -67,7 +69,7 @@ extension MiniAppScriptMessageHandler {
         hostAppMessageDelegate?.requestCustomPermissions(permissions: customPermissionRequestList) { (result) in
            switch result {
            case .success(let result):
-                self.miniAppStatus.setCustomPermissions(forMiniApp: self.miniAppId, permissionList: result)
+                self.miniAppKeyStore.storeCustomPermissions(permissions: result, forMiniApp: self.miniAppId)
                 self.sendCustomPermissionsJsonResponse(result: result, callbackId: callbackId)
            case .failure(let error):
                if !error.localizedDescription.isEmpty {
@@ -113,7 +115,7 @@ extension MiniAppScriptMessageHandler {
         result.forEach {
             permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, isGranted: $0.isPermissionGranted.rawValue))
         }
-        userRespondedRequestList.forEach {
+        userAlreadyRespondedRequestList.forEach {
             permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, isGranted: $0.isPermissionGranted.rawValue))
         }
         cachedUnknownCustomPermissionRequest.forEach {

@@ -338,8 +338,6 @@ func deleteMockMiniApp(appId: String, versionId: String) {
 
 func deleteStatusPreferences() {
     UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
-    UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppCustomPermissions")
-
 }
 
 func tapAlertButton(title: String, actions: [UIAlertAction]?) {

@@ -1,12 +1,10 @@
 class MiniAppStatus {
     private let defaults: UserDefaults?
     private let miniAppInfoDefaults: UserDefaults?
-    private let miniAppCustomPermissionsDefaults: UserDefaults?
 
     init() {
         self.defaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp")
         self.miniAppInfoDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
-        self.miniAppCustomPermissionsDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppCustomPermissions")
     }
 
     func setDownloadStatus(_ value: Bool, appId: String, versionId: String) {
@@ -42,28 +40,6 @@ class MiniAppStatus {
     func getMiniAppInfo(appId: String) -> MiniAppInfo? {
         if let data = self.miniAppInfoDefaults?.data(forKey: appId) {
             let miniAppInfo = try? PropertyListDecoder().decode(MiniAppInfo.self, from: data)
-            return miniAppInfo
-        }
-        return nil
-    }
-
-    func setCustomPermissions(forMiniApp id: String, permissionList: [MASDKCustomPermissionModel]) {
-        var permissionsToStore = permissionList
-        if !id.isEmpty {
-            if let storedPermissions = getCustomPermissions(forMiniApp: id) {
-                storedPermissions.forEach {
-                    permissionsToStore.append($0)
-                }
-            }
-            if let data = try? PropertyListEncoder().encode(permissionsToStore) {
-                self.miniAppCustomPermissionsDefaults?.set(data, forKey: id)
-            }
-        }
-    }
-
-    func getCustomPermissions(forMiniApp id: String) -> [MASDKCustomPermissionModel]? {
-        if let data = self.miniAppCustomPermissionsDefaults?.data(forKey: id) {
-            let miniAppInfo = try? PropertyListDecoder().decode([MASDKCustomPermissionModel].self, from: data)
             return miniAppInfo
         }
         return nil

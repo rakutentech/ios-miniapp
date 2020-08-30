@@ -51,7 +51,7 @@ public class MiniApp: NSObject {
         return realMiniApp.createMiniApp(appId: appId, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 
-    /// Cache the Custom permissions status for a given MiniAppId
+    /// Cache the Custom permissions status for a given MiniApp ID
     /// - Parameters:
     ///   - appId: Mini AppId String value
     ///   - permissionList: List of MASDKCustomPermissionModel class that contains the MiniAppCustomPermissionType and MiniAppCustomPermissionGrantedStatus
@@ -61,7 +61,7 @@ public class MiniApp: NSObject {
         }
     }
 
-    /// Get the list of Custom permissions that is already cached for a given MiniAppId
+    /// Get the list of supported Custom permissions and its status for a given Mini app ID
     /// - Parameter appId: Mini AppId String value
     /// - Returns: List of MASDKCustomPermissionModel that contains the details of every custom permission type, status and description.
     public func getCustomPermissions(forMiniApp appId: String) -> [MASDKCustomPermissionModel]? {

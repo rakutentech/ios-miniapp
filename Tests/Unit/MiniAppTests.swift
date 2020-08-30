@@ -20,13 +20,7 @@ class MiniAppTests: QuickSpec {
                         isPermissionGranted: MiniAppCustomPermissionGrantedStatus.denied)
                     MiniApp.shared().setCustomPermissions(forMiniApp: "123", permissionList: [userNamePermission, profilePhotoPermission])
                     let miniAppCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: "123")
-
-                    expect(miniAppCustomPermissions).toEventuallyNot(beNil())
-                    expect(miniAppCustomPermissions?[0].permissionName.rawValue).toEventually(equal("rakuten.miniapp.user.CONTACT_LIST"))
-                    expect(miniAppCustomPermissions?[0].isPermissionGranted.rawValue).toEventually(equal("ALLOWED"))
-                    expect(miniAppCustomPermissions?[1].permissionName.rawValue).toEventually(equal("rakuten.miniapp.user.PROFILE_PHOTO"))
-                    expect(miniAppCustomPermissions?[1].isPermissionGranted.rawValue).toEventually(equal("DENIED"))
-                    UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
+                    expect(miniAppCustomPermissions?.count).toEventually(equal(MiniAppCustomPermissionType.allCases.count))
                 }
             }
             context("when info method is called with empty mini app id") {

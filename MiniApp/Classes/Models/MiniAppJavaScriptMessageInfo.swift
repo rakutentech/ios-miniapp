@@ -6,7 +6,7 @@ struct MiniAppJavaScriptMessageInfo: Decodable {
 
 struct RequestParameters: Decodable {
     let permission: String?
-    let customPermissions: [MiniAppCustomPermissionsRequest]?
+    let permissions: [MiniAppCustomPermissionsRequest]?
     let locationOptions: LocationOptions?
 }
 
