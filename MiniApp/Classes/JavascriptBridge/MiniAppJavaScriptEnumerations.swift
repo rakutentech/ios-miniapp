@@ -19,13 +19,18 @@ enum MiniAppSupportedSchemes: String {
     case tel
 }
 
+/// List of Support Device Permissions that can be requested by a Mini app
 public enum MiniAppPermissionType: String {
+    /// Device Location permission type. Host app is expected to implement the logic only for requesting the location permission.
     case location
 }
 
 public enum MiniAppPermissionResult: Error {
+    /// User has explicitly denied authorization
     case denied
+    /// User has not yet made a choice
     case notDetermined
+    /// Host app is not authorized to use location services
     case restricted
 }
 

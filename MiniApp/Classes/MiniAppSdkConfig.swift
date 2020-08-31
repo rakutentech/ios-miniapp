@@ -1,5 +1,6 @@
 import Foundation
 
+/// MiniAppSdkConfig class helps you to configure the endpoints at runtime.
 public class MiniAppSdkConfig {
     var isTestMode: Bool?
 
@@ -36,12 +37,12 @@ public class MiniAppSdkConfig {
     /// If a parameter is omitted the client will fallback its value to the configuration values provided into the project configuration .plist
     ///
     /// - Parameters:
-    ///   - baseUrl: the production URL of the back end endpoint
-    ///   - testBaseUrl: the production URL of the back end endpoint
-    ///   - loadTestVersions: a boolean used by MiniApp SDK to determine which endpoint to use. Default is false
-    ///   - rasAppId: the Rakuten Studio Host App ID
-    ///   - subscriptionKey: the Rakuten Studio Subscription Key
-    ///   - hostAppVersion: the Rakuten Studio Host App version
+    ///   - baseUrl: The production URL of the API endpoint
+    ///   - testBaseUrl: The production URL of the API endpoint
+    ///   - loadTestVersions: A boolean used by MiniApp SDK to determine which endpoint to use. Default is false
+    ///   - rasAppId: The Rakuten Studio Host App ID
+    ///   - subscriptionKey: The Rakuten Studio Subscription Key
+    ///   - hostAppVersion: The Rakuten Studio Host App version
 
     public init(baseUrl: String? = nil,
                 rasAppId: String? = nil,
