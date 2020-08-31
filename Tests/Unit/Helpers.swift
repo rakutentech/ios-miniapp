@@ -347,3 +347,13 @@ func tapAlertButton(title: String, actions: [UIAlertAction]?) {
     let handler = unsafeBitCast(block as AnyObject, to: AlertHandler.self)
     handler(action)
 }
+
+func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
+    guard let errorData = message?.data(using: .utf8) else {
+        return nil
+    }
+    guard let errorMessage = ResponseDecoder.decode(decodeType: MiniAppError.self, data: errorData)  else {
+        return nil
+    }
+    return errorMessage.error
+}

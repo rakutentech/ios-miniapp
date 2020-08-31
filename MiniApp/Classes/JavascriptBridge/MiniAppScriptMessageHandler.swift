@@ -15,7 +15,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var miniAppId: String
     var userAlreadyRespondedRequestList = [MASDKCustomPermissionModel]()
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
-    var miniAppKeyStore = MiniAppKeyStore()
+    var miniAppKeyStore = MiniAppKeyChain()
 
     init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol, miniAppId: String) {
         self.delegate = delegate

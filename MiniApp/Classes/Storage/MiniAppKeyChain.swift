@@ -1,12 +1,12 @@
 import Foundation
 
-@objc public class MiniAppKeyStore: NSObject {
+@objc class MiniAppKeyChain: NSObject {
     let service: String
     var account: String
 
     typealias KeysDictionary = [String: [MASDKCustomPermissionModel]]
 
-    public init(service: String = Bundle.main.bundleIdentifier!) {
+    init(service: String = Bundle.main.bundleIdentifier!) {
         self.service = service
         self.account = "\(service).rakuten.tech.permission.keys"
     }
@@ -46,7 +46,7 @@ import Foundation
         }
     }
 
-    private func setDefaultPermissionsInKeyChain(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
+    internal func setDefaultPermissionsInKeyChain(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
         var supportedPermissionList = [MASDKCustomPermissionModel]()
         MiniAppCustomPermissionType.allCases.forEach {
             supportedPermissionList.append(MASDKCustomPermissionModel(
@@ -86,14 +86,6 @@ import Foundation
                 kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
             ]
             status = SecItemAdd(queryAdd as CFDictionary, nil)
-        } else {
-            let queryUpdate: [String: Any] = [
-                kSecClass as String: kSecClassGenericPassword,
-                kSecAttrService as String: service,
-                kSecAttrAccount as String: account,
-                kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-            ]
-            status = SecItemUpdate(queryUpdate as CFDictionary, [kSecValueData as String: data] as CFDictionary)
         }
 
         if status != errSecSuccess {

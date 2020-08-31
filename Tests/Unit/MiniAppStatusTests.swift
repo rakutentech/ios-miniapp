@@ -61,7 +61,7 @@ class MiniAppStatusTests: QuickSpec {
             }
             context("when mini app custom permissions info is saved and retrieved") {
                 it("will return the miniapp info for a valid mini app id") {
-                    let miniAppKeyStore = MiniAppKeyStore()
+                    let miniAppKeyStore = MiniAppKeyChain()
                     let userNamePermission = MASDKCustomPermissionModel(
                         permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.userName.rawValue)!)
                     let profilePhotoPermission = MASDKCustomPermissionModel(

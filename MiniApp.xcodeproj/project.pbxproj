@@ -49,6 +49,7 @@
 		3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878D4D123B44F85001E27F8 /* AppDelegate.swift */; };
 		3878D4D523B44F85001E27F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3878D4D223B44F85001E27F8 /* Images.xcassets */; };
 		3878D4D623B44F85001E27F8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878D4D323B44F85001E27F8 /* ViewController.swift */; };
+		3879499824FCFB0900DB099B /* MiniAppKeyChainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3879499724FCFB0900DB099B /* MiniAppKeyChainTests.swift */; };
 		388FEEE623DEABCF0062382F /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388FEEE523DEABCF0062382F /* EnvironmentTests.swift */; };
 		3899C2C0242331900087A619 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3899C2BF242331900087A619 /* URLSchemeHandlerTests.swift */; };
 		389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */; };
@@ -117,6 +118,7 @@
 		3878D4D223B44F85001E27F8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Example/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		3878D4D323B44F85001E27F8 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Example/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		3878D4D723B44F8E001E27F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Example/Info.plist; sourceTree = SOURCE_ROOT; };
+		3879499724FCFB0900DB099B /* MiniAppKeyChainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppKeyChainTests.swift; sourceTree = "<group>"; };
 		388FEEE523DEABCF0062382F /* EnvironmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentTests.swift; sourceTree = "<group>"; };
 		3893F3E524C16ED3008F4FA4 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3899C2BF242331900087A619 /* URLSchemeHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemeHandlerTests.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				382B95FE24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift */,
 				382B960024F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift */,
 				382B960224F6DAC500DA8B7D /* MiniAppTests.swift */,
+				3879499724FCFB0900DB099B /* MiniAppKeyChainTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */,
 				3871A8E124C54AD600BEC6CF /* MiniApp+StringTests.swift in Sources */,
 				38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */,
+				3879499824FCFB0900DB099B /* MiniAppKeyChainTests.swift in Sources */,
 				38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */,
 				385C25CA23F2E8BA00D61206 /* DisplayerTests.swift in Sources */,
 				385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */,

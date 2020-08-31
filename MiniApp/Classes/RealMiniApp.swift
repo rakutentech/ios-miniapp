@@ -5,7 +5,7 @@ internal class RealMiniApp {
     var manifestDownloader: ManifestDownloader
     var displayer: Displayer
     var miniAppStatus: MiniAppStatus
-    var miniAppKeyStore: MiniAppKeyStore
+    var miniAppKeyStore: MiniAppKeyChain
     let offlineErrorCodeList: [Int] = [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut]
 
     convenience init() {
@@ -21,7 +21,7 @@ internal class RealMiniApp {
                                            isTestMode: settings?.isTestMode)
         self.manifestDownloader = ManifestDownloader()
         self.miniAppStatus = MiniAppStatus()
-        self.miniAppKeyStore = MiniAppKeyStore()
+        self.miniAppKeyStore = MiniAppKeyChain()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer(navigationSettings)
     }
