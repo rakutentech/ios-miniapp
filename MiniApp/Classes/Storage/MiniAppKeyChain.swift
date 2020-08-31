@@ -61,7 +61,7 @@ import Foundation
     }
 
     private func write(keys: KeysDictionary) {
-        guard let data = ResponseEncoder.encode(data: keys) else {
+        guard let data = try? JSONEncoder().encode(keys) else {
             return
         }
 

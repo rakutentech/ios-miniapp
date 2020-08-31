@@ -1,14 +1,3 @@
-struct ResponseEncoder {
-    static func encode<T: Codable>(data: T) -> Data? {
-        do {
-            return try JSONEncoder().encode(data)
-        } catch {
-            MiniAppLogger.e("Encoding Failed", error)
-            return nil
-        }
-    }
-}
-
 struct ResponseDecoder {
     static func decode<T: Decodable>(decodeType: T.Type, data: Data) -> T? {
         do {
