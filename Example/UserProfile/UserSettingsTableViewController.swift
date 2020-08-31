@@ -69,24 +69,15 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
             self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_user_profile_name_not_found", comment: ""))
             return false
         }
-        if let data = try? PropertyListEncoder().encode(UserProfileModel(displayName: userDisplayName, profileImageURI: self.userProfileImage?.dataURI())) {
-            UserDefaults.standard.set(data, forKey: key)
-            return true
-        }
-        return false
+        return setProfileSettings(userDisplayName: userDisplayName, profileImageURI: self.userProfileImage?.dataURI())
     }
 
     func retrieveProfileSettings(key: String = "ProfileImage") -> UIImage? {
-        if let userProfile = UserDefaults.standard.data(forKey: key) {
-            let userProfileData = try? PropertyListDecoder().decode(UserProfileModel.self, from: userProfile)
-            self.displayNameTextField.text = userProfileData?.displayName
-
-            guard let imageData = userProfileData?.profileImageURI else {
-                return nil
-            }
-            return imageData.convertBase64ToImage()
+        guard let userProfile = getProfileSettings() else {
+            return nil
         }
-        return nil
+        self.displayNameTextField.text = userProfile.displayName
+        return userProfile.profileImageURI?.convertBase64ToImage()
     }
 }
 
@@ -94,15 +85,5 @@ extension UIImageView {
     func roundedCornerImageView() {
         self.layer.cornerRadius = self.frame.width/2
         self.layer.masksToBounds = true
-    }
-}
-
-struct UserProfileModel: Codable {
-    var displayName: String?
-    var profileImageURI: String?
-
-    init(displayName: String, profileImageURI: String?) {
-        self.displayName = displayName
-        self.profileImageURI = profileImageURI
     }
 }
