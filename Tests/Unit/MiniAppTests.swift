@@ -46,7 +46,7 @@ class MiniAppTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(400), timeout: 10)
+                    expect(testError?.code).toEventually(equal(400) || equal(404), timeout: 10)
                 }
             }
 
