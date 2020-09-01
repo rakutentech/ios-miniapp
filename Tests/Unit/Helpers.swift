@@ -203,6 +203,7 @@ class MockFile {
 class MockMessageInterface: MiniAppMessageProtocol {
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
+    var customPermissions: Bool = false
     var permissionError: Error?
 
     func getUniqueId() -> String {
@@ -225,6 +226,18 @@ class MockMessageInterface: MiniAppMessageProtocol {
                 return
             }
             completionHandler(.failure(MiniAppPermissionResult.denied))
+        }
+    }
+
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], Error>) -> Void) {
+        if customPermissions {
+            completionHandler(.success(permissions))
+        } else {
+            if permissionError != nil {
+                completionHandler(.failure(permissionError!))
+                return
+            }
+            completionHandler(.failure(MiniAppPermissionResult.restricted))
         }
     }
 }
@@ -333,4 +346,14 @@ func tapAlertButton(title: String, actions: [UIAlertAction]?) {
     guard let action = actions?.first(where: {$0.title == title}), let block = action.value(forKey: "handler") else { return }
     let handler = unsafeBitCast(block as AnyObject, to: AlertHandler.self)
     handler(action)
+}
+
+func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
+    guard let errorData = message?.data(using: .utf8) else {
+        return nil
+    }
+    guard let errorMessage = ResponseDecoder.decode(decodeType: MiniAppError.self, data: errorData)  else {
+        return nil
+    }
+    return errorMessage.error
 }

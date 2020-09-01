@@ -12,10 +12,15 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var locationManager: LocationManager?
     weak var delegate: MiniAppCallbackProtocol?
     weak var hostAppMessageDelegate: MiniAppMessageProtocol?
+    var miniAppId: String
+    var userAlreadyRespondedRequestList = [MASDKCustomPermissionModel]()
+    var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
+    var miniAppKeyStore = MiniAppKeyChain()
 
-    init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol) {
+    init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol, miniAppId: String) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
+        self.miniAppId = miniAppId
         super.init()
     }
 
@@ -46,6 +51,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .getCurrentPosition:
             locationManager = LocationManager(enableHighAccuracy: requestParam?.locationOptions?.enableHighAccuracy ?? false)
             getCurrentPosition(callbackId: callbackId)
+        case .requestCustomPermissions:
+            requestCustomPermissions(requestParam: requestParam, callbackId: callbackId)
         }
     }
 

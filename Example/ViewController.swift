@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     let imageCache = ImageCache()
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
+    var currentMiniAppTitle: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,6 +110,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
                 self.currentMiniAppInfo = miniAppInfo
                 self.fetchMiniApp(for: miniAppInfo)
+                self.currentMiniAppTitle = miniAppInfo.displayName
             }
         }
     }

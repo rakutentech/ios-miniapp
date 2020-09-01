@@ -9,5 +9,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.tintColor = #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
         return true
     }
-
 }
