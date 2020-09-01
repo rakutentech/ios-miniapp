@@ -127,6 +127,7 @@ MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) 
 	...
 }
 ```
+
 <div id="create-mini-app"></div>
 
 ### Create a MiniApp for the given `MiniAppId` :
@@ -142,6 +143,7 @@ MiniApp.shared().create(appId: String, completionHandler: { (result) in
                 print("Error: ", error.localizedDescription)
             }
 }, messageInterface: self)
+
 ```
 <div id="MiniAppMessageProtocol"></div>
 
@@ -179,6 +181,8 @@ extension ViewController: MiniAppMessageProtocol {
         }
     }
 ```
+
+<div id="request-custom-permission"></div>
 
 ##### Requesting Custom Permissions
 

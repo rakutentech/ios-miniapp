@@ -132,6 +132,12 @@ if (isPlatform.iOS()) {
     };
 }
 
+/**
+* Associating requestCustomPermissions function to MiniAppBridge object
+* @param {[Object]} List of custom permissionType that is requested. For eg.,
+ [{"name":"rakuten.miniapp.USER_NAME", "description": "Mini app needed User name for registration"}]
+*/
+
 MiniAppBridge.requestCustomPermissions = function(permissionType) {
   return new Promise(function(resolve, reject) {
     return MiniAppBridge.exec(
