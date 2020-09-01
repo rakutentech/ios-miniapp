@@ -1,5 +1,20 @@
 ## CHANGELOG
 
+### 2.x.0 (2020-08-DD)
+
+**SDK**
+
+- **Feature:** Added public interface to set and get the Custom permissions that is cached by the iOS SDK. [See here](USERGUIDE.md#custom-permissions)
+
+- **Feature:** Added support in Javascript bridge for requesting Custom permission.
+`requestCustomPermissions(permissionType)`
+
+- **Feature:** Added requestCustomPermissions function to MiniAppMessageProtocol. This function requests the host app to implement and return the list of Custom permissions that User responds with allow/deny option.[See here](USERGUIDE.md#request-custom-permission)
+
+**Sample App**
+
+- **Feature:** Added example for showing list of Custom permissions (on request from Mini app) and response back to Mini app.
+
 ### 2.0.0 (2020-08-07)
 
 **SDK**

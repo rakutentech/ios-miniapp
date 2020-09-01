@@ -1,7 +1,8 @@
 enum MiniAppJSActionCommand: String {
     case getUniqueId
-    case requestPermission
     case getCurrentPosition
+    case requestPermission
+    case requestCustomPermissions
 }
 
 enum JavaScriptExecResult: String {
@@ -21,6 +22,29 @@ enum MiniAppSupportedSchemes: String {
 
 public enum MiniAppPermissionType: String {
     case location
+}
+
+public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
+    case userName = "rakuten.miniapp.user.USER_NAME"
+    case profilePhoto = "rakuten.miniapp.user.PROFILE_PHOTO"
+    case contactsList = "rakuten.miniapp.user.CONTACT_LIST"
+
+    public var title: String {
+        switch self {
+        case .userName:
+        return "User Name"
+        case .profilePhoto:
+        return "Profile Photo"
+        case .contactsList:
+        return "Contact List"
+        }
+    }
+}
+
+public enum MiniAppCustomPermissionGrantedStatus: String, Codable {
+    case allowed = "ALLOWED"
+    case denied = "DENIED"
+    case permissionNotAvailable = "PERMISSION_NOT_AVAILABLE"
 }
 
 public enum MiniAppPermissionResult: Error {

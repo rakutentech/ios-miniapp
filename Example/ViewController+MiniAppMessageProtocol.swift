@@ -2,6 +2,7 @@ import MiniApp
 import CoreLocation
 
 extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
+
     typealias PermissionCompletionHandler = (((Result<String, Error>)) -> Void)
 
     func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
@@ -22,6 +23,20 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
             @unknown default:
             break
             }
+        }
+    }
+
+    func requestCustomPermissions(
+        permissions: [MASDKCustomPermissionModel],
+        completionHandler: @escaping (
+        Result<[MASDKCustomPermissionModel], Error>) -> Void) {
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomPermissionsTableViewController") as? CustomPermissionsTableViewController {
+            viewController.customPermissionHandlerObj = completionHandler
+            viewController.permissionsRequestList = permissions
+            viewController.miniAppTitle = self.currentMiniAppTitle ?? "MiniApp"
+            let navController = UINavigationController(rootViewController: viewController)
+            navController.modalPresentationStyle = .fullScreen
+            UIViewController.topViewController()?.present(navController, animated: true, completion: nil)
         }
     }
 
