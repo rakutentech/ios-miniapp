@@ -35,8 +35,14 @@ extension FileManager {
     class func getMiniAppVersionDirectory(usingAppId id: String) -> URL? {
         do {
             let miniAppDirectory = getMiniAppDirectory(with: id)
-            let versionDirectory = try FileManager.default.contentsOfDirectory(at: miniAppDirectory, includingPropertiesForKeys: [URLResourceKey.isDirectoryKey], options: [.skipsHiddenFiles])[0]
-            return versionDirectory
+            var isDir: ObjCBool = true
+            if FileManager.default.fileExists(
+                atPath: miniAppDirectory.path,
+                isDirectory: &isDir) {
+                let versionDirectory = try FileManager.default.contentsOfDirectory(at: miniAppDirectory, includingPropertiesForKeys: [URLResourceKey.isDirectoryKey], options: [.skipsHiddenFiles])[0]
+                return versionDirectory
+            }
+            return nil
         } catch let error as NSError {
             print(error.localizedDescription)
             return nil
