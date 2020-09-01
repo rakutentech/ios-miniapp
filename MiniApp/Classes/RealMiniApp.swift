@@ -135,7 +135,7 @@ internal class RealMiniApp {
         }
     }
 
-    func retrieveCustomPermissions(forMiniApp id: String) -> [MASDKCustomPermissionModel]? {
+    func retrieveCustomPermissions(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
         return self.miniAppKeyStore.getCustomPermissions(forMiniApp: id)
     }
 

@@ -17,28 +17,24 @@ extension MiniAppScriptMessageHandler {
     }
 
     func checkCustomPermissionsRequestStatusInCache(miniAppPermissionRequestModelList: [MASDKCustomPermissionModel], callbackId: String) {
-        if let cachedPermissionsList = self.miniAppKeyStore.getCustomPermissions(forMiniApp: self.miniAppId) {
+        let cachedPermissionsList = self.miniAppKeyStore.getCustomPermissions(forMiniApp: self.miniAppId)
 
-            let allowedList = cachedPermissionsList.filter {
-                $0.isPermissionGranted == .allowed
-            }
+        let allowedList = cachedPermissionsList.filter {
+            $0.isPermissionGranted == .allowed
+        }
 
-            userAlreadyRespondedRequestList = allowedList.filter {
-                miniAppPermissionRequestModelList.contains($0)
-            }
+        userAlreadyRespondedRequestList = allowedList.filter {
+            miniAppPermissionRequestModelList.contains($0)
+        }
 
-            let userNotRespondedRequestList = miniAppPermissionRequestModelList.filter {
-                !allowedList.contains($0)
-            }
+        let userNotRespondedRequestList = miniAppPermissionRequestModelList.filter {
+            !allowedList.contains($0)
+        }
 
-            if userNotRespondedRequestList.count > 0 {
-                requestHostApp(customPermissionRequestList: userNotRespondedRequestList, callbackId: callbackId)
-            } else {
-                self.sendCachedSuccessResponse(result: userAlreadyRespondedRequestList, callbackId: callbackId)
-            }
+        if userNotRespondedRequestList.count > 0 {
+            requestHostApp(customPermissionRequestList: userNotRespondedRequestList, callbackId: callbackId)
         } else {
-            /// if User hasn't responded to any Custom permissions before
-            requestHostApp(customPermissionRequestList: miniAppPermissionRequestModelList, callbackId: callbackId)
+            self.sendCachedSuccessResponse(result: userAlreadyRespondedRequestList, callbackId: callbackId)
         }
     }
 

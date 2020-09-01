@@ -26,7 +26,10 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
         }
     }
 
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], Error>) -> Void) {
+    func requestCustomPermissions(
+        permissions: [MASDKCustomPermissionModel],
+        completionHandler: @escaping (
+        Result<[MASDKCustomPermissionModel], Error>) -> Void) {
         if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomPermissionsTableViewController") as? CustomPermissionsTableViewController {
             viewController.customPermissionHandlerObj = completionHandler
             viewController.permissionsRequestList = permissions

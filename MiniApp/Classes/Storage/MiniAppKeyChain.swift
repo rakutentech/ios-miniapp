@@ -11,9 +11,9 @@ import Foundation
         self.account = "\(service).rakuten.tech.permission.keys"
     }
 
-    func getCustomPermissions(forMiniApp keyId: String) -> [MASDKCustomPermissionModel]? {
+    func getCustomPermissions(forMiniApp keyId: String) -> [MASDKCustomPermissionModel] {
         guard let allKeys = keys() else {
-            return nil
+            return getDefaultSupportedPermissions()
         }
         guard let permissionList = allKeys[keyId] as [MASDKCustomPermissionModel]? else {
             return setDefaultPermissionsInKeyChain(forMiniApp: keyId)
@@ -23,10 +23,7 @@ import Foundation
 
     func storeCustomPermissions(permissions: [MASDKCustomPermissionModel], forMiniApp keyId: String) {
         var keysDic = keys()
-        guard var cachedPermissions = self.getCustomPermissions(forMiniApp: keyId) else {
-            return
-        }
-
+        var cachedPermissions = self.getCustomPermissions(forMiniApp: keyId)
         _ = permissions.map { (permissionModel: MASDKCustomPermissionModel) -> MASDKCustomPermissionModel in
             if let index = cachedPermissions.firstIndex(of: permissionModel) {
                 cachedPermissions[index] = permissionModel
@@ -47,6 +44,12 @@ import Foundation
     }
 
     internal func setDefaultPermissionsInKeyChain(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
+        let defaultList = getDefaultSupportedPermissions()
+        write(keys: [id: defaultList])
+        return defaultList
+    }
+
+    private func getDefaultSupportedPermissions() -> [MASDKCustomPermissionModel] {
         var supportedPermissionList = [MASDKCustomPermissionModel]()
         MiniAppCustomPermissionType.allCases.forEach {
             supportedPermissionList.append(MASDKCustomPermissionModel(
@@ -56,7 +59,6 @@ import Foundation
                 permissionRequestDescription: ""
             ))
         }
-        write(keys: [id: supportedPermissionList])
         return supportedPermissionList
     }
 

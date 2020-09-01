@@ -64,11 +64,11 @@ public class MiniApp: NSObject {
     /// Get the list of supported Custom permissions and its status for a given Mini app ID
     /// - Parameter appId: Mini AppId String value
     /// - Returns: List of MASDKCustomPermissionModel that contains the details of every custom permission type, status and description.
-    public func getCustomPermissions(forMiniApp appId: String) -> [MASDKCustomPermissionModel]? {
+    public func getCustomPermissions(forMiniApp appId: String) -> [MASDKCustomPermissionModel] {
         if !appId.isEmpty {
             return realMiniApp.retrieveCustomPermissions(forMiniApp: appId)
         }
-        return nil
+        return []
     }
 
     /// Create a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
