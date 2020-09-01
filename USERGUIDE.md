@@ -1,6 +1,6 @@
 # MiniApp
 
-This open-source library allows you to integrate Mini App ecosystem into your iOS applications. 
+This open-source library allows you to integrate Mini App ecosystem into your iOS applications.
 Mini App SDK also facilitates communication between a mini app and the host app via a message bridge.
 
 ## Features
@@ -28,9 +28,9 @@ It is written in Swift 5.0 and can be used in compatible Xcode versions.
 
 In order to run your MiniApp you will have to provide the following,
 
-* MiniApp host application identifier (RASApplicationIdentifier)
-* Subscription key (RASProjectSubscriptionKey)
-* Base URL for API requests to the library (RMAAPIEndpoint)
+* MiniApp host application identifier (```RASApplicationIdentifier```)
+* Subscription key (```RASProjectSubscriptionKey```)
+* Base URL for API requests to the library (```RMAAPIEndpoint```)
 * Preference, if you want to make use of Test API Endpoints in your application or not
 
 
@@ -69,11 +69,12 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Create a MiniApp](#create-mini-app)
 * [Communicate with MiniApp](#MiniAppMessageProtocol)
 * [Customize history navigation](#navigation)
+* [Custom Permissions](#custom-permissions)
 
 <div id="runtime-conf"></div>
 
 ### Overriding configuration on runtime
-
+---
 Every call to the API can be done with default parameters retrieved from the project .plist configuration file, or by providing a `MiniAppSdkConfig` object during the call. Here is a simple example class we use to create the configuration in samples below:
 
 ```swift
@@ -93,7 +94,7 @@ class Config: NSObject {
 <div id="load-miniapp-list"></div>
 
 ### Load the `MiniApp` list:
-
+---
 MiniApp library calls are done via the `MiniApp.shared()` singleton with or without a `MiniAppSdkConfig` instance (you can get the current one with `Config.getCurrent()`). If you don't provide a config instance, values in custom iOS target properties will be used by default. 
 
 ```swift
@@ -112,7 +113,7 @@ MiniApp.shared(with: Config.getCurrent()).list { (result) in
 <div id="get-mini-appinfo"></div>
 
 ### Getting a `MiniAppInfo` :
-
+---
 ```swift
 MiniApp.shared().info(miniAppId: miniAppID) { (result) in
 	...
@@ -126,10 +127,11 @@ MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) 
 	...
 }
 ```
+
 <div id="create-mini-app"></div>
 
 ### Create a MiniApp for the given `MiniAppId` :
-
+---
 ```swift
 MiniApp.shared().create(appId: String, completionHandler: { (result) in
 	switch result {
@@ -141,12 +143,17 @@ MiniApp.shared().create(appId: String, completionHandler: { (result) in
                 print("Error: ", error.localizedDescription)
             }
 }, messageInterface: self)
+
 ```
 <div id="MiniAppMessageProtocol"></div>
 
 ### Implement the MiniAppMessageProtocol in your View Controller
-
+---
 The `MiniAppMessageProtocol` is used for passing messages between the Mini App (JavaScript) and the Host App (your native iOS App) and vice versa. Your App must provide the implementation for these functions.
+
+```NOTE: Following code snippets is an example for implementing MiniAppMessageProtocol methods, you can add your own custom implementation or you can make use of the code which is provided in the Sample app.```
+
+##### Retrieving Unique ID
 
 ```swift
 extension ViewController: MiniAppMessageProtocol {
@@ -158,10 +165,42 @@ extension ViewController: MiniAppMessageProtocol {
     }
 }
 ```
+
+##### Requesting Location Permissions
+
+```swift
+extension ViewController: MiniAppMessageProtocol {
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
+        switch permissionType {
+        case .location:
+            let locStatus = CLLocationManager.authorizationStatus()
+            switch locStatus {
+            case .authorizedAlways, .authorizedWhenInUse:
+                completionHandler(.success("allowed"))
+            }
+        }
+    }
+```
+
+<div id="request-custom-permission"></div>
+
+##### Requesting Custom Permissions
+
+```swift
+extension ViewController: MiniAppMessageProtocol {
+        func requestCustomPermissions(
+            permissions: [MASDKCustomPermissionModel],
+            completionHandler: @escaping (
+            Result<[MASDKCustomPermissionModel], Error>) -> Void) {
+            completionHandler(.success(permissions))    
+            }
+    
+```
+
 <div id="navigation"></div>
 
 ### Add a web navigation interface to the MiniApp view
-
+---
 MiniApp iOS SDK provides a fully customizable way to implement a navigation interface inside your html pages with a `MiniAppNavigationConfig` object. The class takes 3 arguments:
 
 - `navigationBarVisibility` : 
@@ -181,6 +220,28 @@ MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(mi
 ...
 }
 ```
+
+<div id="custom-permissions"></div>
+
+### Custom Permissions
+---
+MiniApp iOS SDK supports list of Custom Permissions ( ```MiniAppCustomPermissionType```) and these can be stored and retrieved using the following public interfaces.
+
+#### Retrieving the Mini App Custom Permissions using MiniAppID
+
+Custom permissions and its status can be retrieved using the following interface. ```getCustomPermissions``` will return list  of ```MASDKCustomPermissionModel``` that contains the meta-info such as title and its granted status.
+
+```swift
+let miniAppPermissionsList = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppId)
+```
+
+#### Store the Mini App Custom Permissions
+Custom permissions for a mini app is cached by the SDK and you can use the following interface to store and retrieve it when you need.
+
+```swift
+ MiniApp.shared().setCustomPermissions(forMiniApp: String, permissionList: [MASDKCustomPermissionModel])
+```
+
 
 <div id="change-log"></div>
 
