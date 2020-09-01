@@ -25,7 +25,7 @@ internal func getMimeType(ext: String?) -> String {
 }
 
 extension String {
-    public func mimeType() -> String {
+    func mimeType() -> String {
         return getMimeType(ext: self)
     }
 }
