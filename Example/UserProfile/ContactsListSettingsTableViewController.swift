@@ -3,7 +3,7 @@ import MiniApp
 
 class ContactsListSettingsTableViewController: UITableViewController {
 
-    var userContactList: [String?] = []
+    var userContactList: [String]? = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -13,21 +13,25 @@ class ContactsListSettingsTableViewController: UITableViewController {
     }
 
     func prepareRandomContactList() {
-        for _ in 1...10 {
-            userContactList.append(UUID().uuidString)
+        userContactList = getContactList()
+        if userContactList?.count == 0 {
+            for _ in 1...10 {
+                userContactList?.append(UUID().uuidString)
+            }
+            updateContactList(list: self.userContactList)
         }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell? ?? UITableViewCell()
-        if userContactList.indices.contains(indexPath.row) {
-            cell.textLabel?.text = userContactList[indexPath.row]
+        if userContactList?.indices.contains(indexPath.row) ?? false {
+            cell.textLabel?.text = userContactList?[indexPath.row]
         }
         return cell
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userContactList.count
+        return userContactList?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -36,8 +40,9 @@ class ContactsListSettingsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if userContactList.indices.contains(indexPath.row) {
-                userContactList.remove(at: indexPath.row)
+            if userContactList?.indices.contains(indexPath.row) ?? false {
+                userContactList?.remove(at: indexPath.row)
+                updateContactList(list: self.userContactList)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         }
@@ -51,7 +56,8 @@ class ContactsListSettingsTableViewController: UITableViewController {
         DispatchQueue.main.async {
             self.getInputFromAlertWithTextField(title: title, message: message) { (_, textField) in
                 if let textField = textField, let contactId = textField.text, contactId.count > 0, !contactId.trimTrailingWhitespaces().isEmpty {
-                    self.userContactList.append(contactId)
+                    self.userContactList?.append(contactId)
+                    updateContactList(list: self.userContactList)
                     self.tableView.reloadData()
                 } else {
                     self.addCustomContactId(title: "Invalid Contact ID, please try again", message: "Enter valid contact and select Ok")
