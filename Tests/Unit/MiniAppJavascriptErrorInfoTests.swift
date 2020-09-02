@@ -6,48 +6,48 @@ class MiniAppJavascriptErrorInfoTests: QuickSpec {
 
     override func spec() {
         describe("MiniApp Javascript Error info") {
-            context("when getMiniAppCustomPermissionError is called with invalidCustomPermissionRequest type") {
+            context("when getMiniAppErrorMessage is called with invalidCustomPermissionRequest type") {
                 it("will return encoded json string") {
-                    let miniAppCustomError = getMiniAppCustomPermissionError(customPermissionError: .invalidCustomPermissionRequest)
+                    let miniAppCustomError = getMiniAppErrorMessage(MASDKCustomPermissionError.invalidCustomPermissionRequest)
                     guard let errorData: Data = miniAppCustomError.data(using: .utf8) else {
                         fail()
                         return
                     }
                     let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: errorData)
-                    expect(decodedObj.error.title).toEventually(equal(MiniAppCustomPermissionError.invalidCustomPermissionRequest))
+                    expect(MASDKCustomPermissionError(rawValue: decodedObj.error.title)).toEventually(equal(MASDKCustomPermissionError.invalidCustomPermissionRequest))
                 }
             }
-            context("when getMiniAppCustomPermissionError is called with invalidCustomPermissionsList type") {
+            context("when getMiniAppErrorMessage is called with invalidCustomPermissionsList type") {
                 it("will return encoded json string") {
-                    let miniAppCustomError = getMiniAppCustomPermissionError(customPermissionError: .invalidCustomPermissionsList)
+                    let miniAppCustomError = getMiniAppErrorMessage(MASDKCustomPermissionError.invalidCustomPermissionsList)
                     guard let errorData: Data = miniAppCustomError.data(using: .utf8) else {
                         fail()
                         return
                     }
                     let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: errorData)
-                    expect(decodedObj.error.title).toEventually(equal(MiniAppCustomPermissionError.invalidCustomPermissionsList))
+                    expect(MASDKCustomPermissionError(rawValue: decodedObj.error.title)).toEventually(equal(MASDKCustomPermissionError.invalidCustomPermissionsList))
                 }
             }
-            context("when getMiniAppCustomPermissionError is called with unknownError type") {
+            context("when getMiniAppErrorMessage is called with unknownError type") {
                 it("will return encoded json string") {
-                    let miniAppCustomError = getMiniAppCustomPermissionError(customPermissionError: .hostAppError)
+                    let miniAppCustomError = getMiniAppErrorMessage(MiniAppErrorType.hostAppError)
                     guard let errorData: Data = miniAppCustomError.data(using: .utf8) else {
                         fail()
                         return
                     }
                     let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: errorData)
-                    expect(decodedObj.error.title).toEventually(equal(MiniAppCustomPermissionError.hostAppError))
+                    expect(MiniAppErrorType(rawValue: decodedObj.error.title)).toEventually(equal(MiniAppErrorType.hostAppError))
                 }
             }
-            context("when getMiniAppCustomPermissionError is called with unknownError type") {
+            context("when getMiniAppErrorMessage is called with unknownError type") {
                 it("will return encoded json string") {
-                    let miniAppCustomError = getMiniAppCustomPermissionError(customPermissionError: .unknownError)
+                    let miniAppCustomError = getMiniAppErrorMessage(MiniAppErrorType.unknownError)
                     guard let errorData: Data = miniAppCustomError.data(using: .utf8) else {
                         fail()
                         return
                     }
                     let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: errorData)
-                    expect(decodedObj.error.title).toEventually(equal(MiniAppCustomPermissionError.unknownError))
+                    expect(MiniAppErrorType(rawValue: decodedObj.error.title)).toEventually(equal(MiniAppErrorType.unknownError))
                 }
             }
         }

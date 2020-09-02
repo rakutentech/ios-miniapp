@@ -204,7 +204,8 @@ class MockMessageInterface: MiniAppMessageProtocol {
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
-    var permissionError: Error?
+    var permissionError: MASDKPermissionError?
+    var customPermissionError: MASDKCustomPermissionError?
 
     func getUniqueId() -> String {
         if mockUniqueId {
@@ -217,27 +218,27 @@ class MockMessageInterface: MiniAppMessageProtocol {
         }
     }
 
-    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         if locationAllowed {
-            completionHandler(.success("Allowed"))
+            completionHandler(.success(.allowed))
         } else {
             if permissionError != nil {
                 completionHandler(.failure(permissionError!))
                 return
             }
-            completionHandler(.failure(MiniAppPermissionResult.denied))
+            completionHandler(.failure(.denied))
         }
     }
 
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], Error>) -> Void) {
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         if customPermissions {
             completionHandler(.success(permissions))
         } else {
-            if permissionError != nil {
-                completionHandler(.failure(permissionError!))
+            if customPermissionError != nil {
+                completionHandler(.failure(customPermissionError!))
                 return
             }
-            completionHandler(.failure(MiniAppPermissionResult.restricted))
+            completionHandler(.failure(.unknownError))
         }
     }
 }

@@ -3,22 +3,20 @@ struct MiniAppError: Codable {
 }
 
 struct MiniAppErrorDetail: Codable, Error {
-    let title: MiniAppCustomPermissionError
+    let title: String
     let description: String
 }
 
-public enum MiniAppCustomPermissionError: String, Codable {
-    case invalidCustomPermissionRequest
-    case invalidCustomPermissionsList
+enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
     case hostAppError
     case unknownError
 
+    var title: String {
+        return self.rawValue
+    }
+
     public var description: String {
         switch self {
-        case .invalidCustomPermissionRequest:
-        return "Error in Custom Permission Request, please make sure the Custom permissions are passed in []"
-        case .invalidCustomPermissionsList:
-        return "Error in list of Custom permissions that is passed, please check whether valid permission associated with name "
         case .hostAppError:
         return "Host app Error"
         case .unknownError:
@@ -27,8 +25,8 @@ public enum MiniAppCustomPermissionError: String, Codable {
     }
 }
 
-func getMiniAppCustomPermissionError(customPermissionError: MiniAppCustomPermissionError) -> String {
-    return getErrorJsonResponse(error: MiniAppError(error: MiniAppErrorDetail(title: customPermissionError, description: customPermissionError.description)))
+func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
+    return getErrorJsonResponse(error: MiniAppError(error: MiniAppErrorDetail(title: error.title, description: error.description)))
 }
 
 func getErrorJsonResponse(error: MiniAppError) -> String {
@@ -37,5 +35,48 @@ func getErrorJsonResponse(error: MiniAppError) -> String {
         return String(data: jsonData, encoding: .utf8)!
     } catch let error {
         return error.localizedDescription
+    }
+}
+
+public enum MiniAppPermissionResult: Error {
+    /// User has explicitly denied authorization
+    case denied
+    /// User has not yet made a choice
+    case notDetermined
+    /// Host app is not authorized to use location services
+    case restricted
+}
+
+extension MiniAppPermissionResult: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .denied:
+            return NSLocalizedString("Denied", comment: "Permission Error")
+        case .notDetermined:
+            return NSLocalizedString("NotDetermined", comment: "Permission Error")
+        case .restricted:
+            return NSLocalizedString("Restricted", comment: "Permission Error")
+        }
+    }
+}
+
+enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
+    case internalError
+    case unexpectedMessageFormat
+    case invalidPermissionType
+
+    var title: String {
+        return self.rawValue
+    }
+
+    var description: String {
+        switch self {
+        case .internalError:
+        return "Host app failed to retrieve data"
+        case .unexpectedMessageFormat:
+        return "Please check the message format that is sent to Javascript SDK."
+        case .invalidPermissionType:
+        return "Permission type that is requested is invalid"
+        }
     }
 }
