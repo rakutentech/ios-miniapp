@@ -25,6 +25,7 @@ public class MiniAppNavigationConfig {
 
 /// A delegate used by Mini App view to communicate about available actions based on current user interactions on the Mini App
 public protocol MiniAppNavigationDelegate: class {
+    func miniAppNavigation(shouldOpen url:URL, with jsonResponseHandler: @escaping (Codable) -> Void)
     func miniAppNavigation(canUse actions: [MiniAppNavigationAction])
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate)
 }

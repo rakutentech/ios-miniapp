@@ -22,7 +22,7 @@ class Config: NSObject {
 
     /// Returns a `MiniAppNavigationConfig` with default values
     /// See `DisplayController` class on how to communicate navigation events to `MiniAppView`
-    class func getNavConfig() -> MiniAppNavigationConfig {
-        return MiniAppNavigationConfig()
+    class func getNavConfig(delegate: MiniAppNavigationDelegate) -> MiniAppNavigationConfig {
+        return MiniAppNavigationConfig(navigationBarVisibility: .never, navigationDelegate: delegate, customNavigationView: nil)
     }
 }

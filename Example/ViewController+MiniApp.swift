@@ -1,9 +1,44 @@
 import MiniApp
+import SafariServices
+
+extension ViewController: MiniAppNavigationDelegate {
+    func miniAppNavigation(shouldOpen url: URL, with jsonResponseHandler: @escaping (Codable) -> Void) {
+        self.jsonResponseHandler = jsonResponseHandler
+        let vc = SFSafariViewController(url: url)
+        vc.delegate = self
+        self.modalPresentationStyle = .pageSheet
+        self.presentedViewController?.present(vc, animated: true)
+    }
+
+    func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
+
+    }
+
+    func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
+        
+    }
+
+
+}
+
+extension ViewController: SFSafariViewControllerDelegate {
+    class ReturnObject: Codable {
+        var url: String?
+    }
+    func safariViewController(_ controller: SFSafariViewController, initialLoadDidRedirectTo URL: URL) {
+        self.loadedURL = URL
+    }
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        let json = ReturnObject()
+        json.url = self.loadedURL?.absoluteString ?? "https://www.example.com"
+        self.jsonResponseHandler?(json)
+    }
+}
 
 extension ViewController {
     func fetchAppList(inBackground: Bool) {
         showProgressIndicator(silently: inBackground) {
-            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig()).list { (result) in
+            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).list { (result) in
                 DispatchQueue.main.async {
                     self.tableView.refreshControl?.endRefreshing()
                 }
@@ -28,7 +63,7 @@ extension ViewController {
 
     func fetchAppInfo(for miniAppID: String) {
         self.showProgressIndicator {
-            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig()).info(miniAppId: miniAppID) { (result) in
+            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).info(miniAppId: miniAppID) { (result) in
                 switch result {
                 case .success(let responseData):
                     self.currentMiniAppInfo = responseData
@@ -44,7 +79,7 @@ extension ViewController {
     }
 
     func fetchMiniApp(for appInfo: MiniAppInfo) {
-        MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig()).create(appId: appInfo.id, completionHandler: { (result) in
+        MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).create(appId: appInfo.id, completionHandler: { (result) in
             switch result {
             case .success(let miniAppDisplay):
                 self.dismissProgressIndicator {

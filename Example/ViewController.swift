@@ -6,6 +6,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     let refreshControl = UIRefreshControl()
+    var loadedURL: URL?
 
     var decodeResponse: [MiniAppInfo]? {
         didSet {
@@ -27,6 +28,7 @@ class ViewController: UIViewController {
     let imageCache = ImageCache()
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
+    var jsonResponseHandler:((Codable) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()

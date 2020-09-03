@@ -101,21 +101,40 @@ internal class RealMiniAppView: UIView {
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let requestUrl = navigationAction.request.url {
-            validateScheme(requestURL: requestUrl, decisionHandler: decisionHandler)
+            MiniAppLogger.d("navigation type for \(navigationAction.request.url?.absoluteString ?? "---"): \(navigationAction.navigationType.rawValue)")
+            validateScheme(requestURL: requestUrl, navigationAction: navigationAction, jsonResponseHandler: nil, decisionHandler: decisionHandler)
         } else {
             decisionHandler(.cancel)
         }
     }
 
-    func validateScheme(requestURL: URL, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        let schemeType = MiniAppSupportedSchemes(rawValue: requestURL.scheme!)
-        switch schemeType {
-        case .tel:
-            UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
-            decisionHandler(.cancel)
-        default:
-            decisionHandler(.allow)
+
+
+    func validateScheme(requestURL: URL, navigationAction: WKNavigationAction, jsonResponseHandler: ((Codable) -> Void)?, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let scheme = requestURL.scheme {
+            let schemeType = MiniAppSupportedSchemes(rawValue: requestURL.scheme!)
+            switch schemeType {
+            case .tel:
+                UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
+            default:
+                if scheme.starts(with: Constants.miniAppSchemePrefix) {
+                    return decisionHandler(.allow)
+                } else {
+                    if navigationAction.navigationType == .linkActivated {
+                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (json) in
+                            if let handler = jsonResponseHandler {
+                                handler(json)
+                            }else {
+                                MiniAppLogger.w("Unhandled answer for \(requestURL.absoluteString): \(json)")
+                            }
+                        })
+                    }else {
+                        return decisionHandler(.allow)
+                    }
+                }
+            }
         }
+        decisionHandler(.cancel)
     }
 }
 
