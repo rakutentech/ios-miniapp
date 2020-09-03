@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CHANGELOG  Reference</title>
+    <title>DEV  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,7 +13,7 @@
     <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a title="CHANGELOG  Reference"></a>
+    <a title="DEV  Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="index.html">MiniApp 2.1.0 Docs</a> (61% documented)</p>
@@ -28,7 +28,7 @@
       <p id="breadcrumbs">
         <a href="index.html">MiniApp Reference</a>
         <img id="carat" src="img/carat.png" />
-        CHANGELOG  Reference
+        DEV  Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -124,86 +124,72 @@
         <section>
           <section class="section">
             
-            <h2 id='changelog' class='heading'>CHANGELOG</h2>
-<h3 id='2-1-0-2020-09-03' class='heading'>2.1.0 (2020-09-03)</h3>
+            <h1 id='sdk-developer-guide' class='heading'>SDK Developer Guide</h1>
 
-<p><strong>SDK</strong></p>
+<p>This guide targets Developers of this SDK. It explains how to build the project and how the CI setup works.</p>
+<h2 id='a-name-sample-app-how-to-build-the-sample-app' class='heading'><a name="sample-app" /> How to Build the Sample App</h2>
 
-<ul>
-<li><strong>Feature:</strong> Support telephone (<code>tel:</code>) hyperlinks from a mini app. See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a">here</a>.</li>
-</ul>
+<p>First, you must setup some environment variables which are required by the project.</p>
+<pre class="highlight plaintext"><code>RMAAPIEndpoint=https://www.example.com
+RASApplicationIdentifier=test-app-id
+RASProjectSubscriptionKey=test-subscription-key
+</code></pre>
 
-<p><strong>Sample App:</strong></p>
+<p>Next, run <code>pod install</code> from the root directory, open <code>MiniApp.xcworkspace</code>, and you should be able to successfully build the Sample App.</p>
 
-<ul>
-<li><strong>Feature:</strong> User name, profile photo, and contact list can be configured in the settings screen.</li>
-<li><strong>Fix:</strong> Location permission callback was not triggered after user accepted/denied the permission.</li>
-</ul>
-<h3 id='2-0-0-2020-08-07' class='heading'>2.0.0 (2020-08-07)</h3>
+<p><em>Note:</em> You must define the environment variables before installing the pods because there is a post install script which sets up the project with your environment variables.</p>
+<h2 id='how-to-test-with-the-sample-app' class='heading'>How to Test with the Sample App</h2>
 
-<p><strong>SDK</strong></p>
+<p>We currently don&rsquo;t provide an API for public use, so you must provide your own API.</p>
+<h2 id='continuous-integration-and-deployment' class='heading'>Continuous Integration and Deployment</h2>
 
-<ul>
-<li><strong>Feature:</strong> Added public interface to create a mini app using mini app id <code>MiniApp#create(appId:completionHandler:messageInterface)</code></li>
-<li><strong>Feature:</strong> Mini App is now downloaded as a ZIP archive and extracted. This should improve the initial launch time on a Mini App with many files.</li>
-<li><strong>Feature:</strong> Add support for <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition"><code>navigator.geolocation.getCurrentPosition</code></a> from JavaScript. Note that the other <code>geolocation</code> APIs (<code>gelocation.watchPosition</code> and <code>geolocation.clearWatch</code>) are currently not supported.</li>
-<li><strong>Feature:</strong> Enable localizable strings to be overriden by the Host App. This currently applies only to dialog button text.</li>
-<li><strong>Fixed:</strong> Prevent cache poisoning vulnerability by verifying cached Mini App files using a SHA512 hash.</li>
-<li><strong>Deprecated:</strong> <code>MiniApp#create(appInfo:completionHandler:messageInterface)</code>. Your App should instead use <code>MiniApp#create(appId:completionHandler:messageInterface)</code>.</li>
-<li><strong>Removed:</strong> <code>MiniApp#create(appInfo:completionHandler:)</code>. Your App should instead use <code>MiniApp#create(appId:completionHandler:messageInterface)</code>.</li>
-<li><strong>Removed:</strong> Runtime config option for the User Agent string. This can now be set only by using the <code>RMAHostAppUserAgentInfo</code> setting in your &lsquo;.plist&rsquo; file.</li>
-</ul>
+<p><a href="https://travis-ci.org/github/rakutentech/ios-miniapp">TravisCI</a> is used for building and testing the project for every pull request. It is also used for publishing the SDK and Sample App.</p>
 
-<p><strong>Sample App</strong></p>
+<p>Note that two Sample App builds are created on merge to master or during a release: </p>
 
 <ul>
-<li>No changes</li>
+<li>One build for the iOS Simulator (built on TravisCI and then uploaded to App Center - App Center does not support building for the Simulator target)</li>
+<li>One build for iOS Devices (built directly on App Center in order to keep the certificate and provisioning profile secret)</li>
 </ul>
-<h3 id='1-2-0-2020-07-21' class='heading'>1.2.0 (2020-07-21)</h3>
+<h3 id='merge-to-master' class='heading'>Merge to Master</h3>
 
-<p><strong>SDK</strong></p>
+<p>The following describes the steps that CI performs when a branch is merged to master.</p>
+
+<ol>
+<li>We trigger a build on TravisCI by merging a branch to master.</li>
+<li>CI builds SDK and Sample App, run tests, linting, etc.</li>
+<li>CI creates a ZIP file for the iOS Simulator (Staging) build of the Sample App.
 
 <ul>
-<li><em>Feature:</em> Possibility to use back and forward navigation inside MiniApp with SDK default UI or custom client provided UI - <a href="USERGUIDE.md#navigation">See here</a></li>
-<li><em>Feature:</em> Ability to add a host app information string (RMAHostAppUserAgentInfo) that will get appended in the User agent. - <a href="USERGUIDE.md#configuration">See here</a></li>
-<li><em>Feature:</em> Added support for <code>window.alert</code>, <code>window.confirm</code> and <code>window.prompt</code> JS dialogs in the mini app display</li>
-<li><em>Bugfix:</em> Fixed support for display of SVG file format in a mini app</li>
-</ul>
-
-<p><strong>Sample App</strong></p>
+<li>Publishes build to App Center &ldquo;Testers&rdquo; group.</li>
+</ul></li>
+<li>App Center builds the Sample App for iOS Devices (Staging).
 
 <ul>
-<li><em>Feature:</em> Added example of custom view to navigate backward inside MiniApp - <a href="USERGUIDE.md#navigation">See here</a></li>
-<li>Added build information in App&rsquo;s setting screen</li>
-<li><em>Bugfix:</em> First time settings success dialog dismissed before tapping OK</li>
-<li><em>Bugfix:</em> &ldquo;Display MiniApp&rdquo; button was not visible when scrolling in the Mini Apps list</li>
-</ul>
-<h3 id='1-1-1-2020-06-11' class='heading'>1.1.1 (2020-06-11)</h3>
+<li>Publishes build to App Center &ldquo;Testers&rdquo; group.</li>
+</ul></li>
+</ol>
+<h3 id='release' class='heading'>Release</h3>
 
-<p><strong>SDK</strong></p>
+<p>The following describes the steps that CI performs when releasing a new version of the SDK.</p>
 
-<ul>
-<li>no changes</li>
-</ul>
-
-<p><strong>Sample App</strong></p>
+<ol>
+<li>We trigger a build on TravisCI by pushing a Git tag to the repo in the format <code>vX.X.X</code>.</li>
+<li>CI builds SDK and Sample App, run tests, linting, etc.</li>
+<li>CI publishes the SDK to <a href="https://cocoapods.org/pods/MiniApp">Cocoapods</a>.</li>
+<li>CI creates ZIP file for the iOS Simulator (Production) build of the Sample App.
 
 <ul>
-<li><em>Bugfix:</em> First time settings success dialog dismissed before tapping OK</li>
-<li><em>Bugfix:</em> &ldquo;Display MiniApp&rdquo; button was not visible when scrolling in the list Mini Apps</li>
-</ul>
-<h3 id='1-1-0-2020-06-01' class='heading'>1.1.0 (2020-06-01)</h3>
+<li>Publishes build to App Center &ldquo;Production&rdquo; group.</li>
+</ul></li>
+<li>CI merges the <code>master</code> branch into the <code>prod</code> branch.
 
 <ul>
-<li>Added JavaScript bridge for passing data between Mini App and Host App. Your App now must implement <code><a href="Protocols/MiniAppMessageProtocol.html">MiniAppMessageProtocol</a></code> in your view controller and provide the implementation when calling <code>MiniApp#create</code>. - <a href="USERGUIDE.md#MiniAppMessageProtocol">See here</a></li>
-<li>Deprecated <code>MiniApp#create(appInfo:completionHandler:)</code>. Your App should instead use <code>MiniApp#create(appInfo:completionHandler:messageInterface)</code>.</li>
-<li>Added <code>getUniqueId</code> function to <code><a href="Protocols/MiniAppMessageProtocol.html">MiniAppMessageProtocol</a></code>. This function should provide a unique identifier (unique to the user and device) to Mini Apps.</li>
-</ul>
-<h3 id='1-0-0-2020-04-27' class='heading'>1.0.0 (2020-04-27)</h3>
-
-<ul>
-<li>Initial release</li>
-</ul>
+<li>This triggers a build on App Center for the iOS Device (Production) build of the Sample App.</li>
+<li>Publishes build to App Center &ldquo;Production&rdquo; group.</li>
+</ul></li>
+<li>CI publishes documentation to <a href="https://rakutentech.github.io/ios-miniapp">Github Pages site</a>.</li>
+</ol>
 
           </section>
         </section>
