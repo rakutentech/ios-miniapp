@@ -1006,6 +1006,26 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@brightcove/player-loader@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@brightcove/player-loader/-/player-loader-1.7.1.tgz#8faf31eee40c27390892a6a817b18b0ff0258a88"
+  integrity sha512-shmLow7y8ECiqKBYlawnhnMuniBHjPJK5evrH5dFciji/WWwB0IwHLKdbxN8u59I1dIum4prPNxjUOt07a7CXA==
+  dependencies:
+    "@brightcove/player-url" "^1.2.0"
+    global "^4.3.2"
+
+"@brightcove/player-url@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@brightcove/player-url/-/player-url-1.2.0.tgz#0ee48670b6299bf7a6ae30063d53f31c38468904"
+  integrity sha512-MhmB5JZAAPG3l3FbLiDrkNo5TKQI4Mp1xZmKk1y0DrIibh1loE14raabI30X3rizKT5ThTdvRmLlVMENUn7Gvw==
+
+"@brightcove/react-player-loader@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@brightcove/react-player-loader/-/react-player-loader-1.4.0.tgz#8c8828cfa894dae9d5267c7db53e1db5e0b4b9d5"
+  integrity sha512-a/R050Lskm/U9jv2P7jzrNTLrY+RoRXyZKlOsCd5S2PWyAlAoV6zkLp5xa9xpVcuOeJqoefCZXTYkBBZAf3FYA==
+  dependencies:
+    "@brightcove/player-loader" "^1.7.1"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -4626,6 +4646,11 @@ dom-serializer@0:
     domelementtype "^2.0.1"
     entities "^2.0.0"
 
+dom-walk@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.2.tgz#0c548bef048f4d1f2a97249002236060daa3fd84"
+  integrity sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==
+
 domain-browser@^1.1.1, domain-browser@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
@@ -5944,6 +5969,14 @@ global-prefix@^3.0.0:
     ini "^1.3.5"
     kind-of "^6.0.2"
     which "^1.3.1"
+
+global@^4.3.2:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/global/-/global-4.4.0.tgz#3e7b105179006a323ed71aafca3e9c57a5cc6406"
+  integrity sha512-wv/LAoHdRE3BeTGz53FAamhGlPLhlssK45usmGFThIi4XqnBmjKQ16u+RNbP7WvigRZDxUsM0J3gcQ5yicaL0w==
+  dependencies:
+    min-document "^2.19.0"
+    process "^0.11.10"
 
 globals@^11.1.0:
   version "11.12.0"
@@ -8518,6 +8551,13 @@ mimic-response@^2.0.0, mimic-response@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-2.1.0.tgz#d13763d35f613d09ec37ebb30bac0469c0ee8f43"
   integrity sha512-wXqjST+SLt7R009ySCglWBCFpjUygmCIfD790/kVbiGmUgfYGuB14PiTd5DwVxSV4NcYHjzMkoj5LjQZwTQLEA==
+
+min-document@^2.19.0:
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/min-document/-/min-document-2.19.0.tgz#7bd282e3f5842ed295bb748cdd9f1ffa2c824685"
+  integrity sha1-e9KC4/WELtKVu3SM3Z8f+iyCRoU=
+  dependencies:
+    dom-walk "^0.1.0"
 
 min-indent@^1.0.0:
   version "1.0.0"

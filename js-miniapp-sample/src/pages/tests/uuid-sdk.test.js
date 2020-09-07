@@ -19,10 +19,4 @@ describe('uuid from mobile sdk', () => {
     expect(screen.getByText('Not Available')).toBeInTheDocument();
     expect(screen.getByTestId('get-unique-id')).toBeInTheDocument();
   });
-
-  test("should get UUID on 'GET UNIQUE ID' when miniapp not running inside mobile", () => {
-    const button = screen.getByTestId('get-unique-id');
-    userEvent.click(button);
-    expect(screen.getByText('Not Available')).toBeInTheDocument();
-  });
 });
