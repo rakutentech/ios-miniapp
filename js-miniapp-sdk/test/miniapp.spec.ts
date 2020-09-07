@@ -5,7 +5,8 @@ import sinon from 'sinon';
 
 import { AdTypes } from '../src/types/adTypes';
 import { InterstitialAdResponse } from '../src/types/responseTypes/interstitial';
-import { MiniAppImp } from '../src/miniapp';
+import { RewardedAdResponse } from '../src/types/responseTypes/rewarded';
+import { MiniApp } from '../src/miniapp';
 import { MiniAppPermissionType } from '../src/MiniAppPermissionType';
 
 const window: any = {};
@@ -14,9 +15,12 @@ const window: any = {};
 window.MiniAppBridge = {
   getUniqueId: sinon.stub(),
   requestPermission: sinon.stub(),
+  loadInterstitialAd: sinon.stub(),
+  loadRewardedAd: sinon.stub(),
   showInterstitialAd: sinon.stub(),
+  showRewardedAd: sinon.stub(),
 };
-const miniApp = new MiniAppImp();
+const miniApp = new MiniApp();
 
 describe('getUniqueId', () => {
   it('should retrieve the unique id from the Mini App Bridge', () => {
@@ -52,8 +56,12 @@ describe('showInterstitialAd', () => {
       adType: AdTypes.INTERSTITIAL,
     };
 
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
     window.MiniAppBridge.showInterstitialAd.resolves(response);
-    return expect(miniApp.showInterstitialAd()).to.eventually.equal(response);
+    return expect(miniApp.showInterstitialAd(adUnitId)).to.eventually.equal(
+      response
+    );
   });
 
   it('should retrive error response from the Mini App Bridge', () => {
@@ -62,7 +70,106 @@ describe('showInterstitialAd', () => {
       name: 'Bridge error',
     };
 
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
     window.MiniAppBridge.showInterstitialAd.resolves(error);
-    return expect(miniApp.showInterstitialAd()).to.eventually.equal(error);
+    return expect(miniApp.showInterstitialAd(adUnitId)).to.eventually.equal(
+      error
+    );
+  });
+});
+
+describe('showRewardedAd', () => {
+  it('should retrieve RewardedAdResponse type of result from the Mini App Bridge', () => {
+    const response: RewardedAdResponse = {
+      reward: { amount: 500, type: 'game bonus' },
+      adType: AdTypes.REWARDED,
+    };
+
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    window.MiniAppBridge.showRewardedAd.resolves(response);
+    return expect(miniApp.showRewardedAd(adUnitId)).to.eventually.equal(
+      response
+    );
+  });
+
+  it('should retrieve RewardedAdResponse type of result from the Mini App Bridge and the reward is null', () => {
+    const response: RewardedAdResponse = {
+      adType: AdTypes.REWARDED,
+    };
+
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    window.MiniAppBridge.showRewardedAd.resolves(response);
+    return expect(miniApp.showRewardedAd(adUnitId)).to.eventually.equal(
+      response
+    );
+  });
+
+  it('should retrive error response from the Mini App Bridge', () => {
+    const error: Error = {
+      message: 'Unknown error occured',
+      name: 'Bridge error',
+    };
+
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    window.MiniAppBridge.showRewardedAd.resolves(error);
+    return expect(miniApp.showRewardedAd(adUnitId)).to.eventually.equal(error);
+  });
+});
+
+describe('loadInterstitialAd', () => {
+  it('should retrieve response result from the Mini App Bridge once loadInterstitialAd call is successful', () => {
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    const response = {
+      adUnit: adUnitId,
+      adType: AdTypes.INTERSTITIAL,
+      loaded: true,
+    };
+
+    window.MiniAppBridge.loadInterstitialAd.resolves(response);
+    return expect(miniApp.loadInterstitialAd(adUnitId)).to.eventually.equal(
+      response
+    );
+  });
+  it('should retrive error response from the Mini App Bridge once loadInterstitialAd rejects with error', () => {
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    const error: Error = {
+      message: 'Unknown error occured',
+      name: 'Bridge error',
+    };
+
+    window.MiniAppBridge.loadInterstitialAd.resolves(error);
+    return expect(miniApp.loadInterstitialAd(adUnitId)).to.eventually.equal(
+      error
+    );
+  });
+});
+
+describe('loadRewardedAd', () => {
+  it('should retrieve response result from the Mini App Bridge once loadRewardedAd call is successful', () => {
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    const response = null;
+
+    window.MiniAppBridge.loadRewardedAd.resolves(response);
+    return expect(miniApp.loadRewardedAd(adUnitId)).to.eventually.equal(
+      response
+    );
+  });
+  it('should retrive error response from the Mini App Bridge once loadRewardedAd rejects with error', () => {
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    const error: Error = {
+      message: 'Unknown error occured',
+      name: 'Bridge error',
+    };
+
+    window.MiniAppBridge.loadRewardedAd.resolves(error);
+    return expect(miniApp.loadRewardedAd(adUnitId)).to.eventually.equal(error);
   });
 });

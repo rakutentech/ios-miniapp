@@ -81,22 +81,45 @@ miniApp.requestLocationPermission()
 	});
 ```
 
-### 4. Show Interstitial Ad
+### 4. Show Ads
 
-Mini App JS SDK makes it possible to display Interstitial ads during the execution of a mini-app. MiniApp#showInterstitialAd facilitates the display of the Ad while pairing with the Mini App Native SDKs. The results of the display action are captured as [InterstitialAdResponse](src/types/responseTypes/interstitial/index.ts).
-Note: This requires the mini-app to have obtained/enrolled the required ad units with the host app.
+Mini App SDK allows you to display ads upon requesting from a Mini App with an ad unit id.
+This requires you to first load an Ad by passing an ID. You can then display an Ad in the Ad Unit by passing the same ID which was used for loading.
 
-There is an adType key in the response type which is a value from AdTypes enum and the value for this response is set to `AdTypes.INTERSTITIAL`
+Note that typically you should load your Ads at some point earlier than you intend to use them, such as at App launch time. You can also pre-load multiple Ads by calling `MiniApp.loadInterstialAd` or `MiniApp.loadRewardedAd` multiple times.
+
+Currently two ad types are supported,
+1. Interstitial
+2. Rewarded
+
+**Interstitial**
+The results of the display `Interstitial` ad action is captured as [InterstitialAdResponse](src/types/responseTypes/interstitial/index.ts).
 
 ```javascript
-miniApp.showInterstitialAd()
-	.then(response => {
-		console.log(response); // Successful response
-	}).catch(error => {
-		console.error(response); // Error
-	});
-```
+const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
 
+miniApp.loadInterstitialAd(adUnitID)
+    .then(response => {
+        miniApp.showInterstitialAd(adUnitID)
+            .then(response => console.log(response) )
+            .catch( error => console.error(response) );
+    })
+    .catch( error => console.error(response) );
+```
+**Rewarded**
+The results of the display `Reward` ad action is captured as [RewardedAdResponse](src/types/responseTypes/rewarded/index.ts).
+
+```javascript
+const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
+
+miniApp.loadRewardedAd(adUnitID)
+    .then(response => {
+        miniApp.showRewardedAd(adUnitID)
+            .then(response => console.log(response) )
+            .catch( error => console.error(response) );
+    })
+    .catch( error => console.error(response) );
+```
 ## Advanced Usage
 
 ### Usage when testing in the browser
