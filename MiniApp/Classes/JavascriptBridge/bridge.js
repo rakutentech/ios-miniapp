@@ -1,1 +1,0 @@
-../../../js-miniapp/js-miniapp-bridge/export/ios/bridge.js
