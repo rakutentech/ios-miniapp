@@ -1,4 +1,28 @@
-version: 2
+version: 2.1
+
+commands:
+  export-js-bridge:
+    parameters:
+      platform:
+        description: Platform to export - android or ios
+        type: string
+    steps: 
+      - run: 
+          name: Publish <<parameters.platform>>
+          command: |
+            set -e
+            git checkout js-bridge-<<parameters.platform>>
+            cp js-miniapp-bridge/build/src/<<parameters.platform>>/bridge.js ./
+            if [[ `git status bridge.js --porcelain` ]]; then
+              git add ./bridge.js
+              git config user.name "CI Publisher"
+              git config user.email "dev-opensource@mail.rakuten.com"
+              git commit -m "export bridge resource [ci skip]"
+              git push origin js-bridge-<<parameters.platform>>
+            else
+              echo "Nothing to commit"
+            fi
+
 jobs: # a collection of steps
   build-sdk: # runs not using Workflows must have a `build` job as entry point
     working_directory: ~/mini-js-sdk # directory where steps will run
@@ -95,21 +119,10 @@ jobs: # a collection of steps
       - checkout
       - attach_workspace:
           at: ./
-      - run:
-          name: Export
-          command: |
-            set -e
-            cp js-miniapp-bridge/build/src/android/bridge.js js-miniapp-bridge/export/android/
-            cp js-miniapp-bridge/build/src/ios/bridge.js js-miniapp-bridge/export/ios/
-            if [[ `git status js-miniapp-bridge/export --porcelain` ]]; then
-              git add js-miniapp-bridge/export
-              git config user.name "CI Publisher"
-              git config user.email "dev-opensource@mail.rakuten.com"
-              git commit -m "export bridge resource [ci skip]"
-              git push origin master
-            else
-              echo "Nothing to commit"
-            fi
+      - export-js-bridge:
+          platform: ios
+      - export-js-bridge:
+          platform: android
 
   build-sample: # builds  & tests the sample app against latest sdk build.
     working_directory: ~/js-miniapp-sample
