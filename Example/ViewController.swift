@@ -6,7 +6,6 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     let refreshControl = UIRefreshControl()
-    var loadedURL: URL?
 
     var decodeResponse: [MiniAppInfo]? {
         didSet {
@@ -28,7 +27,7 @@ class ViewController: UIViewController {
     let imageCache = ImageCache()
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
-    var jsonResponseHandler:((Codable) -> Void)?
+    var currentMiniAppTitle: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +35,7 @@ class ViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
+        locationManager.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -110,6 +110,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
                 self.currentMiniAppInfo = miniAppInfo
                 self.fetchMiniApp(for: miniAppInfo)
+                self.currentMiniAppTitle = miniAppInfo.displayName
             }
         }
     }

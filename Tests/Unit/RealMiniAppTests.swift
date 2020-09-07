@@ -349,6 +349,20 @@ class RealMiniAppTests: QuickSpec {
                     expect(testError?.code).toEventually(equal(0))
                 }
             }
+            context("when RealMiniApp class has no message interface method object and when requestCustomPermissions is called") {
+                it("will return error") {
+                    var testError: NSError?
+                    realMiniApp.requestCustomPermissions(permissions: []) { (result) in
+                        switch result {
+                        case .success:
+                        break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    }
+                    expect(testError?.code).toEventually(equal(0))
+                }
+            }
         }
     }
 }

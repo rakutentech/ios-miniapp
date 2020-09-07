@@ -10,6 +10,8 @@
 "error_invalid_miniapp_id" = "Invalid Miniapp ID";
 "error_no_miniapp_found" = "No Miniapp found, please contact your administrator";
 
+"error_user_profile_name_not_found" = "Please enter a valid name";
+
 "input_miniapp_title" = "Please enter Miniapp ID";
 "input_valid_miniapp_title" = "Please enter valid Miniapp ID and try again";
 
@@ -19,7 +21,11 @@
 "wait_message" = "Please wait...";
 "ok" = "OK";
 "cancel" = "Cancel";
+"yes" = "Yes";
 
 "test_mode_publishing" = "Published";
 "test_mode_testing" = "Testing";
 "test_mode_default" = "Default";
+
+"title_allow" = "Allow";
+"title_dont_allow" = "Don't Allow";

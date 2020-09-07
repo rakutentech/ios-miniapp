@@ -5,6 +5,7 @@ internal class RealMiniApp {
     var manifestDownloader: ManifestDownloader
     var displayer: Displayer
     var miniAppStatus: MiniAppStatus
+    var miniAppKeyStore: MiniAppKeyChain
     let offlineErrorCodeList: [Int] = [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut]
 
     convenience init() {
@@ -20,6 +21,7 @@ internal class RealMiniApp {
                                            isTestMode: settings?.isTestMode)
         self.manifestDownloader = ManifestDownloader()
         self.miniAppStatus = MiniAppStatus()
+        self.miniAppKeyStore = MiniAppKeyChain()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer(navigationSettings)
     }
@@ -132,9 +134,22 @@ internal class RealMiniApp {
             completionHandler(.failure(error))
         }
     }
+
+    func retrieveCustomPermissions(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
+        return self.miniAppKeyStore.getCustomPermissions(forMiniApp: id)
+    }
+
+    func storeCustomPermissions(forMiniApp id: String, permissionList: [MASDKCustomPermissionModel]) {
+        return self.miniAppKeyStore.storeCustomPermissions(permissions: permissionList, forMiniApp: id)
+    }
 }
 
 extension RealMiniApp: MiniAppMessageProtocol {
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], Error>) -> Void) {
+        let error: NSError = NSError.init(domain: "MiniAppMessageBridge has not been implemented by the host app", code: 0, userInfo: nil)
+        completionHandler(.failure(error as Error))
+    }
+
     func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
         let error: NSError = NSError.init(domain: "MiniAppMessageBridge has not been implemented by the host app", code: 0, userInfo: nil)
         completionHandler(.failure(error as Error))
