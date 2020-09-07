@@ -51,12 +51,30 @@ var MiniAppBridge = /** @class */ (function () {
     };
     /**
      * Associating requestPermission function to MiniAppBridge object
-     * @param {String} permissionType Type of permission that is requested. For eg., location
+     * @param {string} permissionType Type of permission that is requested. For eg., location
      */
     MiniAppBridge.prototype.requestPermission = function (permissionType) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('requestPermission', { permission: permissionType }, function (success) { return resolve(success); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * Associating requestCustomPermissions function to MiniAppBridge object
+     * @param [CustomPermission[] permissionTypes, Types of custom permissions that are requested
+     * using an Array including the parameters eg. name, description.
+     *
+     * For eg., Miniapps can pass the array of valid custom permissions as following
+     * [
+     *  {"name":"rakuten.miniapp.user.USER_NAME", "description": "Reason to request for the custom permission"},
+     *  {"name":"rakuten.miniapp.user.PROFILE_PHOTO", "description": "Reason to request for the custom permission"},
+     *  {"name":"rakuten.miniapp.user.CONTACT_LIST", "description": "Reason to request for the custom permission"}
+     * ]
+     */
+    MiniAppBridge.prototype.requestCustomPermissions = function (permissionTypes) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('requestCustomPermissions', { permissions: permissionTypes }, function (success) { return resolve(success); }, function (error) { return reject(error); });
         });
     };
     return MiniAppBridge;
