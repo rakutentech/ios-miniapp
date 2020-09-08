@@ -19,6 +19,7 @@ Pod::Spec.new do |s|
   s.source       = {
     :git => "https://github.com/rakutentech/ios-miniapp.git",
     :tag => 'v' + s.version.to_s,
+    :submodules => true
   }
   s.documentation_url = "https://rakutentech.github.io/ios-miniapp/"
 
