@@ -1,3 +1,4 @@
 [submodule "js-miniapp"]
 	path = js-miniapp
 	url = https://github.com/rakutentech/js-miniapp.git
+	branch = js-bridge-ios

@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '11.0'
 
   s.source_files = 'MiniApp/Classes/**/*.swift'
-  s.resources = ['MiniApp/**/*.{xcassets,js,pdf,xib}','js-miniapp/js-miniapp-bridge/export/ios/bridge.js']
+  s.resources = ['MiniApp/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
   s.resource_bundle = {"Localization" => ["MiniApp/*.lproj/*.strings"]}
 
   s.dependency 'RSDKUtils', '>= 1.1.0'
