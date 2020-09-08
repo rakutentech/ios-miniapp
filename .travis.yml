@@ -85,9 +85,8 @@ after_success:
 deploy:
   # Deploy Docs to Github Pages when tagged as release
   provider: pages
-  strategy: git
-  cleanup: false
-  token: $GITHUB_TOKEN
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
   keep_history: true
   local_dir: docs
   on:
