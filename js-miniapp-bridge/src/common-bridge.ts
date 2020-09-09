@@ -1,4 +1,8 @@
-import { InterstitialAdResponse, AdTypes } from 'js-miniapp-sdk';
+import {
+  InterstitialAdResponse,
+  AdTypes,
+  RewardedAdResponse,
+} from 'js-miniapp-sdk';
 /* tslint:disable:no-any */
 const mabMessageQueue: Callback[] = [];
 export { mabMessageQueue };
@@ -132,6 +136,38 @@ export class MiniAppBridge {
         'loadAd',
         { adType: AdTypes.INTERSTITIAL, adUnitId: id },
         loadResponse => resolve(JSON.parse(loadResponse) as null | Error),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating loadRewardedAd function to MiniAppBridge object.
+   * This function preloads Rewarded ad before they are requested for display.
+   * Can be called multiple times to pre-load multiple ads.
+   * @param {string} id ad unit id of the Rewarded ad that needs to be loaded.
+   */
+  loadRewardedAd(id: string) {
+    return new Promise<null | Error>((resolve, reject) => {
+      return this.executor.exec(
+        'loadAd',
+        { adType: AdTypes.REWARDED, adUnitId: id },
+        loadResponse => resolve(JSON.parse(loadResponse) as null | Error),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating showRewardedAd function to MiniAppBridge object
+   * @param {string} id ad unit id of the Rewarded ad
+   */
+  showRewardedAd(id: string) {
+    return new Promise<RewardedAdResponse>((resolve, reject) => {
+      return this.executor.exec(
+        'showAd',
+        { adType: AdTypes.REWARDED, adUnitId: id },
+        adResponse => resolve(JSON.parse(adResponse) as RewardedAdResponse),
         error => reject(error)
       );
     });
