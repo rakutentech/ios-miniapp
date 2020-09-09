@@ -4,6 +4,12 @@ import_from_git(url: 'https://github.com/rakutentech/ios-buildconfig.git')
 default_platform(:ios)
 
 platform :ios do
+  desc "Project update"
+  lane :updatePods do |options|
+    git_submodule_update
+    cocoapods(repo_update: ENV['MA_FL_CP_REPO_UPDATE'] || false)
+  end
+
   desc "Build All"
   lane :ci do |options|
     xcversion(version: "~> 11.2")
@@ -13,7 +19,7 @@ platform :ios do
       ignore_exit_status: false
     )
 
-    cocoapods(repo_update: ENV['MA_FL_CP_REPO_UPDATE'] || false)
+    updatePods
 
     scan(
       clean: true,
@@ -35,7 +41,7 @@ platform :ios do
   lane :build_simulator do |options|
     xcversion(version: "~> 11.2")
 
-    cocoapods(repo_update: ENV['MA_FL_CP_REPO_UPDATE'] || false)
+    updatePods
 
     xcodebuild(
       workspace: "MiniApp.xcworkspace",

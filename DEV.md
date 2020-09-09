@@ -1,26 +1,36 @@
 # SDK Developer Guide
 
-This guide targets Developers of this SDK. It explains how to build the project and how the CI setup works.
+This guide targets Developers of this SDK. It explains how to build the project and how the CI setup works. In order to setup the environment you need to install [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) and [Fastlane](https://docs.fastlane.tools/getting-started/ios/setup/)
 
 ## <a name="sample-app" /> How to Build the Sample App
 
-First, you must setup some environment variables which are required by the project.
+First, it is highly recommanded to setup some environment variables which are required by the project.
 
-```
+```bash
 RMAAPIEndpoint=https://www.example.com
 RASApplicationIdentifier=test-app-id
 RASProjectSubscriptionKey=test-subscription-key
 ```
 
-Next, run `pod install` from the root directory, open `MiniApp.xcworkspace`, and you should be able to successfully build the Sample App.
+Next, run `fastlane updatePods` from the root directory that will trigger a `pod install` and fetch git submodules, then open `MiniApp.xcworkspace`, and you should be able to successfully build the Sample App.
 
-*Note:* You must define the environment variables before installing the pods because there is a post install script which sets up the project with your environment variables.
+*Note:* You need to define the environment variables before installing the pods because there is a post install script which sets up the project with your environment variables. If you don't want to use environment variables, you can edit the `MiniApp-Secrets.xcconfig` created after a `pod install` in the parent folder of the project,but be aware you will have to update this file after every `pod install`
 
 ## How to Test with the Sample App
 
 We currently don't provide an API for public use, so you must provide your own API.
 
+## How to test your SDK integration with Cocoapods
+
+If you need to test your SDK fork into your host app before making a pull request, you can use this line into your podfile:
+
+```ruby
+  pod 'MiniApp', git: 'https://github.com/<My fork account>/ios-miniapp', branch: 'master', submodules: true
+```
+
 ## Continuous Integration and Deployment
+
+Before any deployment, be sure the project will build and run unit tests by running `fastlane ci`.
 
 [TravisCI](https://travis-ci.org/github/rakutentech/ios-miniapp) is used for building and testing the project for every pull request. It is also used for publishing the SDK and Sample App.
 
