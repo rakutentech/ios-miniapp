@@ -41,7 +41,7 @@ platform :ios do
   lane :build_simulator do |options|
     xcversion(version: "~> 11.2")
 
-    cocoapods(repo_update: ENV['MA_FL_CP_REPO_UPDATE'] || false)
+    updatePods
 
     xcodebuild(
       workspace: "MiniApp.xcworkspace",
