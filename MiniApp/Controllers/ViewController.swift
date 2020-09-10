@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.viewControllers = [self]
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
             self.currentMiniAppView = nil
         } else if segue.identifier == "CustomConfiguration" {
             if let navigationController = segue.destination as? UINavigationController,
-               let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
+                let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
                 customSettingsController.configUpdateDelegate = self
             }
         }
