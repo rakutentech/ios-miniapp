@@ -4,6 +4,6 @@
  * Permission type resource.
  */
 
-export enum MiniAppPermissionType {
+export enum DevicePermission {
   LOCATION = 'location',
 }

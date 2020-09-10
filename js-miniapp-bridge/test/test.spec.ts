@@ -1,7 +1,7 @@
 import {
   AdTypes,
-  InterstitialAdResponse,
-  RewardedAdResponse,
+  CustomPermissionName,
+  CustomPermissionStatus,
 } from 'js-miniapp-sdk';
 import * as Bridge from '../src/common-bridge';
 import { expect } from 'chai';
@@ -95,7 +95,7 @@ describe('showInterstitialAd', () => {
 
 describe('requestCustomPermissions', () => {
   const requestPermissions = [
-    { name: 'test_permission', description: 'test_description' },
+    { name: CustomPermissionName.USER_NAME, description: 'test_description' },
   ];
 
   it('will call the platform executor', () => {
@@ -120,12 +120,17 @@ describe('requestCustomPermissions', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(
       2,
-      '[{"name": "test_name", "status": "ALLOWED"}]'
+      `[{"name": "${CustomPermissionName.USER_NAME}", "status": "${CustomPermissionStatus.ALLOWED}"}]`
     );
 
-    return expect(
-      bridge.requestCustomPermissions([])
-    ).to.eventually.deep.equal([{ name: 'test_name', status: 'ALLOWED' }]);
+    return expect(bridge.requestCustomPermissions([])).to.eventually.deep.equal(
+      [
+        {
+          name: CustomPermissionName.USER_NAME,
+          status: CustomPermissionStatus.ALLOWED,
+        },
+      ]
+    );
   });
 });
 

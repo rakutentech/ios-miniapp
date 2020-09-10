@@ -7,7 +7,11 @@ import { AdTypes } from '../src/types/adTypes';
 import { InterstitialAdResponse } from '../src/types/responseTypes/interstitial';
 import { RewardedAdResponse } from '../src/types/responseTypes/rewarded';
 import { MiniApp } from '../src/miniapp';
-import { MiniAppPermissionType } from '../src/types/MiniAppPermissionType';
+import { DevicePermission } from '../src/types/DevicePermission';
+import {
+  CustomPermissionName,
+  CustomPermissionStatus,
+} from '../src/types/CustomPermission';
 
 const window: any = {};
 (global as any).window = window;
@@ -15,6 +19,7 @@ const window: any = {};
 window.MiniAppBridge = {
   getUniqueId: sinon.stub(),
   requestPermission: sinon.stub(),
+  requestCustomPermissions: sinon.stub(),
   loadInterstitialAd: sinon.stub(),
   loadRewardedAd: sinon.stub(),
   showInterstitialAd: sinon.stub(),
@@ -48,6 +53,33 @@ describe('requestPermission', () => {
     return expect(miniApp.requestLocationPermission()).to.eventually.equal(
       'Denied'
     );
+  });
+});
+
+describe('requestCustomPermissions', () => {
+  it('should request provided custom permissions from the Mini App Bridge', () => {
+    window.MiniAppBridge.requestCustomPermissions.resolves({
+      permissions: [
+        {
+          name: CustomPermissionName.USER_NAME,
+          status: CustomPermissionStatus.ALLOWED,
+        },
+      ],
+    });
+
+    return expect(
+      miniApp.requestCustomPermissions([
+        {
+          name: CustomPermissionName.USER_NAME,
+          description: 'test description',
+        },
+      ])
+    ).to.eventually.deep.equal([
+      {
+        name: CustomPermissionName.USER_NAME,
+        status: CustomPermissionStatus.ALLOWED,
+      },
+    ]);
   });
 });
 

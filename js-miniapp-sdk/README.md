@@ -62,23 +62,50 @@ miniApp.getUniqueId()
 
 ### 3. Request Permissions
 
-There must be permission requests from miniapp to access some mobile components and data. Users can revoke a permission at any time, so you must always request the permission every time before you use the associated API.
+There must be permission requests from miniapp to access some mobile components and data. Users can revoke a permission at any time, so you must always request the permission every time before you use the associated API. Note that accepted permissions are cached, so if a User has already accepted a permission then they will not be shown the permission dialog again unless they manually revoke the permission.
 
-| Permission | Method | Description |
-| --- | --- | --- |
-| LOCATION | `requestLocationPermission()` | The current location of the device.<br>Data position can be accessible via geolocation request (`navigator.geolocation`). |
+Note that there are two types of permissions:
+- **Device permissions:** These permissions are for accessing device features, and they will display a platform-specific dialog which is controlled by the Android or iOS operating system. Device permissions can only be requested one at a time.
+- **Custom permissions:** These permissions are related to accessing the User's data which the Host App controls, and the Host App will display a custom permission dialog. Multiple permissions can be requested at once.
+
+| Permission | Type | Method | Description |
+| --- | --- | --- | --- |
+| LOCATION | Device | `requestLocationPermission()` | The current location of the device.<br>Data position can be accessible via geolocation request (`navigator.geolocation`). |
+| User Data | Custom | `requestCustomPermission()` | Custom permissions for User Data. Currently supported types are `CustomPermissionName.USER_NAME`, `CustomPermissionName.PROFILE_PHOTO`, and `CustomPermissionName.CONTACT_LIST`. These permisions should be requested before you attempt to access the User's data. |
 
 #### Usage example
 
 Simply call available permission request methods from `miniApp`.
 
 ```javascript
+// Location Permission
+import miniApp, { CustomPermissionResult, CustomPermissionName} from 'js-miniapp-sdk';
 miniApp.requestLocationPermission()
 	.then(success => {
 		console.log(success); // Allowed.
 	}).catch(error => {
 		console.error(error); // Permission is not granted due to many circumstances.
-	});
+    });
+```
+
+```javascript 
+// User Data Permissions
+import miniApp, { CustomPermissionResult, CustomPermissionName} from 'js-miniapp-sdk';
+miniApp.requestCustomPermissions([
+    {name: CustomPermissionName.USER_NAME, description: 'This text will be shown to the user.'},
+    {name: CustomPermissionName.PROFILE_PHOTO, description: 'This text will be shown to the user.'},
+    {name: CustomPermissionName.CONTACT_LIST, description: 'This text will be shown to the user.'}
+]).then((result) => {
+    const allowed = result
+        .filter(permission => permission.status === CustomPermissionResult.ALLOWED)
+        .map(permission => permisssion.name);
+
+    if (allowed.indexOf(CustomPermissionName.USER_NAME) > -1) {
+        // Access and use the User Name data
+    }
+}).catch(error => {
+    console.error(error); // An error occured
+});
 ```
 
 ### 4. Show Ads
@@ -120,6 +147,7 @@ miniApp.loadRewardedAd(adUnitID)
     })
     .catch( error => console.error(response) );
 ```
+
 ## Advanced Usage
 
 ### Usage when testing in the browser

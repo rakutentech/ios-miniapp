@@ -1,10 +1,13 @@
-import {
-  InterstitialAdResponse,
-  AdTypes,
-  RewardedAdResponse,
-} from 'js-miniapp-sdk';
 /* tslint:disable:no-any */
-import { ShareInfoType, CustomPermissionType } from 'js-miniapp-sdk';
+
+import {
+  AdTypes,
+  InterstitialAdResponse,
+  CustomPermission,
+  CustomPermissionResult,
+  RewardedAdResponse,
+  ShareInfoType,
+} from 'js-miniapp-sdk';
 
 const mabMessageQueue: Callback[] = [];
 export { mabMessageQueue };
@@ -13,6 +16,10 @@ export interface Callback {
   id: string;
   onSuccess: (value: string) => void;
   onError: (error: string) => void;
+}
+
+export interface CustomPermissionResponse {
+  permissions: CustomPermissionResult[];
 }
 
 export interface PlatformExecutor {
@@ -81,7 +88,7 @@ export class MiniAppBridge {
    * Associating getUniqueId function to MiniAppBridge object
    */
   getUniqueId() {
-    return new Promise((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'getUniqueId',
         null,
@@ -182,8 +189,8 @@ export class MiniAppBridge {
    *  {"name":"rakuten.miniapp.user.CONTACT_LIST", "description": "Reason to request for the custom permission"}
    * ]
    */
-  requestCustomPermissions(permissionTypes: CustomPermissionType[]) {
-    return new Promise<string>((resolve, reject) => {
+  requestCustomPermissions(permissionTypes: CustomPermission[]) {
+    return new Promise<CustomPermissionResponse>((resolve, reject) => {
       return this.executor.exec(
         'requestCustomPermissions',
         { permissions: permissionTypes },
