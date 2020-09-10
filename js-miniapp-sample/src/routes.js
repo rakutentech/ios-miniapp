@@ -59,7 +59,7 @@ const navItems = [
   },
   {
     icon: <PersonIcon />,
-    label: 'Fetch UserDetail',
+    label: 'User Details',
     navLink: '/user_detail',
     component: UserDetails,
   },

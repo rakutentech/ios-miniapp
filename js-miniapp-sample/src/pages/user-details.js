@@ -1,25 +1,51 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 
 import {
+  Avatar,
   Button,
+  CardHeader,
   CircularProgress,
   FormGroup,
   Typography,
   CardContent,
   CardActions,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
   TextField,
-  Grid,
-  Switch,
   Paper,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
 import clsx from 'clsx';
+import {
+  CustomPermission,
+  CustomPermissionResult,
+  CustomPermissionName,
+  CustomPermissionStatus,
+} from 'js-miniapp-sdk';
+import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
+import { requestCustomPermissions } from '../services/permissions/actions';
+import {
+  requestContactList,
+  requestProfilePhoto,
+  requestUserName,
+} from '../services/user/actions';
 
 const useStyles = makeStyles((theme) => ({
+  scrollable: {
+    overflowY: 'auto',
+    width: '100%',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  card: {
+    width: '100%',
+    height: 'auto',
+  },
   root: {
     background: theme.color.secondary,
     width: '85vw',
@@ -57,13 +83,8 @@ const useStyles = makeStyles((theme) => ({
   rootUserGroup: {
     alignItems: 'center',
   },
-  rootOneAppGroup: {
-    alignItems: 'center',
-    marginTop: 15,
-    paddingTop: 85,
-  },
   formInput: {
-    width: 220,
+    width: '90%',
     marginTop: 10,
   },
   rootCardActions: {
@@ -82,52 +103,41 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   paper: {
-    height: 260,
-    width: 260,
+    width: '100%',
+    paddingBottom: 10,
+    marginBottom: 20,
+    '&:last-child': {
+      marginBottom: 0,
+    },
   },
-  paperApp: {
-    height: 75,
-    width: 260,
-    marginBottom: 15,
-    marginTop: 15,
-    display: 'flex',
-    justifyContent: 'center',
+  profilePhoto: {
+    height: 100,
+    width: 100,
+    marginBottom: 20,
+  },
+  contactsList: {
+    maxHeight: 125,
+    overflow: 'auto',
+  },
+  red: {
+    color: red[500],
   },
 }));
 
 export const initialState = {
   isLoading: false,
   isError: false,
-  name: '',
-  email: '',
-  country: '',
-  signIn: '',
-  appHoster: '',
-  response: null,
-};
-
-type Payload = {
-  name: string,
-  email: string,
-  country: string,
-  signIn: string,
-  appHoster: string,
+  hasRequestedPermissions: false,
 };
 
 type State = {
   isLoading: ?boolean,
   isError: ?boolean,
-  name: ?string,
-  email: ?string,
-  country: ?string,
-  signIn: ?string,
-  appHoster: ?string,
-  response: ?Payload,
+  hasRequestedPermissions: boolean,
 };
 
 type Action = {
   type: string,
-  payload?: Payload,
 };
 
 export const dataFetchReducer = (state: State, action: Action) => {
@@ -137,18 +147,14 @@ export const dataFetchReducer = (state: State, action: Action) => {
         ...state,
         isLoading: true,
         isError: false,
+        hasRequestedPermissions: false,
       };
     case 'FETCH_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isError: false,
-        name: action.payload?.name,
-        email: action.payload?.email,
-        country: action.payload?.country,
-        signIn: action.payload?.signIn,
-        appHoster: action.payload?.appHoster,
-        response: action.payload,
+        hasRequestedPermissions: true,
       };
     case 'FETCH_FAILURE':
       return {
@@ -161,26 +167,71 @@ export const dataFetchReducer = (state: State, action: Action) => {
   }
 };
 
-function UserDetails() {
+type UserDetailsProps = {
+  permissions: CustomPermissionName[],
+  userName: string,
+  profilePhoto: string,
+  contactList: string[],
+  getUserName: () => Promise<string>,
+  getProfilePhoto: () => Promise<string>,
+  getContacts: () => Promise<string[]>,
+  requestPermissions: (
+    permissions: CustomPermission[]
+  ) => Promise<CustomPermissionResult[]>,
+};
+
+function UserDetails(props: UserDetailsProps) {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
-  const [switchState, setSwitchState] = useState(true);
 
   const buttonClassname = clsx({
     [classes.buttonFailure]: state.isError,
-    [classes.buttonSuccess]: state.response,
+    [classes.buttonSuccess]: !state.isError,
   });
 
   function requestUserDetails() {
-    const mockedAPI = switchState
-      ? 'http://www.mocky.io/v2/5e9406873100006c005e2d00'
-      : 'http://www.mocky.io/v2/5e95032c31000057bf5e360b';
-    axios
-      .get(mockedAPI)
-      .then((response) => {
-        dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
-      })
-      .catch((error) => {
+    const permissionsList = [
+      {
+        name: CustomPermissionName.USER_NAME,
+        description:
+          'We would like to display your Username on your profile page.',
+      },
+      {
+        name: CustomPermissionName.PROFILE_PHOTO,
+        description:
+          'We would like to display your Profile Photo on your profile page.',
+      },
+      {
+        name: CustomPermissionName.CONTACT_LIST,
+        description: 'We would like to send messages to your contacts.',
+      },
+    ];
+
+    props
+      .requestPermissions(permissionsList)
+      .then((permissions) =>
+        permissions
+          .filter(
+            (permission) => permission.status === CustomPermissionStatus.ALLOWED
+          )
+          .map((permission) => permission.name)
+      )
+      .then((permissions) =>
+        Promise.all([
+          hasPermission(CustomPermissionName.USER_NAME, permissions)
+            ? props.getUserName()
+            : null,
+          hasPermission(CustomPermissionName.PROFILE_PHOTO, permissions)
+            ? props.getProfilePhoto()
+            : null,
+          hasPermission(CustomPermissionName.CONTACT_LIST, permissions)
+            ? props.getContacts()
+            : null,
+        ])
+      )
+      .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
+      .catch((e) => {
+        console.error(e);
         dispatch({ type: 'FETCH_FAILURE' });
       });
   }
@@ -193,81 +244,80 @@ function UserDetails() {
     }
   }
 
-  function SwitchToogle() {
+  function ProfilePhoto() {
+    const hasDeniedPermission =
+      state.hasRequestedPermissions &&
+      !hasPermission(CustomPermissionName.PROFILE_PHOTO);
+
+    return [
+      hasDeniedPermission ? (
+        <ListItemText
+          primary='"Profile Photo" permission not granted.'
+          className={classes.red}
+          key="avatar-error"
+        />
+      ) : null,
+      <Avatar
+        src={props.profilePhoto}
+        className={classes.profilePhoto}
+        key="avatar"
+      />,
+    ];
+  }
+
+  function UserDetails() {
+    const hasDeniedPermission =
+      state.hasRequestedPermissions &&
+      !hasPermission(CustomPermissionName.USER_NAME);
+
     return (
-      <Grid
-        component="label"
-        className={classes.caseSelector}
-        container
-        justify="center"
-        alignItems="center"
-        spacing={1}
-      >
-        <Grid item>Success</Grid>
-        <Grid item>
-          <Switch
-            color="primary"
-            checked={switchState}
-            onChange={() => setSwitchState(!switchState)}
-            name="switchState"
-            data-testid="authSwitch"
-          />
-        </Grid>
-        <Grid item>Failure</Grid>
-      </Grid>
+      <Paper className={classes.paper}>
+        <CardHeader subheader="User Details" />
+        <TextField
+          variant="outlined"
+          disabled={true}
+          className={classes.formInput}
+          id="input-name"
+          error={state.isError || hasDeniedPermission}
+          label={'Name'}
+          value={
+            hasDeniedPermission
+              ? '"User Name" permission not granted.'
+              : props.userName || ' '
+          }
+        />
+      </Paper>
     );
   }
 
-  function DataForms() {
+  function ContactList() {
+    const hasDeniedPermision =
+      state.hasRequestedPermissions &&
+      !hasPermission(CustomPermissionName.CONTACT_LIST);
+
     return (
-      <div className={classes.dataFormsWrapper} data-testid="dataFormsWrapper">
-        <Paper className={classes.paperApp}>
-          <TextField
-            disabled={true}
-            className={classes.formInput}
-            id="input-name"
-            error={state.isError}
-            label="App hoster"
-            value={state.appHoster || ''}
-          />
-        </Paper>
-        <Paper className={classes.paper}>
-          <FormGroup column="true" classes={{ root: classes.rootUserGroup }}>
-            <TextField
-              disabled={true}
-              className={classes.formInput}
-              id="input-name"
-              error={state.isError}
-              label="Name"
-              value={state.name || ''}
-            />
-            <TextField
-              disabled={true}
-              className={classes.formInput}
-              id="input-email"
-              error={state.isError}
-              label="email"
-              value={state.email || ''}
-            />
-            <TextField
-              disabled={true}
-              className={classes.formInput}
-              id="input-country"
-              error={state.isError}
-              label="Country"
-              value={state.country || ''}
-            />
-            <TextField
-              disabled={true}
-              className={classes.formInput}
-              id="sign-in-date"
-              error={state.isError}
-              label="Sign-in date"
-              value={state.signIn || ''}
-            />
-          </FormGroup>
-        </Paper>
-      </div>
+      <Paper className={classes.paper}>
+        <CardHeader subheader="Contact List" />
+        <List className={classes.contactsList}>
+          {hasDeniedPermision && (
+            <ListItem>
+              <ListItemText
+                primary='"Contacts" permission not granted.'
+                className={classes.red}
+              />
+            </ListItem>
+          )}
+          {props.contactList &&
+            props.contactList.map((contact) => (
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar className={classes.contactIcon} />
+                </ListItemAvatar>
+                <ListItemText primary={contact} />
+              </ListItem>
+            ))}
+        </List>
+      </Paper>
     );
   }
 
@@ -299,23 +349,50 @@ function UserDetails() {
     );
   }
 
+  function hasPermission(permission, permissionList: ?(string[])) {
+    permissionList = permissionList || props.permissions || [];
+    return permissionList.indexOf(permission) > -1;
+  }
+
   return (
-    <GreyCard height="auto">
-      <CardContent>
-        <Typography variant="body2" align="center">
-          Please note that we use a <strong>mocked API</strong> in this example
-          (<a href="http://www.mocky.io/v2/5e95032c31000057bf5e360b">Success</a>{' '}
-          &{' '}
-          <a href="http://www.mocky.io/v2/5e9406873100006c005e2d00">Failure</a>)
-        </Typography>
-        {SwitchToogle()}
-        {DataForms()}
-      </CardContent>
-      <CardActions classes={{ root: classes.rootCardActions }}>
-        {CardActionsForm()}
-      </CardActions>
-    </GreyCard>
+    <div className={classes.scrollable}>
+      <GreyCard className={classes.card}>
+        <CardContent>
+          <div
+            className={classes.dataFormsWrapper}
+            data-testid="dataFormsWrapper"
+          >
+            {ProfilePhoto()}
+            {UserDetails()}
+            {ContactList()}
+          </div>
+        </CardContent>
+        <CardActions classes={{ root: classes.rootCardActions }}>
+          {CardActionsForm()}
+        </CardActions>
+      </GreyCard>
+    </div>
   );
 }
 
-export default UserDetails;
+const mapStateToProps = (state) => {
+  return {
+    permissions: state.permissions,
+    userName: state.user.userName,
+    profilePhoto: state.user.profilePhoto,
+    contactList: state.user.contactList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUserName: () => dispatch(requestUserName()),
+    getProfilePhoto: () => dispatch(requestProfilePhoto()),
+    getContacts: () => dispatch(requestContactList()),
+    requestPermissions: (permissions) =>
+      dispatch(requestCustomPermissions(permissions)),
+  };
+};
+
+export { UserDetails };
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);
