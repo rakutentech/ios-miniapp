@@ -1,13 +1,13 @@
 import MiniApp
-import SafariServices
 
 extension ViewController: MiniAppNavigationDelegate {
-    func miniAppNavigation(shouldOpen url: URL, with jsonResponseHandler: @escaping (Codable) -> Void) {
-        self.jsonResponseHandler = jsonResponseHandler
-        let vc = SFSafariViewController(url: url)
-        vc.delegate = self
-        self.modalPresentationStyle = .pageSheet
-        self.presentedViewController?.present(vc, animated: true)
+    func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping (URL) -> Void) {
+        self.externalLinkResponseHandler = externalLinkResponseHandler
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExternalWebviewController") as? ExternalWebViewController {
+            viewController.currentURL = url
+            viewController.miniAppExternalNavigationHandler = externalLinkResponseHandler
+            self.presentedViewController?.present(viewController, animated: true)
+        }
     }
 
     func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
@@ -15,23 +15,7 @@ extension ViewController: MiniAppNavigationDelegate {
     }
 
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
-        
-    }
 
-
-}
-
-extension ViewController: SFSafariViewControllerDelegate {
-    class ReturnObject: Codable {
-        var url: String?
-    }
-    func safariViewController(_ controller: SFSafariViewController, initialLoadDidRedirectTo URL: URL) {
-        self.loadedURL = URL
-    }
-    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        let json = ReturnObject()
-        json.url = self.loadedURL?.absoluteString ?? "https://www.example.com"
-        self.jsonResponseHandler?(json)
     }
 }
 

@@ -43,10 +43,10 @@ internal class MiniAppNavigationBar: UIView {
 }
 
 extension MiniAppNavigationBar: MiniAppNavigationDelegate {
-    func miniAppNavigation(shouldOpen url: URL, with jsonResponseHandler: @escaping (Codable) -> Void) {
-        let vc = SFSafariViewController(url: url)
-        vc.delegate = self
-        self.window?.rootViewController?.present(vc, animated: true)
+    func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping (URL) -> Void) {
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.delegate = self
+        self.window?.rootViewController?.present(safariVC, animated: true)
     }
 
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
@@ -57,7 +57,7 @@ extension MiniAppNavigationBar: MiniAppNavigationDelegate {
         buttons = []
         actions.forEach { (action) in
             switch action {
-            case .back :
+            case .back:
                 buttons.append(backButton)
             case .forward:
                 buttons.append(spacer)

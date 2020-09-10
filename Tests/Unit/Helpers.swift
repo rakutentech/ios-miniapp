@@ -284,9 +284,8 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackProtocol {
 }
 
 class MockNavigationView: UIView, MiniAppNavigationDelegate {
-    func miniAppNavigation(shouldOpen url: URL, with jsonResponseHandler: @escaping (Codable) -> Void) {
-        let jsonObject = MiniAppInfo(id: "miniAppNavigation", displayName: "miniAppNavigation", icon: URL(string: "http://www.example.com")!, version: Version(versionTag: "version", versionId: "id"))
-        jsonResponseHandler(jsonObject)
+    func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping (URL) -> Void) {
+        externalLinkResponseHandler(url)
     }
 
     weak var delegate: MiniAppNavigationBarDelegate?

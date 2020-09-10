@@ -99,18 +99,7 @@ internal class RealMiniAppView: UIView {
         webView.configuration.userContentController.removeMessageHandler()
     }
 
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let requestUrl = navigationAction.request.url {
-            MiniAppLogger.d("navigation type for \(navigationAction.request.url?.absoluteString ?? "---"): \(navigationAction.navigationType.rawValue)")
-            validateScheme(requestURL: requestUrl, navigationAction: navigationAction, jsonResponseHandler: nil, decisionHandler: decisionHandler)
-        } else {
-            decisionHandler(.cancel)
-        }
-    }
-
-
-
-    func validateScheme(requestURL: URL, navigationAction: WKNavigationAction, jsonResponseHandler: ((Codable) -> Void)?, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    func validateScheme(requestURL: URL, navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let scheme = requestURL.scheme {
             let schemeType = MiniAppSupportedSchemes(rawValue: requestURL.scheme!)
             switch schemeType {
@@ -121,14 +110,10 @@ internal class RealMiniAppView: UIView {
                     return decisionHandler(.allow)
                 } else {
                     if navigationAction.navigationType == .linkActivated {
-                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (json) in
-                            if let handler = jsonResponseHandler {
-                                handler(json)
-                            }else {
-                                MiniAppLogger.w("Unhandled answer for \(requestURL.absoluteString): \(json)")
-                            }
+                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
+                            self.webView.load(URLRequest(url: url))
                         })
-                    }else {
+                    } else {
                         return decisionHandler(.allow)
                     }
                 }
@@ -170,6 +155,15 @@ extension RealMiniAppView: MiniAppNavigationBarDelegate {
 }
 
 extension RealMiniAppView: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let requestUrl = navigationAction.request.url {
+            MiniAppLogger.d("navigation type for \(navigationAction.request.url?.absoluteString ?? "---"): \(navigationAction.navigationType.rawValue)")
+            validateScheme(requestURL: requestUrl, navigationAction: navigationAction, decisionHandler: decisionHandler)
+        } else {
+            decisionHandler(.cancel)
+        }
+    }
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         refreshNavBar()
     }

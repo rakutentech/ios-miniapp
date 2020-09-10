@@ -14,7 +14,9 @@ class ViewController: UIViewController {
                 self.miniApps = ["": list]
             } else {
                 self.miniApps = nil
-                self.miniAppsSection = self.decodeResponse?.map { $0.displayName ?? "-" }
+                self.miniAppsSection = self.decodeResponse?.map {
+                    $0.displayName ?? "-"
+                }
                 self.miniApps = self.decodeResponse?.dictionaryFilteredBy(index: { $0.displayName ?? "-" })
             }
 
@@ -28,6 +30,7 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
+    var externalLinkResponseHandler: ((URL) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +60,7 @@ class ViewController: UIViewController {
             self.currentMiniAppView = nil
         } else if segue.identifier == "CustomConfiguration" {
             if let navigationController = segue.destination as? UINavigationController,
-                let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
+               let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
                 customSettingsController.configUpdateDelegate = self
             }
         }
@@ -83,6 +86,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return nil
     }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return miniApps?[miniAppsSection?[section] ?? ""]?.count ?? 0
     }
