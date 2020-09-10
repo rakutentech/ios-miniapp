@@ -254,6 +254,25 @@ class MiniAppDownloaderTests: QuickSpec {
             }
         }
         describe("mini app downloader") {
+            context("when receiving a zip file") {
+                it("unzips it and delete archive") {
+                    let mockAPIClient = MockAPIClient()
+                    let mockManifestDownloader = MockManifestDownloader()
+                    let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
+                    let responseString = """
+                      {
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/SmallMA.zip"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.zipFile = Bundle(for: type(of: self)).path(forResource: "SmallMA", ofType: "zip") ?? ""
+                    downloader.verifyAndDownload(appId: appId, versionId: versionId) { (_) in }
+                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/index.html")).toEventually(beTrue(), timeout: 10)
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/script.js")).toEventually(beTrue(), timeout: 3)
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/SmallMA.zip")).toNotEventually(beTrue(), timeout: 3)
+                }
+            }
             context("when receiving a corrupted zip file") {
                 it("tries to unzips it and delete archive") {
                     let mockAPIClient = MockAPIClient()
