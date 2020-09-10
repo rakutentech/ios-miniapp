@@ -7,7 +7,7 @@ import { AdTypes } from '../src/types/adTypes';
 import { InterstitialAdResponse } from '../src/types/responseTypes/interstitial';
 import { RewardedAdResponse } from '../src/types/responseTypes/rewarded';
 import { MiniApp } from '../src/miniapp';
-import { MiniAppPermissionType } from '../src/MiniAppPermissionType';
+import { MiniAppPermissionType } from '../src/types/MiniAppPermissionType';
 
 const window: any = {};
 (global as any).window = window;
@@ -19,6 +19,7 @@ window.MiniAppBridge = {
   loadRewardedAd: sinon.stub(),
   showInterstitialAd: sinon.stub(),
   showRewardedAd: sinon.stub(),
+  shareInfo: sinon.stub(),
 };
 const miniApp = new MiniApp();
 
@@ -171,5 +172,27 @@ describe('loadRewardedAd', () => {
 
     window.MiniAppBridge.loadRewardedAd.resolves(error);
     return expect(miniApp.loadRewardedAd(adUnitId)).to.eventually.equal(error);
+  });
+});
+
+describe('shareInfo', () => {
+  it('should retrieve null from the MiniAppBridge once shareInfo call is successful', () => {
+    const sharedInfo = {
+      content: 'test content',
+    };
+    const response = null;
+
+    window.MiniAppBridge.shareInfo.resolves(response);
+    return expect(miniApp.shareInfo(sharedInfo)).to.eventually.equal(response);
+  });
+  it('should retrive error response from the MiniAppBridge once there is errors', () => {
+    const sharedInfo = {
+      content: 'test content',
+    };
+
+    const error = 'Bridge error';
+
+    window.MiniAppBridge.shareInfo.resolves(error);
+    return expect(miniApp.shareInfo(sharedInfo)).to.eventually.equal(error);
   });
 });

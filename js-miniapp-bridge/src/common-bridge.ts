@@ -4,6 +4,8 @@ import {
   RewardedAdResponse,
 } from 'js-miniapp-sdk';
 /* tslint:disable:no-any */
+import { ShareInfoType, CustomPermissionType } from 'js-miniapp-sdk';
+
 const mabMessageQueue: Callback[] = [];
 export { mabMessageQueue };
 
@@ -29,11 +31,6 @@ export interface PlatformExecutor {
     onSuccess: (value: string) => void,
     onError: (error: string) => void
   ): void;
-}
-
-export interface CustomPermission {
-  name: string;
-  description: string;
 }
 
 export class MiniAppBridge {
@@ -175,7 +172,7 @@ export class MiniAppBridge {
 
   /**
    * Associating requestCustomPermissions function to MiniAppBridge object
-   * @param [CustomPermission[] permissionTypes, Types of custom permissions that are requested
+   * @param [CustomPermissionType[] permissionTypes, Types of custom permissions that are requested
    * using an Array including the parameters eg. name, description.
    *
    * For eg., Miniapps can pass the array of valid custom permissions as following
@@ -185,11 +182,27 @@ export class MiniAppBridge {
    *  {"name":"rakuten.miniapp.user.CONTACT_LIST", "description": "Reason to request for the custom permission"}
    * ]
    */
-  requestCustomPermissions(permissionTypes: CustomPermission[]) {
+  requestCustomPermissions(permissionTypes: CustomPermissionType[]) {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'requestCustomPermissions',
         { permissions: permissionTypes },
+        success => resolve(success),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating shareInfo function to MiniAppBridge object.
+   * This function does not return anything back on success.
+   * @param {info} The shared info object.
+   */
+  shareInfo(info: ShareInfoType) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'shareInfo',
+        { shareInfo: info },
         success => resolve(success),
         error => reject(error)
       );

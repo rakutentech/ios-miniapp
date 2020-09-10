@@ -1,6 +1,8 @@
 import { InterstitialAdResponse } from './types/responseTypes/interstitial';
-import { MiniAppPermissionType } from './MiniAppPermissionType';
+import { MiniAppPermissionType } from './types/MiniAppPermissionType';
 import { RewardedAdResponse } from './types/responseTypes/rewarded';
+import { ShareInfoType } from './types/ShareInfoType';
+
 /**
  * A module layer for webapps and mobile native interaction.
  */
@@ -10,6 +12,12 @@ interface MiniAppFeatures {
 
   /** @returns The Promise of permission result of mini app from injected side. */
   requestLocationPermission(): Promise<string>;
+
+  /**
+   * @param info The shared data must match the property in [ShareInfoType].
+   * @returns The Promise of share info action state from injected side.
+   */
+  shareInfo(info: ShareInfoType): Promise<string>;
 }
 
 /**
@@ -80,5 +88,9 @@ export class MiniApp implements MiniAppFeatures, Ad {
 
   showRewardedAd(id: string): Promise<RewardedAdResponse> {
     return (window as any).MiniAppBridge.showRewardedAd(id);
+  }
+
+  shareInfo(info: ShareInfoType): Promise<string> {
+    return (window as any).MiniAppBridge.shareInfo(info);
   }
 }
