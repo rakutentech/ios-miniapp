@@ -11,11 +11,11 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
     case hostAppError
     case unknownError
 
-    var title: String {
+    var name: String {
         return self.rawValue
     }
 
-    public var description: String {
+    public var message: String {
         switch self {
         case .hostAppError:
         return "Host app Error"
@@ -26,7 +26,7 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
 }
 
 func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
-    return getErrorJsonResponse(error: MiniAppError(error: MiniAppErrorDetail(title: error.title, description: error.description)))
+    return getErrorJsonResponse(error: MiniAppError(error: MiniAppErrorDetail(title: error.name, description: error.message)))
 }
 
 func getErrorJsonResponse(error: MiniAppError) -> String {
@@ -65,11 +65,11 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case unexpectedMessageFormat
     case invalidPermissionType
 
-    var title: String {
+    var name: String {
         return self.rawValue
     }
 
-    var description: String {
+    var message: String {
         switch self {
         case .internalError:
         return "Host app failed to retrieve data"

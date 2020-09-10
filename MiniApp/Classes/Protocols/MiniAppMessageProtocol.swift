@@ -31,11 +31,11 @@ public enum MASDKPermissionError: String, MiniAppErrorProtocol {
     /// Host app failed to implement required interface
     case failedToConformToProtocol = "FAILED_TO_CONFORM_PROTOCOL"
 
-    var title: String {
+    var name: String {
         return self.rawValue
     }
 
-    var description: String {
+    var message: String {
         switch self {
         case .denied:
         return "User has explicitly denied authorization"
@@ -55,11 +55,11 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
     case invalidCustomPermissionRequest
     case invalidCustomPermissionsList
 
-    var title: String {
+    var name: String {
         return self.rawValue
     }
 
-    public var description: String {
+    public var message: String {
         switch self {
         case .unknownError:
             return "Unknown error occurred"
