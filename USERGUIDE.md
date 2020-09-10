@@ -207,17 +207,56 @@ MiniApp iOS SDK provides a fully customizable way to implement a navigation inte
     - never = the UI will never be shown
     - auto = navigation UI is only shown when a back or forward action is available
     - always = navigation UI is always present
-- `navigationDelegate` : A delegate that will receive MiniApp view instructions about available navigation options
+- `navigationDelegate` : A delegate that will receive MiniApp view instructions about available navigation options. It will also receive taps on external links.
 - `customNavigationView` : A view implementing `MiniAppNavigationDelegate` that will be overlayed to the bottom of the MiniApp view
 
 ```swift
 let navConfig = MiniAppNavigationConfig(
                     navigationBarVisibility: .always,
-                    navigationDelegate: myCustomView,
+                    navigationDelegate: myNavigationDelegate,
                     customNavigationView: mCustomView)
 
 MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(miniAppId: miniAppID) { (result) in
 ...
+}
+```
+
+#### Opening external links
+
+By default MiniApp iOS SDK will open external links into a separate modal controller when tapped. `MiniAppNavigationDelegate` implements a method that allows to override this behaviour and provide your own external links management. Here is an example of implementation:
+
+```swift
+extension ViewController: MiniAppNavigationDelegate {
+    func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping (URL) -> Void) {
+        // Getting your custom viewcontroller
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExternalWebviewController") as? ExternalWebViewController {
+            viewController.currentURL = url
+            viewController.miniAppExternalNavigationHandler = externalLinkResponseHandler
+            self.presentedViewController?.present(viewController, animated: true)
+        }
+    }
+
+    ...
+}
+```
+
+The `externalLinkResponseHandler` closure allows you to give a feedback as an URL to the SDK, for example when the controller is closed or when a custom scheme link is tapped. Here is an example following previous example:
+
+```swift
+extension ExternalWebViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.currentURL = self.webView.url
+    }
+
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let urlWebview = navigationAction.request.url, urlWebview.scheme?.starts(with: "mscheme") ?? false {
+            self.miniAppExternalNavigationHandler?(urlWebview)
+            decisionHandler(.cancel)
+            self.dismiss(animated: true)
+        } else {
+            decisionHandler(.allow)
+        }
+    }
 }
 ```
 

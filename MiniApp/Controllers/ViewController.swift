@@ -30,8 +30,7 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
-    var externalLinkResponseHandler: ((URL) -> Void)?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.viewControllers = [self]

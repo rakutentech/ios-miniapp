@@ -45,7 +45,6 @@ internal class MiniAppNavigationBar: UIView {
 extension MiniAppNavigationBar: MiniAppNavigationDelegate {
     func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping (URL) -> Void) {
         let safariVC = SFSafariViewController(url: url)
-        safariVC.delegate = self
         self.window?.rootViewController?.present(safariVC, animated: true)
     }
 
@@ -66,8 +65,4 @@ extension MiniAppNavigationBar: MiniAppNavigationDelegate {
         }
         self.toolBar.items = buttons
     }
-}
-
-extension MiniAppNavigationBar: SFSafariViewControllerDelegate {
-
 }
