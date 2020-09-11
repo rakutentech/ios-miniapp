@@ -1,11 +1,10 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "rootDir": ".",
     "outDir": "build",
     "module": "commonjs",
     "declaration": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts", "../js-miniapp-bridge/src/types/**.ts", "../js-miniapp-bridge/src/types/common-bridge.ts"]
 }

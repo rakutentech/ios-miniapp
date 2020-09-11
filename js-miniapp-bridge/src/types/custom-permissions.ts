@@ -19,3 +19,7 @@ export interface CustomPermissionResult {
   name: CustomPermissionName;
   status: CustomPermissionStatus;
 }
+
+export interface CustomPermissionResponse {
+  permissions: CustomPermissionResult[];
+}

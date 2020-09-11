@@ -3,14 +3,12 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { AdTypes } from '../src/types/adTypes';
-import { Reward } from '../src/types/responseTypes/rewarded';
-import { MiniApp } from '../src/miniapp';
-import { DevicePermission } from '../src/types/DevicePermission';
 import {
+  Reward,
   CustomPermissionName,
   CustomPermissionStatus,
-} from '../src/types/CustomPermission';
+} from '../../js-miniapp-bridge/src';
+import { MiniApp } from '../src/miniapp';
 
 const window: any = {};
 (global as any).window = window;

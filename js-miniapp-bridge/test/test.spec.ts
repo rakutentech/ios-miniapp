@@ -1,11 +1,11 @@
-import {
-  AdTypes,
-  CustomPermissionName,
-  CustomPermissionStatus,
-} from 'js-miniapp-sdk';
-import * as Bridge from '../src/common-bridge';
 import { expect } from 'chai';
 import sinon, { mock } from 'sinon';
+
+import * as Bridge from '../src/common-bridge';
+import {
+  CustomPermissionName,
+  CustomPermissionStatus,
+} from '../src/types/custom-permissions';
 
 /* tslint:disable:no-any */
 const window: any = {};

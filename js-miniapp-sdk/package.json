@@ -4,8 +4,8 @@
   "description": "Mini App SDK for JavaScript",
   "main": "build/miniapp.bundle.js",
   "browser": "build/miniapp.bundle.js",
-  "module": "build/src/index.js",
-  "types": "build/src/index.d.ts",
+  "module": "build/js-miniapp-sdk/src/index.js",
+  "types": "build/js-miniapp-sdk/src/index.d.ts",
   "dependencies": {},
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -33,7 +33,7 @@
   "scripts": {
     "lint": "gts check",
     "clean": "gts clean",
-    "compile": "tsc -p . && browserify ./build/src/index.js --standalone MiniApp > build/miniapp.bundle.js",
+    "compile": "tsc -p . && browserify ./build/js-miniapp-sdk/src/index.js --standalone MiniApp > build/miniapp.bundle.js",
     "prebuild": "npm run clean && npm run lint",
     "buildSdk": "npm run lint && npm run compile && npm run test",
     "fix": "gts fix",
@@ -44,9 +44,11 @@
   },
   "files": [
     "README.md",
+    "CHANGELOG.md",
     "LICENSE",
     "package.json",
-    "build/src/",
+    "build/js-miniapp-sdk/src",
+    "build/js-miniapp-bridge/src",
     "build/miniapp.bundle.js"
   ],
   "repository": {

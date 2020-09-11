@@ -42,7 +42,7 @@ First, download the bundled script file from the [releases page](https://github.
 Then you can acces the SDK methods via `window.MiniApp`.
 
 ```javascript
-window.MiniApp.getUniqueId()
+window.MiniApp.default.getUniqueId()
     .then(id => {
     // ...
 ```
@@ -79,7 +79,7 @@ Simply call available permission request methods from `miniApp`.
 
 ```javascript
 // Location Permission
-import miniApp, { CustomPermissionResult, CustomPermissionName} from 'js-miniapp-sdk';
+import miniApp from 'js-miniapp-sdk';
 miniApp.requestLocationPermission()
 	.then(success => {
 		console.log(success); // Allowed.

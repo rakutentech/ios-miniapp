@@ -1,10 +1,11 @@
 import {
+  MiniAppBridge,
+  Reward,
+  DevicePermission,
   CustomPermission,
   CustomPermissionResult,
-} from './types/CustomPermission';
-import { DevicePermission } from './types/DevicePermission';
-import { Reward } from './types/responseTypes/rewarded';
-import { ShareInfoType } from './types/ShareInfoType';
+  ShareInfoType,
+} from '../../js-miniapp-bridge/src';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -82,12 +83,14 @@ interface Platform {
 
 /* tslint:disable:no-any */
 export class MiniApp implements MiniAppFeatures, Ad, Platform {
-  private requestPermission(permissionType: string): Promise<string> {
-    return (window as any).MiniAppBridge.requestPermission(permissionType);
+  private bridge: MiniAppBridge = (window as any).MiniAppBridge;
+
+  private requestPermission(permissionType: DevicePermission): Promise<string> {
+    return this.bridge.requestPermission(permissionType);
   }
 
   getUniqueId(): Promise<string> {
-    return (window as any).MiniAppBridge.getUniqueId();
+    return this.bridge.getUniqueId();
   }
 
   requestLocationPermission(): Promise<string> {
@@ -97,29 +100,29 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   requestCustomPermissions(
     permissions: CustomPermission[]
   ): Promise<CustomPermissionResult[]> {
-    return (window as any).MiniAppBridge.requestCustomPermissions(
-      permissions
-    ).then(permissionResult => permissionResult.permissions);
+    return this.bridge
+      .requestCustomPermissions(permissions)
+      .then(permissionResult => permissionResult.permissions);
   }
 
   loadInterstitialAd(id: string): Promise<string> {
-    return (window as any).MiniAppBridge.loadInterstitialAd(id);
+    return this.bridge.loadInterstitialAd(id);
   }
 
   loadRewardedAd(id: string): Promise<string> {
-    return (window as any).MiniAppBridge.loadRewardedAd(id);
+    return this.bridge.loadRewardedAd(id);
   }
 
   showInterstitialAd(id: string): Promise<string> {
-    return (window as any).MiniAppBridge.showInterstitialAd(id);
+    return this.bridge.showInterstitialAd(id);
   }
 
   showRewardedAd(id: string): Promise<Reward> {
-    return (window as any).MiniAppBridge.showRewardedAd(id);
+    return this.bridge.showRewardedAd(id);
   }
 
   shareInfo(info: ShareInfoType): Promise<string> {
-    return (window as any).MiniAppBridge.shareInfo(info);
+    return this.bridge.shareInfo(info);
   }
 
   getPlatform(): string {

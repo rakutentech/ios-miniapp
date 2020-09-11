@@ -1,26 +1,30 @@
-/* tslint:disable:no-any */
+/** @internal */
 
+/**
+ * Bridge for communicating with Mini App
+ */
+
+import { AdTypes } from './types/ad-types';
+import { Reward } from './types/response-types/rewarded';
+import { DevicePermission } from './types/device-permission';
 import {
-  AdTypes,
   CustomPermission,
-  CustomPermissionResult,
-  Reward,
-  ShareInfoType,
-} from 'js-miniapp-sdk';
+  CustomPermissionResponse,
+} from './types/custom-permissions';
+import { ShareInfoType } from './types/share-info';
 
+/** @internal */
 const mabMessageQueue: Callback[] = [];
 export { mabMessageQueue };
 
+/** @internal */
 export interface Callback {
   id: string;
   onSuccess: (value: string) => void;
   onError: (error: string) => void;
 }
 
-export interface CustomPermissionResponse {
-  permissions: CustomPermissionResult[];
-}
-
+/** @internal */
 export interface PlatformExecutor {
   /**
    * Method to call the native interface methods for respective platforms
@@ -33,7 +37,7 @@ export interface PlatformExecutor {
    */
   exec(
     action: string,
-    param: any,
+    param: object | null,
     onSuccess: (value: string) => void,
     onError: (error: string) => void
   ): void;
@@ -45,6 +49,7 @@ export interface PlatformExecutor {
   getPlatform(): string;
 }
 
+/** @internal */
 export class MiniAppBridge {
   executor: PlatformExecutor;
   platform: string;
@@ -107,9 +112,9 @@ export class MiniAppBridge {
 
   /**
    * Associating requestPermission function to MiniAppBridge object
-   * @param {string} permissionType Type of permission that is requested. For eg., location
+   * @param {DevicePermission} permissionType Type of permission that is requested. For eg., location
    */
-  requestPermission(permissionType: string) {
+  requestPermission(permissionType: DevicePermission) {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'requestPermission',
@@ -228,6 +233,8 @@ export class MiniAppBridge {
  * Method to remove the callback object from the message queue after successfull/error communication
  * with the native application
  * @param  {[Object]} queueObj Queue Object that holds the references of callback informations
+ *
+ * @internal
  */
 function removeFromMessageQueue(queueObj) {
   const messageObjIndex = mabMessageQueue.indexOf(queueObj);
