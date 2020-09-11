@@ -91,7 +91,7 @@ const Home = (props: any) => {
       >
         <Container className={classes.wrapperContainer}>
           <Switch>
-            <Route exact path="/">
+            <Route exact path={['/', '/miniapp/index.html', '/index.html']}>
               <Redirect to={navItems[0].navLink} />
             </Route>
             {navItems.map((it) => (
