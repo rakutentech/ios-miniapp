@@ -38,28 +38,6 @@ func getErrorJsonResponse(error: MiniAppError) -> String {
     }
 }
 
-public enum MiniAppPermissionResult: Error {
-    /// User has explicitly denied authorization
-    case denied
-    /// User has not yet made a choice
-    case notDetermined
-    /// Host app is not authorized to use location services
-    case restricted
-}
-
-extension MiniAppPermissionResult: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .denied:
-            return NSLocalizedString("Denied", comment: "Permission Error")
-        case .notDetermined:
-            return NSLocalizedString("NotDetermined", comment: "Permission Error")
-        case .restricted:
-            return NSLocalizedString("Restricted", comment: "Permission Error")
-        }
-    }
-}
-
 enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case internalError
     case unexpectedMessageFormat
