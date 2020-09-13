@@ -187,11 +187,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
                             "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    guard let errorMessage = decodeMiniAppError(message: callbackProtocol.errorMessage) else {
-                        fail()
-                        return
-                    }
-                    expect(errorMessage.title).toEventually(equal(.invalidCustomPermissionRequest), timeout: 10)
+                    expect(callbackProtocol.errorMessage).toEventually(equal("Restricted") || equal("NotDetermined"))
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid custom permissions command but there is an error in the host app delegate") {
