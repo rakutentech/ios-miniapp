@@ -201,7 +201,6 @@ class MockFile {
 }
 
 class MockMessageInterface: MiniAppMessageProtocol {
-
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
@@ -247,7 +246,7 @@ class MockMessageInterface: MiniAppMessageProtocol {
         if messageContentAllowed {
             completionHandler(.success("SUCCESS"))
         } else {
-            completionHandler(.failure(MiniAppPermissionResult.restricted))
+            completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
         }
     }
 }
