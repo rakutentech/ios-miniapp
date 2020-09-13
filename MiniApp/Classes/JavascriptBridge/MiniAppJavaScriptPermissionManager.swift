@@ -89,10 +89,7 @@ extension MiniAppScriptMessageHandler {
     }
 
     func sendSuccessResponse(result: [MiniAppCustomPermissionsListResponse], callbackId: String) {
-        guard let responseString = getJsonSuccessResponse(result: result) else {
-            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
-            return
-        }
+        let responseString = getJsonSuccessResponse(result: result)
         self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: responseString)
     }
 
@@ -119,7 +116,7 @@ extension MiniAppScriptMessageHandler {
     /// For a given [MiniAppCustomPermissionsListResponse], this method will use JSONEncoder to encode the [objects] to JSON string
     /// - Parameter result: [MiniAppCustomPermissionsListResponse] that contains the name and isGranted status of every permission that will be sent back to the Mini app as JSON
     /// - Returns: JSON Response string
-    func getJsonSuccessResponse(result: [MiniAppCustomPermissionsListResponse]) -> String? {
+    func getJsonSuccessResponse(result: [MiniAppCustomPermissionsListResponse]) -> String {
         let responseObject = MiniAppCustomPermissionsResponse(permissions: result)
         do {
             let jsonData = try JSONEncoder().encode(responseObject)
