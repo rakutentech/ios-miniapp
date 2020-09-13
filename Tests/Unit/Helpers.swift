@@ -201,10 +201,12 @@ class MockFile {
 }
 
 class MockMessageInterface: MiniAppMessageProtocol {
+
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
     var permissionError: Error?
+    var messageContentAllowed: Bool = false
 
     func getUniqueId() -> String {
         if mockUniqueId {
@@ -237,6 +239,14 @@ class MockMessageInterface: MiniAppMessageProtocol {
                 completionHandler(.failure(permissionError!))
                 return
             }
+            completionHandler(.failure(MiniAppPermissionResult.restricted))
+        }
+    }
+
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<String, Error>) -> Void) {
+        if messageContentAllowed {
+            completionHandler(.success("SUCCESS"))
+        } else {
             completionHandler(.failure(MiniAppPermissionResult.restricted))
         }
     }

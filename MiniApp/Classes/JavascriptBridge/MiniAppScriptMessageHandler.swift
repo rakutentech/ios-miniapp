@@ -53,6 +53,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             getCurrentPosition(callbackId: callbackId)
         case .requestCustomPermissions:
             requestCustomPermissions(requestParam: requestParam, callbackId: callbackId)
+        case .shareInfo:
+            shareContent(requestParam: requestParam, callbackId: callbackId)
         }
     }
 
@@ -96,7 +98,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func getCurrentPosition(callbackId: String) {
-
         self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: getLocationInfo())
     }
 
@@ -117,6 +118,29 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             delegate?.didReceiveScriptMessageResponse(messageId: messageId, response: response)
         case .onError:
             delegate?.didReceiveScriptMessageError(messageId: messageId, errorMessage: response)
+        }
+    }
+
+    func shareContent(requestParam: RequestParameters?, callbackId: String) {
+        guard let requestParamValue = requestParam?.shareInfo else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            return
+        }
+        if !requestParamValue.content.isEmpty {
+            hostAppMessageDelegate?.shareContent(info: MiniAppShareContent(messageContent: requestParamValue.content)) { (result) in
+                switch result {
+                case .success:
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "SUCCESS")
+                case .failure(let error):
+                    if !error.localizedDescription.isEmpty {
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                        return
+                    }
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppPermissionResult.denied.localizedDescription)
+                }
+            }
+        } else {
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: "Share content message is empty")
         }
     }
 }
