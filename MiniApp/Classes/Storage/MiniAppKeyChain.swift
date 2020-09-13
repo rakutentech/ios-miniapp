@@ -16,7 +16,7 @@ import Foundation
             return getDefaultSupportedPermissions()
         }
         guard let permissionList = allKeys[keyId] as [MASDKCustomPermissionModel]? else {
-            return setDefaultPermissionsInKeyChain(forMiniApp: keyId)
+            return setDefaultPermissionsInKeyChain(forMiniApp: keyId, allKeys: allKeys)
         }
         return permissionList
     }
@@ -43,10 +43,12 @@ import Foundation
         }
     }
 
-    internal func setDefaultPermissionsInKeyChain(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
-        let defaultList = getDefaultSupportedPermissions()
-        write(keys: [id: defaultList])
-        return defaultList
+    internal func setDefaultPermissionsInKeyChain(forMiniApp id: String, allKeys: KeysDictionary) -> [MASDKCustomPermissionModel] {
+        var allKeysDict = allKeys
+        let defaultPermissionList = getDefaultSupportedPermissions()
+        allKeysDict[id] = defaultPermissionList
+        write(keys: allKeysDict)
+        return defaultPermissionList
     }
 
     private func getDefaultSupportedPermissions() -> [MASDKCustomPermissionModel] {
