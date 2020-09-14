@@ -22,16 +22,7 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
 }
 
 func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
-    return getErrorJsonResponse(error: MiniAppErrorDetail(name: error.name, description: error.description))
-}
-
-func getErrorJsonResponse(error: MiniAppErrorDetail) -> String {
-    do {
-        let jsonData = try JSONEncoder().encode(error)
-        return String(data: jsonData, encoding: .utf8)!
-    } catch let error {
-        return error.localizedDescription
-    }
+    return "\(error.name): \(error.description)"
 }
 
 enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {

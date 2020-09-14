@@ -58,7 +58,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func sendUniqueId(messageId: String) {
         guard let uniqueId = hostAppMessageDelegate?.getUniqueId(), !uniqueId.isEmpty else {
-            executeJavaScriptLegacyErrorCallback(messageId: messageId, response: MiniAppJavaScriptError.internalError.rawValue)
+            executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: MiniAppJavaScriptError.internalError.rawValue)
             return
         }
         executeJavaScriptCallback(responseStatus: .onSuccess, messageId: messageId, response: uniqueId)
@@ -66,11 +66,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func requestPermission(requestParam: RequestParameters?, callbackId: String) {
         guard let requestParamValue = requestParam?.permission else {
-            executeJavaScriptLegacyErrorCallback(messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
             return
         }
         guard let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue) else {
-            executeJavaScriptLegacyErrorCallback(messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
             return
         }
 
@@ -86,7 +86,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             case .success(let responseMessage):
                 self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: responseMessage.rawValue)
             case .failure(let error):
-                self.executeJavaScriptLegacyErrorCallback(messageId: callbackId, response: error.name)
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.name)
             }
         }
     }
@@ -113,14 +113,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .onError:
             delegate?.didReceiveScriptMessageError(messageId: messageId, errorMessage: response)
         }
-    }
-
-    /// This method is to return the error response that was promised to the mini app at the initial phase. These legacy error format is used by sendUniqueId & requestPermission
-    /// - Parameters:
-    ///   - messageId: callbackId that javascript callback uses to send back the response.
-    ///   - response: Error response that is need to send back to the Mini app
-    func executeJavaScriptLegacyErrorCallback(messageId: String, response: String) {
-        delegate?.didReceiveScriptMessageError(messageId: messageId, errorMessage: response)
     }
 }
 

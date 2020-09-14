@@ -39,11 +39,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let requestParam = RequestParameters(permission: "location", permissions: nil, locationOptions: nil)
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
-                    guard let decodeError = decodeMiniAppError(message: callbackProtocol.errorMessage) else {
-                        fail()
-                        return
-                    }
-                    expect(decodeError.name).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
                 }
             }
             context("when handleBridgeMessage receive valid action, invalid id") {
@@ -52,11 +48,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let requestParam = RequestParameters(permission: "location", permissions: nil, locationOptions: nil)
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
-                    guard let decodeError = decodeMiniAppError(message: callbackProtocol.errorMessage) else {
-                        fail()
-                        return
-                    }
-                    expect(decodeError.name).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
                 }
             }
             context("when handleActionCommand receive valid action, but failed to retrieve unique id") {
@@ -149,11 +141,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
-                    guard let responseData: Data = callbackProtocol.errorMessage?.data(using: .utf8) else {
-                        return
-                    }
-                    let decodedObj = try JSONDecoder().decode(MiniAppErrorDetail.self, from: responseData)
-                    expect(MASDKCustomPermissionError(rawValue: decodedObj.name)).toEventually(equal(MASDKCustomPermissionError.invalidCustomPermissionsList), timeout: 10)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.invalidCustomPermissionsList.rawValue))
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid custom permissions command but only one unknown custom permission") {
@@ -165,11 +153,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
-                    guard let responseData: Data = callbackProtocol.errorMessage?.data(using: .utf8) else {
-                        return
-                    }
-                    let decodedObj = try JSONDecoder().decode(MiniAppErrorDetail.self, from: responseData)
-                    expect(MASDKCustomPermissionError(rawValue: decodedObj.name)).toEventually(equal(MASDKCustomPermissionError.invalidCustomPermissionsList), timeout: 10)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.invalidCustomPermissionsList.rawValue))
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid custom permissions command but  no custom permissions requested") {
@@ -180,11 +164,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\": null},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
-                    guard let responseData: Data = callbackProtocol.errorMessage?.data(using: .utf8) else {
-                        return
-                    }
-                    let decodedObj = try JSONDecoder().decode(MiniAppErrorDetail.self, from: responseData)
-                    expect(MASDKCustomPermissionError(rawValue: decodedObj.name)).toEventually(equal(MASDKCustomPermissionError.invalidCustomPermissionRequest), timeout: 10)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.invalidCustomPermissionRequest.rawValue))
                  }
             }
         }
