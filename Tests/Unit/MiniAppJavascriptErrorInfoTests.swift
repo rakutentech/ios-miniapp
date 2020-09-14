@@ -13,8 +13,8 @@ class MiniAppJavascriptErrorInfoTests: QuickSpec {
                         fail()
                         return
                     }
-                    let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: errorData)
-                    expect(MASDKCustomPermissionError(rawValue: decodedObj.error.title)).toEventually(equal(MASDKCustomPermissionError.invalidCustomPermissionRequest))
+                    let decodedObj = try JSONDecoder().decode(MiniAppErrorDetail.self, from: errorData)
+                    expect(MASDKCustomPermissionError(rawValue: decodedObj.name)).toEventually(equal(MASDKCustomPermissionError.invalidCustomPermissionRequest))
                 }
             }
             context("when getMiniAppErrorMessage is called with invalidCustomPermissionsList type") {
@@ -24,8 +24,8 @@ class MiniAppJavascriptErrorInfoTests: QuickSpec {
                         fail()
                         return
                     }
-                    let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: errorData)
-                    expect(MASDKCustomPermissionError(rawValue: decodedObj.error.title)).toEventually(equal(MASDKCustomPermissionError.invalidCustomPermissionsList))
+                    let decodedObj = try JSONDecoder().decode(MiniAppErrorDetail.self, from: errorData)
+                    expect(MASDKCustomPermissionError(rawValue: decodedObj.name)).toEventually(equal(MASDKCustomPermissionError.invalidCustomPermissionsList))
                 }
             }
             context("when getMiniAppErrorMessage is called with unknownError type") {
@@ -35,8 +35,8 @@ class MiniAppJavascriptErrorInfoTests: QuickSpec {
                         fail()
                         return
                     }
-                    let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: errorData)
-                    expect(MiniAppErrorType(rawValue: decodedObj.error.title)).toEventually(equal(MiniAppErrorType.hostAppError))
+                    let decodedObj = try JSONDecoder().decode(MiniAppErrorDetail.self, from: errorData)
+                    expect(MiniAppErrorType(rawValue: decodedObj.name)).toEventually(equal(MiniAppErrorType.hostAppError))
                 }
             }
             context("when getMiniAppErrorMessage is called with unknownError type") {
@@ -46,8 +46,8 @@ class MiniAppJavascriptErrorInfoTests: QuickSpec {
                         fail()
                         return
                     }
-                    let decodedObj = try JSONDecoder().decode(MiniAppError.self, from: errorData)
-                    expect(MiniAppErrorType(rawValue: decodedObj.error.title)).toEventually(equal(MiniAppErrorType.unknownError))
+                    let decodedObj = try JSONDecoder().decode(MiniAppErrorDetail.self, from: errorData)
+                    expect(MiniAppErrorType(rawValue: decodedObj.name)).toEventually(equal(MiniAppErrorType.unknownError))
                 }
             }
         }

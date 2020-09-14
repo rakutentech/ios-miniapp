@@ -35,7 +35,7 @@ public enum MASDKPermissionError: String, MiniAppErrorProtocol {
         return self.rawValue
     }
 
-    var message: String {
+    var description: String {
         switch self {
         case .denied:
         return "User has explicitly denied authorization"
@@ -59,7 +59,7 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
         return self.rawValue
     }
 
-    public var message: String {
+    public var description: String {
         switch self {
         case .unknownError:
             return "Unknown error occurred"

@@ -1,4 +1,4 @@
 protocol MiniAppErrorProtocol: Error {
   var name: String { get }
-  var message: String { get }
+  var description: String { get }
 }

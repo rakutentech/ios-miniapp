@@ -1,9 +1,5 @@
-struct MiniAppError: Codable {
-    let error: MiniAppErrorDetail
-}
-
 struct MiniAppErrorDetail: Codable, Error {
-    let title: String
+    let name: String
     let description: String
 }
 
@@ -15,7 +11,7 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
         return self.rawValue
     }
 
-    public var message: String {
+    public var description: String {
         switch self {
         case .hostAppError:
         return "Host app Error"
@@ -26,10 +22,10 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
 }
 
 func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
-    return getErrorJsonResponse(error: MiniAppError(error: MiniAppErrorDetail(title: error.name, description: error.message)))
+    return getErrorJsonResponse(error: MiniAppErrorDetail(name: error.name, description: error.description))
 }
 
-func getErrorJsonResponse(error: MiniAppError) -> String {
+func getErrorJsonResponse(error: MiniAppErrorDetail) -> String {
     do {
         let jsonData = try JSONEncoder().encode(error)
         return String(data: jsonData, encoding: .utf8)!
@@ -47,7 +43,7 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
         return self.rawValue
     }
 
-    var message: String {
+    var description: String {
         switch self {
         case .internalError:
         return "Host app failed to retrieve data"
