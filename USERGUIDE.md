@@ -196,6 +196,7 @@ extension ViewController: MiniAppMessageProtocol {
             }
     
 ```
+<div id="share-mini-app-content"></div>
 
 ##### Share Mini app content
 

@@ -3,14 +3,16 @@ ignore:
    - "Tests"
    - "Example"
 coverage:
-   range: 70..100
-   round: down
-   precision: 2
-coverage:
   status:
+    patch:
+      default:
+        target: 70%
+        threshold: 5%
+        base: auto 
+        if_ci_failed: error
     project:
       default:
-        # basic
-        target: auto
+        target: 70%
         threshold: 5%
         base: auto
+        if_ci_failed: error
