@@ -11,6 +11,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import MediaIcon from '@material-ui/icons/MusicVideo';
+import ShareIcon from '@material-ui/icons/Share';
 
 import AuthToken from './pages/auth-token';
 import TalkToChatBot from './pages/chatbot';
@@ -23,6 +24,7 @@ import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
 import Media from './pages/media';
+import Share from './pages/share';
 
 const navItems = [
   {
@@ -90,6 +92,12 @@ const navItems = [
     label: 'Media',
     navLink: '/media',
     component: Media,
+  },
+  {
+    icon: <ShareIcon />,
+    label: 'Share',
+    navLink: '/share',
+    component: Share,
   },
 ];
 
