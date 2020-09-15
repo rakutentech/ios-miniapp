@@ -156,7 +156,7 @@ class MockBundle: EnvironmentProtocol {
     var mockAppId: String?
     var mockSubscriptionKey: String?
     var mockAppVersion: String?
-    var mockEndpoint: String?
+    var mockEndpoint: String? = "https://www.example.com/"
     var mockTestMode: Bool?
     var mockHostAppUserAgentInfo: String?
 
