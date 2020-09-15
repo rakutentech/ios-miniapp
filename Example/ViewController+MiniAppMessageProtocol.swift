@@ -3,9 +3,9 @@ import CoreLocation
 
 extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
 
-    typealias PermissionCompletionHandler = (((Result<String, Error>)) -> Void)
+    typealias PermissionCompletionHandler = (((Result<MASDKPermissionResponse, MASDKPermissionError>)) -> Void)
 
-    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         switch permissionType {
         case .location:
             let locStatus = CLLocationManager.authorizationStatus()
@@ -15,11 +15,11 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
                 locationManager.requestWhenInUseAuthorization()
             case .denied:
                 displayLocationDisabledAlert()
-                completionHandler(.failure(MiniAppPermissionResult.denied))
+                completionHandler(.failure(.denied))
             case .authorizedAlways, .authorizedWhenInUse:
-                completionHandler(.success("allowed"))
+                completionHandler(.success(.allowed))
             case .restricted:
-                completionHandler(.failure(MiniAppPermissionResult.restricted))
+                completionHandler(.failure(.restricted))
             @unknown default:
             break
             }
@@ -29,7 +29,7 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
     func requestCustomPermissions(
         permissions: [MASDKCustomPermissionModel],
         completionHandler: @escaping (
-        Result<[MASDKCustomPermissionModel], Error>) -> Void) {
+        Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomPermissionsTableViewController") as? CustomPermissionsTableViewController {
             viewController.customPermissionHandlerObj = completionHandler
             viewController.permissionsRequestList = permissions
@@ -47,13 +47,13 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
         return deviceId
     }
 
-    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<String, Error>) -> Void) {
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         let activityController = UIActivityViewController(activityItems: [info.messageContent],
                                                           applicationActivities: nil)
         UIViewController.topViewController()?.present(activityController,
                                                       animated: true,
                                                       completion: nil)
-        completionHandler(.success("SUCCESS"))
+        completionHandler(.success(.success))
     }
 
     func displayLocationDisabledAlert() {
@@ -66,13 +66,13 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .denied:
-            permissionHandlerObj?(.failure(MiniAppPermissionResult.denied))
+            permissionHandlerObj?(.failure(.denied))
         case .authorizedWhenInUse, .authorizedAlways:
-            permissionHandlerObj?(.success("allowed"))
+            permissionHandlerObj?(.success(.allowed))
         case .notDetermined:
-            permissionHandlerObj?(.failure(MiniAppPermissionResult.notDetermined))
+            permissionHandlerObj?(.failure(.notDetermined))
         case .restricted:
-            permissionHandlerObj?(.failure(MiniAppPermissionResult.restricted))
+            permissionHandlerObj?(.failure(.restricted))
         @unknown default:
         break
         }

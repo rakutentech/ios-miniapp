@@ -204,7 +204,8 @@ class MockMessageInterface: MiniAppMessageProtocol {
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
-    var permissionError: Error?
+    var permissionError: MASDKPermissionError?
+    var customPermissionError: MASDKCustomPermissionError?
     var messageContentAllowed: Bool = false
 
     func getUniqueId() -> String {
@@ -218,33 +219,33 @@ class MockMessageInterface: MiniAppMessageProtocol {
         }
     }
 
-    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         if locationAllowed {
-            completionHandler(.success("Allowed"))
+            completionHandler(.success(.allowed))
         } else {
             if permissionError != nil {
                 completionHandler(.failure(permissionError!))
                 return
             }
-            completionHandler(.failure(MiniAppPermissionResult.denied))
+            completionHandler(.failure(.denied))
         }
     }
 
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], Error>) -> Void) {
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         if customPermissions {
             completionHandler(.success(permissions))
         } else {
-            if permissionError != nil {
-                completionHandler(.failure(permissionError!))
+            if customPermissionError != nil {
+                completionHandler(.failure(customPermissionError!))
                 return
             }
-            completionHandler(.failure(MiniAppPermissionResult.restricted))
+            completionHandler(.failure(.unknownError))
         }
     }
 
-    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<String, Error>) -> Void) {
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         if messageContentAllowed {
-            completionHandler(.success("SUCCESS"))
+            completionHandler(.success(.success))
         } else {
             completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
         }
@@ -361,8 +362,8 @@ func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
     guard let errorData = message?.data(using: .utf8) else {
         return nil
     }
-    guard let errorMessage = ResponseDecoder.decode(decodeType: MiniAppError.self, data: errorData)  else {
+    guard let errorMessage = ResponseDecoder.decode(decodeType: MiniAppErrorDetail.self, data: errorData)  else {
         return nil
     }
-    return errorMessage.error
+    return errorMessage
 }

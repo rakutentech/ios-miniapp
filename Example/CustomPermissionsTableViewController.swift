@@ -3,7 +3,7 @@ import MiniApp
 
 class CustomPermissionsTableViewController: UITableViewController {
 
-    typealias CustomPermissionsCompletionHandler = (((Result<[MASDKCustomPermissionModel], Error>)) -> Void)
+    typealias CustomPermissionsCompletionHandler = (((Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>)) -> Void)
 
     var customPermissionHandlerObj: CustomPermissionsCompletionHandler?
     var permissionsRequestList: [MASDKCustomPermissionModel]?

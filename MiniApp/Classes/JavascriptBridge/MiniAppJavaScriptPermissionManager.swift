@@ -3,14 +3,14 @@ extension MiniAppScriptMessageHandler {
         cachedUnknownCustomPermissionRequest.removeAll()
         userAlreadyRespondedRequestList.removeAll()
         guard let requestParamValue = requestParam?.permissions else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppCustomPermissionError(customPermissionError: .invalidCustomPermissionRequest))
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.invalidCustomPermissionRequest))
             return
         }
 
         guard let miniAppPermissionRequestModelList = prepareCustomPermissionsRequestModelList(
             permissionList: requestParamValue),
             miniAppPermissionRequestModelList.count > 0 else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppCustomPermissionError(customPermissionError: .invalidCustomPermissionsList))
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.invalidCustomPermissionsList))
             return
         }
         checkCustomPermissionsRequestStatusInCache(miniAppPermissionRequestModelList: miniAppPermissionRequestModelList, callbackId: callbackId)
@@ -68,11 +68,7 @@ extension MiniAppScriptMessageHandler {
                 self.miniAppKeyStore.storeCustomPermissions(permissions: result, forMiniApp: self.miniAppId)
                 self.sendCustomPermissionsJsonResponse(result: result, callbackId: callbackId)
            case .failure(let error):
-               if !error.localizedDescription.isEmpty {
-                   self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
-                   return
-               }
-               self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppCustomPermissionError(customPermissionError: .hostAppError))
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(error))
            }
         }
     }
@@ -93,10 +89,7 @@ extension MiniAppScriptMessageHandler {
     }
 
     func sendSuccessResponse(result: [MiniAppCustomPermissionsListResponse], callbackId: String) {
-        guard let responseString = getJsonSuccessResponse(result: result) else {
-            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppCustomPermissionError(customPermissionError: .unknownError))
-            return
-        }
+        let responseString = getJsonSuccessResponse(result: result)
         self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: responseString)
     }
 
@@ -123,7 +116,7 @@ extension MiniAppScriptMessageHandler {
     /// For a given [MiniAppCustomPermissionsListResponse], this method will use JSONEncoder to encode the [objects] to JSON string
     /// - Parameter result: [MiniAppCustomPermissionsListResponse] that contains the name and isGranted status of every permission that will be sent back to the Mini app as JSON
     /// - Returns: JSON Response string
-    func getJsonSuccessResponse(result: [MiniAppCustomPermissionsListResponse]) -> String? {
+    func getJsonSuccessResponse(result: [MiniAppCustomPermissionsListResponse]) -> String {
         let responseObject = MiniAppCustomPermissionsResponse(permissions: result)
         do {
             let jsonData = try JSONEncoder().encode(responseObject)
