@@ -111,7 +111,7 @@ class MiniAppDownloader {
             guard let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
                 return
             }
-            guard let fileDirectory = UrlParser.getFileStoragePath(from: url) else {
+            guard let fileDirectory = UrlParser.getFileStoragePath(from: url, with: self.miniAppClient.environment) else {
                 completionHandler(.failure(NSError.downloadingFailed()))
                 return
             }
