@@ -9,6 +9,19 @@ class MockAPIClient: MiniAppClient {
     var zipFile: String?
     var headers: [String: String]?
 
+    init() {
+        let bundle = MockBundle()
+        super.init(with:
+            MiniAppSdkConfig(
+                baseUrl: bundle.mockEndpoint,
+                rasAppId: bundle.mockAppId,
+                subscriptionKey: bundle.mockSubscriptionKey,
+                hostAppVersion: bundle.mockHostAppUserAgentInfo,
+                isTestMode: bundle.mockTestMode
+            )
+        )
+    }
+
     override func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
         guard let urlRequest = self.listingApi.createURLRequest() else {
             return completionHandler(.failure(NSError.invalidURLError()))
@@ -156,7 +169,7 @@ class MockBundle: EnvironmentProtocol {
     var mockAppId: String?
     var mockSubscriptionKey: String?
     var mockAppVersion: String?
-    var mockEndpoint: String?
+    var mockEndpoint: String? = "https://www.example.com/"
     var mockTestMode: Bool?
     var mockHostAppUserAgentInfo: String?
 
