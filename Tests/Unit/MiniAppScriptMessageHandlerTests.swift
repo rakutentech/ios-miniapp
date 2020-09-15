@@ -36,7 +36,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when handleBridgeMessage receive invalid action, valid id") {
                 it("will return error") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
-                    let requestParam = RequestParameters(permission: "location", permissions: nil, locationOptions: nil)
+                    let requestParam = RequestParameters(permission: "location", permissions: nil, locationOptions: nil, shareInfo: ShareInfoParameters(content: ""))
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
@@ -45,7 +45,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when handleBridgeMessage receive valid action, invalid id") {
                 it("will return error") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
-                    let requestParam = RequestParameters(permission: "location", permissions: nil, locationOptions: nil)
+                    let requestParam = RequestParameters(permission: "location", permissions: nil, locationOptions: nil, shareInfo: ShareInfoParameters(content: ""))
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
@@ -202,6 +202,27 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let decodedObj = try JSONDecoder().decode(MiniAppCustomPermissionsResponse.self, from: responseData)
                     expect(decodedObj.permissions[0].name).toEventually(equal("rakuten.miniapp.user.PROFILE_PHOTO"), timeout: 10)
                     expect(decodedObj.permissions[0].isGranted).toEventually(equal("DENIED"), timeout: 10)
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid share info message") {
+                 it("will return SUCCESS after host app displays UIActivityController") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+                    mockMessageInterface.messageContentAllowed = true
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\":\"shareInfo\",\"param\":{\"shareInfo\":{\"content\":\"Test Message\"}},\"id\":\"1.033890137027198\"}"as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: 10)
+                    expect(callbackProtocol.response).toEventually(equal("SUCCESS"), timeout: 10)
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid share info message but there is an error in host app delegate") {
+                 it("will return Error") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+                    mockMessageInterface.messageContentAllowed = false
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\":\"shareInfo\",\"param\":{\"shareInfo\":{\"content\":\"Test Message\"}},\"id\":\"1.033890137027198\"}"as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain("ShareContentError"), timeout: 10)
                  }
             }
         }
