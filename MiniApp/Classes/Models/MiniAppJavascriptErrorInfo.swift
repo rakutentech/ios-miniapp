@@ -1,24 +1,18 @@
-struct MiniAppError: Codable {
-    let error: MiniAppErrorDetail
-}
-
 struct MiniAppErrorDetail: Codable, Error {
-    let title: MiniAppCustomPermissionError
+    let name: String
     let description: String
 }
 
-public enum MiniAppCustomPermissionError: String, Codable {
-    case invalidCustomPermissionRequest
-    case invalidCustomPermissionsList
+enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
     case hostAppError
     case unknownError
 
+    var name: String {
+        return self.rawValue
+    }
+
     public var description: String {
         switch self {
-        case .invalidCustomPermissionRequest:
-        return "Error in Custom Permission Request, please make sure the Custom permissions are passed in []"
-        case .invalidCustomPermissionsList:
-        return "Error in list of Custom permissions that is passed, please check whether valid permission associated with name "
         case .hostAppError:
         return "Host app Error"
         case .unknownError:
@@ -27,15 +21,30 @@ public enum MiniAppCustomPermissionError: String, Codable {
     }
 }
 
-func getMiniAppCustomPermissionError(customPermissionError: MiniAppCustomPermissionError) -> String {
-    return getErrorJsonResponse(error: MiniAppError(error: MiniAppErrorDetail(title: customPermissionError, description: customPermissionError.description)))
+func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
+    return "\(error.name): \(error.description)"
 }
 
-func getErrorJsonResponse(error: MiniAppError) -> String {
-    do {
-        let jsonData = try JSONEncoder().encode(error)
-        return String(data: jsonData, encoding: .utf8)!
-    } catch let error {
-        return error.localizedDescription
+enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
+    case internalError
+    case unexpectedMessageFormat
+    case invalidPermissionType
+    case valueIsEmpty
+
+    var name: String {
+        return self.rawValue
+    }
+
+    var description: String {
+        switch self {
+        case .internalError:
+        return "Host app failed to retrieve data"
+        case .unexpectedMessageFormat:
+        return "Please check the message format that is sent to Javascript SDK."
+        case .invalidPermissionType:
+        return "Permission type that is requested is invalid"
+        case .valueIsEmpty:
+        return "The value which is passed is empty."
+        }
     }
 }
