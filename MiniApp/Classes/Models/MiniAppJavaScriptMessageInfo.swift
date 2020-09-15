@@ -29,5 +29,5 @@ struct MiniAppCustomPermissionsResponse: Codable {
 }
 
 struct MiniAppCustomPermissionsListResponse: Codable {
-    let name, isGranted: String
+    let name, status: String
 }
