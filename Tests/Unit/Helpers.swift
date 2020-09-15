@@ -205,6 +205,7 @@ class MockMessageInterface: MiniAppMessageProtocol {
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
     var permissionError: Error?
+    var messageContentAllowed: Bool = false
 
     func getUniqueId() -> String {
         if mockUniqueId {
@@ -238,6 +239,14 @@ class MockMessageInterface: MiniAppMessageProtocol {
                 return
             }
             completionHandler(.failure(MiniAppPermissionResult.restricted))
+        }
+    }
+
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<String, Error>) -> Void) {
+        if messageContentAllowed {
+            completionHandler(.success("SUCCESS"))
+        } else {
+            completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
         }
     }
 }
