@@ -3,165 +3,144 @@ import {
   InterstitialAdResponse,
   RewardedAdResponse,
 } from 'js-miniapp-sdk';
-import * as bridge from '../src/common-bridge';
-import assert from 'chai';
+import * as Bridge from '../src/common-bridge';
+import { expect } from 'chai';
+import sinon, { mock } from 'sinon';
 
 /* tslint:disable:no-any */
 const window: any = {};
 (global as any).window = window;
 
-describe('Test Mini App Bridge execSuccessCallback is called with valid unique id', () => {
-  it('will return success promise with uniqueId value', () => {
-    const callback = {} as bridge.Callback;
-    const onSuccess = value => {
-      assert.expect(value).to.equal('1234');
-    };
-    const onError = () => {};
-    callback.onSuccess = onSuccess;
-    callback.onError = onError;
-    callback.id = String(Math.random());
-    bridge.mabMessageQueue.unshift(callback);
-    bridge.MiniAppBridge.prototype.execSuccessCallback(callback.id, '1234');
+const sandbox = sinon.createSandbox();
+const mockExecutor = {
+  exec: sinon.stub(),
+};
+
+beforeEach(() => {
+  sandbox.restore();
+});
+
+describe('execSuccessCallback', () => {
+  describe('when called with valid value', () => {
+    it('will return success promise with uniqueId value', () => {
+      const callback = createCallback({
+        onSuccess: value => expect(value).to.equal('1234'),
+      });
+
+      Bridge.mabMessageQueue.unshift(callback);
+      Bridge.MiniAppBridge.prototype.execSuccessCallback(callback.id, '1234');
+    });
+  });
+
+  describe('when called with invalid value', () => {
+    it('will return error promise with Unknown Error', () => {
+      const callback = createCallback({
+        onError: error => expect(error).to.equal('Unknown Error'),
+      });
+
+      Bridge.mabMessageQueue.unshift(callback);
+      Bridge.MiniAppBridge.prototype.execSuccessCallback(callback.id, '');
+    });
   });
 });
 
-describe('Test Mini App Bridge execSuccessCallback is called with invalid unique id', () => {
-  it('will return error promise with Unknown Error', () => {
-    const callback = {} as bridge.Callback;
-    const onSuccess = value => {};
-    const onError = error => {
-      assert.expect(error).to.equal('Unknown Error');
-    };
-    callback.onSuccess = onSuccess;
-    callback.onError = onError;
-    callback.id = String(Math.random());
-    bridge.mabMessageQueue.unshift(callback);
-    bridge.MiniAppBridge.prototype.execSuccessCallback(callback.id, '');
+describe('execErrorCallback', () => {
+  describe('when called with error message', () => {
+    it('will return error promise with same error message', () => {
+      const callback = createCallback({
+        onError: error => expect(error).to.equal('Internal Error'),
+      });
+
+      Bridge.mabMessageQueue.unshift(callback);
+      Bridge.MiniAppBridge.prototype.execErrorCallback(
+        callback.id,
+        'Internal Error'
+      );
+    });
+  });
+
+  describe('when called with no error message', () => {
+    it('will return error promise with Unknown Error', () => {
+      const callback = createCallback({
+        onError: error => expect(error).to.equal('Unknown Error'),
+      });
+
+      Bridge.mabMessageQueue.unshift(callback);
+      Bridge.MiniAppBridge.prototype.execErrorCallback(callback.id, '');
+    });
   });
 });
 
-describe('Test Mini App Bridge execErrorCallback is called with error message', () => {
-  it('will return error promise with same error message', () => {
-    const callback = {} as bridge.Callback;
-    const onSuccess = value => {};
-    const onError = error => {
-      assert.expect(error).to.equal('Internal Error');
-    };
-    callback.onSuccess = onSuccess;
-    callback.onError = onError;
-    callback.id = String(Math.random());
-    bridge.mabMessageQueue.unshift(callback);
-    bridge.MiniAppBridge.prototype.execErrorCallback(
-      callback.id,
-      'Internal Error'
-    );
-  });
-});
+describe('showRewardedAd', () => {
+  it('will parse the RewardedAdResponse JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, '{ "adType": 1 }');
 
-describe('Test Mini App Bridge execErrorCallback is called with no error message', () => {
-  it('will return error promise with Unknown Error', () => {
-    const callback = {} as bridge.Callback;
-    const onSuccess = value => {};
-    const onError = error => {
-      assert.expect(error).to.equal('Unknown Error');
-    };
-    callback.onSuccess = onSuccess;
-    callback.onError = onError;
-    callback.id = String(Math.random());
-    bridge.mabMessageQueue.unshift(callback);
-    bridge.MiniAppBridge.prototype.execErrorCallback(callback.id, '');
-  });
-});
-
-describe('Test Mini App Bridge execSuccessCallback is called with valid interstitial ad response', () => {
-  it('will return success promise and typecast the response JSON string successfully', () => {
-    const callback = {} as bridge.Callback;
-    const adResponse: InterstitialAdResponse = {
-      adType: AdTypes.INTERSTITIAL,
-    };
-
-    const jsonAdresponse = '{ "adType": 0 }';
-
-    const onSuccess = value => {
-      assert.expect(value).to.equal(jsonAdresponse);
-      assert
-        .expect(JSON.parse(value) as InterstitialAdResponse)
-        .to.deep.equal(adResponse);
-    };
-    const onError = () => {};
-    callback.onSuccess = onSuccess;
-    callback.onError = onError;
-    callback.id = String(Math.random());
-    bridge.mabMessageQueue.unshift(callback);
-    bridge.MiniAppBridge.prototype.execSuccessCallback(
-      callback.id,
-      jsonAdresponse
-    );
-  });
-});
-
-describe('Test Mini App Bridge execSuccessCallback is called with valid load ad response', () => {
-  it('will resolve successful promise', () => {
-    const callback = {} as bridge.Callback;
-    const adResponse = null;
-
-    const jsonAdresponse = 'null';
-
-    const onSuccess = value => {
-      assert.expect(value).to.equal(jsonAdresponse);
-      assert.expect(JSON.parse(value)).to.deep.equal(adResponse);
-    };
-    const onError = () => {};
-    callback.onSuccess = onSuccess;
-    callback.onError = onError;
-    callback.id = String(Math.random());
-    bridge.mabMessageQueue.unshift(callback);
-    bridge.MiniAppBridge.prototype.execSuccessCallback(
-      callback.id,
-      jsonAdresponse
-    );
-  });
-  it('will reject with an error', () => {
-    const callback = {} as bridge.Callback;
-    const errorResponse = new Error('Internal error');
-
-    const onError = error => {
-      assert.expect(error).to.equal(errorResponse);
-    };
-    callback.onSuccess = () => {};
-    callback.onError = onError;
-    callback.id = String(Math.random());
-    bridge.mabMessageQueue.unshift(callback);
-    bridge.MiniAppBridge.prototype.execErrorCallback(
-      callback.id,
-      errorResponse
-    );
-  });
-});
-
-describe('Test Mini App Bridge execSuccessCallback is called with valid rewarded ad response', () => {
-  it('will return success promise and typecast the response JSON string successfully', () => {
-    const callback = {} as bridge.Callback;
-    const adResponse: RewardedAdResponse = {
+    return expect(bridge.showRewardedAd('test_id')).to.eventually.deep.equal({
       adType: AdTypes.REWARDED,
-    };
-
-    const jsonAdresponse = '{ "adType": 1 }';
-
-    const onSuccess = value => {
-      assert.expect(value).to.equal(jsonAdresponse);
-      assert
-        .expect(JSON.parse(value) as InterstitialAdResponse)
-        .to.deep.equal(adResponse);
-    };
-    const onError = () => {};
-    callback.onSuccess = onSuccess;
-    callback.onError = onError;
-    callback.id = String(Math.random());
-    bridge.mabMessageQueue.unshift(callback);
-    bridge.MiniAppBridge.prototype.execSuccessCallback(
-      callback.id,
-      jsonAdresponse
-    );
+    });
   });
 });
+
+describe('showInterstitialAd', () => {
+  it('will parse the InterstitialAdResponse JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, '{ "adType": 0 }');
+
+    return expect(
+      bridge.showInterstitialAd('test_id')
+    ).to.eventually.deep.equal({ adType: AdTypes.INTERSTITIAL });
+  });
+});
+
+describe('requestCustomPermissions', () => {
+  const requestPermissions = [
+    { name: 'test_permission', description: 'test_description' },
+  ];
+
+  it('will call the platform executor', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.requestCustomPermissions(requestPermissions);
+
+    sinon.assert.calledWith(mockExecutor.exec, 'requestCustomPermissions');
+  });
+
+  it('will attach the permissions to the `permissions` key', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.requestCustomPermissions(requestPermissions);
+
+    sinon.assert.calledWith(mockExecutor.exec, sinon.match.any, {
+      permissions: requestPermissions,
+    });
+  });
+
+  it('will parse the CustomPermission JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      2,
+      '[{"name": "test_name", "status": "ALLOWED"}]'
+    );
+
+    return expect(
+      bridge.requestCustomPermissions([])
+    ).to.eventually.deep.equal([{ name: 'test_name', status: 'ALLOWED' }]);
+  });
+});
+
+interface CreateCallbackParams {
+  onSuccess?: (success: any) => any;
+  onError?: (error: string) => any;
+}
+
+function createCallback({
+  onSuccess,
+  onError,
+}: CreateCallbackParams): Bridge.Callback {
+  return {
+    onSuccess: onSuccess || (() => undefined),
+    onError: onError || (() => undefined),
+    id: String(Math.random()),
+  };
+}

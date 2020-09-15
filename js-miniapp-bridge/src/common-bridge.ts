@@ -187,7 +187,7 @@ export class MiniAppBridge {
       return this.executor.exec(
         'requestCustomPermissions',
         { permissions: permissionTypes },
-        success => resolve(success),
+        success => resolve(JSON.parse(success)),
         error => reject(error)
       );
     });
