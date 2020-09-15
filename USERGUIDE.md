@@ -196,6 +196,21 @@ extension ViewController: MiniAppMessageProtocol {
             }
     
 ```
+<div id="share-mini-app-content"></div>
+
+##### Share Mini app content
+
+```swift
+extension ViewController: MiniAppMessageProtocol {
+    func shareContent(info: MiniAppShareContent,
+            completionHandler: @escaping (
+                Result<String, Error>) -> Void) {
+        let activityController = UIActivityViewController(activityItems: [info.messageContent], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
+        completionHandler(.success("SUCCESS"))
+    }
+}
+```
 
 <div id="navigation"></div>
 
