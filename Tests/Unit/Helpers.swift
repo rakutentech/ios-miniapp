@@ -241,6 +241,14 @@ class MockMessageInterface: MiniAppMessageProtocol {
             completionHandler(.failure(.unknownError))
         }
     }
+
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<String, Error>) -> Void) {
+        if messageContentAllowed {
+            completionHandler(.success("SUCCESS"))
+        } else {
+            completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
+        }
+    }
 }
 
 var mockMiniAppInfo: MiniAppInfo {

@@ -47,6 +47,15 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
         return deviceId
     }
 
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<String, Error>) -> Void) {
+        let activityController = UIActivityViewController(activityItems: [info.messageContent],
+                                                          applicationActivities: nil)
+        UIViewController.topViewController()?.present(activityController,
+                                                      animated: true,
+                                                      completion: nil)
+        completionHandler(.success("SUCCESS"))
+    }
+
     func displayLocationDisabledAlert() {
         let alert = UIAlertController(title: "Location Services are disabled", message: "Please enable Location Services in your Settings", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
