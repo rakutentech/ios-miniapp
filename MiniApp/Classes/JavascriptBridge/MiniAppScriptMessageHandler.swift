@@ -60,7 +60,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func sendUniqueId(messageId: String) {
         guard let uniqueId = hostAppMessageDelegate?.getUniqueId(), !uniqueId.isEmpty else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: MiniAppJavaScriptError.internalError.rawValue)
+            executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
             return
         }
         executeJavaScriptCallback(responseStatus: .onSuccess, messageId: messageId, response: uniqueId)
@@ -68,11 +68,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func requestPermission(requestParam: RequestParameters?, callbackId: String) {
         guard let requestParamValue = requestParam?.permission else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidPermissionType))
             return
         }
         guard let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue) else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidPermissionType))
             return
         }
 
@@ -88,7 +88,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             case .success(let responseMessage):
                 self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: responseMessage.rawValue)
             case .failure(let error):
-                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.name)
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(error))
             }
         }
     }
@@ -132,11 +132,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                         self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
                         return
                     }
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppPermissionResult.denied.localizedDescription)
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
                 }
             }
         } else {
-            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: "Share content message is empty")
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.valueIsEmpty))
         }
     }
 }

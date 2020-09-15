@@ -16,7 +16,11 @@ public protocol MiniAppMessageProtocol: class {
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 
     /// Interface that is used to share the content from the Mini app
-    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<String, Error>) -> Void)
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)
+}
+
+public enum MASDKProtocolResponse: String {
+    case success = "SUCCESS"
 }
 
 public enum MASDKPermissionResponse: String {

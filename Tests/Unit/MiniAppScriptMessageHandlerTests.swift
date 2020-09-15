@@ -31,7 +31,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getUniqueId\", \"param\": { \"permission\": null}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.messageId).toEventually(equal("12345"))
-                    expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.internalError.rawValue))                }
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.description))
+                }
             }
             context("when handleBridgeMessage receive invalid action, valid id") {
                 it("will return error") {
@@ -56,7 +58,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     mockMessageInterface.mockUniqueId = true
                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
                     scriptMessageHandler.sendUniqueId(messageId: "1234")
-                    expect(callbackProtocol.errorMessage).toEventually(equal(MiniAppJavaScriptError.internalError.rawValue))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.description))
                 }
             }
             context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user allowed the permission") {
@@ -74,7 +77,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     mockMessageInterface.locationAllowed = false
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.errorMessage).toEventually(equal("NOT_DETERMINED") || equal( "DENIED"))
+                    expect(callbackProtocol.errorMessage).toEventually(contain("NOT_DETERMINED") || contain( "DENIED"))
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user skipped the permission") {
@@ -84,7 +87,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     mockMessageInterface.permissionError = .notDetermined
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.errorMessage).toEventually(equal("NOT_DETERMINED"))
+                    expect(callbackProtocol.errorMessage).toEventually(contain("NOT_DETERMINED"))
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid requestPermission command and invalid permission type") {
@@ -94,7 +97,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     mockMessageInterface.permissionError = .notDetermined
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"ppp\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.errorMessage).toEventually(equal("invalidPermissionType"))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.invalidPermissionType.rawValue))
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid getCurrentPosition command") {

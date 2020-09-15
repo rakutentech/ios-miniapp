@@ -29,6 +29,7 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case internalError
     case unexpectedMessageFormat
     case invalidPermissionType
+    case valueIsEmpty
 
     var name: String {
         return self.rawValue
@@ -42,6 +43,8 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
         return "Please check the message format that is sent to Javascript SDK."
         case .invalidPermissionType:
         return "Permission type that is requested is invalid"
+        case .valueIsEmpty:
+        return "The value which is passed is empty."
         }
     }
 }

@@ -47,13 +47,13 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
         return deviceId
     }
 
-    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<String, Error>) -> Void) {
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         let activityController = UIActivityViewController(activityItems: [info.messageContent],
                                                           applicationActivities: nil)
         UIViewController.topViewController()?.present(activityController,
                                                       animated: true,
                                                       completion: nil)
-        completionHandler(.success("SUCCESS"))
+        completionHandler(.success(.success))
     }
 
     func displayLocationDisabledAlert() {
