@@ -109,13 +109,9 @@ internal class RealMiniAppView: UIView {
                 if scheme.starts(with: Constants.miniAppSchemePrefix) {
                     return decisionHandler(.allow)
                 } else {
-                    if navigationAction.navigationType == .linkActivated {
-                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
-                            self.webView.load(URLRequest(url: url))
-                        })
-                    } else {
-                        return decisionHandler(.allow)
-                    }
+                    self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
+                        self.webView.load(URLRequest(url: url))
+                    })
                 }
             }
         }
