@@ -48,7 +48,7 @@ extension MiniAppScriptMessageHandler {
                 cachedUnknownCustomPermissionRequest.append(
                     MiniAppCustomPermissionsListResponse(
                         name: $0.name ?? "UNKNOWN_REQUEST",
-                        isGranted:
+                        status:
                         MiniAppCustomPermissionGrantedStatus.permissionNotAvailable.rawValue))
                 return
             }
@@ -76,7 +76,7 @@ extension MiniAppScriptMessageHandler {
     func sendCachedSuccessResponse(result: [MASDKCustomPermissionModel], callbackId: String) {
         var permissionListResponse = [MiniAppCustomPermissionsListResponse]()
         result.forEach {
-            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, isGranted: $0.isPermissionGranted.rawValue))
+            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, status: $0.isPermissionGranted.rawValue))
         }
         cachedUnknownCustomPermissionRequest.forEach {
             permissionListResponse.append($0)
@@ -102,10 +102,10 @@ extension MiniAppScriptMessageHandler {
     func retrieveAllPermissionsMiniAppRequested(result: [MASDKCustomPermissionModel]) -> [MiniAppCustomPermissionsListResponse] {
         var permissionListResponse = [MiniAppCustomPermissionsListResponse]()
         result.forEach {
-            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, isGranted: $0.isPermissionGranted.rawValue))
+            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, status: $0.isPermissionGranted.rawValue))
         }
         userAlreadyRespondedRequestList.forEach {
-            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, isGranted: $0.isPermissionGranted.rawValue))
+            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, status: $0.isPermissionGranted.rawValue))
         }
         cachedUnknownCustomPermissionRequest.forEach {
             permissionListResponse.append($0)
@@ -114,7 +114,7 @@ extension MiniAppScriptMessageHandler {
     }
 
     /// For a given [MiniAppCustomPermissionsListResponse], this method will use JSONEncoder to encode the [objects] to JSON string
-    /// - Parameter result: [MiniAppCustomPermissionsListResponse] that contains the name and isGranted status of every permission that will be sent back to the Mini app as JSON
+    /// - Parameter result: [MiniAppCustomPermissionsListResponse] that contains the name and status of every permission that will be sent back to the Mini app as JSON
     /// - Returns: JSON Response string
     func getJsonSuccessResponse(result: [MiniAppCustomPermissionsListResponse]) -> String {
         let responseObject = MiniAppCustomPermissionsResponse(permissions: result)
