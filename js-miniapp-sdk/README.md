@@ -31,7 +31,7 @@ miniApp.getUniqueId()
 ```
 
 #### Usage via bundled script
-You can alternatively use the bundled script file to use the SDK. When using the bundled script file, a global `MiniApp` object will be available for using the SDK. 
+You can alternatively use the bundled script file to use the SDK. When using the bundled script file, a global `MiniApp` object will be available for using the SDK.
 
 First, download the bundled script file from the [releases page](https://github.com/rakutentech/js-miniapp/releases). You can then include it as a normal `<script>` tag in your HTML:
 
@@ -88,7 +88,7 @@ miniApp.requestLocationPermission()
     });
 ```
 
-```javascript 
+```javascript
 // User Data Permissions
 import miniApp, { CustomPermissionResult, CustomPermissionName} from 'js-miniapp-sdk';
 miniApp.requestCustomPermissions([
@@ -148,6 +148,18 @@ miniApp.loadRewardedAd(adUnitID)
     .catch( error => console.error(response) );
 ```
 
+### 5. Share Info
+
+It is possible for the mini app user to share the mini app data across Android/iOS interface. The data format must match the [ShareInfoType](src/types/ShareInfoType.ts).
+
+```javascript
+const info = { content: inputValue };
+
+miniApp.shareInfo(info)
+    .then(success => console.log(success))
+    .catch(error => console.error(error));
+```
+
 ## Advanced Usage
 
 ### Usage when testing in the browser
@@ -157,7 +169,7 @@ If you wish to be able to test in a browser, you can detect whether your web app
 
 ```javascript
 import miniApp from "js-miniapp-sdk";
-import Bowser from "bowser"; 
+import Bowser from "bowser";
 
 const browser = Bowser.parse(window.navigator.userAgent);
 

@@ -65,6 +65,7 @@ function Share() {
           className={classes.textfield}
           onChange={handleInput}
           placeholder="Content"
+          defaultValue="This is JS-SDK-Sample."
           variant="outlined"
           color="primary"
           multiline="true"
