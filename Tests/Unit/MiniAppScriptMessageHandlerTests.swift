@@ -119,7 +119,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid custom permissions command") {
-                 it("will return response with name and isGranted status for all permission that is requested") {
+                 it("will return response with name and status for all permission that is requested") {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
@@ -132,7 +132,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     }
                     let decodedObj = try JSONDecoder().decode(MiniAppCustomPermissionsResponse.self, from: responseData)
                     expect(decodedObj.permissions[0].name).toEventually(equal("rakuten.miniapp.user.USER_NAME"), timeout: 10)
-                    expect(decodedObj.permissions[0].isGranted).toEventually(equal("ALLOWED"), timeout: 10)
+                    expect(decodedObj.permissions[0].status).toEventually(equal("ALLOWED"), timeout: 10)
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid custom permissions command but invalid permission object title instead of name") {
