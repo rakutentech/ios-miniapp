@@ -26,14 +26,28 @@ public typealias MiniAppNavigationResponseHandler = (URL) -> Void
 
 /// A delegate used by Mini App view to communicate about available actions based on current user interactions on the Mini App
 public protocol MiniAppNavigationDelegate: class {
+    /// This delegate method is called when an external URL is tapped into a Mini App
+    /// so you can display your own webview to load the url parameter, for example.
+    /// A `MiniAppNavigationResponseHandler` is also provided so you can give a proper
+    /// feedback to your MiniApp under the form of an URL when you want
+    /// - Parameters:
+    ///   - url: the external URL triggered from the MiniApp
+    ///   - responseHandler: a `MiniAppNavigationResponseHandler` used to provide an URL to the Mini App
     func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler)
+    /// This delegate method is called when a navigation is performed inside the Mini App.
+    /// - Parameters:
+    ///   - actions: a list of `MiniAppNavigationAction` that can be used to navigate inside the Mini App
     func miniAppNavigation(canUse actions: [MiniAppNavigationAction])
+    /// This delegate method is called when a Mini App view is created.
+    /// - Parameters:
+    ///   - delegate: a`MiniAppNavigationBarDelegate` the can be used to call `MiniAppNavigationAction` on the Mini App view
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate)
 }
 
 /// A delegate implemented by the Mini App view to get the actions triggered by UI
 public protocol MiniAppNavigationBarDelegate: class {
     /// Method to call when a user want to interact with Mini App navigation history
+    /// - Parameters:
     ///    - action: the action requested (go back or go forward)
     /// Returns if action has been triggered or not
     @discardableResult

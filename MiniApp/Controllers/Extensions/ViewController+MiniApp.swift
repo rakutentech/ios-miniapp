@@ -1,6 +1,10 @@
 import MiniApp
 
 extension ViewController: MiniAppNavigationDelegate {
+    /// This delegate method is called when an external URL is tapped into a Mini App
+    /// so you can display your own webview to load the url parameter, for example.
+    /// A MiniAppNavigationResponseHandler is also provided so you can give a proper
+    /// feedback to your MiniApp under the form of an URL when you want
     func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping MiniAppNavigationResponseHandler) {
         if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExternalWebviewController") as? ExternalWebViewController {
             viewController.currentURL = url
