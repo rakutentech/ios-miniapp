@@ -1,10 +1,10 @@
 import MiniApp
 
 extension ViewController: MiniAppNavigationDelegate {
-    func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping (URL) -> Void) {
+    func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping MiniAppNavigationResponseHandler) {
         if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExternalWebviewController") as? ExternalWebViewController {
             viewController.currentURL = url
-            viewController.miniAppExternalNavigationHandler = externalLinkResponseHandler
+            viewController.miniAppExternalUrlLoader = MiniAppExternalUrlLoader(webViewController: viewController, responseHandler: externalLinkResponseHandler)
             self.presentedViewController?.present(viewController, animated: true)
         }
     }

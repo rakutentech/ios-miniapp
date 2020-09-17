@@ -13,6 +13,7 @@ enum JavaScriptExecResult: String {
 
 enum MiniAppSupportedSchemes: String {
     case tel
+    case about
 }
 
 /// List of Device Permissions supported by the SDK that can be requested by a Mini app

@@ -10,7 +10,7 @@ class ExternalWebViewController: UIViewController {
 
     @IBOutlet var webView: WKWebView!
     var currentURL: URL?
-    var miniAppExternalNavigationHandler: ((URL) -> Void)?
+    var miniAppExternalUrlLoader: MiniAppExternalUrlLoader?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,12 +32,6 @@ extension ExternalWebViewController: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let urlWebview = navigationAction.request.url, urlWebview.scheme?.starts(with: "mscheme") ?? false {
-            self.miniAppExternalNavigationHandler?(urlWebview)
-            decisionHandler(.cancel)
-            self.dismiss(animated: true)
-        } else {
-            decisionHandler(.allow)
-        }
+        decisionHandler(miniAppExternalUrlLoader?.shouldOverrideURLLoading(navigationAction.request.url) ?? .allow)
     }
 }

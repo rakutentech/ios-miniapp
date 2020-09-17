@@ -246,7 +246,7 @@ extension ViewController: MiniAppNavigationDelegate {
         // Getting your custom viewcontroller
         if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExternalWebviewController") as? ExternalWebViewController {
             viewController.currentURL = url
-            viewController.miniAppExternalNavigationHandler = externalLinkResponseHandler
+            viewController.miniAppExternalUrlLoader = MiniAppExternalUrlLoader(webViewController: viewController, responseHandler: externalLinkResponseHandler)
             self.presentedViewController?.present(viewController, animated: true)
         }
     }
@@ -255,7 +255,7 @@ extension ViewController: MiniAppNavigationDelegate {
 }
 ```
 
-The `externalLinkResponseHandler` closure allows you to give a feedback as an URL to the SDK, for example when the controller is closed or when a custom scheme link is tapped. Here is an example following previous example:
+The `externalLinkResponseHandler` closure allows you to give a feedback as an URL to the SDK, for example when the controller is closed or when a custom scheme link is tapped. This closure can be passed to a `MiniAppExternalUrlLoader` object that will provide a method to test an URL and return the appropriate decision for a `WKNavigationDelegate` method, and if you provided a controller it will be dismissed automatically. Here is an example following previous example:
 
 ```swift
 extension ExternalWebViewController: WKNavigationDelegate {
@@ -264,13 +264,7 @@ extension ExternalWebViewController: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let urlWebview = navigationAction.request.url, urlWebview.scheme?.starts(with: "mscheme") ?? false {
-            self.miniAppExternalNavigationHandler?(urlWebview)
-            decisionHandler(.cancel)
-            self.dismiss(animated: true)
-        } else {
-            decisionHandler(.allow)
-        }
+        decisionHandler(miniAppExternalUrlLoader?.shouldOverrideURLLoading(navigationAction.request.url) ?? .allow)
     }
 }
 ```

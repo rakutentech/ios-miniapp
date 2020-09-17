@@ -12,6 +12,7 @@ internal class RealMiniAppView: UIView {
 
     internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
+    internal weak var currentDialogController: UIAlertController?
 
     init(
         miniAppId: String,
@@ -101,14 +102,20 @@ internal class RealMiniAppView: UIView {
 
     func validateScheme(requestURL: URL, navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let scheme = requestURL.scheme {
-            let schemeType = MiniAppSupportedSchemes(rawValue: requestURL.scheme!)
+            let schemeType = MiniAppSupportedSchemes(rawValue: scheme)
             switch schemeType {
+            case .about:
+                return decisionHandler(.allow)
             case .tel:
                 UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
             default:
-                if scheme.starts(with: Constants.miniAppSchemePrefix) {
+                if requestURL.isMiniAppURL() {
                     return decisionHandler(.allow)
                 } else {
+                    // Allow navigation for requests loading external web content resources. E.G: iFrames
+                    guard navigationAction.targetFrame?.isMainFrame != false else {
+                        return decisionHandler(.allow)
+                    }
                     self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
                         self.webView.load(URLRequest(url: url))
                     })
