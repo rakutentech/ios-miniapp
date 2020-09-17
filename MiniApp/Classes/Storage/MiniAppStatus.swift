@@ -1,10 +1,12 @@
 class MiniAppStatus {
     private let defaults: UserDefaults?
     private let miniAppInfoDefaults: UserDefaults?
+    private let miniAppKeyStore: MiniAppKeyChain
 
     init() {
         self.defaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp")
         self.miniAppInfoDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
+        self.miniAppKeyStore = MiniAppKeyChain()
     }
 
     func setDownloadStatus(_ value: Bool, appId: String, versionId: String) {
@@ -43,5 +45,34 @@ class MiniAppStatus {
             return miniAppInfo
         }
         return nil
+    }
+    
+    func getDownloadedListWithCustomPermissionsInfo() {
+        var permissionsList = self.miniAppKeyStore.getAllStoredCustomPermissionsList()
+        let downloadedList = getDownloadedMiniAppsList()
+        let mod = permissionsList?.keys.map { miniAppId in
+            print(miniAppId)
+            if downloadedList?.contains(where: { $0.id == miniAppId }) ?? false {
+                print("")
+                var index = downloadedList?.firstIndex { $0.id == miniAppId }
+                return
+            } else {
+                // Delete the value from Keychain
+                // return nil
+            }
+            print("")
+        }
+    }
+    
+    func getDownloadedMiniAppsList() -> [MiniAppInfo]? {
+        let dictList = self.miniAppInfoDefaults?.dictionaryRepresentation().map { dict -> MiniAppInfo? in
+            if let data = dict.value as? Data {
+                if let miniAppInfo = try? PropertyListDecoder().decode(MiniAppInfo.self, from: data) {
+                    return miniAppInfo
+                }
+            }
+            return nil
+        }
+        return dictList?.compactMap{$0}
     }
 }

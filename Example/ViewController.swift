@@ -36,6 +36,7 @@ class ViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
         locationManager.delegate = self
+        MiniApp.shared().getDownloadedListWithCustomPermissionsInfo()
     }
 
     override func viewDidAppear(_ animated: Bool) {

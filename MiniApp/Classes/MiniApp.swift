@@ -70,6 +70,12 @@ public class MiniApp: NSObject {
         }
         return []
     }
+    
+    public func getDownloadedListWithCustomPermissionsInfo() {
+        return realMiniApp.getDownloadedListWithCustomPermissionsInfo()
+    }
+    
+//    public func getCustomPermissionsManageList
 
     /// Create a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
     ///

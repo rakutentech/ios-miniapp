@@ -42,6 +42,10 @@ import Foundation
             write(keys: keys)
         }
     }
+    
+    func getAllStoredCustomPermissionsList() -> KeysDictionary? {
+        return keys()
+    }
 
     internal func setDefaultPermissionsInKeyChain(forMiniApp id: String, allKeys: KeysDictionary) -> [MASDKCustomPermissionModel] {
         var allKeysDict = allKeys
