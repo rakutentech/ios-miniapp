@@ -77,7 +77,20 @@ class MiniAppStatusTests: QuickSpec {
                     miniAppCustomPermissionList = miniAppKeyStore.getCustomPermissions(forMiniApp: "123")
                     expect(miniAppCustomPermissionList[1].isPermissionGranted.rawValue).toEventually(equal("ALLOWED"))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
-
+                }
+            }
+            context("when checkStoredPermissionList is called with downloaded mini apps list") {
+                it("will return list of custom permissions if it is stored already") {
+                    let miniAppKeyStore = MiniAppKeyChain()
+                    let miniAppStatus = MiniAppStatus()
+                    miniAppKeyStore.storeCustomPermissions(permissions: miniAppKeyStore.getDefaultSupportedPermissions(), forMiniApp: mockMiniAppInfo.id)
+                    let miniAppCustomPermissionList = miniAppStatus.checkStoredPermissionList(downloadedMiniAppsList: [mockMiniAppInfo])
+                    expect(miniAppCustomPermissionList.keys).to(contain(mockMiniAppInfo.id))
+                    let miniAppInfo = MiniAppInfo(id: "123", displayName: "Test", icon: URL(string: "https://www.example.com/icon.png")!, version: mockMiniAppInfo.version)
+                    let customPermissionsList = miniAppStatus.checkStoredPermissionList(downloadedMiniAppsList: [miniAppInfo])
+                    expect(customPermissionsList.keys).notTo(contain(miniAppInfo.id))
+                    expect(customPermissionsList.keys).notTo(contain(mockMiniAppInfo.id))
+                    UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
                 }
             }
         }
