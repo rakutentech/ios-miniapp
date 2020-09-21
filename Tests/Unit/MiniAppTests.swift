@@ -49,7 +49,12 @@ class MiniAppTests: QuickSpec {
                     expect(testError?.code).toEventually(equal(400) || equal(404), timeout: 10)
                 }
             }
-
+            context("when no mini apps downloaded and listDownloadedWithCustomPermissions method is called") {
+                it("will return nil") {
+                    let list = MiniApp.shared().listDownloadedWithCustomPermissions()
+                    expect(list).to(beAKindOf(Array<CustomPermissionsManageModel>.self))
+                }
+            }
         }
     }
 }

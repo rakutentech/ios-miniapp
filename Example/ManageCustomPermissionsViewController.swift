@@ -13,7 +13,7 @@ class ManageCustomPermissionsViewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        downloadedMiniApps = MiniApp.shared().listDownloadedWithCustomPermissions() ?? []
+        downloadedMiniApps = MiniApp.shared().listDownloadedWithCustomPermissions()
         self.tableView.reloadData()
     }
 

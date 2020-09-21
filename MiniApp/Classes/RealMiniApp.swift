@@ -143,8 +143,8 @@ internal class RealMiniApp {
         return self.miniAppKeyStore.storeCustomPermissions(permissions: permissionList, forMiniApp: id)
     }
 
-    func getDownloadedListWithCustomPermissions() -> [CustomPermissionsManageModel]? {
-       return self.miniAppStatus.getMiniAppsListWithCustomPermissionsInfo()
+    func getDownloadedListWithCustomPermissions() -> [CustomPermissionsManageModel] {
+        return self.miniAppStatus.getMiniAppsListWithCustomPermissionsInfo() ?? []
     }
 }
 
