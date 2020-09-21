@@ -13,7 +13,6 @@ class MiniAppKeyChainTests: QuickSpec {
                     _ = customPermissions.map { return $0.isPermissionGranted = .allowed }
                     miniAppKeyStore.storeCustomPermissions(permissions: customPermissions, forMiniApp: mockMiniAppInfo.id)
                     let retrievedPermission = miniAppKeyStore.getCustomPermissions(forMiniApp: mockMiniAppInfo.id)
-                    print("")
                     for (permission) in retrievedPermission {
                         expect(permission.isPermissionGranted).toEventually(equal(MiniAppCustomPermissionGrantedStatus.allowed))
                     }
