@@ -46,24 +46,16 @@ class MiniAppStatus {
         }
         return nil
     }
-    
-    func getDownloadedListWithCustomPermissionsInfo() {
-        var permissionsList = self.miniAppKeyStore.getAllStoredCustomPermissionsList()
-        let downloadedList = getDownloadedMiniAppsList()
-        let mod = permissionsList?.keys.map { miniAppId in
-            print(miniAppId)
-            if downloadedList?.contains(where: { $0.id == miniAppId }) ?? false {
-                print("")
-                var index = downloadedList?.firstIndex { $0.id == miniAppId }
-                return
-            } else {
-                // Delete the value from Keychain
-                // return nil
-            }
-            print("")
+
+    func getMiniAppsListWithCustomPermissionsInfo() -> [CustomPermissionsManageModel]? {
+        guard let downloadedList = getDownloadedMiniAppsList(), downloadedList.count != 0 else {
+            return nil
         }
+        return getStoredPermissionList(downloadedMiniAppsList: downloadedList.sorted(by: { $0.displayName ?? "" < $1.displayName ?? ""}))
     }
-    
+
+    /// Method to return list of Downloaded Mini apps info. dictionaryRepresentation() returns list of unknown keys from the plist hence we are decoding with MiniAppInfo and returning the same
+    /// - Returns: List of downloaded MiniAppInfo
     func getDownloadedMiniAppsList() -> [MiniAppInfo]? {
         let dictList = self.miniAppInfoDefaults?.dictionaryRepresentation().map { dict -> MiniAppInfo? in
             if let data = dict.value as? Data {
@@ -73,6 +65,36 @@ class MiniAppStatus {
             }
             return nil
         }
-        return dictList?.compactMap{$0}
+        return dictList?.compactMap {$0}
+    }
+
+    /// Method to return list of CustomPermissionsManageModel that contains list of downloaded mini apps info and Custom permissions info
+    /// - Parameter downloadedMiniAppsList: List of mini app info that is downloaded
+    /// - Returns: List of CustomPermissionsManageModel
+    func getStoredPermissionList(downloadedMiniAppsList: [MiniAppInfo]) -> [CustomPermissionsManageModel] {
+        let finalList = checkStoredPermissionList(downloadedMiniAppsList: downloadedMiniAppsList)
+        var returnList: [CustomPermissionsManageModel] = []
+        _ = downloadedMiniAppsList.map { (miniAppInfo: MiniAppInfo) in
+            if let permMod = finalList[miniAppInfo.id] {
+                returnList.append([miniAppInfo: permMod])
+            } else {
+                returnList.append([miniAppInfo: self.miniAppKeyStore.getDefaultSupportedPermissions()])
+            }
+        }
+        return returnList
+    }
+
+    /// Method to compare the downloaded mini apps list and stored permissions list. If any discrepancy found then we remove the value from the keychain
+    /// - Parameter downloadedMiniAppsList: List of mini app info that is downloaded
+    /// - Returns:List of Mini app ID and respective stored custom permissions info
+    func checkStoredPermissionList(downloadedMiniAppsList: [MiniAppInfo]?) -> [String: [MASDKCustomPermissionModel]] {
+        var storedPermissionsList = self.miniAppKeyStore.getAllStoredCustomPermissionsList()
+        _ = storedPermissionsList?.map { (miniAppId: String, _: [MASDKCustomPermissionModel]) in
+            if downloadedMiniAppsList?.contains(where: { $0.id != miniAppId }) ?? false {
+                storedPermissionsList?.removeValue(forKey: miniAppId)
+                self.miniAppKeyStore.removeKey(for: miniAppId)
+            }
+        }
+        return storedPermissionsList ?? [:]
     }
 }

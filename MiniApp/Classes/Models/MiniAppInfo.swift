@@ -1,5 +1,9 @@
 /// Model for a Mini App information
-public struct MiniAppInfo: Codable {
+public struct MiniAppInfo: Codable, Hashable {
+    public static func == (lhs: MiniAppInfo, rhs: MiniAppInfo) -> Bool {
+        return lhs.id == rhs.id
+    }
+
     /// Unique identifier of a Miniapp
     public var id: String
     /// Name given for a Miniapp that will be displayed on the list
@@ -18,7 +22,7 @@ public struct MiniAppInfo: Codable {
 }
 
 /// Miniapp version information
-public struct Version: Codable {
+public struct Version: Codable, Hashable {
     /// Custom Tag name associated for every Miniapp which was given while uploading it in the platform
     public var versionTag: String
     /// Version number associated for every Miniapp which was given while uploading it in the platform

@@ -42,4 +42,13 @@ public enum MiniAppCustomPermissionGrantedStatus: String, Codable {
     case allowed = "ALLOWED"
     case denied = "DENIED"
     case permissionNotAvailable = "PERMISSION_NOT_AVAILABLE"
+
+    public var boolValue: Bool {
+        switch self {
+        case .allowed:
+        return true
+        default:
+        return false
+        }
+    }
 }

@@ -34,6 +34,7 @@
 		382B95FF24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382B95FE24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift */; };
 		382B960124F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382B960024F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift */; };
 		382B960324F6DAC500DA8B7D /* MiniAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382B960224F6DAC500DA8B7D /* MiniAppTests.swift */; };
+		383F0E722515B302001B062F /* CustomPermissionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383F0E712515B302001B062F /* CustomPermissionsListViewController.swift */; };
 		3850AE722434E02D0046978C /* RealMiniAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3850AE712434E02D0046978C /* RealMiniAppTests.swift */; };
 		385C25CA23F2E8BA00D61206 /* DisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25C923F2E8BA00D61206 /* DisplayerTests.swift */; };
 		385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */; };
@@ -104,6 +105,7 @@
 		382B95FE24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppJavascriptErrorInfoTests.swift; sourceTree = "<group>"; };
 		382B960024F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppJavascriptEnumerationTests.swift; sourceTree = "<group>"; };
 		382B960224F6DAC500DA8B7D /* MiniAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppTests.swift; sourceTree = "<group>"; };
+		383F0E712515B302001B062F /* CustomPermissionsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomPermissionsListViewController.swift; path = Example/CustomPermissionsListViewController.swift; sourceTree = SOURCE_ROOT; };
 		3850AE712434E02D0046978C /* RealMiniAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMiniAppTests.swift; sourceTree = "<group>"; };
 		385C25C923F2E8BA00D61206 /* DisplayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayerTests.swift; sourceTree = "<group>"; };
 		385C25CF23F3991C00D61206 /* RealMiniAppViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewTests.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				38611CFE24F7E6FD00793F06 /* UIViewController+MiniApp.swift */,
 				381CA63324EF74E8001DD858 /* MiniApp+UIImage.swift */,
 				387F63EF2511256600375AF3 /* ManageCustomPermissionsViewController.swift */,
+				383F0E712515B302001B062F /* CustomPermissionsListViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				3878D4D223B44F85001E27F8 /* Images.xcassets */,
@@ -452,6 +455,7 @@
 				38A6C05324F506E900BAC715 /* CustomPermissionsTableViewController.swift in Sources */,
 				18694AD62449891800F97BAA /* ViewController+MiniApp.swift in Sources */,
 				188974B82456B02F00042C97 /* FirstLaunchViewController.swift in Sources */,
+				383F0E722515B302001B062F /* CustomPermissionsListViewController.swift in Sources */,
 				387F63F02511256600375AF3 /* ManageCustomPermissionsViewController.swift in Sources */,
 				188F5921243DC6470042618E /* MiniAppCell.swift in Sources */,
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,

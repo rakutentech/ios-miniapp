@@ -13,3 +13,15 @@ class MiniAppCell: UITableViewCell {
         detailedTextLabel.text = nil
     }
 }
+
+class CustomPermissionCell: UITableViewCell {
+
+    @IBOutlet weak var toggle: UISwitch!
+    @IBOutlet weak var titleLabel: UILabel!
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        toggle.isOn = false
+        titleLabel.text = nil
+    }
+}

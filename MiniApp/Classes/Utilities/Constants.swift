@@ -5,3 +5,5 @@ struct Constants {
     static let javascriptSuccessCallback = "MiniAppBridge.execSuccessCallback"
     static let javascriptErrorCallback = "MiniAppBridge.execErrorCallback"
 }
+
+internal typealias CustomPermissionsManageModel = [MiniAppInfo: [MASDKCustomPermissionModel]]

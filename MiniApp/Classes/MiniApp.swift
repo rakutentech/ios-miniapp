@@ -70,11 +70,13 @@ public class MiniApp: NSObject {
         }
         return []
     }
-    
-    public func getDownloadedListWithCustomPermissionsInfo() {
-        return realMiniApp.getDownloadedListWithCustomPermissionsInfo()
+
+    /// Gets the list of downloaded Mini apps info and associated custom permissions status
+    /// - Returns:Dictionary of MiniAppInfo and respective custom permissions info
+    public func listDownloadedWithCustomPermissions() -> [[MiniAppInfo: [MASDKCustomPermissionModel]]]? {
+        return realMiniApp.getDownloadedListWithCustomPermissions()
     }
-    
+
 //    public func getCustomPermissionsManageList
 
     /// Create a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
