@@ -104,7 +104,7 @@ internal class RealMiniAppView: UIView {
         if let scheme = requestURL.scheme {
             let schemeType = MiniAppSupportedSchemes(rawValue: scheme)
             switch schemeType {
-            case .about:
+            case .about: // mainly implemented to manage buil-in alert dialogs
                 return decisionHandler(.allow)
             case .tel:
                 UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
