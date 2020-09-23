@@ -16,10 +16,14 @@
 
 - **Feature:** Added `shareContent(info:completionHandler:)` function to MiniAppMessageProtocol. Host app can make use of this function to display the Sharing feature/Controller [See here](USERGUIDE.md#share-mini-app-content)
 
+- **Feature:** Added `listDownloadedWithCustomPermissions()` public interface that enables the host app to retrieve the list of downloaded mini-apps and their respective custom permissions.
+
 **Sample App**
 
 - **Feature:** Added example for showing list of Custom permissions (on request from Mini app) and response back to Mini app.
 - **Feature:** Added sample implementation for Sharing the message from Mini app
+- **Feature:** Added sample app implementation to revoke/manage the custom permissions for the list of downloaded mini apps
+
 
 ### 2.1.0 (2020-09-03)
 

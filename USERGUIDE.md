@@ -70,6 +70,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Communicate with MiniApp](#MiniAppMessageProtocol)
 * [Customize history navigation](#navigation)
 * [Custom Permissions](#custom-permissions)
+* [List Downloaded Mini apps](#list-downloaded-mini-apps)
 
 <div id="runtime-conf"></div>
 
@@ -255,6 +256,15 @@ Custom permissions for a mini app is cached by the SDK and you can use the follo
 
 ```swift
  MiniApp.shared().setCustomPermissions(forMiniApp: String, permissionList: [MASDKCustomPermissionModel])
+```
+
+<div id="list-downloaded-mini-apps"></div>
+
+### List Downloaded Mini apps
+Gets the list of downloaded Mini apps info and associated custom permissions status
+
+```swift
+ MiniApp.shared().listDownloadedWithCustomPermissions()
 ```
 
 
