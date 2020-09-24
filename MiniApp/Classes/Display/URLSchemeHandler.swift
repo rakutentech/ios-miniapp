@@ -26,6 +26,9 @@ class URLSchemeHandler: NSObject, WKURLSchemeHandler {
                 }
             } catch let error as NSError {
                 print("Error: ", error)
+                DispatchQueue.main.async {
+                    urlSchemeTask.didFailWithError(error)
+                }
             }
         }
     }

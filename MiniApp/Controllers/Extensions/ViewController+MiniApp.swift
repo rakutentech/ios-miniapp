@@ -1,9 +1,31 @@
 import MiniApp
 
+extension ViewController: MiniAppNavigationDelegate {
+    /// This delegate method is called when an external URL is tapped into a Mini App
+    /// so you can display your own webview to load the url parameter, for example.
+    /// A MiniAppNavigationResponseHandler is also provided so you can give a proper
+    /// feedback to your MiniApp under the form of an URL when you want
+    func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping MiniAppNavigationResponseHandler) {
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExternalWebviewController") as? ExternalWebViewController {
+            viewController.currentURL = url
+            viewController.miniAppExternalUrlLoader = MiniAppExternalUrlLoader(webViewController: viewController, responseHandler: externalLinkResponseHandler)
+            self.presentedViewController?.present(viewController, animated: true)
+        }
+    }
+
+    func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
+
+    }
+
+    func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
+
+    }
+}
+
 extension ViewController {
     func fetchAppList(inBackground: Bool) {
         showProgressIndicator(silently: inBackground) {
-            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig()).list { (result) in
+            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).list { (result) in
                 DispatchQueue.main.async {
                     self.tableView.refreshControl?.endRefreshing()
                 }
@@ -28,7 +50,7 @@ extension ViewController {
 
     func fetchAppInfo(for miniAppID: String) {
         self.showProgressIndicator {
-            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig()).info(miniAppId: miniAppID) { (result) in
+            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).info(miniAppId: miniAppID) { (result) in
                 switch result {
                 case .success(let responseData):
                     self.currentMiniAppInfo = responseData
@@ -44,7 +66,7 @@ extension ViewController {
     }
 
     func fetchMiniApp(for appInfo: MiniAppInfo) {
-        MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig()).create(appId: appInfo.id, completionHandler: { (result) in
+        MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).create(appId: appInfo.id, completionHandler: { (result) in
             switch result {
             case .success(let miniAppDisplay):
                 self.dismissProgressIndicator {

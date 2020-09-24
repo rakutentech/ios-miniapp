@@ -304,7 +304,7 @@ class RealMiniAppTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     waitUntil { done in
-                        realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        realMiniApp.createMiniApp(appId: "app-id-test", completionHandler: { (result) in
                             switch result {
                             case .success(let responseData):
                                 expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
