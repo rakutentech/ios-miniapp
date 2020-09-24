@@ -1,7 +1,7 @@
 import Quick
 import Nimble
 @testable import MiniApp
-@testable import WebKit
+import WebKit
 
 // swiftlint:disable function_body_length
 class RealMiniAppViewTests: QuickSpec {
@@ -37,10 +37,10 @@ class RealMiniAppViewTests: QuickSpec {
         }
         describe("WKUIDelegate") {
             let mockMessageInterface = MockMessageInterface()
-            let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
+            let miniAppView = MockRealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
 
             context("when webview is loaded with alert javascript dialog") {
-                it("will show native alert with request message") {
+                it("will show native alert with request message, ok with no crash") {
                     let html = """
                     <html>
                     <body>
@@ -51,24 +51,17 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                     miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    var alertMessage: String = ""
-                    var alert: UIAlertController?
-                    miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 6.0, execute: {
-                        alert =  UIApplication.topViewController() as? UIAlertController
-                        alertMessage = alert?.message ?? ""
-                        expect(alert?.actions.map({ $0.title })).to(equal(["OK"]))
-                    })
-                    expect(alertMessage).toEventually(equal("mini-app-alert"), timeout: 10)
-                    tapAlertButton(title: "OK", actions: alert?.actions ?? nil)
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: 10)
+                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-alert"), timeout: 10)
+                    miniAppView.tapButton(.okButton)
                 }
             }
         }
         describe("WKUIDelegate") {
             let mockMessageInterface = MockMessageInterface()
-            let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
+            let miniAppView = MockRealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with confirm javascript dialog") {
-                it("will show native alert with request message and ok button is tapped") {
+                it("will show native alert with request message, ok and cancel button, ok don't crash") {
                     let html = """
                     <html>
                     <body>
@@ -78,22 +71,19 @@ class RealMiniAppViewTests: QuickSpec {
                     </body>
                     </html>
                     """
-                    var alertMessage: String = ""
-                    var alert: UIAlertController?
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
-                        miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    })
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 9.0, execute: {
-                        alert =  UIApplication.topViewController() as? UIAlertController
-                        alertMessage = alert?.message ?? ""
-                        expect(alert?.actions.map({ $0.title })).to(equal(["OK", "Cancel"]))
-                    })
-                    expect(alertMessage).toEventually(equal("mini-app-confirm"), timeout: 20)
-                    tapAlertButton(title: "OK", actions: alert?.actions ?? nil)
+                    miniAppView.webView.loadHTMLString(html, baseURL: nil)
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: 10)
+                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: 10)
+                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: 10)
+                    miniAppView.tapButton(.okButton)
                 }
             }
+        }
+        describe("WKUIDelegate") {
+            let mockMessageInterface = MockMessageInterface()
+            let miniAppView = MockRealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with confirm javascript dialog") {
-                it("will show native alert with request message and cancel button is tapped") {
+                it("will show native alert with request message, ok and cancel button, cancel don't crash") {
                     let html = """
                     <html>
                     <body>
@@ -103,26 +93,19 @@ class RealMiniAppViewTests: QuickSpec {
                     </body>
                     </html>
                     """
-                    var alertMessage: String = ""
-                    var alert: UIAlertController?
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 11.0, execute: {
-                        miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    })
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 12.0, execute: {
-                        alert =  UIApplication.topViewController() as? UIAlertController
-                        alertMessage = alert?.message ?? ""
-                        expect(alert?.actions.map({ $0.title })).to(equal(["OK", "Cancel"]))
-                    })
-                    expect(alertMessage).toEventually(equal("mini-app-confirm"), timeout: 20)
-                    tapAlertButton(title: "Cancel", actions: alert?.actions ?? nil)
+                    miniAppView.webView.loadHTMLString(html, baseURL: nil)
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: 10)
+                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: 10)
+                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: 10)
+                    miniAppView.tapButton(.cancelButton)
                 }
             }
         }
         describe("WKUIDelegate") {
                 let mockMessageInterface = MockMessageInterface()
-                let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
+                let miniAppView = MockRealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with prompt javascript dialog") {
-                it("will show native alert with request message and cancel button is tapped") {
+                it("will show native alert with request message and wanted text in textfield, ok will transmit text with no crash") {
                     let html = """
                     <html>
                     <body>
@@ -132,43 +115,35 @@ class RealMiniAppViewTests: QuickSpec {
                     </body>
                     </html>
                     """
-                    var alertMessage: String = ""
-                    var alert: UIAlertController?
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 14.0, execute: {
-                        miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    })
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 16.0, execute: {
-                        alert =  UIApplication.topViewController() as? UIAlertController
-                        alertMessage = alert?.message ?? ""
-                        expect(alert?.actions.map({ $0.title })).to(equal(["OK", "Cancel"]))
-                    })
-                    expect(alertMessage).toEventually(equal("Please enter your name:"), timeout: 20)
-                    tapAlertButton(title: "Cancel", actions: alert?.actions ?? nil)
+                    miniAppView.webView.loadHTMLString(html, baseURL: nil)
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: 10)
+                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: 10)
+                    expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: 10)
+                    expect(miniAppView.dialogTextFieldText).toEventually(equal("Rakuten Mini app"), timeout: 10)
+                    miniAppView.tapButton(.okButton)
                 }
             }
-            context("when webview is loaded with prompt javascript dialog") {
-                it("will show native alert with request message and Ok button is tapped") {
-                    let html = """
+            describe("WKUIDelegate") {
+                let mockMessageInterface = MockMessageInterface()
+                let miniAppView = MockRealMiniAppView(miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "Mini app title", hostAppMessageDelegate: mockMessageInterface)
+                context("when webview is loaded with prompt javascript dialog") {
+                    it("will show native alert with request message and wanted no in textfield, cancel won't crash") {
+                        let html = """
                     <html>
                     <body>
                     <script>
-                    prompt("Please enter your name:", "Rakuten Mini app");
+                    prompt("Please enter your name:", "");
                     </script>
                     </body>
                     </html>
                     """
-                    var alertMessage: String = ""
-                    var alert: UIAlertController?
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 17.0, execute: {
                         miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    })
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 18.0, execute: {
-                        alert =  UIApplication.topViewController() as? UIAlertController
-                        alertMessage = alert?.message ?? ""
-                        expect(alert?.actions.map({ $0.title })).to(equal(["OK", "Cancel"]))
-                    })
-                    expect(alertMessage).toEventually(equal("Please enter your name:"), timeout: 20)
-                    tapAlertButton(title: "OK", actions: alert?.actions ?? nil)
+                        expect(miniAppView.okText).toEventually(equal("OK"), timeout: 10)
+                        expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: 10)
+                        expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: 10)
+                        expect(miniAppView.dialogTextFieldText).toEventually(equal(""), timeout: 10)
+                        miniAppView.tapButton(.cancelButton)
+                    }
                 }
             }
         }

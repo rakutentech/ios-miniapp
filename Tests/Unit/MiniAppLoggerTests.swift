@@ -27,12 +27,15 @@ class MiniAppLoggerTests: QuickSpec {
                     }.toNot(throwAssertion())
                 }
             }
-            context("when I log something on error") {
+            context("when I log something on error with no error") {
                 it("will not crash") {
                     expect {
                         MiniAppLogger.e("test")
                     }.toNot(throwAssertion())
-
+                }
+            }
+            context("when I log something on error with an error object") {
+                it("will not crash") {
                     expect {
                         MiniAppLogger.e("test", error)
                     }.toNot(throwAssertion())

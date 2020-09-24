@@ -16,7 +16,9 @@
 
 - **Feature:** Added `shareContent(info:completionHandler:)` function to MiniAppMessageProtocol. Host app can make use of this function to display the Sharing feature/Controller [See here](USERGUIDE.md#share-mini-app-content)
 
-- **Feature:** Added `listDownloadedWithCustomPermissions()` public interface that enables the host app to retrieve the list of downloaded mini-apps and their respective custom permissions.
+- **Feature:** Added ability to load external link outside of Mini App view with included SFSafariViewController or by providing delegate, with ability to provide a result URL to Mini App with a closure.  [See here](USERGUIDE.md#navigation)
+
+- **Feature:** Added `listDownloadedWithCustomPermissions()` public interface that enables the host app to retrieve the list of downloaded mini-apps and their respective custom permissions. [See here](USERGUIDE.md#list-downloaded-mini-apps)
 
 **Sample App**
 

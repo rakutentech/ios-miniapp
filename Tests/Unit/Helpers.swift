@@ -12,13 +12,13 @@ class MockAPIClient: MiniAppClient {
     init() {
         let bundle = MockBundle()
         super.init(with:
-            MiniAppSdkConfig(
-                baseUrl: bundle.mockEndpoint,
-                rasAppId: bundle.mockAppId,
-                subscriptionKey: bundle.mockSubscriptionKey,
-                hostAppVersion: bundle.mockHostAppUserAgentInfo,
-                isTestMode: bundle.mockTestMode
-            )
+                MiniAppSdkConfig(
+                    baseUrl: bundle.mockEndpoint,
+                    rasAppId: bundle.mockAppId,
+                    subscriptionKey: bundle.mockSubscriptionKey,
+                    hostAppVersion: bundle.mockHostAppUserAgentInfo,
+                    isTestMode: bundle.mockTestMode
+                )
         )
     }
 
@@ -307,6 +307,10 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackProtocol {
 }
 
 class MockNavigationView: UIView, MiniAppNavigationDelegate {
+    func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping MiniAppNavigationResponseHandler) {
+        externalLinkResponseHandler(url)
+    }
+
     weak var delegate: MiniAppNavigationBarDelegate?
     var hasReceivedBack: Bool = false
     var hasReceivedForward: Bool = true
@@ -363,19 +367,11 @@ func deleteStatusPreferences() {
     UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
 }
 
-func tapAlertButton(title: String, actions: [UIAlertAction]?) {
-    typealias AlertHandler = @convention(block) (UIAlertAction) -> Void
-
-    guard let action = actions?.first(where: {$0.title == title}), let block = action.value(forKey: "handler") else { return }
-    let handler = unsafeBitCast(block as AnyObject, to: AlertHandler.self)
-    handler(action)
-}
-
 func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
     guard let errorData = message?.data(using: .utf8) else {
         return nil
     }
-    guard let errorMessage = ResponseDecoder.decode(decodeType: MiniAppErrorDetail.self, data: errorData)  else {
+    guard let errorMessage = ResponseDecoder.decode(decodeType: MiniAppErrorDetail.self, data: errorData) else {
         return nil
     }
     return errorMessage

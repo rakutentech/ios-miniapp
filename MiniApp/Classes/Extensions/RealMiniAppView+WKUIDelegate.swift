@@ -6,9 +6,11 @@ extension RealMiniAppView: WKUIDelegate {
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping () -> Void) {
         let alertController = UIAlertController(title: self.miniAppTitle, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Ok_title".localizedString(), style: .default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Ok_title".localizedString(), style: .default) { (_) in
+            completionHandler()
+        })
+        currentDialogController = alertController
         UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
-        completionHandler()
     }
 
     func webView(_ webView: WKWebView,
@@ -22,6 +24,7 @@ extension RealMiniAppView: WKUIDelegate {
         alertController.addAction(UIAlertAction(title: "Cancel_title".localizedString(), style: .cancel, handler: { (_) in
             completionHandler(false)
         }))
+        currentDialogController = alertController
         UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
     }
 
@@ -34,15 +37,16 @@ extension RealMiniAppView: WKUIDelegate {
             textField.text = defaultText
         }
         alertController.addAction(UIAlertAction(title: "Ok_title".localizedString(), style: .default, handler: { (_) in
-            if let text = alertController.textFields?.first?.text {
+            if let text = alertController.textFields?.first?.text, text.count > 0 {
                 completionHandler(text)
             } else {
-                completionHandler(defaultText)
+                completionHandler("")
             }
         }))
         alertController.addAction(UIAlertAction(title: "Cancel_title".localizedString(), style: .cancel, handler: { (_) in
             completionHandler(nil)
         }))
+        currentDialogController = alertController
         UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
     }
 }

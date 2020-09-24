@@ -255,7 +255,7 @@ class MiniAppDownloaderTests: QuickSpec {
         }
         describe("mini app downloader") {
             context("when receiving a zip file") {
-                it("unzips ip and delete archive") {
+                it("unzips it and delete archive") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
@@ -274,7 +274,7 @@ class MiniAppDownloaderTests: QuickSpec {
                 }
             }
             context("when receiving a corrupted zip file") {
-                it("tries to unzips ip and delete archive") {
+                it("tries to unzips it and delete archive") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)

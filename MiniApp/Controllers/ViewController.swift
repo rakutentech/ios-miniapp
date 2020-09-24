@@ -14,7 +14,9 @@ class ViewController: UIViewController {
                 self.miniApps = ["": list]
             } else {
                 self.miniApps = nil
-                self.miniAppsSection = self.decodeResponse?.map { $0.displayName ?? "-" }
+                self.miniAppsSection = self.decodeResponse?.map {
+                    $0.displayName ?? "-"
+                }
                 self.miniApps = self.decodeResponse?.dictionaryFilteredBy(index: { $0.displayName ?? "-" })
             }
 
@@ -83,6 +85,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return nil
     }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return miniApps?[miniAppsSection?[section] ?? ""]?.count ?? 0
     }
