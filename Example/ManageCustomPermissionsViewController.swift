@@ -3,7 +3,7 @@ import MiniApp
 
 class ManageCustomPermissionsViewController: UITableViewController {
 
-    var downloadedMiniApps: [[MiniAppInfo: [MASDKCustomPermissionModel]]] = [[:]]
+    var downloadedMiniApps: MASDKDownloadedListPermissionsPair = []
     let imageCache = ImageCache()
     let selectedMiniAppPermission = [MASDKCustomPermissionModel]()
 
@@ -25,9 +25,9 @@ class ManageCustomPermissionsViewController: UITableViewController {
 
             let permissionListController = segue.destination as? CustomPermissionsListViewController
             if downloadedMiniApps.indices.contains(index.row) {
-                let miniApp = downloadedMiniApps[index.row]
-                permissionListController?.permissionList = Array(miniApp.values)[0]
-                permissionListController?.miniAppId = Array(miniApp.keys)[0].id
+                let miniAppInfoPair = downloadedMiniApps[index.row]
+                permissionListController?.miniAppId = miniAppInfoPair.0.id
+                permissionListController?.permissionList = miniAppInfoPair.1
             }
         }
     }
@@ -45,13 +45,11 @@ extension ManageCustomPermissionsViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppPermissionsCell", for: indexPath) as? MiniAppCell {
             if downloadedMiniApps.indices.contains(indexPath.row) {
-                let dict = downloadedMiniApps[indexPath.row]
-                for (miniAppInfo, permissionModelList) in dict {
-                    cell.titleLabel?.text = miniAppInfo.displayName ?? "Null"
-                    cell.detailedTextLabel.text = getDescriptionText(permissionsList: permissionModelList)
-                    cell.icon?.image = UIImage(named: "image_placeholder")
-                    cell.icon?.loadImage(miniAppInfo.icon, placeholder: "image_placeholder", cache: imageCache)
-                }
+                let miniAppInfoPair = downloadedMiniApps[indexPath.row]
+                cell.titleLabel?.text = miniAppInfoPair.0.displayName ?? "Null"
+                cell.detailedTextLabel.text = getDescriptionText(permissionsList: miniAppInfoPair.1)
+                cell.icon?.image = UIImage(named: "image_placeholder")
+                cell.icon?.loadImage(miniAppInfoPair.0.icon, placeholder: "image_placeholder", cache: imageCache)
                 return cell
             }
         }

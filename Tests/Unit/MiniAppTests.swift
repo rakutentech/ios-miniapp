@@ -52,7 +52,7 @@ class MiniAppTests: QuickSpec {
             context("when no mini apps downloaded and listDownloadedWithCustomPermissions method is called") {
                 it("will return nil") {
                     let list = MiniApp.shared().listDownloadedWithCustomPermissions()
-                    expect(list).to(beAKindOf(Array<CustomPermissionsManageModel>.self))
+                    expect(list).to(beAKindOf(MASDKDownloadedListPermissionsPair.self))
                 }
             }
         }

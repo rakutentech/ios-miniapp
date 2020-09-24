@@ -73,7 +73,7 @@ public class MiniApp: NSObject {
 
     /// Gets the list of downloaded Mini apps info and associated custom permissions status
     /// - Returns:Dictionary of MiniAppInfo and respective custom permissions info
-    public func listDownloadedWithCustomPermissions() -> [[MiniAppInfo: [MASDKCustomPermissionModel]]] {
+    public func listDownloadedWithCustomPermissions() -> [(MiniAppInfo, [MASDKCustomPermissionModel])] {
         return realMiniApp.getDownloadedListWithCustomPermissions()
     }
 
