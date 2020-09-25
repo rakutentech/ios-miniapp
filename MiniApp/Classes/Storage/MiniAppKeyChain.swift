@@ -12,11 +12,8 @@ import Foundation
     }
 
     func getCustomPermissions(forMiniApp keyId: String) -> [MASDKCustomPermissionModel] {
-        guard let allKeys = keys() else {
+        guard let allKeys = keys(), let permissionList = allKeys[keyId] as [MASDKCustomPermissionModel]? else {
             return getDefaultSupportedPermissions()
-        }
-        guard let permissionList = allKeys[keyId] as [MASDKCustomPermissionModel]? else {
-            return setDefaultPermissionsInKeyChain(forMiniApp: keyId, allKeys: allKeys)
         }
         return permissionList
     }
@@ -43,15 +40,25 @@ import Foundation
         }
     }
 
-    internal func setDefaultPermissionsInKeyChain(forMiniApp id: String, allKeys: KeysDictionary) -> [MASDKCustomPermissionModel] {
-        var allKeysDict = allKeys
-        let defaultPermissionList = getDefaultSupportedPermissions()
-        allKeysDict[id] = defaultPermissionList
-        write(keys: allKeysDict)
-        return defaultPermissionList
+    /// Returns all key and values that is stored in Keychain,
+    /// - Returns: List of KeysDictionary
+    func getAllStoredCustomPermissionsList() -> KeysDictionary? {
+        return keys()
     }
 
-    private func getDefaultSupportedPermissions() -> [MASDKCustomPermissionModel] {
+    /// Remove Key from the KeyChain
+    /// - Parameter keyId: Mini app ID
+    internal func removeKey(for keyId: String) {
+        var keysDic = keys()
+
+        keysDic?[keyId] = nil
+
+        if let keys = keysDic {
+            write(keys: keys)
+        }
+    }
+
+    internal func getDefaultSupportedPermissions() -> [MASDKCustomPermissionModel] {
         var supportedPermissionList = [MASDKCustomPermissionModel]()
         MiniAppCustomPermissionType.allCases.forEach {
             supportedPermissionList.append(MASDKCustomPermissionModel(

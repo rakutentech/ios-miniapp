@@ -27,6 +27,18 @@ class MiniAppJavascriptEnumerationTests: QuickSpec {
                     expect(miniAppPermissionType?.title).toEventually(equal("Contact List"))
                 }
             }
+            context("when MiniAppCustomPermissionGrantedStatus is initialized with ALLOWED status") {
+                it("will return true") {
+                    let miniAppPermissionStatus = MiniAppCustomPermissionGrantedStatus(rawValue: "ALLOWED")
+                    expect(miniAppPermissionStatus?.boolValue).toEventually(equal(true))
+                }
+            }
+            context("when MiniAppCustomPermissionGrantedStatus is initialized with DENIED status") {
+                it("will return false") {
+                    let miniAppPermissionStatus = MiniAppCustomPermissionGrantedStatus(rawValue: "DENIED")
+                    expect(miniAppPermissionStatus?.boolValue).toEventually(equal(false))
+                }
+            }
         }
     }
 }
