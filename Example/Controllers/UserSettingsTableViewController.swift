@@ -14,6 +14,7 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
         super.viewDidLoad()
         self.imageView.roundedCornerImageView()
         setProfileImage(image: retrieveProfileSettings())
+        addTapGestureForImage()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -28,6 +29,16 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
         editPhotoButton.setTitle("Edit", for: .normal)
         self.imageView.image = profileImage
         self.userProfileImage = profileImage
+    }
+
+    func addTapGestureForImage() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        showPhotoLibrary()
     }
 
     @IBAction func showPhotoLibrary() {
@@ -64,12 +75,8 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
     }
 
     func saveProfileSettings(forKey key: String = "ProfileImage") -> Bool {
-        let name = displayNameTextField.text?.trimTrailingWhitespaces()
-        guard let userDisplayName = name, !userDisplayName.isEmpty else {
-            self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_user_profile_name_not_found", comment: ""))
-            return false
-        }
-        return setProfileSettings(userDisplayName: userDisplayName, profileImageURI: self.userProfileImage?.dataURI())
+        displayNameTextField.text = displayNameTextField.text?.trimTrailingWhitespaces()
+        return setProfileSettings(userDisplayName: displayNameTextField.text, profileImageURI: self.userProfileImage?.dataURI())
     }
 
     func retrieveProfileSettings(key: String = "ProfileImage") -> UIImage? {
