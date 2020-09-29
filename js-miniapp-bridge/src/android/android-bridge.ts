@@ -4,6 +4,7 @@ import {
   Callback,
   mabMessageQueue,
 } from '../common-bridge';
+import { Platform } from '../types/platform';
 
 /* tslint:disable:no-any */
 let uniqueId = Math.random();
@@ -19,6 +20,10 @@ class AndroidExcecutor implements PlatformExecutor {
     (window as any).MiniAppAndroid.postMessage(
       JSON.stringify({ action, param, id: callback.id })
     );
+  }
+
+  getPlatform(): string {
+    return Platform.ANDROID;
   }
 }
 

@@ -4,6 +4,7 @@ import {
   Callback,
   mabMessageQueue,
 } from '../common-bridge';
+import { Platform } from '../types/platform';
 
 /* tslint:disable:no-any */
 let uniqueId = Math.random();
@@ -26,6 +27,10 @@ class IOSExcecutor implements PlatformExecutor {
     (window as any).webkit.messageHandlers.MiniAppiOS.postMessage(
       JSON.stringify({ action, param, id: callback.id })
     );
+  }
+
+  getPlatform(): string {
+    return Platform.IOS;
   }
 }
 

@@ -1,10 +1,9 @@
-import { InterstitialAdResponse } from './types/responseTypes/interstitial';
 import {
   CustomPermission,
   CustomPermissionResult,
 } from './types/CustomPermission';
 import { DevicePermission } from './types/DevicePermission';
-import { RewardedAdResponse } from './types/responseTypes/rewarded';
+import { Reward } from './types/responseTypes/rewarded';
 import { ShareInfoType } from './types/ShareInfoType';
 
 /**
@@ -45,27 +44,27 @@ interface Ad {
    * Loads the specified Interstittial Ad Unit ID.
    * Can be called multiple times to pre-load multiple ads.
    * Promise is resolved when successfully loaded.
-   * @returns The Promise of load ad response result from injected side.
+   * @returns The Promise of load success response.
    * Promise is rejected if failed to load.
    */
-  loadInterstitialAd(id: string): Promise<null | Error>;
+  loadInterstitialAd(id: string): Promise<string>;
 
   /**
    * Loads the specified Rewarded Ad Unit ID.
    * Can be called multiple times to pre-load multiple ads.
    * Promise is resolved when successfully loaded.
-   * * @returns The Promise of load ad response result from injected side.
+   * @returns The Promise of load success response.
    * Promise is rejected if failed to load.
    */
-  loadRewardedAd(id: string): Promise<null | Error>;
+  loadRewardedAd(id: string): Promise<string>;
 
   /**
    * Shows the Interstitial Ad for the specified ID.
    * Promise is resolved after the user closes the Ad.
-   * @returns The Promise of Interstitial ad response result from injected side.
-   * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.
+   * @returns The Promise of close success response.
+   * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadInterstitialAd.
    */
-  showInterstitialAd(id: string): Promise<InterstitialAdResponse>;
+  showInterstitialAd(id: string): Promise<string>;
 
   /**
    * Shows the Rewarded Ad for the specified ID.
@@ -74,11 +73,15 @@ interface Ad {
    * @returns The Promise of Rewarded ad response result from injected side.
    * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.
    */
-  showRewardedAd(id: string): Promise<RewardedAdResponse>;
+  showRewardedAd(id: string): Promise<Reward>;
+}
+
+interface Platform {
+  getPlatform();
 }
 
 /* tslint:disable:no-any */
-export class MiniApp implements MiniAppFeatures, Ad {
+export class MiniApp implements MiniAppFeatures, Ad, Platform {
   private requestPermission(permissionType: string): Promise<string> {
     return (window as any).MiniAppBridge.requestPermission(permissionType);
   }
@@ -99,23 +102,31 @@ export class MiniApp implements MiniAppFeatures, Ad {
     ).then(permissionResult => permissionResult.permissions);
   }
 
-  loadInterstitialAd(id: string): Promise<null | Error> {
+  loadInterstitialAd(id: string): Promise<string> {
     return (window as any).MiniAppBridge.loadInterstitialAd(id);
   }
 
-  loadRewardedAd(id: string): Promise<null | Error> {
+  loadRewardedAd(id: string): Promise<string> {
     return (window as any).MiniAppBridge.loadRewardedAd(id);
   }
 
-  showInterstitialAd(id: string): Promise<InterstitialAdResponse> {
+  showInterstitialAd(id: string): Promise<string> {
     return (window as any).MiniAppBridge.showInterstitialAd(id);
   }
 
-  showRewardedAd(id: string): Promise<RewardedAdResponse> {
+  showRewardedAd(id: string): Promise<Reward> {
     return (window as any).MiniAppBridge.showRewardedAd(id);
   }
 
   shareInfo(info: ShareInfoType): Promise<string> {
     return (window as any).MiniAppBridge.shareInfo(info);
+  }
+
+  getPlatform(): string {
+    let platform = 'Unknown';
+    try {
+      platform = (window as any).MiniAppBridge.platform;
+    } catch (e) {}
+    return platform;
   }
 }

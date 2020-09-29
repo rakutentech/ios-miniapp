@@ -2,10 +2,9 @@
 
 import {
   AdTypes,
-  InterstitialAdResponse,
   CustomPermission,
   CustomPermissionResult,
-  RewardedAdResponse,
+  Reward,
   ShareInfoType,
 } from 'js-miniapp-sdk';
 
@@ -38,13 +37,21 @@ export interface PlatformExecutor {
     onSuccess: (value: string) => void,
     onError: (error: string) => void
   ): void;
+
+  /**
+   * Get the platform which injects this bridge.
+   * @returns The platform name. It could be 'Android' or 'iOS'.
+   */
+  getPlatform(): string;
 }
 
 export class MiniAppBridge {
   executor: PlatformExecutor;
+  platform: string;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
+    this.platform = executor.getPlatform();
   }
 
   /**
@@ -118,11 +125,11 @@ export class MiniAppBridge {
    * @param {string} id ad unit id of the intertitial ad
    */
   showInterstitialAd(id: string) {
-    return new Promise<InterstitialAdResponse>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'showAd',
         { adType: AdTypes.INTERSTITIAL, adUnitId: id },
-        adResponse => resolve(JSON.parse(adResponse) as InterstitialAdResponse),
+        closeSuccess => resolve(closeSuccess),
         error => reject(error)
       );
     });
@@ -135,11 +142,11 @@ export class MiniAppBridge {
    * @param {string} id ad unit id of the intertitial ad that needs to be loaded.
    */
   loadInterstitialAd(id: string) {
-    return new Promise<null | Error>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'loadAd',
         { adType: AdTypes.INTERSTITIAL, adUnitId: id },
-        loadResponse => resolve(JSON.parse(loadResponse) as null | Error),
+        loadSuccess => resolve(loadSuccess),
         error => reject(error)
       );
     });
@@ -152,11 +159,11 @@ export class MiniAppBridge {
    * @param {string} id ad unit id of the Rewarded ad that needs to be loaded.
    */
   loadRewardedAd(id: string) {
-    return new Promise<null | Error>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'loadAd',
         { adType: AdTypes.REWARDED, adUnitId: id },
-        loadResponse => resolve(JSON.parse(loadResponse) as null | Error),
+        loadSuccess => resolve(loadSuccess),
         error => reject(error)
       );
     });
@@ -167,11 +174,11 @@ export class MiniAppBridge {
    * @param {string} id ad unit id of the Rewarded ad
    */
   showRewardedAd(id: string) {
-    return new Promise<RewardedAdResponse>((resolve, reject) => {
+    return new Promise<Reward>((resolve, reject) => {
       return this.executor.exec(
         'showAd',
         { adType: AdTypes.REWARDED, adUnitId: id },
-        adResponse => resolve(JSON.parse(adResponse) as RewardedAdResponse),
+        rewardResponse => resolve(JSON.parse(rewardResponse) as Reward),
         error => reject(error)
       );
     });

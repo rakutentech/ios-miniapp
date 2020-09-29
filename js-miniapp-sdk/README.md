@@ -162,19 +162,30 @@ miniApp.shareInfo(info)
 
 ## Advanced Usage
 
+### Check Android/iOS device
+You can detect whether your mini app is running on an Android/iOS by using
+
+```javascript
+const platform = miniApp.getPlatform();
+//platform value here can be `Android`, `iOS` or `Unknown`.
+```
+When it is not running by Android/iOS, the return value is `Unknown`.
+
+The mini app can have its own device detection by not using SDK/
+This can be done with [Bowser](https://github.com/lancedikson/bowser).
+
 ### Usage when testing in the browser
 Currently, the SDK does not support testing in the browser. You must test using the [Android Mini App Demo App](https://github.com/rakutentech/android-miniapp) or [iOS Mini App Demo App](https://github.com/rakutentech/ios-miniapp) on an actual Android or iOS device.
 
-If you wish to be able to test in a browser, you can detect whether your web app is running on an Android/iOS device or in the browser. If not running on a device, you can return a mock value instead of calling the SDK method. Device detection can be done using something like [Bowser](https://github.com/lancedikson/bowser).
+If you wish to be able to test in a browser, you can return a mock value instead of calling the SDK method.
 
 ```javascript
 import miniApp from "js-miniapp-sdk";
-import Bowser from "bowser";
 
-const browser = Bowser.parse(window.navigator.userAgent);
+const platform = miniApp.getPlatform();
 
 function getId() {
-    if (browser.is("android") || browser.is("ios")) {
+    if (platform != "Unknown") {
         return miniApp.getUniqueId()
             .then(id => {
                 console.log(id);
