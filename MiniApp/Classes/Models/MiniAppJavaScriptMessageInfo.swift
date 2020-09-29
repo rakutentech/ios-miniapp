@@ -8,10 +8,15 @@ struct RequestParameters: Decodable {
     let permission: String?
     let permissions: [MiniAppCustomPermissionsRequest]?
     let locationOptions: LocationOptions?
+    let shareInfo: ShareInfoParameters?
 }
 
 struct LocationOptions: Decodable {
     let enableHighAccuracy: Bool?
+}
+
+struct ShareInfoParameters: Decodable {
+    var content: String
 }
 
 struct MiniAppCustomPermissionsRequest: Decodable {
@@ -24,5 +29,5 @@ struct MiniAppCustomPermissionsResponse: Codable {
 }
 
 struct MiniAppCustomPermissionsListResponse: Codable {
-    let name, isGranted: String
+    let name, status: String
 }

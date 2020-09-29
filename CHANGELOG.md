@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 2.x.0 (2020-08-DD)
+### 2.x.0 (2020-10-DD)
 
 **SDK**
 
@@ -9,11 +9,23 @@
 - **Feature:** Added support in Javascript bridge for requesting Custom permission.
 `requestCustomPermissions(permissionType)`
 
-- **Feature:** Added requestCustomPermissions function to MiniAppMessageProtocol. This function requests the host app to implement and return the list of Custom permissions that User responds with allow/deny option.[See here](USERGUIDE.md#request-custom-permission)
+- **Feature:** Added `requestCustomPermissions` function to MiniAppMessageProtocol. This function requests the host app to implement and return the list of Custom permissions that User responds with allow/deny option.[See here](USERGUIDE.md#request-custom-permission)
+
+- **Feature:** Added support for Javascript bridge interface for sharing message string from Mini app.
+`shareInfo(info)`
+
+- **Feature:** Added `shareContent(info:completionHandler:)` function to MiniAppMessageProtocol. Host app can make use of this function to display the Sharing feature/Controller [See here](USERGUIDE.md#share-mini-app-content)
+
+- **Feature:** Added ability to load external link outside of Mini App view with included SFSafariViewController or by providing delegate, with ability to provide a result URL to Mini App with a closure.  [See here](USERGUIDE.md#navigation)
+
+- **Feature:** Added `listDownloadedWithCustomPermissions()` public interface that enables the host app to retrieve the list of downloaded mini-apps and their respective custom permissions. [See here](USERGUIDE.md#list-downloaded-mini-apps)
 
 **Sample App**
 
 - **Feature:** Added example for showing list of Custom permissions (on request from Mini app) and response back to Mini app.
+- **Feature:** Added sample implementation for Sharing the message from Mini app
+- **Feature:** Added sample app implementation to revoke/manage the custom permissions for the list of downloaded mini apps
+
 
 ### 2.1.0 (2020-09-03)
 

@@ -12,6 +12,7 @@ internal class RealMiniAppView: UIView {
 
     internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
+    internal weak var currentDialogController: UIAlertController?
 
     init(
         miniAppId: String,
@@ -99,23 +100,29 @@ internal class RealMiniAppView: UIView {
         webView.configuration.userContentController.removeMessageHandler()
     }
 
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let requestUrl = navigationAction.request.url {
-            validateScheme(requestURL: requestUrl, decisionHandler: decisionHandler)
-        } else {
-            decisionHandler(.cancel)
+    func validateScheme(requestURL: URL, navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let scheme = requestURL.scheme {
+            let schemeType = MiniAppSupportedSchemes(rawValue: scheme)
+            switch schemeType {
+            case .about: // mainly implemented to manage buil-in alert dialogs
+                return decisionHandler(.allow)
+            case .tel:
+                UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
+            default:
+                if requestURL.isMiniAppURL() {
+                    return decisionHandler(.allow)
+                } else {
+                    // Allow navigation for requests loading external web content resources. E.G: iFrames
+                    guard navigationAction.targetFrame?.isMainFrame != false else {
+                        return decisionHandler(.allow)
+                    }
+                    self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
+                        self.webView.load(URLRequest(url: url))
+                    })
+                }
+            }
         }
-    }
-
-    func validateScheme(requestURL: URL, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        let schemeType = MiniAppSupportedSchemes(rawValue: requestURL.scheme!)
-        switch schemeType {
-        case .tel:
-            UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
-            decisionHandler(.cancel)
-        default:
-            decisionHandler(.allow)
-        }
+        decisionHandler(.cancel)
     }
 }
 
@@ -151,6 +158,15 @@ extension RealMiniAppView: MiniAppNavigationBarDelegate {
 }
 
 extension RealMiniAppView: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let requestUrl = navigationAction.request.url {
+            MiniAppLogger.d("navigation type for \(navigationAction.request.url?.absoluteString ?? "---"): \(navigationAction.navigationType.rawValue)")
+            validateScheme(requestURL: requestUrl, navigationAction: navigationAction, decisionHandler: decisionHandler)
+        } else {
+            decisionHandler(.cancel)
+        }
+    }
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         refreshNavBar()
     }

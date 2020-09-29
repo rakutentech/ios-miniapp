@@ -99,8 +99,8 @@ class MiniAppDownloaderTests: QuickSpec {
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     let responseString = """
                       {
-                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt",
-                                    "https://google.com/map-published-v2/min-abc/ver-abc/Testing.txt"]
+                        "manifest": ["\(mockAPIClient.environment.baseUrl?.appendingPathComponent("min-abc/ver-abc/HelloWorld.txt").absoluteString ?? "")",
+                                    "\(mockAPIClient.environment.baseUrl?.appendingPathComponent("min-abc/ver-abc/Testing.txt").absoluteString ?? "")"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -255,7 +255,7 @@ class MiniAppDownloaderTests: QuickSpec {
         }
         describe("mini app downloader") {
             context("when receiving a zip file") {
-                it("unzips ip and delete archive") {
+                it("unzips it and delete archive") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
@@ -274,7 +274,7 @@ class MiniAppDownloaderTests: QuickSpec {
                 }
             }
             context("when receiving a corrupted zip file") {
-                it("tries to unzips ip and delete archive") {
+                it("tries to unzips it and delete archive") {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
@@ -289,7 +289,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
                         switch result {
                         case .success:
-                           break
+                            break
                         case .failure(let failed):
                             error = failed
                         }

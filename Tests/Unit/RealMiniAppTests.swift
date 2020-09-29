@@ -4,6 +4,7 @@ import Nimble
 
 // swiftlint:disable function_body_length
 // swiftlint:disable cyclomatic_complexity
+// swiftlint:disable type_body_length
 class RealMiniAppTests: QuickSpec {
 
     override func spec() {
@@ -303,7 +304,7 @@ class RealMiniAppTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     waitUntil { done in
-                        realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        realMiniApp.createMiniApp(appId: "app-id-test", completionHandler: { (result) in
                             switch result {
                             case .success(let responseData):
                                 expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
@@ -337,22 +338,37 @@ class RealMiniAppTests: QuickSpec {
             }
             context("when RealMiniApp class has no message interface method object and when requestPermission is called") {
                 it("will return error") {
-                    var testError: NSError?
+                    var testError: MASDKPermissionError?
                     realMiniApp.requestPermission(permissionType: MiniAppPermissionType.init(rawValue: "location")!) { (result) in
                         switch result {
                         case .success:
                         break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
-                    expect(testError?.code).toEventually(equal(0))
+                    expect(MASDKPermissionError(rawValue: testError?.rawValue ?? "")).toEventually(equal(MASDKPermissionError.failedToConformToProtocol))
+                }
+            }
+            context("when RealMiniApp class has no message interface method object and when requestCustomPermissions is called") {
+                it("will return error") {
+                    var testError: MASDKCustomPermissionError?
+                    realMiniApp.requestCustomPermissions(permissions: []) { (result) in
+                        switch result {
+                        case .success:
+                        break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    }
+                    expect(MASDKCustomPermissionError(rawValue: testError?.rawValue ?? "")).toEventually(equal(MASDKCustomPermissionError.failedToConformToProtocol))
                 }
             }
             context("when RealMiniApp class has no message interface method object and when requestCustomPermissions is called") {
                 it("will return error") {
                     var testError: NSError?
-                    realMiniApp.requestCustomPermissions(permissions: []) { (result) in
+                    realMiniApp.shareContent(info: MiniAppShareContent(
+                        messageContent: "Testing the sample app")) { (result) in
                         switch result {
                         case .success:
                         break

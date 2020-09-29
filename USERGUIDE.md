@@ -70,6 +70,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Communicate with MiniApp](#MiniAppMessageProtocol)
 * [Customize history navigation](#navigation)
 * [Custom Permissions](#custom-permissions)
+* [List Downloaded Mini apps](#list-downloaded-mini-apps)
 
 <div id="runtime-conf"></div>
 
@@ -196,6 +197,21 @@ extension ViewController: MiniAppMessageProtocol {
             }
     
 ```
+<div id="share-mini-app-content"></div>
+
+##### Share Mini app content
+
+```swift
+extension ViewController: MiniAppMessageProtocol {
+    func shareContent(info: MiniAppShareContent,
+            completionHandler: @escaping (
+                Result<String, Error>) -> Void) {
+        let activityController = UIActivityViewController(activityItems: [info.messageContent], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
+        completionHandler(.success("SUCCESS"))
+    }
+}
+```
 
 <div id="navigation"></div>
 
@@ -207,17 +223,50 @@ MiniApp iOS SDK provides a fully customizable way to implement a navigation inte
     - never = the UI will never be shown
     - auto = navigation UI is only shown when a back or forward action is available
     - always = navigation UI is always present
-- `navigationDelegate` : A delegate that will receive MiniApp view instructions about available navigation options
+- `navigationDelegate` : A delegate that will receive MiniApp view instructions about available navigation options. It will also receive taps on external links.
 - `customNavigationView` : A view implementing `MiniAppNavigationDelegate` that will be overlayed to the bottom of the MiniApp view
 
 ```swift
 let navConfig = MiniAppNavigationConfig(
                     navigationBarVisibility: .always,
-                    navigationDelegate: myCustomView,
+                    navigationDelegate: myNavigationDelegate,
                     customNavigationView: mCustomView)
 
 MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(miniAppId: miniAppID) { (result) in
 ...
+}
+```
+
+#### Opening external links
+
+By default MiniApp iOS SDK will open external links into a separate modal controller when tapped. `MiniAppNavigationDelegate` implements a method that allows to override this behaviour and provide your own external links management. Here is an example of implementation:
+
+```swift
+extension ViewController: MiniAppNavigationDelegate {
+    func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping (URL) -> Void) {
+        // Getting your custom viewcontroller
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ExternalWebviewController") as? ExternalWebViewController {
+            viewController.currentURL = url
+            viewController.miniAppExternalUrlLoader = MiniAppExternalUrlLoader(webViewController: viewController, responseHandler: externalLinkResponseHandler)
+            self.presentedViewController?.present(viewController, animated: true)
+        }
+    }
+
+    ...
+}
+```
+
+The `externalLinkResponseHandler` closure allows you to give a feedback as an URL to the SDK, for example when the controller is closed or when a custom scheme link is tapped. This closure can be passed to a `MiniAppExternalUrlLoader` object that will provide a method to test an URL and return the appropriate decision for a `WKNavigationDelegate` method, and if you provided a controller it will be dismissed automatically. Here is an example following previous example:
+
+```swift
+extension ExternalWebViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.currentURL = self.webView.url
+    }
+
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        decisionHandler(miniAppExternalUrlLoader?.shouldOverrideURLLoading(navigationAction.request.url) ?? .allow)
+    }
 }
 ```
 
@@ -240,6 +289,15 @@ Custom permissions for a mini app is cached by the SDK and you can use the follo
 
 ```swift
  MiniApp.shared().setCustomPermissions(forMiniApp: String, permissionList: [MASDKCustomPermissionModel])
+```
+
+<div id="list-downloaded-mini-apps"></div>
+
+### List Downloaded Mini apps
+Gets the list of downloaded Mini apps info and associated custom permissions status
+
+```swift
+ MiniApp.shared().listDownloadedWithCustomPermissions()
 ```
 
 
