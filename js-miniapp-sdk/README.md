@@ -39,7 +39,7 @@ First, download the bundled script file from the [releases page](https://github.
 <script src="miniapp.bundle.js"></script>
 ```
 
-Then you can acces the SDK methods via `window.MiniApp`.
+Then you can acces the SDK methods via `window.MiniApp.default`.
 
 ```javascript
 window.MiniApp.default.getUniqueId()
@@ -150,7 +150,9 @@ miniApp.loadRewardedAd(adUnitID)
 
 ### 5. Share Info
 
-It is possible for the mini app user to share the mini app data across Android/iOS interface. The data format must match the [ShareInfoType](src/types/ShareInfoType.ts).
+It is possible for the mini app user to share data with another App by showing the native content sharing chooser.
+
+The data format must match the [ShareInfoType](https://github.com/rakutentech/js-miniapp/blob/master/js-miniapp-sdk/src/types/ShareInfoType.ts).
 
 ```javascript
 const info = { content: inputValue };
