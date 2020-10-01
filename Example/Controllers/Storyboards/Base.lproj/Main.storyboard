@@ -396,13 +396,17 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rakuten-profile-image" translatesAutoresizingMaskIntoConstraints="NO" id="FFS-wP-6jT">
+                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rakuten-profile-image" translatesAutoresizingMaskIntoConstraints="NO" id="FFS-wP-6jT">
                                     <rect key="frame" x="112.5" y="15" width="150" height="150"/>
                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="150" id="LBe-30-81M"/>
                                         <constraint firstAttribute="width" constant="150" id="P7D-wo-DBd"/>
                                     </constraints>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="g6p-jH-UdQ" appends="YES" id="i0B-Ad-o8n"/>
+                                    </connections>
                                 </imageView>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Alo-Dr-dfD">
                                     <rect key="frame" x="172.5" y="172" width="30" height="30"/>
@@ -480,6 +484,11 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vo5-0S-he6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="g6p-jH-UdQ">
+                    <connections>
+                        <action selector="openPhotoLibrary:" destination="eiM-he-3CM" id="uMc-4A-oPX"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2150" y="1173"/>
         </scene>

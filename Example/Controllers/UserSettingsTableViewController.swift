@@ -7,6 +7,8 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
     @IBOutlet weak var editPhotoButton: UIButton!
     @IBOutlet weak var displayNameTextField: UITextField!
     @IBOutlet weak var modifyProfileSettingsButton: UIBarButtonItem!
+    private var saveTitleText = "Save"
+    private var editTitleText = "Edit"
 
     var userProfileImage: UIImage?
 
@@ -14,7 +16,6 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
         super.viewDidLoad()
         self.imageView.roundedCornerImageView()
         setProfileImage(image: retrieveProfileSettings())
-        addTapGestureForImage()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -26,19 +27,15 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
             editPhotoButton.setTitle("Add Photo", for: .normal)
             return
         }
-        editPhotoButton.setTitle("Edit", for: .normal)
+        editPhotoButton.setTitle(editTitleText, for: .normal)
         self.imageView.image = profileImage
         self.userProfileImage = profileImage
     }
 
-    func addTapGestureForImage() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(tapGestureRecognizer)
-    }
-
-    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        showPhotoLibrary()
+    @IBAction func openPhotoLibrary(_ sender: Any) {
+        if modifyProfileSettingsButton.title == saveTitleText {
+            showPhotoLibrary()
+        }
     }
 
     @IBAction func showPhotoLibrary() {
@@ -50,13 +47,13 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
     }
 
     @IBAction func modifyProfileSettings() {
-        if modifyProfileSettingsButton.title == "Edit" {
-            modifyProfileSettingsButton.title = "Save"
+        if modifyProfileSettingsButton.title == editTitleText {
+            modifyProfileSettingsButton.title = saveTitleText
         } else {
             if !saveProfileSettings() {
                 return
             }
-            modifyProfileSettingsButton.title = "Edit"
+            modifyProfileSettingsButton.title = editTitleText
         }
         displayNameTextField.isEnabled = !displayNameTextField.isEnabled
         editPhotoButton.isEnabled = !editPhotoButton.isEnabled
