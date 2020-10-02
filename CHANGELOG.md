@@ -26,6 +26,10 @@
 - **Feature:** Added sample implementation for Sharing the message from Mini app
 - **Feature:** Added sample app implementation to revoke/manage the custom permissions for the list of downloaded mini apps
 
+### 2.x
+
+***SDK***
+-**Fixed:** support of `playsinline` instruction of  `Video` html tag
 
 ### 2.1.0 (2020-09-03)
 

@@ -10,6 +10,8 @@ internal class MiniAppWebView: WKWebView {
         config.preferences.javaScriptEnabled = true
         config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         config.setURLSchemeHandler(URLSchemeHandler(versionId: versionId), forURLScheme: schemeName)
+        config.allowsInlineMediaPlayback = true
+        config.allowsPictureInPictureMediaPlayback = true
         self.init(frame: .zero, configuration: config)
         self.allowsBackForwardNavigationGestures = true
         contentMode = .scaleToFill
