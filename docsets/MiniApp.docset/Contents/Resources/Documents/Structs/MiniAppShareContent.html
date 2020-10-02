@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>String Extension Reference</title>
+    <title>MiniAppShareContent Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,11 +13,11 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/String" class="dashAnchor"></a>
-    <a title="String Extension Reference"></a>
+    <a name="//apple_ref/swift/Struct/MiniAppShareContent" class="dashAnchor"></a>
+    <a title="MiniAppShareContent Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniApp 2.1.0 Docs</a> (61% documented)</p>
+        <p><a href="../index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
         <p class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -29,7 +29,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MiniApp Reference</a>
         <img id="carat" src="../img/carat.png" />
-        String Extension Reference
+        MiniAppShareContent Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -56,7 +56,13 @@
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a>
@@ -70,24 +76,31 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MASDKPermissionError.html">MASDKPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MASDKPermissionResponse.html">MASDKPermissionResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MiniAppCustomPermissionGrantedStatus.html">MiniAppCustomPermissionGrantedStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/MiniAppPermissionResult.html">MiniAppPermissionResult</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Enums/MiniAppPermissionType.html">MiniAppPermissionType</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/String.html">String</a>
               </li>
             </ul>
           </li>
@@ -115,7 +128,21 @@
                 <a href="../Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/MiniAppShareContent.html">MiniAppShareContent</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
               </li>
             </ul>
           </li>
@@ -124,15 +151,16 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>String</h1>
+            <h1>MiniAppShareContent</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">String</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MiniAppShareContent</span></code></pre>
 
                 </div>
               </div>
-            
+            <p>Undocumented</p>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -140,9 +168,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:SS7MiniAppE8mimeTypeSSyF"></a>
-                    <a name="//apple_ref/swift/Method/mimeType()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:SS7MiniAppE8mimeTypeSSyF">mimeType()</a>
+                    <a name="/s:7MiniApp0aB12ShareContentV07messageD0SSvp"></a>
+                    <a name="//apple_ref/swift/Property/messageContent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB12ShareContentV07messageD0SSvp">messageContent</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -157,7 +185,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">mimeType</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">messageContent</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -169,7 +197,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-09-03)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

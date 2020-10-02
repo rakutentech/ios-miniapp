@@ -16,7 +16,7 @@
     <a title="DEV  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp 2.1.0 Docs</a> (61% documented)</p>
+        <p><a href="index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -55,7 +55,13 @@
             <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a>
@@ -69,24 +75,31 @@
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKPermissionError.html">MASDKPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKPermissionResponse.html">MASDKPermissionResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MiniAppCustomPermissionGrantedStatus.html">MiniAppCustomPermissionGrantedStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/MiniAppPermissionResult.html">MiniAppPermissionResult</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/MiniAppPermissionType.html">MiniAppPermissionType</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/String.html">String</a>
               </li>
             </ul>
           </li>
@@ -114,7 +127,21 @@
                 <a href="Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/MiniAppShareContent.html">MiniAppShareContent</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
               </li>
             </ul>
           </li>
@@ -126,22 +153,29 @@
             
             <h1 id='sdk-developer-guide' class='heading'>SDK Developer Guide</h1>
 
-<p>This guide targets Developers of this SDK. It explains how to build the project and how the CI setup works.</p>
+<p>This guide targets Developers of this SDK. It explains how to build the project and how the CI setup works. In order to setup the environment you need to install <a href="https://guides.cocoapods.org/using/getting-started.html">Cocoapods</a> and <a href="https://docs.fastlane.tools/getting-started/ios/setup/">Fastlane</a></p>
 <h2 id='a-name-sample-app-how-to-build-the-sample-app' class='heading'><a name="sample-app" /> How to Build the Sample App</h2>
 
-<p>First, you must setup some environment variables which are required by the project.</p>
-<pre class="highlight plaintext"><code>RMAAPIEndpoint=https://www.example.com
-RASApplicationIdentifier=test-app-id
-RASProjectSubscriptionKey=test-subscription-key
+<p>First, it is highly recommanded to setup some environment variables which are required by the project.</p>
+<pre class="highlight shell"><code><span class="nv">RMAAPIEndpoint</span><span class="o">=</span>https://www.example.com
+<span class="nv">RASApplicationIdentifier</span><span class="o">=</span><span class="nb">test</span>-app-id
+<span class="nv">RASProjectSubscriptionKey</span><span class="o">=</span><span class="nb">test</span>-subscription-key
 </code></pre>
 
-<p>Next, run <code>pod install</code> from the root directory, open <code>MiniApp.xcworkspace</code>, and you should be able to successfully build the Sample App.</p>
+<p>Next, run <code>fastlane updatePods</code> from the root directory that will trigger a <code>pod install</code> and fetch git submodules, then open <code>MiniApp.xcworkspace</code>, and you should be able to successfully build the Sample App.</p>
 
-<p><em>Note:</em> You must define the environment variables before installing the pods because there is a post install script which sets up the project with your environment variables.</p>
+<p><em>Note:</em> You need to define the environment variables before installing the pods because there is a post install script which sets up the project with your environment variables. If you don&rsquo;t want to use environment variables, you can edit the <code>MiniApp-Secrets.xcconfig</code> created after a <code>pod install</code> in the parent folder of the project,but be aware you will have to update this file after every <code>pod install</code></p>
 <h2 id='how-to-test-with-the-sample-app' class='heading'>How to Test with the Sample App</h2>
 
 <p>We currently don&rsquo;t provide an API for public use, so you must provide your own API.</p>
+<h2 id='how-to-test-your-sdk-integration-with-cocoapods' class='heading'>How to test your SDK integration with Cocoapods</h2>
+
+<p>If you need to test your SDK fork into your host app before making a pull request, you can use this line into your podfile:</p>
+<pre class="highlight ruby"><code>  <span class="n">pod</span> <span class="s1">'MiniApp'</span><span class="p">,</span> <span class="ss">git: </span><span class="s1">'https://github.com/&lt;My fork account&gt;/ios-miniapp'</span><span class="p">,</span> <span class="ss">branch: </span><span class="s1">'master'</span><span class="p">,</span> <span class="ss">submodules: </span><span class="kp">true</span>
+</code></pre>
 <h2 id='continuous-integration-and-deployment' class='heading'>Continuous Integration and Deployment</h2>
+
+<p>Before any deployment, be sure the project will build and run unit tests by running <code>fastlane ci</code>.</p>
 
 <p><a href="https://travis-ci.org/github/rakutentech/ios-miniapp">TravisCI</a> is used for building and testing the project for every pull request. It is also used for publishing the SDK and Sample App.</p>
 
@@ -194,7 +228,7 @@ RASProjectSubscriptionKey=test-subscription-key
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-09-03)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

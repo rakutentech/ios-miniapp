@@ -17,7 +17,7 @@
     <a title="Enumerations  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp 2.1.0 Docs</a> (61% documented)</p>
+        <p><a href="index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -56,7 +56,13 @@
             <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a>
@@ -70,24 +76,31 @@
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKPermissionError.html">MASDKPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKPermissionResponse.html">MASDKPermissionResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MiniAppCustomPermissionGrantedStatus.html">MiniAppCustomPermissionGrantedStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/MiniAppPermissionResult.html">MiniAppPermissionResult</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/MiniAppPermissionType.html">MiniAppPermissionType</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/String.html">String</a>
               </li>
             </ul>
           </li>
@@ -115,7 +128,21 @@
                 <a href="Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/MiniAppShareContent.html">MiniAppShareContent</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
               </li>
             </ul>
           </li>
@@ -215,7 +242,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>List of Device Permissions supported by the SDK that can be requested by a Mini app</p>
 
                         <a href="Enums/MiniAppPermissionType.html" class="slightly-smaller">See more</a>
                       </div>
@@ -233,9 +260,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB16PermissionResultO"></a>
-                    <a name="//apple_ref/swift/Enum/MiniAppPermissionResult" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB16PermissionResultO">MiniAppPermissionResult</a>
+                    <a name="/s:7MiniApp0aB20CustomPermissionTypeO"></a>
+                    <a name="//apple_ref/swift/Enum/MiniAppCustomPermissionType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB20CustomPermissionTypeO">MiniAppCustomPermissionType</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -245,14 +272,153 @@
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Enums/MiniAppPermissionResult.html" class="slightly-smaller">See more</a>
+                        <a href="Enums/MiniAppCustomPermissionType.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MiniAppPermissionResult</span> <span class="p">:</span> <span class="kt">Error</span></code></pre>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">MiniAppPermissionResult</span><span class="p">:</span> <span class="kt">LocalizedError</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MiniAppCustomPermissionType</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CaseIterable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB29CustomPermissionGrantedStatusO"></a>
+                    <a name="//apple_ref/swift/Enum/MiniAppCustomPermissionGrantedStatus" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB29CustomPermissionGrantedStatusO">MiniAppCustomPermissionGrantedStatus</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Enums/MiniAppCustomPermissionGrantedStatus.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MiniAppCustomPermissionGrantedStatus</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp21MASDKProtocolResponseO"></a>
+                    <a name="//apple_ref/swift/Enum/MASDKProtocolResponse" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp21MASDKProtocolResponseO">MASDKProtocolResponse</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Enums/MASDKProtocolResponse.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MASDKProtocolResponse</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp23MASDKPermissionResponseO"></a>
+                    <a name="//apple_ref/swift/Enum/MASDKPermissionResponse" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp23MASDKPermissionResponseO">MASDKPermissionResponse</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Enums/MASDKPermissionResponse.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MASDKPermissionResponse</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp20MASDKPermissionErrorO"></a>
+                    <a name="//apple_ref/swift/Enum/MASDKPermissionError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp20MASDKPermissionErrorO">MASDKPermissionError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Enums/MASDKPermissionError.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MASDKPermissionError</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">MiniAppErrorProtocol</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp26MASDKCustomPermissionErrorO"></a>
+                    <a name="//apple_ref/swift/Enum/MASDKCustomPermissionError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp26MASDKCustomPermissionErrorO">MASDKCustomPermissionError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Enums/MASDKCustomPermissionError.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MASDKCustomPermissionError</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">MiniAppErrorProtocol</span></code></pre>
 
                         </div>
                       </div>
@@ -264,7 +430,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-09-03)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

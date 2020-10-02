@@ -17,7 +17,7 @@
     <a title="MiniAppNavigationDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniApp 2.1.0 Docs</a> (61% documented)</p>
+        <p><a href="../index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
         <p class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -56,7 +56,13 @@
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a>
@@ -70,24 +76,31 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MASDKPermissionError.html">MASDKPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MASDKPermissionResponse.html">MASDKPermissionResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MiniAppCustomPermissionGrantedStatus.html">MiniAppCustomPermissionGrantedStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/MiniAppPermissionResult.html">MiniAppPermissionResult</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Enums/MiniAppPermissionType.html">MiniAppPermissionType</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/String.html">String</a>
               </li>
             </ul>
           </li>
@@ -115,7 +128,21 @@
                 <a href="../Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/MiniAppShareContent.html">MiniAppShareContent</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
               </li>
             </ul>
           </li>
@@ -141,6 +168,67 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7MiniApp0aB18NavigationDelegateP04minibC010shouldOpen4withy10Foundation3URLV_yAIctF"></a>
+                    <a name="//apple_ref/swift/Method/miniAppNavigation(shouldOpen:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB18NavigationDelegateP04minibC010shouldOpen4withy10Foundation3URLV_yAIctF">miniAppNavigation(shouldOpen:<wbr>with:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This delegate method is called when an external URL is tapped into a Mini App
+so you can display your own webview to load the url parameter, for example.
+A <code><a href="../Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a></code> is also provided so you can give a proper
+feedback to your MiniApp under the form of an URL when you want</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">miniAppNavigation</span><span class="p">(</span><span class="n">shouldOpen</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="n">with</span> <span class="nv">responseHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the external URL triggered from the MiniApp</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>responseHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a <code><a href="../Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a></code> used to provide an URL to the Mini App</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7MiniApp0aB18NavigationDelegateP04minibC06canUseySayAA0abC6ActionOG_tF"></a>
                     <a name="//apple_ref/swift/Method/miniAppNavigation(canUse:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7MiniApp0aB18NavigationDelegateP04minibC06canUseySayAA0abC6ActionOG_tF">miniAppNavigation(canUse:<wbr>)</a>
@@ -151,7 +239,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>This delegate method is called when a navigation is performed inside the Mini App.</p>
 
                       </div>
                       <div class="declaration">
@@ -161,6 +249,25 @@
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">miniAppNavigation</span><span class="p">(</span><span class="n">canUse</span> <span class="nv">actions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a></span><span class="p">])</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>actions</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a list of <code><a href="../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a></code> that can be used to navigate inside the Mini App</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -178,7 +285,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>This delegate method is called when a Mini App view is created.</p>
 
                       </div>
                       <div class="declaration">
@@ -189,6 +296,25 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>delegate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a<code><a href="../Protocols/MiniAppNavigationBarDelegate.html">MiniAppNavigationBarDelegate</a></code> the can be used to call <code><a href="../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a></code> on the Mini App view</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -197,7 +323,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-09-03)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

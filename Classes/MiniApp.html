@@ -17,7 +17,7 @@
     <a title="MiniApp Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniApp 2.1.0 Docs</a> (61% documented)</p>
+        <p><a href="../index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
         <p class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -56,7 +56,13 @@
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a>
@@ -70,24 +76,31 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MASDKPermissionError.html">MASDKPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MASDKPermissionResponse.html">MASDKPermissionResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MiniAppCustomPermissionGrantedStatus.html">MiniAppCustomPermissionGrantedStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/MiniAppPermissionResult.html">MiniAppPermissionResult</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Enums/MiniAppPermissionType.html">MiniAppPermissionType</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/String.html">String</a>
               </li>
             </ul>
           </li>
@@ -115,7 +128,21 @@
                 <a href="../Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/MiniAppShareContent.html">MiniAppShareContent</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
               </li>
             </ul>
           </li>
@@ -379,6 +406,145 @@ Error information will be returned if any problem while fetching from the backed
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7MiniAppAAC20setCustomPermissions03foraB014permissionListySS_SayAA26MASDKCustomPermissionModelCGtF"></a>
+                    <a name="//apple_ref/swift/Method/setCustomPermissions(forMiniApp:permissionList:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC20setCustomPermissions03foraB014permissionListySS_SayAA26MASDKCustomPermissionModelCGtF">setCustomPermissions(forMiniApp:<wbr>permissionList:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Cache the Custom permissions status for a given MiniApp ID</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setCustomPermissions</span><span class="p">(</span><span class="n">forMiniApp</span> <span class="nv">appId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">permissionList</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>appId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Mini AppId String value</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>permissionList</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>List of MASDKCustomPermissionModel class that contains the MiniAppCustomPermissionType and MiniAppCustomPermissionGrantedStatus</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniAppAAC20getCustomPermissions03foraB0SayAA26MASDKCustomPermissionModelCGSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/getCustomPermissions(forMiniApp:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC20getCustomPermissions03foraB0SayAA26MASDKCustomPermissionModelCGSS_tF">getCustomPermissions(forMiniApp:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get the list of supported Custom permissions and its status for a given Mini app ID</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getCustomPermissions</span><span class="p">(</span><span class="n">forMiniApp</span> <span class="nv">appId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>appId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Mini AppId String value</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>List of MASDKCustomPermissionModel that contains the details of every custom permission type, status and description.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniAppAAC35listDownloadedWithCustomPermissionsSayAA0aB4InfoV_SayAA26MASDKCustomPermissionModelCGtGyF"></a>
+                    <a name="//apple_ref/swift/Method/listDownloadedWithCustomPermissions()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC35listDownloadedWithCustomPermissionsSayAA0aB4InfoV_SayAA26MASDKCustomPermissionModelCGtGyF">listDownloadedWithCustomPermissions()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the list of downloaded Mini apps info and associated custom permissions status</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">listDownloadedWithCustomPermissions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[(</span><span class="kt"><a href="../Structs/MiniAppInfo.html">MiniAppInfo</a></span><span class="p">,</span> <span class="p">[</span><span class="kt"><a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a></span><span class="p">])]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Dictionary of MiniAppInfo and respective custom permissions info</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7MiniAppAAC6create7appInfo17completionHandler16messageInterfaceyAA0abE0V_ys6ResultOyAA0aB15DisplayProtocol_ps5Error_pGcAA0ab7MessageL0_ptF"></a>
                     <a name="//apple_ref/swift/Method/create(appInfo:completionHandler:messageInterface:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7MiniAppAAC6create7appInfo17completionHandler16messageInterfaceyAA0abE0V_ys6ResultOyAA0aB15DisplayProtocol_ps5Error_pGcAA0ab7MessageL0_ptF">create(appInfo:<wbr>completionHandler:<wbr>messageInterface:<wbr>)</a>
@@ -458,7 +624,7 @@ Error information will be returned if any problem while fetching from the backed
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-09-03)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

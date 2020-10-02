@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppNavigationAction Enumeration Reference</title>
+    <title>MASDKCustomPermissionModel Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/MiniAppNavigationAction" class="dashAnchor"></a>
-    <a title="MiniAppNavigationAction Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Class/MASDKCustomPermissionModel" class="dashAnchor"></a>
+    <a title="MASDKCustomPermissionModel Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
@@ -29,7 +29,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MiniApp Reference</a>
         <img id="carat" src="../img/carat.png" />
-        MiniAppNavigationAction Enumeration Reference
+        MASDKCustomPermissionModel Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -151,15 +151,17 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>MiniAppNavigationAction</h1>
+            <h1>MASDKCustomPermissionModel</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MiniAppNavigationAction</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">MASDKCustomPermissionModel</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">Equatable</span></code></pre>
 
                 </div>
               </div>
-            <p>An enum used by <code><a href="../Protocols/MiniAppNavigationBarDelegate.html">MiniAppNavigationBarDelegate</a></code> to indicate which action has been triggered by navigation UI</p>
+            <p>MASDKCustomPermissionModel helps to communicate with the Host app back and forth when Custom Permissions are requested by a Mini App.
+When Custom Permissions received from Mini app, this class is used by SDK to define the type of custom permissions that is requested and
+the same is returned by Host app with isPermissionGranted values updated (Value returned after user responded to the list of permissions)</p>
 
           </section>
           <section class="section task-group-section">
@@ -168,9 +170,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB16NavigationActionO4backyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/back" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB16NavigationActionO4backyA2CmF">back</a>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -178,14 +180,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
-
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">back</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">MASDKCustomPermissionModel</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">MASDKCustomPermissionModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -195,9 +196,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB16NavigationActionO7forwardyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/forward" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB16NavigationActionO7forwardyA2CmF">forward</a>
+                    <a name="/s:7MiniApp26MASDKCustomPermissionModelC14permissionNameAA0ab6CustomD4TypeOvp"></a>
+                    <a name="//apple_ref/swift/Property/permissionName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp26MASDKCustomPermissionModelC14permissionNameAA0ab6CustomD4TypeOvp">permissionName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -212,7 +213,61 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">forward</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">permissionName</span><span class="p">:</span> <span class="kt"><a href="../Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp26MASDKCustomPermissionModelC02isD7GrantedAA0ab6CustomdG6StatusOvp"></a>
+                    <a name="//apple_ref/swift/Property/isPermissionGranted" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp26MASDKCustomPermissionModelC02isD7GrantedAA0ab6CustomdG6StatusOvp">isPermissionGranted</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isPermissionGranted</span><span class="p">:</span> <span class="kt"><a href="../Enums/MiniAppCustomPermissionGrantedStatus.html">MiniAppCustomPermissionGrantedStatus</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp26MASDKCustomPermissionModelC21permissionDescriptionSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/permissionDescription" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp26MASDKCustomPermissionModelC21permissionDescriptionSSSgvp">permissionDescription</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">permissionDescription</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>

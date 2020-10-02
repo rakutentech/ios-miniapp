@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppNavigationAction Enumeration Reference</title>
+    <title>MASDKPermissionError Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/MiniAppNavigationAction" class="dashAnchor"></a>
-    <a title="MiniAppNavigationAction Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/MASDKPermissionError" class="dashAnchor"></a>
+    <a title="MASDKPermissionError Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
@@ -29,7 +29,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MiniApp Reference</a>
         <img id="carat" src="../img/carat.png" />
-        MiniAppNavigationAction Enumeration Reference
+        MASDKPermissionError Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -151,15 +151,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>MiniAppNavigationAction</h1>
+            <h1>MASDKPermissionError</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MiniAppNavigationAction</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MASDKPermissionError</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">MiniAppErrorProtocol</span></code></pre>
 
                 </div>
               </div>
-            <p>An enum used by <code><a href="../Protocols/MiniAppNavigationBarDelegate.html">MiniAppNavigationBarDelegate</a></code> to indicate which action has been triggered by navigation UI</p>
+            <p>Undocumented</p>
 
           </section>
           <section class="section task-group-section">
@@ -168,9 +168,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB16NavigationActionO4backyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/back" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB16NavigationActionO4backyA2CmF">back</a>
+                    <a name="/s:7MiniApp20MASDKPermissionErrorO6deniedyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/denied" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp20MASDKPermissionErrorO6deniedyA2CmF">denied</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -178,14 +178,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>User has explicitly denied authorization</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">back</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">denied</span> <span class="o">=</span> <span class="s">"DENIED"</span></code></pre>
 
                         </div>
                       </div>
@@ -195,9 +195,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB16NavigationActionO7forwardyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/forward" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB16NavigationActionO7forwardyA2CmF">forward</a>
+                    <a name="/s:7MiniApp20MASDKPermissionErrorO13notDeterminedyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/notDetermined" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp20MASDKPermissionErrorO13notDeterminedyA2CmF">notDetermined</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -205,14 +205,68 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>User has not yet made a choice</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">forward</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">notDetermined</span> <span class="o">=</span> <span class="s">"NOT_DETERMINED"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp20MASDKPermissionErrorO10restrictedyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/restricted" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp20MASDKPermissionErrorO10restrictedyA2CmF">restricted</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Host app is not authorized to use location services</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">restricted</span> <span class="o">=</span> <span class="s">"RESTRICTED"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp20MASDKPermissionErrorO015failedToConformF8ProtocolyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/failedToConformToProtocol" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp20MASDKPermissionErrorO015failedToConformF8ProtocolyA2CmF">failedToConformToProtocol</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Host app failed to implement required interface</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">failedToConformToProtocol</span> <span class="o">=</span> <span class="s">"FAILED_TO_CONFORM_PROTOCOL"</span></code></pre>
 
                         </div>
                       </div>

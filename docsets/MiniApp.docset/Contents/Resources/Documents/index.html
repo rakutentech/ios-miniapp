@@ -16,7 +16,7 @@
     <a title="MiniApp  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp 2.1.0 Docs</a> (61% documented)</p>
+        <p><a href="index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -55,7 +55,13 @@
             <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a>
@@ -69,24 +75,31 @@
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKPermissionError.html">MASDKPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKPermissionResponse.html">MASDKPermissionResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MiniAppCustomPermissionGrantedStatus.html">MiniAppCustomPermissionGrantedStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/MiniAppPermissionResult.html">MiniAppPermissionResult</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/MiniAppPermissionType.html">MiniAppPermissionType</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/String.html">String</a>
               </li>
             </ul>
           </li>
@@ -114,7 +127,21 @@
                 <a href="Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/MiniAppShareContent.html">MiniAppShareContent</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
               </li>
             </ul>
           </li>
@@ -126,7 +153,7 @@
             
             <h1 id='miniapp' class='heading'>MiniApp</h1>
 
-<p>This open-source library allows you to integrate Mini App ecosystem into your iOS applications. 
+<p>This open-source library allows you to integrate Mini App ecosystem into your iOS applications.
 Mini App SDK also facilitates communication between a mini app and the host app via a message bridge.</p>
 <h2 id='features' class='heading'>Features</h2>
 
@@ -156,9 +183,9 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 <p>In order to run your MiniApp you will have to provide the following,</p>
 
 <ul>
-<li>MiniApp host application identifier (RASApplicationIdentifier)</li>
-<li>Subscription key (RASProjectSubscriptionKey)</li>
-<li>Base URL for API requests to the library (RMAAPIEndpoint)</li>
+<li>MiniApp host application identifier (<code>RASApplicationIdentifier</code>)</li>
+<li>Subscription key (<code>RASProjectSubscriptionKey</code>)</li>
+<li>Base URL for API requests to the library (<code>RMAAPIEndpoint</code>)</li>
 <li>Preference, if you want to make use of Test API Endpoints in your application or not</li>
 </ul>
 <h2 id='installation' class='heading'>Installation</h2>
@@ -223,10 +250,14 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 <li><a href="#create-mini-app">Create a MiniApp</a></li>
 <li><a href="#MiniAppMessageProtocol">Communicate with MiniApp</a></li>
 <li><a href="#navigation">Customize history navigation</a></li>
+<li><a href="#custom-permissions">Custom Permissions</a></li>
+<li><a href="#list-downloaded-mini-apps">List Downloaded Mini apps</a></li>
 </ul>
 
 <div id="runtime-conf"></div>
 <h3 id='overriding-configuration-on-runtime' class='heading'>Overriding configuration on runtime</h3>
+
+<hr>
 
 <p>Every call to the API can be done with default parameters retrieved from the project .plist configuration file, or by providing a <code><a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a></code> object during the call. Here is a simple example class we use to create the configuration in samples below:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Config</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
@@ -245,6 +276,8 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 <div id="load-miniapp-list"></div>
 <h3 id='load-the-code-miniapp-code-list' class='heading'>Load the <code><a href="Classes/MiniApp.html">MiniApp</a></code> list:</h3>
 
+<hr>
+
 <p>MiniApp library calls are done via the <code>MiniApp.shared()</code> singleton with or without a <code><a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a></code> instance (you can get the current one with <code>Config.getCurrent()</code>). If you don&rsquo;t provide a config instance, values in custom iOS target properties will be used by default. </p>
 <pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="n">list</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
     <span class="o">...</span>
@@ -259,6 +292,8 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 
 <div id="get-mini-appinfo"></div>
 <h3 id='getting-a-code-miniappinfo-code' class='heading'>Getting a <code><a href="Structs/MiniAppInfo.html">MiniAppInfo</a></code> :</h3>
+
+<hr>
 <pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
     <span class="o">...</span>
 <span class="p">}</span>
@@ -272,6 +307,8 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 
 <div id="create-mini-app"></div>
 <h3 id='create-a-miniapp-for-the-given-code-miniappid-code' class='heading'>Create a MiniApp for the given <code>MiniAppId</code> :</h3>
+
+<hr>
 <pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">appId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
     <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
             <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">miniAppDisplay</span><span class="p">):</span>
@@ -282,12 +319,18 @@ Mini App SDK also facilitates communication between a mini app and the host app 
                 <span class="nf">print</span><span class="p">(</span><span class="s">"Error: "</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="p">)</span>
             <span class="p">}</span>
 <span class="p">},</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
+
 </code></pre>
 
 <div id="MiniAppMessageProtocol"></div>
 <h3 id='implement-the-miniappmessageprotocol-in-your-view-controller' class='heading'>Implement the MiniAppMessageProtocol in your View Controller</h3>
 
+<hr>
+
 <p>The <code><a href="Protocols/MiniAppMessageProtocol.html">MiniAppMessageProtocol</a></code> is used for passing messages between the Mini App (JavaScript) and the Host App (your native iOS App) and vice versa. Your App must provide the implementation for these functions.</p>
+
+<p><code>NOTE: Following code snippets is an example for implementing MiniAppMessageProtocol methods, you can add your own custom implementation or you can make use of the code which is provided in the Sample app.</code></p>
+<h5 id='retrieving-unique-id' class='heading'>Retrieving Unique ID</h5>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageProtocol</span> <span class="p">{</span>
     <span class="kd">func</span> <span class="nf">getUniqueId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
         <span class="k">guard</span> <span class="k">let</span> <span class="nv">deviceId</span> <span class="o">=</span> <span class="kt">UIDevice</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">identifierForVendor</span><span class="p">?</span><span class="o">.</span><span class="n">uuidString</span> <span class="k">else</span> <span class="p">{</span>
@@ -297,9 +340,49 @@ Mini App SDK also facilitates communication between a mini app and the host app 
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
+<h5 id='requesting-location-permissions' class='heading'>Requesting Location Permissions</h5>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageProtocol</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">requestPermission</span><span class="p">(</span><span class="nv">permissionType</span><span class="p">:</span> <span class="kt">MiniAppPermissionType</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="n">permissionType</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">location</span><span class="p">:</span>
+            <span class="k">let</span> <span class="nv">locStatus</span> <span class="o">=</span> <span class="kt">CLLocationManager</span><span class="o">.</span><span class="nf">authorizationStatus</span><span class="p">()</span>
+            <span class="k">switch</span> <span class="n">locStatus</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="o">.</span><span class="n">authorizedAlways</span><span class="p">,</span> <span class="o">.</span><span class="nv">authorizedWhenInUse</span><span class="p">:</span>
+                <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="s">"allowed"</span><span class="p">))</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre>
+
+<div id="request-custom-permission"></div>
+<h5 id='requesting-custom-permissions' class='heading'>Requesting Custom Permissions</h5>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageProtocol</span> <span class="p">{</span>
+        <span class="kd">func</span> <span class="nf">requestCustomPermissions</span><span class="p">(</span>
+            <span class="nv">permissions</span><span class="p">:</span> <span class="p">[</span><span class="kt">MASDKCustomPermissionModel</span><span class="p">],</span>
+            <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span>
+            <span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">MASDKCustomPermissionModel</span><span class="p">],</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">permissions</span><span class="p">))</span>    
+            <span class="p">}</span>
+
+</code></pre>
+
+<div id="share-mini-app-content"></div>
+<h5 id='share-mini-app-content' class='heading'>Share Mini app content</h5>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageProtocol</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">shareContent</span><span class="p">(</span><span class="nv">info</span><span class="p">:</span> <span class="kt">MiniAppShareContent</span><span class="p">,</span>
+            <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span>
+                <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">activityController</span> <span class="o">=</span> <span class="kt">UIActivityViewController</span><span class="p">(</span><span class="nv">activityItems</span><span class="p">:</span> <span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">messageContent</span><span class="p">],</span> <span class="nv">applicationActivities</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="nf">present</span><span class="p">(</span><span class="n">activityController</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="s">"SUCCESS"</span><span class="p">))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 
 <div id="navigation"></div>
 <h3 id='add-a-web-navigation-interface-to-the-miniapp-view' class='heading'>Add a web navigation interface to the MiniApp view</h3>
+
+<hr>
 
 <p>MiniApp iOS SDK provides a fully customizable way to implement a navigation interface inside your html pages with a <code><a href="Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a></code> object. The class takes 3 arguments:</p>
 
@@ -311,17 +394,69 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 <li>auto = navigation UI is only shown when a back or forward action is available</li>
 <li>always = navigation UI is always present</li>
 </ul></li>
-<li><code>navigationDelegate</code> : A delegate that will receive MiniApp view instructions about available navigation options</li>
+<li><code>navigationDelegate</code> : A delegate that will receive MiniApp view instructions about available navigation options. It will also receive taps on external links.</li>
 <li><code>customNavigationView</code> : A view implementing <code><a href="Protocols/MiniAppNavigationDelegate.html">MiniAppNavigationDelegate</a></code> that will be overlayed to the bottom of the MiniApp view</li>
 </ul>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">navConfig</span> <span class="o">=</span> <span class="kt">MiniAppNavigationConfig</span><span class="p">(</span>
                     <span class="nv">navigationBarVisibility</span><span class="p">:</span> <span class="o">.</span><span class="n">always</span><span class="p">,</span>
-                    <span class="nv">navigationDelegate</span><span class="p">:</span> <span class="n">myCustomView</span><span class="p">,</span>
+                    <span class="nv">navigationDelegate</span><span class="p">:</span> <span class="n">myNavigationDelegate</span><span class="p">,</span>
                     <span class="nv">customNavigationView</span><span class="p">:</span> <span class="n">mCustomView</span><span class="p">)</span>
 
 <span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">(),</span> <span class="nv">navigationSettings</span><span class="p">:</span> <span class="n">navConfig</span><span class="p">)</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
 <span class="o">...</span>
 <span class="p">}</span>
+</code></pre>
+<h4 id='opening-external-links' class='heading'>Opening external links</h4>
+
+<p>By default MiniApp iOS SDK will open external links into a separate modal controller when tapped. <code><a href="Protocols/MiniAppNavigationDelegate.html">MiniAppNavigationDelegate</a></code> implements a method that allows to override this behaviour and provide your own external links management. Here is an example of implementation:</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppNavigationDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">miniAppNavigation</span><span class="p">(</span><span class="n">shouldOpen</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="n">with</span> <span class="nv">externalLinkResponseHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">URL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Getting your custom viewcontroller</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">viewController</span> <span class="o">=</span> <span class="kt">UIStoryboard</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Main"</span><span class="p">,</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span><span class="o">.</span><span class="nf">instantiateViewController</span><span class="p">(</span><span class="nv">withIdentifier</span><span class="p">:</span> <span class="s">"ExternalWebviewController"</span><span class="p">)</span> <span class="k">as?</span> <span class="kt">ExternalWebViewController</span> <span class="p">{</span>
+            <span class="n">viewController</span><span class="o">.</span><span class="n">currentURL</span> <span class="o">=</span> <span class="n">url</span>
+            <span class="n">viewController</span><span class="o">.</span><span class="n">miniAppExternalUrlLoader</span> <span class="o">=</span> <span class="kt">MiniAppExternalUrlLoader</span><span class="p">(</span><span class="nv">webViewController</span><span class="p">:</span> <span class="n">viewController</span><span class="p">,</span> <span class="nv">responseHandler</span><span class="p">:</span> <span class="n">externalLinkResponseHandler</span><span class="p">)</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">presentedViewController</span><span class="p">?</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="n">viewController</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>The <code>externalLinkResponseHandler</code> closure allows you to give a feedback as an URL to the SDK, for example when the controller is closed or when a custom scheme link is tapped. This closure can be passed to a <code><a href="Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a></code> object that will provide a method to test an URL and return the appropriate decision for a <code>WKNavigationDelegate</code> method, and if you provided a controller it will be dismissed automatically. Here is an example following previous example:</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ExternalWebViewController</span><span class="p">:</span> <span class="kt">WKNavigationDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">webView</span><span class="p">(</span><span class="n">_</span> <span class="nv">webView</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">,</span> <span class="n">didFinish</span> <span class="nv">navigation</span><span class="p">:</span> <span class="kt">WKNavigation</span><span class="o">!</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">currentURL</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">webView</span><span class="o">.</span><span class="n">url</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">webView</span><span class="p">(</span><span class="n">_</span> <span class="nv">webView</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">,</span> <span class="n">decidePolicyFor</span> <span class="nv">navigationAction</span><span class="p">:</span> <span class="kt">WKNavigationAction</span><span class="p">,</span> <span class="nv">decisionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">WKNavigationActionPolicy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">decisionHandler</span><span class="p">(</span><span class="n">miniAppExternalUrlLoader</span><span class="p">?</span><span class="o">.</span><span class="nf">shouldOverrideURLLoading</span><span class="p">(</span><span class="n">navigationAction</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">)</span> <span class="p">??</span> <span class="o">.</span><span class="n">allow</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<div id="custom-permissions"></div>
+<h3 id='custom-permissions' class='heading'>Custom Permissions</h3>
+
+<hr>
+
+<p>MiniApp iOS SDK supports list of Custom Permissions ( <code><a href="Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a></code>) and these can be stored and retrieved using the following public interfaces.</p>
+<h4 id='retrieving-the-mini-app-custom-permissions-using-miniappid' class='heading'>Retrieving the Mini App Custom Permissions using MiniAppID</h4>
+
+<p>Custom permissions and its status can be retrieved using the following interface. <code>getCustomPermissions</code> will return list  of <code><a href="Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a></code> that contains the meta-info such as title and its granted status.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">miniAppPermissionsList</span> <span class="o">=</span> <span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">getCustomPermissions</span><span class="p">(</span><span class="nv">forMiniApp</span><span class="p">:</span> <span class="n">miniAppId</span><span class="p">)</span>
+</code></pre>
+<h4 id='store-the-mini-app-custom-permissions' class='heading'>Store the Mini App Custom Permissions</h4>
+
+<p>Custom permissions for a mini app is cached by the SDK and you can use the following interface to store and retrieve it when you need.</p>
+<pre class="highlight swift"><code> <span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">setCustomPermissions</span><span class="p">(</span><span class="nv">forMiniApp</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">permissionList</span><span class="p">:</span> <span class="p">[</span><span class="kt">MASDKCustomPermissionModel</span><span class="p">])</span>
+</code></pre>
+
+<div id="list-downloaded-mini-apps"></div>
+<h3 id='list-downloaded-mini-apps' class='heading'>List Downloaded Mini apps</h3>
+
+<p>Gets the list of downloaded Mini apps info and associated custom permissions status</p>
+<pre class="highlight swift"><code> <span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">listDownloadedWithCustomPermissions</span><span class="p">()</span>
 </code></pre>
 
 <div id="change-log"></div>
@@ -332,7 +467,7 @@ Mini App SDK also facilitates communication between a mini app and the host app 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-09-03)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

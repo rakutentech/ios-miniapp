@@ -16,7 +16,7 @@
     <a title="CHANGELOG  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp 2.1.0 Docs</a> (61% documented)</p>
+        <p><a href="index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -55,7 +55,13 @@
             <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a>
@@ -69,24 +75,31 @@
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKPermissionError.html">MASDKPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKPermissionResponse.html">MASDKPermissionResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MiniAppCustomPermissionGrantedStatus.html">MiniAppCustomPermissionGrantedStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/MiniAppPermissionResult.html">MiniAppPermissionResult</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/MiniAppPermissionType.html">MiniAppPermissionType</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/String.html">String</a>
               </li>
             </ul>
           </li>
@@ -114,7 +127,21 @@
                 <a href="Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/MiniAppShareContent.html">MiniAppShareContent</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
               </li>
             </ul>
           </li>
@@ -125,6 +152,29 @@
           <section class="section">
             
             <h2 id='changelog' class='heading'>CHANGELOG</h2>
+<h3 id='2-2-0-2020-10-02' class='heading'>2.2.0 (2020-10-02)</h3>
+
+<p><strong>SDK</strong></p>
+
+<ul>
+<li><strong>Feature:</strong> Added public interface to set and get the Custom permissions that are cached by the iOS SDK. <a href="USERGUIDE.md#custom-permissions">See here</a></li>
+<li><strong>Feature:</strong> Added support in Javascript bridge for requesting Custom permission.
+<code>requestCustomPermissions(permissionType)</code></li>
+<li><strong>Feature:</strong> Added <code>requestCustomPermissions</code> function to MiniAppMessageProtocol. This function requests the host app to implement and return the list of Custom permissions that User responds with allow/deny option.<a href="USERGUIDE.md#request-custom-permission">See here</a></li>
+<li><strong>Feature:</strong> Added support for Javascript bridge interface for sharing message string from Mini app.
+<code>shareInfo(info)</code></li>
+<li><strong>Feature:</strong> Added <code>shareContent(info:completionHandler:)</code> function to MiniAppMessageProtocol. Host app can make use of this function to display the Sharing feature/Controller <a href="USERGUIDE.md#share-mini-app-content">See here</a></li>
+<li><strong>Feature:</strong> Added ability to load external link outside of Mini App view with included SFSafariViewController or by providing delegate, with ability to provide a result URL to Mini App with a closure.  <a href="USERGUIDE.md#navigation">See here</a></li>
+<li><strong>Feature:</strong> Added <code>listDownloadedWithCustomPermissions()</code> public interface that enables the host app to retrieve the list of downloaded mini-apps and their respective custom permissions. <a href="USERGUIDE.md#list-downloaded-mini-apps">See here</a></li>
+</ul>
+
+<p><strong>Sample App</strong></p>
+
+<ul>
+<li><strong>Feature:</strong> Added example for showing list of Custom permissions (on request from Mini app) and response back to Mini app.</li>
+<li><strong>Feature:</strong> Added sample implementation for Sharing the message from Mini app</li>
+<li><strong>Feature:</strong> Added sample app implementation to revoke/manage the custom permissions for the list of downloaded mini apps</li>
+</ul>
 <h3 id='2-1-0-2020-09-03' class='heading'>2.1.0 (2020-09-03)</h3>
 
 <p><strong>SDK</strong></p>
@@ -208,7 +258,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-09-03)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

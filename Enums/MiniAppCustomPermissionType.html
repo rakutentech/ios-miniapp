@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppNavigationAction Enumeration Reference</title>
+    <title>MiniAppCustomPermissionType Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/MiniAppNavigationAction" class="dashAnchor"></a>
-    <a title="MiniAppNavigationAction Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/MiniAppCustomPermissionType" class="dashAnchor"></a>
+    <a title="MiniAppCustomPermissionType Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
@@ -29,7 +29,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MiniApp Reference</a>
         <img id="carat" src="../img/carat.png" />
-        MiniAppNavigationAction Enumeration Reference
+        MiniAppCustomPermissionType Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -151,15 +151,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>MiniAppNavigationAction</h1>
+            <h1>MiniAppCustomPermissionType</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MiniAppNavigationAction</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MiniAppCustomPermissionType</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CaseIterable</span></code></pre>
 
                 </div>
               </div>
-            <p>An enum used by <code><a href="../Protocols/MiniAppNavigationBarDelegate.html">MiniAppNavigationBarDelegate</a></code> to indicate which action has been triggered by navigation UI</p>
+            <p>Undocumented</p>
 
           </section>
           <section class="section task-group-section">
@@ -168,9 +168,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB16NavigationActionO4backyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/back" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB16NavigationActionO4backyA2CmF">back</a>
+                    <a name="/s:7MiniApp0aB20CustomPermissionTypeO8userNameyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/userName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB20CustomPermissionTypeO8userNameyA2CmF">userName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -185,7 +185,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">back</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">userName</span> <span class="o">=</span> <span class="s">"rakuten.miniapp.user.USER_NAME"</span></code></pre>
 
                         </div>
                       </div>
@@ -195,9 +195,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB16NavigationActionO7forwardyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/forward" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB16NavigationActionO7forwardyA2CmF">forward</a>
+                    <a name="/s:7MiniApp0aB20CustomPermissionTypeO12profilePhotoyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/profilePhoto" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB20CustomPermissionTypeO12profilePhotoyA2CmF">profilePhoto</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -212,7 +212,61 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">forward</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">profilePhoto</span> <span class="o">=</span> <span class="s">"rakuten.miniapp.user.PROFILE_PHOTO"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB20CustomPermissionTypeO12contactsListyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/contactsList" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB20CustomPermissionTypeO12contactsListyA2CmF">contactsList</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">contactsList</span> <span class="o">=</span> <span class="s">"rakuten.miniapp.user.CONTACT_LIST"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB20CustomPermissionTypeO5titleSSvp"></a>
+                    <a name="//apple_ref/swift/Property/title" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB20CustomPermissionTypeO5titleSSvp">title</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
