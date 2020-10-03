@@ -149,6 +149,14 @@ internal class RealMiniApp {
 }
 
 extension RealMiniApp: MiniAppMessageProtocol {
+    func getUserName(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
+
+    func getProfilePhoto(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
+
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }

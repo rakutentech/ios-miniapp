@@ -17,6 +17,12 @@ public protocol MiniAppMessageProtocol: class {
 
     /// Interface that is used to share the content from the Mini app
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)
+
+    /// Interface that is used to retrieve the user name from the User Profile
+    func getUserName(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void)
+
+    /// Interface that is used to retrieve the Base64 Profile photo
+    func getProfilePhoto(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void)
 }
 
 public enum MASDKProtocolResponse: String {
@@ -61,6 +67,9 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
     case failedToConformToProtocol = "FAILED_TO_CONFORM_PROTOCOL"
     case invalidCustomPermissionRequest
     case invalidCustomPermissionsList
+    case userNameNotAvailable
+    case profilePhotoNotAvailable
+    case userDenied
 
     var name: String {
         return self.rawValue
@@ -76,6 +85,12 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
             return "Error in Custom Permission Request, please make sure the Custom permissions are passed in []"
         case .invalidCustomPermissionsList:
             return "Error in list of Custom permissions that is passed, please check whether valid permission associated with name "
+        case .userNameNotAvailable:
+            return "User name is not set by the User"
+        case .profilePhotoNotAvailable:
+            return "Profile photo is not set the User"
+        case .userDenied:
+            return "User denied to share the detail"
         }
     }
 }

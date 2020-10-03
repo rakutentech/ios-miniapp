@@ -1,6 +1,7 @@
 @testable import MiniApp
 import WebKit
 
+// swiftlint:disable file_length
 class MockAPIClient: MiniAppClient {
     var data: Data?
     var manifestData: Data?
@@ -220,6 +221,7 @@ class MockMessageInterface: MiniAppMessageProtocol {
     var permissionError: MASDKPermissionError?
     var customPermissionError: MASDKCustomPermissionError?
     var messageContentAllowed: Bool = false
+    var userSettingsAllowed: Bool = false
 
     func getUniqueId() -> String {
         if mockUniqueId {
@@ -263,6 +265,23 @@ class MockMessageInterface: MiniAppMessageProtocol {
             completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
         }
     }
+
+    func getUserName(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void) {
+        if userSettingsAllowed {
+            completionHandler(.success("Rakuten"))
+        } else {
+            completionHandler(.failure(.unknownError))
+        }
+    }
+
+    func getProfilePhoto(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void) {
+        if userSettingsAllowed {
+
+            let image = UIImage(named: "image_placeholder")
+            completionHandler(.success((image?.dataURI())!))
+        } else {
+            completionHandler(.failure(.unknownError))
+        }    }
 }
 
 var mockMiniAppInfo: MiniAppInfo {
@@ -375,4 +394,31 @@ func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
         return nil
     }
     return errorMessage
+}
+
+extension UIImage {
+    func hasAlpha() -> Bool {
+        let noAlphaCases: [CGImageAlphaInfo] = [.none, .noneSkipLast, .noneSkipFirst]
+        if let alphaInfo = cgImage?.alphaInfo {
+            return !noAlphaCases.contains(alphaInfo)
+        } else {
+            return false
+        }
+    }
+
+    func dataURI() -> String? {
+        var mimeType: String = ""
+        var imageData: Data
+        if hasAlpha(), let png = pngData() {
+            imageData = png
+            mimeType = "image/png"
+        } else if let jpg = jpegData(compressionQuality: 1.0) {
+            imageData = jpg
+            mimeType = "image/jpeg"
+        } else {
+            return nil
+        }
+
+        return "data:\(mimeType);base64,\(imageData.base64EncodedString())"
+    }
 }

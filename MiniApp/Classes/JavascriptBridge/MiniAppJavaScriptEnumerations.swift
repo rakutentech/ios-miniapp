@@ -4,6 +4,8 @@ enum MiniAppJSActionCommand: String {
     case requestPermission
     case requestCustomPermissions
     case shareInfo
+    case getUsername
+    case getProfilePhoto
 }
 
 enum JavaScriptExecResult: String {
