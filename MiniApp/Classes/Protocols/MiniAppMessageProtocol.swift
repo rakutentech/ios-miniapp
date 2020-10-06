@@ -17,12 +17,18 @@ public protocol MiniAppMessageProtocol: class {
 
     /// Interface that is used to share the content from the Mini app
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)
+}
 
+/**
+ Public Protocol that will be used by the Mini App to communicate
+ with the Native implementation for User profile related retrieval
+*/
+public protocol MiniAppUserInfoProtocol: class {
     /// Interface that is used to retrieve the user name from the User Profile
-    func getUserName(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void)
+    func getUserName() -> String
 
-    /// Interface that is used to retrieve the Base64 Profile photo
-    func getProfilePhoto(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void)
+    /// Interface that is used to retrieve the Image URI
+    func getProfilePhoto() -> String
 }
 
 public enum MASDKProtocolResponse: String {

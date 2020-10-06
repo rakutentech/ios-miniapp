@@ -3,30 +3,6 @@ import CoreLocation
 
 extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
 
-    func getUserName(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void) {
-        guard let userProfile = getProfileSettings() else {
-            completionHandler(.failure(.unknownError))
-            return
-        }
-        guard let userName = userProfile.displayName else {
-            completionHandler(.failure(.userNameNotAvailable))
-            return
-        }
-        completionHandler(.success(userName))
-    }
-
-    func getProfilePhoto(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void) {
-        guard let userProfile = getProfileSettings() else {
-            completionHandler(.failure(.unknownError))
-            return
-        }
-        guard let userProfilePhoto = userProfile.profileImageURI else {
-            completionHandler(.failure(.profilePhotoNotAvailable))
-            return
-        }
-        completionHandler(.success(userProfilePhoto))
-    }
-
     typealias PermissionCompletionHandler = (((Result<MASDKPermissionResponse, MASDKPermissionError>)) -> Void)
 
     func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {

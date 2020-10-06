@@ -265,23 +265,19 @@ class MockMessageInterface: MiniAppMessageProtocol {
             completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
         }
     }
+}
 
-    func getUserName(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void) {
-        if userSettingsAllowed {
-            completionHandler(.success("Rakuten"))
-        } else {
-            completionHandler(.failure(.unknownError))
-        }
+class MockUserInfoInterface: MiniAppUserInfoProtocol {
+    var mockUserName = ""
+    var mockProfilePhoto = ""
+
+    func getUserName() -> String {
+        return mockUserName
     }
 
-    func getProfilePhoto(completionHandler: @escaping (Result<String, MASDKCustomPermissionError>) -> Void) {
-        if userSettingsAllowed {
-
-            let image = UIImage(named: "image_placeholder")
-            completionHandler(.success((image?.dataURI())!))
-        } else {
-            completionHandler(.failure(.unknownError))
-        }    }
+    func getProfilePhoto() -> String {
+        return mockProfilePhoto
+    }
 }
 
 var mockMiniAppInfo: MiniAppInfo {
