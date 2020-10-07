@@ -2,9 +2,18 @@
 
 ### 2.x.x (In progress)
 
-***SDK***
+**SDK**
 
--**Fixed:** support of `playsinline` instruction of  `Video` html tag
+- **Fixed:** support of `playsinline` instruction of  `Video` html tag
+
+- **Feature:** Added separate public `MiniAppUserInfoProtocol` to communicate with the host app for User profile related retrieval.
+- **Feature:** Added interfaces such as [getUserName](USERGUIDE.md#cuser-profile-details-username) and [getProfilePhoto](USERGUIDE.md#cuser-profile-details-profilephoto) in `MiniAppUserInfoProtocol` to retrieve username and profile photo respectively. Interfaces will be called only if user has agreed to the respective custom permission. i.e `rakuten.miniapp.user.USER_NAME` for [getUserName](USERGUIDE.md#cuser-profile-details-username) and `rakuten.miniapp.user.PROFILE_PHOTO` for [getProfilePhoto](USERGUIDE.md#cuser-profile-details-profilephoto)
+- **Feature:** Added support for Javascript bridge interface for User Info detail retrieval from Mini app.
+`getUserName()` and `geProfilePhoto()`
+
+**Sample App**
+
+- **Feature:** Added sample implementation for Retrieving Username & Profile photo from Mini app
 
 ### 2.2.0 (2020-10-02)
 

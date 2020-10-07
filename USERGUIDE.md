@@ -305,14 +305,37 @@ Gets the list of downloaded Mini apps info and associated custom permissions sta
 
 ### Retrieve User Profile details
 ---
-Get the User profile related details using the following interfaces.
+Get the User profile related details using 'MiniAppUserInfoProtocol'.
+The following delegates/interfaces will be called only if the user has allowed respective [Custom permissions](#custom-permissions)
+
+<div id="user-profile-details-username"></div>
 
 #### User Name
 
-Retrieve user name
+Retrieve user name of the User
 
 ```swift
- MiniApp.shared().getUserName()
+extension ViewController: MiniAppUserInfoProtocol {
+    MiniApp.shared().getUserName() -> String {
+        // Implementation to return the User name
+        return ""
+    }
+}
+```
+
+<div id="user-profile-details-profilephoto"></div>
+
+#### Profile Photo
+
+Retrieve Profile Photo of the User
+
+```swift
+extension ViewController: MiniAppUserInfoProtocol {
+    MiniApp.shared().getProfilePhoto() -> String {
+        // Implementation to return the Profile photo URI
+        return ""
+    }
+}
 ```
 
 <div id="change-log"></div>
