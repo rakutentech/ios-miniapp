@@ -71,6 +71,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Customize history navigation](#navigation)
 * [Custom Permissions](#custom-permissions)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
+* [Retrieve User Profile details](#user-profile-details)
 
 <div id="runtime-conf"></div>
 
@@ -300,6 +301,19 @@ Gets the list of downloaded Mini apps info and associated custom permissions sta
  MiniApp.shared().listDownloadedWithCustomPermissions()
 ```
 
+<div id="user-profile-details"></div>
+
+### Retrieve User Profile details
+---
+Get the User profile related details using the following interfaces.
+
+#### User Name
+
+Retrieve user name
+
+```swift
+ MiniApp.shared().getUserName()
+```
 
 <div id="change-log"></div>
 

@@ -382,6 +382,14 @@ func deleteStatusPreferences() {
     UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
 }
 
+func updateCustomPermissionStatus(miniAppId: String, permissionType: MiniAppCustomPermissionType, status: MiniAppCustomPermissionGrantedStatus) {
+    MiniApp.shared().setCustomPermissions(forMiniApp: miniAppId,
+                                          permissionList: [MASDKCustomPermissionModel(
+                                            permissionName: permissionType,
+                                            isPermissionGranted: status,
+                                            permissionRequestDescription: "")])
+}
+
 func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
     guard let errorData = message?.data(using: .utf8) else {
         return nil

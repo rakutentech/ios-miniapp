@@ -277,6 +277,107 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(callbackProtocol.errorMessage).toEventually(contain("ShareContentError"), timeout: 10)
                  }
             }
+
+            context("when MiniAppScriptMessageHandler receives valid getUsername command") {
+                 it("will return User Name if User has set the Username in the User Profile") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+
+                    mockUserInfoInterface.mockUserName = "Rakuten"
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: "Test",
+                        hostAppUserInfoDelegate: mockUserInfoInterface
+                    )
+                    mockMessageInterface.messageContentAllowed = false
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(contain("Rakuten"), timeout: 10)
+                 }
+                it("will return Error if User didn't set the Username in the User Profile") {
+                    mockUserInfoInterface.mockUserName = ""
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                       delegate: mockCallbackProtocol,
+                       hostAppMessageDelegate: mockMessageInterface,
+                       miniAppId: self.name,
+                       hostAppUserInfoDelegate: mockUserInfoInterface
+                    )
+                    updateCustomPermissionStatus(miniAppId: self.name, permissionType: .userName, status: .allowed)
+                   let mockMessage = MockWKScriptMessage(
+                       name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                   scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                   expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue), timeout: 10)
+                }
+                it("will return Error if User didn't allow User Name permission") {
+                    mockUserInfoInterface.mockUserName = ""
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                       delegate: mockCallbackProtocol,
+                       hostAppMessageDelegate: mockMessageInterface,
+                       miniAppId: self.name,
+                       hostAppUserInfoDelegate: mockUserInfoInterface
+                    )
+                    updateCustomPermissionStatus(miniAppId: self.name, permissionType: .userName, status: .denied)
+                   let mockMessage = MockWKScriptMessage(
+                       name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                   scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: 10)
+                }
+            }
+            context("when MiniAppScriptMessageHandler receives valid getProfilePhoto command") {
+                 it("will return Profile Photo if User has set the Profile photo in the User Profile") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    mockUserInfoInterface.mockProfilePhoto = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8wmD0HwAFPQInf/fUWQAAAABJRU5ErkJggg=="
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: self.name,
+                        hostAppUserInfoDelegate: mockUserInfoInterface
+                    )
+                    updateCustomPermissionStatus(miniAppId: self.name, permissionType: .profilePhoto, status: .allowed)
+                    mockMessageInterface.messageContentAllowed = false
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(contain(mockUserInfoInterface.mockProfilePhoto), timeout: 10)
+                 }
+                it("will return Error if User didn't set the Profile Photo in the User Profile") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                   mockUserInfoInterface.mockProfilePhoto = ""
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                       delegate: mockCallbackProtocol,
+                       hostAppMessageDelegate: mockMessageInterface,
+                       miniAppId: self.name,
+                       hostAppUserInfoDelegate: mockUserInfoInterface
+                   )
+                   updateCustomPermissionStatus(miniAppId: self.name, permissionType: .profilePhoto, status: .allowed)
+                   mockMessageInterface.messageContentAllowed = false
+                   let mockMessage = MockWKScriptMessage(
+                       name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                   scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                   expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue), timeout: 10)
+                }
+                it("will return Error if User didn't allow Profile Photo permission") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                   mockUserInfoInterface.mockProfilePhoto = ""
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                       delegate: mockCallbackProtocol,
+                       hostAppMessageDelegate: mockMessageInterface,
+                       miniAppId: self.name,
+                       hostAppUserInfoDelegate: mockUserInfoInterface
+                   )
+                   updateCustomPermissionStatus(miniAppId: self.name, permissionType: .profilePhoto, status: .denied)
+                   mockMessageInterface.messageContentAllowed = false
+                   let mockMessage = MockWKScriptMessage(
+                       name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                   scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                   expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: 10)
+                }
+            }
         }
     }
 }
