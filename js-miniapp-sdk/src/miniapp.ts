@@ -81,9 +81,42 @@ interface Platform {
   getPlatform();
 }
 
+/**
+ * Interfaces to retrieve User profile related information
+ */
+export interface UserInfoProvider {
+  /**
+   * @returns Username saved in the host app user profile
+   */
+  getUserName(): Promise<string>;
+
+  /**
+   * @returns Profile photo saved in the host app user profile
+   */
+  getProfilePhoto(): Promise<string>;
+}
+
+/** @internal */
+class UserInfo implements UserInfoProvider {
+  private bridge: MiniAppBridge;
+
+  constructor(miniAppBridge: MiniAppBridge) {
+    this.bridge = miniAppBridge;
+  }
+
+  getUserName(): Promise<string> {
+    return this.bridge.getUserName();
+  }
+
+  getProfilePhoto(): Promise<string> {
+    return this.bridge.getProfilePhoto();
+  }
+}
+
 /* tslint:disable:no-any */
 export class MiniApp implements MiniAppFeatures, Ad, Platform {
   private bridge: MiniAppBridge = (window as any).MiniAppBridge;
+  user: UserInfoProvider = new UserInfo(this.bridge);
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return this.bridge.requestPermission(permissionType);

@@ -162,6 +162,34 @@ miniApp.shareInfo(info)
     .catch(error => console.error(error));
 ```
 
+### 5. Requesting User details
+
+You can retrieve the User Name and Profile Photo of the user using the following interfaces. Please make sure that User have allowed respective custom permission before requesting the user detail.
+
+```javascript
+const info = { content: inputValue };
+
+MiniApp.getUserName()
+    .then(userName => {
+		console.log(userName);
+	}).catch(error => {
+		console.error(error);
+	});
+```
+
+NOTE: getProfilePhoto() -  Returns the Profile Photo URI from the Host app.
+
+```javascript
+const info = { content: inputValue };
+
+MiniApp.getProfilePhoto()
+    .then(profilePhoto => {
+		console.log(profilePhoto);
+	}).catch(error => {
+		console.error(error);
+	});
+```
+
 ## Advanced Usage
 
 ### Check Android/iOS device

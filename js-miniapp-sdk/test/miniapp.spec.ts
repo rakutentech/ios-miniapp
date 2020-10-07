@@ -23,6 +23,8 @@ window.MiniAppBridge = {
   showRewardedAd: sinon.stub(),
   shareInfo: sinon.stub(),
   getPlatform: sinon.stub(),
+  getUserName: sinon.stub(),
+  getProfilePhoto: sinon.stub(),
 };
 const miniApp = new MiniApp();
 
@@ -200,5 +202,24 @@ describe('shareInfo', () => {
 
     window.MiniAppBridge.shareInfo.resolves(error);
     return expect(miniApp.shareInfo(sharedInfo)).to.eventually.equal(error);
+  });
+});
+
+describe('getUserName', () => {
+  it('should retrieve username from the MiniAppBridge if getUserName is called', () => {
+    const response = 'Rakuten';
+
+    window.MiniAppBridge.getUserName.resolves(response);
+    return expect(miniApp.user.getUserName()).to.eventually.equal(response);
+  });
+});
+
+describe('getProfilePhoto', () => {
+  it('should retrieve Profile photo in Base 64 string from the MiniAppBridge if getProfilePhoto is called', () => {
+    const response =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8wmD0HwAFPQInf/fUWQAAAABJRU5ErkJggg==';
+
+    window.MiniAppBridge.getProfilePhoto.resolves(response);
+    return expect(miniApp.user.getProfilePhoto()).to.eventually.equal(response);
   });
 });
