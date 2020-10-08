@@ -213,7 +213,7 @@ class MockFile {
     }
 }
 
-class MockMessageInterface: MiniAppMessageDelegate {
+class MockMessageInterface: MiniAppMessageProtocol {
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
