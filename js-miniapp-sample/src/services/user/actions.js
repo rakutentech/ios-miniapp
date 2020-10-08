@@ -15,35 +15,37 @@ type ContactListSuccessAction = { type: String, contacts: string[] };
 
 const requestUserName = (): Function => {
   return (dispatch) => {
-    return MiniApp.user.getUserName()
-    .then((userName) => {
-      dispatch({
-        type: REQUEST_USER_NAME_SUCCESS,
-        userName,
+    return MiniApp.user
+      .getUserName()
+      .then((userName) => {
+        dispatch({
+          type: REQUEST_USER_NAME_SUCCESS,
+          userName,
+        });
+      })
+      .catch((_) => {
+        dispatch({
+          type: REQUEST_USER_NAME_FAILURE,
+        });
       });
-    })
-    .catch((_) => {
-      dispatch({
-        type: REQUEST_USER_NAME_FAILURE,
-      });
-    });
   };
 };
 
 const requestProfilePhoto = (): Function => {
   return (dispatch) => {
-    return MiniApp.user.getProfilePhoto()
-    .then((url) => {
-      dispatch({
-        type: REQUEST_PROFILE_PHOTO_SUCCESS,
-        url,
+    return MiniApp.user
+      .getProfilePhoto()
+      .then((url) => {
+        dispatch({
+          type: REQUEST_PROFILE_PHOTO_SUCCESS,
+          url,
+        });
+      })
+      .catch((_) => {
+        dispatch({
+          type: REQUEST_PROFILE_PHOTO_FAILURE,
+        });
       });
-    })
-    .catch((_) => {
-      dispatch({
-        type: REQUEST_PROFILE_PHOTO_FAILURE,
-      });
-    });
   };
 };
 

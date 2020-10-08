@@ -161,7 +161,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   getPlatform(): string {
     let platform = 'Unknown';
     try {
-      platform = (window as any).MiniAppBridge.platform;
+      platform = this.bridge.platform;
     } catch (e) {}
     return platform;
   }

@@ -39,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Share() {
   const classes = useStyles();
-  let inputValue = 'This is JS-SDK-Sample.';
+  const defaultInputValue = 'This is JS-SDK-Sample.';
+  let inputValue = defaultInputValue;
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -65,7 +66,7 @@ function Share() {
           className={classes.textfield}
           onChange={handleInput}
           placeholder="Content"
-          defaultValue="This is JS-SDK-Sample."
+          defaultValue={defaultInputValue}
           variant="outlined"
           color="primary"
           multiline="true"
