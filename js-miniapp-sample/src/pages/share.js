@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Share() {
   const classes = useStyles();
-  let inputValue = '';
+  let inputValue = 'This is JS-SDK-Sample.';
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();

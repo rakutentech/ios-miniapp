@@ -169,7 +169,7 @@ You can retrieve the User Name and Profile Photo of the user using the following
 ```javascript
 const info = { content: inputValue };
 
-MiniApp.getUserName()
+MiniApp.user.getUserName()
     .then(userName => {
 		console.log(userName);
 	}).catch(error => {
@@ -182,7 +182,7 @@ NOTE: getProfilePhoto() -  Returns the Profile Photo URI from the Host app.
 ```javascript
 const info = { content: inputValue };
 
-MiniApp.getProfilePhoto()
+MiniApp.user.getProfilePhoto()
     .then(profilePhoto => {
 		console.log(profilePhoto);
 	}).catch(error => {
