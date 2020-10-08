@@ -33,7 +33,7 @@ class MiniAppTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.localizedDescription).toEventually(equal("Invalid AppID error"), timeout: 2)
+                    expect(testError?.localizedDescription).toEventually(equal("Invalid AppID error"), timeout: .seconds(2))
                 }
             }
             context("when info method is called with valid mini app id") {
@@ -46,7 +46,7 @@ class MiniAppTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(400) || equal(404), timeout: 10)
+                    expect(testError?.code).toEventually(equal(400) || equal(404), timeout: .seconds(10))
                 }
             }
             context("when no mini apps downloaded and listDownloadedWithCustomPermissions method is called") {

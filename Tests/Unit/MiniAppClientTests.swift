@@ -86,7 +86,7 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError.code).toEventually(equal(400), timeout: 2)
+                    expect(testError.code).toEventually(equal(400), timeout: .seconds(2))
                 }
             }
 
@@ -101,7 +101,7 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(404), timeout: 2)
+                    expect(testError?.code).toEventually(equal(404), timeout: .seconds(2))
                 }
                 it("will pass an error to completion handler with expected message") {
                     self.executeSession(data: ["code": 404, "message": "error message description"], statusCode: 404) { (result) in
@@ -113,7 +113,7 @@ class MiniAppClientTests: QuickSpec {
                         }
                     }
 
-                    expect(testError?.localizedDescription).toEventually(equal("error message description"), timeout: 2)
+                    expect(testError?.localizedDescription).toEventually(equal("error message description"), timeout: .seconds(2))
                 }
 
                 let sessionDataForbidden = ["error": "Error", "error_description": "An error has occurred"]
@@ -126,7 +126,7 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.localizedDescription).toEventually(equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"), timeout: 2)
+                    expect(testError?.localizedDescription).toEventually(equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"), timeout: .seconds(2))
                 }
                 it("will pass an error to completion handler with expected message if it is a 403 error") {
                     self.executeSession(data: sessionDataForbidden, statusCode: 403) { (result) in
@@ -137,7 +137,7 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.localizedDescription).toEventually(equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"), timeout: 2)
+                    expect(testError?.localizedDescription).toEventually(equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"), timeout: .seconds(2))
                 }
             }
             context("when network response contains invalid error") {
@@ -151,7 +151,7 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: 2)
+                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(2))
                 }
             }
             context("when environment is invalid") {
@@ -165,7 +165,7 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: 2)
+                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(2))
                 }
             }
         }
@@ -206,7 +206,7 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError.code).toEventually(equal(400), timeout: 2)
+                    expect(testError.code).toEventually(equal(400), timeout: .seconds(2))
                 }
                 it("returns valid error response") {
                     var testError: NSError?
@@ -221,7 +221,7 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(404), timeout: 2)
+                    expect(testError?.code).toEventually(equal(404), timeout: .seconds(2))
                 }
                 it("returns invalid error response") {
                     var testError: NSError?
@@ -236,7 +236,7 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: 2)
+                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(2))
                 }
             }
         }
