@@ -213,13 +213,22 @@ class MockFile {
     }
 }
 
-class MockMessageInterface: MiniAppMessageProtocol {
+class MockShareInterface: MockMessageInterface, MiniAppMessageAndShareDelegate {
+    var messageContentAllowed: Bool = false
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+        if messageContentAllowed {
+            completionHandler(.success(.success))
+        } else {
+            completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
+        }
+    }
+}
+class MockMessageInterface: MiniAppMessageDelegate {
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
     var permissionError: MASDKPermissionError?
     var customPermissionError: MASDKCustomPermissionError?
-    var messageContentAllowed: Bool = false
 
     func getUniqueId() -> String {
         if mockUniqueId {
@@ -253,14 +262,6 @@ class MockMessageInterface: MiniAppMessageProtocol {
                 return
             }
             completionHandler(.failure(.unknownError))
-        }
-    }
-
-    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
-        if messageContentAllowed {
-            completionHandler(.success(.success))
-        } else {
-            completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
         }
     }
 }

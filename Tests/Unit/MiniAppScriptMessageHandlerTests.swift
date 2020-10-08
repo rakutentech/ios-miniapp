@@ -171,8 +171,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid share info message") {
-                 it("will return SUCCESS after host app displays UIActivityController") {
-                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+                it("will return SUCCESS after host app displays UIActivityController") {
+                    let mockMessageInterface = MockShareInterface()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
                     mockMessageInterface.messageContentAllowed = true
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"shareInfo\",\"param\":{\"shareInfo\":{\"content\":\"Test Message\"}},\"id\":\"1.033890137027198\"}"as AnyObject)
@@ -182,8 +183,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid share info message but there is an error in host app delegate") {
-                 it("will return Error") {
-                     let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
+                it("will return Error") {
+                    let mockMessageInterface = MockShareInterface()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")
                     mockMessageInterface.messageContentAllowed = false
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"shareInfo\",\"param\":{\"shareInfo\":{\"content\":\"Test Message\"}},\"id\":\"1.033890137027198\"}"as AnyObject)

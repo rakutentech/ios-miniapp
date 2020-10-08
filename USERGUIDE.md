@@ -201,8 +201,10 @@ extension ViewController: MiniAppMessageDelegate {
 
 ##### Share Mini app content
 
+By default, Mini App iOS SDK can open its own controller for content sharing. If you want to override this, you just have to implement the `MiniAppMessageAndShareDelegate`, which is a subprotocol of `MiniAppMessageDelegate`.
+
 ```swift
-extension ViewController: MiniAppMessageDelegate {
+extension ViewController: MiniAppMessageAndShareDelegate {
     func shareContent(info: MiniAppShareContent,
             completionHandler: @escaping (
                 Result<String, Error>) -> Void) {
