@@ -1,7 +1,7 @@
 import MiniApp
 import CoreLocation
 
-extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
+extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
 
     typealias PermissionCompletionHandler = (((Result<MASDKPermissionResponse, MASDKPermissionError>)) -> Void)
 
@@ -45,15 +45,6 @@ extension ViewController: MiniAppMessageProtocol, CLLocationManagerDelegate {
             return ""
         }
         return deviceId
-    }
-
-    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
-        let activityController = UIActivityViewController(activityItems: [info.messageContent],
-                                                          applicationActivities: nil)
-        UIViewController.topViewController()?.present(activityController,
-                                                      animated: true,
-                                                      completion: nil)
-        completionHandler(.success(.success))
     }
 
     func displayLocationDisabledAlert() {

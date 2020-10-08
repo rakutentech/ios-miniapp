@@ -47,7 +47,7 @@ public class MiniApp: NSObject {
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
-    public func create(appId: String, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol) {
+    public func create(appId: String, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate) {
         return realMiniApp.createMiniApp(appId: appId, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 
@@ -91,7 +91,7 @@ public class MiniApp: NSObject {
     @available(*, deprecated,
     message:"Since version 2.0, you can create a Mini app view using just the mini app id",
     renamed: "create(appId:completionHandler:messageInterface:)")
-    public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol) {
+    public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate) {
         return realMiniApp.createMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 }

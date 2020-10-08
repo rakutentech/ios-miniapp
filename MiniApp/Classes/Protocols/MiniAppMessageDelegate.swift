@@ -1,8 +1,11 @@
+@available(*, deprecated, message: "protocol renamed to MiniAppMessageDelegate")
+public typealias MiniAppMessageProtocol = MiniAppMessageDelegate
+
 /**
 Public Protocol that will be used by the Mini App to communicate
  with the Native implementation
 */
-public protocol MiniAppMessageProtocol: class {
+public protocol MiniAppMessageDelegate: class {
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     func getUniqueId() -> String
@@ -14,7 +17,9 @@ public protocol MiniAppMessageProtocol: class {
     /// Interface that should be implemented in the host app to handle the Custom Permissions.
     /// Host app is responsible to display the alert/dialog with the [MiniAppCustomPermissionType] permissions to the user and the result should be returned back to the SDK
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
+}
 
+public protocol MiniAppMessageAndShareDelegate: MiniAppMessageDelegate {
     /// Interface that is used to share the content from the Mini app
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)
 }
@@ -45,13 +50,13 @@ public enum MASDKPermissionError: String, MiniAppErrorProtocol {
     var description: String {
         switch self {
         case .denied:
-        return "User has explicitly denied authorization"
+            return "User has explicitly denied authorization"
         case .notDetermined:
-        return "User has not yet made a choice"
+            return "User has not yet made a choice"
         case .restricted:
-        return "Host app is not authorized to use location services"
+            return "Host app is not authorized to use location services"
         case .failedToConformToProtocol:
-        return "Host app failed to implement required interface"
+            return "Host app failed to implement required interface"
         }
     }
 }

@@ -6,7 +6,7 @@ extension WKUserContentController {
     /// - Parameters:
     ///   - delegate: Callback protocol to handle the message from the WebView
     ///   - hostMessageInterface: Message interface protocol of the host application
-    func addMiniAppScriptMessageHandler(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol, miniAppId: String) {
+    func addMiniAppScriptMessageHandler(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageDelegate, miniAppId: String) {
         add(MiniAppScriptMessageHandler(delegate: delegate, hostAppMessageDelegate: hostAppMessageDelegate, miniAppId: miniAppId), name: Constants.javascriptInterfaceName)
     }
 

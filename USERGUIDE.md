@@ -67,7 +67,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Create a MiniApp](#create-mini-app)
-* [Communicate with MiniApp](#MiniAppMessageProtocol)
+* [Communicate with MiniApp](#MiniAppMessageDelegate)
 * [Customize history navigation](#navigation)
 * [Custom Permissions](#custom-permissions)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
@@ -146,18 +146,18 @@ MiniApp.shared().create(appId: String, completionHandler: { (result) in
 }, messageInterface: self)
 
 ```
-<div id="MiniAppMessageProtocol"></div>
+<div id="MiniAppMessageDelegate"></div>
 
-### Implement the MiniAppMessageProtocol in your View Controller
+### Implement the MiniAppMessageDelegate in your View Controller
 ---
-The `MiniAppMessageProtocol` is used for passing messages between the Mini App (JavaScript) and the Host App (your native iOS App) and vice versa. Your App must provide the implementation for these functions.
+The `MiniAppMessageDelegate` is used for passing messages between the Mini App (JavaScript) and the Host App (your native iOS App) and vice versa. Your App must provide the implementation for these functions.
 
-```NOTE: Following code snippets is an example for implementing MiniAppMessageProtocol methods, you can add your own custom implementation or you can make use of the code which is provided in the Sample app.```
+```NOTE: Following code snippets is an example for implementing MiniAppMessageDelegate methods, you can add your own custom implementation or you can make use of the code which is provided in the Sample app.```
 
 ##### Retrieving Unique ID
 
 ```swift
-extension ViewController: MiniAppMessageProtocol {
+extension ViewController: MiniAppMessageDelegate {
     func getUniqueId() -> String {
         guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
             return ""
@@ -170,7 +170,7 @@ extension ViewController: MiniAppMessageProtocol {
 ##### Requesting Location Permissions
 
 ```swift
-extension ViewController: MiniAppMessageProtocol {
+extension ViewController: MiniAppMessageDelegate {
     func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
         switch permissionType {
         case .location:
@@ -188,7 +188,7 @@ extension ViewController: MiniAppMessageProtocol {
 ##### Requesting Custom Permissions
 
 ```swift
-extension ViewController: MiniAppMessageProtocol {
+extension ViewController: MiniAppMessageDelegate {
         func requestCustomPermissions(
             permissions: [MASDKCustomPermissionModel],
             completionHandler: @escaping (
@@ -202,7 +202,7 @@ extension ViewController: MiniAppMessageProtocol {
 ##### Share Mini app content
 
 ```swift
-extension ViewController: MiniAppMessageProtocol {
+extension ViewController: MiniAppMessageDelegate {
     func shareContent(info: MiniAppShareContent,
             completionHandler: @escaping (
                 Result<String, Error>) -> Void) {
