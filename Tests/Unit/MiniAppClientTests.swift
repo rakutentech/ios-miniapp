@@ -126,7 +126,10 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.localizedDescription).toEventually(equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"), timeout: .seconds(2))
+                    expect(testError?.localizedDescription)
+                        .toEventually(
+                            equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"),
+                            timeout: .seconds(2))
                 }
                 it("will pass an error to completion handler with expected message if it is a 403 error") {
                     self.executeSession(data: sessionDataForbidden, statusCode: 403) { (result) in
@@ -137,7 +140,10 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.localizedDescription).toEventually(equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"), timeout: .seconds(2))
+                    expect(testError?.localizedDescription)
+                        .toEventually(
+                            equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"),
+                            timeout: .seconds(2))
                 }
             }
             context("when network response contains invalid error") {
