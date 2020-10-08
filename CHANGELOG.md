@@ -10,7 +10,7 @@
 - **Feature:** Added interfaces such as [getUserName](USERGUIDE.md#cuser-profile-details-username) and [getProfilePhoto](USERGUIDE.md#cuser-profile-details-profilephoto) in `MiniAppUserInfoProtocol` to retrieve username and profile photo respectively. Interfaces will be called only if user has agreed to the respective custom permission. i.e `rakuten.miniapp.user.USER_NAME` for [getUserName](USERGUIDE.md#cuser-profile-details-username) and `rakuten.miniapp.user.PROFILE_PHOTO` for [getProfilePhoto](USERGUIDE.md#cuser-profile-details-profilephoto)
 - **Feature:** Added support for Javascript bridge interface for User Info detail retrieval from Mini app.
 `getUserName()` and `geProfilePhoto()`
-- **Feature:** Updated public interface with `MiniAppUserInfoProtocol` support `(appId:completionHandler:messageInterface:userInfoProtocol)`
+- **Feature:** Updated public interface with `MiniAppUserInfoProtocol` support `MiniApp#create(appId:completionHandler:messageInterface:userInfoProtocol)`
 
 **Sample App**
 
