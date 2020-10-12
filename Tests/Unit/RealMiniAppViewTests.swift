@@ -182,10 +182,8 @@ class RealMiniAppViewTests: QuickSpec {
 
 class RealMiniAppViewNavigationTests: QuickSpec {
     override func spec() {
-
         describe("Mini App view navigation") {
             let mockMessageInterface = MockMessageInterface()
-
             context("when initialized with navigation parameter set to never") {
                 it("will return MiniAppView without navigation") {
                     let miniAppView = RealMiniAppView(
@@ -240,7 +238,6 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             let customNav = MockNavigationView(frame: .zero)
             let nav = WKNavigation()
             let mockMessageInterface = MockMessageInterface()
-
             context("when initialized with navigation parameter set to never") {
                 it("will return MiniAppView without navigation") {
                     let miniAppView = RealMiniAppView(
