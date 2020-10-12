@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- This page is used on the "URI Schemes" page as an example for opening the external webview -->
+<!-- It is accessed directly via the raw link to this file on Github -->
+<html>
+    <head>
+        <title>External Webview</title>
+        <meta name="viewport" content="initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            body {
+                margin: 2em;
+            }
+            h3 {
+                margin-bottom: 0;
+            }
+
+            ul {
+                margin-bottom: 3em;
+            }
+            li {
+                margin: 0.5em 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>External Webview</h2>
+
+        <h3>tel: Links</h3>
+        <ul>
+            <li>
+                <b>tel: </b>
+                <a href="tel:+1-123-456-7890" id="tel-1">+1-123-456-7890</a>
+            </li>
+            <li>
+                <b>tel:// </b>
+                <a href="tel://+1-123-456-7890" id="tel-2">+1-123-456-7890</a>
+            </li>
+        </ul>
+
+        <h3>New Window Links</h3>
+        <ul>
+            <li>
+                <b>_blank: </b>
+                <a href="https://www.google.com" target="_blank" id="new-window">Google</a>
+            </li>
+            <li>
+                <b>JS window.open: </b>
+                <a href ="#" onclick="window.open('https://www.google.com')" id="new-window-js">Google</a>
+            </li>
+        </ul>
+    </body>
+</html>

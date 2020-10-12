@@ -14,6 +14,12 @@ import {
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
+  scrollable: {
+    overflowY: 'auto',
+    width: '100%',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
   content: {
     height: 'auto',
     justifyContent: 'center',
@@ -25,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   paper: {
+    width: '80%',
     paddingBottom: 10,
     marginBottom: 20,
     '&:first-child': {
@@ -39,17 +46,21 @@ const useStyles = makeStyles((theme) => ({
   },
   textfield: {
     backgroundColor: '#ffffff',
+    width: '100%',
   },
 }));
 
 type State = {
-  isLoading: ?boolean,
-  isError: ?boolean,
+  isLoading: boolean,
+  error?: ?string,
+  reward?: {
+    amount: number,
+  },
 };
 
 export const initialState = {
   isLoading: false,
-  isError: false,
+  error: null,
 };
 
 // $FlowFixMe
@@ -59,20 +70,20 @@ export const dataFetchReducer = (state: State, action: Action) => {
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        error: null,
       };
     case 'SUCCESS':
       return {
         ...state,
         isLoading: false,
-        isError: false,
+        error: null,
         reward: action.rewardItem,
       };
     case 'FAILURE':
       return {
         ...initialState,
         isLoading: false,
-        isError: true,
+        error: action.error,
       };
     default:
       throw Error('Unknown action type');
@@ -101,7 +112,7 @@ function Ads() {
     interstitialDispatch({ type: 'SUCCESS' });
   };
   const handleInterstitialFailure = (error) => {
-    interstitialDispatch({ type: 'FAILURE' });
+    interstitialDispatch({ type: 'FAILURE', error });
     console.error(error);
   };
   const loadInterstitialAd = () => {
@@ -118,7 +129,7 @@ function Ads() {
   };
 
   const handleRewardFailure = (error) => {
-    rewardDispatch({ type: 'FAILURE' });
+    rewardDispatch({ type: 'FAILURE', error });
     console.error(error);
   };
   const loadRewardAd = () => {
@@ -139,100 +150,105 @@ function Ads() {
       .catch(handleRewardFailure);
   };
 
+  const renderLoading = () => (
+    <CardContent className={classes.content}>
+      <CircularProgress size={20} className={classes.buttonProgress} />
+    </CardContent>
+  );
+
+  const renderError = (error) => (
+    <CardContent className={classes.content}>
+      <Typography className={classes.error}>Error: {error}</Typography>
+    </CardContent>
+  );
+
+  const renderInput = ({ label, value, onChange }) => (
+    <CardContent className={classes.content}>
+      <TextField
+        type="text"
+        label={label}
+        className={classes.textfield}
+        value={value}
+        onChange={(e) => onChange.call(e.currentTarget.value)}
+        variant="outlined"
+        color="primary"
+        inputProps={{
+          'data-testid': 'input-field',
+        }}
+      />
+    </CardContent>
+  );
+
+  const renderButton = ({ text, disabled, onClick }) => (
+    <CardActions className={classes.actions}>
+      <Button
+        color="primary"
+        className={classes.button}
+        onClick={onClick}
+        disabled={disabled}
+        variant="contained"
+      >
+        {text}
+      </Button>
+    </CardActions>
+  );
+
   return (
-    <GreyCard className={classes.content}>
-      {(interstitialState.isLoading || rewardState.isLoading) && (
-        <CircularProgress size={20} className={classes.buttonProgress} />
-      )}
+    <div class={classes.scrollable}>
+      <GreyCard className={classes.content}>
+        <Paper className={classes.paper}>
+          {interstitialState.isLoading && renderLoading()}
+          {interstitialState.error && renderError(interstitialState.error)}
 
-      <Paper className={classes.paper}>
-        <CardContent className={classes.content}>
-          <TextField
-            type="text"
-            label="Interstitial Ad Id"
-            className={classes.textfield}
-            value={interstitialAdId}
-            onChange={(e) => setInterstitialAdId(e.currentTarget.value)}
-            variant="outlined"
-            color="primary"
-            inputProps={{
-              'data-testid': 'input-field',
-            }}
-          />
-        </CardContent>
-        <CardActions className={classes.actions}>
-          <Button
-            color="primary"
-            className={classes.button}
-            onClick={loadInterstitialAd}
-            disabled={interstitialState.isLoading}
-            variant="contained"
-          >
-            Load Interstitial
-          </Button>
-        </CardActions>
-        <CardActions className={classes.actions}>
-          <Button
-            color="primary"
-            className={classes.button}
-            onClick={displayInterstitialAd}
-            disabled={interstitialState.isLoading}
-            variant="contained"
-          >
-            Show Interstitial
-          </Button>
-        </CardActions>
-      </Paper>
+          {renderInput({
+            label: 'Interstitial Ad Id',
+            value: interstitialAdId,
+            onChange: setInterstitialAdId,
+          })}
+          {renderButton({
+            text: 'Load Interstitial',
+            disabled: interstitialState.isLoading,
+            onClick: loadInterstitialAd,
+          })}
+          {renderButton({
+            text: 'Show Interstitial',
+            disabled: interstitialState.isLoading,
+            onClick: displayInterstitialAd,
+          })}
+        </Paper>
+        <Paper className={classes.paper}>
+          {rewardState.isLoading && renderLoading()}
+          {rewardState.error && renderError(rewardState.error)}
 
-      <Paper className={classes.paper}>
-        <CardContent className={classes.content}>
-          <TextField
-            type="text"
-            label="Rewarded Ad Id"
-            className={classes.textfield}
-            value={rewardAdId}
-            onChange={(e) => setRewardAdId(e.currentTarget.value)}
-            variant="outlined"
-            color="primary"
-            inputProps={{
-              'data-testid': 'input-field',
-            }}
-          />
-        </CardContent>
-        <CardActions className={classes.actions}>
-          <Button
-            color="primary"
-            className={classes.button}
-            onClick={loadRewardAd}
-            disabled={rewardState.isLoading}
-            variant="contained"
-          >
-            Load Reward
-          </Button>
-        </CardActions>
-        <CardActions className={classes.actions}>
-          <Button
-            color="primary"
-            className={classes.button}
-            onClick={displayRewardAd}
-            disabled={rewardState.isLoading}
-            variant="contained"
-          >
-            Show Reward
-          </Button>
-        </CardActions>
-      </Paper>
+          {!rewardState.error &&
+            !rewardState.isLoading &&
+            rewardState.reward != null && (
+              // $FlowFixMe
+              <CardContent className={classes.content}>
+                <Typography>
+                  Rewarded point: {rewardState.reward.amount}
+                </Typography>
+              </CardContent>
+            )}
 
-      {!rewardState.isError &&
-        !rewardState.isLoading &&
-        rewardState.reward != null && (
-          // $FlowFixMe
-          <Typography>Rewarded point: {rewardState.reward.amount}</Typography>
-        )}
-      {(interstitialState.isError || rewardState.isError) && (
-        <Typography className={classes.error}>Error display ads</Typography>
-      )}
-    </GreyCard>
+          {renderInput({
+            label: 'Rewarded Ad Id',
+            value: rewardAdId,
+            onChange: setRewardAdId,
+          })}
+          {renderButton({
+            text: 'Load Reward',
+            disabled: rewardState.isLoading,
+            onClick: loadRewardAd,
+          })}
+          {renderButton({
+            text: 'Show Reward',
+            disabled: rewardState.isLoading,
+            onClick: displayRewardAd,
+          })}
+        </Paper>
+      </GreyCard>
+    </div>
   );
 }
 

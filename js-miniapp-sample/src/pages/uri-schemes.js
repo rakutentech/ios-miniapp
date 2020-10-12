@@ -51,6 +51,17 @@ const UriSchemes = () => {
           +1-123-456-7890
         </Button>
       </CardActions>
+
+      <CardContent className={classes.content}>External Webview</CardContent>
+      <CardActions className={classes.actions}>
+        <Button
+          variant="contained"
+          color="primary"
+          href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/rakutentech/js-miniapp/master/js-miniapp-sample/external-webview/index.html"
+        >
+          Open
+        </Button>
+      </CardActions>
     </GreyCard>
   );
 };
