@@ -49,10 +49,8 @@ public class MiniApp: NSObject {
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     public func create(appId: String,
                        completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
-                       messageInterface: MiniAppMessageProtocol,
-                       userInfoProtocol: MiniAppUserInfoProtocol? = nil
-    ) {
-        return realMiniApp.createMiniApp(appId: appId, completionHandler: completionHandler, messageInterface: messageInterface, userInfoProtocol: userInfoProtocol)
+                       messageInterface: MiniAppMessageProtocol) {
+        return realMiniApp.createMiniApp(appId: appId, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 
     /// Cache the Custom permissions status for a given MiniApp ID

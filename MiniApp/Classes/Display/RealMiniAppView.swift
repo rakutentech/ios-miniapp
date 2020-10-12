@@ -11,7 +11,6 @@ internal class RealMiniAppView: UIView {
     internal var isNavBarCustom = false
 
     internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
-    internal weak var hostAppUserInfoDelegate: MiniAppUserInfoProtocol?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
     internal weak var currentDialogController: UIAlertController?
 
@@ -20,7 +19,6 @@ internal class RealMiniAppView: UIView {
         versionId: String,
         miniAppTitle: String,
         hostAppMessageDelegate: MiniAppMessageProtocol,
-        hostAppUserInfoDelegate: MiniAppUserInfoProtocol,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
@@ -28,7 +26,6 @@ internal class RealMiniAppView: UIView {
         self.miniAppTitle = miniAppTitle
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId)
         self.hostAppMessageDelegate = hostAppMessageDelegate
-        self.hostAppUserInfoDelegate = hostAppUserInfoDelegate
         navBarVisibility = displayNavBar
         super.init(frame: .zero)
         webView.navigationDelegate = self
@@ -44,8 +41,7 @@ internal class RealMiniAppView: UIView {
         navBar?.miniAppNavigation(delegate: self)
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self,
                                                                                    hostAppMessageDelegate: hostAppMessageDelegate,
-                                                                                   miniAppId: miniAppId,
-                                                                                   hostAppUserInfoDelegate: hostAppUserInfoDelegate)
+                                                                                   miniAppId: miniAppId)
         webView.configuration.userContentController.addBridgingJavaScript()
         webView.uiDelegate = self
         self.navigationDelegate = navigationDelegate

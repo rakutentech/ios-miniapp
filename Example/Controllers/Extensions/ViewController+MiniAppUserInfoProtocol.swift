@@ -1,6 +1,6 @@
 import MiniApp
 
-extension ViewController: MiniAppUserInfoProtocol {
+extension ViewController {
 
     func getUserName() -> String {
         guard let userProfile = getProfileSettings(), let userName = userProfile.displayName else {

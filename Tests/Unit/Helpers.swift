@@ -222,6 +222,8 @@ class MockMessageInterface: MiniAppMessageProtocol {
     var customPermissionError: MASDKCustomPermissionError?
     var messageContentAllowed: Bool = false
     var userSettingsAllowed: Bool = false
+    var mockUserName = ""
+    var mockProfilePhoto = ""
 
     func getUniqueId() -> String {
         if mockUniqueId {
@@ -265,11 +267,6 @@ class MockMessageInterface: MiniAppMessageProtocol {
             completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
         }
     }
-}
-
-class MockUserInfoInterface: MiniAppUserInfoProtocol {
-    var mockUserName = ""
-    var mockProfilePhoto = ""
 
     func getUserName() -> String {
         return mockUserName

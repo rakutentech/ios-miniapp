@@ -79,7 +79,7 @@ extension ViewController {
                 }
                 print("Errored: ", error.localizedDescription)
             }
-        }, messageInterface: self, userInfoProtocol: self)
+        }, messageInterface: self)
     }
 
     func fetchMiniAppUsingId(title: String? = nil, message: String? = nil) {

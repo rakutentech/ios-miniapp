@@ -12,16 +12,14 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var locationManager: LocationManager?
     weak var delegate: MiniAppCallbackProtocol?
     weak var hostAppMessageDelegate: MiniAppMessageProtocol?
-    weak var hostAppUserInfoDelegate: MiniAppUserInfoProtocol?
     var miniAppId: String
     var userAlreadyRespondedRequestList = [MASDKCustomPermissionModel]()
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
     var miniAppKeyStore = MiniAppKeyChain()
 
-    init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol, miniAppId: String, hostAppUserInfoDelegate: MiniAppUserInfoProtocol) {
+    init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol, miniAppId: String) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
-        self.hostAppUserInfoDelegate = hostAppUserInfoDelegate
         self.miniAppId = miniAppId
         super.init()
     }
@@ -148,7 +146,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func fetchUserName(callbackId: String) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.userName) {
-            guard let userName = hostAppUserInfoDelegate?.getUserName(), !userName.isEmpty else {
+            guard let userName = hostAppMessageDelegate?.getUserName(), !userName.isEmpty else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
                 return
             }
@@ -160,7 +158,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func fetchProfilePhoto(callbackId: String) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.profilePhoto) {
-            guard let profilePhoto = hostAppUserInfoDelegate?.getProfilePhoto(), !profilePhoto.isEmpty else {
+            guard let profilePhoto = hostAppMessageDelegate?.getProfilePhoto(), !profilePhoto.isEmpty else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
                 return
             }

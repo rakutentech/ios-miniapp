@@ -51,16 +51,15 @@ internal class RealMiniApp {
      renamed: "createMiniApp(appId:completionHandler:messageInterface:)")
     func createMiniApp(appInfo: MiniAppInfo,
                        completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
-                       messageInterface: MiniAppMessageProtocol? = nil,
-                       userInfoProtocol: MiniAppUserInfoProtocol? = nil) {
+                       messageInterface: MiniAppMessageProtocol? = nil) {
         getMiniApp(miniAppId: appInfo.id) { (result) in
             switch result {
             case .success(let responseData):
                 if appInfo.version.versionId != responseData.version.versionId {
-                    self.downloadMiniApp(appInfo: responseData, completionHandler: completionHandler, messageInterface: messageInterface, userInfoProtocol: userInfoProtocol)
+                    self.downloadMiniApp(appInfo: responseData, completionHandler: completionHandler, messageInterface: messageInterface)
                     return
                 }
-                self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface, userInfoProtocol: userInfoProtocol)
+                self.downloadMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
                 self.handleMiniAppDownloadError(appId: appInfo.id,
                                  error: error,
@@ -71,13 +70,12 @@ internal class RealMiniApp {
 
     func createMiniApp(appId: String,
                        completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
-                       messageInterface: MiniAppMessageProtocol? = nil,
-                       userInfoProtocol: MiniAppUserInfoProtocol? = nil) {
+                       messageInterface: MiniAppMessageProtocol? = nil) {
         getMiniApp(miniAppId: appId) { (result) in
             switch result {
             case .success(let responseData):
                 self.miniAppStatus.saveMiniAppInfo(appInfo: responseData, key: responseData.id)
-                self.downloadMiniApp(appInfo: responseData, completionHandler: completionHandler, messageInterface: messageInterface, userInfoProtocol: userInfoProtocol)
+                self.downloadMiniApp(appInfo: responseData, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
                 self.handleMiniAppDownloadError(appId: appId,
                                  error: error,
@@ -93,12 +91,11 @@ internal class RealMiniApp {
     ///   - messageInterface: Miniapp communication protocol object.
     func downloadMiniApp(appInfo: MiniAppInfo,
                          completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
-                         messageInterface: MiniAppMessageProtocol? = nil,
-                         userInfoProtocol: MiniAppUserInfoProtocol? = nil) {
+                         messageInterface: MiniAppMessageProtocol? = nil) {
         return miniAppDownloader.verifyAndDownload(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
             switch result {
             case .success:
-                self.getMiniAppView(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface, userInfoProtocol: userInfoProtocol)
+                self.getMiniAppView(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
             case .failure(let error):
                 self.handleMiniAppDownloadError(appId: appInfo.id,
                                  error: error,
@@ -110,13 +107,12 @@ internal class RealMiniApp {
 
     func getMiniAppView(appInfo: MiniAppInfo,
                         completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
-                        messageInterface: MiniAppMessageProtocol? = nil,
-                        userInfoProtocol: MiniAppUserInfoProtocol? = nil) {
+                        messageInterface: MiniAppMessageProtocol? = nil) {
         DispatchQueue.main.async {
             let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
                                                                        versionId: appInfo.version.versionId,
                                                                        miniAppTitle: appInfo.displayName ?? "Mini app",
-                                                                       hostAppMessageDelegate: messageInterface ?? self, hostAppUserInfoProtocol: userInfoProtocol ?? self)
+                                                                       hostAppMessageDelegate: messageInterface ?? self)
             self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
             self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
             completionHandler(.success(miniAppDisplayProtocol))
@@ -126,7 +122,7 @@ internal class RealMiniApp {
     func handleMiniAppDownloadError(appId: String,
                                     error: Error,
                                     completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
-                                    messageInterface: MiniAppMessageProtocol? = nil, userInfoProtocol: MiniAppUserInfoProtocol? = nil) {
+                                    messageInterface: MiniAppMessageProtocol? = nil) {
         let downloadError = error as NSError
         if self.offlineErrorCodeList.contains(downloadError.code) {
             guard let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId) else {
@@ -139,7 +135,7 @@ internal class RealMiniApp {
                 let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId,
                                                                            versionId: cachedVersion,
                                                                            miniAppTitle: miniAppInfo.displayName ?? "Mini App",
-                                                                           hostAppMessageDelegate: messageInterface ?? self, hostAppUserInfoProtocol: userInfoProtocol ?? self)
+                                                                           hostAppMessageDelegate: messageInterface ?? self)
                 completionHandler(.success(miniAppDisplayProtocol))
             }
         } else {
@@ -177,16 +173,5 @@ extension RealMiniApp: MiniAppMessageProtocol {
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         let error: NSError = NSError.init(domain: "MiniAppMessageBridge has not been implemented by the host app", code: 0, userInfo: nil)
         completionHandler(.failure(error as Error))
-    }
-}
-
-extension RealMiniApp: MiniAppUserInfoProtocol {
-
-    func getUserName() -> String {
-        return ""
-    }
-
-    func getProfilePhoto() -> String {
-        return ""
     }
 }

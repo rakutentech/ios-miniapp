@@ -2,7 +2,7 @@
 Public Protocol that will be used by the Mini App to communicate
  with the Native implementation
 */
-public protocol MiniAppMessageProtocol: class {
+public protocol MiniAppMessageProtocol: MiniAppUserInfoDelegate {
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     func getUniqueId() -> String
@@ -17,18 +17,6 @@ public protocol MiniAppMessageProtocol: class {
 
     /// Interface that is used to share the content from the Mini app
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)
-}
-
-/**
- Public Protocol that will be used by the Mini App to communicate
- with the Native implementation for User profile related retrieval
-*/
-public protocol MiniAppUserInfoProtocol: class {
-    /// Interface that is used to retrieve the user name from the User Profile
-    func getUserName() -> String
-
-    /// Interface that is used to retrieve the Image URI
-    func getProfilePhoto() -> String
 }
 
 public enum MASDKProtocolResponse: String {

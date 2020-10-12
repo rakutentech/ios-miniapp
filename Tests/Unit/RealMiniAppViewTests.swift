@@ -6,24 +6,19 @@ import WebKit
 // swiftlint:disable function_body_length
 class RealMiniAppViewTests: QuickSpec {
     override func spec() {
-        let mockUserInfoInterface = MockUserInfoInterface()
 
         describe("Mini App view") {
             let mockMessageInterface = MockMessageInterface()
             let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing",
                                               versionId: "version-id",
                                               miniAppTitle: "Mini app title",
-                                              hostAppMessageDelegate: mockMessageInterface,
-                                              hostAppUserInfoDelegate: mockUserInfoInterface
-            )
+                                              hostAppMessageDelegate: mockMessageInterface)
             context("when initialized with valid parameters") {
                 it("will return MiniAppView object") {
                     let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing",
                                                       versionId: "version-id",
                                                       miniAppTitle: "",
-                                                      hostAppMessageDelegate: mockMessageInterface,
-                                                      hostAppUserInfoDelegate: mockUserInfoInterface
-                    )
+                                                      hostAppMessageDelegate: mockMessageInterface)
                     expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self))
                 }
             }
@@ -38,9 +33,7 @@ class RealMiniAppViewTests: QuickSpec {
                         miniAppId: "miniappid-testing",
                         versionId: "version-id",
                         miniAppTitle: "",
-                        hostAppMessageDelegate: mockMessageInterface,
-                        hostAppUserInfoDelegate: mockUserInfoInterface
-                    )
+                        hostAppMessageDelegate: mockMessageInterface)
                     expect(miniAppView.webView.customUserAgent).toEventually(contain("MiniApp Demo App"), timeout: 6)
                 }
             }
@@ -58,9 +51,7 @@ class RealMiniAppViewTests: QuickSpec {
                 miniAppId: "miniappid-testing",
                 versionId: "version-id",
                 miniAppTitle: "Mini app title",
-                hostAppMessageDelegate: mockMessageInterface,
-                hostAppUserInfoDelegate: mockUserInfoInterface
-            )
+                hostAppMessageDelegate: mockMessageInterface)
 
             context("when webview is loaded with alert javascript dialog") {
                 it("will show native alert with request message, ok with no crash") {
@@ -86,9 +77,7 @@ class RealMiniAppViewTests: QuickSpec {
                 miniAppId: "miniappid-testing",
                 versionId: "version-id",
                 miniAppTitle: "Mini app title",
-                hostAppMessageDelegate: mockMessageInterface,
-                hostAppUserInfoDelegate: mockUserInfoInterface
-            )
+                hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with confirm javascript dialog") {
                 it("will show native alert with request message, ok and cancel button, ok don't crash") {
                     let html = """
@@ -114,9 +103,7 @@ class RealMiniAppViewTests: QuickSpec {
                 miniAppId: "miniappid-testing",
                 versionId: "version-id",
                 miniAppTitle: "Mini app title",
-                hostAppMessageDelegate: mockMessageInterface,
-                hostAppUserInfoDelegate: mockUserInfoInterface
-            )
+                hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with confirm javascript dialog") {
                 it("will show native alert with request message, ok and cancel button, cancel don't crash") {
                     let html = """
@@ -142,9 +129,7 @@ class RealMiniAppViewTests: QuickSpec {
                     miniAppId: "miniappid-testing",
                     versionId: "version-id",
                     miniAppTitle: "Mini app title",
-                    hostAppMessageDelegate: mockMessageInterface,
-                    hostAppUserInfoDelegate: mockUserInfoInterface
-            )
+                    hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with prompt javascript dialog") {
                 it("will show native alert with request message and wanted text in textfield, ok will transmit text with no crash") {
                     let html = """
@@ -170,9 +155,7 @@ class RealMiniAppViewTests: QuickSpec {
                     miniAppId: "miniappid-testing",
                     versionId: "version-id",
                     miniAppTitle: "Mini app title",
-                    hostAppMessageDelegate: mockMessageInterface,
-                    hostAppUserInfoDelegate: mockUserInfoInterface
-                )
+                    hostAppMessageDelegate: mockMessageInterface)
                 context("when webview is loaded with prompt javascript dialog") {
                     it("will show native alert with request message and wanted no in textfield, cancel won't crash") {
                         let html = """
@@ -199,7 +182,6 @@ class RealMiniAppViewTests: QuickSpec {
 
 class RealMiniAppViewNavigationTests: QuickSpec {
     override func spec() {
-        let mockUserInfoInterface = MockUserInfoInterface()
 
         describe("Mini App view navigation") {
             let mockMessageInterface = MockMessageInterface()
@@ -211,7 +193,6 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                         versionId: "version-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
-                        hostAppUserInfoDelegate: mockUserInfoInterface,
                         displayNavBar: .never
                     )
                     miniAppView.refreshNavBar()
@@ -225,7 +206,6 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                         versionId: "version-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
-                        hostAppUserInfoDelegate: mockUserInfoInterface,
                         displayNavBar: .always
                     )
                     miniAppView.refreshNavBar()
@@ -243,7 +223,6 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                         miniAppId: "miniappid-testing",
                         versionId: "version-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
-                        hostAppUserInfoDelegate: mockUserInfoInterface,
                         displayNavBar: .auto
                     )
                     miniAppView.refreshNavBar()
@@ -261,14 +240,16 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             let customNav = MockNavigationView(frame: .zero)
             let nav = WKNavigation()
             let mockMessageInterface = MockMessageInterface()
-            let mockUserInfoInterface = MockUserInfoInterface()
 
             context("when initialized with navigation parameter set to never") {
                 it("will return MiniAppView without navigation") {
                     let miniAppView = RealMiniAppView(
                         miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
-                        hostAppUserInfoDelegate: mockUserInfoInterface, displayNavBar: .never, navigationDelegate: customNav, navigationView: customNav)
+                        displayNavBar: .never,
+                        navigationDelegate: customNav,
+                        navigationView: customNav
+                    )
                     miniAppView.refreshNavBar()
                     expect(miniAppView.navBar).to(beNil())
                 }
@@ -277,7 +258,10 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
                 it("will return MiniAppView with navigation visible") {
                     let miniAppView = RealMiniAppView(
                         miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface,
-                        hostAppUserInfoDelegate: mockUserInfoInterface, displayNavBar: .always, navigationDelegate: customNav, navigationView: customNav)
+                        displayNavBar: .always,
+                        navigationDelegate: customNav,
+                        navigationView: customNav
+                    )
                     miniAppView.refreshNavBar()
                     customNav.actionGoBack()
                     customNav.actionGoForward()
@@ -288,8 +272,12 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to auto") {
                 it("will return MiniAppView with navigation hidden") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface,
-                        hostAppUserInfoDelegate: mockUserInfoInterface, displayNavBar: .auto, navigationDelegate: customNav, navigationView: customNav)
+                        miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "",
+                        hostAppMessageDelegate: mockMessageInterface,
+                        displayNavBar: .auto,
+                        navigationDelegate: customNav,
+                        navigationView: customNav
+                    )
                     miniAppView.refreshNavBar()
                     let webvtest = MockNavigationWebView(miniAppId: "test", versionId: "test")
                     miniAppView.webView = webvtest
