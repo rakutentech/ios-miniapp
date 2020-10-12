@@ -2,16 +2,16 @@ import MiniApp
 
 extension ViewController {
 
-    func getUserName() -> String {
+    func getUserName() -> String? {
         guard let userProfile = getProfileSettings(), let userName = userProfile.displayName else {
-            return ""
+            return nil
         }
         return userName
     }
 
-    func getProfilePhoto() -> String {
+    func getProfilePhoto() -> String? {
         guard let userProfile = getProfileSettings(), let userProfilePhoto = userProfile.profileImageURI else {
-            return ""
+            return nil
         }
         return userProfilePhoto
     }

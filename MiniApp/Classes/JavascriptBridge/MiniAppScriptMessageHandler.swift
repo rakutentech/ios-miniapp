@@ -146,7 +146,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func fetchUserName(callbackId: String) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.userName) {
-            guard let userName = hostAppMessageDelegate?.getUserName(), !userName.isEmpty else {
+            guard let userName = hostAppMessageDelegate?.getUserName() else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
                 return
             }

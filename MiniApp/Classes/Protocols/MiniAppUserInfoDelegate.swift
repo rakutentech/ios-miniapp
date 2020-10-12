@@ -4,8 +4,8 @@
 */
 public protocol MiniAppUserInfoDelegate: class {
     /// Interface that is used to retrieve the user name from the User Profile
-    func getUserName() -> String
+    func getUserName() -> String?
 
     /// Interface that is used to retrieve the Image URI
-    func getProfilePhoto() -> String
+    func getProfilePhoto() -> String?
 }

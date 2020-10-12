@@ -277,7 +277,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(mockCallbackProtocol.response).toEventually(contain("Rakuten"), timeout: 10)
                  }
                 it("will return Error if User didn't set the Username in the User Profile") {
-                    mockMessageInterface.mockUserName = ""
+                    mockMessageInterface.mockUserName = nil
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
 
                     let scriptMessageHandler = MiniAppScriptMessageHandler(
@@ -321,7 +321,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.response).toEventually(contain(mockMessageInterface.mockProfilePhoto), timeout: 10)
+                    expect(mockCallbackProtocol.response).toEventually(contain(mockMessageInterface.mockProfilePhoto ?? ""), timeout: 10)
                  }
                 it("will return Error if User didn't set the Profile Photo in the User Profile") {
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
@@ -332,6 +332,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                    )
                    updateCustomPermissionStatus(miniAppId: self.name, permissionType: .profilePhoto, status: .allowed)
                    mockMessageInterface.messageContentAllowed = false
+                    mockMessageInterface.mockProfilePhoto = ""
                    let mockMessage = MockWKScriptMessage(
                        name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)

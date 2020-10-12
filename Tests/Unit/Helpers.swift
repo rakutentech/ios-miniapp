@@ -222,8 +222,8 @@ class MockMessageInterface: MiniAppMessageProtocol {
     var customPermissionError: MASDKCustomPermissionError?
     var messageContentAllowed: Bool = false
     var userSettingsAllowed: Bool = false
-    var mockUserName = ""
-    var mockProfilePhoto = ""
+    var mockUserName: String? = ""
+    var mockProfilePhoto: String? = ""
 
     func getUniqueId() -> String {
         if mockUniqueId {
@@ -268,11 +268,11 @@ class MockMessageInterface: MiniAppMessageProtocol {
         }
     }
 
-    func getUserName() -> String {
+    func getUserName() -> String? {
         return mockUserName
     }
 
-    func getProfilePhoto() -> String {
+    func getProfilePhoto() -> String? {
         return mockProfilePhoto
     }
 }
