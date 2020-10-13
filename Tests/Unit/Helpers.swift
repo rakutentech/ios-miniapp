@@ -1,6 +1,7 @@
 @testable import MiniApp
 import WebKit
 
+// swiftlint:disable file_length
 class MockAPIClient: MiniAppClient {
     var data: Data?
     var manifestData: Data?
@@ -213,8 +214,17 @@ class MockFile {
     }
 }
 
-class MockShareInterface: MockMessageInterface {
+class MockMessageInterface: MiniAppMessageDelegate {
+    var mockUniqueId: Bool = false
+    var locationAllowed: Bool = false
+    var customPermissions: Bool = false
+    var permissionError: MASDKPermissionError?
+    var customPermissionError: MASDKCustomPermissionError?
+    var userSettingsAllowed: Bool = false
+    var mockUserName: String? = ""
+    var mockProfilePhoto: String? = ""
     var messageContentAllowed: Bool = false
+
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         if messageContentAllowed {
             completionHandler(.success(.success))
@@ -222,13 +232,6 @@ class MockShareInterface: MockMessageInterface {
             completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
         }
     }
-}
-class MockMessageInterface: MiniAppMessageDelegate {
-    var mockUniqueId: Bool = false
-    var locationAllowed: Bool = false
-    var customPermissions: Bool = false
-    var permissionError: MASDKPermissionError?
-    var customPermissionError: MASDKCustomPermissionError?
 
     func getUniqueId() -> String {
         if mockUniqueId {
@@ -264,6 +267,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
             completionHandler(.failure(.unknownError))
         }
     }
+
+    func getUserName() -> String? {
+        return mockUserName
+    }
+
+    func getProfilePhoto() -> String? {
+        return mockProfilePhoto
+    }
 }
 
 var mockMiniAppInfo: MiniAppInfo {
@@ -291,7 +302,7 @@ class MockWKScriptMessage: WKScriptMessage {
     }
 }
 
-class MockMiniAppCallbackDelegate: MiniAppCallbackDelegate {
+class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     var messageId: String?
     var response: String?
     var errorMessage: String?
@@ -368,6 +379,14 @@ func deleteStatusPreferences() {
     UserDefaults.standard.removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
 }
 
+func updateCustomPermissionStatus(miniAppId: String, permissionType: MiniAppCustomPermissionType, status: MiniAppCustomPermissionGrantedStatus) {
+    MiniApp.shared().setCustomPermissions(forMiniApp: miniAppId,
+        permissionList: [MASDKCustomPermissionModel(
+            permissionName: permissionType,
+            isPermissionGranted: status,
+            permissionRequestDescription: "")])
+}
+
 func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
     guard let errorData = message?.data(using: .utf8) else {
         return nil
@@ -376,4 +395,31 @@ func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
         return nil
     }
     return errorMessage
+}
+
+extension UIImage {
+    func hasAlpha() -> Bool {
+        let noAlphaCases: [CGImageAlphaInfo] = [.none, .noneSkipLast, .noneSkipFirst]
+        if let alphaInfo = cgImage?.alphaInfo {
+            return !noAlphaCases.contains(alphaInfo)
+        } else {
+            return false
+        }
+    }
+
+    func dataURI() -> String? {
+        var mimeType: String = ""
+        var imageData: Data
+        if hasAlpha(), let png = pngData() {
+            imageData = png
+            mimeType = "image/png"
+        } else if let jpg = jpegData(compressionQuality: 1.0) {
+            imageData = jpg
+            mimeType = "image/jpeg"
+        } else {
+            return nil
+        }
+
+        return "data:\(mimeType);base64,\(imageData.base64EncodedString())"
+    }
 }

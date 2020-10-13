@@ -28,21 +28,21 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if let messageBody = message.body as? String {
-            let bodyData: Data = messageBody.data(using: .utf8)!
-            let responseJson = ResponseDecoder.decode(decodeType: MiniAppJavaScriptMessageInfo.self, data: bodyData)
-            handleBridgeMessage(responseJson: responseJson)
-        }
+            if let messageBody = message.body as? String {
+                let bodyData: Data = messageBody.data(using: .utf8)!
+                let responseJson = ResponseDecoder.decode(decodeType: MiniAppJavaScriptMessageInfo.self, data: bodyData)
+                handleBridgeMessage(responseJson: responseJson)
+            }
     }
 
     func handleBridgeMessage(responseJson: MiniAppJavaScriptMessageInfo?) {
         guard let actionCommand = responseJson?.action, !actionCommand.isEmpty,
-            let callbackId = responseJson?.id, !callbackId.isEmpty else {
+            let callbackId = responseJson?.id, !callbackId.isEmpty, let requestAction = MiniAppJSActionCommand(rawValue: actionCommand) else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: "", response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
-                return
+            return
         }
         let requestParam = responseJson?.param ?? nil
-        handleActionCommand(action: MiniAppJSActionCommand(rawValue: actionCommand)!, requestParam: requestParam, callbackId: callbackId)
+        handleActionCommand(action: requestAction, requestParam: requestParam, callbackId: callbackId)
     }
 
     func handleActionCommand(action: MiniAppJSActionCommand, requestParam: RequestParameters?, callbackId: String) {
@@ -58,6 +58,10 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             requestCustomPermissions(requestParam: requestParam, callbackId: callbackId)
         case .shareInfo:
             shareContent(requestParam: requestParam, callbackId: callbackId)
+        case .getUserName:
+            fetchUserName(callbackId: callbackId)
+        case .getProfilePhoto:
+            fetchProfilePhoto(callbackId: callbackId)
         }
     }
 
@@ -101,14 +105,14 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func getLocationInfo() -> String {
-        return "{\"coords\":{\"latitude\":\(locationManager?.location?.coordinate.latitude ?? 0)" +
-            ",\"longitude\":\(locationManager?.location?.coordinate.longitude ?? 0)" +
-            ", \"altitude\":\(locationManager?.location?.altitude ?? "null" as Any)" +
-            ", \"altitudeAccuracy\":\(locationManager?.location?.verticalAccuracy ?? "null" as Any)" +
-            ", \"accuracy\":\(locationManager?.location?.horizontalAccuracy ?? 0)" +
-            ", \"speed\":\(locationManager?.location?.speed ?? "null" as Any)" +
-            ", \"heading\":\(locationManager?.location?.course ?? "null" as Any)" +
-            "}, \"timestamp\":\(Date().epochInMilliseconds)}"
+        return  "{\"coords\":{\"latitude\":\(locationManager?.location?.coordinate.latitude ?? 0)" +
+        ",\"longitude\":\(locationManager?.location?.coordinate.longitude ?? 0)" +
+        ", \"altitude\":\(locationManager?.location?.altitude ?? "null" as Any)" +
+        ", \"altitudeAccuracy\":\(locationManager?.location?.verticalAccuracy ?? "null" as Any)" +
+        ", \"accuracy\":\(locationManager?.location?.horizontalAccuracy ?? 0)" +
+        ", \"speed\":\(locationManager?.location?.speed ?? "null" as Any)" +
+        ", \"heading\":\(locationManager?.location?.course ?? "null" as Any)" +
+        "}, \"timestamp\":\(Date().epochInMilliseconds)}"
     }
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {
@@ -148,6 +152,35 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             }
             self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
         }
+    }
+
+    func fetchUserName(callbackId: String) {
+        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.userName) {
+            guard let userName = hostAppMessageDelegate?.getUserName() else {
+                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                return
+            }
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: userName)
+            return
+        }
+        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
+    }
+
+    func fetchProfilePhoto(callbackId: String) {
+        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.profilePhoto) {
+            guard let profilePhoto = hostAppMessageDelegate?.getProfilePhoto(), !profilePhoto.isEmpty else {
+                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                return
+            }
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: profilePhoto)
+            return
+        }
+        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
+    }
+
+    func isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType) -> Bool {
+        let customPermission = self.miniAppKeyStore.getCustomPermissions(forMiniApp: self.miniAppId).filter { $0.permissionName == customPermissionType }
+        return customPermission[0].isPermissionGranted.boolValue
     }
 }
 

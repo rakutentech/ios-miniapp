@@ -71,6 +71,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Customize history navigation](#navigation)
 * [Custom Permissions](#custom-permissions)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
+* [Retrieve User Profile details](#user-profile-details)
 
 <div id="runtime-conf"></div>
 
@@ -201,7 +202,7 @@ extension ViewController: MiniAppMessageDelegate {
 
 ##### Share Mini app content
 
-By default, Mini App iOS SDK can open its own controller for content sharing. If you want to override this, you just have to implement the `shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)` from `MiniAppMessageAndShareDelegate`, which is part of `MiniAppMessageDelegate`.
+By default, Mini App iOS SDK can open its own controller for content sharing. If you want to override this, you just have to implement the `shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)` from `MiniAppShareContentDelegate`, which is part of `MiniAppMessageDelegate`.
 
 ```swift
 extension ViewController: MiniAppMessageAndShareDelegate {
@@ -302,6 +303,42 @@ Gets the list of downloaded Mini apps info and associated custom permissions sta
  MiniApp.shared().listDownloadedWithCustomPermissions()
 ```
 
+<div id="user-profile-details"></div>
+
+### Retrieve User Profile details
+---
+Get the User profile related details using 'MiniAppMessageProtocol'.
+The following delegates/interfaces will be called only if the user has allowed respective [Custom permissions](#custom-permissions)
+
+<div id="user-profile-details-username"></div>
+
+#### User Name
+
+Retrieve user name of the User
+
+```swift
+extension ViewController: MiniAppMessageProtocol {
+    MiniApp.shared().getUserName() -> String? {
+        // Implementation to return the User name
+        return ""
+    }
+}
+```
+
+<div id="user-profile-details-profilephoto"></div>
+
+#### Profile Photo
+
+Retrieve Profile Photo of the User
+
+```swift
+extension ViewController: MiniAppMessageProtocol {
+    MiniApp.shared().getProfilePhoto() -> String? {
+        // Implementation to return the Profile photo URI
+        return ""
+    }
+}
+```
 
 <div id="change-log"></div>
 

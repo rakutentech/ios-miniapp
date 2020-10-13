@@ -5,7 +5,7 @@ public typealias MiniAppMessageProtocol = MiniAppMessageDelegate
 Public Protocol that will be used by the Mini App to communicate
  with the Native implementation
 */
-public protocol MiniAppMessageDelegate: MiniAppMessageAndShareDelegate {
+public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareContentDelegate {
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     func getUniqueId() -> String
@@ -17,27 +17,6 @@ public protocol MiniAppMessageDelegate: MiniAppMessageAndShareDelegate {
     /// Interface that should be implemented in the host app to handle the Custom Permissions.
     /// Host app is responsible to display the alert/dialog with the [MiniAppCustomPermissionType] permissions to the user and the result should be returned back to the SDK
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
-}
-
-public protocol MiniAppMessageAndShareDelegate: class {
-    /// Interface that is used to share the content from the Mini app
-    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)
-}
-
-public extension MiniAppMessageAndShareDelegate {
-    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
-        let activityController = UIActivityViewController(activityItems: [info.messageContent], applicationActivities: nil)
-        activityController.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            if let err = error {
-                completionHandler(.failure(err))
-            } else {
-                completionHandler(.success(.success))
-            }
-        }
-        UIViewController.topViewController()?.present(activityController,
-            animated: true,
-            completion: nil)
-    }
 }
 
 public enum MASDKProtocolResponse: String {
@@ -66,13 +45,13 @@ public enum MASDKPermissionError: String, MiniAppErrorProtocol {
     var description: String {
         switch self {
         case .denied:
-            return "User has explicitly denied authorization"
+        return "User has explicitly denied authorization"
         case .notDetermined:
-            return "User has not yet made a choice"
+        return "User has not yet made a choice"
         case .restricted:
-            return "Host app is not authorized to use location services"
+        return "Host app is not authorized to use location services"
         case .failedToConformToProtocol:
-            return "Host app failed to implement required interface"
+        return "Host app failed to implement required interface"
         }
     }
 }
@@ -82,6 +61,7 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
     case failedToConformToProtocol = "FAILED_TO_CONFORM_PROTOCOL"
     case invalidCustomPermissionRequest
     case invalidCustomPermissionsList
+    case userDenied
 
     var name: String {
         return self.rawValue
@@ -97,6 +77,8 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
             return "Error in Custom Permission Request, please make sure the Custom permissions are passed in []"
         case .invalidCustomPermissionsList:
             return "Error in list of Custom permissions that is passed, please check whether valid permission associated with name "
+        case .userDenied:
+            return "User denied to share the detail"
         }
     }
 }
