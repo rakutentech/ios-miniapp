@@ -274,7 +274,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.response).toEventually(contain("Rakuten"), timeout: 10)
+                    expect(mockCallbackProtocol.response).toEventually(contain("Rakuten"), timeout: .seconds(10))
                  }
                 it("will return Error if User didn't set the Username in the User Profile") {
                     mockMessageInterface.mockUserName = nil
@@ -289,7 +289,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                    let mockMessage = MockWKScriptMessage(
                        name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                   expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue), timeout: 10)
+                   expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue), timeout: .seconds(10))
                 }
                 it("will return Error if User didn't allow User Name permission") {
                     mockMessageInterface.mockUserName = ""
@@ -304,7 +304,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                    let mockMessage = MockWKScriptMessage(
                        name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: 10)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
                 }
             }
             context("when MiniAppScriptMessageHandler receives valid getProfilePhoto command") {
@@ -321,7 +321,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.response).toEventually(contain(mockMessageInterface.mockProfilePhoto ?? ""), timeout: 10)
+                    expect(mockCallbackProtocol.response).toEventually(contain(mockMessageInterface.mockProfilePhoto ?? ""), timeout: .seconds(10))
                  }
                 it("will return Error if User didn't set the Profile Photo in the User Profile") {
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
@@ -336,7 +336,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                    let mockMessage = MockWKScriptMessage(
                        name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                   expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue), timeout: 10)
+                   expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue), timeout: .seconds(10))
                 }
                 it("will return Error if User didn't allow Profile Photo permission") {
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
@@ -350,7 +350,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                    let mockMessage = MockWKScriptMessage(
                        name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                   expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: 10)
+                   expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
                 }
             }
         }
