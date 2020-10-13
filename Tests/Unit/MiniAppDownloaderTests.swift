@@ -32,7 +32,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (_) in }
                     let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                     var isDir: ObjCBool = true
-                    expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: 10)
+                    expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: .seconds(10))
                 }
             }
             context("when downloader is failed") {
@@ -59,7 +59,7 @@ class MiniAppDownloaderTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(-1009), timeout: 20)
+                    expect(testError?.code).toEventually(equal(-1009), timeout: .seconds(20))
                 }
             }
         }
@@ -85,8 +85,8 @@ class MiniAppDownloaderTests: QuickSpec {
         //             let oldMiniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: "\(versionId).1")
         //             var isDir: ObjCBool = true
 
-        //             expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: 10)
-        //             expect(FileManager.default.fileExists(atPath: oldMiniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(false), timeout: 10)
+        //             expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: .seconds(10))
+        //             expect(FileManager.default.fileExists(atPath: oldMiniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(false), timeout: .seconds(10))
         //         }
         //     }
         // }
@@ -114,7 +114,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     }
                     let miniAppPath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                     let expectedPath = miniAppPath.appendingPathComponent("HelloWorld.txt")
-                    expect(FileManager.default.fileExists(atPath: expectedPath.path)).toEventually(equal(true), timeout: 10)
+                    expect(FileManager.default.fileExists(atPath: expectedPath.path)).toEventually(equal(true), timeout: .seconds(10))
                 }
             }
         }
@@ -140,7 +140,7 @@ class MiniAppDownloaderTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(-1022), timeout: 20)
+                    expect(testError?.code).toEventually(equal(-1022), timeout: .seconds(20))
                 }
             }
         }
@@ -161,7 +161,7 @@ class MiniAppDownloaderTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(0), timeout: 10)
+                    expect(testError?.code).toEventually(equal(0), timeout: .seconds(10))
                 }
             }
         }
@@ -204,7 +204,7 @@ class MiniAppDownloaderTests: QuickSpec {
             context("when getCachedMiniAppVersion is called with invalid data") {
                 it("will return nil") {
                     let version = downloader.getCachedMiniAppVersion(appId: "test", versionId: "")
-                    expect(version).toEventually(beNil(), timeout: 10)
+                    expect(version).toEventually(beNil(), timeout: .seconds(10))
                 }
             }
             context("when getCachedMiniAppVersion is called with valid mini app id and version id") {
@@ -226,7 +226,7 @@ class MiniAppDownloaderTests: QuickSpec {
                             break
                         }
                     }
-                    expect(version).toEventually(equal(versionId), timeout: 20)
+                    expect(version).toEventually(equal(versionId), timeout: .seconds(20))
                 }
             }
             context("when getCachedMiniAppVersion is called with valid mini app id and empty version id") {
@@ -249,7 +249,7 @@ class MiniAppDownloaderTests: QuickSpec {
                             break
                         }
                     }
-                    expect(version).toEventually(equal(versionId), timeout: 20)
+                    expect(version).toEventually(equal(versionId), timeout: .seconds(20))
                 }
             }
         }
@@ -268,9 +268,9 @@ class MiniAppDownloaderTests: QuickSpec {
                     mockAPIClient.zipFile = Bundle(for: type(of: self)).path(forResource: "SmallMA", ofType: "zip") ?? ""
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (_) in }
                     let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
-                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/index.html")).toEventually(beTrue(), timeout: 10)
-                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/script.js")).toEventually(beTrue(), timeout: 3)
-                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/SmallMA.zip")).toNotEventually(beTrue(), timeout: 3)
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/index.html")).toEventually(beTrue(), timeout: .seconds(10))
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/script.js")).toEventually(beTrue(), timeout: .seconds(3))
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/SmallMA.zip")).toNotEventually(beTrue(), timeout: .seconds(3))
                 }
             }
             context("when receiving a corrupted zip file") {
@@ -294,9 +294,9 @@ class MiniAppDownloaderTests: QuickSpec {
                             error = failed
                         }
                     }
-                    expect(error).toNotEventually(beNil(), timeout: 3)
+                    expect(error).toNotEventually(beNil(), timeout: .seconds(3))
                     let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
-                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/SmallMAerror.zip")).toNotEventually(beTrue(), timeout: 3)
+                    expect(FileManager.default.fileExists(atPath: "\(miniAppDirectory.path)/SmallMAerror.zip")).toNotEventually(beTrue(), timeout: .seconds(3))
                 }
             }
         }
