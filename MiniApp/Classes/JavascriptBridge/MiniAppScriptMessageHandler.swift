@@ -2,7 +2,10 @@ import Foundation
 import WebKit
 import CoreLocation
 
-protocol MiniAppCallbackProtocol: AnyObject {
+@available(*, deprecated, message: "protocol renamed to MiniAppCallbackDelegate")
+typealias MiniAppCallbackProtocol = MiniAppCallbackDelegate
+
+protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveScriptMessageResponse(messageId: String, response: String)
     func didReceiveScriptMessageError(messageId: String, errorMessage: String)
 }
@@ -10,14 +13,14 @@ protocol MiniAppCallbackProtocol: AnyObject {
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     var locationManager: LocationManager?
-    weak var delegate: MiniAppCallbackProtocol?
+    weak var delegate: MiniAppCallbackDelegate?
     weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     var miniAppId: String
     var userAlreadyRespondedRequestList = [MASDKCustomPermissionModel]()
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
     var miniAppKeyStore = MiniAppKeyChain()
 
-    init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageDelegate, miniAppId: String) {
+    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, miniAppId: String) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
         self.miniAppId = miniAppId
@@ -123,12 +126,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             return
         }
         if !requestParamValue.content.isEmpty {
-            if let delegate = hostAppMessageDelegate as? MiniAppMessageAndShareDelegate {
-                delegate.shareContent(info: MiniAppShareContent(messageContent: requestParamValue.content)) { (result) in
-                    self.manageShareResult(result, with: callbackId)
-                }
-            } else {
-                self.showShareController(with: requestParamValue.content, for: callbackId)
+            let info = MiniAppShareContent(messageContent: requestParamValue.content)
+            let hamDelegate = self.hostAppMessageDelegate ?? self
+            hamDelegate.shareContent(
+                info: info) { (result) in
+                self.manageShareResult(result, with: callbackId)
             }
         } else {
             self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.valueIsEmpty))
@@ -137,7 +139,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func showShareController(with content: String, for callbackId: String) {
         let activityController = UIActivityViewController(activityItems: [content],
-                                                          applicationActivities: nil)
+            applicationActivities: nil)
         activityController.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
             if let err = error {
                 self.manageShareResult(.failure(err), with: callbackId)
@@ -146,8 +148,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             }
         }
         UIViewController.topViewController()?.present(activityController,
-                                                      animated: true,
-                                                      completion: nil)
+            animated: true,
+            completion: nil)
     }
 
     func manageShareResult(_ result: Result<MASDKProtocolResponse, Error>, with callbackId: String) {
@@ -161,6 +163,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             }
             self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
         }
+    }
+}
+
+extension MiniAppScriptMessageHandler: MiniAppMessageDelegate {
+    func getUniqueId() -> String {
+        return ""
+    }
+
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
+    }
+
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
     }
 }
 

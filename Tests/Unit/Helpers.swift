@@ -213,7 +213,7 @@ class MockFile {
     }
 }
 
-class MockShareInterface: MockMessageInterface, MiniAppMessageAndShareDelegate {
+class MockShareInterface: MockMessageInterface {
     var messageContentAllowed: Bool = false
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         if messageContentAllowed {
@@ -291,7 +291,7 @@ class MockWKScriptMessage: WKScriptMessage {
     }
 }
 
-class MockMiniAppCallbackProtocol: MiniAppCallbackProtocol {
+class MockMiniAppCallbackDelegate: MiniAppCallbackDelegate {
     var messageId: String?
     var response: String?
     var errorMessage: String?

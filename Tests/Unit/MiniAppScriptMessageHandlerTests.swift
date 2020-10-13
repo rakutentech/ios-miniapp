@@ -8,7 +8,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
 
     override func spec() {
         describe("Mini App Script message handler test") {
-            let callbackProtocol = MockMiniAppCallbackProtocol()
+            let callbackProtocol = MockMiniAppCallbackDelegate()
             let mockMessageInterface = MockMessageInterface()
 
             let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: "Test")

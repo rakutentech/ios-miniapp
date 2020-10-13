@@ -132,7 +132,7 @@ extension RealMiniAppView: MiniAppDisplayProtocol {
     }
 }
 
-extension RealMiniAppView: MiniAppCallbackProtocol {
+extension RealMiniAppView: MiniAppCallbackDelegate {
     func didReceiveScriptMessageResponse(messageId: String, response: String) {
         self.webView.evaluateJavaScript(Constants.javascriptSuccessCallback + "('\(messageId)'," + "'\(response)')")
     }

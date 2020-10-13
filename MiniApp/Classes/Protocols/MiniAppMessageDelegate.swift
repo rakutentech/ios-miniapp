@@ -5,7 +5,7 @@ public typealias MiniAppMessageProtocol = MiniAppMessageDelegate
 Public Protocol that will be used by the Mini App to communicate
  with the Native implementation
 */
-public protocol MiniAppMessageDelegate: class {
+public protocol MiniAppMessageDelegate: MiniAppMessageAndShareDelegate {
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     func getUniqueId() -> String
@@ -19,9 +19,25 @@ public protocol MiniAppMessageDelegate: class {
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 }
 
-public protocol MiniAppMessageAndShareDelegate: MiniAppMessageDelegate {
+public protocol MiniAppMessageAndShareDelegate: class {
     /// Interface that is used to share the content from the Mini app
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)
+}
+
+public extension MiniAppMessageAndShareDelegate {
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+        let activityController = UIActivityViewController(activityItems: [info.messageContent], applicationActivities: nil)
+        activityController.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
+            if let err = error {
+                completionHandler(.failure(err))
+            } else {
+                completionHandler(.success(.success))
+            }
+        }
+        UIViewController.topViewController()?.present(activityController,
+            animated: true,
+            completion: nil)
+    }
 }
 
 public enum MASDKProtocolResponse: String {
