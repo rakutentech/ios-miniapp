@@ -39,7 +39,9 @@ internal class RealMiniAppView: UIView {
             }
         }
         navBar?.miniAppNavigation(delegate: self)
-        webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self, hostAppMessageDelegate: hostAppMessageDelegate, miniAppId: miniAppId)
+        webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self,
+                                                                                   hostAppMessageDelegate: hostAppMessageDelegate,
+                                                                                   miniAppId: miniAppId)
         webView.configuration.userContentController.addBridgingJavaScript()
         webView.uiDelegate = self
         self.navigationDelegate = navigationDelegate
