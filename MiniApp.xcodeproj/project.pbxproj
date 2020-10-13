@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		183AF07A24CE6410000ABCBF /* Config-release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 183AF07824CE640F000ABCBF /* Config-release.xcconfig */; };
-		183AF07E24CE6430000ABCBF /* Config-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 183AF07C24CE642F000ABCBF /* Config-debug.xcconfig */; };
 		183AF08124CE8D7D000ABCBF /* SmallMAerror.zip in Resources */ = {isa = PBXBuildFile; fileRef = 183AF08024CE8D7D000ABCBF /* SmallMAerror.zip */; };
 		183AF08324CFCF37000ABCBF /* MiniAppStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183AF08224CFCF37000ABCBF /* MiniAppStorageTests.swift */; };
 		183E680E2499D49A00BAADB2 /* MiniAppLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E680C2499D42300BAADB2 /* MiniAppLoggerTests.swift */; };
@@ -46,8 +44,6 @@
 		38920AFC251D9C57004C5DDD /* MiniAppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38920AD7251D9C57004C5DDD /* MiniAppCell.swift */; };
 		38920AFD251D9C57004C5DDD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 38920AD9251D9C57004C5DDD /* Localizable.strings */; };
 		38920AFE251D9C57004C5DDD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38920ADC251D9C57004C5DDD /* Images.xcassets */; };
-		38920AFF251D9C57004C5DDD /* Config-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 38920ADE251D9C57004C5DDD /* Config-debug.xcconfig */; };
-		38920B00251D9C57004C5DDD /* Config-release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 38920ADF251D9C57004C5DDD /* Config-release.xcconfig */; };
 		38920B01251D9C57004C5DDD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38920AE2251D9C57004C5DDD /* LaunchScreen.xib */; };
 		38920B02251D9C57004C5DDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38920AE4251D9C57004C5DDD /* Main.storyboard */; };
 		38920B03251D9C57004C5DDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38920AE6251D9C57004C5DDD /* ViewController.swift */; };
@@ -434,7 +430,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -473,14 +469,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38920B00251D9C57004C5DDD /* Config-release.xcconfig in Resources */,
-				183AF07E24CE6430000ABCBF /* Config-debug.xcconfig in Resources */,
 				38920AFE251D9C57004C5DDD /* Images.xcassets in Resources */,
 				38920B02251D9C57004C5DDD /* Main.storyboard in Resources */,
 				38920B01251D9C57004C5DDD /* LaunchScreen.xib in Resources */,
-				38920AFF251D9C57004C5DDD /* Config-debug.xcconfig in Resources */,
 				38920AFD251D9C57004C5DDD /* Localizable.strings in Resources */,
-				183AF07A24CE6410000ABCBF /* Config-release.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
