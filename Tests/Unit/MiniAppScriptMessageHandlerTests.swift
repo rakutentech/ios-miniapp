@@ -174,13 +174,13 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
                             "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: 10)
+                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: .seconds(10))
                     guard let responseData: Data = callbackProtocol.response?.data(using: .utf8) else {
                         return
                     }
                     let decodedObj = try JSONDecoder().decode(MiniAppCustomPermissionsResponse.self, from: responseData)
-                    expect(decodedObj.permissions[0].name).toEventually(equal("rakuten.miniapp.user.USER_NAME"), timeout: 10)
-                    expect(decodedObj.permissions[0].status).toEventually(equal("ALLOWED"), timeout: 10)
+                    expect(decodedObj.permissions[0].name).toEventually(equal("rakuten.miniapp.user.USER_NAME"), timeout: .seconds(10))
+                    expect(decodedObj.permissions[0].status).toEventually(equal("ALLOWED"), timeout: .seconds(10))
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid custom permissions command but invalid permission object title instead of name") {
@@ -195,7 +195,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"title\":\"rakuten.miniapp.user.USER_NAME\"," +
                             "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
+                    expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: .seconds(10))
                     expect(callbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.invalidCustomPermissionsList.rawValue))
                  }
             }
@@ -211,7 +211,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"name\":\"rakuten.miniapp.user.LOCATION\"," +
                             "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
+                    expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: .seconds(10))
                     expect(callbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.invalidCustomPermissionsList.rawValue))
                  }
             }
@@ -226,7 +226,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\": null},\"id\":\"1.0343410245054572\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: 10)
+                    expect(callbackProtocol.errorMessage).toEventuallyNot(beNil(), timeout: .seconds(10))
                     expect(callbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.invalidCustomPermissionRequest.rawValue))
                  }
             }
@@ -241,8 +241,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"shareInfo\",\"param\":{\"shareInfo\":{\"content\":\"Test Message\"}},\"id\":\"1.033890137027198\"}"as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: 10)
-                    expect(callbackProtocol.response).toEventually(equal("SUCCESS"), timeout: 10)
+                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: .seconds(10))
+                    expect(callbackProtocol.response).toEventually(equal("SUCCESS"), timeout: .seconds(10))
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid share info message but there is an error in host app delegate") {
@@ -256,7 +256,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"shareInfo\",\"param\":{\"shareInfo\":{\"content\":\"Test Message\"}},\"id\":\"1.033890137027198\"}"as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.errorMessage).toEventually(contain("ShareContentError"), timeout: 10)
+                    expect(callbackProtocol.errorMessage).toEventually(contain("ShareContentError"), timeout: .seconds(10))
                  }
             }
 

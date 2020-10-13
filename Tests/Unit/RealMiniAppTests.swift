@@ -209,7 +209,7 @@ class RealMiniAppTests: QuickSpec {
                             break
                         }
                     })
-                    expect(testResultData).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: 20)
+                    expect(testResultData).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: .seconds(20))
                 }
             }
 
@@ -278,7 +278,7 @@ class RealMiniAppTests: QuickSpec {
                             testError = error as NSError
                         }
                     }, messageInterface: mockMessageInterface)
-                    expect(testError?.code).toEventually(equal(-1009), timeout: 10)
+                    expect(testError?.code).toEventually(equal(-1009), timeout: .seconds(10))
                     mockMiniAppInfoFetcher.error = nil
                 }
             }
