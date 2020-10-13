@@ -137,21 +137,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func showShareController(with content: String, for callbackId: String) {
-        let activityController = UIActivityViewController(activityItems: [content],
-            applicationActivities: nil)
-        activityController.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            if let err = error {
-                self.manageShareResult(.failure(err), with: callbackId)
-            } else {
-                self.manageShareResult(.success(.success), with: callbackId)
-            }
-        }
-        UIViewController.topViewController()?.present(activityController,
-            animated: true,
-            completion: nil)
-    }
-
     func manageShareResult(_ result: Result<MASDKProtocolResponse, Error>, with callbackId: String) {
         switch result {
         case .success:
