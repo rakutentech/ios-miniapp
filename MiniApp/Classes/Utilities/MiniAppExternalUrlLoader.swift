@@ -26,7 +26,20 @@ public class MiniAppExternalUrlLoader {
             self.currentWebViewController?.dismiss(animated: true)
             return .cancel
         } else {
+            return validateScheme(url: url)
+        }
+    }
+
+    private func validateScheme(url: URL?) -> WKNavigationActionPolicy {
+        guard let requestURL = url, let scheme = requestURL.scheme, let schemeType = MiniAppSupportedSchemes(rawValue: scheme) else {
             return .allow
         }
+        switch schemeType {
+        case .tel:
+            UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
+        default:
+            return .cancel
+        }
+        return .cancel
     }
 }
