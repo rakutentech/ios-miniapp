@@ -49,7 +49,9 @@ internal class RealMiniApp {
     @available(*, deprecated,
      message:"Since version 2.0, you can create a Mini app view using just the mini app id",
      renamed: "createMiniApp(appId:completionHandler:messageInterface:)")
-    func createMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol? = nil) {
+    func createMiniApp(appInfo: MiniAppInfo,
+                       completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
+                       messageInterface: MiniAppMessageProtocol? = nil) {
         getMiniApp(miniAppId: appInfo.id) { (result) in
             switch result {
             case .success(let responseData):
@@ -66,7 +68,9 @@ internal class RealMiniApp {
             } }
     }
 
-    func createMiniApp(appId: String, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol? = nil) {
+    func createMiniApp(appId: String,
+                       completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
+                       messageInterface: MiniAppMessageProtocol? = nil) {
         getMiniApp(miniAppId: appId) { (result) in
             switch result {
             case .success(let responseData):
@@ -85,7 +89,9 @@ internal class RealMiniApp {
     ///   - appInfo: Miniapp Info object
     ///   - completionHandler: Completion Handler that needed to pass back the MiniAppDisplayProtocol
     ///   - messageInterface: Miniapp communication protocol object.
-    func downloadMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol? = nil) {
+    func downloadMiniApp(appInfo: MiniAppInfo,
+                         completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
+                         messageInterface: MiniAppMessageProtocol? = nil) {
         return miniAppDownloader.verifyAndDownload(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
             switch result {
             case .success:
@@ -99,7 +105,9 @@ internal class RealMiniApp {
         }
     }
 
-    func getMiniAppView(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageProtocol? = nil) {
+    func getMiniAppView(appInfo: MiniAppInfo,
+                        completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
+                        messageInterface: MiniAppMessageProtocol? = nil) {
         DispatchQueue.main.async {
             let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
                                                                        versionId: appInfo.version.versionId,

@@ -2,7 +2,7 @@
 Public Protocol that will be used by the Mini App to communicate
  with the Native implementation
 */
-public protocol MiniAppMessageProtocol: class {
+public protocol MiniAppMessageProtocol: MiniAppUserInfoDelegate {
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     func getUniqueId() -> String
@@ -61,6 +61,7 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
     case failedToConformToProtocol = "FAILED_TO_CONFORM_PROTOCOL"
     case invalidCustomPermissionRequest
     case invalidCustomPermissionsList
+    case userDenied
 
     var name: String {
         return self.rawValue
@@ -76,6 +77,8 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
             return "Error in Custom Permission Request, please make sure the Custom permissions are passed in []"
         case .invalidCustomPermissionsList:
             return "Error in list of Custom permissions that is passed, please check whether valid permission associated with name "
+        case .userDenied:
+            return "User denied to share the detail"
         }
     }
 }
