@@ -205,7 +205,7 @@ extension ViewController: MiniAppMessageDelegate {
 By default, Mini App iOS SDK can open its own controller for content sharing. If you want to override this, you just have to implement the `shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)` from `MiniAppShareContentDelegate`, which is part of `MiniAppMessageDelegate`.
 
 ```swift
-extension ViewController: MiniAppMessageAndShareDelegate {
+extension ViewController: MiniAppMessageDelegate {
     func shareContent(info: MiniAppShareContent,
             completionHandler: @escaping (
                 Result<String, Error>) -> Void) {
@@ -307,7 +307,7 @@ Gets the list of downloaded Mini apps info and associated custom permissions sta
 
 ### Retrieve User Profile details
 ---
-Get the User profile related details using 'MiniAppMessageProtocol'.
+Get the User profile related details using 'MiniAppMessageDelegate'.
 The following delegates/interfaces will be called only if the user has allowed respective [Custom permissions](#custom-permissions)
 
 <div id="user-profile-details-username"></div>
@@ -317,7 +317,7 @@ The following delegates/interfaces will be called only if the user has allowed r
 Retrieve user name of the User
 
 ```swift
-extension ViewController: MiniAppMessageProtocol {
+extension ViewController: MiniAppMessageDelegate {
     MiniApp.shared().getUserName() -> String? {
         // Implementation to return the User name
         return ""
@@ -332,7 +332,7 @@ extension ViewController: MiniAppMessageProtocol {
 Retrieve Profile Photo of the User
 
 ```swift
-extension ViewController: MiniAppMessageProtocol {
+extension ViewController: MiniAppMessageDelegate {
     MiniApp.shared().getProfilePhoto() -> String? {
         // Implementation to return the Profile photo URI
         return ""
