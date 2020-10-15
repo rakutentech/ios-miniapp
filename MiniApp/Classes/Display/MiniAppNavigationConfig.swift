@@ -1,3 +1,5 @@
+import UIKit
+
 // MARK: - MiniAppNavigationConfig
 
 /// Create a Mini App navigation UI configuration to provide MiniApp client a user interface to navigate inside the Mini App.
@@ -42,6 +44,16 @@ public protocol MiniAppNavigationDelegate: class {
     /// - Parameters:
     ///   - delegate: a`MiniAppNavigationBarDelegate` the can be used to call `MiniAppNavigationAction` on the Mini App view
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate)
+}
+
+public extension MiniAppNavigationDelegate {
+    func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
+        MiniAppExternalWebViewController.presentModally(url: url, externalLinkResponseHandler: responseHandler)
+    }
+    func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
+    }
+    func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
+    }
 }
 
 /// A delegate implemented by the Mini App view to get the actions triggered by UI
