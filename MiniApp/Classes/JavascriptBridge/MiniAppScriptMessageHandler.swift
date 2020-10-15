@@ -131,8 +131,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
         if !requestParamValue.content.isEmpty {
             let info = MiniAppShareContent(messageContent: requestParamValue.content)
-            let hamDelegate = self.hostAppMessageDelegate ?? self
-            hamDelegate.shareContent(
+            self.hostAppMessageDelegate?.shareContent(
                 info: info) { (result) in
                 self.manageShareResult(result, with: callbackId)
             }
@@ -181,18 +180,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     func isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType) -> Bool {
         let customPermission = self.miniAppKeyStore.getCustomPermissions(forMiniApp: self.miniAppId).filter { $0.permissionName == customPermissionType }
         return customPermission[0].isPermissionGranted.boolValue
-    }
-}
-
-extension MiniAppScriptMessageHandler: MiniAppMessageDelegate {
-    func getUniqueId() -> String {
-        return ""
-    }
-
-    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
-    }
-
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
     }
 }
 
