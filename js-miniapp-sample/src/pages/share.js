@@ -48,7 +48,7 @@ function Share() {
   };
 
   const shareContent = () => {
-    const info = { content: inputValue }; //see js-miniapp-sdk/types/ShareInfoType
+    const info = { content: inputValue }; //see js-miniapp-bridge/types/share-info
     MiniApp.shareInfo(info)
       .then((success) => {
         console.log(success);

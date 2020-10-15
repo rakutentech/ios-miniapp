@@ -7,6 +7,7 @@ import {
   Reward,
   CustomPermissionName,
   CustomPermissionStatus,
+  ScreenOrientation,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 
@@ -25,6 +26,7 @@ window.MiniAppBridge = {
   getPlatform: sinon.stub(),
   getUserName: sinon.stub(),
   getProfilePhoto: sinon.stub(),
+  setScreenOrientation: sinon.stub(),
 };
 const miniApp = new MiniApp();
 
@@ -221,5 +223,25 @@ describe('getProfilePhoto', () => {
 
     window.MiniAppBridge.getProfilePhoto.resolves(response);
     return expect(miniApp.user.getProfilePhoto()).to.eventually.equal(response);
+  });
+});
+
+describe('requestScreenOrientation', () => {
+  it('should retrieve success from the MiniAppBridge when request is successful', () => {
+    const response = 'success';
+
+    window.MiniAppBridge.setScreenOrientation.resolves(response);
+    return expect(
+      miniApp.setScreenOrientation(ScreenOrientation.LOCK_LANDSCAPE)
+    ).to.eventually.equal(response);
+  });
+
+  it('should retrive error response from the MiniAppBridge once there is errors', () => {
+    const error = 'Bridge error';
+
+    window.MiniAppBridge.setScreenOrientation.resolves(error);
+    return expect(
+      miniApp.setScreenOrientation(ScreenOrientation.LOCK_PORTRAIT)
+    ).to.eventually.equal(error);
   });
 });

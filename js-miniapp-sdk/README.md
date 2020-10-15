@@ -119,9 +119,6 @@ Currently two ad types are supported,
 1. Interstitial
 2. Rewarded
 
-**Interstitial**
-The results of the display `Interstitial` ad action is captured as [InterstitialAdResponse](src/types/responseTypes/interstitial/index.ts).
-
 ```javascript
 const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
 
@@ -133,8 +130,6 @@ miniApp.loadInterstitialAd(adUnitID)
     })
     .catch( error => console.error(response) );
 ```
-**Rewarded**
-The results of the display `Reward` ad action is captured as [RewardedAdResponse](src/types/responseTypes/rewarded/index.ts).
 
 ```javascript
 const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
@@ -169,7 +164,7 @@ You can retrieve the User Name and Profile Photo of the user using the following
 ```javascript
 const info = { content: inputValue };
 
-MiniApp.user.getUserName()
+miniApp.user.getUserName()
     .then(userName => {
 		console.log(userName);
 	}).catch(error => {
@@ -182,12 +177,30 @@ NOTE: getProfilePhoto() -  Returns the Profile Photo URI from the Host app.
 ```javascript
 const info = { content: inputValue };
 
-MiniApp.user.getProfilePhoto()
+miniApp.user.getProfilePhoto()
     .then(profilePhoto => {
 		console.log(profilePhoto);
 	}).catch(error => {
 		console.error(error);
 	});
+```
+
+### 6. Set screen orientation
+
+It is possible to change and lock device screen orientation.
+However, there is no guarantee that all hostapps and device OS allow the force screen change so MiniApp should not rely on this.
+
+The support screen change cases are defined as [ScreenOrientation](../js-miniapp-bridge/src/types/screen.ts).
+After finish locking, the miniapp can release the lock and grant back the normal orientation controller to device. Please use ```ScreenOrientation.LOCK_RELEASE```
+
+```javascript
+miniApp.setScreenOrientation(ScreenOrientation.LOCK_LANDSCAPE) // or LOCK_PORTRAIT, LOCK_RELEASE.
+  .then((success) => {
+    console.log(success);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 ```
 
 ## Advanced Usage

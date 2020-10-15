@@ -5,6 +5,7 @@ import {
   CustomPermission,
   CustomPermissionResult,
   ShareInfoType,
+  ScreenOrientation,
 } from '../../js-miniapp-bridge/src';
 
 /**
@@ -35,6 +36,14 @@ interface MiniAppFeatures {
    * @returns The Promise of share info action state from injected side.
    */
   shareInfo(info: ShareInfoType): Promise<string>;
+
+  /**
+   * Swap and lock the screen orientation.
+   * There is no guarantee that all hostapps and devices allow the force screen change so MiniApp should not rely on this.
+   * @param screenOrientation The action that miniapp wants to request on device.
+   * @returns The Promise of screen action state from injected side.
+   */
+  setScreenOrientation(screenOrientation: ScreenOrientation): Promise<string>;
 }
 
 /**
@@ -164,5 +173,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
       platform = this.bridge.platform;
     } catch (e) {}
     return platform;
+  }
+
+  setScreenOrientation(screenOrientation: ScreenOrientation): Promise<string> {
+    return this.bridge.setScreenOrientation(screenOrientation);
   }
 }
