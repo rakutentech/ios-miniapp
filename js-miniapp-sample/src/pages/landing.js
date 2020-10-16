@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   info: {
     fontSize: 16,
-  }
+  },
 }));
 
 const Landing = () => {
