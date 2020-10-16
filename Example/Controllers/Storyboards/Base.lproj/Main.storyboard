@@ -696,7 +696,6 @@
                             </tableView>
                             <searchBar contentMode="redraw" barStyle="black" prompt="Search Mini App by name or load by ID" placeholder="Name or ID" translatesAutoresizingMaskIntoConstraints="NO" id="wM9-1o-Y4m">
                                 <rect key="frame" x="0.0" y="44" width="375" height="90"/>
-                                <color key="barTintColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <textInputTraits key="textInputTraits" spellCheckingType="no" keyboardType="alphabet" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                 <scopeButtonTitles>
                                     <string>Title</string>

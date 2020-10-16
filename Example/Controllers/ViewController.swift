@@ -10,8 +10,8 @@ class ViewController: UIViewController {
 
     var unfilteredResults: [MiniAppInfo]? {
         didSet {
-            self.searchBar.text = ""
             self.decodeResponse = self.unfilteredResults
+            executeSearch(searchText: searchBar.text ?? "")
         }
     }
     var decodeResponse: [MiniAppInfo]? {
@@ -140,13 +140,17 @@ extension ViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        executeSearch(searchText: searchText)
+    }
+
+    func executeSearch(searchText: String) {
         searchBar.returnKeyType = .done
 
         if searchText.count == 0 {
             self.decodeResponse = self.unfilteredResults
         } else {
             self.decodeResponse = self.unfilteredResults?.filter {($0.displayName?.uppercased().contains(searchText.uppercased()) ?? false)
-                    || ($0.id == searchText)}
+                || ($0.id == searchText)}
 
             if (self.decodeResponse?.count ?? 0) == 0 && searchText.count > 0 {
                 searchBar.returnKeyType = .go
