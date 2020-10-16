@@ -1,6 +1,6 @@
 import React from 'react';
+import MiniApp from 'js-miniapp-sdk';
 import { CardContent, makeStyles } from '@material-ui/core';
-
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
       lineHeight: 1.5,
     },
   },
+  info: {
+    fontSize: 16,
+  }
 }));
 
 const Landing = () => {
@@ -29,7 +32,8 @@ const Landing = () => {
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
-        <p>This is a Demo App of Mini App JS SDK</p>
+        <p>Demo Mini App JS SDK</p>
+        <p className={classes.info}>Platform: {MiniApp.getPlatform()}</p>
       </CardContent>
     </GreyCard>
   );
