@@ -24,7 +24,6 @@ class MiniAppExternalWebViewController: UIViewController {
         let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: navigationController, action: #selector(MiniAppCloseNavigationController.close))
         webctrl.navigationItem.rightBarButtonItem = closeButton
         webctrl.miniAppExternalUrlLoader = MiniAppExternalUrlLoader(webViewController: webctrl, responseHandler: externalLinkResponseHandler)
-        //let safariVC = SFSafariViewController(url: url)
         window?.topController()?.present(navigationController, animated: true)
 
     }
