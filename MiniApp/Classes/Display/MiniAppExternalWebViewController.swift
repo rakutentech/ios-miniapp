@@ -63,9 +63,9 @@ extension MiniAppExternalWebViewController: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.navigationType == .linkActivated {
-            if let url = navigationAction.request.url, !(navigationAction.targetFrame?.isMainFrame ?? false) {
+            if !(navigationAction.targetFrame?.isMainFrame ?? false) {
                 decisionHandler(.cancel)
-                Self.presentModally(url: url, externalLinkResponseHandler: self.miniAppExternalUrlLoader?.currentResponseHandler)
+                self.webView.load(navigationAction.request)
             } else {
                 decisionHandler(miniAppExternalUrlLoader?.shouldOverrideURLLoading(navigationAction.request.url) ?? .allow)
             }
