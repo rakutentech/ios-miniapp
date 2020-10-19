@@ -214,16 +214,24 @@ class MockFile {
     }
 }
 
-class MockMessageInterface: MiniAppMessageProtocol {
+class MockMessageInterface: MiniAppMessageDelegate {
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
     var permissionError: MASDKPermissionError?
     var customPermissionError: MASDKCustomPermissionError?
-    var messageContentAllowed: Bool = false
     var userSettingsAllowed: Bool = false
     var mockUserName: String? = ""
     var mockProfilePhoto: String? = ""
+    var messageContentAllowed: Bool = false
+
+    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+        if messageContentAllowed {
+            completionHandler(.success(.success))
+        } else {
+            completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
+        }
+    }
 
     func getUniqueId() -> String {
         if mockUniqueId {
@@ -257,14 +265,6 @@ class MockMessageInterface: MiniAppMessageProtocol {
                 return
             }
             completionHandler(.failure(.unknownError))
-        }
-    }
-
-    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
-        if messageContentAllowed {
-            completionHandler(.success(.success))
-        } else {
-            completionHandler(.failure(NSError(domain: "ShareContentError", code: 0, userInfo: nil)))
         }
     }
 
@@ -302,7 +302,7 @@ class MockWKScriptMessage: WKScriptMessage {
     }
 }
 
-class MockMiniAppCallbackProtocol: MiniAppCallbackProtocol {
+class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     var messageId: String?
     var response: String?
     var errorMessage: String?
@@ -381,10 +381,10 @@ func deleteStatusPreferences() {
 
 func updateCustomPermissionStatus(miniAppId: String, permissionType: MiniAppCustomPermissionType, status: MiniAppCustomPermissionGrantedStatus) {
     MiniApp.shared().setCustomPermissions(forMiniApp: miniAppId,
-                                          permissionList: [MASDKCustomPermissionModel(
-                                            permissionName: permissionType,
-                                            isPermissionGranted: status,
-                                            permissionRequestDescription: "")])
+        permissionList: [MASDKCustomPermissionModel(
+            permissionName: permissionType,
+            isPermissionGranted: status,
+            permissionRequestDescription: "")])
 }
 
 func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {

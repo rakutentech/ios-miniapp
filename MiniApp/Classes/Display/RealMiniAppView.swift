@@ -10,7 +10,7 @@ internal class RealMiniAppView: UIView {
     internal var navBarVisibility: MiniAppNavigationVisibility
     internal var isNavBarCustom = false
 
-    internal weak var hostAppMessageDelegate: MiniAppMessageProtocol?
+    internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
     internal weak var currentDialogController: UIAlertController?
 
@@ -18,7 +18,7 @@ internal class RealMiniAppView: UIView {
         miniAppId: String,
         versionId: String,
         miniAppTitle: String,
-        hostAppMessageDelegate: MiniAppMessageProtocol,
+        hostAppMessageDelegate: MiniAppMessageDelegate,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
@@ -134,7 +134,7 @@ extension RealMiniAppView: MiniAppDisplayProtocol {
     }
 }
 
-extension RealMiniAppView: MiniAppCallbackProtocol {
+extension RealMiniAppView: MiniAppCallbackDelegate {
     func didReceiveScriptMessageResponse(messageId: String, response: String) {
         self.webView.evaluateJavaScript(Constants.javascriptSuccessCallback + "('\(messageId)'," + "'\(response)')")
     }

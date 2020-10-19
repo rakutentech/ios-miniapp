@@ -5,10 +5,7 @@ internal class Displayer {
         self.navConfig = config
     }
 
-    func getMiniAppView(miniAppId: String,
-                        versionId: String,
-                        miniAppTitle: String,
-                        hostAppMessageDelegate: MiniAppMessageProtocol) -> MiniAppDisplayProtocol {
+    func getMiniAppView(miniAppId: String, versionId: String, miniAppTitle: String, hostAppMessageDelegate: MiniAppMessageDelegate) -> MiniAppDisplayProtocol {
         return RealMiniAppView(
           miniAppId: miniAppId,
           versionId: versionId,
