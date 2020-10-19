@@ -21,6 +21,7 @@ public class MiniAppExternalUrlLoader {
     /// and eventually close the external webview controller if a Mini App link is triggered
     /// and provide a feedback to the Mini App via the MiniAppNavigationResponseHandler
     public func shouldOverrideURLLoading(_ url: URL?) -> WKNavigationActionPolicy {
+        MiniAppLogger.d("shouldOverrideURLLoading(_ url: \(url?.absoluteString ?? "?"))")
         if let urlWebview = url, urlWebview.isMiniAppURL() {
             self.currentResponseHandler?(urlWebview)
             self.currentWebViewController?.dismiss(animated: true)
