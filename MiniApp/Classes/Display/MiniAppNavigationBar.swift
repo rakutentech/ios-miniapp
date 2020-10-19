@@ -1,6 +1,3 @@
-import UIKit
-import SafariServices
-
 internal class MiniAppNavigationBar: UIView {
 
     @IBOutlet var contentView: UIView!
@@ -43,11 +40,6 @@ internal class MiniAppNavigationBar: UIView {
 }
 
 extension MiniAppNavigationBar: MiniAppNavigationDelegate {
-    func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
-        let safariVC = SFSafariViewController(url: url)
-        self.window?.rootViewController?.present(safariVC, animated: true)
-    }
-
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
         self.delegate = delegate
     }

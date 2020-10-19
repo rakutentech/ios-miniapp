@@ -1,8 +1,11 @@
+@available(*, deprecated, message: "protocol renamed to MiniAppMessageDelegate")
+public typealias MiniAppMessageProtocol = MiniAppMessageDelegate
+
 /**
 Public Protocol that will be used by the Mini App to communicate
  with the Native implementation
 */
-public protocol MiniAppMessageProtocol: MiniAppUserInfoDelegate {
+public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareContentDelegate {
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     func getUniqueId() -> String
@@ -14,9 +17,6 @@ public protocol MiniAppMessageProtocol: MiniAppUserInfoDelegate {
     /// Interface that should be implemented in the host app to handle the Custom Permissions.
     /// Host app is responsible to display the alert/dialog with the [MiniAppCustomPermissionType] permissions to the user and the result should be returned back to the SDK
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
-
-    /// Interface that is used to share the content from the Mini app
-    func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)
 }
 
 public enum MASDKProtocolResponse: String {
