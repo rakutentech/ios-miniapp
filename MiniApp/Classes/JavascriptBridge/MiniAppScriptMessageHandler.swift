@@ -2,7 +2,10 @@ import Foundation
 import WebKit
 import CoreLocation
 
-protocol MiniAppCallbackProtocol: AnyObject {
+@available(*, deprecated, message: "protocol renamed to MiniAppCallbackDelegate")
+typealias MiniAppCallbackProtocol = MiniAppCallbackDelegate
+
+protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveScriptMessageResponse(messageId: String, response: String)
     func didReceiveScriptMessageError(messageId: String, errorMessage: String)
 }
@@ -10,14 +13,14 @@ protocol MiniAppCallbackProtocol: AnyObject {
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     var locationManager: LocationManager?
-    weak var delegate: MiniAppCallbackProtocol?
-    weak var hostAppMessageDelegate: MiniAppMessageProtocol?
+    weak var delegate: MiniAppCallbackDelegate?
+    weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     var miniAppId: String
     var userAlreadyRespondedRequestList = [MASDKCustomPermissionModel]()
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
     var miniAppKeyStore = MiniAppKeyChain()
 
-    init(delegate: MiniAppCallbackProtocol, hostAppMessageDelegate: MiniAppMessageProtocol, miniAppId: String) {
+    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, miniAppId: String) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
         self.miniAppId = miniAppId
@@ -127,20 +130,26 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             return
         }
         if !requestParamValue.content.isEmpty {
-            hostAppMessageDelegate?.shareContent(info: MiniAppShareContent(messageContent: requestParamValue.content)) { (result) in
-                switch result {
-                case .success:
-                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "SUCCESS")
-                case .failure(let error):
-                    if !error.localizedDescription.isEmpty {
-                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
-                        return
-                    }
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
-                }
+            let info = MiniAppShareContent(messageContent: requestParamValue.content)
+            self.hostAppMessageDelegate?.shareContent(
+                info: info) { (result) in
+                self.manageShareResult(result, with: callbackId)
             }
         } else {
             self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.valueIsEmpty))
+        }
+    }
+
+    func manageShareResult(_ result: Result<MASDKProtocolResponse, Error>, with callbackId: String) {
+        switch result {
+        case .success:
+            self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "SUCCESS")
+        case .failure(let error):
+            if !error.localizedDescription.isEmpty {
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                return
+            }
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
         }
     }
 
