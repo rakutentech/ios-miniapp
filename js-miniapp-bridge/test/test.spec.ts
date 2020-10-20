@@ -17,6 +17,8 @@ const mockExecutor = {
   getPlatform: sinon.stub(),
 };
 
+const handleError = error => {};
+
 beforeEach(() => {
   sandbox.restore();
 });
@@ -107,7 +109,7 @@ describe('requestCustomPermissions', () => {
   it('will call the platform executor', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
 
-    bridge.requestCustomPermissions(requestPermissions);
+    bridge.requestCustomPermissions(requestPermissions).catch(handleError);
 
     sinon.assert.calledWith(mockExecutor.exec, 'requestCustomPermissions');
   });
@@ -115,7 +117,7 @@ describe('requestCustomPermissions', () => {
   it('will attach the permissions to the `permissions` key', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
 
-    bridge.requestCustomPermissions(requestPermissions);
+    bridge.requestCustomPermissions(requestPermissions).catch(handleError);
 
     sinon.assert.calledWith(mockExecutor.exec, sinon.match.any, {
       permissions: requestPermissions,
