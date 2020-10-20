@@ -10,7 +10,7 @@ extension ViewController: MiniAppNavigationDelegate {
                 switch result {
                 case .success(let responseData):
                     DispatchQueue.main.async {
-                        self.decodeResponse = responseData
+                        self.unfilteredResults = responseData
                         self.tableView.reloadData()
                     }
                 case .failure(let error):

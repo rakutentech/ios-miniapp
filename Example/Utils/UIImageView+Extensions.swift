@@ -5,13 +5,14 @@ extension UIImageView {
 
         if let cachedImage = cache?[url] {
             self.image = cachedImage
-        } else if let imageName = placeholder {
-            self.image = UIImage(named: imageName)
         } else {
-            self.image = nil
+            if let imageName = placeholder {
+                self.image = UIImage(named: imageName)
+            } else {
+                self.image = nil
+            }
+            UIImageView.downloadImage(url, for: self, cache: cache)
         }
-
-        UIImageView.downloadImage(url, for: self, cache: cache)
     }
 
     class func downloadImage(_ url: URL, for imageView: UIImageView, cache: ImageCache? = nil) {
