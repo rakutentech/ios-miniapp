@@ -5,8 +5,15 @@ import CoreLocation
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
     let refreshControl = UIRefreshControl()
 
+    var unfilteredResults: [MiniAppInfo]? {
+        didSet {
+            self.decodeResponse = self.unfilteredResults
+            executeSearch(searchText: searchBar.text ?? "")
+        }
+    }
     var decodeResponse: [MiniAppInfo]? {
         didSet {
             if let list = self.decodeResponse, !(Config.userDefaults?.bool(forKey: Config.Key.isTestMode.rawValue) ?? false) {
@@ -71,10 +78,6 @@ extension ViewController {
     @IBAction func refreshList(_ sender: UIRefreshControl) {
         fetchAppList(inBackground: false)
     }
-
-    @IBAction func actionShowMiniAppById() {
-        fetchMiniAppUsingId(title: NSLocalizedString("input_miniapp_title", comment: ""))
-    }
 }
 
 // MARK: - UITableViewControllerDelegate
@@ -122,8 +125,38 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - SettingsDelegate
 extension ViewController: SettingsDelegate {
     func didSettingsUpdated(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]?) {
-        self.decodeResponse?.removeAll()
-        self.decodeResponse = miniAppList
+        self.unfilteredResults?.removeAll()
+        self.unfilteredResults = miniAppList
         self.tableView.reloadData()
+    }
+}
+
+extension ViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBar.returnKeyType == UIReturnKeyType.go, let search = searchBar.text {
+            self.fetchAppInfo(for: search)
+        }
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        executeSearch(searchText: searchText)
+    }
+
+    func executeSearch(searchText: String) {
+        searchBar.returnKeyType = .done
+
+        if searchText.count == 0 {
+            self.decodeResponse = self.unfilteredResults
+        } else {
+            self.decodeResponse = self.unfilteredResults?.filter {($0.displayName?.uppercased().contains(searchText.uppercased()) ?? false)
+                || ($0.id == searchText)}
+
+            if (self.decodeResponse?.count ?? 0) == 0 && searchText.count > 0 {
+                searchBar.returnKeyType = .go
+            }
+        }
+        self.tableView.reloadData()
+        searchBar.reloadInputViews()
     }
 }
