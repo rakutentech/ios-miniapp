@@ -54,11 +54,6 @@ class MiniAppExternalWebViewController: UIViewController {
             self.webView.load(URLRequest(url: url))
         }
     }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.miniAppExternalUrlLoader = nil
-    }
 }
 
 extension MiniAppExternalWebViewController: WKNavigationDelegate {
