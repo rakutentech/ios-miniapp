@@ -56,7 +56,7 @@ class MiniAppExternalWebViewController: UIViewController {
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
+        super.viewDidDisappear(animated)
         self.miniAppExternalUrlLoader = nil
     }
 }
