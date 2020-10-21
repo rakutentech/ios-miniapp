@@ -12,7 +12,7 @@ class MiniAppExternalWebViewController: UIViewController {
     var miniAppExternalUrlLoader: MiniAppExternalUrlLoader?
 
     public class func presentModally(url: URL, externalLinkResponseHandler: MiniAppNavigationResponseHandler?) {
-        weak var window: UIWindow?
+        let window: UIWindow?
         if #available(iOS 13, *) {
             window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
         } else {
