@@ -118,8 +118,8 @@ internal class RealMiniAppView: UIView {
                     guard navigationAction.targetFrame?.isMainFrame != false else {
                         return decisionHandler(.allow)
                     }
-                    self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
-                        self.webView.load(URLRequest(url: url))
+                    self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { [weak self] (url) in
+                        self?.webView.load(URLRequest(url: url))
                     })
                 }
             }
