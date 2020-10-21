@@ -14,7 +14,7 @@ class MiniAppExternalWebViewController: UIViewController {
     public class func presentModally(url: URL, externalLinkResponseHandler: MiniAppNavigationResponseHandler?) {
         weak var window: UIWindow?
         if #available(iOS 13, *) {
-            window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
         } else {
             window = UIApplication.shared.keyWindow
         }
@@ -36,6 +36,7 @@ class MiniAppExternalWebViewController: UIViewController {
         config.preferences.javaScriptEnabled = true
         config.allowsInlineMediaPlayback = true
         config.allowsPictureInPictureMediaPlayback = true
+        config.mediaTypesRequiringUserActionForPlayback = []
 
         self.webView = WKWebView(frame: self.view.frame, configuration: config)
         self.webView.allowsBackForwardNavigationGestures = true
