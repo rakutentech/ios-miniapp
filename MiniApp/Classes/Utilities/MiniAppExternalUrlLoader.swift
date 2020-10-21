@@ -1,7 +1,7 @@
 import WebKit
 
 public class MiniAppExternalUrlLoader {
-    public var currentWebViewController: UIViewController?
+    public weak var currentWebViewController: UIViewController?
     public var currentResponseHandler: MiniAppNavigationResponseHandler?
 
     /// This class supports the scenario that external loader redirects url that are only supported in mini app view,
