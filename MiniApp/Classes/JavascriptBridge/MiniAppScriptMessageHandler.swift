@@ -187,12 +187,12 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func setScreenOrientation(requestParam: RequestParameters?, callbackId: String) {
         guard let requestParamValue = requestParam?.action else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
             return
         }
         if !requestParamValue.isEmpty {
             guard let info = MiniAppInterfaceOrientation(rawValue: requestParamValue) else {
-                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.valueIsEmpty))
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
                 return
             }
             delegate?.didOrientationChanged(orientation: info.orientation)
