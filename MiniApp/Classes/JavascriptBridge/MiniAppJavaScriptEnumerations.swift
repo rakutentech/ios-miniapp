@@ -6,6 +6,7 @@ enum MiniAppJSActionCommand: String {
     case shareInfo
     case getUserName
     case getProfilePhoto
+    case setScreenOrientation
 }
 
 enum JavaScriptExecResult: String {
@@ -52,6 +53,23 @@ public enum MiniAppCustomPermissionGrantedStatus: String, Codable {
         return true
         default:
         return false
+        }
+    }
+}
+
+enum MiniAppInterfaceOrientation: String, Codable {
+    case lockPortrait = "rakuten.miniapp.screen.LOCK_PORTRAIT"
+    case lockLandscape = "rakuten.miniapp.screen.LOCK_LANDSCAPE"
+    case lockRelease = "rakuten.miniapp.screen.LOCK_RELEASE"
+
+    public var orientation: UIInterfaceOrientationMask {
+        switch self {
+        case .lockPortrait:
+            return .portrait
+        case .lockLandscape:
+            return .landscape
+        case .lockRelease:
+            return .all
         }
     }
 }

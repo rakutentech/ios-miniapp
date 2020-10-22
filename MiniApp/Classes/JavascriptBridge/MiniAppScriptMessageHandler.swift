@@ -8,6 +8,7 @@ typealias MiniAppCallbackProtocol = MiniAppCallbackDelegate
 protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveScriptMessageResponse(messageId: String, response: String)
     func didReceiveScriptMessageError(messageId: String, errorMessage: String)
+    func didOrientationChanged(orientation: UIInterfaceOrientationMask)
 }
 
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
@@ -62,6 +63,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             fetchUserName(callbackId: callbackId)
         case .getProfilePhoto:
             fetchProfilePhoto(callbackId: callbackId)
+        case .setScreenOrientation:
+            setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         }
     }
 
@@ -180,6 +183,23 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     func isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType) -> Bool {
         let customPermission = self.miniAppKeyStore.getCustomPermissions(forMiniApp: self.miniAppId).filter { $0.permissionName == customPermissionType }
         return customPermission[0].isPermissionGranted.boolValue
+    }
+
+    func setScreenOrientation(requestParam: RequestParameters?, callbackId: String) {
+        guard let requestParamValue = requestParam?.action else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            return
+        }
+        if !requestParamValue.isEmpty {
+            guard let info = MiniAppInterfaceOrientation(rawValue: requestParamValue) else {
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.valueIsEmpty))
+                return
+            }
+            delegate?.didOrientationChanged(orientation: info.orientation)
+            UIViewController.attemptRotationToDeviceOrientation()
+        } else {
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.valueIsEmpty))
+        }
     }
 }
 

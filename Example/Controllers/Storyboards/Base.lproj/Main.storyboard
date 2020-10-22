@@ -624,7 +624,7 @@
         <!--Mini App Sample-->
         <scene sceneID="yHS-0v-Pch">
             <objects>
-                <viewController id="BQV-uy-8GQ" customClass="ViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="BQV-uy-8GQ" customClass="ViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XCF-cL-5kF"/>
                         <viewControllerLayoutGuide type="bottom" id="tdn-rl-TH3"/>
@@ -752,7 +752,7 @@
         <!--Display Controller-->
         <scene sceneID="poG-Jp-R00">
             <objects>
-                <viewController id="EFj-rP-o8F" customClass="DisplayController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="EFj-rP-o8F" customClass="DisplayController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uts-jG-JDj"/>
                         <viewControllerLayoutGuide type="bottom" id="2Js-EV-iRO"/>

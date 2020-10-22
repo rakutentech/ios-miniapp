@@ -316,6 +316,10 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
         self.messageId = messageId
         self.errorMessage = errorMessage
     }
+
+    func didOrientationChanged(orientation: UIInterfaceOrientationMask) {
+        
+    }
 }
 
 class MockNavigationView: UIView, MiniAppNavigationDelegate {
