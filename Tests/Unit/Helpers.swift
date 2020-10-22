@@ -318,7 +318,6 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     }
 
     func didOrientationChanged(orientation: UIInterfaceOrientationMask) {
-        
     }
 }
 
