@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppCustomPermissionGrantedStatus Enumeration Reference</title>
+    <title>MiniAppUserInfoDelegate Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/MiniAppCustomPermissionGrantedStatus" class="dashAnchor"></a>
-    <a title="MiniAppCustomPermissionGrantedStatus Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Protocol/MiniAppUserInfoDelegate" class="dashAnchor"></a>
+    <a title="MiniAppUserInfoDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MiniApp 2.3.0 Docs</a> (59% documented)</p>
@@ -29,7 +29,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MiniApp Reference</a>
         <img id="carat" src="../img/carat.png" />
-        MiniAppCustomPermissionGrantedStatus Enumeration Reference
+        MiniAppUserInfoDelegate Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -160,15 +160,16 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>MiniAppCustomPermissionGrantedStatus</h1>
+            <h1>MiniAppUserInfoDelegate</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MiniAppCustomPermissionGrantedStatus</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppUserInfoDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Public Protocol that will be used by the Mini App to communicate
+with the Native implementation for User profile related retrieval</p>
 
           </section>
           <section class="section task-group-section">
@@ -177,24 +178,31 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB29CustomPermissionGrantedStatusO7allowedyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/allowed" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB29CustomPermissionGrantedStatusO7allowedyA2CmF">allowed</a>
+                    <a name="/s:7MiniApp0aB16UserInfoDelegateP03getC4NameSSSgyF"></a>
+                    <a name="//apple_ref/swift/Method/getUserName()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegateP03getC4NameSSSgyF">getUserName()</a>
                     </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Interface that is used to retrieve the user name from the User Profile</p>
 
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">allowed</span> <span class="o">=</span> <span class="s">"ALLOWED"</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getUserName</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -204,78 +212,31 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB29CustomPermissionGrantedStatusO6deniedyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/denied" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB29CustomPermissionGrantedStatusO6deniedyA2CmF">denied</a>
+                    <a name="/s:7MiniApp0aB16UserInfoDelegateP15getProfilePhotoSSSgyF"></a>
+                    <a name="//apple_ref/swift/Method/getProfilePhoto()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegateP15getProfilePhotoSSSgyF">getProfilePhoto()</a>
                     </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Interface that is used to retrieve the Image URI</p>
 
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">denied</span> <span class="o">=</span> <span class="s">"DENIED"</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp0aB29CustomPermissionGrantedStatusO22permissionNotAvailableyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/permissionNotAvailable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB29CustomPermissionGrantedStatusO22permissionNotAvailableyA2CmF">permissionNotAvailable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">permissionNotAvailable</span> <span class="o">=</span> <span class="s">"PERMISSION_NOT_AVAILABLE"</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp0aB29CustomPermissionGrantedStatusO9boolValueSbvp"></a>
-                    <a name="//apple_ref/swift/Property/boolValue" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB29CustomPermissionGrantedStatusO9boolValueSbvp">boolValue</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">boolValue</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getProfilePhoto</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>

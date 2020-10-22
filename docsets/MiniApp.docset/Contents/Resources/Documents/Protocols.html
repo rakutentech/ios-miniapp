@@ -17,7 +17,7 @@
     <a title="Protocols  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp 2.2.0 Docs</a> (55% documented)</p>
+        <p><a href="index.html">MiniApp 2.3.0 Docs</a> (59% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -111,13 +111,19 @@
                 <a href="Protocols/MiniAppDisplayProtocol.html">MiniAppDisplayProtocol</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/MiniAppMessageProtocol.html">MiniAppMessageProtocol</a>
+                <a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/MiniAppNavigationBarDelegate.html">MiniAppNavigationBarDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/MiniAppNavigationDelegate.html">MiniAppNavigationDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MiniAppShareContentDelegate.html">MiniAppShareContentDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a>
               </li>
             </ul>
           </li>
@@ -140,6 +146,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a href="Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
@@ -255,9 +264,9 @@ to communicate with the Mini App display module</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB15MessageProtocolP"></a>
-                    <a name="//apple_ref/swift/Protocol/MiniAppMessageProtocol" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB15MessageProtocolP">MiniAppMessageProtocol</a>
+                    <a name="/s:7MiniApp0aB15MessageDelegateP"></a>
+                    <a name="//apple_ref/swift/Protocol/MiniAppMessageDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB15MessageDelegateP">MiniAppMessageDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -268,13 +277,71 @@ to communicate with the Mini App display module</p>
                         <p>Public Protocol that will be used by the Mini App to communicate
  with the Native implementation</p>
 
-                        <a href="Protocols/MiniAppMessageProtocol.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/MiniAppMessageDelegate.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppMessageProtocol</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">:</span> <span class="kt"><a href="Protocols/MiniAppShareContentDelegate.html">MiniAppShareContentDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB20ShareContentDelegateP"></a>
+                    <a name="//apple_ref/swift/Protocol/MiniAppShareContentDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB20ShareContentDelegateP">MiniAppShareContentDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Public Protocol that will be used by the Mini App to communicate
+with the Native implementation for content sharing mechanism</p>
+
+                        <a href="Protocols/MiniAppShareContentDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppShareContentDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB16UserInfoDelegateP"></a>
+                    <a name="//apple_ref/swift/Protocol/MiniAppUserInfoDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegateP">MiniAppUserInfoDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Public Protocol that will be used by the Mini App to communicate
+with the Native implementation for User profile related retrieval</p>
+
+                        <a href="Protocols/MiniAppUserInfoDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppUserInfoDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                         </div>
                       </div>
@@ -286,7 +353,7 @@ to communicate with the Mini App display module</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-02)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-22)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
