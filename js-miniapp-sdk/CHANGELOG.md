@@ -2,9 +2,13 @@
 
 ### 1.x.x (In progress)
 
+- **Feature:** Set and lock device screen orientation. [See here](README.md#6-Set-screen-orientation).
+
+### 1.3.0 (2020-10-22)
+
 - **Feature:** Added support for requesting the load and display of Interstitial & Rewarded Ads by the host application [See here](README.md#4-Show-Ads).
 - **Feature:** Added support for requesting User Name and Profle Photo from Mini app to Host application [See here](README.md#5-Requesting-User-details).
-- **Feature:** Set and lock device screen orientation. [See here](README.md#6-Set-screen-orientation).
+- **Feature:** Added `MiniApp.getPlatform` for retrieving the platform name of the device. [See here](README.md#check-androidios-device).
 
 ### v1.2.0 (2020-10-02)
 

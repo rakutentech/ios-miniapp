@@ -214,9 +214,6 @@ const platform = miniApp.getPlatform();
 ```
 When it is not running by Android/iOS, the return value is `Unknown`.
 
-The mini app can have its own device detection by not using SDK/
-This can be done with [Bowser](https://github.com/lancedikson/bowser).
-
 ### Usage when testing in the browser
 Currently, the SDK does not support testing in the browser. You must test using the [Android Mini App Demo App](https://github.com/rakutentech/android-miniapp) or [iOS Mini App Demo App](https://github.com/rakutentech/ios-miniapp) on an actual Android or iOS device.
 
