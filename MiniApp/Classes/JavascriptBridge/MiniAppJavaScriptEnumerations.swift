@@ -69,7 +69,7 @@ enum MiniAppInterfaceOrientation: String, Codable {
         case .lockLandscape:
             return .landscape
         case .lockRelease:
-            return .all
+            return []
         }
     }
 }

@@ -134,7 +134,11 @@ extension RealMiniAppView: MiniAppDisplayProtocol {
 
     func getSupportedOrientation() -> UIInterfaceOrientationMask {
         if self.supportedMiniAppOrientation.isEmpty {
-            return .all
+            if UIDevice.current.orientation.isPortrait {
+                return .portrait
+            } else {
+                return .landscape
+            }
         } else {
             return self.supportedMiniAppOrientation
         }
