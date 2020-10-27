@@ -57,7 +57,7 @@ class MiniAppJavascriptEnumerationTests: QuickSpec {
                 it("will return all UIInterfaceOrientationMask") {
                     let miniAppInterfaceOrientation = MiniAppInterfaceOrientation(rawValue: "rakuten.miniapp.screen.LOCK_RELEASE")
                     expect(miniAppInterfaceOrientation).toEventually(equal(MiniAppInterfaceOrientation.lockRelease))
-                    expect(miniAppInterfaceOrientation?.orientation).toEventually(equal(UIInterfaceOrientationMask.all))
+                    expect(miniAppInterfaceOrientation?.orientation).toEventually(equal([]))
                 }
             }
         }
