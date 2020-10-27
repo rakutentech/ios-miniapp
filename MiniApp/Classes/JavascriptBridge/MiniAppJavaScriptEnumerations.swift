@@ -6,6 +6,7 @@ enum MiniAppJSActionCommand: String {
     case shareInfo
     case getUserName
     case getProfilePhoto
+    case getAccessToken
 }
 
 enum JavaScriptExecResult: String {

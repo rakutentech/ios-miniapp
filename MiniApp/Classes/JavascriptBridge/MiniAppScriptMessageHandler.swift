@@ -28,18 +28,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-            if let messageBody = message.body as? String {
-                let bodyData: Data = messageBody.data(using: .utf8)!
-                let responseJson = ResponseDecoder.decode(decodeType: MiniAppJavaScriptMessageInfo.self, data: bodyData)
-                handleBridgeMessage(responseJson: responseJson)
-            }
+        if let messageBody = message.body as? String {
+            let bodyData: Data = messageBody.data(using: .utf8)!
+            let responseJson = ResponseDecoder.decode(decodeType: MiniAppJavaScriptMessageInfo.self, data: bodyData)
+            handleBridgeMessage(responseJson: responseJson)
+        }
     }
 
     func handleBridgeMessage(responseJson: MiniAppJavaScriptMessageInfo?) {
         guard let actionCommand = responseJson?.action, !actionCommand.isEmpty,
             let callbackId = responseJson?.id, !callbackId.isEmpty, let requestAction = MiniAppJSActionCommand(rawValue: actionCommand) else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: "", response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
-            return
+                return
         }
         let requestParam = responseJson?.param ?? nil
         handleActionCommand(action: requestAction, requestParam: requestParam, callbackId: callbackId)
@@ -62,6 +62,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             fetchUserName(callbackId: callbackId)
         case .getProfilePhoto:
             fetchProfilePhoto(callbackId: callbackId)
+        case .getAccessToken:
+            fetchTokenDetails(callbackId: callbackId)
         }
     }
 
@@ -105,14 +107,14 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func getLocationInfo() -> String {
-        return  "{\"coords\":{\"latitude\":\(locationManager?.location?.coordinate.latitude ?? 0)" +
-        ",\"longitude\":\(locationManager?.location?.coordinate.longitude ?? 0)" +
-        ", \"altitude\":\(locationManager?.location?.altitude ?? "null" as Any)" +
-        ", \"altitudeAccuracy\":\(locationManager?.location?.verticalAccuracy ?? "null" as Any)" +
-        ", \"accuracy\":\(locationManager?.location?.horizontalAccuracy ?? 0)" +
-        ", \"speed\":\(locationManager?.location?.speed ?? "null" as Any)" +
-        ", \"heading\":\(locationManager?.location?.course ?? "null" as Any)" +
-        "}, \"timestamp\":\(Date().epochInMilliseconds)}"
+        return "{\"coords\":{\"latitude\":\(locationManager?.location?.coordinate.latitude ?? 0)" +
+            ",\"longitude\":\(locationManager?.location?.coordinate.longitude ?? 0)" +
+            ", \"altitude\":\(locationManager?.location?.altitude ?? "null" as Any)" +
+            ", \"altitudeAccuracy\":\(locationManager?.location?.verticalAccuracy ?? "null" as Any)" +
+            ", \"accuracy\":\(locationManager?.location?.horizontalAccuracy ?? 0)" +
+            ", \"speed\":\(locationManager?.location?.speed ?? "null" as Any)" +
+            ", \"heading\":\(locationManager?.location?.course ?? "null" as Any)" +
+            "}, \"timestamp\":\(Date().epochInMilliseconds)}"
     }
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {
@@ -180,6 +182,19 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     func isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType) -> Bool {
         let customPermission = self.miniAppKeyStore.getCustomPermissions(forMiniApp: self.miniAppId).filter { $0.permissionName == customPermissionType }
         return customPermission[0].isPermissionGranted.boolValue
+    }
+
+    func fetchTokenDetails(callbackId: String) {
+        guard let tokenInfo = hostAppMessageDelegate?.getAccessToken() else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+            return
+        }
+        guard let jsonResponse = ResponseEncoder.encode(data: tokenInfo) else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+            return
+        }
+        executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: jsonResponse)
+        return
     }
 }
 
