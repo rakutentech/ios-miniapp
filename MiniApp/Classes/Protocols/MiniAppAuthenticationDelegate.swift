@@ -4,16 +4,16 @@
 */
 public protocol MiniAppAuthenticationDelegate: class {
     /// Interface that is used to retrieve the Token Info
-    func getAccessToken() -> MATokenInfo?
+    func getAccessToken(completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
 }
 
 public extension MiniAppAuthenticationDelegate {
-    func getAccessToken() -> MATokenInfo? {
-        return MATokenInfo(accessToken: "", expirationDate: "")
+    func getAccessToken(completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
     }
 }
 
 public struct MATokenInfo: Codable {
-    let accessToken: String
-    let expirationDate: String
+    let token: String
+    let validUntil: String
 }
