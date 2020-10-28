@@ -39,6 +39,27 @@ class MiniAppJavascriptEnumerationTests: QuickSpec {
                     expect(miniAppPermissionStatus?.boolValue).toEventually(equal(false))
                 }
             }
+            context("when MiniAppInterfaceOrientation is initialized with valid Portrait string ") {
+                it("will return portrait UIInterfaceOrientationMask") {
+                    let miniAppInterfaceOrientation = MiniAppInterfaceOrientation(rawValue: "rakuten.miniapp.screen.LOCK_PORTRAIT")
+                    expect(miniAppInterfaceOrientation).toEventually(equal(MiniAppInterfaceOrientation.lockPortrait))
+                    expect(miniAppInterfaceOrientation?.orientation).toEventually(equal(UIInterfaceOrientationMask.portrait))
+                }
+            }
+            context("when MiniAppInterfaceOrientation is initialized with valid Landscape string ") {
+                it("will return landscape UIInterfaceOrientationMask") {
+                    let miniAppInterfaceOrientation = MiniAppInterfaceOrientation(rawValue: "rakuten.miniapp.screen.LOCK_LANDSCAPE")
+                    expect(miniAppInterfaceOrientation).toEventually(equal(MiniAppInterfaceOrientation.lockLandscape))
+                    expect(miniAppInterfaceOrientation?.orientation).toEventually(equal(UIInterfaceOrientationMask.landscape))
+                }
+            }
+            context("when MiniAppInterfaceOrientation is initialized with valid LOCK_RELEASE string") {
+                it("will return all UIInterfaceOrientationMask") {
+                    let miniAppInterfaceOrientation = MiniAppInterfaceOrientation(rawValue: "rakuten.miniapp.screen.LOCK_RELEASE")
+                    expect(miniAppInterfaceOrientation).toEventually(equal(MiniAppInterfaceOrientation.lockRelease))
+                    expect(miniAppInterfaceOrientation?.orientation).toEventually(equal([]))
+                }
+            }
         }
     }
 }

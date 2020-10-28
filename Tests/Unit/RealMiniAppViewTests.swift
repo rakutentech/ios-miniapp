@@ -27,6 +27,18 @@ class RealMiniAppViewTests: QuickSpec {
                     expect(miniAppView.getMiniAppView()).toEventually(beAKindOf(UIView.self))
                 }
             }
+            context("when getSupportedOrientation is called and no supported orientation is set by the mini app") {
+                it("will return UIInterfaceOrientationMask.all") {
+                    miniAppView.supportedMiniAppOrientation = []
+                    expect(miniAppView.getSupportedOrientation()).toEventually(equal(UIInterfaceOrientationMask.portrait))
+                }
+            }
+            context("when getSupportedOrientation is called and supported orientation is set by the mini app as portrait") {
+                it("will return UIInterfaceOrientationMask.portrait") {
+                    miniAppView.supportedMiniAppOrientation = UIInterfaceOrientationMask.portrait
+                    expect(miniAppView.getSupportedOrientation()).toEventually(equal(UIInterfaceOrientationMask.portrait))
+                }
+            }
             context("when host app info is specified in plist") {
                 it("will add custom string in User agent") {
                     let miniAppView = RealMiniAppView(

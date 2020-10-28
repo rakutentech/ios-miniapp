@@ -50,7 +50,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         miniAppId: "Test"
                     )
-                    let requestParam = RequestParameters(permission: "location", permissions: nil, locationOptions: nil, shareInfo: ShareInfoParameters(content: ""))
+                    let requestParam = RequestParameters(action: "", permission: "location", permissions: nil, locationOptions: nil, shareInfo: ShareInfoParameters(content: ""))
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
@@ -63,7 +63,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         miniAppId: "Test"
                     )
-                    let requestParam = RequestParameters(permission: "location", permissions: nil, locationOptions: nil, shareInfo: ShareInfoParameters(content: ""))
+                    let requestParam = RequestParameters(action: "", permission: "location", permissions: nil, locationOptions: nil, shareInfo: ShareInfoParameters(content: ""))
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
@@ -340,6 +340,36 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
                 }
+            }
+            context("when MiniAppScriptMessageHandler receives invalid orientation lock command") {
+                 it("will return error") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: "Test"
+                    )
+                    mockMessageInterface.messageContentAllowed = false
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\":\"setScreenOrientation\",\"param\":{\"action\":null},\"id\":\"5.733550049709592\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(10))
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives no orientation lock command") {
+                 it("will return error") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: "Test"
+                    )
+                    mockMessageInterface.messageContentAllowed = false
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\":\"setScreenOrientation\",\"param\":{\"action\":\"rakuten.miniapp.screen.LOCK_LANDSCAPE_RIGHT\"},\"id\":\"5.733550049709592\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(10))
+                 }
             }
         }
     }

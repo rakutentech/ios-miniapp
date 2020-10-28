@@ -1,5 +1,16 @@
 ## CHANGELOG
 
+### 2.x.x (IN-PROGRESS)
+
+**SDK**
+
+- **Feature:** Added support for Orientation lock, that enables the mini app to lock `portrait` or `landscape` orientation for the mini-app. [Please check here](USERGUIDE.md#orientation-lock)
+
+**Sample App**
+
+- **Feature:** Added implementation for orientation lock
+---
+
 ### 2.3.0 (2020-10-22)
 
 **SDK**
