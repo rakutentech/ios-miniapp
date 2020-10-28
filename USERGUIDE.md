@@ -72,6 +72,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Custom Permissions](#custom-permissions)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Retrieve User Profile details](#user-profile-details)
+* [Orientation Lock](#orientation-lock)
 
 <div id="runtime-conf"></div>
 
@@ -339,6 +340,55 @@ extension ViewController: MiniAppMessageDelegate {
     }
 }
 ```
+
+<div id="orientation-lock"></div>
+
+### Orientation Lock
+---
+Mini-app can request the SDK to lock the orientation using the JS SDK interfaces and the locked orientation can be retrieved using the following interface,
+
+1. Overriding `supportedInterfaceOrientations` in your ViewController
+
+    ```swift
+    static var miniAppSupportedOrientation: UIInterfaceOrientationMask = []
+
+    extension DisplayController {
+        override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+            DisplayController.miniAppSupportedOrientation = self.miniAppDisplayDelegate?.getSupportedOrientation() ?? .all
+            return DisplayController.miniAppSupportedOrientation
+        }
+    }
+    ```
+    NOTE: `self.miniAppDisplayDelegate` is an instance of `MiniAppDisplayProtocol` which can be retrieved while [creating mini-app](#create-mini-app).
+
+    The above code will help you to override the orientation for a given Viewcontroller (in which the Mini app view is displayed)
+
+2. Overriding `navigationControllerSupportedInterfaceOrientations`
+
+    If you have used UINavigationController, then you need to add the following code to enable the orientation lock,
+
+    ```swift
+    extension DisplayController: UINavigationControllerDelegate {
+        public func navigationControllerSupportedInterfaceOrientations(_ navigationController: UINavigationController) -> UIInterfaceOrientationMask {
+            return navigationController.topViewController?.supportedInterfaceOrientations ?? .all
+        }
+    }
+    ```
+    NOTE: You should also set the Navigation Controller delegate to self. ```self.navigationController?.delegate = self```
+
+3. Overriding `supportedInterfaceOrientations` for AVPlayerViewController
+
+    Orientation lock will not work for videos that is played inside Mini-app. To enable Orientation lock for the videos, please add the following code,
+
+    `import AVKit`
+
+    ```swift
+    extension AVPlayerViewController {
+        override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+                return DisplayController.miniAppSupportedOrientation
+            }
+        }
+    ```
 
 <div id="change-log"></div>
 
