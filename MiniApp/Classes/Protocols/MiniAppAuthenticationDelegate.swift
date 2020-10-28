@@ -13,7 +13,12 @@ public extension MiniAppAuthenticationDelegate {
     }
 }
 
-public struct MATokenInfo: Codable {
+public class MATokenInfo: Codable {
     let token: String
-    let validUntil: String
+    let validUntil: Date
+
+    public init(accessToken: String, expirationDate: Date) {
+        self.token = accessToken
+        self.validUntil = expirationDate
+    }
 }

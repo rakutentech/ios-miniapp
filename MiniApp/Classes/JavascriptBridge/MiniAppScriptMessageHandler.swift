@@ -205,7 +205,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func fetchTokenDetails(callbackId: String) {
-        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.profilePhoto) {
+        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.accessToken) {
             hostAppMessageDelegate?.getAccessToken { (result) in
                 switch result {
                 case .success(let responseMessage):
