@@ -10,8 +10,8 @@ extension MiniAppScriptMessageHandler {
         guard let miniAppPermissionRequestModelList = prepareCustomPermissionsRequestModelList(
             permissionList: requestParamValue),
             miniAppPermissionRequestModelList.count > 0 else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.invalidCustomPermissionsList))
-            return
+                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.invalidCustomPermissionsList))
+                return
         }
         checkCustomPermissionsRequestStatusInCache(miniAppPermissionRequestModelList: miniAppPermissionRequestModelList, callbackId: callbackId)
     }
@@ -49,7 +49,7 @@ extension MiniAppScriptMessageHandler {
                     MiniAppCustomPermissionsListResponse(
                         name: $0.name ?? "UNKNOWN_REQUEST",
                         status:
-                        MiniAppCustomPermissionGrantedStatus.permissionNotAvailable.rawValue))
+                            MiniAppCustomPermissionGrantedStatus.permissionNotAvailable.rawValue))
                 return
             }
             customPermissionRequestList.append(MASDKCustomPermissionModel(permissionName: permissionType, permissionRequestDescription: $0.description))
@@ -63,13 +63,13 @@ extension MiniAppScriptMessageHandler {
     ///   - callbackId: Callback ID that is used to send success/error response back to Miniapp
     func requestHostApp(customPermissionRequestList: [MASDKCustomPermissionModel], callbackId: String) {
         hostAppMessageDelegate?.requestCustomPermissions(permissions: customPermissionRequestList) { (result) in
-           switch result {
-           case .success(let result):
+            switch result {
+            case .success(let result):
                 self.miniAppKeyStore.storeCustomPermissions(permissions: result, forMiniApp: self.miniAppId)
                 self.sendCustomPermissionsJsonResponse(result: result, callbackId: callbackId)
-           case .failure(let error):
+            case .failure(let error):
                 self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(error))
-           }
+            }
         }
     }
 

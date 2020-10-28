@@ -15,8 +15,8 @@ enum JavaScriptExecResult: String {
 }
 
 enum MiniAppSupportedSchemes: String {
-    case tel    // used for phone calls
-    case about  // used to reveal internal state and built-in functions (e.g.: alert dialog)
+    case tel // used for phone calls
+    case about // used to reveal internal state and built-in functions (e.g.: alert dialog)
 }
 
 /// List of Device Permissions supported by the SDK that can be requested by a Mini app
@@ -33,11 +33,11 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
     public var title: String {
         switch self {
         case .userName:
-        return "User Name"
+            return "User Name"
         case .profilePhoto:
-        return "Profile Photo"
+            return "Profile Photo"
         case .contactsList:
-        return "Contact List"
+            return "Contact List"
         }
     }
 }
@@ -50,9 +50,9 @@ public enum MiniAppCustomPermissionGrantedStatus: String, Codable {
     public var boolValue: Bool {
         switch self {
         case .allowed:
-        return true
+            return true
         default:
-        return false
+            return false
         }
     }
 }
