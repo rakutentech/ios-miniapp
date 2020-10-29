@@ -22,11 +22,13 @@
     "prettify": "prettier --config ./prettier.config.js --check src/**/*.js",
     "lint": "eslint src/ --fix-dry-run",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run zip",
     "dockerBuild": "cd ci && make build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "flow": "flow"
+    "flow": "flow",
+    "deleteUnsupportedBuildFiles": "(cd build; find . -type f -name \"*.txt\" -delete -o -name \".DS_Store\" -delete)",
+    "zip": "(npm run deleteUnsupportedBuildFiles; cd build; zip -r js-miniapp-sample.zip ./*)"
   },
   "browserslist": [
     ">0.2%",
