@@ -8,7 +8,6 @@ typealias MiniAppCallbackProtocol = MiniAppCallbackDelegate
 protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveScriptMessageResponse(messageId: String, response: String)
     func didReceiveScriptMessageError(messageId: String, errorMessage: String)
-    func didOrientationChanged(orientation: UIInterfaceOrientationMask)
 }
 
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
@@ -195,7 +194,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
                 return
             }
-            delegate?.didOrientationChanged(orientation: info.orientation)
+            MiniApp.MAOrientationLock = info.orientation
             UIViewController.attemptRotationToDeviceOrientation()
             executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: MASDKProtocolResponse.success.rawValue)
         } else {
