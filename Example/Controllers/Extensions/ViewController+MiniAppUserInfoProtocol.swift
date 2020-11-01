@@ -16,7 +16,7 @@ extension ViewController {
         return userProfilePhoto
     }
 
-    func getAccessToken(completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
     }
 }

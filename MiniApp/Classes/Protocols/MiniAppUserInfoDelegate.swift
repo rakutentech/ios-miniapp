@@ -8,6 +8,9 @@ public protocol MiniAppUserInfoDelegate: class {
 
     /// Interface that is used to retrieve the Image URI
     func getProfilePhoto() -> String?
+
+    /// Interface that is used to retrieve the Token Info
+    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
 }
 
 public extension MiniAppUserInfoDelegate {
@@ -17,5 +20,19 @@ public extension MiniAppUserInfoDelegate {
 
     func getProfilePhoto() -> String? {
         return nil
+    }
+
+    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
+}
+
+public class MATokenInfo: Codable {
+    let token: String
+    let validUntil: Date
+
+    public init(accessToken: String, expirationDate: Date) {
+        self.token = accessToken
+        self.validUntil = expirationDate
     }
 }

@@ -206,7 +206,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func fetchTokenDetails(callbackId: String) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.accessToken) {
-            hostAppMessageDelegate?.getAccessToken { (result) in
+            hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId) { (result) in
                 switch result {
                 case .success(let responseMessage):
                     guard let jsonResponse = ResponseEncoder.encode(data: responseMessage) else {
