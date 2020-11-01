@@ -205,22 +205,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func fetchTokenDetails(callbackId: String) {
-        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.accessToken) {
-            hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId) { (result) in
-                switch result {
-                case .success(let responseMessage):
-                    guard let jsonResponse = ResponseEncoder.encode(data: responseMessage) else {
-                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-                        return
-                    }
-                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: jsonResponse)
-                case .failure(let error):
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(error))
+        hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId) { (result) in
+            switch result {
+            case .success(let responseMessage):
+                guard let jsonResponse = ResponseEncoder.encode(data: responseMessage) else {
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                    return
                 }
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: jsonResponse)
+            case .failure(let error):
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(error))
             }
         }
-        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
-        return
     }
 }
 
