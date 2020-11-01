@@ -5,6 +5,7 @@ import WebKit
 
 // swiftlint:disable function_body_length
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class MiniAppScriptMessageHandlerTests: QuickSpec {
 
     override func spec() {
