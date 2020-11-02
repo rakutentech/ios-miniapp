@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 1.x.x (In progress)
+### 1.4.0 (2020-11-02)
 
 - **Feature:** Set and lock device screen orientation. [See here](README.md#6-Set-screen-orientation).
 
