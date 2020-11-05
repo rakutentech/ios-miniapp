@@ -1,17 +1,16 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
+import MiniApp from 'js-miniapp-sdk';
+import { displayDate } from '../js_sdk';
 
 import {
   Button,
-  Switch,
   CircularProgress,
   FormGroup,
-  Grid,
   Typography,
   CardContent,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
 import clsx from 'clsx';
 
 import GreyCard from '../components/GreyCard';
@@ -73,13 +72,14 @@ const dataFetchReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: false,
-        response: action.payload,
+        response: action.tokenData,
       };
     case 'FETCH_FAILURE':
       return {
         ...state,
         isLoading: false,
         isError: true,
+        errorMessage: action.errorMessage,
       };
     default:
       throw new Error();
@@ -95,20 +95,15 @@ function AuthToken() {
     [classes.buttonSuccess]: state.response,
   });
 
-  const [switchState, setSwitchState] = useState(true);
-
   function requestToken() {
-    // Hardcoded API values to test
-    const API = switchState
-      ? 'http://www.mocky.io/v2/5e9406873100006c005e2d00'
-      : 'http://www.mocky.io/v2/5e9806e43500006a00c47d6f';
-    axios
-      .get(API)
+    MiniApp.user
+      .getAccessToken()
       .then((response) => {
-        dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
+        dispatch({ type: 'FETCH_SUCCESS', tokenData: response });
       })
       .catch((error) => {
-        dispatch({ type: 'FETCH_FAILURE' });
+        console.error(error);
+        dispatch({ type: 'FETCH_FAILURE', errorMessage: error });
       });
   }
 
@@ -118,26 +113,6 @@ function AuthToken() {
       dispatch({ type: 'FETCH_INIT' });
       requestToken();
     }
-  }
-
-  function SwitchToggle() {
-    return (
-      <Typography component="div">
-        <Grid component="label" container alignItems="center" spacing={1}>
-          <Grid item>Success</Grid>
-          <Grid item>
-            <Switch
-              color="primary"
-              checked={switchState}
-              onChange={() => setSwitchState(!switchState)}
-              name="switchState"
-              data-testid="authSwitch"
-            />
-          </Grid>
-          <Grid item>Failure</Grid>
-        </Grid>
-      </Typography>
-    );
   }
 
   function ButtonWrapper() {
@@ -164,28 +139,20 @@ function AuthToken() {
     <GreyCard height="auto">
       <CardContent>
         <FormGroup column="true" classes={{ root: classes.rootFormGroup }}>
-          <Typography variant="body2" align="center">
-            Please note that we use a <strong>mocked API</strong> in this
-            example (
-            <a href="http://www.mocky.io/v2/5e9806e43500006a00c47d6f">
-              Success
-            </a>{' '}
-            &{' '}
-            <a href="http://www.mocky.io/v2/5e9406873100006c005e2d00">
-              Failure
-            </a>
-            )
-          </Typography>
-          {SwitchToggle()}
           {ButtonWrapper()}
           {state.isError && (
             <Typography variant="body1" className={classes.error}>
-              Error fetching the Token
+              {state.errorMessage}
             </Typography>
           )}
           {state.response && (
             <Typography variant="body1" className={classes.success}>
-              {JSON.stringify(state.response.data)}
+              Token: {state.response.token}
+            </Typography>
+          )}
+          {state.response && (
+            <Typography variant="body1" className={classes.success}>
+              Valid until: {displayDate(state.response.validUntil)}
             </Typography>
           )}
         </FormGroup>

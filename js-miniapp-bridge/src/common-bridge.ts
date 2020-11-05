@@ -13,6 +13,7 @@ import {
 } from './types/custom-permissions';
 import { ShareInfoType } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
+import { NativeTokenData, AccessTokenData } from './types/token-data';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -258,6 +259,23 @@ export class MiniAppBridge {
         'getProfilePhoto',
         null,
         profilePhoto => resolve(profilePhoto),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Get access token from native hostapp.
+   */
+  getAccessToken() {
+    return new Promise<AccessTokenData>((resolve, reject) => {
+      return this.executor.exec(
+        'getAccessToken',
+        null,
+        tokenData => {
+          const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
+          resolve(new AccessTokenData(nativeTokenData));
+        },
         error => reject(error)
       );
     });

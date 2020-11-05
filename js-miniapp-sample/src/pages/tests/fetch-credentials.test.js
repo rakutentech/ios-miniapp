@@ -14,12 +14,6 @@ test('Button is rendered', () => {
   expect(button).toBeInTheDocument();
 });
 
-test('Switch is rendered', () => {
-  const { getByTestId } = render(wrapTheme(<AuthToken />));
-  const authSwitch = getByTestId('authSwitch');
-  expect(authSwitch).toBeInTheDocument();
-});
-
 describe('Test Reducer', () => {
   test('The init action updates state properly', () => {
     expect(initialState.isLoading).toBe(false);

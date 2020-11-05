@@ -6,6 +6,7 @@ import {
   CustomPermissionResult,
   ShareInfoType,
   ScreenOrientation,
+  AccessTokenData,
 } from '../../js-miniapp-bridge/src';
 
 /**
@@ -91,18 +92,23 @@ interface Platform {
 }
 
 /**
- * Interfaces to retrieve User profile related information
+ * Interfaces to retrieve User profile related information.
  */
 export interface UserInfoProvider {
   /**
-   * @returns Username saved in the host app user profile
+   * @returns Username saved in the host app user profile.
    */
   getUserName(): Promise<string>;
 
   /**
-   * @returns Profile photo saved in the host app user profile
+   * @returns Profile photo saved in the host app user profile.
    */
   getProfilePhoto(): Promise<string>;
+
+  /**
+   * @returns Access token from native hostapp.
+   */
+  getAccessToken(): Promise<AccessTokenData>;
 }
 
 /** @internal */
@@ -119,6 +125,10 @@ class UserInfo implements UserInfoProvider {
 
   getProfilePhoto(): Promise<string> {
     return this.bridge.getProfilePhoto();
+  }
+
+  getAccessToken(): Promise<AccessTokenData> {
+    return this.bridge.getAccessToken();
   }
 }
 

@@ -15,8 +15,3 @@ test('Button is rendered', () => {
   const button = screen.getByTestId('authButton');
   expect(button).toBeInTheDocument();
 });
-
-test('Switch is rendered', () => {
-  const authSwitch = screen.getByTestId('authSwitch');
-  expect(authSwitch).toBeInTheDocument();
-});
