@@ -19,6 +19,35 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 }
 
+public extension MiniAppMessageDelegate {
+    func requestCustomPermissions(
+        permissions: [MASDKCustomPermissionModel],
+        completionHandler: @escaping (
+        Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
+//        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomPermissionsTableViewController") as? CustomPermissionsTableViewController {
+//            viewController.customPermissionHandlerObj = completionHandler
+//            viewController.permissionsRequestList = permissions
+//            viewController.miniAppTitle = self.currentMiniAppTitle ?? "MiniApp"
+//            let navController = UINavigationController(rootViewController: viewController)
+//            navController.modalPresentationStyle = .fullScreen
+//            UIViewController.topViewController()?.present(navController, animated: true, completion: nil)
+//        }
+        
+        let podBundle: Bundle = Bundle(for: MiniApp.self)
+        let customPermissionRequestController = CustomPermissionsRequestViewController(nibName: "CustomPermissionsRequestViewController", bundle: podBundle)
+        customPermissionRequestController.customPermissionHandlerObj = completionHandler
+        customPermissionRequestController.permissionsRequestList = permissions
+//        customPermissionRequestController.miniAppTitle = self.currentMiniAppTitle ?? "MiniApp"
+
+        customPermissionRequestController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        customPermissionRequestController.modalPresentationStyle = .overFullScreen
+        UIViewController.topViewController()?.present(customPermissionRequestController,
+            animated: true,
+            completion: nil)
+
+    }
+}
+
 public enum MASDKProtocolResponse: String {
     case success = "SUCCESS"
 }
@@ -82,3 +111,14 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
         }
     }
 }
+//
+//extension UIViewController {
+//    static func loadFromNib() -> Self {
+//        func instantiateFromNib<T: UIViewController>() -> T {
+//            let podBundle: Bundle = Bundle(for: MiniApp.self)
+//
+//            return T.init(nibName: String(describing: T.self), bundle: podBundle)
+//        }
+//        return instantiateFromNib()
+//    }
+//}
