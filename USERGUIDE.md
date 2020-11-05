@@ -365,7 +365,7 @@ func application(_ application: UIApplication, supportedInterfaceOrientationsFor
     }
 ```
 
-### Allow only full screen videos to change orientation
+### Allow full screen videos to change orientation
 
 If you do not wish to add code to `AppDelegate` as in the above example, you can still allow videos inside the mini app to use landscape mode even when your App is locked to portrait mode and vice versa.
 
