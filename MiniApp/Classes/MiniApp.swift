@@ -2,6 +2,7 @@
 public class MiniApp: NSObject {
     private static let shared = MiniApp()
     private let realMiniApp = RealMiniApp()
+    public static var MAOrientationLock: UIInterfaceOrientationMask = []
 
     /// Instance of MiniApp which uses the default config settings as defined in Info.plist.
     /// A MiniAppSdkConfig object can be provided to override this configuration
