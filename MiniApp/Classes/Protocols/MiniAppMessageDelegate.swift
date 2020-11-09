@@ -19,13 +19,6 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
                                   miniAppTitle: String,
                                   completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
-
-    /// Interface that should be implemented in the host app to handle the Custom Permissions.
-    /// Host app is responsible to display the alert/dialog with the [MiniAppCustomPermissionType] permissions to the user and the result should be returned back to the SDK
-    @available(*, deprecated,
-    message:"Since version 2.3.0, you can requestCustomPermissions using the below method",
-    renamed: "requestCustomPermissions(permissions:miniAppTitle:completionHandler:)")
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 }
 
 public extension MiniAppMessageDelegate {
@@ -43,13 +36,6 @@ public extension MiniAppMessageDelegate {
         UIViewController.topViewController()?.present(customPermissionRequestController,
             animated: true,
             completion: nil)
-    }
-
-    func requestCustomPermissions(
-        permissions: [MASDKCustomPermissionModel],
-        completionHandler: @escaping (
-        Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
-        self.requestCustomPermissions(permissions: permissions, miniAppTitle: "Mini App", completionHandler: completionHandler)
     }
 }
 
