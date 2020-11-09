@@ -116,14 +116,3 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
         }
     }
 }
-//
-//extension UIViewController {
-//    static func loadFromNib() -> Self {
-//        func instantiateFromNib<T: UIViewController>() -> T {
-//            let podBundle: Bundle = Bundle(for: MiniApp.self)
-//
-//            return T.init(nibName: String(describing: T.self), bundle: podBundle)
-//        }
-//        return instantiateFromNib()
-//    }
-//}
