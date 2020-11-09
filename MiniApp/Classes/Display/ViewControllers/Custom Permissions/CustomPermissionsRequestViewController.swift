@@ -49,14 +49,6 @@ class CustomPermissionsRequestViewController: UIViewController {
         }
     }
 
-    func getSwitchView(tagValue: Int) -> UISwitch {
-        let switchView = UISwitch(frame: .zero)
-        switchView.setOn(true, animated: true)
-        switchView.tag = tagValue
-        switchView.addTarget(self, action: #selector(permissionValueChanged(_:)), for: .valueChanged)
-        return switchView
-    }
-
     func addFooterInfo() {
         self.footerLabel.text = " \(miniAppTitle) wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings"
     }
