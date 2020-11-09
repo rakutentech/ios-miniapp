@@ -101,6 +101,8 @@ internal class RealMiniAppView: UIView {
     }
 
     deinit {
+        MiniApp.MAOrientationLock = []
+        UIViewController.attemptRotationToDeviceOrientation()
         webView.configuration.userContentController.removeMessageHandler()
     }
 
@@ -131,18 +133,6 @@ internal class RealMiniAppView: UIView {
 }
 
 extension RealMiniAppView: MiniAppDisplayProtocol {
-
-    func getSupportedOrientation() -> UIInterfaceOrientationMask {
-        if self.supportedMiniAppOrientation.isEmpty {
-            if UIDevice.current.orientation.isPortrait {
-                return .portrait
-            } else {
-                return .landscape
-            }
-        } else {
-            return self.supportedMiniAppOrientation
-        }
-    }
 
     public func getMiniAppView() -> UIView {
         return self

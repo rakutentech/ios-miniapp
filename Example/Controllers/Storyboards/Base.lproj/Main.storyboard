@@ -752,7 +752,7 @@
         <!--Display Controller-->
         <scene sceneID="poG-Jp-R00">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="EFj-rP-o8F" customClass="DisplayController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="overFullScreen" id="EFj-rP-o8F" customClass="DisplayController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uts-jG-JDj"/>
                         <viewControllerLayoutGuide type="bottom" id="2Js-EV-iRO"/>
@@ -793,7 +793,7 @@
         <!--External Web View Controller-->
         <scene sceneID="Nc0-0h-iRa">
             <objects>
-                <viewController storyboardIdentifier="ExternalWebviewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="E74-BF-oFY" customClass="ExternalWebViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ExternalWebviewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="E74-BF-oFY" customClass="ExternalWebViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X4B-7B-cj5"/>
                         <viewControllerLayoutGuide type="bottom" id="7Ou-70-095"/>
