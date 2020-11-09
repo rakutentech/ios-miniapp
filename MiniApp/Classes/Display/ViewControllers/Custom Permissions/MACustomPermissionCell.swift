@@ -6,8 +6,8 @@ class MACustomPermissionCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        permissionTitle.text = nil
-        permissionDescription.text = nil
-        toggle.isOn = false
+        toggle.isOn = true
+        permissionTitle.text = ""
+        permissionDescription.text = ""
     }
 }

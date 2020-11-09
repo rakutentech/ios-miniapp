@@ -256,7 +256,9 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
+                                  miniAppTitle: String,
+                                  completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         if customPermissions {
             completionHandler(.success(permissions))
         } else {

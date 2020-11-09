@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="footerLabel" destination="JTX-6c-ppU" id="mUc-BQ-jtV"/>
                 <outlet property="saveButton" destination="guU-mA-ZL2" id="U6O-vH-bcF"/>
+                <outlet property="tableView" destination="YLn-0A-ABz" id="WHC-gu-QaS"/>
                 <outlet property="view" destination="gzc-el-DZp" id="ave-1s-rrY"/>
             </connections>
         </placeholder>
@@ -36,11 +37,15 @@
                     </textAttributes>
                     <items>
                         <navigationItem id="CQG-Gc-gTL">
-                            <barButtonItem key="rightBarButtonItem" title="Allow" id="guU-mA-ZL2"/>
+                            <barButtonItem key="rightBarButtonItem" title="Allow" id="guU-mA-ZL2">
+                                <connections>
+                                    <action selector="saveCustomPermission:" destination="-1" id="8d9-7h-Y7j"/>
+                                </connections>
+                            </barButtonItem>
                         </navigationItem>
                     </items>
                 </navigationBar>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTX-6c-ppU">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTX-6c-ppU">
                     <rect key="frame" x="20" y="791" width="374" height="60"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="374" id="gZo-Az-h3K"/>

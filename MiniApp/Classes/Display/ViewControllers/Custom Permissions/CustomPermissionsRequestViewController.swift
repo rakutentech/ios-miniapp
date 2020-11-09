@@ -15,7 +15,10 @@ class CustomPermissionsRequestViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.tableView.tableFooterView = UIView(frame: .zero)
+        let podBundle: Bundle = Bundle(for: MiniApp.self)
+        let nib = UINib(nibName: "MACustomPermissionCell", bundle: podBundle)
+        self.tableView.register(nib, forCellReuseIdentifier: "MACustomPermissionCell")
+        self.tableView.tableFooterView = UIView(frame: .zero)
         self.addFooterInfo()
     }
 
@@ -66,34 +69,19 @@ extension CustomPermissionsRequestViewController: UITableViewDelegate, UITableVi
         return permissionsRequestList?.count ?? 0
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return permissionsRequestList?.count ?? 1
-    }
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MACustomPermissionCell", for: indexPath) as? MACustomPermissionCell {
             let permissionModel: MASDKCustomPermissionModel?
             if permissionsRequestList?.indices.contains(indexPath.row) ?? false {
                 permissionModel = permissionsRequestList?[indexPath.row]
-                cell.textLabel?.text = permissionModel?.permissionName.title
-                cell.detailTextLabel?.text = permissionModel?.permissionDescription
-                cell.detailTextLabel?.numberOfLines = 0
-                cell.accessoryView = getSwitchView(tagValue: indexPath.row)
+                cell.permissionTitle?.text = permissionModel?.permissionName.title
+                cell.permissionDescription?.text = permissionModel?.permissionDescription
+                cell.toggle.tag = indexPath.row
+                cell.toggle.isOn = permissionModel?.isPermissionGranted.boolValue ?? true
+                cell.toggle.addTarget(self, action: #selector(permissionValueChanged(_:)), for: .valueChanged)
             }
             return cell
         }
         return UITableViewCell()
     }
-
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        self.showProgressIndicator {
-//            if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
-//                self.currentMiniAppInfo = miniAppInfo
-//                self.fetchMiniApp(for: miniAppInfo)
-//                self.currentMiniAppTitle = miniAppInfo.displayName
-//            }
-//        }
-//    }
 }
-

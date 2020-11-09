@@ -14,37 +14,42 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     /// result (allowed/denied) should be returned.
     func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void)
 
+    /// Optional Interface that can be implemented in the host app to handle the Custom Permissions.
+    /// SDK will open its default UI for prompting Custom Permissions request if this protocol interface is not overridden
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
+                                  miniAppTitle: String,
+                                  completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
+
     /// Interface that should be implemented in the host app to handle the Custom Permissions.
     /// Host app is responsible to display the alert/dialog with the [MiniAppCustomPermissionType] permissions to the user and the result should be returned back to the SDK
+    @available(*, deprecated,
+    message:"Since version 2.3.0, you can requestCustomPermissions using the below method",
+    renamed: "requestCustomPermissions(permissions:miniAppTitle:completionHandler:)")
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 }
 
 public extension MiniAppMessageDelegate {
+
     func requestCustomPermissions(
-        permissions: [MASDKCustomPermissionModel],
+        permissions: [MASDKCustomPermissionModel], miniAppTitle: String,
         completionHandler: @escaping (
         Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
-//        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomPermissionsTableViewController") as? CustomPermissionsTableViewController {
-//            viewController.customPermissionHandlerObj = completionHandler
-//            viewController.permissionsRequestList = permissions
-//            viewController.miniAppTitle = self.currentMiniAppTitle ?? "MiniApp"
-//            let navController = UINavigationController(rootViewController: viewController)
-//            navController.modalPresentationStyle = .fullScreen
-//            UIViewController.topViewController()?.present(navController, animated: true, completion: nil)
-//        }
-        
         let podBundle: Bundle = Bundle(for: MiniApp.self)
         let customPermissionRequestController = CustomPermissionsRequestViewController(nibName: "CustomPermissionsRequestViewController", bundle: podBundle)
         customPermissionRequestController.customPermissionHandlerObj = completionHandler
         customPermissionRequestController.permissionsRequestList = permissions
-//        customPermissionRequestController.miniAppTitle = self.currentMiniAppTitle ?? "MiniApp"
-
-        customPermissionRequestController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        customPermissionRequestController.miniAppTitle = miniAppTitle
         customPermissionRequestController.modalPresentationStyle = .overFullScreen
         UIViewController.topViewController()?.present(customPermissionRequestController,
             animated: true,
             completion: nil)
+    }
 
+    func requestCustomPermissions(
+        permissions: [MASDKCustomPermissionModel],
+        completionHandler: @escaping (
+        Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
+        self.requestCustomPermissions(permissions: permissions, miniAppTitle: "Mini App", completionHandler: completionHandler)
     }
 }
 
