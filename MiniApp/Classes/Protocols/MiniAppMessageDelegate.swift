@@ -19,6 +19,14 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
                                   miniAppTitle: String,
                                   completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
+
+    /// Interface that should be implemented in the host app to handle the Custom Permissions.
+    /// Host app is responsible to display the alert/dialog with the [MiniAppCustomPermissionType] permissions to the user and the result should be returned back to the SDK
+    @available(*, deprecated,
+        message: "Since version 2.3.0, this method is deprecated",
+        renamed: "requestCustomPermissions(permissions:miniAppTitle:completionHandler:)")
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
+                                  completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 }
 
 public extension MiniAppMessageDelegate {
@@ -26,7 +34,7 @@ public extension MiniAppMessageDelegate {
     func requestCustomPermissions(
         permissions: [MASDKCustomPermissionModel], miniAppTitle: String,
         completionHandler: @escaping (
-        Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
+            Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         let podBundle: Bundle = Bundle(for: MiniApp.self)
         let customPermissionRequestController = CustomPermissionsRequestViewController(nibName: "CustomPermissionsRequestViewController", bundle: podBundle)
         customPermissionRequestController.customPermissionHandlerObj = completionHandler
@@ -36,6 +44,12 @@ public extension MiniAppMessageDelegate {
         UIViewController.topViewController()?.present(customPermissionRequestController,
             animated: true,
             completion: nil)
+    }
+
+    func requestCustomPermissions(
+        permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (
+            Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
+        self.requestCustomPermissions(permissions: permissions, miniAppTitle: "Mini App", completionHandler: completionHandler)
     }
 }
 
@@ -65,13 +79,13 @@ public enum MASDKPermissionError: String, MiniAppErrorProtocol {
     var description: String {
         switch self {
         case .denied:
-        return "User has explicitly denied authorization"
+            return "User has explicitly denied authorization"
         case .notDetermined:
-        return "User has not yet made a choice"
+            return "User has not yet made a choice"
         case .restricted:
-        return "Host app is not authorized to use location services"
+            return "Host app is not authorized to use location services"
         case .failedToConformToProtocol:
-        return "Host app failed to implement required interface"
+            return "Host app failed to implement required interface"
         }
     }
 }

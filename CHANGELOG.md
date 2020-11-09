@@ -5,6 +5,8 @@
 **SDK**
 
 - **Feature:** Added support for Orientation lock, that enables the mini app to lock `portrait` or `landscape` orientation for the mini-app. [Please check here](USERGUIDE.md#orientation-lock)
+- **Feature:** Added default implementation in SDK for `requestCustomPermissions(permissions:miniAppTitle:completionHandler:)` [Please check here](USERGUIDE.md#request-custom-permission)
+- **Deprecated:** `requestCustomPermissions(permissions:completionHandler:)` in `MiniAppCallbackProtocol` protocol is deprecated
 
 **Sample App**
 
