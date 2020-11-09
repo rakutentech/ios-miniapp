@@ -29,10 +29,17 @@ public extension MiniAppUserInfoDelegate {
 
 public class MATokenInfo: Codable {
     let token: String
-    let validUntil: Date
+    let validUntil: Int
 
     public init(accessToken: String, expirationDate: Date) {
         self.token = accessToken
-        self.validUntil = expirationDate
+        self.validUntil = expirationDate.dateToNumber()
+    }
+}
+
+extension Date {
+    func dateToNumber() -> Int {
+        let timeSince1970 = self.timeIntervalSince1970
+        return Int(timeSince1970 * 1000)
     }
 }

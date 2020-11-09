@@ -13,7 +13,6 @@ struct ResponseEncoder {
     static func encode<T: Encodable>(data: T) -> String? {
         do {
             let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted
             let jsonData = try encoder.encode(data)
             return String(data: jsonData, encoding: .utf8)
         } catch let error {
