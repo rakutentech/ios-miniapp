@@ -349,7 +349,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
-                        miniAppId: self.name
+                        miniAppId: self.name, miniAppTitle: "Mini App"
                     )
                     mockMessageInterface.mockAccessToken = true
                     let mockMessage = MockWKScriptMessage(
@@ -364,7 +364,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
-                        miniAppId: self.name
+                        miniAppId: self.name, miniAppTitle: "Mini App"
                     )
                     mockMessageInterface.mockAccessToken = false
                     let mockMessage = MockWKScriptMessage(
