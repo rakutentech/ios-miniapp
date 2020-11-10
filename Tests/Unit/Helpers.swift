@@ -224,6 +224,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockUserName: String? = ""
     var mockProfilePhoto: String? = ""
     var messageContentAllowed: Bool = false
+    var mockAccessToken = false
 
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         if messageContentAllowed {
@@ -274,6 +275,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
 
     func getProfilePhoto() -> String? {
         return mockProfilePhoto
+    }
+
+    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+        if mockAccessToken {
+            completionHandler(.success(MATokenInfo(accessToken: "MOCK_ACCESS_TOKEN", expirationDate: Date())))
+        } else {
+            completionHandler(.failure(.unknownError))
+        }
     }
 }
 
