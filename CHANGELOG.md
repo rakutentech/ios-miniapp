@@ -5,12 +5,14 @@
 **SDK**
 
 - **Feature:** Added support for Orientation lock, that enables the mini app to lock `portrait` or `landscape` orientation for the mini-app. [Please check here](USERGUIDE.md#orientation-lock)
+- **Feature:** Added support to retrieve Access token and expiry date
 - **Feature:** Added default implementation in SDK for `requestCustomPermissions(permissions:miniAppTitle:completionHandler:)` [Please check here](USERGUIDE.md#request-custom-permission)
 - **Deprecated:** `requestCustomPermissions(permissions:completionHandler:)` in `MiniAppCallbackProtocol` protocol is deprecated. You should use `requestCustomPermissions(permissions:miniAppTitle:completionHandler:))` instead
 
 **Sample App**
 
 - **Feature:** Added implementation for orientation lock
+- **Feature:** Added implementation to retrieve Access token details
 ---
 
 ### 2.3.0 (2020-10-22)

@@ -73,6 +73,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Retrieve User Profile details](#user-profile-details)
 * [Orientation Lock](#orientation-lock)
+* [Access Token info](#access-token-info)
 
 <div id="runtime-conf"></div>
 
@@ -322,7 +323,7 @@ Retrieve user name of the User
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    MiniApp.shared().getUserName() -> String? {
+    func getUserName() -> String? {
         // Implementation to return the User name
         return ""
     }
@@ -337,9 +338,24 @@ Retrieve Profile Photo of the User
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    MiniApp.shared().getProfilePhoto() -> String? {
+    func getProfilePhoto() -> String? {
         // Implementation to return the Profile photo URI
         return ""
+    }
+}
+```
+
+<div id="access-token-info"></div>
+
+#### Access Token Info
+
+Retrieve access token and expiry date
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+
+        completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
     }
 }
 ```

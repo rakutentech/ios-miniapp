@@ -4,6 +4,8 @@ import WebKit
 @testable import MiniApp
 
 // swiftlint:disable function_body_length
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class MiniAppScriptMessageHandlerTests: QuickSpec {
 
     override func spec() {
@@ -340,6 +342,36 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid getAccessToken command") {
+                 it("will return Access Token data info such as Token string and expiry date") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: self.name
+                    )
+                    mockMessageInterface.mockAccessToken = true
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\": \"getAccessToken\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(contain("MOCK_ACCESS_TOKEN"), timeout: .seconds(10))
+                 }
+            }
+            context("when MiniAppScriptMessageHandler receives valid getAccessToken command but host app returns error") {
+                 it("will return error") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: self.name
+                    )
+                    mockMessageInterface.mockAccessToken = false
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\": \"getAccessToken\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.unknownError.rawValue), timeout: .seconds(10))
+                 }
             }
             context("when MiniAppScriptMessageHandler receives invalid orientation lock command") {
                  it("will return error") {
