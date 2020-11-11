@@ -12,6 +12,16 @@ struct UserProfileModel: Codable {
     }
 }
 
+struct AccessTokenInfo: Codable {
+    var tokenString: String
+    var expiryDate: Date
+
+    init(accessToken: String, expiry: Date) {
+        self.tokenString = accessToken
+        self.expiryDate = expiry
+    }
+}
+
 func setProfileSettings(forKey key: String = "UserProfileDetail", userDisplayName: String?, profileImageURI: String?, contactList: [String] = getContactList()) -> Bool {
     if let data = try? PropertyListEncoder().encode(UserProfileModel(displayName: userDisplayName ?? "", profileImageURI: profileImageURI, contactList: contactList)) {
         UserDefaults.standard.set(data, forKey: key)
@@ -43,4 +53,21 @@ func updateContactList(list: [String]?) {
     } else {
         _ = setProfileSettings(userDisplayName: "", profileImageURI: "", contactList: list ?? [])
     }
+}
+
+func saveTokenInfo(accessToken: String, expiryDate: Date, forKey key: String = "AccessTokenInfo") -> Bool {
+        if let data = try? PropertyListEncoder().encode(AccessTokenInfo(accessToken: accessToken, expiry: expiryDate)) {
+            UserDefaults.standard.set(data, forKey: key)
+            UserDefaults.standard.synchronize()
+            return true
+        }
+        return false
+}
+
+func getTokenInfo(key: String = "AccessTokenInfo") -> AccessTokenInfo? {
+    if let data = UserDefaults.standard.data(forKey: key) {
+        let accessTokenInfo = try? PropertyListDecoder().decode(AccessTokenInfo.self, from: data)
+        return accessTokenInfo
+    }
+    return nil
 }
