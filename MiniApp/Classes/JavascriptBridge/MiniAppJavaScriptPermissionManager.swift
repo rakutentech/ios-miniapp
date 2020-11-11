@@ -62,7 +62,7 @@ extension MiniAppScriptMessageHandler {
     ///   - customPermissionRequestList: List of MASDKCustomPermissionModel which contains the meta info of every custom permission that is requested
     ///   - callbackId: Callback ID that is used to send success/error response back to Miniapp
     func requestHostApp(customPermissionRequestList: [MASDKCustomPermissionModel], callbackId: String) {
-        hostAppMessageDelegate?.requestCustomPermissions(permissions: customPermissionRequestList) { (result) in
+        hostAppMessageDelegate?.requestCustomPermissions(permissions: customPermissionRequestList, miniAppTitle: self.miniAppTitle) { (result) in
             switch result {
             case .success(let result):
                 self.miniAppKeyStore.storeCustomPermissions(permissions: result, forMiniApp: self.miniAppId)

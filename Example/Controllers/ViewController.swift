@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     var unfilteredResults: [MiniAppInfo]? {
         didSet {
             self.decodeResponse = self.unfilteredResults
-            executeSearch(searchText: searchBar.text ?? "")
+            executeSearch(searchText: self.searchBar.text ?? "")
         }
     }
     var decodeResponse: [MiniAppInfo]? {
