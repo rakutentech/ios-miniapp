@@ -190,13 +190,16 @@ extension ViewController: MiniAppMessageDelegate {
 
 ##### Requesting Custom Permissions
 
+SDK has its own implementation to show the list of requested custom permissions. If you want to display your own UI for requesting custom permissions, you can do it by overriding the method like below,
+
 ```swift
 extension ViewController: MiniAppMessageDelegate {
         func requestCustomPermissions(
             permissions: [MASDKCustomPermissionModel],
+            miniAppTitle: String,
             completionHandler: @escaping (
             Result<[MASDKCustomPermissionModel], Error>) -> Void) {
-            completionHandler(.success(permissions))    
+                completionHandler(.success(permissions))    
             }
     
 ```

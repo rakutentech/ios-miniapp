@@ -25,20 +25,6 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
         }
     }
 
-    func requestCustomPermissions(
-        permissions: [MASDKCustomPermissionModel],
-        completionHandler: @escaping (
-        Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
-        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomPermissionsTableViewController") as? CustomPermissionsTableViewController {
-            viewController.customPermissionHandlerObj = completionHandler
-            viewController.permissionsRequestList = permissions
-            viewController.miniAppTitle = self.currentMiniAppTitle ?? "MiniApp"
-            let navController = UINavigationController(rootViewController: viewController)
-            navController.modalPresentationStyle = .fullScreen
-            UIViewController.topViewController()?.present(navController, animated: true, completion: nil)
-        }
-    }
-
     func getUniqueId() -> String {
         guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
             return ""

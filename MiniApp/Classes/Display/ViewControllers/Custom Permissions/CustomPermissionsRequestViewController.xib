@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomPermissionsRequestViewController" customModule="MiniApp">
+            <connections>
+                <outlet property="footerLabel" destination="JTX-6c-ppU" id="mUc-BQ-jtV"/>
+                <outlet property="saveButton" destination="guU-mA-ZL2" id="U6O-vH-bcF"/>
+                <outlet property="tableView" destination="YLn-0A-ABz" id="WHC-gu-QaS"/>
+                <outlet property="view" destination="gzc-el-DZp" id="ave-1s-rrY"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="gzc-el-DZp">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YLn-0A-ABz">
+                    <rect key="frame" x="0.0" y="88" width="414" height="615"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="kFI-f8-IEB"/>
+                        <outlet property="delegate" destination="-1" id="g3e-cG-7Xn"/>
+                    </connections>
+                </tableView>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xqh-51-PNv">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <textAttributes key="largeTitleTextAttributes">
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </textAttributes>
+                    <items>
+                        <navigationItem id="CQG-Gc-gTL">
+                            <barButtonItem key="rightBarButtonItem" title="Allow" id="guU-mA-ZL2">
+                                <connections>
+                                    <action selector="saveCustomPermission:" destination="-1" id="8d9-7h-Y7j"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTX-6c-ppU">
+                    <rect key="frame" x="20" y="791" width="374" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="374" id="gZo-Az-h3K"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                    <size key="shadowOffset" width="-1" height="-1"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="oOV-dF-0No"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="YLn-0A-ABz" firstAttribute="top" secondItem="oOV-dF-0No" secondAttribute="top" constant="44" id="3Zr-JO-7Cb"/>
+                <constraint firstItem="JTX-6c-ppU" firstAttribute="centerX" secondItem="YLn-0A-ABz" secondAttribute="centerX" id="FPX-DK-YXA"/>
+                <constraint firstItem="Xqh-51-PNv" firstAttribute="leading" secondItem="YLn-0A-ABz" secondAttribute="leading" id="OTz-Sa-QpP"/>
+                <constraint firstItem="Xqh-51-PNv" firstAttribute="top" secondItem="oOV-dF-0No" secondAttribute="top" id="SeF-MA-fxG"/>
+                <constraint firstAttribute="bottom" secondItem="YLn-0A-ABz" secondAttribute="bottom" constant="193" id="Tjx-W1-nuP"/>
+                <constraint firstItem="oOV-dF-0No" firstAttribute="bottom" secondItem="JTX-6c-ppU" secondAttribute="bottom" constant="11" id="XxQ-lp-LUq"/>
+                <constraint firstItem="JTX-6c-ppU" firstAttribute="leading" secondItem="gzc-el-DZp" secondAttribute="leadingMargin" id="YhY-cZ-p8j"/>
+                <constraint firstItem="JTX-6c-ppU" firstAttribute="centerX" secondItem="Xqh-51-PNv" secondAttribute="centerX" id="aad-Jf-cbo"/>
+                <constraint firstItem="YLn-0A-ABz" firstAttribute="trailing" secondItem="oOV-dF-0No" secondAttribute="trailing" id="cOi-vd-35A"/>
+                <constraint firstItem="JTX-6c-ppU" firstAttribute="top" relation="lessThanOrEqual" secondItem="YLn-0A-ABz" secondAttribute="bottom" constant="88" id="e5z-0d-mJf"/>
+                <constraint firstItem="YLn-0A-ABz" firstAttribute="leading" secondItem="oOV-dF-0No" secondAttribute="leading" id="why-eb-yUv"/>
+            </constraints>
+            <point key="canvasLocation" x="-265.21739130434787" y="-110.49107142857143"/>
+        </view>
+    </objects>
+</document>
