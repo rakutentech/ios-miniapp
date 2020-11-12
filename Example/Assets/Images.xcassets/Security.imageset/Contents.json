@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "SF_lock.png",
+      "filename" : "Security.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "SF_lock@2x.png",
+      "filename" : "Security@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "SF_lock@3x.png",
+      "filename" : "Security@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
