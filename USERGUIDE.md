@@ -72,6 +72,8 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Custom Permissions](#custom-permissions)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Retrieve User Profile details](#user-profile-details)
+* [Orientation Lock](#orientation-lock)
+* [Access Token info](#access-token-info)
 
 <div id="runtime-conf"></div>
 
@@ -188,13 +190,16 @@ extension ViewController: MiniAppMessageDelegate {
 
 ##### Requesting Custom Permissions
 
+SDK has its own implementation to show the list of requested custom permissions. If you want to display your own UI for requesting custom permissions, you can do it by overriding the method like below,
+
 ```swift
 extension ViewController: MiniAppMessageDelegate {
         func requestCustomPermissions(
             permissions: [MASDKCustomPermissionModel],
+            miniAppTitle: String,
             completionHandler: @escaping (
             Result<[MASDKCustomPermissionModel], Error>) -> Void) {
-            completionHandler(.success(permissions))    
+                completionHandler(.success(permissions))    
             }
     
 ```
@@ -318,7 +323,7 @@ Retrieve user name of the User
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    MiniApp.shared().getUserName() -> String? {
+    func getUserName() -> String? {
         // Implementation to return the User name
         return ""
     }
@@ -333,9 +338,66 @@ Retrieve Profile Photo of the User
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    MiniApp.shared().getProfilePhoto() -> String? {
+    func getProfilePhoto() -> String? {
         // Implementation to return the Profile photo URI
         return ""
+    }
+}
+```
+
+<div id="access-token-info"></div>
+
+#### Access Token Info
+
+Retrieve access token and expiry date
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+
+        completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
+    }
+}
+```
+
+<div id="orientation-lock"></div>
+
+### Orientation Lock
+---
+
+You can choose to give orientation lock control to mini apps. However, this requires you to add some code to your `AppDelegate` which could have an affect on your entire App. If you do not wish to do this, please see the section *"Allow only full screen videos to change orientation".*
+
+### Allow mini apps to lock the view to any orientation
+    
+```swift
+func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        if #available(iOS 12, *) {
+            if window?.isKeyWindow != true {
+                return .all
+            }
+        }
+        if MiniApp.MAOrientationLock.isEmpty {
+            return .all
+        } else {
+            return MiniApp.MAOrientationLock
+        }
+    }
+```
+
+### Allow full screen videos to change orientation
+
+You can add the following if you want to enable videos to change orientation. Note that if you do not wish to add code to `AppDelegate` as in the above example, you can still allow videos inside the mini app to use landscape mode even when your App is locked to portrait mode and vice versa.
+
+```swift
+import AVKit
+
+extension AVPlayerViewController {
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if MiniApp.MAOrientationLock.isEmpty {
+            return .all
+        } else {
+            return MiniApp.MAOrientationLock
+        }
     }
 }
 ```

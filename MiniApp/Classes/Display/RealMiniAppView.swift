@@ -9,6 +9,7 @@ internal class RealMiniAppView: UIView {
     internal var webViewBottomConstraintWithNavBar: NSLayoutConstraint?
     internal var navBarVisibility: MiniAppNavigationVisibility
     internal var isNavBarCustom = false
+    internal var supportedMiniAppOrientation: UIInterfaceOrientationMask
 
     internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
@@ -27,6 +28,7 @@ internal class RealMiniAppView: UIView {
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
+        self.supportedMiniAppOrientation = []
         super.init(frame: .zero)
         webView.navigationDelegate = self
 
@@ -41,7 +43,7 @@ internal class RealMiniAppView: UIView {
         navBar?.miniAppNavigation(delegate: self)
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self,
                                                                                    hostAppMessageDelegate: hostAppMessageDelegate,
-                                                                                   miniAppId: miniAppId)
+                                                                                   miniAppId: miniAppId, miniAppTitle: self.miniAppTitle)
         webView.configuration.userContentController.addBridgingJavaScript()
         webView.uiDelegate = self
         self.navigationDelegate = navigationDelegate
@@ -99,6 +101,8 @@ internal class RealMiniAppView: UIView {
     }
 
     deinit {
+        MiniApp.MAOrientationLock = []
+        UIViewController.attemptRotationToDeviceOrientation()
         webView.configuration.userContentController.removeMessageHandler()
     }
 
@@ -106,7 +110,7 @@ internal class RealMiniAppView: UIView {
         if let scheme = requestURL.scheme {
             let schemeType = MiniAppSupportedSchemes(rawValue: scheme)
             switch schemeType {
-            case .about: // mainly implemented to manage buil-in alert dialogs
+            case .about: // mainly implemented to manage built-in alert dialogs
                 return decisionHandler(.allow)
             case .tel:
                 UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
@@ -129,6 +133,7 @@ internal class RealMiniAppView: UIView {
 }
 
 extension RealMiniAppView: MiniAppDisplayProtocol {
+
     public func getMiniAppView() -> UIView {
         return self
     }
@@ -141,6 +146,10 @@ extension RealMiniAppView: MiniAppCallbackDelegate {
 
     func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
         self.webView.evaluateJavaScript(Constants.javascriptErrorCallback + "('\(messageId)'," + "'\(errorMessage)')")
+    }
+
+    func didOrientationChanged(orientation: UIInterfaceOrientationMask) {
+        self.supportedMiniAppOrientation = orientation
     }
 }
 

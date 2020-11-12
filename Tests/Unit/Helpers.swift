@@ -224,6 +224,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockUserName: String? = ""
     var mockProfilePhoto: String? = ""
     var messageContentAllowed: Bool = false
+    var mockAccessToken = false
 
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         if messageContentAllowed {
@@ -256,7 +257,9 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
+                                  miniAppTitle: String,
+                                  completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         if customPermissions {
             completionHandler(.success(permissions))
         } else {
@@ -274,6 +277,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
 
     func getProfilePhoto() -> String? {
         return mockProfilePhoto
+    }
+
+    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+        if mockAccessToken {
+            completionHandler(.success(MATokenInfo(accessToken: "MOCK_ACCESS_TOKEN", expirationDate: Date())))
+        } else {
+            completionHandler(.failure(.unknownError))
+        }
     }
 }
 
@@ -315,6 +326,9 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
         self.messageId = messageId
         self.errorMessage = errorMessage
+    }
+
+    func didOrientationChanged(orientation: UIInterfaceOrientationMask) {
     }
 }
 

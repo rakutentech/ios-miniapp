@@ -6,6 +6,8 @@ enum MiniAppJSActionCommand: String {
     case shareInfo
     case getUserName
     case getProfilePhoto
+    case setScreenOrientation
+    case getAccessToken
 }
 
 enum JavaScriptExecResult: String {
@@ -14,8 +16,8 @@ enum JavaScriptExecResult: String {
 }
 
 enum MiniAppSupportedSchemes: String {
-    case tel    // used for phone calls
-    case about  // used to reveal internal state and built-in functions (e.g.: alert dialog)
+    case tel // used for phone calls
+    case about // used to reveal internal state and built-in functions (e.g.: alert dialog)
 }
 
 /// List of Device Permissions supported by the SDK that can be requested by a Mini app
@@ -32,11 +34,11 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
     public var title: String {
         switch self {
         case .userName:
-        return "User Name"
+            return "User Name"
         case .profilePhoto:
-        return "Profile Photo"
+            return "Profile Photo"
         case .contactsList:
-        return "Contact List"
+            return "Contact List"
         }
     }
 }
@@ -49,9 +51,26 @@ public enum MiniAppCustomPermissionGrantedStatus: String, Codable {
     public var boolValue: Bool {
         switch self {
         case .allowed:
-        return true
+            return true
         default:
-        return false
+            return false
+        }
+    }
+}
+
+enum MiniAppInterfaceOrientation: String, Codable {
+    case lockPortrait = "rakuten.miniapp.screen.LOCK_PORTRAIT"
+    case lockLandscape = "rakuten.miniapp.screen.LOCK_LANDSCAPE"
+    case lockRelease = "rakuten.miniapp.screen.LOCK_RELEASE"
+
+    public var orientation: UIInterfaceOrientationMask {
+        switch self {
+        case .lockPortrait:
+            return .portrait
+        case .lockLandscape:
+            return .landscape
+        case .lockRelease:
+            return []
         }
     }
 }

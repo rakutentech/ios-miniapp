@@ -1,18 +1,36 @@
 ## CHANGELOG
 
-### 2.x.x (In progress)
+### 2.x.x (IN-PROGRESS)
 
 **SDK**
 
-- **Fixed:** support of `playsinline` instruction of  `Video` html tag
-- **Feature:** Added separate public `MiniAppUserInfoDelegate` to communicate with the host app to [getUserName](USERGUIDE.md#cuser-profile-details-username) and [getProfilePhoto](USERGUIDE.md#cuser-profile-details-profilephoto). Interfaces will be called only if user has agreed to the respective custom permission. i.e `rakuten.miniapp.user.USER_NAME` for [getUserName](USERGUIDE.md#cuser-profile-details-username) and `rakuten.miniapp.user.PROFILE_PHOTO` for [getProfilePhoto](USERGUIDE.md#cuser-profile-details-profilephoto)
-- **Feature:** Added support for Javascript bridge interface for User Info detail retrieval from Mini app.
-`getUserName()` and `getProfilePhoto()`
+- **Feature:** Added support for Orientation lock, that enables the mini app to lock `portrait` or `landscape` orientation for the mini-app. [Please check here](USERGUIDE.md#orientation-lock)
+- **Feature:** Added support to retrieve Access token and expiry date
+- **Feature:** Added default implementation in SDK for `requestCustomPermissions(permissions:miniAppTitle:completionHandler:)` [Please check here](USERGUIDE.md#request-custom-permission)
+- **Deprecated:** `requestCustomPermissions(permissions:completionHandler:)` in `MiniAppCallbackProtocol` protocol is deprecated. You should use `requestCustomPermissions(permissions:miniAppTitle:completionHandler:))` instead
 
+**Sample App**
+
+- **Feature:** Added implementation for orientation lock
+- **Feature:** Added implementation to retrieve Access token details
+---
+
+### 2.3.0 (2020-10-22)
+
+**SDK**
+
+- **Feature:** Added separate public `MiniAppUserInfoDelegate` to communicate with the host app to [getUserName](USERGUIDE.md#cuser-profile-details-username) and [getProfilePhoto](USERGUIDE.md#cuser-profile-details-profilephoto). Interfaces will be called only if user has agreed to the respective custom permission. i.e `rakuten.miniapp.user.USER_NAME` for [getUserName](USERGUIDE.md#cuser-profile-details-username) and `rakuten.miniapp.user.PROFILE_PHOTO` for [getProfilePhoto](USERGUIDE.md#cuser-profile-details-profilephoto).
+- **Feature:** Added support for Javascript bridge interface for User Info detail retrieval from Mini app. `getUserName()` and `getProfilePhoto()`.
+- **Feature:** Added a default sharing controller in the SDK for `MiniAppMessageDelegate.shareContent`. This means you are no longer required to implement this method and can instead choose to use the default functionality provided by the SDK if you wish.
+- **Feature:** Added support of `playsinline` and `autoplay` instruction of `video` html tag.
+- **Fixed:** Links in the external webview that targeted `_blank` were not functioning. This has been updated so that these links will open in the same webview.
+- **Fixed:** `tel:` links were not working in the external webview.
+- **Deprecated:** `MiniAppCallbackProtocol` has been deprecated and replaced with `MiniAppCallbackDelegate`. `MiniAppCallbackProtocol` will continue to function as a `typealias` for `MiniAppCallbackDelegate`, however it will be removed in the next major version.
 
 **Sample App**
 
 - **Feature:** Added sample implementation for Retrieving Username & Profile photo from Mini app
+- **Feature:** Added search field for mini app list.
 
 ### 2.2.0 (2020-10-02)
 

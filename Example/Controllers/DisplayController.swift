@@ -6,6 +6,7 @@ class DisplayController: UIViewController {
     @IBOutlet var backButton: UIBarButtonItem!
     @IBOutlet var forwardButton: UIBarButtonItem!
     weak var navBarDelegate: MiniAppNavigationBarDelegate?
+    weak var miniAppDisplayDelegate: MiniAppDisplayProtocol?
 
     override func viewDidAppear(_ animated: Bool) {
         guard let controller = self.navigationController as? DisplayNavigationController, let info = controller.miniAppInfo, let miniAppDisplay = controller.miniAppDisplay else {
@@ -13,7 +14,7 @@ class DisplayController: UIViewController {
         }
 
         self.title = info.displayName
-
+        self.miniAppDisplayDelegate = miniAppDisplay
         let view = miniAppDisplay.getMiniAppView()
         view.frame = self.view.bounds
         self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate

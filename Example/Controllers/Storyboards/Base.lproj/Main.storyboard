@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -624,7 +624,7 @@
         <!--Mini App Sample-->
         <scene sceneID="yHS-0v-Pch">
             <objects>
-                <viewController id="BQV-uy-8GQ" customClass="ViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="BQV-uy-8GQ" customClass="ViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XCF-cL-5kF"/>
                         <viewControllerLayoutGuide type="bottom" id="tdn-rl-TH3"/>
@@ -752,7 +752,7 @@
         <!--Display Controller-->
         <scene sceneID="poG-Jp-R00">
             <objects>
-                <viewController id="EFj-rP-o8F" customClass="DisplayController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="overFullScreen" id="EFj-rP-o8F" customClass="DisplayController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uts-jG-JDj"/>
                         <viewControllerLayoutGuide type="bottom" id="2Js-EV-iRO"/>
@@ -793,7 +793,7 @@
         <!--External Web View Controller-->
         <scene sceneID="Nc0-0h-iRa">
             <objects>
-                <viewController storyboardIdentifier="ExternalWebviewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="E74-BF-oFY" customClass="ExternalWebViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ExternalWebviewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="E74-BF-oFY" customClass="ExternalWebViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X4B-7B-cj5"/>
                         <viewControllerLayoutGuide type="bottom" id="7Ou-70-095"/>
