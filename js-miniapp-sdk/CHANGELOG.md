@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 1.5.0 (2020-11-13)
+
+- **Feature:** Added `MiniApp.getAccessToken` for retrieving an access token. [See here](README.md#6-Get-access-token).
+
 ### 1.4.0 (2020-11-02)
 
 - **Feature:** Set and lock device screen orientation. [See here](README.md#6-Set-screen-orientation).
