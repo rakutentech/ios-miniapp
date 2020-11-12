@@ -203,6 +203,24 @@ miniApp.setScreenOrientation(ScreenOrientation.LOCK_LANDSCAPE) // or LOCK_PORTRA
   });
 ```
 
+### 7. Get access token
+
+You can get an access token provided by the Host App. The Host App will be able to deny your request if your mini app ID is not approved to access the token.
+
+This will return an object containing `token` and `validUntil` keys.
+
+```javascript
+miniApp.getAccessToken()
+  .then(data => {
+      const isValid = data.validUntil.getTime() >= Date.now();
+      if (isValid) {
+          const token = data.token;
+          // Use token
+      }
+  })
+  .catch(error => console.error(error))
+```
+
 ## Advanced Usage
 
 ### Check Android/iOS device
