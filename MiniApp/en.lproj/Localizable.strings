@@ -13,6 +13,16 @@
 "error_invalid_miniapp_id" = "Invalid Miniapp ID";
 "error_no_miniapp_found" = "No Miniapp found, please contact your administrator";
 
+/* MASDKError messages */
+"error_server" = "Server returned an error. %@: %@";
+"error_invalid_url" = "URL is invalid.";
+"error_invalid_app_id" = "Provided Mini App ID is invalid.";
+"error_invalid_response" = "Invalid response received from server.";
+"error_download_failed" = "Failed to download the mini app.";
+"error_no_published_version" = "Server returned no published versions for the provided Mini App ID.";
+"error_miniapp_id_not_found" = "Server could not find the provided Mini App ID.";
+"error_unknown" = "Unknown error occured in %@ domain with error code %@: %@";
+
 "input_miniapp_title" = "Please enter Miniapp ID";
 "input_valid_miniapp_title" = "Please enter valid Miniapp ID and try again";
 
