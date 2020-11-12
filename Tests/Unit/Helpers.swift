@@ -402,6 +402,25 @@ class MockNavigationWebView: MiniAppWebView {
     }
 }
 
+class MockDisplayer: Displayer {
+    var mockedInitialLoadCallbackResponse = true
+
+    override func getMiniAppView(miniAppURL: URL,
+                                 miniAppTitle: String,
+                                 hostAppMessageDelegate: MiniAppMessageDelegate,
+                                 initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayProtocol {
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
+            DispatchQueue.main.async {
+                initialLoadCallback(self.mockedInitialLoadCallbackResponse)
+            }
+        }
+        return super.getMiniAppView(miniAppURL: miniAppURL,
+                                    miniAppTitle: miniAppTitle,
+                                    hostAppMessageDelegate: hostAppMessageDelegate,
+                                    initialLoadCallback: { _ in })
+    }
+}
+
 /// Method to delete the Mini App directory which was created for Mock testing
 /// - Parameters:
 ///   - appId: Mini App ID

@@ -9,16 +9,17 @@ class DisplayController: UIViewController {
     weak var miniAppDisplayDelegate: MiniAppDisplayProtocol?
 
     override func viewDidAppear(_ animated: Bool) {
-        guard let controller = self.navigationController as? DisplayNavigationController, let info = controller.miniAppInfo, let miniAppDisplay = controller.miniAppDisplay else {
+        guard let controller = self.navigationController as? DisplayNavigationController,
+              let miniAppDisplay = controller.miniAppDisplay else {
             return
         }
 
-        self.title = info.displayName
-        self.miniAppDisplayDelegate = miniAppDisplay
-        let view = miniAppDisplay.getMiniAppView()
-        view.frame = self.view.bounds
-        self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
-        self.view.addSubview(view)
+        title = controller.miniAppInfo?.displayName ?? "Mini app"
+        miniAppDisplayDelegate = miniAppDisplay
+        let miniAppView = miniAppDisplay.getMiniAppView()
+        miniAppView.frame = view.bounds
+        navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
+        view.addSubview(miniAppView)
     }
 
     @IBAction func done(_ sender: UIBarButtonItem) {

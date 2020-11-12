@@ -3,6 +3,7 @@ import Nimble
 @testable import MiniApp
 
 // swiftlint:disable function_body_length
+// swiftlint:disable file_length
 // swiftlint:disable cyclomatic_complexity
 // swiftlint:disable type_body_length
 class RealMiniAppTests: QuickSpec {
@@ -374,6 +375,29 @@ class RealMiniAppTests: QuickSpec {
                         }
                     }, messageInterface: mockMessageInterface)
                     expect(testError?.code).toEventually(equal(0))
+                }
+            }
+            context("when createMiniApp is called with url parameter") {
+                var originalDisplayer: Displayer!
+                var mockedDisplayer: MockDisplayer!
+
+                beforeEach {
+                    originalDisplayer = realMiniApp.displayer
+                    mockedDisplayer = MockDisplayer()
+                    realMiniApp.displayer = mockedDisplayer
+                }
+                afterEach {
+                    realMiniApp.displayer = originalDisplayer
+                }
+
+                it("will return an error if initial load of the mini app has failed") {
+                    var testError: NSError?
+                    mockedDisplayer.mockedInitialLoadCallbackResponse = false
+                    _ = realMiniApp.createMiniApp(url: URL(string: "http://miniapp")!,
+                                              errorHandler: { error in
+                        testError = error as NSError
+                    }, messageInterface: mockMessageInterface)
+                    expect(testError).toEventually(equal(NSError.invalidURLError()), timeout: .seconds(2))
                 }
             }
         }

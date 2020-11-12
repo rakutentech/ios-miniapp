@@ -18,7 +18,7 @@ public class MiniApp: NSObject {
     /// Error information will be returned if any problem while fetching from the backed
     ///
     /// - Parameters:
-    ///     -   completionBlock: A block to be called when list of [MiniAppInfo] information is fetched. Completion blocks receives the following parameters
+    ///     -   completionHandler: A block to be called when list of [MiniAppInfo] information is fetched. Completion blocks receives the following parameters
     ///         -   [MiniAppInfo]: List of [MiniAppInfo] information.
     ///         -   Error: Error details if fetching is failed.
     public func list(completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
@@ -44,7 +44,7 @@ public class MiniApp: NSObject {
     /// - Parameters:
     ///   - appId: Mini AppId String value
     ///   - version: optional Mini App version String value. If omitted the modt recent one is picked
-    ///   - completionBlock: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
+    ///   - completionHandler: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
@@ -58,9 +58,7 @@ public class MiniApp: NSObject {
     ///   - appId: Mini AppId String value
     ///   - permissionList: List of MASDKCustomPermissionModel class that contains the MiniAppCustomPermissionType and MiniAppCustomPermissionGrantedStatus
     public func setCustomPermissions(forMiniApp appId: String, permissionList: [MASDKCustomPermissionModel]) {
-        if !appId.isEmpty {
-            return realMiniApp.storeCustomPermissions(forMiniApp: appId, permissionList: permissionList)
-        }
+        return realMiniApp.storeCustomPermissions(forMiniApp: appId, permissionList: permissionList)
     }
 
     /// Get the list of supported Custom permissions and its status for a given Mini app ID
@@ -79,19 +77,38 @@ public class MiniApp: NSObject {
         return realMiniApp.getDownloadedListWithCustomPermissions()
     }
 
-//    public func getCustomPermissionsManageList
-
     /// Creates a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
     /// This method should only be used in "Preview Mode".
     ///
     /// - Parameters:
     ///   - appInfo: Mini App info object
-    ///   - completionBlock: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
+    ///   - completionHandler: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate) {
         return realMiniApp.createMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
+    }
+}
+
+// MARK: - Testing
+public extension MiniApp {
+    /// Creates a Mini App for the given url.
+    /// Mini app will NOT be downloaded and cached in local, its content will be read directly from provided url.
+    /// This should only be used for previewing a mini app from a local server.
+    ///
+    /// - Parameters:
+    ///   - url: a HTTP url containing Mini App content
+    ///   - errorHandler: A block to be called on unsuccessful initial load of Mini App's web content. The handler block receives the following parameter
+    ///         -   Error: Error details if Mini App's url content loading is failed, otherwise nil.
+    /// - Returns: MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
+    ///                         to interact with View component of mini app.
+    func create(url: URL,
+                errorHandler: @escaping (Error) -> Void,
+                messageInterface: MiniAppMessageDelegate) -> MiniAppDisplayProtocol {
+        return realMiniApp.createMiniApp(url: url,
+                                         errorHandler: errorHandler,
+                                         messageInterface: messageInterface)
     }
 }

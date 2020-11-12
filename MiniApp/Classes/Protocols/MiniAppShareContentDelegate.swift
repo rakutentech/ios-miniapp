@@ -10,7 +10,7 @@ public protocol MiniAppShareContentDelegate: class {
 public extension MiniAppShareContentDelegate {
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         let activityController = UIActivityViewController(activityItems: [info.messageContent], applicationActivities: nil)
-        activityController.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
+        activityController.completionWithItemsHandler = { (_, _, _, error: Error?) in
             if let err = error {
                 completionHandler(.failure(err))
             } else {
