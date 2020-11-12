@@ -106,6 +106,9 @@ jobs: # a collection of steps
       - run:
           name: Compile
           command: yarn bridge compile
+      - store_artifacts:
+          path: js-miniapp-sample/build
+          prefix: build
       - persist_to_workspace:
           root: ~/mini-js-bridge
           paths:
