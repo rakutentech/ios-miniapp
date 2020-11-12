@@ -3,7 +3,10 @@ extension URL {
         (self.absoluteString as NSString).pathExtension.lowercased()
     }
 
-    func isMiniAppURL() -> Bool {
+    func isMiniAppURL(customMiniAppURL: URL? = nil) -> Bool {
+        if let miniAppURL = customMiniAppURL {
+            return host?.lowercased() == miniAppURL.host?.lowercased()
+        }
         return scheme?.starts(with: Constants.miniAppSchemePrefix) ?? false
     }
 }

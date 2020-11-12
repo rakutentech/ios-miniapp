@@ -54,16 +54,16 @@ class ViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DisplayMiniApp" {
-            guard let miniAppInfo = self.currentMiniAppInfo, let miniAppDisplay = self.currentMiniAppView else {
-                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
+            guard let miniAppDisplay = currentMiniAppView else {
+                displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
                 return
             }
 
             let displayController = segue.destination as? DisplayNavigationController
-            displayController?.miniAppInfo = miniAppInfo
+            displayController?.miniAppInfo = currentMiniAppInfo
             displayController?.miniAppDisplay = miniAppDisplay
-            self.currentMiniAppInfo = nil
-            self.currentMiniAppView = nil
+            currentMiniAppInfo = nil
+            currentMiniAppView = nil
         } else if segue.identifier == "CustomConfiguration" {
             if let navigationController = segue.destination as? UINavigationController,
                 let customSettingsController = navigationController.topViewController as? SettingsTableViewController {
@@ -133,10 +133,16 @@ extension ViewController: SettingsDelegate {
 
 extension ViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if searchBar.returnKeyType == UIReturnKeyType.go, let search = searchBar.text {
-            self.fetchAppInfo(for: search)
-        }
         searchBar.resignFirstResponder()
+        guard searchBar.returnKeyType == .go, let search = searchBar.text else {
+            return
+        }
+
+        if search.hasHTTPPrefix, let searchURL = URL(string: search) {
+            loadMiniAppUsingURL(searchURL)
+        } else {
+            fetchAppInfo(for: search)
+        }
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -144,19 +150,24 @@ extension ViewController: UISearchBarDelegate {
     }
 
     func executeSearch(searchText: String) {
+        defer {
+            tableView.reloadData()
+            searchBar.reloadInputViews()
+        }
         searchBar.returnKeyType = .done
 
-        if searchText.count == 0 {
-            self.decodeResponse = self.unfilteredResults
-        } else {
-            self.decodeResponse = self.unfilteredResults?.filter {($0.displayName?.uppercased().contains(searchText.uppercased()) ?? false)
-                || ($0.id == searchText)}
-
-            if (self.decodeResponse?.count ?? 0) == 0 && searchText.count > 0 {
-                searchBar.returnKeyType = .go
-            }
+        guard !searchText.isEmpty else {
+            decodeResponse = unfilteredResults
+            return
         }
-        self.tableView.reloadData()
-        searchBar.reloadInputViews()
+
+        decodeResponse = unfilteredResults?.filter {
+            $0.displayName?.uppercased().contains(searchText.uppercased()) == true
+            || $0.id == searchText
+        }
+
+        if decodeResponse?.isEmpty == true && !searchText.isEmpty {
+            searchBar.returnKeyType = .go // load by ID or URL
+        }
     }
 }

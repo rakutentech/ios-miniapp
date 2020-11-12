@@ -77,6 +77,19 @@ internal class RealMiniApp {
             } }
     }
 
+    func createMiniApp(url: URL,
+                       errorHandler: @escaping (Error) -> Void,
+                       messageInterface: MiniAppMessageDelegate? = nil) -> MiniAppDisplayProtocol {
+        return displayer.getMiniAppView(miniAppURL: url,
+                                        miniAppTitle: "Mini app",
+                                        hostAppMessageDelegate: messageInterface ?? self,
+                                        initialLoadCallback: { success in
+            if !success {
+                errorHandler(NSError.invalidURLError())
+            }
+        })
+    }
+
     /// Download Mini app for a given Mini app info object
     /// - Parameters:
     ///   - appInfo: Miniapp Info object

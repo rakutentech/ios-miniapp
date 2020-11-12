@@ -4,12 +4,14 @@ internal class RealMiniAppView: UIView {
 
     internal var webView: WKWebView
     internal var miniAppTitle: String
+    internal var miniAppURL: URL?
     internal var navBar: (UIView & MiniAppNavigationDelegate)?
     internal var webViewBottomConstraintStandalone: NSLayoutConstraint?
     internal var webViewBottomConstraintWithNavBar: NSLayoutConstraint?
     internal var navBarVisibility: MiniAppNavigationVisibility
     internal var isNavBarCustom = false
     internal var supportedMiniAppOrientation: UIInterfaceOrientationMask
+    internal var initialLoadCallback: ((Bool) -> Void)?
 
     internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
@@ -28,8 +30,49 @@ internal class RealMiniAppView: UIView {
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
-        self.supportedMiniAppOrientation = []
+        supportedMiniAppOrientation = []
+
         super.init(frame: .zero)
+        commonInit(miniAppId: miniAppId,
+                   hostAppMessageDelegate: hostAppMessageDelegate,
+                   navigationDelegate: navigationDelegate,
+                   navigationView: navigationView)
+    }
+
+    init(
+        miniAppURL: URL,
+        miniAppTitle: String,
+        hostAppMessageDelegate: MiniAppMessageDelegate,
+        initialLoadCallback: ((Bool) -> Void)? = nil,
+        displayNavBar: MiniAppNavigationVisibility = .never,
+        navigationDelegate: MiniAppNavigationDelegate? = nil,
+        navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+
+        self.miniAppTitle = miniAppTitle
+        self.miniAppURL = miniAppURL
+        self.initialLoadCallback = initialLoadCallback
+        webView = MiniAppWebView(miniAppURL: miniAppURL)
+        self.hostAppMessageDelegate = hostAppMessageDelegate
+        navBarVisibility = displayNavBar
+        supportedMiniAppOrientation = []
+
+        super.init(frame: .zero)
+        commonInit(miniAppId: "custom\(Int32.random(in: 0...Int32.max))", // some id is needed to handle permissions
+                   hostAppMessageDelegate: hostAppMessageDelegate,
+                   navigationDelegate: navigationDelegate,
+                   navigationView: navigationView)
+    }
+
+    required init?(coder: NSCoder) {
+        return nil
+    }
+
+    private func commonInit(
+        miniAppId: String,
+        hostAppMessageDelegate: MiniAppMessageDelegate,
+        navigationDelegate: MiniAppNavigationDelegate? = nil,
+        navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+
         webView.navigationDelegate = self
 
         if navBarVisibility != .never {
@@ -43,7 +86,8 @@ internal class RealMiniAppView: UIView {
         navBar?.miniAppNavigation(delegate: self)
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self,
                                                                                    hostAppMessageDelegate: hostAppMessageDelegate,
-                                                                                   miniAppId: miniAppId, miniAppTitle: self.miniAppTitle)
+                                                                                   miniAppId: miniAppId,
+                                                                                   miniAppTitle: self.miniAppTitle)
         webView.configuration.userContentController.addBridgingJavaScript()
         webView.uiDelegate = self
         self.navigationDelegate = navigationDelegate
@@ -58,10 +102,6 @@ internal class RealMiniAppView: UIView {
             webViewBottomConstraintStandalone?.isActive = false
         }
 
-    }
-
-    required init?(coder: NSCoder) {
-        return nil
     }
 
     func refreshNavBar() {
@@ -115,16 +155,22 @@ internal class RealMiniAppView: UIView {
             case .tel:
                 UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
             default:
-                if requestURL.isMiniAppURL() {
+                if requestURL.isMiniAppURL(customMiniAppURL: miniAppURL) {
                     return decisionHandler(.allow)
                 } else {
                     // Allow navigation for requests loading external web content resources. E.G: iFrames
                     guard navigationAction.targetFrame?.isMainFrame != false else {
                         return decisionHandler(.allow)
                     }
-                    self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
-                        self.webView.load(URLRequest(url: url))
-                    })
+                    if let miniAppURL = miniAppURL {
+                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
+                            self.webView.load(URLRequest(url: url))
+                        }, customMiniAppURL: miniAppURL)
+                    } else {
+                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
+                            self.webView.load(URLRequest(url: url))
+                        })
+                    }
                 }
             }
         }
@@ -180,5 +226,16 @@ extension RealMiniAppView: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         refreshNavBar()
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        MiniAppLogger.e("Couldn't load Miniapp URL", error)
+        initialLoadCallback?(false)
+        initialLoadCallback = nil
+    }
+
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        initialLoadCallback?(true)
+        initialLoadCallback = nil
     }
 }

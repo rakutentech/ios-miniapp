@@ -19,6 +19,9 @@ import Foundation
     }
 
     func storeCustomPermissions(permissions: [MASDKCustomPermissionModel], forMiniApp keyId: String) {
+        guard !keyId.isEmpty else {
+            return
+        }
         var keysDic = keys()
         var cachedPermissions = self.getCustomPermissions(forMiniApp: keyId)
         _ = permissions.map { (permissionModel: MASDKCustomPermissionModel) -> MASDKCustomPermissionModel in
