@@ -17,6 +17,10 @@ extension ViewController {
     }
 
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
-        completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
+        guard let tokenInfo = getTokenInfo() else {
+            completionHandler(.failure(.unknownError))
+            return
+        }
+        completionHandler(.success(.init(accessToken: tokenInfo.tokenString, expirationDate: tokenInfo.expiryDate)))
     }
 }

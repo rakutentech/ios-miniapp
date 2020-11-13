@@ -61,6 +61,7 @@
 		38A2E93A24A2E3E600E58233 /* MimeTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */; };
 		38D04804252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */; };
 		38D0C7C624C1A00000384422 /* MiniAppSdkConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D0C7C524C1A00000384422 /* MiniAppSdkConfigTests.swift */; };
+		38D4C7AE255BCBF400CD5CE6 /* AccessTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D4C7AD255BCBF400CD5CE6 /* AccessTokenViewController.swift */; };
 		38F07E0C2535CC3600E32B32 /* MiniAppExternalUrlLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F07E0B2535CC3600E32B32 /* MiniAppExternalUrlLoaderTests.swift */; };
 		38F3B7F024192E7300914E37 /* UrlParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3B7EF24192E7300914E37 /* UrlParserTests.swift */; };
 		38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4423D554FE00F2C1CE /* Helpers.swift */; };
@@ -139,6 +140,7 @@
 		38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypesTests.swift; sourceTree = "<group>"; };
 		38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+MiniAppUserInfoProtocol.swift"; sourceTree = "<group>"; };
 		38D0C7C524C1A00000384422 /* MiniAppSdkConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSdkConfigTests.swift; sourceTree = "<group>"; };
+		38D4C7AD255BCBF400CD5CE6 /* AccessTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenViewController.swift; sourceTree = "<group>"; };
 		38F07E0B2535CC3600E32B32 /* MiniAppExternalUrlLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppExternalUrlLoaderTests.swift; sourceTree = "<group>"; };
 		38F3B7EF24192E7300914E37 /* UrlParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlParserTests.swift; sourceTree = "<group>"; };
 		38F73B4423D554FE00F2C1CE /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 		38920AE0251D9C57004C5DDD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				38D4C7AC255BCBD800CD5CE6 /* Settings */,
 				38920AE1251D9C57004C5DDD /* Storyboards */,
 				38920AEC251D9C57004C5DDD /* FirstLaunchViewController.swift */,
 				38920AE6251D9C57004C5DDD /* ViewController.swift */,
@@ -308,6 +311,14 @@
 				38F07E0B2535CC3600E32B32 /* MiniAppExternalUrlLoaderTests.swift */,
 			);
 			path = Unit;
+			sourceTree = "<group>";
+		};
+		38D4C7AC255BCBD800CD5CE6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				38D4C7AD255BCBF400CD5CE6 /* AccessTokenViewController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		607FACC71AFB9204008FA782 = {
@@ -530,6 +541,7 @@
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
 				38920B05251D9C57004C5DDD /* SettingsTableViewController.swift in Sources */,
 				38920AF4251D9C57004C5DDD /* String+MiniApp.swift in Sources */,
+				38D4C7AE255BCBF400CD5CE6 /* AccessTokenViewController.swift in Sources */,
 				18CC83372538172F00EEDB00 /* UIWindow+MiniApp.swift in Sources */,
 				38920B08251D9C57004C5DDD /* ContactsListSettingsTableViewController.swift in Sources */,
 				38920B0C251D9C57004C5DDD /* DisplayNavigationController.swift in Sources */,
