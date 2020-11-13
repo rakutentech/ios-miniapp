@@ -16,7 +16,7 @@
     <a title="USERGUIDE  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp 2.3.0 Docs</a> (59% documented)</p>
+        <p><a href="index.html">MiniApp 2.5.0 Docs</a> (59% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -56,6 +56,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/MATokenInfo.html">MATokenInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/MiniApp.html">MiniApp</a>
@@ -107,7 +110,7 @@
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Protocols/MiniAppDisplayProtocol.html">MiniAppDisplayProtocol</a>
+                <a href="Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a>
@@ -145,6 +148,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp0aB15DisplayProtocola">MiniAppDisplayProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a href="Typealiases.html#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a>
@@ -262,6 +268,8 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 <li><a href="#custom-permissions">Custom Permissions</a></li>
 <li><a href="#list-downloaded-mini-apps">List Downloaded Mini apps</a></li>
 <li><a href="#user-profile-details">Retrieve User Profile details</a></li>
+<li><a href="#orientation-lock">Orientation Lock</a></li>
+<li><a href="#access-token-info">Access Token info</a></li>
 </ul>
 
 <div id="runtime-conf"></div>
@@ -366,12 +374,15 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 
 <div id="request-custom-permission"></div>
 <h5 id='requesting-custom-permissions' class='heading'>Requesting Custom Permissions</h5>
+
+<p>SDK has its own implementation to show the list of requested custom permissions. If you want to display your own UI for requesting custom permissions, you can do it by overriding the method like below,</p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
         <span class="kd">func</span> <span class="nf">requestCustomPermissions</span><span class="p">(</span>
             <span class="nv">permissions</span><span class="p">:</span> <span class="p">[</span><span class="kt">MASDKCustomPermissionModel</span><span class="p">],</span>
+            <span class="nv">miniAppTitle</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
             <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span>
             <span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">MASDKCustomPermissionModel</span><span class="p">],</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">permissions</span><span class="p">))</span>    
+                <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">permissions</span><span class="p">))</span>    
             <span class="p">}</span>
 
 </code></pre>
@@ -484,7 +495,7 @@ The following delegates/interfaces will be called only if the user has allowed r
 
 <p>Retrieve user name of the User</p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
-    <span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">getUserName</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">getUserName</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
         <span class="c1">// Implementation to return the User name</span>
         <span class="k">return</span> <span class="s">""</span>
     <span class="p">}</span>
@@ -496,9 +507,57 @@ The following delegates/interfaces will be called only if the user has allowed r
 
 <p>Retrieve Profile Photo of the User</p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
-    <span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">getProfilePhoto</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">getProfilePhoto</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
         <span class="c1">// Implementation to return the Profile photo URI</span>
         <span class="k">return</span> <span class="s">""</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<div id="access-token-info"></div>
+<h4 id='access-token-info' class='heading'>Access Token Info</h4>
+
+<p>Retrieve access token and expiry date</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">getAccessToken</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">MATokenInfo</span><span class="p">,</span> <span class="kt">MASDKCustomPermissionError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">accessToken</span><span class="p">:</span> <span class="s">"ACCESS_TOKEN"</span><span class="p">,</span> <span class="nv">expirationDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">())))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<div id="orientation-lock"></div>
+<h3 id='orientation-lock' class='heading'>Orientation Lock</h3>
+
+<hr>
+
+<p>You can choose to give orientation lock control to mini apps. However, this requires you to add some code to your <code>AppDelegate</code> which could have an affect on your entire App. If you do not wish to do this, please see the section <em>&ldquo;Allow only full screen videos to change orientation&rdquo;.</em></p>
+<h3 id='allow-mini-apps-to-lock-the-view-to-any-orientation' class='heading'>Allow mini apps to lock the view to any orientation</h3>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">supportedInterfaceOrientationsFor</span> <span class="nv">window</span><span class="p">:</span> <span class="kt">UIWindow</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">UIInterfaceOrientationMask</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="kd">#available(iOS 12, *)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">window</span><span class="p">?</span><span class="o">.</span><span class="n">isKeyWindow</span> <span class="o">!=</span> <span class="kc">true</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="o">.</span><span class="n">all</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="kt">MiniApp</span><span class="o">.</span><span class="kt">MAOrientationLock</span><span class="o">.</span><span class="n">isEmpty</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">.</span><span class="n">all</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kt">MiniApp</span><span class="o">.</span><span class="kt">MAOrientationLock</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre>
+<h3 id='allow-full-screen-videos-to-change-orientation' class='heading'>Allow full screen videos to change orientation</h3>
+
+<p>You can add the following if you want to enable videos to change orientation. Note that if you do not wish to add code to <code>AppDelegate</code> as in the above example, you can still allow videos inside the mini app to use landscape mode even when your App is locked to portrait mode and vice versa.</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">AVKit</span>
+
+<span class="kd">extension</span> <span class="kt">AVPlayerViewController</span> <span class="p">{</span>
+    <span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">supportedInterfaceOrientations</span><span class="p">:</span> <span class="kt">UIInterfaceOrientationMask</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="kt">MiniApp</span><span class="o">.</span><span class="kt">MAOrientationLock</span><span class="o">.</span><span class="n">isEmpty</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">.</span><span class="n">all</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kt">MiniApp</span><span class="o">.</span><span class="kt">MAOrientationLock</span>
+        <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -511,8 +570,8 @@ The following delegates/interfaces will be called only if the user has allowed r
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-22)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-11-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

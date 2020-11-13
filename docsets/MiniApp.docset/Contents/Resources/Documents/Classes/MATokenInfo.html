@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MASDKCustomPermissionError Enumeration Reference</title>
+    <title>MATokenInfo Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,8 +13,8 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/MASDKCustomPermissionError" class="dashAnchor"></a>
-    <a title="MASDKCustomPermissionError Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Class/MATokenInfo" class="dashAnchor"></a>
+    <a title="MATokenInfo Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MiniApp 2.5.0 Docs</a> (59% documented)</p>
@@ -29,7 +29,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MiniApp Reference</a>
         <img id="carat" src="../img/carat.png" />
-        MASDKCustomPermissionError Enumeration Reference
+        MATokenInfo Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -166,11 +166,11 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>MASDKCustomPermissionError</h1>
+            <h1>MATokenInfo</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MASDKCustomPermissionError</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">MiniAppErrorProtocol</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">MATokenInfo</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
 
                 </div>
               </div>
@@ -183,9 +183,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp26MASDKCustomPermissionErrorO07unknownE0yA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/unknownError" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp26MASDKCustomPermissionErrorO07unknownE0yA2CmF">unknownError</a>
+                    <a name="/s:7MiniApp11MATokenInfoC11accessToken14expirationDateACSS_10Foundation0H0Vtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(accessToken:expirationDate:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MATokenInfoC11accessToken14expirationDateACSS_10Foundation0H0Vtcfc">init(accessToken:<wbr>expirationDate:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -200,142 +200,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">unknownError</span> <span class="o">=</span> <span class="s">"UKNOWN_ERROR"</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp26MASDKCustomPermissionErrorO015failedToConformG8ProtocolyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/failedToConformToProtocol" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp26MASDKCustomPermissionErrorO015failedToConformG8ProtocolyA2CmF">failedToConformToProtocol</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">failedToConformToProtocol</span> <span class="o">=</span> <span class="s">"FAILED_TO_CONFORM_PROTOCOL"</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp26MASDKCustomPermissionErrorO013invalidCustomD7RequestyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/invalidCustomPermissionRequest" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp26MASDKCustomPermissionErrorO013invalidCustomD7RequestyA2CmF">invalidCustomPermissionRequest</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidCustomPermissionRequest</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp26MASDKCustomPermissionErrorO28invalidCustomPermissionsListyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/invalidCustomPermissionsList" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp26MASDKCustomPermissionErrorO28invalidCustomPermissionsListyA2CmF">invalidCustomPermissionsList</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidCustomPermissionsList</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp26MASDKCustomPermissionErrorO10userDeniedyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/userDenied" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp26MASDKCustomPermissionErrorO10userDeniedyA2CmF">userDenied</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">userDenied</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp26MASDKCustomPermissionErrorO11descriptionSSvp"></a>
-                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp26MASDKCustomPermissionErrorO11descriptionSSvp">description</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">accessToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">expirationDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

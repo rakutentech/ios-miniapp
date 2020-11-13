@@ -17,7 +17,7 @@
     <a title="MiniAppMessageDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniApp 2.3.0 Docs</a> (59% documented)</p>
+        <p><a href="../index.html">MiniApp 2.5.0 Docs</a> (59% documented)</p>
         <p class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -57,6 +57,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MATokenInfo.html">MATokenInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/MiniApp.html">MiniApp</a>
@@ -108,7 +111,7 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Protocols/MiniAppDisplayProtocol.html">MiniAppDisplayProtocol</a>
+                <a href="../Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a>
@@ -146,6 +149,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:7MiniApp0aB15DisplayProtocola">MiniAppDisplayProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a>
@@ -233,10 +239,50 @@ result (allowed/denied) should be returned.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7MiniApp0aB15MessageDelegateP24requestCustomPermissions11permissions04miniB5Title17completionHandlerySayAA26MASDKCustomPermissionModelCG_SSys6ResultOyAjA0mN5ErrorOGctF"></a>
+                    <a name="//apple_ref/swift/Method/requestCustomPermissions(permissions:miniAppTitle:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB15MessageDelegateP24requestCustomPermissions11permissions04miniB5Title17completionHandlerySayAA26MASDKCustomPermissionModelCG_SSys6ResultOyAjA0mN5ErrorOGctF">requestCustomPermissions(permissions:<wbr>miniAppTitle:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optional Interface that can be implemented in the host app to handle the Custom Permissions.
+SDK will open its default UI for prompting Custom Permissions request if this protocol interface is not overridden</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">requestCustomPermissions</span><span class="p">(</span><span class="nv">permissions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a></span><span class="p">],</span>
+                              <span class="nv">miniAppTitle</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                              <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a></span><span class="p">],</span> <span class="kt"><a href="../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7MiniApp0aB15MessageDelegateP24requestCustomPermissions11permissions17completionHandlerySayAA26MASDKCustomPermissionModelCG_ys6ResultOyAiA0kL5ErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/requestCustomPermissions(permissions:completionHandler:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7MiniApp0aB15MessageDelegateP24requestCustomPermissions11permissions17completionHandlerySayAA26MASDKCustomPermissionModelCG_ys6ResultOyAiA0kL5ErrorOGctF">requestCustomPermissions(permissions:<wbr>completionHandler:<wbr>)</a>
                     </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
@@ -247,11 +293,17 @@ result (allowed/denied) should be returned.</p>
 Host app is responsible to display the alert/dialog with the [MiniAppCustomPermissionType] permissions to the user and the result should be returned back to the SDK</p>
 
                       </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">requestCustomPermissions</span><span class="p">(</span><span class="nv">permissions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a></span><span class="p">],</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a></span><span class="p">],</span> <span class="kt"><a href="../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "requestCustomPermissions(permissions:miniAppTitle:completionHandler:﹚", message: "Since version 2.3.0, this method is deprecated")</span>
+<span class="kd">func</span> <span class="nf">requestCustomPermissions</span><span class="p">(</span><span class="nv">permissions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a></span><span class="p">],</span>
+                              <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a></span><span class="p">],</span> <span class="kt"><a href="../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -263,8 +315,8 @@ Host app is responsible to display the alert/dialog with the [MiniAppCustomPermi
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-22)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-11-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

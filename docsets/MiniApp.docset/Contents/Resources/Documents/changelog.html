@@ -16,7 +16,7 @@
     <a title="CHANGELOG  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">MiniApp 2.3.0 Docs</a> (59% documented)</p>
+        <p><a href="index.html">MiniApp 2.5.0 Docs</a> (59% documented)</p>
         <p class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -56,6 +56,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/MATokenInfo.html">MATokenInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/MiniApp.html">MiniApp</a>
@@ -107,7 +110,7 @@
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Protocols/MiniAppDisplayProtocol.html">MiniAppDisplayProtocol</a>
+                <a href="Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a>
@@ -147,6 +150,9 @@
                 <a href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
               </li>
               <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7MiniApp0aB15DisplayProtocola">MiniAppDisplayProtocol</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Typealiases.html#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a>
               </li>
               <li class="nav-group-task">
@@ -161,6 +167,27 @@
           <section class="section">
             
             <h2 id='changelog' class='heading'>CHANGELOG</h2>
+<h3 id='2-5-0-2020-11-13' class='heading'>2.5.0 (2020-11-13)</h3>
+
+<p><strong>Note:</strong> The 2.4.0 version was skipped to keep version alignment with the Android SDK.</p>
+
+<p><strong>SDK</strong></p>
+
+<ul>
+<li><strong>Feature:</strong> Added support for Orientation lock, that enables the mini app to lock <code>portrait</code> or <code>landscape</code> orientation for the mini-app. <a href="USERGUIDE.md#orientation-lock">Please check here</a></li>
+<li><strong>Feature:</strong> Added support to retrieve Access token and expiry date</li>
+<li><strong>Feature:</strong> Added default implementation in SDK for <code>requestCustomPermissions(permissions:miniAppTitle:completionHandler:)</code> <a href="USERGUIDE.md#request-custom-permission">Please check here</a></li>
+<li><strong>Deprecated:</strong> <code>requestCustomPermissions(permissions:completionHandler:)</code> in <code>MiniAppCallbackProtocol</code> protocol is deprecated. You should use <code>requestCustomPermissions(permissions:miniAppTitle:completionHandler:))</code> instead</li>
+</ul>
+
+<p><strong>Sample App</strong></p>
+
+<ul>
+<li><strong>Feature:</strong> Added implementation for orientation lock</li>
+<li><strong>Feature:</strong> Added implementation to retrieve Access token details</li>
+</ul>
+
+<hr>
 <h3 id='2-3-0-2020-10-22' class='heading'>2.3.0 (2020-10-22)</h3>
 
 <p><strong>SDK</strong></p>
@@ -181,6 +208,8 @@
 <li><strong>Feature:</strong> Added sample implementation for Retrieving Username &amp; Profile photo from Mini app</li>
 <li><strong>Feature:</strong> Added search field for mini app list.</li>
 </ul>
+
+<hr>
 <h3 id='2-2-0-2020-10-02' class='heading'>2.2.0 (2020-10-02)</h3>
 
 <p><strong>SDK</strong></p>
@@ -204,6 +233,8 @@
 <li><strong>Feature:</strong> Added sample implementation for Sharing the message from Mini app</li>
 <li><strong>Feature:</strong> Added sample app implementation to revoke/manage the custom permissions for the list of downloaded mini apps</li>
 </ul>
+
+<hr>
 <h3 id='2-1-0-2020-09-03' class='heading'>2.1.0 (2020-09-03)</h3>
 
 <p><strong>SDK</strong></p>
@@ -218,6 +249,8 @@
 <li><strong>Feature:</strong> User name, profile photo, and contact list can be configured in the settings screen.</li>
 <li><strong>Fix:</strong> Location permission callback was not triggered after user accepted/denied the permission.</li>
 </ul>
+
+<hr>
 <h3 id='2-0-0-2020-08-07' class='heading'>2.0.0 (2020-08-07)</h3>
 
 <p><strong>SDK</strong></p>
@@ -238,6 +271,8 @@
 <ul>
 <li>No changes</li>
 </ul>
+
+<hr>
 <h3 id='1-2-0-2020-07-21' class='heading'>1.2.0 (2020-07-21)</h3>
 
 <p><strong>SDK</strong></p>
@@ -257,6 +292,8 @@
 <li><em>Bugfix:</em> First time settings success dialog dismissed before tapping OK</li>
 <li><em>Bugfix:</em> &ldquo;Display MiniApp&rdquo; button was not visible when scrolling in the Mini Apps list</li>
 </ul>
+
+<hr>
 <h3 id='1-1-1-2020-06-11' class='heading'>1.1.1 (2020-06-11)</h3>
 
 <p><strong>SDK</strong></p>
@@ -271,6 +308,8 @@
 <li><em>Bugfix:</em> First time settings success dialog dismissed before tapping OK</li>
 <li><em>Bugfix:</em> &ldquo;Display MiniApp&rdquo; button was not visible when scrolling in the list Mini Apps</li>
 </ul>
+
+<hr>
 <h3 id='1-1-0-2020-06-01' class='heading'>1.1.0 (2020-06-01)</h3>
 
 <ul>
@@ -278,6 +317,8 @@
 <li>Deprecated <code>MiniApp#create(appInfo:completionHandler:)</code>. Your App should instead use <code>MiniApp#create(appInfo:completionHandler:messageInterface)</code>.</li>
 <li>Added <code>getUniqueId</code> function to <code><a href="Typealiases.html#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a></code>. This function should provide a unique identifier (unique to the user and device) to Mini Apps.</li>
 </ul>
+
+<hr>
 <h3 id='1-0-0-2020-04-27' class='heading'>1.0.0 (2020-04-27)</h3>
 
 <ul>
@@ -287,8 +328,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-10-22)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-11-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
