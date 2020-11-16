@@ -1,6 +1,8 @@
 ## CHANGELOG
 
-### 2.x.x (IN-PROGRESS)
+### 2.5.0 (2020-11-13)
+
+**Note:** The 2.4.0 version was skipped to keep version alignment with the Android SDK.
 
 **SDK**
 
@@ -13,6 +15,7 @@
 
 - **Feature:** Added implementation for orientation lock
 - **Feature:** Added implementation to retrieve Access token details
+
 ---
 
 ### 2.3.0 (2020-10-22)
@@ -31,6 +34,8 @@
 
 - **Feature:** Added sample implementation for Retrieving Username & Profile photo from Mini app
 - **Feature:** Added search field for mini app list.
+
+---
 
 ### 2.2.0 (2020-10-02)
 
@@ -52,6 +57,8 @@
 - **Feature:** Added sample implementation for Sharing the message from Mini app
 - **Feature:** Added sample app implementation to revoke/manage the custom permissions for the list of downloaded mini apps
 
+---
+
 ### 2.1.0 (2020-09-03)
 
 **SDK**
@@ -60,6 +67,8 @@
 **Sample App:**
 - **Feature:** User name, profile photo, and contact list can be configured in the settings screen.
 - **Fix:** Location permission callback was not triggered after user accepted/denied the permission.
+
+---
 
 ### 2.0.0 (2020-08-07)
 
@@ -76,6 +85,8 @@
 **Sample App**
 - No changes
 
+---
+
 ### 1.2.0 (2020-07-21)
 
 **SDK**
@@ -90,6 +101,8 @@
 - *Bugfix:* First time settings success dialog dismissed before tapping OK
 - *Bugfix:* "Display MiniApp" button was not visible when scrolling in the Mini Apps list
 
+---
+
 ### 1.1.1 (2020-06-11)
 
 **SDK**
@@ -99,11 +112,15 @@
 - *Bugfix:* First time settings success dialog dismissed before tapping OK
 - *Bugfix:* "Display MiniApp" button was not visible when scrolling in the list Mini Apps
 
+---
+
 ### 1.1.0 (2020-06-01)
 
 - Added JavaScript bridge for passing data between Mini App and Host App. Your App now must implement `MiniAppMessageProtocol` in your view controller and provide the implementation when calling `MiniApp#create`. - [See here](USERGUIDE.md#MiniAppMessageProtocol)
 - Deprecated `MiniApp#create(appInfo:completionHandler:)`. Your App should instead use `MiniApp#create(appInfo:completionHandler:messageInterface)`.
 - Added `getUniqueId` function to `MiniAppMessageProtocol`. This function should provide a unique identifier (unique to the user and device) to Mini Apps.
+
+---
 
 ### 1.0.0 (2020-04-27)
 
