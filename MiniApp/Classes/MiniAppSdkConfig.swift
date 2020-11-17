@@ -11,7 +11,7 @@ public class MiniAppSdkConfig {
             }
         }
     }
-    @available(*, deprecated)
+    @available(*, deprecated, message: "use rasProjectId instead")
     var rasAppId: String? {
         didSet {
             if rasAppId?.count ?? 0 == 0 {

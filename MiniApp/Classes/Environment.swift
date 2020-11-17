@@ -18,7 +18,7 @@ internal class Environment {
     let bundle: EnvironmentProtocol
 
     var customUrl: String?
-    @available(*, deprecated)
+    @available(*, deprecated, message: "use customProjectId instead")
     var customAppId: String?
     var customProjectId: String?
     var customAppVersion: String?
@@ -39,7 +39,7 @@ internal class Environment {
         self.customIsTestMode = config.isTestMode
     }
 
-    @available(*, deprecated)
+    @available(*, deprecated, message: "use projectId instead")
     var appId: String {
         return value(for: customAppId, fallback: .applicationIdentifier)
     }

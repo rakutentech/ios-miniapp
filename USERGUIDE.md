@@ -55,8 +55,6 @@ In your project configuration .plist you should add below Key/Value :
 
 If you don't want to use project settings, you have to pass this information one by one to the `Config.userDefaults` using a `Config.Key` as key:
 
-NOTE: `RASApplicationIdentifier` is deprecated
-
 ```swift
 Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawValue)
 ```
