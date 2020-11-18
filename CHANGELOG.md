@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+### 2.x.x (2020-MM-DD)
+
+**SDK**
+
+- **Feature:** Added support for `RASProjectId`. `RASApplicationIdentifier` is deprecated now
+
+---
+
 ### 2.5.0 (2020-11-13)
 
 **Note:** The 2.4.0 version was skipped to keep version alignment with the Android SDK.

@@ -15,7 +15,7 @@ internal class RealMiniApp {
     init(with settings: MiniAppSdkConfig?, and navigationSettings: MiniAppNavigationConfig? = nil) {
         self.miniAppInfoFetcher = MiniAppInfoFetcher()
         self.miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl,
-                                           rasAppId: settings?.rasAppId,
+                                           rasProjectId: settings?.rasProjectId,
                                            subscriptionKey: settings?.subscriptionKey,
                                            hostAppVersion: settings?.hostAppVersion,
                                            isPreviewMode: settings?.isPreviewMode)

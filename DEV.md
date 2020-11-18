@@ -8,9 +8,11 @@ First, it is highly recommanded to setup some environment variables which are re
 
 ```bash
 RMAAPIEndpoint=https://www.example.com
-RASApplicationIdentifier=test-app-id
+RASProjectId=test-app-id
 RASProjectSubscriptionKey=test-subscription-key
 ```
+
+NOTE: `RASApplicationIdentifier` is deprecated
 
 Next, run `fastlane updatePods` from the root directory that will trigger a `pod install` and fetch git submodules, then open `MiniApp.xcworkspace`, and you should be able to successfully build the Sample App.
 

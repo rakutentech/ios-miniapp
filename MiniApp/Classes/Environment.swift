@@ -7,6 +7,7 @@ internal protocol EnvironmentProtocol {
 internal class Environment {
     enum Key: String {
         case applicationIdentifier = "RASApplicationIdentifier"
+        case projectId = "RASProjectId"
         case version = "CFBundleShortVersionString"
         case subscriptionKey = "RASProjectSubscriptionKey"
         case endpoint = "RMAAPIEndpoint"
@@ -18,7 +19,8 @@ internal class Environment {
     let bundle: EnvironmentProtocol
 
     var customUrl: String?
-    var customAppId: String?
+    @available(*, deprecated, message: "use customProjectId instead") var customAppId: String?
+    var customProjectId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
     var customIsPreviewMode: Bool?
@@ -32,13 +34,19 @@ internal class Environment {
         self.init(bundle: bundle)
         self.customUrl = config.baseUrl
         self.customAppId = config.rasAppId
+        self.customProjectId = config.rasProjectId
         self.customSubscriptionKey = config.subscriptionKey
         self.customAppVersion = config.hostAppVersion
         self.customIsPreviewMode = config.isPreviewMode
     }
 
+    @available(*, deprecated, message: "use projectId instead")
     var appId: String {
         return value(for: customAppId, fallback: .applicationIdentifier)
+    }
+
+    var projectId: String {
+        return value(for: customProjectId, fallback: .projectId, fallbackParam: self.appId)
     }
 
     var appVersion: String {
@@ -74,6 +82,10 @@ internal class Environment {
 
     func value(for field: String?, fallback key: Key) -> String {
         return field ?? bundle.value(for: key.rawValue) ?? bundle.valueNotFound
+    }
+
+    func value(for field: String?, fallback key: Key, fallbackParam: String) -> String {
+        return field ?? bundle.value(for: key.rawValue) ?? fallbackParam
     }
 
     func bool(for field: Bool?, fallback key: Key) -> Bool {

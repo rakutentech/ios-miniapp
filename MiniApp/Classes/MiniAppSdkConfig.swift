@@ -21,10 +21,18 @@ public class MiniAppSdkConfig {
             }
         }
     }
+    @available(*, deprecated, message: "use rasProjectId instead")
     var rasAppId: String? {
         didSet {
             if rasAppId?.count ?? 0 == 0 {
                 rasAppId = nil
+            }
+        }
+    }
+    var rasProjectId: String? {
+        didSet {
+            if rasProjectId?.count ?? 0 == 0 {
+                rasProjectId = nil
             }
         }
     }
@@ -48,19 +56,18 @@ public class MiniAppSdkConfig {
     ///
     /// - Parameters:
     ///   - baseUrl: The production URL of the API endpoint
-    ///   - rasAppId: The Rakuten Studio Host App ID
+    ///   - rasProjectId: The Rakuten Studio Host App Project ID
     ///   - subscriptionKey: The Rakuten Studio Subscription Key
     ///   - hostAppVersion: The Rakuten Studio Host App version
-    ///   - isTestMode: A boolean used by MiniApp SDK to determine which endpoint to use. Default is false
-    @available(*, deprecated, renamed: "init(baseUrl:rasAppId:subscriptionKey:hostAppVersion:isPreviewMode:)")
+    ///   - isPreviewMode: A boolean used by MiniApp SDK to determine which endpoint to use. Default is true
     public init(baseUrl: String? = nil,
-                rasAppId: String? = nil,
+                rasProjectId: String? = nil,
                 subscriptionKey: String? = nil,
                 hostAppVersion: String? = nil,
-                isTestMode: Bool?) {
-        self.isTestMode = isTestMode
+                isPreviewMode: Bool? = true) {
+        self.isPreviewMode = isPreviewMode ?? true
         self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
-        self.rasAppId = rasAppId?.count ?? 0 > 0 ? rasAppId : nil
+        self.rasProjectId = rasProjectId?.count ?? 0 > 0 ? rasProjectId  : nil
         self.subscriptionKey = subscriptionKey?.count ?? 0 > 0 ? subscriptionKey : nil
         self.hostAppVersion = hostAppVersion?.count ?? 0 > 0 ? hostAppVersion : nil
     }
@@ -73,16 +80,15 @@ public class MiniAppSdkConfig {
     ///   - rasAppId: The Rakuten Studio Host App ID
     ///   - subscriptionKey: The Rakuten Studio Subscription Key
     ///   - hostAppVersion: The Rakuten Studio Host App version
-    ///   - isPreviewMode: A boolean used by MiniApp SDK to determine which endpoint to use. Default is true
-    public init(baseUrl: String? = nil,
-                rasAppId: String? = nil,
-                subscriptionKey: String? = nil,
-                hostAppVersion: String? = nil,
-                isPreviewMode: Bool? = true) {
-        self.isPreviewMode = isPreviewMode
-        self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
+    ///   - isTestMode: A boolean used by MiniApp SDK to determine which endpoint to use. Default is false
+    @available(*, deprecated, message: "use constructor with rasProjectId indeed. isTestMode has been renamed isPreviewMode",
+    renamed: "init(baseUrl:rasProjectId:subscriptionKey:hostAppVersion:isPreviewMode:)")
+    convenience public init(baseUrl: String? = nil,
+                            rasAppId: String? = nil,
+                            subscriptionKey: String? = nil,
+                            hostAppVersion: String? = nil,
+                            isTestMode: Bool? = false) {
+        self.init(baseUrl: baseUrl, rasProjectId: nil, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: isTestMode)
         self.rasAppId = rasAppId?.count ?? 0 > 0 ? rasAppId : nil
-        self.subscriptionKey = subscriptionKey?.count ?? 0 > 0 ? subscriptionKey : nil
-        self.hostAppVersion = hostAppVersion?.count ?? 0 > 0 ? hostAppVersion : nil
     }
 }

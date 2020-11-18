@@ -20,20 +20,21 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     weak var delegate: MiniAppDownloaderProtocol?
 
     private convenience override init() {
-        self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
+        self.init(baseUrl: nil, rasProjectId: nil, subscriptionKey: nil, hostAppVersion: nil)
     }
 
-    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil) {
-        self.init(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: true)
+    @available(*, deprecated, renamed: "init(baseUrl:rasProjectId:subscriptionKey:hostAppVersion:)")
+    convenience init(baseUrl: String? = nil, rasAppId: String, subscriptionKey: String, hostAppVersion: String? = nil) {
+        self.init(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: false)
     }
 
-    @available(*, deprecated, renamed: "init(baseUrl:rasAppId:subscriptionKey:hostAppVersion:isPreviewMode:)")
-    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = true) {
-        self.init(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: isTestMode)
+    @available(*, deprecated, renamed: "init(baseUrl:rasProjectId:subscriptionKey:hostAppVersion:isPreviewMode:)")
+    convenience init(baseUrl: String? = nil, rasAppId: String, subscriptionKey: String, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
     }
 
-    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = true) {
-        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: isPreviewMode))
+    convenience init(baseUrl: String? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = true) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasProjectId: rasProjectId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: isPreviewMode))
     }
 
     init(with config: MiniAppSdkConfig) {
@@ -46,6 +47,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     func updateEnvironment(with config: MiniAppSdkConfig?) {
         self.environment.customUrl = config?.baseUrl
         self.environment.customAppId = config?.rasAppId
+        self.environment.customProjectId = config?.rasProjectId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion
         self.environment.customIsPreviewMode = config?.isPreviewMode ?? true

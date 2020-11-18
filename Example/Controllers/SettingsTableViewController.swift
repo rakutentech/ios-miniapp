@@ -76,7 +76,7 @@ class SettingsTableViewController: UITableViewController {
 
                 fetchAppList(withConfig:
                         createConfig(
-                            hostAppId: self.textFieldAppID.text!,
+                            projectId: self.textFieldAppID.text!,
                             subscriptionKey: self.textFieldSubKey.text!,
                             loadPreviewVersions: isPreview
                         )
@@ -136,9 +136,9 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
-    func createConfig(hostAppId: String, subscriptionKey: String, loadPreviewVersions: Bool) -> MiniAppSdkConfig {
+    func createConfig(projectId: String, subscriptionKey: String, loadPreviewVersions: Bool) -> MiniAppSdkConfig {
         return MiniAppSdkConfig(
-            rasAppId: hostAppId,
+            rasProjectId: projectId,
             subscriptionKey: subscriptionKey,
             hostAppVersion: Bundle.main.infoDictionary?[Config.Key.version.rawValue] as? String,
             isPreviewMode: loadPreviewVersions)

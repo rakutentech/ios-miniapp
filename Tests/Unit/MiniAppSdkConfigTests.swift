@@ -11,7 +11,7 @@ class MiniAppSdkConfigTests: QuickSpec {
                                                   rasAppId: "mini-app-host-id",
                                                   subscriptionKey: "mini-app-sub-key",
                                                   hostAppVersion: "1.0",
-                                                  isPreviewMode: false)
+                                                  isTestMode: false)
                     expect(config.baseUrl).to(equal("http://example.com"))
                     expect(config.rasAppId).to(equal("mini-app-host-id"))
                     expect(config.subscriptionKey).to(equal("mini-app-sub-key"))

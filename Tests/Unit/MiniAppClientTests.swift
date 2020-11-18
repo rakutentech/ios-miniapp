@@ -248,6 +248,7 @@ class MiniAppClientTests: QuickSpec {
         }
         describe("override configuration at runtime") {
             let applicationIdentifierKey = "RASApplicationIdentifier"
+            let projectId = "RASApplicationIdentifier"
             let versionKey = "CFBundleShortVersionString"
             let subscriptionKey = "RASProjectSubscriptionKey"
             let endpointKey = "RMAAPIEndpoint"
@@ -255,6 +256,7 @@ class MiniAppClientTests: QuickSpec {
             let bundle = Bundle.main as EnvironmentProtocol
             let testURL = "http://dummy.url"
             let testID = "testID"
+            let testProjectID = "testProjectID"
             let testKey = "testKey"
             let testVersion = "testVersion"
 
@@ -263,6 +265,7 @@ class MiniAppClientTests: QuickSpec {
                     let miniAppClient = MiniAppClient()
 
                     expect(miniAppClient.environment.appId).to(equal(bundle.value(for: applicationIdentifierKey)))
+                    expect(miniAppClient.environment.projectId).to(equal(bundle.value(for: projectId)))
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
@@ -272,9 +275,14 @@ class MiniAppClientTests: QuickSpec {
 
             context("when a configuration is provided") {
                 it("it uses configuration values as environment") {
-                    let miniAppClient = MiniAppClient(with: MiniAppSdkConfig(baseUrl: testURL, rasAppId: testID, subscriptionKey: testKey, hostAppVersion: testVersion, isPreviewMode: true))
+                    let miniAppClient = MiniAppClient(with: MiniAppSdkConfig(
+                                                        baseUrl: testURL,
+                                                        rasProjectId: testProjectID,
+                                                        subscriptionKey: testKey,
+                                                        hostAppVersion: testVersion,
+                                                        isPreviewMode: true))
 
-                    expect(miniAppClient.environment.appId).to(equal(testID))
+                    expect(miniAppClient.environment.projectId).to(equal(testProjectID))
                     expect(miniAppClient.environment.appVersion).to(equal(testVersion))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(testKey))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
@@ -284,9 +292,9 @@ class MiniAppClientTests: QuickSpec {
 
             context("when a custom parameter is provided") {
                 it("it uses provided custom parameters values as environment") {
-                    let miniAppClient = MiniAppClient(baseUrl: testURL, rasAppId: testID)
+                    let miniAppClient = MiniAppClient(baseUrl: testURL, rasProjectId: testProjectID)
 
-                    expect(miniAppClient.environment.appId).to(equal(testID))
+                    expect(miniAppClient.environment.projectId).to(equal(testProjectID))
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
@@ -296,9 +304,13 @@ class MiniAppClientTests: QuickSpec {
             context("when we update configuration after creating client") {
                 it("it uses configuration values as environment") {
                     let miniAppClient = MiniAppClient()
-                    miniAppClient.updateEnvironment(with: MiniAppSdkConfig(baseUrl: testURL, rasAppId: testID, subscriptionKey: testKey, hostAppVersion: testVersion, isPreviewMode: true))
+                    miniAppClient.updateEnvironment(with: MiniAppSdkConfig(baseUrl: testURL,
+                        rasProjectId: testProjectID,
+                        subscriptionKey: testKey,
+                        hostAppVersion: testVersion,
+                        isPreviewMode: true))
 
-                    expect(miniAppClient.environment.appId).to(equal(testID))
+                    expect(miniAppClient.environment.projectId).to(equal(testProjectID))
                     expect(miniAppClient.environment.appVersion).to(equal(testVersion))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(testKey))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
@@ -308,10 +320,10 @@ class MiniAppClientTests: QuickSpec {
 
             context("when we provide nil configuration") {
                 it("it uses plist configuration as environment") {
-                    let miniAppClient = MiniAppClient(baseUrl: testURL, rasAppId: testID)
+                    let miniAppClient = MiniAppClient(baseUrl: testURL, rasProjectId: testID)
                     miniAppClient.updateEnvironment(with: nil)
 
-                    expect(miniAppClient.environment.appId).to(equal(bundle.value(for: applicationIdentifierKey)))
+                    expect(miniAppClient.environment.projectId).to(equal(bundle.value(for: projectId)))
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))

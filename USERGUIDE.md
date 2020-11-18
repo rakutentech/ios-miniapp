@@ -28,7 +28,7 @@ It is written in Swift 5.0 and can be used in compatible Xcode versions.
 
 In order to run your MiniApp you will have to provide the following,
 
-* MiniApp host application identifier (```RASApplicationIdentifier```)
+* MiniApp host application identifier (```RASProjectId```)
 * Subscription key (```RASProjectSubscriptionKey```)
 * Base URL for API requests to the library (```RMAAPIEndpoint```)
 * Preference, if you want to make use of Test API Endpoints in your application or not
@@ -48,7 +48,7 @@ In your project configuration .plist you should add below Key/Value :
 
 | Key                          | Type    | Description                                                     | Optional| Default |
 | :----                        | :----:  | :----                                                           |:----:   |:----:   |
-| RASApplicationIdentifier     | String  | `Set your MiniApp host application identifier`                  |NO       |`none`   |
+| RASProjectId     | String  | `Set your MiniApp host application project identifier`                  |NO       |`none`   |
 | RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
 | RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
 | RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent. The value specified in the plist is retrieved only at the build time.` |YES      |`none`   |
