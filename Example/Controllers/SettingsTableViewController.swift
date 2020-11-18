@@ -26,7 +26,7 @@ class SettingsTableViewController: UITableViewController {
             case .HOSTED:
                 return NSLocalizedString("test_mode_publishing", comment: "")
             case .PREVIEW:
-                return NSLocalizedString("test_mode_testing", comment: "")
+                return NSLocalizedString("test_mode_previewing", comment: "")
             }
         }
 
@@ -72,7 +72,7 @@ class SettingsTableViewController: UITableViewController {
         if isValueEntered(text: self.textFieldAppID.text, key: .applicationIdentifier) && isValueEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
             if self.textFieldAppID.text!.isValidUUID() {
                 let selectedMode = TestMode(rawValue: self.endPointSegmentedControl.selectedSegmentIndex)
-                let isPreview = selectedMode?.isPreviewMode() ?? false
+                let isPreview = selectedMode?.isPreviewMode() ?? true
 
                 fetchAppList(withConfig:
                         createConfig(
@@ -159,7 +159,7 @@ class SettingsTableViewController: UITableViewController {
     func configureMode() {
         self.endPointSegmentedControl.removeAllSegments()
         TestMode.allCases.forEach { configure(mode: $0) }
-        let defaultMode = (Bundle.main.infoDictionary?[Config.Key.isPreviewMode.rawValue] as? Bool ?? false).intValue
+        let defaultMode = (Bundle.main.infoDictionary?[Config.Key.isPreviewMode.rawValue] as? Bool ?? true).intValue
         if let index = Config.userDefaults?.value(forKey: Config.Key.isPreviewMode.rawValue) {
             self.endPointSegmentedControl.selectedSegmentIndex = (index as? Bool)?.intValue ?? defaultMode
         } else {

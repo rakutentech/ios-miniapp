@@ -6,13 +6,13 @@ internal protocol EnvironmentProtocol {
 
 internal class Environment {
     enum Key: String {
-        case applicationIdentifier = "RASApplicationIdentifier",
-            version = "CFBundleShortVersionString",
-            subscriptionKey = "RASProjectSubscriptionKey",
-            endpoint = "RMAAPIEndpoint",
-            isPreviewMode = "RMAIsPreviewMode",
-            isTestMode = "RMAIsTestMode",
-            hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
+        case applicationIdentifier = "RASApplicationIdentifier"
+        case version = "CFBundleShortVersionString"
+        case subscriptionKey = "RASProjectSubscriptionKey"
+        case endpoint = "RMAAPIEndpoint"
+        case isPreviewMode = "RMAIsPreviewMode"
+        @available(*, deprecated, renamed: "isPreviewMode") case isTestMode = "RMAIsTestMode"
+        case hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
     }
 
     let bundle: EnvironmentProtocol
@@ -22,8 +22,7 @@ internal class Environment {
     var customAppVersion: String?
     var customSubscriptionKey: String?
     var customIsPreviewMode: Bool?
-    @available(*, deprecated, renamed: "customIsPreviewMode")
-    var customIsTestMode: Bool?
+    @available(*, deprecated, renamed: "customIsPreviewMode") var customIsTestMode: Bool?
 
     init(bundle: EnvironmentProtocol = Bundle.main) {
         self.bundle = bundle
