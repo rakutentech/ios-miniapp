@@ -102,11 +102,12 @@ class RealMiniAppTests: QuickSpec {
                 }
             }
             context("when I update RealMiniApp with MiniAppSdkConfig") {
-                let config = MiniAppSdkConfig(baseUrl: "http://test1/", rasAppId: "dummyId", subscriptionKey: "dummyKey", hostAppVersion: "dummyHostVersion")
+                let config = MiniAppSdkConfig(baseUrl: "http://test1/", rasAppId: "dummyId", rasProjectId: "customProjectId", subscriptionKey: "dummyKey", hostAppVersion: "dummyHostVersion")
                 it("will take the new settings in account") {
                     realMiniApp.update(with: config)
                     expect(realMiniApp.miniAppClient.environment.customUrl) == "http://test1/"
                     expect(realMiniApp.miniAppClient.environment.customAppId) == "dummyId"
+                    expect(realMiniApp.miniAppClient.environment.customProjectId) == "customProjectId"
                     expect(realMiniApp.miniAppClient.environment.customSubscriptionKey) == "dummyKey"
                     expect(realMiniApp.miniAppClient.environment.customAppVersion) == "dummyHostVersion"
                 }

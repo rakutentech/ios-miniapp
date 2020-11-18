@@ -168,6 +168,7 @@ class MockBundle: EnvironmentProtocol {
 
     var mockValueNotFound: String?
     var mockAppId: String?
+    var mockProjectId: String?
     var mockSubscriptionKey: String?
     var mockAppVersion: String?
     var mockEndpoint: String? = "https://www.example.com/"
@@ -187,6 +188,8 @@ class MockBundle: EnvironmentProtocol {
         switch key {
         case "RASApplicationIdentifier":
             return mockAppId
+        case "RASProjectId":
+            return mockProjectId
         case "RASProjectSubscriptionKey":
             return mockSubscriptionKey
         case "CFBundleShortVersionString":

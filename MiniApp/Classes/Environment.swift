@@ -7,17 +7,20 @@ internal protocol EnvironmentProtocol {
 internal class Environment {
     enum Key: String {
         case applicationIdentifier = "RASApplicationIdentifier",
-            version = "CFBundleShortVersionString",
-            subscriptionKey = "RASProjectSubscriptionKey",
-            endpoint = "RMAAPIEndpoint",
-            isTestMode = "RMAIsTestMode",
-            hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
+        projectId = "RASProjectId",
+        version = "CFBundleShortVersionString",
+        subscriptionKey = "RASProjectSubscriptionKey",
+        endpoint = "RMAAPIEndpoint",
+        isTestMode = "RMAIsTestMode",
+        hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
     }
 
     let bundle: EnvironmentProtocol
 
     var customUrl: String?
+    @available(*, deprecated, message: "use customProjectId instead")
     var customAppId: String?
+    var customProjectId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
     var customIsTestMode: Bool?
@@ -30,13 +33,19 @@ internal class Environment {
         self.init(bundle: bundle)
         self.customUrl = config.baseUrl
         self.customAppId = config.rasAppId
+        self.customProjectId = config.rasProjectId
         self.customSubscriptionKey = config.subscriptionKey
         self.customAppVersion = config.hostAppVersion
         self.customIsTestMode = config.isTestMode
     }
 
+    @available(*, deprecated, message: "use projectId instead")
     var appId: String {
         return value(for: customAppId, fallback: .applicationIdentifier)
+    }
+
+    var projectId: String {
+        return value(for: customProjectId, fallback: .projectId, fallbackParam: self.appId)
     }
 
     var appVersion: String {
@@ -66,6 +75,10 @@ internal class Environment {
 
     func value(for field: String?, fallback key: Key) -> String {
         return field ?? bundle.value(for: key.rawValue) ?? bundle.valueNotFound
+    }
+
+    func value(for field: String?, fallback key: Key, fallbackParam: String) -> String {
+        return field ?? bundle.value(for: key.rawValue) ?? fallbackParam
     }
 
     func bool(for field: Bool?, fallback key: Key) -> Bool {
