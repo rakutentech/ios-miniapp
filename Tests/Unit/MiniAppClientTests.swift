@@ -251,7 +251,7 @@ class MiniAppClientTests: QuickSpec {
             let versionKey = "CFBundleShortVersionString"
             let subscriptionKey = "RASProjectSubscriptionKey"
             let endpointKey = "RMAAPIEndpoint"
-            let isTestMode = "RMAIsTestMode"
+            let isPreviewMode = "RMAIsPreviewMode"
             let bundle = Bundle.main as EnvironmentProtocol
             let testURL = "http://dummy.url"
             let testID = "testID"
@@ -266,7 +266,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
-                    expect(miniAppClient.environment.isPreviewMode).to(equal(bundle.bool(for: isTestMode)))
+                    expect(miniAppClient.environment.isPreviewMode).to(equal(bundle.bool(for: isPreviewMode)))
                 }
             }
 
@@ -315,7 +315,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
-                    expect(miniAppClient.environment.isPreviewMode).to(equal(bundle.bool(for: isTestMode)))
+                    expect(miniAppClient.environment.isPreviewMode).to(equal(bundle.bool(for: isPreviewMode)))
                 }
             }
         }

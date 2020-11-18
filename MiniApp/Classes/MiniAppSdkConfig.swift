@@ -11,7 +11,7 @@ public class MiniAppSdkConfig {
             isPreviewMode
         }
     }
-    
+
     var isPreviewMode: Bool?
 
     var baseUrl: String? {
@@ -42,24 +42,7 @@ public class MiniAppSdkConfig {
             }
         }
     }
-    
-    /// Initialize a MiniAppSdkConfig object that can be used to configure a MiniApp client. All the parameters are optional.
-    /// If a parameter is omitted the client will fallback its value to the configuration values provided into the project configuration .plist
-    ///
-    /// - Parameters:
-    ///   - baseUrl: The production URL of the API endpoint
-    ///   - rasAppId: The Rakuten Studio Host App ID
-    ///   - subscriptionKey: The Rakuten Studio Subscription Key
-    ///   - hostAppVersion: The Rakuten Studio Host App version
-    ///   - isTestMode: A boolean used by MiniApp SDK to determine which endpoint to use. Default is false
-    @available(*, deprecated, renamed: "init(baseUrl:rasAppId:subscriptionKey:hostAppVersion:isPreviewMode:)")
-    public convenience init(baseUrl: String? = nil,
-                rasAppId: String? = nil,
-                subscriptionKey: String? = nil,
-                hostAppVersion: String? = nil) {
-        self.init(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: true)
-    }
-    
+
     /// Initialize a MiniAppSdkConfig object that can be used to configure a MiniApp client. All the parameters are optional.
     /// If a parameter is omitted the client will fallback its value to the configuration values provided into the project configuration .plist
     ///
@@ -74,7 +57,7 @@ public class MiniAppSdkConfig {
                 rasAppId: String? = nil,
                 subscriptionKey: String? = nil,
                 hostAppVersion: String? = nil,
-                isTestMode: Bool? = false) {
+                isTestMode: Bool?) {
         self.isTestMode = isTestMode
         self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
         self.rasAppId = rasAppId?.count ?? 0 > 0 ? rasAppId : nil
@@ -103,4 +86,3 @@ public class MiniAppSdkConfig {
         self.hostAppVersion = hostAppVersion?.count ?? 0 > 0 ? hostAppVersion : nil
     }
 }
-

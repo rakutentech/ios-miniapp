@@ -48,7 +48,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.environment.customAppId = config?.rasAppId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion
-        self.environment.customIsPreviewMode = config?.isPreviewMode ?? false
+        self.environment.customIsPreviewMode = config?.isPreviewMode ?? true
     }
 
     lazy var session: SessionProtocol = {
