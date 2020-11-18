@@ -248,7 +248,7 @@ class MiniAppClientTests: QuickSpec {
         }
         describe("override configuration at runtime") {
             let applicationIdentifierKey = "RASApplicationIdentifier"
-            let projectId = "RASApplicationIdentifier"
+            let projectId = "RASProjectId"
             let versionKey = "CFBundleShortVersionString"
             let subscriptionKey = "RASProjectSubscriptionKey"
             let endpointKey = "RMAAPIEndpoint"

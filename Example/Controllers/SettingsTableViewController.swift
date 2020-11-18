@@ -58,7 +58,7 @@ class SettingsTableViewController: UITableViewController {
     func resetFields() {
         self.invalidHostAppIdLabel.isHidden = true
         self.invalidSubscriptionKeyLabel.isHidden = true
-        configure(field: self.textFieldAppID, for: .applicationIdentifier)
+        configure(field: self.textFieldAppID, for: .projectId)
         configure(field: self.textFieldSubKey, for: .subscriptionKey)
         configureMode()
     }
@@ -69,7 +69,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     @IBAction func actionSaveConfig() {
-        if isValueEntered(text: self.textFieldAppID.text, key: .applicationIdentifier) && isValueEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
+        if isValueEntered(text: self.textFieldAppID.text, key: .projectId) && isValueEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
             if self.textFieldAppID.text!.isValidUUID() {
                 let selectedMode = TestMode(rawValue: self.endPointSegmentedControl.selectedSegmentIndex)
                 let isTest = selectedMode?.isTestMode() ?? false
@@ -82,7 +82,7 @@ class SettingsTableViewController: UITableViewController {
                         )
                 )
             }
-            displayInvalidValueErrorMessage(forKey: .applicationIdentifier)
+            displayInvalidValueErrorMessage(forKey: .projectId)
         }
     }
 
@@ -120,7 +120,7 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func saveCustomConfiguration(responseData: [MiniAppInfo]?) {
-        self.save(field: self.textFieldAppID, for: .applicationIdentifier)
+        self.save(field: self.textFieldAppID, for: .projectId)
         self.save(field: self.textFieldSubKey, for: .subscriptionKey)
         self.saveMode()
 
@@ -210,7 +210,7 @@ class SettingsTableViewController: UITableViewController {
 
     func displayInvalidValueErrorMessage(forKey: Config.Key) {
         switch forKey {
-        case .applicationIdentifier:
+        case .projectId:
             displayAlert(title: NSLocalizedString("error_title", comment: ""),
                 message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
                 autoDismiss: true)
@@ -224,7 +224,7 @@ class SettingsTableViewController: UITableViewController {
     }
     func displayNoValueFoundErrorMessage(forKey: Config.Key) {
         switch forKey {
-        case .applicationIdentifier:
+        case .projectId:
             displayAlert(title: NSLocalizedString("error_title", comment: ""),
                 message: NSLocalizedString("error_empty_appid_key_message", comment: ""),
                 autoDismiss: true)
