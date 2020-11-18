@@ -2,7 +2,7 @@ import Foundation
 
 /// MiniAppSdkConfig class helps you to configure the endpoints at runtime.
 public class MiniAppSdkConfig {
-    var isTestMode: Bool?
+    var isPreviewMode: Bool?
 
     var baseUrl: String? {
         didSet {
@@ -48,8 +48,8 @@ public class MiniAppSdkConfig {
                 rasAppId: String? = nil,
                 subscriptionKey: String? = nil,
                 hostAppVersion: String? = nil,
-                isTestMode: Bool? = false) {
-        self.isTestMode = isTestMode
+                isPreviewMode: Bool? = false) {
+        self.isPreviewMode = isPreviewMode
         self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
         self.rasAppId = rasAppId?.count ?? 0 > 0 ? rasAppId : nil
         self.subscriptionKey = subscriptionKey?.count ?? 0 > 0 ? subscriptionKey : nil

@@ -15,7 +15,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let downloadApi: DownloadApi
     var environment: Environment
     private var testPath: String {
-        self.environment.isTestMode ? "test" : ""
+        self.environment.isPreviewMode ? "preview" : ""
     }
     weak var delegate: MiniAppDownloaderProtocol?
 
@@ -23,8 +23,8 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
     }
 
-    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
-        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
+    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = false) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: isPreviewMode))
     }
 
     init(with config: MiniAppSdkConfig) {
@@ -39,7 +39,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.environment.customAppId = config?.rasAppId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion
-        self.environment.customIsTestMode = config?.isTestMode ?? false
+        self.environment.customIsPreviewMode = config?.isPreviewMode ?? false
     }
 
     lazy var session: SessionProtocol = {

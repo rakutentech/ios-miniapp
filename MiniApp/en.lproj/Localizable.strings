@@ -23,5 +23,5 @@
 "ok" = "OK";
 "cancel" = "Cancel";
 
-"test_mode_publishing" = "Published";
-"test_mode_testing" = "Testing";
+"test_mode_publishing" = "Hosted";
+"test_mode_previewing" = "Previewable apps";

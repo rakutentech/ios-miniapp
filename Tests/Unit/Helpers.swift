@@ -18,7 +18,7 @@ class MockAPIClient: MiniAppClient {
                     rasAppId: bundle.mockAppId,
                     subscriptionKey: bundle.mockSubscriptionKey,
                     hostAppVersion: bundle.mockHostAppUserAgentInfo,
-                    isTestMode: bundle.mockTestMode
+                    isPreviewMode: bundle.mockTestMode
                 )
         )
     }

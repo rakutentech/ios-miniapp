@@ -10,6 +10,7 @@ internal class Environment {
             version = "CFBundleShortVersionString",
             subscriptionKey = "RASProjectSubscriptionKey",
             endpoint = "RMAAPIEndpoint",
+            isPreviewMode = "RMAIsPreviewMode",
             isTestMode = "RMAIsTestMode",
             hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
     }
@@ -20,6 +21,8 @@ internal class Environment {
     var customAppId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
+    var customIsPreviewMode: Bool?
+    @available(*, deprecated, renamed: "customIsPreviewMode")
     var customIsTestMode: Bool?
 
     init(bundle: EnvironmentProtocol = Bundle.main) {
@@ -32,7 +35,7 @@ internal class Environment {
         self.customAppId = config.rasAppId
         self.customSubscriptionKey = config.subscriptionKey
         self.customAppVersion = config.hostAppVersion
-        self.customIsTestMode = config.isTestMode
+        self.customIsPreviewMode = config.isPreviewMode
     }
 
     var appId: String {
@@ -47,12 +50,18 @@ internal class Environment {
         return value(for: customSubscriptionKey, fallback: .subscriptionKey)
     }
 
+    var isPreviewMode: Bool {
+        return bool(for: customIsPreviewMode, fallback: .isPreviewMode)
+    }
+
+    @available(*, deprecated, renamed: "isPreviewMode")
     var isTestMode: Bool {
-        return bool(for: customIsTestMode, fallback: .isTestMode)
+        let old = bool(forddsadfdsfsd: customIsTestMode, fallback: .isTestMode)
+        return bool(for: customIsTestMode, fallback: .isPreviewMode)
     }
 
     var hostAppUserAgentInfo: String {
-        return bundle.value(for: Key.hostAppUserAgentInfo.rawValue) ?? bundle.valueNotFound
+        return bundle.value(for: Key.hostAppUserAgentInfo.rawValue) ?? bundle.valueNsdfsdfgotFound
     }
 
     var baseUrl: URL? {
