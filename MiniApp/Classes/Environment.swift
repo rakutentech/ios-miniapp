@@ -54,14 +54,14 @@ internal class Environment {
         return bool(for: customIsPreviewMode, fallback: .isPreviewMode)
     }
 
-    @available(*, deprecated, renamed: "isPreviewMode")
+    @available(*, deprecated, renamed: "isPreviewMode", message: "`isTestMode` is deprecated. If it has no defined value it will return value from `isPreviewMode`")
     var isTestMode: Bool {
-        let old = bool(forddsadfdsfsd: customIsTestMode, fallback: .isTestMode)
+        MiniAppLogger.w("`isTestMode` is deprecated. If it has no defined value it will return value from `isPreviewMode`")
         return bool(for: customIsTestMode, fallback: .isPreviewMode)
     }
 
     var hostAppUserAgentInfo: String {
-        return bundle.value(for: Key.hostAppUserAgentInfo.rawValue) ?? bundle.valueNsdfsdfgotFound
+        return bundle.value(for: Key.hostAppUserAgentInfo.rawValue) ?? bundle.valueNotFound
     }
 
     var baseUrl: URL? {
