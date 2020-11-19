@@ -18,7 +18,7 @@ class FirstLaunchViewController: UIViewController {
     }
 
     func checkSettingsOK() -> Bool {
-        return Config.userDefaults?.string(forKey: Config.Key.applicationIdentifier.rawValue) != nil && Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue) != nil
+        return Config.userDefaults?.string(forKey: Config.Key.projectId.rawValue) != nil && Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue) != nil
     }
 
     func animateViews() {
