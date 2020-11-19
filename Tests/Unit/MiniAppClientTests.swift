@@ -264,7 +264,6 @@ class MiniAppClientTests: QuickSpec {
                 it("it uses plist configuration as environment") {
                     let miniAppClient = MiniAppClient()
 
-                    expect(miniAppClient.environment.appId).to(equal(bundle.value(for: applicationIdentifierKey)))
                     expect(miniAppClient.environment.projectId).to(equal(bundle.value(for: projectId)))
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
@@ -327,7 +326,6 @@ class MiniAppClientTests: QuickSpec {
                     let miniAppClient = MiniAppClient(baseUrl: testURL, rasProjectId: testID)
                     miniAppClient.updateEnvironment(with: nil)
 
-                    expect(miniAppClient.environment.appId).to(equal(bundle.value(for: applicationIdentifierKey)))
                     expect(miniAppClient.environment.projectId).to(equal(bundle.value(for: projectId)))
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
