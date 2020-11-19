@@ -25,7 +25,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Demo app helps you find more information near you</string>
 	<key>RASProjectId</key>
-	<string>$(RAS_PROJECT_ID)</string>
+	<string>$(RAS_APPLICATION_IDENTIFIER)</string>
 	<key>RASProjectSubscriptionKey</key>
 	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY)</string>
 	<key>RMAAPIEndpoint</key>
