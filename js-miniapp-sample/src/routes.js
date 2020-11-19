@@ -13,6 +13,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import MediaIcon from '@material-ui/icons/MusicVideo';
 import ShareIcon from '@material-ui/icons/Share';
 import AdsIcon from '@material-ui/icons/LocalPlay';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 import AuthToken from './pages/auth-token';
 import TalkToChatBot from './pages/chatbot';
@@ -27,6 +28,7 @@ import WindowActions from './pages/window-actions';
 import Media from './pages/media';
 import Share from './pages/share';
 import Ads from './pages/ads';
+import FileUploader from './pages/file-upload';
 
 const homeItem = [
   {
@@ -109,6 +111,12 @@ const appItems = [
     label: 'Ads',
     navLink: '/ads',
     component: Ads,
+  },
+  {
+    icon: <AttachFileIcon />,
+    label: 'File Upload',
+    navLink: '/file_upload',
+    component: FileUploader,
   },
 ];
 const navItems: Object[] = homeItem.concat(
