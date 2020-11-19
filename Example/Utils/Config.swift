@@ -4,6 +4,7 @@ import MiniApp
 class Config: NSObject {
     enum Key: String {
         case applicationIdentifier = "RASApplicationIdentifier",
+        projectId = "RASProjectId",
         version = "CFBundleShortVersionString",
         subscriptionKey = "RASProjectSubscriptionKey",
         endpoint = "RMAAPIEndpoint",
@@ -15,6 +16,7 @@ class Config: NSObject {
     class func getCurrent() -> MiniAppSdkConfig {
         return MiniAppSdkConfig(baseUrl: Config.userDefaults?.string(forKey: Config.Key.endpoint.rawValue),
             rasAppId: Config.userDefaults?.string(forKey: Config.Key.applicationIdentifier.rawValue),
+            rasProjectId: Config.userDefaults?.string(forKey: Config.Key.projectId.rawValue),
             subscriptionKey: Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue),
             hostAppVersion: Config.userDefaults?.string(forKey: Config.Key.version.rawValue),
             isTestMode: Config.userDefaults?.bool(forKey: Config.Key.isTestMode.rawValue))

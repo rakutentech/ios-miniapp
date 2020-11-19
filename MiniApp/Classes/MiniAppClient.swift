@@ -20,11 +20,11 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     weak var delegate: MiniAppDownloaderProtocol?
 
     private convenience override init() {
-        self.init(baseUrl: nil, rasAppId: nil, subscriptionKey: nil, hostAppVersion: nil)
+        self.init(baseUrl: nil, rasAppId: nil, rasProjectId: nil, subscriptionKey: nil, hostAppVersion: nil)
     }
 
-    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
-        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
+    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, rasProjectId: rasProjectId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
     }
 
     init(with config: MiniAppSdkConfig) {
@@ -37,6 +37,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     func updateEnvironment(with config: MiniAppSdkConfig?) {
         self.environment.customUrl = config?.baseUrl
         self.environment.customAppId = config?.rasAppId
+        self.environment.customProjectId = config?.rasProjectId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion
         self.environment.customIsTestMode = config?.isTestMode ?? false
