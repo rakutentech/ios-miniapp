@@ -180,6 +180,46 @@ class RealMiniAppTests: QuickSpec {
                 }
             }
 
+            context("when createMiniApp is called with a deprecated helper") {
+                it("will return valid Mini App View instance with a default hostAppMessageDelegate and getUniqueId() will return an error message") {
+                    let responseString = """
+                    [{
+                        "id": "123",
+                        "displayName": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "455"
+                        }
+                      }]
+                    """
+                    let manifestResponse = """
+                      {
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
+                    waitUntil { done in
+                        realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                            switch result {
+                            case .success(let responseData):
+                                expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
+                                if let rmap = responseData as? RealMiniAppView {
+                                    expect(rmap.hostAppMessageDelegate).notTo(beNil())
+                                    expect(UUID(uuidString: rmap.hostAppMessageDelegate!.getUniqueId())).to(beNil())
+                                } else {
+                                    fail("create RealMiniAppView failure")
+                                }
+                                done()
+                            case .failure:
+                                fail("create MiniApp failure")
+                            }
+                        })
+                    }
+                }
+            }
+
             context("when createMiniApp is called with valid Mini App id and real mini app validates with platform for the latest version and if the versions are same") {
                 it("will download mini app with the mini app info that is passed on") {
                     let responseString = """
@@ -333,49 +373,6 @@ class RealMiniAppTests: QuickSpec {
                                 testError = error as NSError
                         }
                     }, messageInterface: mockMessageInterface)
-                    expect(testError?.code).toEventually(equal(0))
-                }
-            }
-            context("when RealMiniApp class has no message interface method object and when requestPermission is called") {
-                it("will return error") {
-                    var testError: MASDKPermissionError?
-                    realMiniApp.requestPermission(permissionType: MiniAppPermissionType.init(rawValue: "location")!) { (result) in
-                        switch result {
-                        case .success:
-                        break
-                        case .failure(let error):
-                            testError = error
-                        }
-                    }
-                    expect(MASDKPermissionError(rawValue: testError?.rawValue ?? "")).toEventually(equal(MASDKPermissionError.failedToConformToProtocol))
-                }
-            }
-            context("when RealMiniApp class has no message interface method object and when requestCustomPermissions is called") {
-                it("will return error") {
-                    var testError: MASDKCustomPermissionError?
-                    realMiniApp.requestCustomPermissions(permissions: []) { (result) in
-                        switch result {
-                        case .success:
-                        break
-                        case .failure(let error):
-                            testError = error
-                        }
-                    }
-                    expect(MASDKCustomPermissionError(rawValue: testError?.rawValue ?? "")).toEventually(equal(MASDKCustomPermissionError.failedToConformToProtocol))
-                }
-            }
-            context("when RealMiniApp class has no message interface method object and when requestCustomPermissions is called") {
-                it("will return error") {
-                    var testError: NSError?
-                    realMiniApp.shareContent(info: MiniAppShareContent(
-                        messageContent: "Testing the sample app")) { (result) in
-                        switch result {
-                        case .success:
-                        break
-                        case .failure(let error):
-                            testError = error as NSError
-                        }
-                    }
                     expect(testError?.code).toEventually(equal(0))
                 }
             }

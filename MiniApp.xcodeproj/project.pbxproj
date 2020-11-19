@@ -12,6 +12,7 @@
 		183E680E2499D49A00BAADB2 /* MiniAppLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E680C2499D42300BAADB2 /* MiniAppLoggerTests.swift */; };
 		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
+		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
 		18CC83372538172F00EEDB00 /* UIWindow+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC83362538172F00EEDB00 /* UIWindow+MiniApp.swift */; };
 		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
 		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
@@ -87,6 +88,7 @@
 		183E680C2499D42300BAADB2 /* MiniAppLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppLoggerTests.swift; sourceTree = "<group>"; };
 		185DBD6124B2A06300CD2094 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
+		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
 		18CC83362538172F00EEDB00 /* UIWindow+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIWindow+MiniApp.swift"; path = "../../MiniApp/Classes/Extensions/UIWindow+MiniApp.swift"; sourceTree = "<group>"; };
 		3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStatusTests.swift; sourceTree = "<group>"; };
 		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				38F3B7EF24192E7300914E37 /* UrlParserTests.swift */,
 				3899C2BF242331900087A619 /* URLSchemeHandlerTests.swift */,
 				3850AE712434E02D0046978C /* RealMiniAppTests.swift */,
+				189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */,
 				38FC4652244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift */,
 				183E680C2499D42300BAADB2 /* MiniAppLoggerTests.swift */,
 				38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */,
@@ -572,6 +575,7 @@
 				188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */,
 				3871A8E124C54AD600BEC6CF /* MiniApp+StringTests.swift in Sources */,
 				38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */,
+				189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */,
 				3879499824FCFB0900DB099B /* MiniAppKeyChainTests.swift in Sources */,
 				38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */,
 				385C25CA23F2E8BA00D61206 /* DisplayerTests.swift in Sources */,

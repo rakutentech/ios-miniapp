@@ -19,10 +19,6 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
     weak var delegate: MiniAppDownloaderProtocol?
 
-    private convenience override init() {
-        self.init(baseUrl: nil, rasProjectId: nil, subscriptionKey: nil, hostAppVersion: nil)
-    }
-
     @available(*, deprecated, renamed: "init(baseUrl:rasProjectId:subscriptionKey:hostAppVersion:)")
     convenience init(baseUrl: String? = nil, rasAppId: String, subscriptionKey: String, hostAppVersion: String? = nil) {
         self.init(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: false)
