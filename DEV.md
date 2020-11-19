@@ -28,6 +28,22 @@ If you need to test your SDK fork into your host app before making a pull reques
   pod 'MiniApp', git: 'https://github.com/<My fork account>/ios-miniapp', branch: 'master', submodules: true
 ```
 
+## How to generate SDK documentation locally
+
+You may want to generate the SDK documentation locally so that you can ensure that the generated docs look correct. 
+We use [Jazzy](https://github.com/realm/jazzy) for this, so you can run the following commands:
+
+```ruby
+bundle exec jazzy \
+  --xcodebuild-arguments -scheme,Tests \
+  --module MiniApp \
+  --source-directory MiniApp \
+  --podspec MiniApp.podspec \
+  --readme USERGUIDE.md
+```
+
+The generated docs will be output to a folder named `docs` in the root of this repo.
+
 ## Continuous Integration and Deployment
 
 Before any deployment, be sure the project will build and run unit tests by running `fastlane ci`.
