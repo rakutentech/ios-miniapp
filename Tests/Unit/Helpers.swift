@@ -173,12 +173,15 @@ class MockBundle: EnvironmentProtocol {
     var mockAppVersion: String?
     var mockEndpoint: String? = "https://www.example.com/"
     var mockTestMode: Bool?
+    var mockPreviewMode: Bool?
     var mockHostAppUserAgentInfo: String?
 
     func bool(for key: String) -> Bool? {
         switch key {
         case "RMAIsTestMode":
             return mockTestMode
+        case "RMAIsPreviewMode":
+            return mockPreviewMode
         default:
             return nil
         }

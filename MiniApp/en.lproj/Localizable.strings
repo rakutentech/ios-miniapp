@@ -22,6 +22,3 @@
 "wait_message" = "Please wait...";
 "ok" = "OK";
 "cancel" = "Cancel";
-
-"test_mode_publishing" = "Published";
-"test_mode_testing" = "Testing";

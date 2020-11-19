@@ -13,28 +13,28 @@ class SettingsTableViewController: UITableViewController {
     let predefinedKeys: [String] = ["RAS_APPLICATION_IDENTIFIER", "RAS_SUBSCRIPTION_KEY", ""]
 
     enum SectionHeader: Int {
-        case RAS = 0
-        case profile = 1
-        case testMode = 2
+        case RAS = 1
+        case profile = 2
+        case previewMode = 0
     }
     enum TestMode: Int, CaseIterable {
-        case PUBLISHING,
-        TESTING
+        case HOSTED,
+        PREVIEW
 
         func stringValue() -> String {
             switch self {
-            case .PUBLISHING:
+            case .HOSTED:
                 return NSLocalizedString("test_mode_publishing", comment: "")
-            case .TESTING:
-                return NSLocalizedString("test_mode_testing", comment: "")
+            case .PREVIEW:
+                return NSLocalizedString("test_mode_previewing", comment: "")
             }
         }
 
-        func isTestMode() -> Bool {
+        func isPreviewMode() -> Bool {
             switch self {
-            case .PUBLISHING:
+            case .HOSTED:
                 return false
-            case .TESTING:
+            case .PREVIEW:
                 return true
             }
         }
@@ -72,13 +72,13 @@ class SettingsTableViewController: UITableViewController {
         if isValueEntered(text: self.textFieldAppID.text, key: .projectId) && isValueEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
             if self.textFieldAppID.text!.isValidUUID() {
                 let selectedMode = TestMode(rawValue: self.endPointSegmentedControl.selectedSegmentIndex)
-                let isTest = selectedMode?.isTestMode() ?? false
+                let isPreview = selectedMode?.isPreviewMode() ?? true
 
                 fetchAppList(withConfig:
                         createConfig(
                             projectId: self.textFieldAppID.text!,
                             subscriptionKey: self.textFieldSubKey.text!,
-                            loadTestVersions: isTest
+                            loadPreviewVersions: isPreview
                         )
                 )
             }
@@ -136,12 +136,12 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
-    func createConfig(projectId: String, subscriptionKey: String, loadTestVersions: Bool) -> MiniAppSdkConfig {
+    func createConfig(projectId: String, subscriptionKey: String, loadPreviewVersions: Bool) -> MiniAppSdkConfig {
         return MiniAppSdkConfig(
             rasProjectId: projectId,
             subscriptionKey: subscriptionKey,
             hostAppVersion: Bundle.main.infoDictionary?[Config.Key.version.rawValue] as? String,
-            isTestMode: loadTestVersions)
+            isPreviewMode: loadPreviewVersions)
     }
 
     /// Adding Tap gesture to dismiss the Keyboard
@@ -159,8 +159,8 @@ class SettingsTableViewController: UITableViewController {
     func configureMode() {
         self.endPointSegmentedControl.removeAllSegments()
         TestMode.allCases.forEach { configure(mode: $0) }
-        let defaultMode = (Bundle.main.infoDictionary?[Config.Key.isTestMode.rawValue] as? Bool ?? false).intValue
-        if let index = Config.userDefaults?.value(forKey: Config.Key.isTestMode.rawValue) {
+        let defaultMode = (Bundle.main.infoDictionary?[Config.Key.isPreviewMode.rawValue] as? Bool ?? true).intValue
+        if let index = Config.userDefaults?.value(forKey: Config.Key.isPreviewMode.rawValue) {
             self.endPointSegmentedControl.selectedSegmentIndex = (index as? Bool)?.intValue ?? defaultMode
         } else {
             self.endPointSegmentedControl.selectedSegmentIndex = defaultMode
@@ -197,7 +197,7 @@ class SettingsTableViewController: UITableViewController {
 
     func saveMode() {
         let selectedMode = self.endPointSegmentedControl.selectedSegmentIndex
-        Config.userDefaults?.set(selectedMode.boolValue, forKey: Config.Key.isTestMode.rawValue)
+        Config.userDefaults?.set(selectedMode.boolValue, forKey: Config.Key.isPreviewMode.rawValue)
     }
 
     func isValueEntered(text: String?, key: Config.Key) -> Bool {
@@ -302,8 +302,8 @@ protocol SettingsDelegate: class {
 extension SettingsTableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case SectionHeader.testMode.rawValue:
-            return "Test Mode"
+        case SectionHeader.previewMode.rawValue:
+            return "Preview Mode"
         case SectionHeader.profile.rawValue:
             return ""
         case SectionHeader.RAS.rawValue:
@@ -311,10 +311,5 @@ extension SettingsTableViewController {
         default:
             return nil
         }
-    }
-    // swiftlint:disable:next todo
-    //FIXME: remove to enable test mode after backend API is ready
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
     }
 }

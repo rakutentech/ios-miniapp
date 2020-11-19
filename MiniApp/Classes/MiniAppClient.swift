@@ -14,17 +14,23 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
     var environment: Environment
-    private var testPath: String {
-        self.environment.isTestMode ? "test" : ""
+    private var previewPath: String {
+        self.environment.isPreviewMode ? "preview" : ""
     }
     weak var delegate: MiniAppDownloaderProtocol?
 
-    private convenience override init() {
-        self.init(baseUrl: nil, rasAppId: nil, rasProjectId: nil, subscriptionKey: nil, hostAppVersion: nil)
+    @available(*, deprecated, renamed: "init(baseUrl:rasProjectId:subscriptionKey:hostAppVersion:)")
+    convenience init(baseUrl: String? = nil, rasAppId: String, subscriptionKey: String, hostAppVersion: String? = nil) {
+        self.init(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: false)
     }
 
-    convenience init(baseUrl: String? = nil, rasAppId: String? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
-        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, rasProjectId: rasProjectId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
+    @available(*, deprecated, renamed: "init(baseUrl:rasProjectId:subscriptionKey:hostAppVersion:isPreviewMode:)")
+    convenience init(baseUrl: String? = nil, rasAppId: String, subscriptionKey: String, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
+    }
+
+    convenience init(baseUrl: String? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = true) {
+        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasProjectId: rasProjectId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: isPreviewMode))
     }
 
     init(with config: MiniAppSdkConfig) {
@@ -40,7 +46,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.environment.customProjectId = config?.rasProjectId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion
-        self.environment.customIsTestMode = config?.isTestMode ?? false
+        self.environment.customIsPreviewMode = config?.isPreviewMode ?? true
     }
 
     lazy var session: SessionProtocol = {
@@ -49,7 +55,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
-        guard let urlRequest = self.listingApi.createURLRequest(testPath: self.testPath) else {
+        guard let urlRequest = self.listingApi.createURLRequest(testPath: self.previewPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
@@ -57,7 +63,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func getMiniApp(_ miniAppId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
-        guard let urlRequest = self.listingApi.createURLRequest(for: miniAppId, testPath: self.testPath) else {
+        guard let urlRequest = self.listingApi.createURLRequest(for: miniAppId, testPath: self.previewPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)

@@ -252,7 +252,7 @@ class MiniAppClientTests: QuickSpec {
             let versionKey = "CFBundleShortVersionString"
             let subscriptionKey = "RASProjectSubscriptionKey"
             let endpointKey = "RMAAPIEndpoint"
-            let isTestMode = "RMAIsTestMode"
+            let isPreviewMode = "RMAIsPreviewMode"
             let bundle = Bundle.main as EnvironmentProtocol
             let testURL = "http://dummy.url"
             let testID = "testID"
@@ -268,37 +268,69 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
-                    expect(miniAppClient.environment.isTestMode).to(equal(bundle.bool(for: isTestMode)))
+                    expect(miniAppClient.environment.isPreviewMode).to(equal(bundle.bool(for: isPreviewMode)))
                 }
             }
 
             context("when a configuration is provided") {
                 it("it uses configuration values as environment") {
                     let miniAppClient = MiniAppClient(with: MiniAppSdkConfig(
-                                                        baseUrl: testURL,
-                                                        rasAppId: testID,
-                                                        rasProjectId: testProjectID,
-                                                        subscriptionKey: testKey,
-                                                        hostAppVersion: testVersion,
-                                                        isTestMode: true))
+                        baseUrl: testURL,
+                        rasProjectId: testProjectID,
+                        subscriptionKey: testKey,
+                        hostAppVersion: testVersion,
+                        isPreviewMode: true))
 
-                    expect(miniAppClient.environment.appId).to(equal(testID))
                     expect(miniAppClient.environment.projectId).to(equal(testProjectID))
                     expect(miniAppClient.environment.appVersion).to(equal(testVersion))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(testKey))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
-                    expect(miniAppClient.environment.isTestMode).to(be(true))
+                    expect(miniAppClient.environment.isPreviewMode).to(be(true))
+                }
+            }
+
+            context("when a configuration is updated") {
+                it("it uses configuration values as environment") {
+                    let miniAppClient = MiniAppClient(with: MiniAppSdkConfig(
+                        baseUrl: testURL,
+                        rasProjectId: testProjectID,
+                        subscriptionKey: testKey,
+                        hostAppVersion: testVersion,
+                        isPreviewMode: true))
+
+                    miniAppClient.updateEnvironment(with: MiniAppSdkConfig(
+                        baseUrl: "http://dummy2.url",
+                        rasProjectId: "id2",
+                        subscriptionKey: "key2",
+                        hostAppVersion: "newversion",
+                        isPreviewMode: false))
+
+                    expect(miniAppClient.environment.projectId).to(equal("id2"))
+                    expect(miniAppClient.environment.appVersion).to(equal("newversion"))
+                    expect(miniAppClient.environment.subscriptionKey).to(equal("key2"))
+                    expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal("http://dummy2.url"))
+                    expect(miniAppClient.environment.isPreviewMode).to(be(false))
                 }
             }
 
             context("when a custom parameter is provided") {
                 it("it uses provided custom parameters values as environment") {
-                    let miniAppClient = MiniAppClient(baseUrl: testURL, rasAppId: testID, rasProjectId: testProjectID)
+                    let miniAppClient = MiniAppClient(baseUrl: testURL, rasProjectId: testProjectID)
 
-                    expect(miniAppClient.environment.appId).to(equal(testID))
                     expect(miniAppClient.environment.projectId).to(equal(testProjectID))
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
+                    expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
+                }
+            }
+
+            context("when a custom parameter is provided to deprecated method") {
+                it("it uses provided custom parameters values as environment") {
+                    let miniAppClient = MiniAppClient(baseUrl: testURL, rasAppId: testID, subscriptionKey: subscriptionKey)
+
+                    expect(miniAppClient.environment.appId).to(equal(testID))
+                    expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
+                    expect(miniAppClient.environment.subscriptionKey).to(equal(subscriptionKey))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
                 }
             }
@@ -307,17 +339,16 @@ class MiniAppClientTests: QuickSpec {
                 it("it uses configuration values as environment") {
                     let miniAppClient = MiniAppClient()
                     miniAppClient.updateEnvironment(with: MiniAppSdkConfig(baseUrl: testURL,
-                        rasAppId: testID,
                         rasProjectId: testProjectID,
                         subscriptionKey: testKey,
                         hostAppVersion: testVersion,
-                        isTestMode: true
-                        ))
+                        isPreviewMode: true))
+
                     expect(miniAppClient.environment.projectId).to(equal(testProjectID))
                     expect(miniAppClient.environment.appVersion).to(equal(testVersion))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(testKey))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
-                    expect(miniAppClient.environment.isTestMode).to(be(true))
+                    expect(miniAppClient.environment.isPreviewMode).to(be(true))
                 }
             }
 
@@ -330,7 +361,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
-                    expect(miniAppClient.environment.isTestMode).to(equal(bundle.bool(for: isTestMode)))
+                    expect(miniAppClient.environment.isPreviewMode).to(equal(bundle.bool(for: isPreviewMode)))
                 }
             }
         }
