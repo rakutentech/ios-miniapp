@@ -5,13 +5,13 @@ import Nimble
 // swiftlint:disable function_body_length
 class EnvironmentTests: QuickSpec {
     override func spec() {
-        it("uses the main bundle when no bundle parameter is supplied") {
-            let environment = Environment()
-            let bundle = environment.bundle as? Bundle ?? Bundle(for: EnvironmentTests.self)
-
-            expect(bundle).to(equal(Bundle.main))
-        }
         context("when bundle has valid key-values") {
+            it("uses the main bundle when no bundle parameter is supplied") {
+                let environment = Environment()
+                let bundle = environment.bundle as? Bundle ?? Bundle(for: EnvironmentTests.self)
+
+                expect(bundle).to(equal(Bundle.main))
+            }
             it("has the expected app id") {
                 let mockBundle = MockBundle()
                 mockBundle.mockAppId = "1.1"
@@ -49,6 +49,15 @@ class EnvironmentTests: QuickSpec {
                 let environment = Environment(bundle: mockBundle)
 
                 expect(environment.hostAppUserAgentInfo).to(equal("Demo app v1.1"))
+            }
+            it("will return preview mode if it is provided") {
+                let mockBundle = MockBundle()
+                mockBundle.mockTestMode = true
+                mockBundle.mockPreviewMode = false
+                let environment = Environment(bundle: mockBundle)
+
+                expect(environment.isTestMode).to(equal(false))
+                expect(environment.isPreviewMode).to(equal(false))
             }
         }
         context("when bundle does not have valid key values") {

@@ -18,7 +18,7 @@ internal class RealMiniApp {
                                            rasProjectId: settings?.rasProjectId,
                                            subscriptionKey: settings?.subscriptionKey,
                                            hostAppVersion: settings?.hostAppVersion,
-                                           isTestMode: settings?.isTestMode)
+                                           isPreviewMode: settings?.isPreviewMode)
         self.manifestDownloader = ManifestDownloader()
         self.miniAppStatus = MiniAppStatus()
         self.miniAppKeyStore = MiniAppKeyChain()

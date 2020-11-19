@@ -6,13 +6,14 @@ internal protocol EnvironmentProtocol {
 
 internal class Environment {
     enum Key: String {
-        case applicationIdentifier = "RASApplicationIdentifier",
-        projectId = "RASProjectId",
-        version = "CFBundleShortVersionString",
-        subscriptionKey = "RASProjectSubscriptionKey",
-        endpoint = "RMAAPIEndpoint",
-        isTestMode = "RMAIsTestMode",
-        hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
+        case applicationIdentifier = "RASApplicationIdentifier"
+        case projectId = "RASProjectId"
+        case version = "CFBundleShortVersionString"
+        case subscriptionKey = "RASProjectSubscriptionKey"
+        case endpoint = "RMAAPIEndpoint"
+        case isPreviewMode = "RMAIsPreviewMode"
+        @available(*, deprecated, renamed: "isPreviewMode") case isTestMode = "RMAIsTestMode"
+        case hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
     }
 
     let bundle: EnvironmentProtocol
@@ -23,7 +24,8 @@ internal class Environment {
     var customProjectId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
-    var customIsTestMode: Bool?
+    var customIsPreviewMode: Bool?
+    @available(*, deprecated, renamed: "customIsPreviewMode") var customIsTestMode: Bool?
 
     init(bundle: EnvironmentProtocol = Bundle.main) {
         self.bundle = bundle
@@ -36,7 +38,7 @@ internal class Environment {
         self.customProjectId = config.rasProjectId
         self.customSubscriptionKey = config.subscriptionKey
         self.customAppVersion = config.hostAppVersion
-        self.customIsTestMode = config.isTestMode
+        self.customIsPreviewMode = config.isPreviewMode
     }
 
     @available(*, deprecated, renamed: "projectId")
@@ -56,8 +58,14 @@ internal class Environment {
         return value(for: customSubscriptionKey, fallback: .subscriptionKey)
     }
 
+    var isPreviewMode: Bool {
+        return bool(for: customIsPreviewMode, fallback: .isPreviewMode)
+    }
+
+    @available(*, deprecated, renamed: "isPreviewMode", message: "`isTestMode` is deprecated. If it has no defined value it will return value from `isPreviewMode`")
     var isTestMode: Bool {
-        return bool(for: customIsTestMode, fallback: .isTestMode)
+        MiniAppLogger.w("`isTestMode` is deprecated. If it has no defined value it will return value from `isPreviewMode`")
+        return bool(for: customIsTestMode, fallback: .isPreviewMode)
     }
 
     var hostAppUserAgentInfo: String {
