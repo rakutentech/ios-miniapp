@@ -8,9 +8,11 @@ First, it is highly recommanded to setup some environment variables which are re
 
 ```bash
 RMAAPIEndpoint=https://www.example.com
-RASApplicationIdentifier=test-app-id
+RASProjectId=test-app-id
 RASProjectSubscriptionKey=test-subscription-key
 ```
+
+NOTE: `RASApplicationIdentifier` is deprecated
 
 Next, run `fastlane updatePods` from the root directory that will trigger a `pod install` and fetch git submodules, then open `MiniApp.xcworkspace`, and you should be able to successfully build the Sample App.
 
@@ -27,6 +29,22 @@ If you need to test your SDK fork into your host app before making a pull reques
 ```ruby
   pod 'MiniApp', git: 'https://github.com/<My fork account>/ios-miniapp', branch: 'master', submodules: true
 ```
+
+## How to generate SDK documentation locally
+
+You may want to generate the SDK documentation locally so that you can ensure that the generated docs look correct. 
+We use [Jazzy](https://github.com/realm/jazzy) for this, so you can run the following commands:
+
+```ruby
+bundle exec jazzy \
+  --xcodebuild-arguments -scheme,Tests \
+  --module MiniApp \
+  --source-directory MiniApp \
+  --podspec MiniApp.podspec \
+  --readme USERGUIDE.md
+```
+
+The generated docs will be output to a folder named `docs` in the root of this repo.
 
 ## Continuous Integration and Deployment
 

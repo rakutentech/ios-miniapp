@@ -6,21 +6,26 @@ internal protocol EnvironmentProtocol {
 
 internal class Environment {
     enum Key: String {
-        case applicationIdentifier = "RASApplicationIdentifier",
-            version = "CFBundleShortVersionString",
-            subscriptionKey = "RASProjectSubscriptionKey",
-            endpoint = "RMAAPIEndpoint",
-            isTestMode = "RMAIsTestMode",
-            hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
+        case applicationIdentifier = "RASApplicationIdentifier"
+        case projectId = "RASProjectId"
+        case version = "CFBundleShortVersionString"
+        case subscriptionKey = "RASProjectSubscriptionKey"
+        case endpoint = "RMAAPIEndpoint"
+        case isPreviewMode = "RMAIsPreviewMode"
+        @available(*, deprecated, renamed: "isPreviewMode") case isTestMode = "RMAIsTestMode"
+        case hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
     }
 
     let bundle: EnvironmentProtocol
 
     var customUrl: String?
+    @available(*, deprecated, renamed: "customProjectId")
     var customAppId: String?
+    var customProjectId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
-    var customIsTestMode: Bool?
+    var customIsPreviewMode: Bool?
+    @available(*, deprecated, renamed: "customIsPreviewMode") var customIsTestMode: Bool?
 
     init(bundle: EnvironmentProtocol = Bundle.main) {
         self.bundle = bundle
@@ -30,13 +35,19 @@ internal class Environment {
         self.init(bundle: bundle)
         self.customUrl = config.baseUrl
         self.customAppId = config.rasAppId
+        self.customProjectId = config.rasProjectId
         self.customSubscriptionKey = config.subscriptionKey
         self.customAppVersion = config.hostAppVersion
-        self.customIsTestMode = config.isTestMode
+        self.customIsPreviewMode = config.isPreviewMode
     }
 
+    @available(*, deprecated, renamed: "projectId")
     var appId: String {
         return value(for: customAppId, fallback: .applicationIdentifier)
+    }
+
+    var projectId: String {
+        return value(for: customProjectId, fallback: .projectId, fallbackParam: self.appId)
     }
 
     var appVersion: String {
@@ -47,8 +58,14 @@ internal class Environment {
         return value(for: customSubscriptionKey, fallback: .subscriptionKey)
     }
 
+    var isPreviewMode: Bool {
+        return bool(for: customIsPreviewMode, fallback: .isPreviewMode)
+    }
+
+    @available(*, deprecated, renamed: "isPreviewMode", message: "`isTestMode` is deprecated. If it has no defined value it will return value from `isPreviewMode`")
     var isTestMode: Bool {
-        return bool(for: customIsTestMode, fallback: .isTestMode)
+        MiniAppLogger.w("`isTestMode` is deprecated. If it has no defined value it will return value from `isPreviewMode`")
+        return bool(for: customIsTestMode, fallback: .isPreviewMode)
     }
 
     var hostAppUserAgentInfo: String {
@@ -66,6 +83,10 @@ internal class Environment {
 
     func value(for field: String?, fallback key: Key) -> String {
         return field ?? bundle.value(for: key.rawValue) ?? bundle.valueNotFound
+    }
+
+    func value(for field: String?, fallback key: Key, fallbackParam: String) -> String {
+        return field ?? bundle.value(for: key.rawValue) ?? fallbackParam
     }
 
     func bool(for field: Bool?, fallback key: Key) -> Bool {

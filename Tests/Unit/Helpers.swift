@@ -168,16 +168,20 @@ class MockBundle: EnvironmentProtocol {
 
     var mockValueNotFound: String?
     var mockAppId: String?
+    var mockProjectId: String?
     var mockSubscriptionKey: String?
     var mockAppVersion: String?
     var mockEndpoint: String? = "https://www.example.com/"
     var mockTestMode: Bool?
+    var mockPreviewMode: Bool?
     var mockHostAppUserAgentInfo: String?
 
     func bool(for key: String) -> Bool? {
         switch key {
         case "RMAIsTestMode":
             return mockTestMode
+        case "RMAIsPreviewMode":
+            return mockPreviewMode
         default:
             return nil
         }
@@ -187,6 +191,8 @@ class MockBundle: EnvironmentProtocol {
         switch key {
         case "RASApplicationIdentifier":
             return mockAppId
+        case "RASProjectId":
+            return mockProjectId
         case "RASProjectSubscriptionKey":
             return mockSubscriptionKey
         case "CFBundleShortVersionString":
