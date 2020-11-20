@@ -93,7 +93,7 @@ class MiniAppClientTests: QuickSpec {
             context("when network response contains valid error json") {
                 var testError: NSError?
                 it("will pass an error to completion handler with expected code") {
-                    self.executeSession(data: ["code": 404, "message": "error message"], statusCode: 404) { (result) in
+                    self.executeSession(data: ["code": 400, "message": "error message"], statusCode: 400) { (result) in
                         switch result {
                         case .success:
                             break
@@ -101,10 +101,10 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(404), timeout: .seconds(2))
+                    expect(testError?.code).toEventually(equal(400), timeout: .seconds(2))
                 }
                 it("will pass an error to completion handler with expected message") {
-                    self.executeSession(data: ["code": 404, "message": "error message description"], statusCode: 404) { (result) in
+                    self.executeSession(data: ["code": 400, "message": "error message description"], statusCode: 400) { (result) in
                         switch result {
                         case .success:
                             break
@@ -216,7 +216,7 @@ class MiniAppClientTests: QuickSpec {
                 }
                 it("returns valid error response") {
                     var testError: NSError?
-                    let mockSession = MockSession(data: ["code": 404, "message": "error message"], statusCode: 404)
+                    let mockSession = MockSession(data: ["code": 400, "message": "error message"], statusCode: 400)
                     let miniAppClient = MiniAppClient()
                     miniAppClient.session = mockSession
                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
@@ -227,7 +227,7 @@ class MiniAppClientTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(404), timeout: .seconds(2))
+                    expect(testError?.code).toEventually(equal(400), timeout: .seconds(2))
                 }
                 it("returns invalid error response") {
                     var testError: NSError?

@@ -52,18 +52,18 @@ class RealMiniAppTests: QuickSpec {
                 }
             }
             context("when getMiniApp is called with invalid app id") {
-                it("will return valid MiniAppInfo") {
-                    var testError: NSError?
+                it("will return an Error") {
+                    var testError: MASDKError?
                     mockAPIClient.data = nil
                     realMiniApp.getMiniApp(miniAppId: "123", completionHandler: { (result) in
                             switch result {
                             case .success:
                                 break
                             case .failure(let error):
-                                testError = error as NSError
+                                testError = error
                         }
                     })
-                    expect(testError?.code).toEventually(equal(0))
+                    expect(testError).toEventuallyNot(beNil())
                 }
             }
             context("when listMiniApp is called") {
@@ -310,16 +310,16 @@ class RealMiniAppTests: QuickSpec {
                     mockMiniAppInfoFetcher.error = NSError(domain: "URLErrorDomain", code: -1009, userInfo: nil)
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
-                    var testError: NSError?
+                    var testError: MASDKError?
                     realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                         switch result {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }, messageInterface: mockMessageInterface)
-                    expect(testError?.code).toEventually(equal(-1009), timeout: .seconds(10))
+                    expect(testError).toEventuallyNot(beNil())
                     mockMiniAppInfoFetcher.error = nil
                 }
             }
@@ -374,7 +374,7 @@ class RealMiniAppTests: QuickSpec {
                                 testError = error as NSError
                         }
                     }, messageInterface: mockMessageInterface)
-                    expect(testError?.code).toEventually(equal(0))
+                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidURLError.rawValue))
                 }
             }
             context("when createMiniApp is called with url parameter") {

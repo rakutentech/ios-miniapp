@@ -8,26 +8,26 @@ public enum MASDKError: Error {
     ///     - code: HTTP status code from the server
     ///     - message: error message returned by the server
     case serverError(code: Int, message: String)
-    
+
     /// The URL was invalid the SDK tried to connect to the server.
     /// Probably you provided an invalid URL value to the Base URL setting.
     case invalidURLError
-    
+
     /// The provided mini app ID was invalid. For example, the value cannot be an empty string.
     case invalidAppId
-    
+
     /// The server provided an invalid response body.
     case invalidResponseData
-    
+
     /// The mini app failed to download.
     case downloadingFailed
-    
+
     /// There are no published versions for the provided mini app ID.
     case noPublishedVersion
-    
+
     /// The provided mini app ID was not found on the server.
     case miniAppNotFound
-    
+
     /// An unexpected error occured.
     ///
     /// - Parameters:

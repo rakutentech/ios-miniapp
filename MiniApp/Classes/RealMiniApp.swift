@@ -36,7 +36,8 @@ internal class RealMiniApp {
     }
 
     func getMiniApp(miniAppId: String, miniAppVersion: String? = nil, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
-        return miniAppInfoFetcher.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion, apiClient: self.miniAppClient, completionHandler: self.createCompletionHandler(completionHandler: completionHandler))
+        return miniAppInfoFetcher.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion, apiClient: self.miniAppClient,
+                                          completionHandler: self.createCompletionHandler(completionHandler: completionHandler))
     }
 
     /// For a given Miniapp info object, this method will check whether the version id is the latest one with the platform.
