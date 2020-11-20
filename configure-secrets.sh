@@ -18,7 +18,7 @@ echo "Configuring project's build secrets in $SECRETS_FILE..."
 #
 # New secrets should be added below (following the same format)
 #
-declare -a vars=(RMA_API_ENDPOINT RAS_PROJECT_SUBSCRIPTION_KEY RAS_APPLICATION_IDENTIFIER)
+declare -a vars=(RMA_API_ENDPOINT RAS_PROJECT_SUBSCRIPTION_KEY RAS_PROJECT_IDENTIFIER)
 for var_name in "${vars[@]}"
 do
   if [ -z "$(eval "echo \$$var_name")" ]; then
@@ -29,7 +29,7 @@ done
 secureDoubleSlashForXCConfig ${RMA_API_ENDPOINT:=https://www.example.com}
 RMA_API_ENDPOINT_SECRET=$SECURE_DOUBLE_SLASH_FOR_XCCONFIG_RESULT
 RAS_PROJECT_SUBSCRIPTION_KEY_SECRET=${RAS_PROJECT_SUBSCRIPTION_KEY:=RAS_PROJECT_SUBSCRIPTION_KEY}
-RAS_APPLICATION_IDENTIFIER_SECRET=${RAS_APPLICATION_IDENTIFIER:=RAS_APPLICATION_IDENTIFIER}
+RAS_PROJECT_IDENTIFIER_SECRET=${RAS_PROJECT_IDENTIFIER:=RAS_PROJECT_IDENTIFIER}
 
 # Overwrite secrets xcconfig and add file header
 echo "// Secrets configuration for the app." > $SECRETS_FILE
@@ -46,4 +46,4 @@ echo "// variable substitution via \$() e.g. ROOT_URL = https:/\$()/www.example.
 # Set secrets from environment variables
 echo "RMA_API_ENDPOINT = $RMA_API_ENDPOINT_SECRET" >> $SECRETS_FILE
 echo "RAS_PROJECT_SUBSCRIPTION_KEY = $RAS_PROJECT_SUBSCRIPTION_KEY_SECRET" >> $SECRETS_FILE
-echo "RAS_APPLICATION_IDENTIFIER = $RAS_APPLICATION_IDENTIFIER_SECRET" >> $SECRETS_FILE
+echo "RAS_PROJECT_IDENTIFIER = $RAS_PROJECT_IDENTIFIER_SECRET" >> $SECRETS_FILE
