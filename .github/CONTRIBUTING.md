@@ -17,6 +17,7 @@ Please include unit tests where necessary to cover any functionality that is int
 
 ## Coding Guidelines
 
+* **See our [iOS SDK Development Guidelines](https://github.com/rakutentech/mobile-sdk-guidelines/blob/master/ios-sdk-development-guidelines.md)**
 * All features or bug fixes **must be tested** by one or more unit tests/specs
 * All public API methods **must be documented** and potentially also described in the user guide.
 * All code should follow the style of the existing code.
@@ -111,3 +112,22 @@ A sentence describing the type of change with necessary and relevant information
 * **Obsoleted**: No longer works as expected since a better alternative is available and will maybe discontinued from the next releases.
 * **Removed**: When a feature has been expired by the sunsetting deadline.
 * Write "No changes" when there is no difference with the previous release version.
+
+## SDK Development Learning Path
+
+If you would like submit a pull request for a major feature, please follow the learning path below to ensure you understand the development guidelines and the tools which we use.
+
+* **Read and understand our [iOS SDK Development guidelines](https://github.com/rakutentech/mobile-sdk-guidelines/blob/master/ios-sdk-development-guidelines.md)**.
+* Read the [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/).
+* Learn how to use unit testing tools.
+    * [Quick](https://github.com/Quick/Quick)
+    * [Nimble](https://github.com/Quick/Nimble)
+* Learn how to write Swift documentation.
+    * Learn [how to write markup for XCode](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/).
+    * Learn how to use [Jazzy](https://github.com/realm/jazzy) and how to [generate docs locally using Jazzy](../DEV.md#How-to-generate-SDK-documentation-locally).
+* Be familiar with [SwiftLint](https://github.com/realm/SwiftLint) and [our SwiftLint rules](https://github.com/rakutentech/ios-miniapp/blob/master/.swiftlint.yml).
+* Be familiar with the [OWASP mobile security checklist](https://github.com/OWASP/owasp-mstg/tree/master/Checklists).
+    * Optional: Read the [OWASP iOS Testing Guide](https://github.com/OWASP/owasp-mstg#ios-testing-guide).
+* Be familiar with [CocoaPods](https://cocoapods.org/), both [using](https://guides.cocoapods.org/using/index.html) and [making](https://guides.cocoapods.org/making/index.html).
+* Be familiar with [fastlane](https://github.com/fastlane/fastlane).
+* Learn about [Semantic versioning](https://semver.org/spec/v2.0.0.html).
