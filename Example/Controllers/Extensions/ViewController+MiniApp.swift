@@ -44,7 +44,8 @@ extension ViewController: MiniAppNavigationDelegate {
     }
 
     func fetchMiniApp(for appInfo: MiniAppInfo) {
-        MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).create(appId: appInfo.id, completionHandler: { (result) in
+        MiniApp.shared(with: Config.getCurrent(),
+                       navigationSettings: Config.getNavConfig(delegate: self)).create(appId: appInfo.id, version: appInfo.version.versionId, completionHandler: { (result) in
             switch result {
             case .success(let miniAppDisplay):
                 self.dismissProgressIndicator {

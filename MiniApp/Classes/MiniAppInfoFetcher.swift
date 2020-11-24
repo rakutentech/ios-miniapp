@@ -15,16 +15,25 @@ internal class MiniAppInfoFetcher {
         }
     }
 
-    func getInfo(miniAppId: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+    func getInfo(miniAppId: String, miniAppVersion: String? = nil, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
 
         apiClient.getMiniApp(miniAppId) { (result) in
             switch result {
             case .success(let responseData):
-                guard let decodeResponse = ResponseDecoder.decode(decodeType: Array<MiniAppInfo>.self, data: responseData.data), let miniApp = decodeResponse.first else {
-                    return completionHandler(.failure(NSError.invalidResponseData()))
+                if let decodeResponse = ResponseDecoder.decode(decodeType: Array<MiniAppInfo>.self, data: responseData.data) {
+                    let miniAppInfo: MiniAppInfo?
+                    if let version = miniAppVersion {
+                        miniAppInfo = decodeResponse.filter({ (appInfo) -> Bool in
+                            appInfo.version.versionId == version
+                        }).first
+                    } else {
+                        miniAppInfo  = decodeResponse.first
+                    }
+                    if let miniApp = miniAppInfo {
+                        return completionHandler(.success(miniApp))
+                    }
                 }
-                return completionHandler(.success(miniApp))
-
+                return completionHandler(.failure(NSError.invalidResponseData()))
             case .failure(let error):
                 return completionHandler(.failure(error))
             }
