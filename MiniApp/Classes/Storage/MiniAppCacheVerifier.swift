@@ -4,20 +4,28 @@ import RSDKUtils
 internal class MiniAppCacheVerifier {
     let keystore = KeyStore()
 
-    func verify(appId: String) -> Bool {
-        let cachedFilesHash = calculateHash(appId: appId)
-        let storedHash = keystore.key(for: appId) ?? ""
+    private func generateKeyId(for appId: String, version: String) -> String {
+        "\(appId) | \(version)"
+    }
 
+    func verify(appId: String, version: String) -> Bool {
+        if keystore.key(for: appId) != nil {
+            return false // v2.5 legacy cleaning
+        }
+        let cachedFilesHash = calculateHash(appId: appId, version: version)
+        let storedHash = keystore.key(for: generateKeyId(for: appId, version: version)) ?? ""
         return cachedFilesHash == storedHash
     }
 
-    func storeHash(for appId: String) {
-        keystore.removeKey(for: appId)
-        keystore.addKey(key: calculateHash(appId: appId), for: appId)
+    func storeHash(for appId: String, version: String) {
+        keystore.removeKey(for: appId) // v2.5 legacy cleaning
+        let appKey = generateKeyId(for: appId, version: version)
+        keystore.removeKey(for: appKey)
+        keystore.addKey(key: calculateHash(appId: appId, version: version), for: appKey)
     }
 
-    private func calculateHash(appId: String) -> String {
-        guard let directory = FileManager.getMiniAppVersionDirectory(usingAppId: appId) else {
+    private func calculateHash(appId: String, version: String) -> String {
+        guard let directory = FileManager.getMiniAppVersionDirectory(usingAppId: appId, version: version) else {
             return ""
         }
 

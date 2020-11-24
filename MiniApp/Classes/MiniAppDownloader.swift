@@ -28,16 +28,23 @@ class MiniAppDownloader {
         self.cacheVerifier = MiniAppCacheVerifier()
     }
 
+    fileprivate func cleanApp(_ appId: String, for version: String) {
+        if self.miniAppClient.environment.isPreviewMode == false {
+            self.miniAppStorage.cleanVersions(for: appId, differentFrom: version, status: self.miniAppStatus)
+        }
+    }
+
     func verifyAndDownload(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         if isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId) {
-            if cacheVerifier.verify(appId: appId) {
+            if cacheVerifier.verify(appId: appId, version: versionId) {
+                cleanApp(appId, for: versionId)
                 let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                 MiniAppLogger.d("📂 \(miniAppStoragePath.absoluteString)")
                 completionHandler(.success(miniAppStoragePath))
             } else {
                 MiniAppLogger.w("Cached Mini App did not pass the hash verification. The Mini App will be re-downloaded.")
 
-                self.miniAppStorage.cleanVersions(for: appId, differentFrom: "", status: self.miniAppStatus)
+                cleanApp(appId, for: "")
                 download(appId: appId, versionId: versionId, completionHandler: completionHandler)
             }
         } else {
@@ -54,8 +61,8 @@ class MiniAppDownloader {
                     switch downloadResult {
                     case .success:
                         DispatchQueue.main.async {
-                            self.miniAppStorage.cleanVersions(for: appId, differentFrom: versionId, status: self.miniAppStatus)
-                            self.cacheVerifier.storeHash(for: appId)
+                            self.cleanApp(appId, for: versionId)
+                            self.cacheVerifier.storeHash(for: appId, version: versionId)
                         }
                         fallthrough
                     default:
