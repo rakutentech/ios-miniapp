@@ -81,7 +81,8 @@ public class MiniApp: NSObject {
 
 //    public func getCustomPermissionsManageList
 
-    /// Create a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
+    /// Creates a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
+    /// This method should only be used in "Preview Mode".
     ///
     /// - Parameters:
     ///   - appInfo: Mini App info object
