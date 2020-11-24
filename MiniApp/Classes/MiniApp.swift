@@ -32,24 +32,25 @@ public class MiniApp: NSObject {
     ///     -   completionHandler: A block to be called when MiniAppInfo information is fetched. Completion blocks receives the following parameters
     ///         -   MiniAppInfo: MiniAppInfo information.
     ///         -   Error: Error details if fetching is failed.
-    public func info(miniAppId: String, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+    public func info(miniAppId: String, miniAppVersion: String? = nil, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
         if miniAppId.count == 0 {
             return completionHandler(.failure(NSError.invalidAppId()))
         }
-        return realMiniApp.getMiniApp(miniAppId: miniAppId, completionHandler: completionHandler)
+        return realMiniApp.getMiniApp(miniAppId: miniAppId, miniAppVersion: miniAppVersion, completionHandler: completionHandler)
     }
 
     /// Create a Mini App for the given mini appId, Mini app will be downloaded and cached in local.
     ///
     /// - Parameters:
     ///   - appId: Mini AppId String value
+    ///   - version: optional Mini App version String value. If omitted the modt recent one is picked
     ///   - completionBlock: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
-    public func create(appId: String, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate) {
-        return realMiniApp.createMiniApp(appId: appId, completionHandler: completionHandler, messageInterface: messageInterface)
+    public func create(appId: String, version: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate) {
+        return realMiniApp.createMiniApp(appId: appId, version: version, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 
     /// Cache the Custom permissions status for a given MiniApp ID
@@ -80,7 +81,8 @@ public class MiniApp: NSObject {
 
 //    public func getCustomPermissionsManageList
 
-    /// Create a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
+    /// Creates a Mini App for the given mini app info object, Mini app will be downloaded and cached in local.
+    /// This method should only be used in "Preview Mode".
     ///
     /// - Parameters:
     ///   - appInfo: Mini App info object
@@ -89,9 +91,6 @@ public class MiniApp: NSObject {
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
-    @available(*, deprecated,
-    message:"Since version 2.0, you can create a Mini app view using just the mini app id",
-    renamed: "create(appId:completionHandler:messageInterface:)")
     public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate) {
         return realMiniApp.createMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
     }

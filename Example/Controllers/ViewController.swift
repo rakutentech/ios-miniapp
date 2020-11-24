@@ -22,9 +22,9 @@ class ViewController: UIViewController {
             } else {
                 self.miniApps = nil
                 self.miniAppsSection = self.decodeResponse?.map {
-                    $0.displayName ?? "-"
-                }
-                self.miniApps = self.decodeResponse?.dictionaryFilteredBy(index: { $0.displayName ?? "-" })
+                    $0.id
+                }.unique()
+                self.miniApps = self.decodeResponse?.dictionaryFilteredBy(index: { $0.id })
             }
 
         }

@@ -115,7 +115,7 @@ class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
     var data: Data?
     var error: Error?
 
-    override func getInfo(miniAppId: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+    override func getInfo(miniAppId: String, miniAppVersion: String? = nil, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
 
         if error != nil {
             return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))

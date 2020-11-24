@@ -35,8 +35,8 @@ internal class RealMiniApp {
         return miniAppInfoFetcher.fetchList(apiClient: self.miniAppClient, completionHandler: completionHandler)
     }
 
-    func getMiniApp(miniAppId: String, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
-        return miniAppInfoFetcher.getInfo(miniAppId: miniAppId, apiClient: self.miniAppClient, completionHandler: completionHandler)
+    func getMiniApp(miniAppId: String, miniAppVersion: String? = nil, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+        return miniAppInfoFetcher.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion, apiClient: self.miniAppClient, completionHandler: completionHandler)
     }
 
     /// For a given Miniapp info object, this method will check whether the version id is the latest one with the platform.
@@ -46,11 +46,8 @@ internal class RealMiniApp {
     ///   - appInfo: Miniapp Info object
     ///   - completionHandler: Completion Handler that needed to pass back the MiniAppDisplayProtocol
     ///   - messageInterface: Miniapp communication protocol object.
-    @available(*, deprecated,
-     message:"Since version 2.0, you can create a Mini app view using just the mini app id",
-     renamed: "createMiniApp(appId:completionHandler:messageInterface:)")
     func createMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil) {
-        getMiniApp(miniAppId: appInfo.id) { (result) in
+        getMiniApp(miniAppId: appInfo.id, miniAppVersion: appInfo.version.versionId) { (result) in
             switch result {
             case .success(let responseData):
                 if appInfo.version.versionId != responseData.version.versionId {
@@ -66,8 +63,8 @@ internal class RealMiniApp {
             } }
     }
 
-    func createMiniApp(appId: String, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil) {
-        getMiniApp(miniAppId: appId) { (result) in
+    func createMiniApp(appId: String, version: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil) {
+        getMiniApp(miniAppId: appId, miniAppVersion: version) { (result) in
             switch result {
             case .success(let responseData):
                 self.miniAppStatus.saveMiniAppInfo(appInfo: responseData, key: responseData.id)

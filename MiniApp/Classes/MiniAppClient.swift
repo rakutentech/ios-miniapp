@@ -73,7 +73,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                         versionId: String,
                         completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
-        guard let urlRequest = self.manifestApi.createURLRequest(appId: appId, versionId: versionId) else {
+        guard let urlRequest = self.manifestApi.createURLRequest(appId: appId, versionId: versionId, testPath: self.previewPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
