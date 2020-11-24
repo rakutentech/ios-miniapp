@@ -46,9 +46,6 @@ internal class RealMiniApp {
     ///   - appInfo: Miniapp Info object
     ///   - completionHandler: Completion Handler that needed to pass back the MiniAppDisplayProtocol
     ///   - messageInterface: Miniapp communication protocol object.
-    @available(*, deprecated,
-     message:"Since version 2.0, you can create a Mini app view using just the mini app id",
-     renamed: "createMiniApp(appId:completionHandler:messageInterface:)")
     func createMiniApp(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil) {
         getMiniApp(miniAppId: appInfo.id, miniAppVersion: appInfo.version.versionId) { (result) in
             switch result {

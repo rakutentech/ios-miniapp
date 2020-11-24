@@ -180,7 +180,7 @@ class RealMiniAppTests: QuickSpec {
                 }
             }
 
-            context("when createMiniApp is called with a deprecated helper") {
+            context("when createMiniApp is called with appInfo helper") {
                 it("will return valid Mini App View instance with a default hostAppMessageDelegate and getUniqueId() will return an error message") {
                     let responseString = """
                     [{
@@ -189,7 +189,7 @@ class RealMiniAppTests: QuickSpec {
                         "icon": "https://test.com",
                         "version": {
                             "versionTag": "1.0.0",
-                            "versionId": "455"
+                            "versionId": "ver-id-test"
                         }
                       }]
                     """
