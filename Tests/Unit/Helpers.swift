@@ -18,8 +18,22 @@ class MockAPIClient: MiniAppClient {
                     rasAppId: bundle.mockAppId,
                     subscriptionKey: bundle.mockSubscriptionKey,
                     hostAppVersion: bundle.mockHostAppUserAgentInfo,
-                    isTestMode: bundle.mockTestMode
+                    isTestMode: false
                 )
+        )
+    }
+
+    init(previewMode: Bool) {
+        let bundle = MockBundle()
+        bundle.mockPreviewMode = previewMode
+        super.init(with:
+                    MiniAppSdkConfig(
+                        baseUrl: bundle.mockEndpoint,
+                        rasProjectId: bundle.mockProjectId,
+                        subscriptionKey: bundle.mockSubscriptionKey,
+                        hostAppVersion: bundle.mockHostAppUserAgentInfo,
+                        isPreviewMode: bundle.mockPreviewMode
+                    )
         )
     }
 
