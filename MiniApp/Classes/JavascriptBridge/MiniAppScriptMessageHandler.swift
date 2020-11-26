@@ -80,19 +80,23 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func requestPermission(requestParam: RequestParameters?, callbackId: String) {
-        guard let requestParamValue = requestParam?.permission else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidPermissionType))
-            return
-        }
-        guard let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue) else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidPermissionType))
-            return
-        }
+        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.deviceLocation) {
+            guard let requestParamValue = requestParam?.permission else {
+                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidPermissionType))
+                return
+            }
+            guard let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue) else {
+                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidPermissionType))
+                return
+            }
 
-        switch requestPermissionType {
-        case .location:
-            getPermissionResult(requestPermissionType: requestPermissionType, callbackId: callbackId)
+            switch requestPermissionType {
+            case .location:
+                getPermissionResult(requestPermissionType: requestPermissionType, callbackId: callbackId)
+            }
+            return
         }
+        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKPermissionError.denied))
     }
 
     func getPermissionResult(requestPermissionType: MiniAppPermissionType, callbackId: String) {
@@ -185,7 +189,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType) -> Bool {
         let customPermission = self.miniAppKeyStore.getCustomPermissions(forMiniApp: self.miniAppId).filter { $0.permissionName == customPermissionType }
-        return customPermission[0].isPermissionGranted.boolValue
+        if !customPermission.isEmpty {
+            return customPermission[0].isPermissionGranted.boolValue
+        } else {
+            return false
+        }
     }
 
     func setScreenOrientation(requestParam: RequestParameters?, callbackId: String) {
