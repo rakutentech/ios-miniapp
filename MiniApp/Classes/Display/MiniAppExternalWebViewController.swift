@@ -3,15 +3,23 @@ import UIKit
 import WebKit
 
 class MiniAppExternalWebViewController: UIViewController {
-    struct ReturnObject: Codable {
-        var url: String?
-    }
 
-    var webView: WKWebView!
-    var currentURL: URL?
-    var miniAppExternalUrlLoader: MiniAppExternalUrlLoader?
+    private var webView: WKWebView!
+    private var currentURL: URL?
+    private var customMiniAppURL: URL?
+    private var miniAppExternalUrlLoader: MiniAppExternalUrlLoader?
 
-    public class func presentModally(url: URL, externalLinkResponseHandler: MiniAppNavigationResponseHandler?) {
+    ///
+    /// Presents a webview modally to handle external URLs.
+    ///
+    /// - Parameters:
+    ///   - url: A url to load in a webview
+    ///   - externalLinkResponseHandler: A closure that will provide triggered url to the Mini App view.
+    ///   - customMiniAppURL: The url that was used to load the Mini App.
+    ///
+    public class func presentModally(url: URL,
+                                     externalLinkResponseHandler: MiniAppNavigationResponseHandler?,
+                                     customMiniAppURL: URL? = nil) {
         let window: UIWindow?
         if #available(iOS 13, *) {
             window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
@@ -20,12 +28,14 @@ class MiniAppExternalWebViewController: UIViewController {
         }
         let webctrl = MiniAppExternalWebViewController()
         webctrl.currentURL = url
+        webctrl.customMiniAppURL = customMiniAppURL
         let navigationController = MiniAppCloseNavigationController(rootViewController: webctrl)
         let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: navigationController, action: #selector(MiniAppCloseNavigationController.close))
         webctrl.navigationItem.rightBarButtonItem = closeButton
-        webctrl.miniAppExternalUrlLoader = MiniAppExternalUrlLoader(webViewController: webctrl, responseHandler: externalLinkResponseHandler)
+        webctrl.miniAppExternalUrlLoader = MiniAppExternalUrlLoader(webViewController: webctrl,
+                                                                    responseHandler: externalLinkResponseHandler,
+                                                                    customMiniAppURL: customMiniAppURL)
         window?.topController()?.present(navigationController, animated: true)
-
     }
 
     override func loadView() {

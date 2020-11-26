@@ -3,6 +3,10 @@ import UIKit
 
 extension String {
 
+    var hasHTTPPrefix: Bool {
+        return lowercased().hasPrefix("http://") || lowercased().hasPrefix("https://")
+    }
+
     func isValidUUID() -> Bool {
         if UUID(uuidString: self) != nil {
             return true

@@ -794,7 +794,7 @@
                                     <outlet property="delegate" destination="BQV-uy-8GQ" id="nc3-ar-qnG"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" barStyle="black" prompt="Search Mini App by name or load by ID" placeholder="Name or ID" translatesAutoresizingMaskIntoConstraints="NO" id="wM9-1o-Y4m">
+                            <searchBar contentMode="redraw" barStyle="black" prompt="Search Mini App by name or load by ID or URL" placeholder="Name, ID or URL" translatesAutoresizingMaskIntoConstraints="NO" id="wM9-1o-Y4m">
                                 <rect key="frame" x="0.0" y="44" width="375" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="pNm-44-330"/>
