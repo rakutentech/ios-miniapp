@@ -10,7 +10,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var invalidSubscriptionKeyLabel: UILabel!
     weak var configUpdateDelegate: SettingsDelegate?
 
-    let predefinedKeys: [String] = ["RAS_APPLICATION_IDENTIFIER", "RAS_SUBSCRIPTION_KEY", ""]
+    let predefinedKeys: [String] = ["RAS_PROJECT_IDENTIFIER", "RAS_SUBSCRIPTION_KEY", ""]
 
     enum SectionHeader: Int {
         case RAS = 1
@@ -19,7 +19,7 @@ class SettingsTableViewController: UITableViewController {
     }
     enum TestMode: Int, CaseIterable {
         case HOSTED,
-        PREVIEW
+             PREVIEW
 
         func stringValue() -> String {
             switch self {
@@ -75,11 +75,11 @@ class SettingsTableViewController: UITableViewController {
                 let isPreview = selectedMode?.isPreviewMode() ?? true
 
                 fetchAppList(withConfig:
-                        createConfig(
-                            projectId: self.textFieldAppID.text!,
-                            subscriptionKey: self.textFieldSubKey.text!,
-                            loadPreviewVersions: isPreview
-                        )
+                                createConfig(
+                                    projectId: self.textFieldAppID.text!,
+                                    subscriptionKey: self.textFieldSubKey.text!,
+                                    loadPreviewVersions: isPreview
+                                )
                 )
             }
             displayInvalidValueErrorMessage(forKey: .projectId)
@@ -125,8 +125,8 @@ class SettingsTableViewController: UITableViewController {
         self.saveMode()
 
         self.displayAlert(title: NSLocalizedString("message_save_title", comment: ""),
-            message: NSLocalizedString("message_save_text", comment: ""),
-            autoDismiss: true) { _ in
+                          message: NSLocalizedString("message_save_text", comment: ""),
+                          autoDismiss: true) { _ in
             self.dismiss(animated: true, completion: nil)
             guard let miniAppList = responseData else {
                 self.configUpdateDelegate?.didSettingsUpdated(controller: self, updated: nil)
@@ -172,11 +172,10 @@ class SettingsTableViewController: UITableViewController {
     }
 
     func getTextFieldValue(key: Config.Key, placeholderText: String?) -> String? {
-        if predefinedKeys.contains(placeholderText ?? "") {
-            return Config.userDefaults?.string(forKey: key.rawValue) ?? ""
-        } else {
+        guard let value = Config.userDefaults?.string(forKey: key.rawValue) else {
             return placeholderText
         }
+        return value
     }
 
     func toggleSaveButton() {
@@ -212,12 +211,12 @@ class SettingsTableViewController: UITableViewController {
         switch forKey {
         case .projectId:
             displayAlert(title: NSLocalizedString("error_title", comment: ""),
-                message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
-                autoDismiss: true)
+                         message: NSLocalizedString("error_incorrect_appid_message", comment: ""),
+                         autoDismiss: true)
         case .subscriptionKey:
             displayAlert(title: NSLocalizedString("error_title", comment: ""),
-                message: NSLocalizedString("error_incorrect_subscription_key_message", comment: ""),
-                autoDismiss: false)
+                         message: NSLocalizedString("error_incorrect_subscription_key_message", comment: ""),
+                         autoDismiss: false)
         default:
             break
         }
@@ -226,12 +225,12 @@ class SettingsTableViewController: UITableViewController {
         switch forKey {
         case .projectId:
             displayAlert(title: NSLocalizedString("error_title", comment: ""),
-                message: NSLocalizedString("error_empty_appid_key_message", comment: ""),
-                autoDismiss: true)
+                         message: NSLocalizedString("error_empty_appid_key_message", comment: ""),
+                         autoDismiss: true)
         case .subscriptionKey:
             displayAlert(title: NSLocalizedString("error_title", comment: ""),
-                message: NSLocalizedString("error_empty_subscription_key_message", comment: ""),
-                autoDismiss: false)
+                         message: NSLocalizedString("error_empty_subscription_key_message", comment: ""),
+                         autoDismiss: false)
         default:
             break
         }
