@@ -4,11 +4,11 @@ import Foundation
 public class MiniAppSdkConfig {
     @available(*, deprecated, renamed: "isPreviewMode")
     var isTestMode: Bool? {
-        set {
-            isPreviewMode = newValue
-        }
         get {
             isPreviewMode
+        }
+        set {
+            isPreviewMode = newValue
         }
     }
 

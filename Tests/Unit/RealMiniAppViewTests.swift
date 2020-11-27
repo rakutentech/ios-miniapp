@@ -14,9 +14,15 @@ class RealMiniAppViewTests: QuickSpec {
                                               miniAppTitle: "Mini app title",
                                               hostAppMessageDelegate: mockMessageInterface)
             context("when initialized with valid parameters") {
-                it("will return MiniAppView object") {
+                it("will return MiniAppView object for given app id") {
                     let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing",
                                                       versionId: "version-id",
+                                                      miniAppTitle: "",
+                                                      hostAppMessageDelegate: mockMessageInterface)
+                    expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self))
+                }
+                it("will return MiniAppView object for given app url") {
+                    let miniAppView = RealMiniAppView(miniAppURL: URL(string: "http://miniapp")!,
                                                       miniAppTitle: "",
                                                       hostAppMessageDelegate: mockMessageInterface)
                     expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self))

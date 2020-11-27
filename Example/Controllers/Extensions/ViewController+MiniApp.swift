@@ -61,6 +61,18 @@ extension ViewController: MiniAppNavigationDelegate {
         }, messageInterface: self)
     }
 
+    func loadMiniAppUsingURL(_ url: URL) {
+        let miniAppDisplay = MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).create(
+            url: url,
+            errorHandler: { error in
+                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
+                print("Errored: ", error.localizedDescription)
+            }, messageInterface: self)
+
+        currentMiniAppView = miniAppDisplay
+        performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
+    }
+
     func fetchMiniAppUsingId(title: String? = nil, message: String? = nil) {
         self.displayTextFieldAlert(title: title, message: message) { (_, textField) in
             if let textField = textField, let miniAppID = textField.text, miniAppID.count > 0 {

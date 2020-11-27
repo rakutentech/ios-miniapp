@@ -36,6 +36,16 @@ public protocol MiniAppNavigationDelegate: class {
     ///   - url: the external URL triggered from the MiniApp
     ///   - responseHandler: a `MiniAppNavigationResponseHandler` used to provide an URL to the Mini App
     func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler)
+    /// This delegate method is called when an external URL is tapped into a url loaded Mini App
+    /// so you can display your own webview to load the url parameter, for example.
+    /// A `MiniAppNavigationResponseHandler` is also provided so you can give a proper
+    /// feedback to your MiniApp under the form of an URL when you want.
+    /// This should only be used for previewing a mini app from a local server.
+    /// - Parameters:
+    ///   - url: the external URL triggered from the MiniApp
+    ///   - responseHandler: a `MiniAppNavigationResponseHandler` used to provide an URL to the Mini App
+    ///   - customMiniAppURL: The url that was used to load the Mini App.
+    func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler, customMiniAppURL: URL)
     /// This delegate method is called when a navigation is performed inside the Mini App.
     /// - Parameters:
     ///   - actions: a list of `MiniAppNavigationAction` that can be used to navigate inside the Mini App
@@ -48,7 +58,16 @@ public protocol MiniAppNavigationDelegate: class {
 
 public extension MiniAppNavigationDelegate {
     func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
-        MiniAppExternalWebViewController.presentModally(url: url, externalLinkResponseHandler: responseHandler)
+        MiniAppExternalWebViewController.presentModally(url: url,
+                                                        externalLinkResponseHandler: responseHandler,
+                                                        customMiniAppURL: nil)
+    }
+    func miniAppNavigation(shouldOpen url: URL,
+                           with responseHandler: @escaping MiniAppNavigationResponseHandler,
+                           customMiniAppURL: URL) {
+        MiniAppExternalWebViewController.presentModally(url: url,
+                                                        externalLinkResponseHandler: responseHandler,
+                                                        customMiniAppURL: customMiniAppURL)
     }
     func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
     }
