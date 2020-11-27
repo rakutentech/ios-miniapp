@@ -106,9 +106,6 @@ jobs: # a collection of steps
       - run:
           name: Compile
           command: yarn bridge compile
-      - store_artifacts:
-          path: js-miniapp-sample/build
-          prefix: build
       - persist_to_workspace:
           root: ~/mini-js-bridge
           paths:
@@ -132,6 +129,8 @@ jobs: # a collection of steps
     docker:
       - image: circleci/node:12.16.2
       # TODO get the sdk build from saved workspace
+    environment:
+      PUBLIC_URL: .
     steps:
       - checkout
       - restore_cache:
@@ -157,6 +156,33 @@ jobs: # a collection of steps
       - run:
           name: build
           command: yarn sample build
+      - store_artifacts:
+          path: js-miniapp-sample/build
+          prefix: build
+
+  deploy-sample:
+    working_directory: ~/js-miniapp-sample
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Deploy Sample App to Github Pages
+          command: |
+            set -e
+            git checkout gh-pages
+            cp -r ./js-miniapp-sample/build/ ./sample
+            if [[ `git status sample --porcelain` ]]; then
+              git add sample
+              git config user.name "CI Publisher"
+              git config user.email "dev-opensource@mail.rakuten.com"
+              git commit -m "sample: Deploy JS Sample App [ci skip]"
+              git push origin gh-pages
+            else
+              echo "Nothing to commit"
+            fi
 
   publish-sdk:
     working_directory: ~/mini-js-sdk
@@ -218,6 +244,12 @@ workflows:
             branches:
               only: master
       - build-sample
+      - deploy-sample:
+          requires:
+           - build-sample
+          filters:
+            branches:
+              only: master
       - sdk-release-verification:
           type: approval
           requires:

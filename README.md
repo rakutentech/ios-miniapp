@@ -45,3 +45,12 @@ The following describes the steps performed by CI when releasing a new version o
 4. If approved, publish the JS SDK to [NPM](https://www.npmjs.com/package/js-miniapp-sdk).
 5. Publish documentation to the [Github Pages site](https://rakutentech.github.io/js-miniapp/docs/1.1/).
 6. Publish a release to [Github Releases page](https://github.com/rakutentech/js-miniapp/releases) and attach a JavaScript bundle of the SDK (`miniapp.bundle.js`).
+
+### JavaScript Bridge Deployment
+
+The JavaScript bridge ([js-miniapp-bridge](js-miniapp-bridge)) will be deployed to the [js-bridge-android](tree/js-bridge-android) and [js-bridge-ios](/tree/js-bridge-ios) branches when changes are merged to master. These branches are then imported as Git Submodules in the Android and iOS Mini App SDK repos.
+
+
+### Sample App Deployment
+
+The sample app ([js-miniapp-sample](js-miniapp-sample)) will be deployed to the [gh-pages](tree/gh-pages) branch when changes are merged to master. This can be viewed [here](https://rakutentech.github.io/js-miniapp/sample).
