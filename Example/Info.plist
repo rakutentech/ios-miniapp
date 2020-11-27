@@ -31,7 +31,7 @@
 	<key>RMAAPIEndpoint</key>
 	<string>$(RMA_API_ENDPOINT)</string>
 	<key>RMAHostAppUserAgentInfo</key>
-	<string>MiniApp Demo App/2.5.0</string>
+	<string>$(RMA_USER_AGENT)</string>
 	<key>RMAIsPreviewMode</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
