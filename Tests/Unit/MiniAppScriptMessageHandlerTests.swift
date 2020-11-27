@@ -84,7 +84,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.description))
                 }
             }
-            context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user allowed the permission") {
+            context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user didn't allow the location custom permission") {
                  it("will return error") {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(
                         delegate: callbackProtocol,
@@ -94,7 +94,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     mockMessageInterface.locationAllowed = true
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.response).toEventually(equal("ALLOWED"))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MASDKPermissionError.denied.rawValue))
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user denied the permission") {
@@ -121,7 +121,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     mockMessageInterface.permissionError = .notDetermined
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.errorMessage).toEventually(contain("NOT_DETERMINED"))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MASDKPermissionError.denied.rawValue))
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid requestPermission command and invalid permission type") {

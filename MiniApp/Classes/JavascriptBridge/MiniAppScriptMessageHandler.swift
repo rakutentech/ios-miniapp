@@ -80,7 +80,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func requestPermission(requestParam: RequestParameters?, callbackId: String) {
-        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.deviceLocation) {
             guard let requestParamValue = requestParam?.permission else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidPermissionType))
                 return
@@ -90,6 +89,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 return
             }
 
+        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.deviceLocation) {
             switch requestPermissionType {
             case .location:
                 getPermissionResult(requestPermissionType: requestPermissionType, callbackId: callbackId)
