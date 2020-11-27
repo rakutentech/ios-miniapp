@@ -17,7 +17,7 @@
     <a title="MiniAppSdkConfig Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">MiniApp 2.5.0 Docs</a> (59% documented)</p>
+        <p><a href="../index.html">MiniApp 2.6.0 Docs</a> (59% documented)</p>
         <p class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -183,9 +183,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB9SdkConfigC7baseUrl03rasB2Id15subscriptionKey04hostB7Version10isTestModeACSSSg_A3ISbSgtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(baseUrl:rasAppId:subscriptionKey:hostAppVersion:isTestMode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB9SdkConfigC7baseUrl03rasB2Id15subscriptionKey04hostB7Version10isTestModeACSSSg_A3ISbSgtcfc">init(baseUrl:<wbr>rasAppId:<wbr>subscriptionKey:<wbr>hostAppVersion:<wbr>isTestMode:<wbr>)</a>
+                    <a name="/s:7MiniApp0aB9SdkConfigC7baseUrl12rasProjectId15subscriptionKey04hostB7Version13isPreviewModeACSSSg_A3ISbSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(baseUrl:rasProjectId:subscriptionKey:hostAppVersion:isPreviewMode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB9SdkConfigC7baseUrl12rasProjectId15subscriptionKey04hostB7Version13isPreviewModeACSSSg_A3ISbSgtcfc">init(baseUrl:<wbr>rasProjectId:<wbr>subscriptionKey:<wbr>hostAppVersion:<wbr>isPreviewMode:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -202,10 +202,10 @@ If a parameter is omitted the client will fallback its value to the configuratio
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">baseUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-            <span class="nv">rasAppId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">rasProjectId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
             <span class="nv">subscriptionKey</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
             <span class="nv">hostAppVersion</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-            <span class="nv">isTestMode</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
+            <span class="nv">isPreviewMode</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -228,24 +228,100 @@ If a parameter is omitted the client will fallback its value to the configuratio
                             <tr>
                               <td>
                                 <code>
-                                <em>testBaseUrl</em>
+                                <em>rasProjectId</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The production URL of the API endpoint</p>
+                                  <p>The Rakuten Studio Host App Project ID</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>loadTestVersions</em>
+                                <em>subscriptionKey</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A boolean used by MiniApp SDK to determine which endpoint to use. Default is false</p>
+                                  <p>The Rakuten Studio Subscription Key</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>hostAppVersion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The Rakuten Studio Host App version</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isPreviewMode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A boolean used by MiniApp SDK to determine which endpoint to use. Default is true</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB9SdkConfigC7baseUrl03rasB2Id15subscriptionKey04hostB7Version10isTestModeACSSSg_A3ISbSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(baseUrl:rasAppId:subscriptionKey:hostAppVersion:isTestMode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB9SdkConfigC7baseUrl03rasB2Id15subscriptionKey04hostB7Version10isTestModeACSSSg_A3ISbSgtcfc">init(baseUrl:<wbr>rasAppId:<wbr>subscriptionKey:<wbr>hostAppVersion:<wbr>isTestMode:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize a MiniAppSdkConfig object that can be used to configure a MiniApp client. All the parameters are optional.
+If a parameter is omitted the client will fallback its value to the configuration values provided into the project configuration .plist</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "init(baseUrl:rasProjectId:subscriptionKey:hostAppVersion:isPreviewMode:﹚", message: "use constructor with rasProjectId indeed. isTestMode has been renamed isPreviewMode")</span>
+<span class="n">convenience</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">baseUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                        <span class="nv">rasAppId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                        <span class="nv">subscriptionKey</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                        <span class="nv">hostAppVersion</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                        <span class="nv">isTestMode</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>baseUrl</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The production URL of the API endpoint</p>
                                 </div>
                               </td>
                             </tr>
@@ -285,6 +361,18 @@ If a parameter is omitted the client will fallback its value to the configuratio
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isTestMode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A boolean used by MiniApp SDK to determine which endpoint to use. Default is false</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -296,7 +384,7 @@ If a parameter is omitted the client will fallback its value to the configuratio
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-11-13)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-11-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
