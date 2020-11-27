@@ -138,6 +138,20 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.invalidPermissionType.rawValue))
                  }
             }
+            context("when MiniAppScriptMessageHandler receives valid requestPermission command and permission type is null") {
+                 it("will return invalidPermissionType error") {
+                     let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: callbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: "Test", miniAppTitle: "Mini App"
+                    )
+                    mockMessageInterface.locationAllowed = false
+                    mockMessageInterface.permissionError = .notDetermined
+                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": null}, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.invalidPermissionType.rawValue))
+                 }
+            }
             context("when MiniAppScriptMessageHandler receives valid getCurrentPosition command") {
                  it("will return valid latitude and longitude values") {
                      let scriptMessageHandler = MiniAppScriptMessageHandler(
