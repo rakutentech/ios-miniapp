@@ -89,14 +89,10 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             return
         }
 
-        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.deviceLocation) {
-            switch requestPermissionType {
-            case .location:
-                getPermissionResult(requestPermissionType: requestPermissionType, callbackId: callbackId)
-            }
-            return
+        switch requestPermissionType {
+        case .location:
+            getPermissionResult(requestPermissionType: requestPermissionType, callbackId: callbackId)
         }
-        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKPermissionError.denied))
     }
 
     func getPermissionResult(requestPermissionType: MiniAppPermissionType, callbackId: String) {
