@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### In Progress (2020-XX-XX)
+- **Feature:** Added `CustomPermissionName.LOCATION`.
+- **Change:** Updated `requestLocationPermission()` to `requestLocationPermission(permissionDescription?: string)`. From now `requestLocationPermission` will request both custom and device permission respectively.
+
 ### 1.5.0 (2020-11-13)
 
 - **Feature:** Added `MiniApp.getAccessToken` for retrieving an access token. [See here](README.md#6-Get-access-token).

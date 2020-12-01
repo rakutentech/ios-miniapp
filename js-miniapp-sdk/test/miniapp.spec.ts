@@ -43,12 +43,21 @@ describe('getUniqueId', () => {
 });
 
 describe('requestPermission', () => {
+  window.MiniAppBridge.requestCustomPermissions.resolves({
+    permissions: [
+      {
+        name: CustomPermissionName.LOCATION,
+        status: CustomPermissionStatus.ALLOWED,
+      },
+    ],
+  });
+
   it('should delegate to requestPermission function when request any permission', () => {
     const spy = sinon.spy(miniApp, 'requestPermission' as any);
 
-    miniApp.requestLocationPermission();
-
-    return expect(spy.callCount).to.equal(1);
+    return miniApp
+      .requestLocationPermission()
+      .then(denied => expect(spy.callCount).to.equal(1));
   });
 
   it('should retrieve location permission result from the Mini App Bridge', () => {

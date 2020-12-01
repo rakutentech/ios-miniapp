@@ -7,7 +7,9 @@ const useGeoLocation = () => {
     isWatching: false,
   });
   const watch = () => {
-    return MiniApp.requestLocationPermission()
+    return MiniApp.requestLocationPermission(
+      'We would like to display the location of your device.'
+    )
       .then(() =>
         navigator.geolocation.getCurrentPosition(
           (pos) => {

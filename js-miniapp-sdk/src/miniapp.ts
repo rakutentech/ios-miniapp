@@ -3,7 +3,9 @@ import {
   Reward,
   DevicePermission,
   CustomPermission,
+  CustomPermissionName,
   CustomPermissionResult,
+  CustomPermissionStatus,
   ShareInfoType,
   ScreenOrientation,
   AccessTokenData,
@@ -16,8 +18,11 @@ interface MiniAppFeatures {
   /** @returns The Promise of provided id of mini app from injected side. */
   getUniqueId(): Promise<string>;
 
-  /** @returns The Promise of permission result of mini app from injected side. */
-  requestLocationPermission(): Promise<string>;
+  /**
+   * @param Description of location permission.
+   * @returns The Promise of permission result of mini app from injected side.
+   */
+  requestLocationPermission(permissionDescription?: string): Promise<string>;
 
   /**
    *
@@ -145,8 +150,23 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return this.bridge.getUniqueId();
   }
 
-  requestLocationPermission(): Promise<string> {
-    return this.requestPermission(DevicePermission.LOCATION);
+  requestLocationPermission(permissionDescription = ''): Promise<string> {
+    const locationPermission = [
+      {
+        name: CustomPermissionName.LOCATION,
+        description: permissionDescription,
+      },
+    ];
+
+    return this.requestCustomPermissions(locationPermission)
+      .then(permission =>
+        permission.find(
+          result => result.status === CustomPermissionStatus.ALLOWED
+        )
+      )
+      .then(hasPermission =>
+        hasPermission ? this.requestPermission(DevicePermission.LOCATION) : null
+      );
   }
 
   requestCustomPermissions(
