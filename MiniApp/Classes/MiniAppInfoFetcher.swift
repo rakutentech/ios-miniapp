@@ -31,6 +31,8 @@ internal class MiniAppInfoFetcher {
                     }
                     if let miniApp = miniAppInfo {
                         return completionHandler(.success(miniApp))
+                    } else {
+                        return completionHandler(.failure(NSError.noPublishedVersion()))
                     }
                 }
                 return completionHandler(.failure(NSError.invalidResponseData()))

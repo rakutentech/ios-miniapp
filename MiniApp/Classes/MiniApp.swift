@@ -21,7 +21,7 @@ public class MiniApp: NSObject {
     ///     -   completionHandler: A block to be called when list of [MiniAppInfo] information is fetched. Completion blocks receives the following parameters
     ///         -   [MiniAppInfo]: List of [MiniAppInfo] information.
     ///         -   Error: Error details if fetching is failed.
-    public func list(completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
+    public func list(completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
         return realMiniApp.listMiniApp(completionHandler: completionHandler)
     }
 
@@ -32,9 +32,9 @@ public class MiniApp: NSObject {
     ///     -   completionHandler: A block to be called when MiniAppInfo information is fetched. Completion blocks receives the following parameters
     ///         -   MiniAppInfo: MiniAppInfo information.
     ///         -   Error: Error details if fetching is failed.
-    public func info(miniAppId: String, miniAppVersion: String? = nil, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+    public func info(miniAppId: String, miniAppVersion: String? = nil, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
         if miniAppId.count == 0 {
-            return completionHandler(.failure(NSError.invalidAppId()))
+            return completionHandler(.failure(.invalidAppId))
         }
         return realMiniApp.getMiniApp(miniAppId: miniAppId, miniAppVersion: miniAppVersion, completionHandler: completionHandler)
     }
@@ -49,7 +49,7 @@ public class MiniApp: NSObject {
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
-    public func create(appId: String, version: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate) {
+    public func create(appId: String, version: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate) {
         return realMiniApp.createMiniApp(appId: appId, version: version, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 
@@ -89,6 +89,52 @@ public class MiniApp: NSObject {
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate) {
         return realMiniApp.createMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
+    }
+
+    @available(*, deprecated,
+    message:"Use MASDKError instead of Error in your completionHandler.",
+    renamed: "list(completionHandler:)")
+    public func list<T>(completionHandler: @escaping (Result<[MiniAppInfo], T>) -> Void) where T: Error {
+        return self.list { (result) in
+            switch result {
+            case .success(let responseData):
+                completionHandler(.success(responseData))
+            case .failure(let error):
+                // swiftlint:disable force_cast
+                completionHandler(.failure(error as! T))
+            }
+        }
+    }
+
+    @available(*, deprecated,
+    message:"Use MASDKError instead of Error in your completionHandler.",
+    renamed: "info(miniAppId:completionHandler:)")
+    public func info<T>(miniAppId: String, completionHandler: @escaping (Result<MiniAppInfo, T>) -> Void) where T: Error {
+        self.info(miniAppId: miniAppId) { (result) in
+                switch result {
+                case .success(let responseData):
+                    completionHandler(.success(responseData))
+                case .failure(let error):
+                    // swiftlint:disable force_cast
+                    completionHandler(.failure(error as! T))
+            }
+        }
+    }
+
+    @available(*, deprecated,
+    message:"Use MASDKError instead of Error in your completionHandler.",
+    renamed: "create(appId:completionHandler:)")
+    public func create<T>(appId: String, completionHandler: @escaping (Result<MiniAppDisplayProtocol, T>) -> Void, messageInterface: MiniAppMessageDelegate) where T: Error {
+        let handler: (Result<MiniAppDisplayProtocol, MASDKError>) -> Void = { (result) in
+                switch result {
+                case .success(let responseData):
+                    completionHandler(.success(responseData))
+                case .failure(let error):
+                    // swiftlint:disable force_cast
+                    completionHandler(.failure(error as! T))
+            }
+        }
+        return realMiniApp.createMiniApp(appId: appId, completionHandler: handler, messageInterface: messageInterface)
     }
 }
 

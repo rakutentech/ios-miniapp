@@ -1,6 +1,8 @@
 "error_title" = "Error";
 "error_list_message" = "Couldn't retrieve Miniapp list, please try again later";
 "error_single_message" = "Couldn't retrieve Miniapp info, please try again later";
+"error_no_published_version" = "No published versions for the provided Mini App ID.";
+"error_miniapp_id_not_found" = "No Mini App found for the provided Mini App ID.";
 "error_incorrect_appid_message" = "Incorrect Host app ID, please try again";
 "error_empty_appid_key_message" = "Host app ID cannot be empty, enter valid ID and try again";
 "error_incorrect_subscription_key_message" = "Incorrect subscription key, please try again";

@@ -34,9 +34,18 @@ extension ViewController: MiniAppNavigationDelegate {
                     self.currentMiniAppInfo = responseData
                     self.fetchMiniApp(for: responseData)
                 case .failure(let error):
+                    var message: String
+                    switch error {
+                    case .noPublishedVersion:
+                        message = NSLocalizedString("error_no_published_version", comment: "")
+                    case .miniAppNotFound:
+                        message = NSLocalizedString("error_miniapp_id_not_found", comment: "")
+                    default:
+                        message = NSLocalizedString("error_single_message", comment: "")
+                    }
                     print(error.localizedDescription)
                     self.dismissProgressIndicator {
-                        self.fetchMiniAppUsingId(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""))
+                        self.fetchMiniAppUsingId(title: NSLocalizedString("error_title", comment: ""), message: message)
                     }
                 }
             }

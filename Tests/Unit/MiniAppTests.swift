@@ -24,29 +24,16 @@ class MiniAppTests: QuickSpec {
                 }
             }
             context("when info method is called with empty mini app id") {
-                it("will return nil") {
-                    var testError: NSError?
+                it("will return an error") {
+                    var testError: MASDKError?
                     MiniApp.shared().info(miniAppId: "") { (result) in
                         switch result {
                         case .success: break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
-                    expect(testError?.localizedDescription).toEventually(equal("Invalid AppID error"), timeout: .seconds(2))
-                }
-            }
-            context("when info method is called with valid mini app id") {
-                it("will return nil") {
-                    var testError: NSError?
-                    MiniApp.shared().info(miniAppId: "1234") { (result) in
-                        switch result {
-                        case .success: break
-                        case .failure(let error):
-                            testError = error as NSError
-                        }
-                    }
-                    expect(testError?.code).toEventually(equal(400) || equal(404), timeout: .seconds(10))
+                    expect(testError?.localizedDescription).toEventually(equal(MASDKError.invalidAppId.localizedDescription), timeout: .seconds(2))
                 }
             }
             context("when no mini apps downloaded and listDownloadedWithCustomPermissions method is called") {
