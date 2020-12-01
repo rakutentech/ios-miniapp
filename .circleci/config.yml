@@ -201,6 +201,10 @@ jobs:
       - store_artifacts:
           path: js-miniapp-sample/build
           prefix: build
+      - persist_to_workspace:
+          root: ~/js-miniapp-sample
+          paths:
+            - js-miniapp-sample/build
 
   deploy-sample:
     working_directory: ~/js-miniapp-sample
