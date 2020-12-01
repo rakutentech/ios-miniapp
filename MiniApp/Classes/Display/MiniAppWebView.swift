@@ -22,7 +22,7 @@ internal class MiniAppWebView: WKWebView {
     }
 
     convenience init(miniAppURL: URL) {
-        let urlRequest = URLRequest(url: miniAppURL.appendingPathComponent(Constants.rootFileName))
+        let urlRequest = URLRequest(url: miniAppURL)
         self.init(frame: .zero, configuration: MiniAppWebView.defaultConfig())
         commonInit(urlRequest: urlRequest)
     }
