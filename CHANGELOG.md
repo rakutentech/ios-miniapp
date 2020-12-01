@@ -1,10 +1,18 @@
 ## CHANGELOG
 
-### 2.x.x (2020-MM-DD)
+### 2.6.0 (2020-11-27)
 
 **SDK**
 
 - **Feature:** Added support for `RASProjectId`. `RASApplicationIdentifier` is deprecated now
+- **Feature:** Added support for Preview endpoint. Preview endpoint becomes the new default endpoint
+
+**Sample App**
+
+- **Feature:** Added implementation for Preview mode
+- **Fixed:** iOS 11 search field visual glitches
+- **Fixed:** Support for dark UI
+- **Fixed:** Default settings were displayed instead of the saved one 
 
 ---
 
