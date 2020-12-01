@@ -43,13 +43,6 @@ class RealMiniAppViewTests: QuickSpec {
                     expect(miniAppView.webView.customUserAgent).toEventually(contain("MiniApp Demo App"), timeout: .seconds(6))
                 }
             }
-            context("when RealMiniAppView is called with coder") {
-                it("will return nil") {
-                    let keyedArchiver = NSKeyedArchiver()
-                    let realMiniAppView = RealMiniAppView(coder: keyedArchiver)
-                    expect(realMiniAppView).toEventually(beNil())
-                }
-            }
         }
         describe("WKUIDelegate") {
             let mockMessageInterface = MockMessageInterface()
