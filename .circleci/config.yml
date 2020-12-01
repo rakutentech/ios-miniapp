@@ -23,10 +23,54 @@ commands:
               echo "Nothing to commit"
             fi
 
-jobs: # a collection of steps
-  build-sdk: # runs not using Workflows must have a `build` job as entry point
-    working_directory: ~/mini-js-sdk # directory where steps will run
-    docker: # run the steps with Docker
+jobs: 
+  build-bridge:
+    working_directory: ~/mini-js-bridge
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies w/ Yarn
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Test
+          command: yarn bridge test
+      - run:
+          name: Lint
+          command: yarn bridge lint
+      - run:
+          name: Compile
+          command: yarn bridge compile
+      - persist_to_workspace:
+          root: ~/mini-js-bridge
+          paths:
+            - js-miniapp-bridge/build/
+
+  export-bridge:
+    working_directory: ~/mini-js-bridge
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - export-js-bridge:
+          platform: ios
+      - export-js-bridge:
+          platform: android
+
+  build-sdk:
+    working_directory: ~/mini-js-sdk
+    docker:
       - image: circleci/node:10.16.3
     steps:
       - checkout
@@ -80,49 +124,47 @@ jobs: # a collection of steps
             - js-miniapp-sdk/build/
             - js-miniapp-sdk/publishableDocs/
 
-  build-bridge:
-    working_directory: ~/mini-js-bridge
-    docker:
-      - image: circleci/node:10.16.3
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies w/ Yarn
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run:
-          name: Test
-          command: yarn bridge test
-      - run:
-          name: Lint
-          command: yarn bridge lint
-      - run:
-          name: Compile
-          command: yarn bridge compile
-      - persist_to_workspace:
-          root: ~/mini-js-bridge
-          paths:
-            - js-miniapp-bridge/build/
-
-  export-bridge:
-    working_directory: ~/mini-js-bridge
+  publish-sdk:
+    working_directory: ~/mini-js-sdk
     docker:
       - image: circleci/node:10.16.3
     steps:
       - checkout
       - attach_workspace:
           at: ./
-      - export-js-bridge:
-          platform: ios
-      - export-js-bridge:
-          platform: android
+      - run:
+          name: publish to NPM
+          command: |
+            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+            yarn sdk publish
+      - run:
+          name: Publish Documentation
+          command: |
+            set -e
+            if [[ ! $CIRCLE_TAG == *"-"* ]]; then
+              git checkout gh-pages
+              cp -R ./js-miniapp-sdk/publishableDocs/docs/. ./docs
+              cp -R ./js-miniapp-sdk/publishableDocs/_versions/. ./_versions
+              git add docs _versions
+              git config user.name "CI Publisher"
+              git config user.email "dev-opensource@mail.rakuten.com"
+              git commit -m "Publish documentation for $CIRCLE_TAG"
+              git push origin gh-pages
+            else
+              echo "Documentation not published for snapshot version"
+            fi
+      - run:
+          name: Publish GitHub Release
+          command: |
+            set -e
+            curl -fsSL https://github.com/github/hub/raw/master/script/get | bash -s 2.14.1
+            if [[ ! $CIRCLE_TAG == *"-"* ]]; then
+              echo "Publishing $CIRCLE_TAG release to GitHub"
+              ./bin/hub release create -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
+            else
+              echo "Publishing $CIRCLE_TAG pre-release to GitHub"
+              ./bin/hub release create --prerelease -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
+            fi
 
   build-sample: # builds  & tests the sample app against latest sdk build.
     working_directory: ~/js-miniapp-sample
@@ -184,58 +226,10 @@ jobs: # a collection of steps
               echo "Nothing to commit"
             fi
 
-  publish-sdk:
-    working_directory: ~/mini-js-sdk
-    docker:
-      - image: circleci/node:10.16.3
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./
-      - run:
-          name: publish to NPM
-          command: |
-            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-            yarn sdk publish
-      - run:
-          name: Publish Documentation
-          command: |
-            set -e
-            if [[ ! $CIRCLE_TAG == *"-"* ]]; then
-              git checkout gh-pages
-              cp -R ./js-miniapp-sdk/publishableDocs/docs/. ./docs
-              cp -R ./js-miniapp-sdk/publishableDocs/_versions/. ./_versions
-              git add docs _versions
-              git config user.name "CI Publisher"
-              git config user.email "dev-opensource@mail.rakuten.com"
-              git commit -m "Publish documentation for $CIRCLE_TAG"
-              git push origin gh-pages
-            else
-              echo "Documentation not published for snapshot version"
-            fi
-      - run:
-          name: Publish GitHub Release
-          command: |
-            set -e
-            curl -fsSL https://github.com/github/hub/raw/master/script/get | bash -s 2.14.1
-            if [[ ! $CIRCLE_TAG == *"-"* ]]; then
-              echo "Publishing $CIRCLE_TAG release to GitHub"
-              ./bin/hub release create -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
-            else
-              echo "Publishing $CIRCLE_TAG pre-release to GitHub"
-              ./bin/hub release create --prerelease -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
-            fi
-
 workflows:
   version: 2
   build-and-release:
     jobs:
-      - build-sdk:
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              only: /.*/
       - build-bridge
       - export-bridge:
           requires:
@@ -243,13 +237,12 @@ workflows:
           filters:
             branches:
               only: master
-      - build-sample
-      - deploy-sample:
-          requires:
-           - build-sample
+      - build-sdk:
           filters:
+            tags:
+              only: /^v.*/
             branches:
-              only: master
+              only: /.*/
       - sdk-release-verification:
           type: approval
           requires:
@@ -267,3 +260,10 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+      - build-sample
+      - deploy-sample:
+          requires:
+           - build-sample
+          filters:
+            branches:
+              only: master
