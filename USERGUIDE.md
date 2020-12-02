@@ -8,7 +8,9 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 - Load MiniApp list
 - Load MiniApp metadata
 - Create a MiniApp view
-- Facilitate comm between host app and mini app
+- Facilitate communication between host app and mini app
+
+And much more features which you can find them in [Usage](#usage).
 
 All the MiniApp files downloaded by the MiniApp iOS library are cached locally
 
