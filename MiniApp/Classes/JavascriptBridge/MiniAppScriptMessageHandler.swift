@@ -185,7 +185,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType) -> Bool {
         let customPermission = self.miniAppKeyStore.getCustomPermissions(forMiniApp: self.miniAppId).filter { $0.permissionName == customPermissionType }
-        return customPermission[0].isPermissionGranted.boolValue
+        if !customPermission.isEmpty {
+            return customPermission[0].isPermissionGranted.boolValue
+        } else {
+            return false
+        }
     }
 
     func setScreenOrientation(requestParam: RequestParameters?, callbackId: String) {
