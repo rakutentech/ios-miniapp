@@ -78,7 +78,7 @@ class MiniAppInfoFetcherTests: QuickSpec {
                             testError = error as NSError
                         }
                     })
-                    expect(testError?.code).toEventually(equal(0))
+                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidResponseData.rawValue))
                 }
             }
             context("when request from server returns error") {
@@ -158,7 +158,7 @@ class MiniAppInfoFetcherTests: QuickSpec {
                             testError = error as NSError
                         }
                     })
-                    expect(testError?.code).toEventually(equal(0))
+                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidResponseData.rawValue))
                 }
             }
             context("when request from server returns error") {
@@ -171,7 +171,7 @@ class MiniAppInfoFetcherTests: QuickSpec {
                         userInfo: nil
                     )
                     let miniAppInfoFetcher = MiniAppInfoFetcher()
-                    miniAppInfoFetcher.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
+                    miniAppInfoFetcher.getInfo(miniAppId: "123", apiClient: mockAPIClient, completionHandler: { (result) in
                         switch result {
                         case .success:
                             break
@@ -180,6 +180,26 @@ class MiniAppInfoFetcherTests: QuickSpec {
                         }
                     })
                     expect(testError?.code).toEventually(equal(123))
+                }
+            }
+            context("when request from server returns no versions") {
+                it("will pass no published versions error to completion handler") {
+                    let mockAPIClient = MockAPIClient()
+                    mockAPIClient.data = "[]".data(using: .utf8)
+                    var testError: NSError?
+                    let miniAppInfoFetcher = MiniAppInfoFetcher()
+
+                    miniAppInfoFetcher.getInfo(miniAppId: "123", apiClient: mockAPIClient, completionHandler: { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error as NSError
+                        }
+                    })
+
+                    expect(testError?.domain).toEventually(equal(MiniAppSDKErrorDomain))
+                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.noPublishedVersion.rawValue))
                 }
             }
         }

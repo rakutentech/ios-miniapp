@@ -21,13 +21,13 @@ class MiniAppNSErrorTests: QuickSpec {
                 }
             }
             context("throws unknown error") {
-                let urlResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: 404, httpVersion: "1", headerFields: nil)
+                let urlResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: 400, httpVersion: "1", headerFields: nil)
                 let error = NSError.unknownServerError(httpResponse: urlResponse)
                 it("will return server with NSError type") {
                     expect(error).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(2))
                 }
                 it("will return unknown error with code") {
-                    expect(error.code).toEventually(equal(404), timeout: .seconds(2))
+                    expect(error.code).toEventually(equal(400), timeout: .seconds(2))
                 }
                 it("will return unknown error with message") {
                     expect(error.localizedDescription).toEventually(equal("Unknown server error occurred"), timeout: .seconds(2))
@@ -43,10 +43,7 @@ class MiniAppNSErrorTests: QuickSpec {
                     expect(error).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(2))
                 }
                 it("will return invalid URL error with code") {
-                    expect(error.code).toEventually(equal(0), timeout: .seconds(2))
-                }
-                it("will return invalid URL error with message") {
-                    expect(error.localizedDescription).toEventually(equal("Invalid URL error"), timeout: .seconds(2))
+                    expect(error.code).toEventually(equal(MiniAppSDKErrorCode.invalidURLError.rawValue), timeout: .seconds(2))
                 }
             }
             context("throws invalid response received error") {
@@ -55,10 +52,7 @@ class MiniAppNSErrorTests: QuickSpec {
                     expect(error).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(2))
                 }
                 it("will return invalid response received error with code") {
-                    expect(error.code).toEventually(equal(0), timeout: .seconds(2))
-                }
-                it("will return invalid response received error with message") {
-                    expect(error.localizedDescription).toEventually(equal("Invalid response received"), timeout: .seconds(2))
+                    expect(error.code).toEventually(equal(MiniAppSDKErrorCode.invalidResponseData.rawValue), timeout: .seconds(2))
                 }
             }
             context("throws downloading mini app failed error") {
@@ -67,10 +61,7 @@ class MiniAppNSErrorTests: QuickSpec {
                     expect(error).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(2))
                 }
                 it("will return server error with code") {
-                    expect(error.code).toEventually(equal(0), timeout: .seconds(2))
-                }
-                it("will return server error with message") {
-                    expect(error.localizedDescription).toEventually(equal("Downloading failed"), timeout: .seconds(2))
+                    expect(error.code).toEventually(equal(MiniAppSDKErrorCode.downloadingFailed.rawValue), timeout: .seconds(2))
                 }
             }
         }
