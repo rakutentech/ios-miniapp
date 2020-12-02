@@ -256,6 +256,23 @@ function getId() {
 }
 ```
 
+## Troubleshooting & FAQs
+
+### Error: "Uncaught TypeError: Cannot read property 'getUniqueId' of undefined"
+
+This is an error that you could see on Android devices when using any of the SDK functions.
+
+Please ensure that you have defined a `<title>` tag within your HTML document's `<head>` before the Mini App SDK `<script>` tag. For example:
+
+```html
+<head>
+    <title>My Mini App title</title>
+    <script src="miniapp.bundle.js"></script>
+<head>
+```
+
+In the Android SDK, we will inject some necessary JavaScript from the native side, and we do this after receiving a callback that the mini app's `<title>` has been set. So if you do not set a `<title>`, then the JavaScript will be injected at an unpredictable time and you could see errors when trying to use SDK functions.
+
 ## Changelog
 
 See the full [CHANGELOG](https://github.com/rakutentech/js-miniapp/blob/master/js-miniapp-sdk/CHANGELOG.md).
