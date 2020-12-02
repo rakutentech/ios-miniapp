@@ -30,6 +30,7 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
     case userName = "rakuten.miniapp.user.USER_NAME"
     case profilePhoto = "rakuten.miniapp.user.PROFILE_PHOTO"
     case contactsList = "rakuten.miniapp.user.CONTACT_LIST"
+    case deviceLocation = "rakuten.miniapp.device.LOCATION"
 
     public var title: String {
         switch self {
@@ -39,6 +40,8 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
             return "Profile Photo"
         case .contactsList:
             return "Contact List"
+        case .deviceLocation:
+            return "Device Location"
         }
     }
 }
