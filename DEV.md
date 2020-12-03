@@ -11,7 +11,7 @@ This guide targets Developers of this SDK. It explains how to build the project 
 * [How to generate SDK documentation locally](#generate-sdk-doc)
 * [Continuous Integration and Deployment](#continuous-integration)
 
-<div id="build-sample-app"></div>
+<a id="build-sample-app"></a>
 
 ## How to Build the Sample App
 ---
@@ -30,14 +30,14 @@ Next, run `fastlane updatePods` from the root directory that will trigger a `pod
 
 *Note:* You need to define the environment variables before installing the pods because there is a post install script which sets up the project with your environment variables. If you don't want to use environment variables, you can edit the `MiniApp-Secrets.xcconfig` created after a `pod install` in the parent folder of the project,but be aware you will have to update this file after every `pod install`
 
-<div id="test-sample-app"></div>
+<a id="test-sample-app"></a>
 
 ## How to Test with the Sample App
 ---
 
 We currently don't provide an API for public use, so you must provide your own API.
 
-<div id="integrate-sdk-cocoapod"></div>
+<a id="integrate-sdk-cocoapod"></a>
 
 ## How to test your SDK integration with Cocoapods
 ---
@@ -48,7 +48,7 @@ If you need to test your SDK fork into your host app before making a pull reques
   pod 'MiniApp', git: 'https://github.com/<My fork account>/ios-miniapp', branch: 'master', submodules: true
 ```
 
-<div id="generate-sdk-doc"></div>
+<a id="generate-sdk-doc"></a>
 
 ## How to generate SDK documentation locally
 ---
@@ -62,12 +62,13 @@ bundle exec jazzy \
   --module MiniApp \
   --source-directory MiniApp \
   --podspec MiniApp.podspec \
+  --theme fullwidth \
   --readme USERGUIDE.md
 ```
 
 The generated docs will be output to a folder named `docs` in the root of this repo.
 
-<div id="continuous-integration"></div>
+<a id="continuous-integration"></a>
 
 ## Continuous Integration and Deployment
 ---
