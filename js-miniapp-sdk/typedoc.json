@@ -1,0 +1,11 @@
+{
+    "excludeNotExported": true,
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "includeVersion": false,
+    "name": "js-miniapp-sdk",
+    "plugin": "typedoc-plugin-markdown",
+    "mode": "file",
+    "readme": "none",
+    "stripInternal": true
+}

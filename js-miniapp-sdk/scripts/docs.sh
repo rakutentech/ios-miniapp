@@ -17,7 +17,7 @@ version: "$PACKAGE_VERSION"
 cat <<< "$contents" > "$FILE_VERSION_MD"
 
 # Generate docs
-npx typedoc --includeVersion --out $DIR_DOCS/api src --plugin typedoc-plugin-markdown --stripInternal --readme none --mode file
+npx typedoc --out $DIR_DOCS/api src --options typedoc.json
 
 # Move userguide to docs and create correct folder structure
 mv $DIR_DOCS/api/README.md $DIR_DOCS/api/index.md
