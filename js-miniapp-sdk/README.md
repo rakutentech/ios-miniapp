@@ -147,7 +147,7 @@ miniApp.loadRewardedAd(adUnitID)
 
 It is possible for the mini app user to share data with another App by showing the native content sharing chooser.
 
-The data format must match the [ShareInfoType](https://github.com/rakutentech/js-miniapp/blob/master/js-miniapp-sdk/src/types/ShareInfoType.ts).
+The data format must match the [ShareInfoType](api/interfaces/shareinfotype.md).
 
 ```javascript
 const info = { content: inputValue };
@@ -190,7 +190,7 @@ miniApp.user.getProfilePhoto()
 It is possible to change and lock device screen orientation.
 However, there is no guarantee that all hostapps and device OS allow the force screen change so MiniApp should not rely on this.
 
-The support screen change cases are defined as [ScreenOrientation](../js-miniapp-bridge/src/types/screen.ts).
+The support screen change cases are defined as [ScreenOrientation](api/enums/screenorientation.md).
 After finish locking, the miniapp can release the lock and grant back the normal orientation controller to device. Please use ```ScreenOrientation.LOCK_RELEASE```
 
 ```javascript
