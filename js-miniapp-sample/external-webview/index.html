@@ -20,6 +20,14 @@
             li {
                 margin: 0.5em 0;
             }
+            a.button {
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 6px 10px;
+                text-decoration: none;
+                background: #eee;
+                color: #111;
+            }
         </style>
     </head>
     <body>
@@ -48,5 +56,69 @@
                 <a href ="#" onclick="window.open('https://www.google.com')" id="new-window-js">Google</a>
             </li>
         </ul>
-    </body>
+
+        <h3>Received Parameters</h3>
+        <ul>
+            <li id="PassedParams" style="line-break: anywhere"></li>
+        </ul>
+
+        <h3>Return To Mini App</h3>
+        <br />
+        <div>
+            <label>Params to send mini app:</label>
+            <br />
+            <input id="ReturnInput" 
+                placeholder="Enter params to send Mini App"
+                value="?testParam=someValue&test2=anotherValue" 
+                style="width: 250px;" />
+            <br />
+            <br />
+            <a class="button" id="ReturnButton">Return to Mini App</a>
+        </div>
+
+        <script>
+            function getParam(name) {
+                const params = window.location.search;
+                if (params) {
+                    const param = params.substr(1).split("&")
+                        .map(param => param.split("="))
+                        .find(pair => pair[0] === name);
+                    return param && param[1];
+                } else {
+                    return null;
+                }
+            }
+
+            function validateParams(params) {
+                if (!params.startsWith('?') || params.indexOf('=') <= -1) {
+                    return false;
+                }
+                return true;
+            }
+
+            (function() {
+                // Set Params field
+                const passedParams = window.location.search
+                    // This page is loaded via a query parameter so we must remove the section which isn't relevant
+                    .replace(/^[?](.*?)[?]/, '?'); 
+                document.getElementById('PassedParams').innerHTML = passedParams || 'None';
+
+                // Set return URL and params
+                const returnInput = document.getElementById('ReturnInput');
+                const returnButton = document.getElementById('ReturnButton');
+                const callbackUrl = decodeURIComponent( getParam('callbackUrl') );
+                const setReturnHref = () => returnButton.href = callbackUrl + returnInput.value;
+                setReturnHref();
+                returnInput.onchange = setReturnHref;
+
+                // Validate params on button click
+                returnButton.onclick = (e) => {
+                    if (!validateParams(returnInput.value)) {
+                        e.preventDefault();
+                        alert("Invalid params were defined!");
+                    }
+                }
+            })();
+        </script>
+    </body> 
 </html>

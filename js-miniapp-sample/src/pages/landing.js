@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
   },
   info: {
     fontSize: 16,
+    lineBreak: 'anywhere',
+    marginTop: 0,
   },
 }));
 
@@ -34,6 +36,9 @@ const Landing = () => {
       <CardContent className={classes.content}>
         <p>Demo Mini App JS SDK</p>
         <p className={classes.info}>Platform: {MiniApp.getPlatform()}</p>
+        <p className={classes.info}>
+          Parameters: {window.location.search || 'None'}
+        </p>
       </CardContent>
     </GreyCard>
   );
