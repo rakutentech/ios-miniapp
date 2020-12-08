@@ -78,7 +78,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 ---
 **API Docs:** [MiniApp.create](https://rakutentech.github.io/ios-miniapp/Classes/MiniApp.html), [MiniAppDisplayDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppDisplayDelegate.html)
 
-`MiniApp.create` is used to create a `View` for displaying a specific mini app. You must provide the mini app ID which you wish to create (you can get the mini-app ID by [Fetching Mini App Info](#fetching-mini-app-info) first). Calling `MiniApp.create` will do the following:
+`MiniApp.create` is used to create a `View` for displaying a specific mini app. You must provide the mini app ID which you wish to create (you can get the mini-app ID by [Loading the Mini App List](#load-miniapp-list) first). Calling `MiniApp.create` will do the following:
 
 - Checks with the platform what is the latest and published version of the mini app.
 - Check if the latest version of the mini app has been already downloaded 
