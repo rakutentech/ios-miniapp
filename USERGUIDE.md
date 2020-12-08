@@ -263,7 +263,7 @@ extension ViewController: MiniAppMessageDelegate {
 
 <a id="access-token-info"></a>
 
-#### Access Token Info
+###### Access Token Info
 
 Retrieve access token and expiry date
 
