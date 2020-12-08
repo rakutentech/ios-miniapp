@@ -16,7 +16,7 @@ For instructions on implementing in an iOS application, see the [User Guide](htt
 - Load MiniApp list
 - Load MiniApp metadata
 - Create a MiniApp view
-- Facilitate communcation between host app and mini app
+- Facilitate communication between host app and mini app
 
 All the MiniApp files downloaded by the MiniApp iOS library are cached locally.
 

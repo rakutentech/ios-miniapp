@@ -2,13 +2,25 @@
 
 This guide targets Developers of this SDK. It explains how to build the project and how the CI setup works. In order to setup the environment you need to install [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) and [Fastlane](https://docs.fastlane.tools/getting-started/ios/setup/)
 
-## <a name="sample-app" /> How to Build the Sample App
+## Table of Contents
+---
 
-First, it is highly recommanded to setup some environment variables which are required by the project.
+* [How to Build the Sample App](#build-sample-app)
+* [How to Test with the Sample App](#test-sample-app)
+* [How to test your SDK integration with Cocoapods](#integrate-sdk-cocoapod)
+* [How to generate SDK documentation locally](#generate-sdk-doc)
+* [Continuous Integration and Deployment](#continuous-integration)
+
+<a id="build-sample-app"></a>
+
+## How to Build the Sample App
+---
+
+First, it is highly recommended to setup some environment variables which are required by the project.
 
 ```bash
 RMAAPIEndpoint=https://www.example.com
-RASProjectId=test-app-id
+RASProjectId=test-project-id
 RASProjectSubscriptionKey=test-subscription-key
 ```
 
@@ -18,11 +30,17 @@ Next, run `fastlane updatePods` from the root directory that will trigger a `pod
 
 *Note:* You need to define the environment variables before installing the pods because there is a post install script which sets up the project with your environment variables. If you don't want to use environment variables, you can edit the `MiniApp-Secrets.xcconfig` created after a `pod install` in the parent folder of the project,but be aware you will have to update this file after every `pod install`
 
+<a id="test-sample-app"></a>
+
 ## How to Test with the Sample App
+---
 
 We currently don't provide an API for public use, so you must provide your own API.
 
+<a id="integrate-sdk-cocoapod"></a>
+
 ## How to test your SDK integration with Cocoapods
+---
 
 If you need to test your SDK fork into your host app before making a pull request, you can use this line into your podfile:
 
@@ -30,7 +48,10 @@ If you need to test your SDK fork into your host app before making a pull reques
   pod 'MiniApp', git: 'https://github.com/<My fork account>/ios-miniapp', branch: 'master', submodules: true
 ```
 
+<a id="generate-sdk-doc"></a>
+
 ## How to generate SDK documentation locally
+---
 
 You may want to generate the SDK documentation locally so that you can ensure that the generated docs look correct. 
 We use [Jazzy](https://github.com/realm/jazzy) for this, so you can run the following commands:
@@ -41,12 +62,16 @@ bundle exec jazzy \
   --module MiniApp \
   --source-directory MiniApp \
   --podspec MiniApp.podspec \
+  --theme fullwidth \
   --readme USERGUIDE.md
 ```
 
 The generated docs will be output to a folder named `docs` in the root of this repo.
 
+<a id="continuous-integration"></a>
+
 ## Continuous Integration and Deployment
+---
 
 Before any deployment, be sure the project will build and run unit tests by running `fastlane ci`.
 
