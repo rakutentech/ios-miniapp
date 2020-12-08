@@ -233,7 +233,7 @@ The following delegates/interfaces will be called only if the user has allowed r
 
 <a id="user-profile-details-username"></a>
 
-#### User Name
+###### User Name
 
 Retrieve user name of the User
 
