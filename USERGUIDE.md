@@ -248,7 +248,7 @@ extension ViewController: MiniAppMessageDelegate {
 
 <a id="user-profile-details-profilephoto"></a>
 
-#### Profile Photo
+###### Profile Photo
 
 Retrieve Profile Photo of the User
 
