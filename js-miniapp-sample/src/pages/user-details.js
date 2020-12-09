@@ -24,6 +24,7 @@ import {
   CustomPermissionResult,
   CustomPermissionName,
   CustomPermissionStatus,
+  Contact,
 } from 'js-miniapp-sdk';
 import { connect } from 'react-redux';
 
@@ -174,7 +175,7 @@ type UserDetailsProps = {
   contactList: string[],
   getUserName: () => Promise<string>,
   getProfilePhoto: () => Promise<string>,
-  getContacts: () => Promise<string[]>,
+  getContacts: () => Promise<Contact[]>,
   requestPermissions: (
     permissions: CustomPermission[]
   ) => Promise<CustomPermissionResult[]>,
@@ -313,7 +314,7 @@ function UserDetails(props: UserDetailsProps) {
                 <ListItemAvatar>
                   <Avatar className={classes.contactIcon} />
                 </ListItemAvatar>
-                <ListItemText primary={contact} />
+                <ListItemText primary={contact.id} />
               </ListItem>
             ))}
         </List>

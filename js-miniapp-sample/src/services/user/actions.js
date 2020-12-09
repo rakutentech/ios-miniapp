@@ -9,9 +9,11 @@ import {
   REQUEST_CONTACT_LIST_FAILURE,
 } from './types';
 
+import { Contact } from 'js-miniapp-sdk';
+
 type UserNameSuccessAction = { type: String, userName: string };
 type ProfilePhotoSuccessAction = { type: String, url: string };
-type ContactListSuccessAction = { type: String, contacts: string[] };
+type ContactListSuccessAction = { type: String, contacts: Contact[] };
 
 const requestUserName = (): Function => {
   return (dispatch) => {
@@ -51,16 +53,9 @@ const requestProfilePhoto = (): Function => {
 
 const requestContactList = (): Function => {
   return (dispatch) => {
-    return Promise.resolve()
-      .then(() => {
-        const contacts = [
-          'Test Contact 1',
-          'Test Contact 2',
-          'Test Contact 3',
-          'Test Contact 4',
-          'Test Contact 5',
-          'Test Contact 6',
-        ];
+    return MiniApp.user
+      .getContacts()
+      .then((contacts) => {
         dispatch({
           type: REQUEST_CONTACT_LIST_SUCCESS,
           contacts,
