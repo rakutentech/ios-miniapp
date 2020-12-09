@@ -4,7 +4,6 @@ import GoogleMobileAds
 /// Made to be a singleton
 /// It has to be a single instance to avoid multiple instances of Admob SDK
 class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
-	var isAdmobInitialized = false
 	var interstitial: GADInterstitial!
 	var rewarded: GADRewardedAd?
 	var onInterstitialClosed: (() -> Void)?
@@ -14,33 +13,40 @@ class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 	override init() {
 		super.init()
 
-		createAndLoadInterstitial()
-		createAndLoadRewarded()
+		GADMobileAds.sharedInstance().start(completionHandler: {
+			[weak self] _ in
+
+			self?.createAndLoadInterstitial()
+			self?.createAndLoadRewarded()
+		})
+
 	}
 
 	private func createAndLoadRewarded() {
+		//FIXME: Google's test id from tutorial
 		rewarded = GADRewardedAd(adUnitID: "ca-app-pub-3940256099942544/1712485313")
 		rewarded?.load(GADRequest())
 	}
 
 	private func createAndLoadInterstitial() {
+		//FIXME: Google's test id from tutorial
 		interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
 		interstitial.delegate = self
 		interstitial.load(GADRequest())
 	}
 
 	func showInterstitial(onClosed: @escaping (() -> Void), onFailed: @escaping ((Error) -> Void)) {
-		if !isAdmobInitialized {
-			GADMobileAds.sharedInstance().start(completionHandler: {
-				[weak self] _ in
-
-				self?.isAdmobInitialized = true
-				self?.showInterstitial(onClosed: onClosed, onFailed: onFailed)
-			})
-		} else if interstitial.isReady {
-			self.onInterstitialClosed = onClosed
-			// PIERRE: here I need some reference to the viewController displaying the miniApp to allow the `present`
-			interstitial.present(fromRootViewController: UIViewController())
+		if interstitial.isReady {
+			onInterstitialClosed = onClosed
+			let window: UIWindow?
+			if #available(iOS 13, *) {
+				window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
+			} else {
+				window = UIApplication.shared.keyWindow
+			}
+			if let viewController = window?.topController() {
+				interstitial.present(fromRootViewController: viewController)
+			}
 		} else {
 			onFailed(NSError())
 		}
@@ -48,17 +54,17 @@ class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 	}
 
 	func showRewarded(onClosed: @escaping ((MiniAppReward?) -> Void), onFailed: @escaping ((Error) -> Void)) {
-		if !isAdmobInitialized {
-			GADMobileAds.sharedInstance().start(completionHandler: {
-				[weak self] _ in
-
-				self?.isAdmobInitialized = true
-				self?.showRewarded(onClosed: onClosed, onFailed: onFailed)
-			})
-		} else if rewarded?.isReady == true {
+		if rewarded?.isReady == true {
 			onRewardedClosed = onClosed
-			// PIERRE: here I need some reference to the viewController displaying the miniApp to allow the `present`
-			rewarded?.present(fromRootViewController: UIViewController(), delegate: self)
+			let window: UIWindow?
+			if #available(iOS 13, *) {
+				window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
+			} else {
+				window = UIApplication.shared.keyWindow
+			}
+			if let viewController = window?.topController() {
+				rewarded?.present(fromRootViewController: viewController, delegate: self)
+			}
 		} else {
 			onFailed(NSError())
 		}
