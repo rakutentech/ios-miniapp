@@ -27,11 +27,11 @@ Pod::Spec.new do |s|
 
   s.source_files = 'MiniApp/Classes/**/*.swift'
   s.resource_bundle = {
-		"MiniApp" => ['MiniApp/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js'],
-		"Localization" => ["MiniApp/*.lproj/*.strings"]
-	}
+    "MiniApp" => ['MiniApp/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js'],
+    "Localization" => ["MiniApp/*.lproj/*.strings"]
+  }
 
-	s.static_framework = true
+  s.static_framework = true
 
   s.dependency 'RSDKUtils', '>= 1.1.0'
   s.dependency 'ZIPFoundation'
