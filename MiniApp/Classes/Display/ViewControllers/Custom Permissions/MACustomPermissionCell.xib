@@ -17,19 +17,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M4f-PF-F5r">
-                        <rect key="frame" x="352" y="10" width="51" height="14"/>
-                    </switch>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ExB-9O-tUQ">
                         <rect key="frame" x="14" y="10" width="322" height="21.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="77i-AP-Yv0">
-                        <rect key="frame" x="345" y="14" width="51" height="31"/>
+                        <rect key="frame" x="345" y="10" width="51" height="31"/>
                     </switch>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gH1-hC-l2Z">
-                        <rect key="frame" x="20" y="43" width="317" height="16"/>
+                        <rect key="frame" x="14" y="42" width="317" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="D9v-nO-SVj"/>
                         </constraints>
@@ -39,22 +36,23 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="77i-AP-Yv0" firstAttribute="leading" secondItem="Lwl-mD-SLv" secondAttribute="trailing" constant="8" symbolic="YES" id="0e9-oc-Vom"/>
-                    <constraint firstItem="Lwl-mD-SLv" firstAttribute="top" secondItem="bQm-Nu-nSz" secondAttribute="top" constant="14" id="0j8-oL-pM0"/>
+                    <constraint firstItem="gH1-hC-l2Z" firstAttribute="top" secondItem="ExB-9O-tUQ" secondAttribute="bottom" constant="10.5" id="2wP-h1-ByN"/>
                     <constraint firstAttribute="trailing" secondItem="77i-AP-Yv0" secondAttribute="trailing" constant="20" symbolic="YES" id="5Bi-xd-bzE"/>
                     <constraint firstAttribute="bottom" secondItem="gH1-hC-l2Z" secondAttribute="bottom" constant="16" id="Dq7-ha-0NO"/>
-                    <constraint firstItem="gH1-hC-l2Z" firstAttribute="top" secondItem="Lwl-mD-SLv" secondAttribute="bottom" constant="8" symbolic="YES" id="F5P-gR-Pum"/>
-                    <constraint firstItem="gH1-hC-l2Z" firstAttribute="leading" secondItem="bQm-Nu-nSz" secondAttribute="leading" constant="20" symbolic="YES" id="OYp-F2-2l8"/>
-                    <constraint firstAttribute="trailing" secondItem="gH1-hC-l2Z" secondAttribute="trailing" constant="77" id="YTo-zo-mvx"/>
-                    <constraint firstItem="Lwl-mD-SLv" firstAttribute="leading" secondItem="bQm-Nu-nSz" secondAttribute="leading" constant="20" symbolic="YES" id="bba-aA-0xt"/>
-                    <constraint firstItem="77i-AP-Yv0" firstAttribute="top" secondItem="bQm-Nu-nSz" secondAttribute="top" constant="14" id="f6M-o4-zlK"/>
+                    <constraint firstItem="gH1-hC-l2Z" firstAttribute="leading" secondItem="bQm-Nu-nSz" secondAttribute="leading" constant="14" id="OYp-F2-2l8"/>
+                    <constraint firstItem="77i-AP-Yv0" firstAttribute="leading" secondItem="ExB-9O-tUQ" secondAttribute="trailing" constant="9" id="VPO-05-gQV"/>
+                    <constraint firstAttribute="trailing" secondItem="gH1-hC-l2Z" secondAttribute="trailing" constant="83" id="YTo-zo-mvx"/>
+                    <constraint firstItem="ExB-9O-tUQ" firstAttribute="leading" secondItem="bQm-Nu-nSz" secondAttribute="leading" constant="14" id="aUp-I9-96v"/>
+                    <constraint firstAttribute="leading" secondItem="bQm-Nu-nSz" secondAttribute="leading" symbolic="YES" id="bba-aA-0xt"/>
+                    <constraint firstItem="77i-AP-Yv0" firstAttribute="top" secondItem="bQm-Nu-nSz" secondAttribute="top" constant="10" id="f6M-o4-zlK"/>
+                    <constraint firstItem="ExB-9O-tUQ" firstAttribute="top" secondItem="bQm-Nu-nSz" secondAttribute="top" constant="10" id="yF7-kM-KxM"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
-                <outlet property="permissionDescription" destination="gH1-hC-l2Z" id="w16-aW-31S"/>
-                <outlet property="permissionTitle" destination="Lwl-mD-SLv" id="SNV-fU-Ey1"/>
-                <outlet property="toggle" destination="77i-AP-Yv0" id="lLL-Qm-CXj"/>
+                <outlet property="permissionDescription" destination="gH1-hC-l2Z" id="gVw-4e-qe3"/>
+                <outlet property="permissionTitle" destination="ExB-9O-tUQ" id="OKs-2c-X6A"/>
+                <outlet property="toggle" destination="77i-AP-Yv0" id="4Z0-Oq-LwZ"/>
             </connections>
             <point key="canvasLocation" x="-281.15942028985512" y="-120.87053571428571"/>
         </tableViewCell>
