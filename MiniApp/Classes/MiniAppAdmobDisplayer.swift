@@ -1,7 +1,8 @@
 import Foundation
 import GoogleMobileAds
 
-
+/// Made to be a singleton
+/// It has to be a single instance to avoid multiple instances of Admob SDK
 class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 	var isAdmobInitialized = false
 	var interstitial: GADInterstitial!
