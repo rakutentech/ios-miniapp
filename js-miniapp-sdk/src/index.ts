@@ -13,6 +13,7 @@ import {
   ShareInfoType,
   ScreenOrientation,
   AccessTokenData,
+  Contact,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -30,4 +31,5 @@ export {
   ShareInfoType,
   ScreenOrientation,
   AccessTokenData,
+  Contact,
 };
