@@ -241,8 +241,8 @@ describe('getContacts', () => {
   it('should retrieve contact list from the MiniAppBridge when request is successful', () => {
     const response = [
       {
-        id: 'test_contact_id'
-      }
+        id: 'test_contact_id',
+      },
     ];
 
     window.MiniAppBridge.getContacts.resolves(response);
