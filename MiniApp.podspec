@@ -26,11 +26,12 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '11.0'
 
   s.source_files = 'MiniApp/Classes/**/*.swift'
-  s.resources = ['MiniApp/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
-  s.resource_bundle = {"Localization" => ["MiniApp/*.lproj/*.strings"]}
+  s.resource_bundle = {
+		"MiniApp" => ['MiniApp/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js'],
+		"Localization" => ["MiniApp/*.lproj/*.strings"]
+	}
 
-  # Needed for Google-Mobile-Ads-SDK to be linked properly
-  s.static_framework = true
+	s.static_framework = true
 
   s.dependency 'RSDKUtils', '>= 1.1.0'
   s.dependency 'ZIPFoundation'

@@ -1,6 +1,6 @@
 import Foundation
 
 public protocol MiniAppAdDisplayProtocol {
-	func showInterstitial(onClosed: (() -> Void), onFailed: (() -> Void))
-	func showRewarded(onClosed: ((MiniAppReward?) -> Void), onFailed: ((Error) -> Void))
+	func showInterstitial(onClosed: @escaping (() -> Void), onFailed: @escaping ((Error) -> Void))
+	func showRewarded(onClosed: @escaping ((MiniAppReward?) -> Void), onFailed: @escaping ((Error) -> Void))
 }

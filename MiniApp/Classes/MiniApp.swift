@@ -1,11 +1,6 @@
-import GoogleMobileAds
-
 /// Mini App Public API methods
 public class MiniApp: NSObject {
-	private static var shared: MiniApp {
-		GADMobileAds.sharedInstance().start(completionHandler: nil)
-		return MiniApp()
-	}
+    private static let shared = MiniApp()
     private let realMiniApp = RealMiniApp()
     public static var MAOrientationLock: UIInterfaceOrientationMask = []
 
