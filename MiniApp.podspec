@@ -31,5 +31,6 @@ Pod::Spec.new do |s|
 
   s.dependency 'RSDKUtils', '>= 1.1.0'
   s.dependency 'ZIPFoundation'
+  s.dependency 'Google-Mobile-Ads-SDK'
 
 end
