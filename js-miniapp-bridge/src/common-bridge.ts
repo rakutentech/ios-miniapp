@@ -14,6 +14,7 @@ import {
 import { ShareInfoType } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
 import { NativeTokenData, AccessTokenData } from './types/token-data';
+import { Contact } from './types/contact';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -249,7 +250,7 @@ export class MiniAppBridge {
 
   /**
    * Associating getProfilePhoto function to MiniAppBridge object.
-   * This function returns username from the user profile
+   * This function returns username from the user profile.
    * (provided the rakuten.miniapp.user.PROFILE_PHOTO is allowed by the user)
    * It returns error info if user had denied the custom permission
    */
@@ -259,6 +260,23 @@ export class MiniAppBridge {
         'getProfilePhoto',
         null,
         profilePhoto => resolve(profilePhoto),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating getContacts function to MiniAppBridge object.
+   * This function returns contact list from the user profile.
+   * (provided the rakuten.miniapp.user.CONTACT_LIST is allowed by the user)
+   * It returns error info if user had denied the custom permission
+   */
+  getContacts() {
+    return new Promise<Contact[]>((resolve, reject) => {
+      return this.executor.exec(
+        'getContacts',
+        null,
+        contacts => resolve(JSON.parse(contacts) as Contact[]),
         error => reject(error)
       );
     });

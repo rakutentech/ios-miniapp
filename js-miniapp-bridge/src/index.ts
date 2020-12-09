@@ -17,6 +17,7 @@ import {
 import { ShareInfoType } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
 import { AccessTokenData } from './types/token-data';
+import { Contact } from './types/contact';
 
 export {
   MiniAppBridge,
@@ -30,4 +31,5 @@ export {
   ShareInfoType,
   ScreenOrientation,
   AccessTokenData,
+  Contact,
 };
