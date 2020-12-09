@@ -159,11 +159,11 @@ miniApp.shareInfo(info)
 
 ### 5. Requesting User details
 
-You can retrieve the User Name and Profile Photo of the user using the following interfaces. Please make sure that User have allowed respective custom permission before requesting the user detail.
+Please make sure that User have allowed respective custom permission before requesting the user detail.
+
+`getUserName())`:  Returns the Username text from the Host app.
 
 ```javascript
-const info = { content: inputValue };
-
 miniApp.user.getUserName()
     .then(userName => {
 		console.log(userName);
@@ -172,14 +172,23 @@ miniApp.user.getUserName()
 	});
 ```
 
-NOTE: getProfilePhoto() -  Returns the Profile Photo URI from the Host app.
+`getProfilePhoto()`:  Returns the Profile Photo URI from the Host app.
 
 ```javascript
-const info = { content: inputValue };
-
 miniApp.user.getProfilePhoto()
     .then(profilePhoto => {
 		console.log(profilePhoto);
+	}).catch(error => {
+		console.error(error);
+	});
+```
+
+`getContacts()`:  Returns the [Contact](api/interfaces/contact.md) list from the Host app.
+
+```javascript
+MiniApp.user.getContacts()
+    .then(contacts => {
+		console.log(contacts);
 	}).catch(error => {
 		console.error(error);
 	});

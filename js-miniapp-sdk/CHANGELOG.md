@@ -3,6 +3,7 @@
 ### In Progress (2020-XX-XX)
 - **Feature:** Added `CustomPermissionName.LOCATION`.
 - **Change:** Updated `requestLocationPermission()` to `requestLocationPermission(permissionDescription?: string)`. From now `requestLocationPermission` will request both custom and device permission respectively.
+- **Feature:** Added support for requesting Contact list from Host app. [See here](README.md#5-Requesting-User-details).
 
 ### 1.5.0 (2020-11-13)
 
@@ -14,8 +15,8 @@
 
 ### 1.3.0 (2020-10-22)
 
-- **Feature:** Added support for requesting the load and display of Interstitial & Rewarded Ads by the host application [See here](README.md#4-Show-Ads).
-- **Feature:** Added support for requesting User Name and Profle Photo from Mini app to Host application [See here](README.md#5-Requesting-User-details).
+- **Feature:** Added support for requesting the load and display of Interstitial & Rewarded Ads in Host app. [See here](README.md#4-Show-Ads).
+- **Feature:** Added support for requesting User Name and Profile Photo from Host app. [See here](README.md#5-Requesting-User-details).
 - **Feature:** Added `MiniApp.getPlatform` for retrieving the platform name of the device. [See here](README.md#check-androidios-device).
 
 ### v1.2.0 (2020-10-02)
