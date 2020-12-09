@@ -8,7 +8,6 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
   ScreenOrientation,
-  AccessTokenData,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 
@@ -27,6 +26,7 @@ window.MiniAppBridge = {
   getPlatform: sinon.stub(),
   getUserName: sinon.stub(),
   getProfilePhoto: sinon.stub(),
+  getContacts: sinon.stub(),
   getAccessToken: sinon.stub(),
   setScreenOrientation: sinon.stub(),
 };
@@ -234,6 +234,19 @@ describe('getProfilePhoto', () => {
 
     window.MiniAppBridge.getProfilePhoto.resolves(response);
     return expect(miniApp.user.getProfilePhoto()).to.eventually.equal(response);
+  });
+});
+
+describe('getContacts', () => {
+  it('should retrieve contact list from the MiniAppBridge when request is successful', () => {
+    const response = [
+      {
+        id: 'test_contact_id'
+      }
+    ];
+
+    window.MiniAppBridge.getContacts.resolves(response);
+    return expect(miniApp.user.getContacts()).to.eventually.equal(response);
   });
 });
 
