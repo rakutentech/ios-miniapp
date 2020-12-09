@@ -172,7 +172,7 @@ type UserDetailsProps = {
   permissions: CustomPermissionName[],
   userName: string,
   profilePhoto: string,
-  contactList: string[],
+  contactList: Contact[],
   getUserName: () => Promise<string>,
   getProfilePhoto: () => Promise<string>,
   getContacts: () => Promise<Contact[]>,
