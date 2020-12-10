@@ -8,6 +8,10 @@ enum MiniAppJSActionCommand: String {
     case getProfilePhoto
     case setScreenOrientation
     case getAccessToken
+    case loadInterstitialAd
+    case showInterstitialAd
+    case loadRewardedAd
+    case showRewardedAd
 }
 
 enum JavaScriptExecResult: String {

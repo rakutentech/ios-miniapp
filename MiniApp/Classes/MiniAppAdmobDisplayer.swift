@@ -1,68 +1,57 @@
 import Foundation
 import GoogleMobileAds
 
-/// Made to be a singleton
-/// It has to be a single instance to avoid multiple instances of Admob SDK
-class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
-	var interstitial: GADInterstitial!
-	var rewarded: GADRewardedAd?
+/// Made to be a singleton and has to be used with shared instance
+/// It has to be a single instance to avoid multiple initializations of Admob SDK
+internal class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
+	static let shared = MiniAppAdmobDisplayer()
+
+	var interstitialAds: [String: GADInterstitial?] = [:]
+	var rewardedAds: [String: GADRewardedAd?] = [:]
 	var onInterstitialClosed: (() -> Void)?
 	var onRewardedClosed: ((MiniAppReward?) -> Void)?
 	var lastReward: MiniAppReward?
 
+	var window: UIWindow? {
+		if #available(iOS 13, *) {
+			return UIApplication.shared.windows.filter { $0.isKeyWindow }.first
+		} else {
+			return UIApplication.shared.keyWindow
+		}
+	}
+
 	override init() {
 		super.init()
 
-		GADMobileAds.sharedInstance().start(completionHandler: { [weak self] _ in
-			self?.createAndLoadInterstitial()
-			self?.createAndLoadRewarded()
-		})
-
+		GADMobileAds.sharedInstance().start(completionHandler: nil)
 	}
 
-	private func createAndLoadRewarded() {
-		//TEST: Google's test id from tutorial
-		rewarded = GADRewardedAd(adUnitID: "ca-app-pub-3940256099942544/1712485313")
-		rewarded?.load(GADRequest())
+	func loadRewarded(forId id: String) {
+		rewardedAds[id] = GADRewardedAd(adUnitID: id)
+		rewardedAds[id]??.load(GADRequest())
 	}
 
-	private func createAndLoadInterstitial() {
-		//TEST: Google's test id from tutorial
-		interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-		interstitial.delegate = self
-		interstitial.load(GADRequest())
+	func loadInterstitial(forId id: String) {
+		interstitialAds[id] = GADInterstitial(adUnitID: id)
+		interstitialAds[id]??.delegate = self
+		interstitialAds[id]??.load(GADRequest())
 	}
 
-	func showInterstitial(onClosed: @escaping (() -> Void), onFailed: @escaping ((Error) -> Void)) {
-		if interstitial.isReady {
+	func showInterstitial(forId id: String, onClosed: @escaping (() -> Void), onFailed: @escaping ((Error) -> Void)) {
+		if interstitialAds[id]??.isReady == true,
+			let viewController = window?.topController() {
 			onInterstitialClosed = onClosed
-			let window: UIWindow?
-			if #available(iOS 13, *) {
-				window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
-			} else {
-				window = UIApplication.shared.keyWindow
-			}
-			if let viewController = window?.topController() {
-				interstitial.present(fromRootViewController: viewController)
-			}
+			interstitialAds[id]??.present(fromRootViewController: viewController)
 		} else {
 			onFailed(NSError())
 		}
 		return
 	}
 
-	func showRewarded(onClosed: @escaping ((MiniAppReward?) -> Void), onFailed: @escaping ((Error) -> Void)) {
-		if rewarded?.isReady == true {
+	func showRewarded(forId id: String, onClosed: @escaping ((MiniAppReward?) -> Void), onFailed: @escaping ((Error) -> Void)) {
+		if rewardedAds[id]??.isReady == true, let viewController = window?.topController() {
 			onRewardedClosed = onClosed
-			let window: UIWindow?
-			if #available(iOS 13, *) {
-				window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
-			} else {
-				window = UIApplication.shared.keyWindow
-			}
-			if let viewController = window?.topController() {
-				rewarded?.present(fromRootViewController: viewController, delegate: self)
-			}
+			rewardedAds[id]??.present(fromRootViewController: viewController, delegate: self)
 		} else {
 			onFailed(NSError())
 		}
@@ -72,7 +61,6 @@ class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 
 extension MiniAppAdmobDisplayer: GADInterstitialDelegate {
 	func interstitialDidDismissScreen(_ ad: GADInterstitial) { //swiftlint:disable:this identifier_name
-		createAndLoadInterstitial()
 		self.onInterstitialClosed?()
 	}
 }
@@ -83,7 +71,6 @@ extension MiniAppAdmobDisplayer: GADRewardedAdDelegate {
 	}
 
 	func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
-		createAndLoadRewarded()
 		self.onRewardedClosed?(self.lastReward)
 	}
 }

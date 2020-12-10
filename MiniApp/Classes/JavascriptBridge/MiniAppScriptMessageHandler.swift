@@ -68,6 +68,30 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
+        case .loadInterstitialAd:
+            MiniAppAdmobDisplayer.shared.loadInterstitial(forId: "undefined")
+        case .showInterstitialAd:
+            MiniAppAdmobDisplayer.shared.showInterstitial(
+                forId: "undefined",
+                onClosed: {
+                    print("onClosed")
+                },
+                onFailed: { _ in
+                    print("onFailed")
+                }
+            )
+        case .loadRewardedAd:
+            MiniAppAdmobDisplayer.shared.loadRewarded(forId: "undefined")
+        case .showRewardedAd:
+            MiniAppAdmobDisplayer.shared.showRewarded(
+                forId: "undefined",
+                onClosed: { reward in
+                    print("onClosed rewarded \(reward?.amount ?? 0)")
+                },
+                onFailed: { _ in
+                    print("onFailed")
+                }
+            )
         }
     }
 
