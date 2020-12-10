@@ -75,17 +75,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
             }
         case .showAd:
-            guard let adTypeRaw = requestParam?.adType, let adType = MiniAppAdType(rawValue: adTypeRaw), let adUnitId = requestParam?.adUnitId else {
-                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-                return
-            }
-
-            switch adType {
-            case .interstitial:
-                showInterstitial(callbackId: callbackId, adUnitId: adUnitId)
-            case .rewarded:
-                showRewarded(callbackId: callbackId, adUnitId: adUnitId)
-            }
+            showRequestedAd(callbackId: callbackId, params: requestParam)
         }
     }
 
@@ -137,6 +127,20 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             ", \"speed\":\(locationManager?.location?.speed ?? "null" as Any)" +
             ", \"heading\":\(locationManager?.location?.course ?? "null" as Any)" +
             "}, \"timestamp\":\(Date().epochInMilliseconds)}"
+    }
+
+    func showRequestedAd(callbackId: String, params: RequestParameters?) {
+        guard let adTypeRaw = params?.adType, let adType = MiniAppAdType(rawValue: adTypeRaw), let adUnitId = params?.adUnitId else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+            return
+        }
+
+        switch adType {
+        case .interstitial:
+            showInterstitial(callbackId: callbackId, adUnitId: adUnitId)
+        case .rewarded:
+            showRewarded(callbackId: callbackId, adUnitId: adUnitId)
+        }
     }
 
     func showInterstitial(callbackId: String, adUnitId: String) {
