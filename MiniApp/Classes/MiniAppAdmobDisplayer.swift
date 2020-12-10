@@ -24,13 +24,24 @@ internal class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 		super.init()
 
 		GADMobileAds.sharedInstance().start(completionHandler: nil)
+		// Uncomment next line if testing in simulator
+		//GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [String(describing: kGADSimulatorID)]
 	}
 
-	func loadRequestedAd(forParams params: RequestParameters?) {
-		guard let params = params, let adType = params.adType, let adId = params.adUnitId else {
-			return
+	func loadRequestedAd(forParams params: RequestParameters?) -> Bool {
+		//PIERRE: params.adUnitId here is always nil
+		// adType works fine 0 for interstitial and 1 for rewarded are showing up properly
+		// only adUnitId is nil. Something wrong with the bridge.js script ?
+		guard let params = params, let adTypeRaw = params.adType, let adType = MiniAppAdType(rawValue: adTypeRaw), let adId = params.adUnitId else {
+			return false
 		}
-		adType == 0 ? loadInterstitial(forId: adId) : loadRewarded(forId: adId)
+		switch adType {
+		case .interstitial:
+			loadInterstitial(forId: adId)
+		case .rewarded:
+			loadRewarded(forId: adId)
+		}
+		return true
 	}
 
 	func loadRewarded(forId id: String) {
@@ -67,6 +78,7 @@ internal class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 }
 
 extension MiniAppAdmobDisplayer: GADInterstitialDelegate {
+	// function predicate comes from Google's SDK, had to disable swiftlint rule
 	func interstitialDidDismissScreen(_ ad: GADInterstitial) { //swiftlint:disable:this identifier_name
 		if let id = ad.adUnitID {
 			interstitialAds[id] = nil

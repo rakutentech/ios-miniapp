@@ -79,3 +79,8 @@ enum MiniAppInterfaceOrientation: String, Codable {
         }
     }
 }
+
+enum MiniAppAdType: Int {
+    case interstitial = 0
+    case rewarded
+}

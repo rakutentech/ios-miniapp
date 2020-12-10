@@ -69,18 +69,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
         case .loadAd:
-            MiniAppAdmobDisplayer.shared.loadRequestedAd(forParams: requestParam)
+            let isLoadSuccess = MiniAppAdmobDisplayer.shared.loadRequestedAd(forParams: requestParam)
+            executeJavaScriptCallback(responseStatus: isLoadSuccess ? .onSuccess : .onError, messageId: callbackId, response: isLoadSuccess ? "" : getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
         case .showAd:
-            guard let adType = requestParam?.adType, let adUnitId = requestParam?.adUnitId else {
+            guard let adTypeRaw = requestParam?.adType, let adType = MiniAppAdType(rawValue: adTypeRaw), let adUnitId = requestParam?.adUnitId else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
                 return
             }
 
-            //PIERRE: Saw in the js bridge that the `adType` is a typescript enum without defined subtype.
-            // Not really sure what swift type it should parse to in our `RequestParameters`, used Int for now
-            if adType == 0 {
+            switch adType {
+            case .interstitial:
                 showInterstitial(callbackId: callbackId, adUnitId: adUnitId)
-            } else {
+            case .rewarded:
                 showRewarded(callbackId: callbackId, adUnitId: adUnitId)
             }
         }
@@ -152,7 +152,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         MiniAppAdmobDisplayer.shared.showRewarded(
             forId: adUnitId,
             onClosed: { [weak self] reward in
-                if let response = reward?.toJSONString() {
+                if let response = ResponseEncoder.encode(data: reward) {
                     self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: response)
                 } else {
                     self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
