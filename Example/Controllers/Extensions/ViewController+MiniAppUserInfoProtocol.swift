@@ -15,7 +15,7 @@ extension ViewController {
         }
         return userProfilePhoto
     }
-    
+
     func getContacts() -> [MAContact]? {
         guard let userProfile = getProfileSettings(), let contactList = userProfile.contactList else {
             return nil

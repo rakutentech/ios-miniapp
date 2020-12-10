@@ -299,7 +299,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     func getProfilePhoto() -> String? {
         return mockProfilePhoto
     }
-    
+
     func getContacts() -> [MAContact]? {
         return mockContactList
     }

@@ -8,7 +8,7 @@ public protocol MiniAppUserInfoDelegate: class {
 
     /// Interface that is used to retrieve the Image URI
     func getProfilePhoto() -> String?
-    
+
     /// Interface that is used to retrieve the Contact list
     func getContacts() -> [MAContact]?
 
@@ -24,7 +24,7 @@ public extension MiniAppUserInfoDelegate {
     func getProfilePhoto() -> String? {
         return nil
     }
-    
+
     func getContacts() -> [MAContact]? {
         return nil
     }
@@ -46,7 +46,7 @@ public class MATokenInfo: Codable {
 
 public class MAContact: Codable {
     let id: String
-    
+
     public init(id: String) {
         self.id = id
     }
