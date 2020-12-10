@@ -8,6 +8,9 @@ public protocol MiniAppUserInfoDelegate: class {
 
     /// Interface that is used to retrieve the Image URI
     func getProfilePhoto() -> String?
+    
+    /// Interface that is used to retrieve the Contact list
+    func getContacts() -> [MAContact]?
 
     /// Interface that is used to retrieve the Token Info
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
@@ -19,6 +22,10 @@ public extension MiniAppUserInfoDelegate {
     }
 
     func getProfilePhoto() -> String? {
+        return nil
+    }
+    
+    func getContacts() -> [MAContact]? {
         return nil
     }
 
@@ -34,6 +41,14 @@ public class MATokenInfo: Codable {
     public init(accessToken: String, expirationDate: Date) {
         self.token = accessToken
         self.validUntil = expirationDate.dateToNumber()
+    }
+}
+
+public class MAContact: Codable {
+    let id: String
+    
+    public init(id: String) {
+        self.id = id
     }
 }
 
