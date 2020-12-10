@@ -69,8 +69,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
         case .loadAd:
-            let isLoadSuccess = MiniAppAdmobDisplayer.shared.loadRequestedAd(forParams: requestParam)
-            executeJavaScriptCallback(responseStatus: isLoadSuccess ? .onSuccess : .onError, messageId: callbackId, response: isLoadSuccess ? "" : getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+            if MiniAppAdmobDisplayer.shared.loadRequestedAd(forParams: requestParam) {
+                executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "")
+            } else {
+                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+            }
         case .showAd:
             guard let adTypeRaw = requestParam?.adType, let adType = MiniAppAdType(rawValue: adTypeRaw), let adUnitId = requestParam?.adUnitId else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
