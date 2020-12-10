@@ -12,6 +12,11 @@ import {
   Contact,
 } from '../../js-miniapp-bridge/src';
 
+/* tslint:disable:no-any */
+function getBridge() {
+  return (window as any).MiniAppBridge as MiniAppBridge;
+}
+
 /**
  * A module layer for webapps and mobile native interaction.
  */
@@ -122,40 +127,32 @@ export interface UserInfoProvider {
 
 /** @internal */
 class UserInfo implements UserInfoProvider {
-  private bridge: MiniAppBridge;
-
-  constructor(miniAppBridge: MiniAppBridge) {
-    this.bridge = miniAppBridge;
-  }
-
   getUserName(): Promise<string> {
-    return this.bridge.getUserName();
+    return getBridge().getUserName();
   }
 
   getProfilePhoto(): Promise<string> {
-    return this.bridge.getProfilePhoto();
+    return getBridge().getProfilePhoto();
   }
 
   getContacts(): Promise<Contact[]> {
-    return this.bridge.getContacts();
+    return getBridge().getContacts();
   }
 
   getAccessToken(): Promise<AccessTokenData> {
-    return this.bridge.getAccessToken();
+    return getBridge().getAccessToken();
   }
 }
 
-/* tslint:disable:no-any */
 export class MiniApp implements MiniAppFeatures, Ad, Platform {
-  private bridge: MiniAppBridge = (window as any).MiniAppBridge;
-  user: UserInfoProvider = new UserInfo(this.bridge);
+  user: UserInfoProvider = new UserInfo();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
-    return this.bridge.requestPermission(permissionType);
+    return getBridge().requestPermission(permissionType);
   }
 
   getUniqueId(): Promise<string> {
-    return this.bridge.getUniqueId();
+    return getBridge().getUniqueId();
   }
 
   requestLocationPermission(permissionDescription = ''): Promise<string> {
@@ -180,40 +177,40 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   requestCustomPermissions(
     permissions: CustomPermission[]
   ): Promise<CustomPermissionResult[]> {
-    return this.bridge
+    return getBridge()
       .requestCustomPermissions(permissions)
       .then(permissionResult => permissionResult.permissions);
   }
 
   loadInterstitialAd(id: string): Promise<string> {
-    return this.bridge.loadInterstitialAd(id);
+    return getBridge().loadInterstitialAd(id);
   }
 
   loadRewardedAd(id: string): Promise<string> {
-    return this.bridge.loadRewardedAd(id);
+    return getBridge().loadRewardedAd(id);
   }
 
   showInterstitialAd(id: string): Promise<string> {
-    return this.bridge.showInterstitialAd(id);
+    return getBridge().showInterstitialAd(id);
   }
 
   showRewardedAd(id: string): Promise<Reward> {
-    return this.bridge.showRewardedAd(id);
+    return getBridge().showRewardedAd(id);
   }
 
   shareInfo(info: ShareInfoType): Promise<string> {
-    return this.bridge.shareInfo(info);
+    return getBridge().shareInfo(info);
   }
 
   getPlatform(): string {
     let platform = 'Unknown';
     try {
-      platform = this.bridge.platform;
+      platform = getBridge().platform;
     } catch (e) {}
     return platform;
   }
 
   setScreenOrientation(screenOrientation: ScreenOrientation): Promise<string> {
-    return this.bridge.setScreenOrientation(screenOrientation);
+    return getBridge().setScreenOrientation(screenOrientation);
   }
 }
