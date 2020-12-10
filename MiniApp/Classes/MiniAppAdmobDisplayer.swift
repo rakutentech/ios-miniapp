@@ -61,6 +61,9 @@ internal class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 
 extension MiniAppAdmobDisplayer: GADInterstitialDelegate {
 	func interstitialDidDismissScreen(_ ad: GADInterstitial) { //swiftlint:disable:this identifier_name
+		if let id = ad.adUnitID {
+			interstitialAds[id] = nil
+		}
 		self.onInterstitialClosed?()
 	}
 }
@@ -71,6 +74,7 @@ extension MiniAppAdmobDisplayer: GADRewardedAdDelegate {
 	}
 
 	func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
+		rewardedAds[rewardedAd.adUnitID] = nil
 		self.onRewardedClosed?(self.lastReward)
 	}
 }
