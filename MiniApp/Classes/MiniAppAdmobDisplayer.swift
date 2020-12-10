@@ -3,7 +3,7 @@ import GoogleMobileAds
 
 /// Made to be a singleton and has to be used with shared instance
 /// It has to be a single instance to avoid multiple initializations of Admob SDK
-internal class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
+internal class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayDelegate {
 	static let shared = MiniAppAdmobDisplayer()
 
 	var interstitialAds: [String: GADInterstitial?] = [:]
@@ -18,14 +18,6 @@ internal class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 		} else {
 			return UIApplication.shared.keyWindow
 		}
-	}
-
-	override init() {
-		super.init()
-
-		GADMobileAds.sharedInstance().start(completionHandler: nil)
-		// Uncomment next line if testing in simulator
-		//GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [String(describing: kGADSimulatorID)]
 	}
 
 	func loadRequestedAd(forParams params: RequestParameters?) -> Bool {
