@@ -13,9 +13,7 @@ class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 	override init() {
 		super.init()
 
-		GADMobileAds.sharedInstance().start(completionHandler: {
-			[weak self] _ in
-
+		GADMobileAds.sharedInstance().start(completionHandler: { [weak self] _ in
 			self?.createAndLoadInterstitial()
 			self?.createAndLoadRewarded()
 		})
@@ -23,13 +21,13 @@ class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 	}
 
 	private func createAndLoadRewarded() {
-		//FIXME: Google's test id from tutorial
+		//TEST: Google's test id from tutorial
 		rewarded = GADRewardedAd(adUnitID: "ca-app-pub-3940256099942544/1712485313")
 		rewarded?.load(GADRequest())
 	}
 
 	private func createAndLoadInterstitial() {
-		//FIXME: Google's test id from tutorial
+		//TEST: Google's test id from tutorial
 		interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
 		interstitial.delegate = self
 		interstitial.load(GADRequest())
@@ -73,7 +71,7 @@ class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 }
 
 extension MiniAppAdmobDisplayer: GADInterstitialDelegate {
-	func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+	func interstitialDidDismissScreen(_ ad: GADInterstitial) { //swiftlint:disable:this identifier_name
 		createAndLoadInterstitial()
 		self.onInterstitialClosed?()
 	}
