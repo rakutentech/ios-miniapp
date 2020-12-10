@@ -26,6 +26,13 @@ internal class MiniAppAdmobDisplayer: NSObject, MiniAppAdDisplayProtocol {
 		GADMobileAds.sharedInstance().start(completionHandler: nil)
 	}
 
+	func loadRequestedAd(forParams params: RequestParameters?) {
+		guard let params = params, let adType = params.adType, let adId = params.adUnitId else {
+			return
+		}
+		adType == 0 ? loadInterstitial(forId: adId) : loadRewarded(forId: adId)
+	}
+
 	func loadRewarded(forId id: String) {
 		rewardedAds[id] = GADRewardedAd(adUnitID: id)
 		rewardedAds[id]??.load(GADRequest())
@@ -70,7 +77,8 @@ extension MiniAppAdmobDisplayer: GADInterstitialDelegate {
 
 extension MiniAppAdmobDisplayer: GADRewardedAdDelegate {
 	func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
-		lastReward = MiniAppReward(type: "undefined", amount: Int(truncating: reward.amount))
+		//PIERRE: How to define reward type here ?
+		lastReward = MiniAppReward(type: "", amount: Int(truncating: reward.amount))
 	}
 
 	func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {

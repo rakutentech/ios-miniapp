@@ -68,30 +68,21 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
-        case .loadInterstitialAd:
-            MiniAppAdmobDisplayer.shared.loadInterstitial(forId: "undefined")
-        case .showInterstitialAd:
-            MiniAppAdmobDisplayer.shared.showInterstitial(
-                forId: "undefined",
-                onClosed: {
-                    print("onClosed")
-                },
-                onFailed: { _ in
-                    print("onFailed")
-                }
-            )
-        case .loadRewardedAd:
-            MiniAppAdmobDisplayer.shared.loadRewarded(forId: "undefined")
-        case .showRewardedAd:
-            MiniAppAdmobDisplayer.shared.showRewarded(
-                forId: "undefined",
-                onClosed: { reward in
-                    print("onClosed rewarded \(reward?.amount ?? 0)")
-                },
-                onFailed: { _ in
-                    print("onFailed")
-                }
-            )
+        case .loadAd:
+            MiniAppAdmobDisplayer.shared.loadRequestedAd(forParams: requestParam)
+		case .showAd:
+            guard let adType = requestParam?.adType, let adUnitId = requestParam?.adUnitId else {
+                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                return
+            }
+
+            //PIERRE: Saw in the js bridge that the `adType` is a typescript enum without defined subtype.
+            // Not really sure what swift type it should parse to in our `RequestParameters`, used Int for now
+            if adType == 0 {
+                showInterstitial(callbackId: callbackId, adUnitId: adUnitId)
+            } else {
+                showRewarded(callbackId: callbackId, adUnitId: adUnitId)
+            }
         }
     }
 
@@ -143,6 +134,34 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             ", \"speed\":\(locationManager?.location?.speed ?? "null" as Any)" +
             ", \"heading\":\(locationManager?.location?.course ?? "null" as Any)" +
             "}, \"timestamp\":\(Date().epochInMilliseconds)}"
+    }
+
+    func showInterstitial(callbackId: String, adUnitId: String) {
+        MiniAppAdmobDisplayer.shared.showInterstitial(
+            forId: adUnitId,
+            onClosed: { [weak self] in
+                self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "")
+            },
+            onFailed: { [weak self] _ in
+                self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+            }
+        )
+    }
+
+    func showRewarded(callbackId: String, adUnitId: String) {
+        MiniAppAdmobDisplayer.shared.showRewarded(
+            forId: adUnitId,
+            onClosed: { [weak self] reward in
+                if let response = reward?.toJSONString() {
+                    self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: response)
+                } else {
+                    self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                }
+            },
+            onFailed: { [weak self] _ in
+                self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+            }
+        )
     }
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {
