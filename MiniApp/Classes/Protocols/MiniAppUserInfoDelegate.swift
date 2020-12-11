@@ -44,6 +44,7 @@ public class MATokenInfo: Codable {
     }
 }
 
+/** Contact object for miniapp. */
 public class MAContact: Codable {
     let id: String
 
