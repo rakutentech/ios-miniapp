@@ -7,12 +7,7 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import ToolBar from '../components/ToolBar';
 import { navItems } from './../routes';
@@ -91,9 +86,6 @@ const Home = (props: any) => {
       >
         <Container className={classes.wrapperContainer}>
           <Switch>
-            <Route exact path={['/', '/miniapp/index.html', '/index.html']}>
-              <Redirect to={navItems[0].navLink} />
-            </Route>
             {navItems.map((it) => (
               <Route
                 key={it.navLink}
@@ -112,7 +104,7 @@ const Home = (props: any) => {
                 }
               ></Route>
             ))}
-            <Route path="*">Page Not Found</Route>
+            <Route path="*" component={navItems[0].component}></Route>
           </Switch>
         </Container>
       </main>
