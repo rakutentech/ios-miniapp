@@ -33,7 +33,7 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
     }
 
     func displayLocationDisabledAlert() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let alert = UIAlertController(title: "Location Services are disabled", message: "Please enable Location Services in your Settings", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
