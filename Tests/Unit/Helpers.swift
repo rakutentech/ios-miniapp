@@ -277,7 +277,8 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
+    func requestCustomPermissions(
+        permissions: [MASDKCustomPermissionModel],
         miniAppTitle: String,
         completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         if customPermissions {
@@ -405,7 +406,8 @@ class MockNavigationWebView: MiniAppWebView {
 class MockDisplayer: Displayer {
     var mockedInitialLoadCallbackResponse = true
 
-    override func getMiniAppView(miniAppURL: URL,
+    override func getMiniAppView(
+        miniAppURL: URL,
         miniAppTitle: String,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayProtocol {

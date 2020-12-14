@@ -255,7 +255,12 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when MiniAppScriptMessageHandler receives valid share info message") {
                 it("will return SUCCESS after host app displays UIActivityController") {
                     mockMessageInterface.messageContentAllowed = true
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle)
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: callbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: mockMiniAppID,
+                        miniAppTitle: mockMiniAppTitle
+                    )
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"shareInfo\",\"param\":{\"shareInfo\":{\"content\":\"Test Message\"}},\"id\":\"1.033890137027198\"}"as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -266,7 +271,12 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when MiniAppScriptMessageHandler receives valid share info message but there is an error in host app delegate") {
                 it("will return Error") {
                     mockMessageInterface.messageContentAllowed = false
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(delegate: callbackProtocol, hostAppMessageDelegate: mockMessageInterface, miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle)
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: callbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: mockMiniAppID,
+                        miniAppTitle: mockMiniAppTitle
+                    )
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"shareInfo\",\"param\":{\"shareInfo\":{\"content\":\"Test Message\"}},\"id\":\"1.033890137027198\"}"as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
