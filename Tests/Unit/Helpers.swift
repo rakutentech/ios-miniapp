@@ -278,8 +278,8 @@ class MockMessageInterface: MiniAppMessageDelegate {
     }
 
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
-                                  miniAppTitle: String,
-                                  completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
+        miniAppTitle: String,
+        completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         if customPermissions {
             completionHandler(.success(permissions))
         } else {
@@ -452,12 +452,12 @@ func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
 
 func setCustomPermission(forMiniAppId: String, permissionType: MiniAppCustomPermissionType) {
     MiniApp.shared().setCustomPermissions(forMiniApp: forMiniAppId,
-                                          permissionList: [MASDKCustomPermissionModel(permissionName: permissionType, isPermissionGranted: .allowed, permissionRequestDescription: "")])
+        permissionList: [MASDKCustomPermissionModel(permissionName: permissionType, isPermissionGranted: .allowed, permissionRequestDescription: "")])
 }
 
 func resetCustomPermission(forMiniAppId: String, permissionType: MiniAppCustomPermissionType) {
     MiniApp.shared().setCustomPermissions(forMiniApp: forMiniAppId,
-                                          permissionList: [MASDKCustomPermissionModel(permissionName: permissionType, isPermissionGranted: .allowed, permissionRequestDescription: "")])
+        permissionList: [MASDKCustomPermissionModel(permissionName: permissionType, isPermissionGranted: .allowed, permissionRequestDescription: "")])
 }
 
 extension UIImage {
