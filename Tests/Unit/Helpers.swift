@@ -450,16 +450,6 @@ func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
     return errorMessage
 }
 
-func setCustomPermission(forMiniAppId: String, permissionType: MiniAppCustomPermissionType) {
-    MiniApp.shared().setCustomPermissions(forMiniApp: forMiniAppId,
-        permissionList: [MASDKCustomPermissionModel(permissionName: permissionType, isPermissionGranted: .allowed, permissionRequestDescription: "")])
-}
-
-func resetCustomPermission(forMiniAppId: String, permissionType: MiniAppCustomPermissionType) {
-    MiniApp.shared().setCustomPermissions(forMiniApp: forMiniAppId,
-        permissionList: [MASDKCustomPermissionModel(permissionName: permissionType, isPermissionGranted: .allowed, permissionRequestDescription: "")])
-}
-
 extension UIImage {
     func hasAlpha() -> Bool {
         let noAlphaCases: [CGImageAlphaInfo] = [.none, .noneSkipLast, .noneSkipFirst]

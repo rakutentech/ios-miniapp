@@ -161,12 +161,13 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
                     )
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .allowed)
                     setCustomPermission(forMiniAppId: mockMiniAppID, permissionType: .deviceLocation)
                     mockMessageInterface.locationAllowed = false
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.response).toEventually(contain("latitude"))
-                    resetCustomPermission(forMiniAppId: mockMiniAppID, permissionType: .deviceLocation)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .denied)
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid getCurrentPosition command") {
@@ -177,11 +178,11 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.locationAllowed = false
-                    setCustomPermission(forMiniAppId: mockMiniAppID, permissionType: .deviceLocation)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .allowed)
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.response).toEventually(contain("longitude"))
-                    resetCustomPermission(forMiniAppId: mockMiniAppID, permissionType: .deviceLocation)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .denied)
                  }
             }
             context("when MiniAppScriptMessageHandler receives valid custom permissions command") {
