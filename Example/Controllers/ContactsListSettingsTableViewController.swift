@@ -3,7 +3,7 @@ import MiniApp
 
 class ContactsListSettingsTableViewController: UITableViewController {
 
-    var userContactList: [Contact]? = []
+    var userContactList: [MAContact]? = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,7 +16,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
         userContactList = getContactList()
         if userContactList?.count == 0 {
             for _ in 1...10 {
-                userContactList?.append(Contact(id: UUID().uuidString))
+                userContactList?.append(MAContact(id: UUID().uuidString))
             }
             updateContactList(list: self.userContactList)
         }
@@ -56,7 +56,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
         DispatchQueue.main.async {
             self.getInputFromAlertWithTextField(title: title, message: message) { (_, textField) in
                 if let textField = textField, let contactId = textField.text, contactId.count > 0, !contactId.trimTrailingWhitespaces().isEmpty {
-                    self.userContactList?.append(Contact(id: contactId))
+                    self.userContactList?.append(MAContact(id: contactId))
                     updateContactList(list: self.userContactList)
                     self.tableView.reloadData()
                 } else {

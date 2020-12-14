@@ -1,22 +1,15 @@
 import UIKit
+import MiniApp
 
 struct UserProfileModel: Codable {
     var displayName: String?
     var profileImageURI: String?
-    var contactList: [Contact]?
+    var contactList: [MAContact]?
 
-    init(displayName: String, profileImageURI: String?, contactList: [Contact]?) {
+    init(displayName: String, profileImageURI: String?, contactList: [MAContact]?) {
         self.displayName = displayName
         self.profileImageURI = profileImageURI
         self.contactList = contactList
-    }
-}
-
-struct Contact: Codable {
-    var id: String
-
-    init(id: String) {
-        self.id = id
     }
 }
 
@@ -30,7 +23,7 @@ struct AccessTokenInfo: Codable {
     }
 }
 
-func setProfileSettings(forKey key: String = "UserProfileDetail", userDisplayName: String?, profileImageURI: String?, contactList: [Contact] = getContactList()) -> Bool {
+func setProfileSettings(forKey key: String = "UserProfileDetail", userDisplayName: String?, profileImageURI: String?, contactList: [MAContact] = getContactList()) -> Bool {
     if let data = try? PropertyListEncoder().encode(UserProfileModel(displayName: userDisplayName ?? "", profileImageURI: profileImageURI, contactList: contactList)) {
         UserDefaults.standard.set(data, forKey: key)
         UserDefaults.standard.synchronize()
@@ -47,7 +40,7 @@ func getProfileSettings(key: String = "UserProfileDetail") -> UserProfileModel? 
     return nil
 }
 
-func getContactList(key: String = "UserProfileDetail") -> [Contact] {
+func getContactList(key: String = "UserProfileDetail") -> [MAContact] {
     if let userProfile = UserDefaults.standard.data(forKey: key) {
            let userProfileData = try? PropertyListDecoder().decode(UserProfileModel.self, from: userProfile)
         return userProfileData?.contactList ?? []
@@ -55,7 +48,7 @@ func getContactList(key: String = "UserProfileDetail") -> [Contact] {
     return []
 }
 
-func updateContactList(list: [Contact]?) {
+func updateContactList(list: [MAContact]?) {
     if let profileDetail = getProfileSettings() {
         _ = setProfileSettings(userDisplayName: profileDetail.displayName, profileImageURI: profileDetail.profileImageURI, contactList: list ?? [])
     } else {
