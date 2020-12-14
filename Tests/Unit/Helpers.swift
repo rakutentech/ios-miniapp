@@ -27,13 +27,13 @@ class MockAPIClient: MiniAppClient {
         let bundle = MockBundle()
         bundle.mockPreviewMode = previewMode
         super.init(with:
-                    MiniAppSdkConfig(
-                        baseUrl: bundle.mockEndpoint,
-                        rasProjectId: bundle.mockProjectId,
-                        subscriptionKey: bundle.mockSubscriptionKey,
-                        hostAppVersion: bundle.mockHostAppUserAgentInfo,
-                        isPreviewMode: bundle.mockPreviewMode
-                    )
+                MiniAppSdkConfig(
+                    baseUrl: bundle.mockEndpoint,
+                    rasProjectId: bundle.mockProjectId,
+                    subscriptionKey: bundle.mockSubscriptionKey,
+                    hostAppVersion: bundle.mockHostAppUserAgentInfo,
+                    isPreviewMode: bundle.mockPreviewMode
+                )
         )
     }
 
@@ -277,9 +277,10 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
-                                  miniAppTitle: String,
-                                  completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
+    func requestCustomPermissions(
+        permissions: [MASDKCustomPermissionModel],
+        miniAppTitle: String,
+        completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         if customPermissions {
             completionHandler(.success(permissions))
         } else {
@@ -405,19 +406,20 @@ class MockNavigationWebView: MiniAppWebView {
 class MockDisplayer: Displayer {
     var mockedInitialLoadCallbackResponse = true
 
-    override func getMiniAppView(miniAppURL: URL,
-                                 miniAppTitle: String,
-                                 hostAppMessageDelegate: MiniAppMessageDelegate,
-                                 initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayProtocol {
+    override func getMiniAppView(
+        miniAppURL: URL,
+        miniAppTitle: String,
+        hostAppMessageDelegate: MiniAppMessageDelegate,
+        initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayProtocol {
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
             DispatchQueue.main.async {
                 initialLoadCallback(self.mockedInitialLoadCallbackResponse)
             }
         }
         return super.getMiniAppView(miniAppURL: miniAppURL,
-                                    miniAppTitle: miniAppTitle,
-                                    hostAppMessageDelegate: hostAppMessageDelegate,
-                                    initialLoadCallback: { _ in })
+            miniAppTitle: miniAppTitle,
+            hostAppMessageDelegate: hostAppMessageDelegate,
+            initialLoadCallback: { _ in })
     }
 }
 
