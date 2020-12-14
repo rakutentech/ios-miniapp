@@ -12,8 +12,9 @@ import {
   Contact,
 } from '../../js-miniapp-bridge/src';
 
-/* tslint:disable:no-any */
+/** @internal */
 function getBridge() {
+  // tslint:disable:no-any
   return (window as any).MiniAppBridge as MiniAppBridge;
 }
 
@@ -21,11 +22,18 @@ function getBridge() {
  * A module layer for webapps and mobile native interaction.
  */
 interface MiniAppFeatures {
-  /** @returns The Promise of provided id of mini app from injected side. */
+  /**
+   * Request the mini app's unique id from the host app.
+   * @returns The Promise of provided id of mini app from injected side.
+   */
   getUniqueId(): Promise<string>;
 
   /**
-   * @param Description of location permission.
+   * Request the location permission from the host app.
+   * You must call this before using `navigator.geolocation`.
+   * This will request both the Android/iOS device permission for location (if not yet granted to the host app),
+   * and the custom permission for location {@link CustomPermissionName.LOCATION}.
+   * @param permissionDescription Description of location permission.
    * @returns The Promise of permission result of mini app from injected side.
    */
   requestLocationPermission(permissionDescription?: string): Promise<string>;
@@ -44,6 +52,7 @@ interface MiniAppFeatures {
   ): Promise<CustomPermissionResult[]>;
 
   /**
+   * Share text data with another App or with the host app.
    * @param info The shared data must match the property in [ShareInfoType].
    * @returns The Promise of share info action state from injected side.
    */
@@ -99,7 +108,11 @@ interface Ad {
 }
 
 interface Platform {
-  getPlatform();
+  /**
+   * Detect which platform your mini app is running on.
+   * @returns `Android`, `iOS`, or `Unknown`
+   */
+  getPlatform(): string;
 }
 
 /**
@@ -107,20 +120,29 @@ interface Platform {
  */
 export interface UserInfoProvider {
   /**
+   * Fetches the username from host app.
+   * You should request the {@link CustomPermissionName.USER_NAME} permission before using this method.
    * @returns Username saved in the host app user profile.
    */
   getUserName(): Promise<string>;
 
   /**
+   * Fetches the profile photo URI from host app.
+   * You should request the {@link CustomPermissionName.PROFILE_PHOTO} permission before using this method.
    * @returns Profile photo saved in the host app user profile.
    */
   getProfilePhoto(): Promise<string>;
 
-  /** @returns Contact list in the host app user profile. */
+  /**
+   * Fetches the contact list from host app.
+   * You should request the {@link CustomPermissionName.CONTACT_LIST} permission before using this method.
+   * @returns Contact list in the host app user profile.
+   */
   getContacts(): Promise<Contact[]>;
 
   /**
-   * @returns Access token from native hostapp.
+   * Fetches the access token from host app.
+   * @returns Access token from native host app.
    */
   getAccessToken(): Promise<AccessTokenData>;
 }

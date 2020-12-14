@@ -16,6 +16,9 @@ version: "$PACKAGE_VERSION"
 ---"
 cat <<< "$contents" > "$FILE_VERSION_MD"
 
+# Clean docs folder
+rm -rf publishableDocs
+
 # Generate docs
 npx typedoc --out $DIR_DOCS/api src --options typedoc.json
 
