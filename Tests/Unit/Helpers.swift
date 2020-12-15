@@ -243,6 +243,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var userSettingsAllowed: Bool = false
     var mockUserName: String? = ""
     var mockProfilePhoto: String? = ""
+    var mockContactList: [MAContact]? = [MAContact(id: "contact_id")]
     var messageContentAllowed: Bool = false
     var mockAccessToken = false
 
@@ -298,6 +299,10 @@ class MockMessageInterface: MiniAppMessageDelegate {
 
     func getProfilePhoto() -> String? {
         return mockProfilePhoto
+    }
+
+    func getContacts() -> [MAContact]? {
+        return mockContactList
     }
 
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {

@@ -66,12 +66,15 @@ class MiniAppStatusTests: QuickSpec {
                         permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.userName.rawValue)!)
                     let profilePhotoPermission = MASDKCustomPermissionModel(
                         permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.profilePhoto.rawValue)!, isPermissionGranted: MiniAppCustomPermissionGrantedStatus.denied)
-                    miniAppKeyStore.storeCustomPermissions(permissions: [userNamePermission, profilePhotoPermission], forMiniApp: "123")
+                    let contactListPermission = MASDKCustomPermissionModel(
+                    permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.contactsList.rawValue)!, isPermissionGranted: MiniAppCustomPermissionGrantedStatus.denied)
+                    miniAppKeyStore.storeCustomPermissions(permissions: [userNamePermission, profilePhotoPermission, contactListPermission], forMiniApp: "123")
                     var miniAppCustomPermissionList = miniAppKeyStore.getCustomPermissions(forMiniApp: "123")
                     expect(miniAppCustomPermissionList[0].permissionName.rawValue).toEventually(equal("rakuten.miniapp.user.USER_NAME"))
                     expect(miniAppCustomPermissionList[0].isPermissionGranted.rawValue).toEventually(equal("ALLOWED"))
                     expect(miniAppCustomPermissionList[1].permissionName.rawValue).toEventually(equal("rakuten.miniapp.user.PROFILE_PHOTO"))
                     expect(miniAppCustomPermissionList[1].isPermissionGranted.rawValue).toEventually(equal("DENIED"))
+                    expect(miniAppCustomPermissionList[2].isPermissionGranted.rawValue).toEventually(equal("DENIED"))
                     profilePhotoPermission.isPermissionGranted = .allowed
                     miniAppKeyStore.storeCustomPermissions(permissions: [profilePhotoPermission], forMiniApp: "123")
                     miniAppCustomPermissionList = miniAppKeyStore.getCustomPermissions(forMiniApp: "123")

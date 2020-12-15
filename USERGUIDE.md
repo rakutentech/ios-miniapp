@@ -261,6 +261,21 @@ extension ViewController: MiniAppMessageDelegate {
 }
 ```
 
+<a id="user-profile-details-contactlist"></a>
+
+###### Contact List
+
+Retrieve the Contact list of the User
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getContacts() -> [MAContact]? {
+        // Implementation to return the contact list
+        return []
+    }
+}
+```
+
 <a id="access-token-info"></a>
 
 ###### Access Token Info
