@@ -245,6 +245,15 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockProfilePhoto: String? = ""
     var messageContentAllowed: Bool = false
     var mockAccessToken = false
+    var trackingAllowed = false
+
+    func miniAppAnalytics(triggered event: String, with parameters: [String: Any]?, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+        if trackingAllowed {
+            completionHandler(.success(.success))
+        } else {
+            completionHandler(.failure(NSError(domain: "TrackingError", code: 0, userInfo: nil)))
+        }
+    }
 
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         if messageContentAllowed {

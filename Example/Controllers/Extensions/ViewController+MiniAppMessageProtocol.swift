@@ -2,6 +2,9 @@ import MiniApp
 import CoreLocation
 
 extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
+    func miniAppAnalytics(triggered event: String, with parameters: [String: Any]?, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+    }
+
     typealias PermissionCompletionHandler = (((Result<MASDKPermissionResponse, MASDKPermissionError>)) -> Void)
 
     func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {

@@ -10,7 +10,7 @@ struct RequestParameters: Decodable {
     let permissions: [MiniAppCustomPermissionsRequest]?
     let locationOptions: LocationOptions?
     let shareInfo: ShareInfoParameters?
-    let analyticsParameters: [String:[String]]?
+    let analyticsParameters: [String: [String]]?
 }
 
 struct LocationOptions: Decodable {
