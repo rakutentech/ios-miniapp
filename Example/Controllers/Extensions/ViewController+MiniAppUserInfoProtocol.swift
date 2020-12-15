@@ -16,6 +16,13 @@ extension ViewController {
         return userProfilePhoto
     }
 
+    func getContacts() -> [MAContact]? {
+        guard let userProfile = getProfileSettings(), let contactList = userProfile.contactList else {
+            return nil
+        }
+        return contactList
+    }
+
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         guard let tokenInfo = getTokenInfo() else {
             completionHandler(.failure(.unknownError))

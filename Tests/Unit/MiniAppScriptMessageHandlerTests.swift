@@ -373,6 +373,34 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
                 }
             }
+            context("when MiniAppScriptMessageHandler receives valid getContacts command") {
+                 it("will return contact list if User has contacts in the User Profile") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: self.name, miniAppTitle: "Mini App"
+                    )
+                    updateCustomPermissionStatus(miniAppId: self.name, permissionType: .contactsList, status: .allowed)
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\": \"getContacts\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(contain("contact_id"), timeout: .seconds(10))
+                 }
+                it("will return Error if User didn't allow Contact permission") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                       delegate: mockCallbackProtocol,
+                       hostAppMessageDelegate: mockMessageInterface,
+                       miniAppId: self.name, miniAppTitle: "Mini App"
+                    )
+                    updateCustomPermissionStatus(miniAppId: self.name, permissionType: .contactsList, status: .denied)
+                   let mockMessage = MockWKScriptMessage(
+                       name: "", body: "{\"action\": \"getContacts\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                   scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
+                }
+            }
             context("when MiniAppScriptMessageHandler receives valid getAccessToken command") {
                 it("will return Access Token data info such as Token string and expiry date") {
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
