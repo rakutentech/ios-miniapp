@@ -60,13 +60,15 @@ do
    fi
 done
 
+success=true
 for var_name in ${vars[@]}
 do
   nbstars=$(($longest_name - ${#var_name} + 5))
   stars=$(printf '%*s' $nbstars '')	
   value=$(eval "echo \$$var_name")
   if [ -z "$value" ]; then
-    >&2 echo "➜ ${BOLD}$var_name${NOCOLOR} ${stars// /*} ${RED}ERROR!${NOCOLOR} Before building the project you must set environment variable ${BOLD}$var_name${NOCOLOR}. See project README for instructions."
+    >&2 echo "➜ ${BOLD}$var_name${NOCOLOR} ${stars// /*} ${RED}ERROR!${NOCOLOR} Missing environment variable ${BOLD}$var_name${NOCOLOR}."
+    success=false
   else
   	echo "➜ ${BOLD}$var_name${NOCOLOR} ${stars// /*} ${GREEN}OK${NOCOLOR}"
   fi
@@ -75,3 +77,7 @@ do
   cmd='echo "${var_name} = $SECURE_DOUBLE_SLASH_FOR_XCCONFIG_RESULT"'
   eval ${cmd} >> $SECRETS_FILE
 done
+
+if [ $success = false ] ; then
+	echo "Before building the project you must set missing environment variables. See project README for instructions."
+fi

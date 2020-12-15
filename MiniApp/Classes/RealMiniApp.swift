@@ -171,6 +171,11 @@ internal class RealMiniApp {
 }
 
 extension RealMiniApp: MiniAppMessageDelegate {
+    func miniAppAnalytics(triggered event: String, with parameters: [String : Any]?, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+        let error: NSError = NSError.init(domain: "MiniAppAnalyticsDelegate has not been implemented by the host app", code: 0, userInfo: nil)
+        completionHandler(.failure(error as Error))
+    }
+
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }

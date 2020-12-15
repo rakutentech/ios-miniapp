@@ -30,6 +30,7 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case unexpectedMessageFormat
     case invalidPermissionType
     case valueIsEmpty
+    case invalidAnalyticsParametersFormat
 
     var name: String {
         return self.rawValue
@@ -45,6 +46,8 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
         return "Permission type that is requested is invalid"
         case .valueIsEmpty:
         return "The value which is passed is empty."
+        case .invalidAnalyticsParametersFormat:
+        return "Please check that your analytics parameters sent to Javascript SDK are into a dictionary of String array."
         }
     }
 }

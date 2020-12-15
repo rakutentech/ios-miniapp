@@ -68,7 +68,34 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
+        case .trackLaunch:
+            fallthrough
+        case .trackDisplay:
+            fallthrough
+        case .trackClose:
+            sendAnalytic(event: action, requestParam: requestParam, callbackId: callbackId)
         }
+    }
+
+    func sendAnalytic(event: MiniAppJSActionCommand, requestParam: RequestParameters?, callbackId: String) {
+        let requestParamValue = requestParam?.analyticsParameters
+        if requestParam != nil && requestParamValue == nil {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidAnalyticsParametersFormat))
+            return
+        }
+
+        var eventName: String
+        switch event {
+        case .trackLaunch:
+            eventName = "miniApp.launch"
+        case .trackDisplay:
+            eventName = "miniApp.display"
+        case .trackClose:
+            eventName = "miniApp.close"
+        default:
+            eventName = "unknown"
+        }
+        hostAppMessageDelegate?.miniAppAnalytics(triggered: eventName, with: requestParamValue)
     }
 
     func sendUniqueId(messageId: String) {
