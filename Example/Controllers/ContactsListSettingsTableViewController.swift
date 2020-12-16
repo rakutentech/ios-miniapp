@@ -14,7 +14,8 @@ class ContactsListSettingsTableViewController: UITableViewController {
 
     func prepareRandomContactList() {
         userContactList = getContactList()
-        if userContactList?.count == 0 {
+        if userContactList == nil {
+            userContactList = []
             for _ in 1...10 {
                 userContactList?.append(MAContact(id: UUID().uuidString))
             }
