@@ -23,7 +23,7 @@ struct AccessTokenInfo: Codable {
     }
 }
 
-func setProfileSettings(forKey key: String = "UserProfileDetail", userDisplayName: String?, profileImageURI: String?, contactList: [MAContact] = getContactList()) -> Bool {
+func setProfileSettings(forKey key: String = "UserProfileDetail", userDisplayName: String?, profileImageURI: String?, contactList: [MAContact]? = getContactList()) -> Bool {
     if let data = try? PropertyListEncoder().encode(UserProfileModel(displayName: userDisplayName ?? "", profileImageURI: profileImageURI, contactList: contactList)) {
         UserDefaults.standard.set(data, forKey: key)
         UserDefaults.standard.synchronize()
@@ -40,19 +40,19 @@ func getProfileSettings(key: String = "UserProfileDetail") -> UserProfileModel? 
     return nil
 }
 
-func getContactList(key: String = "UserProfileDetail") -> [MAContact] {
+func getContactList(key: String = "UserProfileDetail") -> [MAContact]? {
     if let userProfile = UserDefaults.standard.data(forKey: key) {
-           let userProfileData = try? PropertyListDecoder().decode(UserProfileModel.self, from: userProfile)
-        return userProfileData?.contactList ?? []
+        let userProfileData = try? PropertyListDecoder().decode(UserProfileModel.self, from: userProfile)
+        return userProfileData?.contactList
     }
-    return []
+    return nil
 }
 
 func updateContactList(list: [MAContact]?) {
     if let profileDetail = getProfileSettings() {
-        _ = setProfileSettings(userDisplayName: profileDetail.displayName, profileImageURI: profileDetail.profileImageURI, contactList: list ?? [])
+        _ = setProfileSettings(userDisplayName: profileDetail.displayName, profileImageURI: profileDetail.profileImageURI, contactList: list)
     } else {
-        _ = setProfileSettings(userDisplayName: "", profileImageURI: "", contactList: list ?? [])
+        _ = setProfileSettings(userDisplayName: "", profileImageURI: "", contactList: list)
     }
 }
 
