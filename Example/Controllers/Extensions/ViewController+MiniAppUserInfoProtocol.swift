@@ -18,7 +18,12 @@ extension ViewController {
 
     func getContacts() -> [MAContact]? {
         guard let userProfile = getProfileSettings(), let contactList = userProfile.contactList else {
-            return nil
+            var userContactList = [MAContact]()
+            for _ in 1...10 {
+                userContactList.append(MAContact(id: UUID().uuidString))
+            }
+            updateContactList(list: userContactList)
+            return userContactList
         }
         return contactList
     }

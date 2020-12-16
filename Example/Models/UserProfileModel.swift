@@ -42,7 +42,7 @@ func getProfileSettings(key: String = "UserProfileDetail") -> UserProfileModel? 
 
 func getContactList(key: String = "UserProfileDetail") -> [MAContact] {
     if let userProfile = UserDefaults.standard.data(forKey: key) {
-           let userProfileData = try? PropertyListDecoder().decode(UserProfileModel.self, from: userProfile)
+        let userProfileData = try? PropertyListDecoder().decode(UserProfileModel.self, from: userProfile)
         return userProfileData?.contactList ?? []
     }
     return []
