@@ -219,7 +219,9 @@ jobs:
           command: |
             set -e
             git checkout gh-pages
-            cp -r ./js-miniapp-sample/build/ ./sample
+            rm -rf ./sample
+            mkdir sample
+            cp -r ./js-miniapp-sample/build/* ./sample
             if [[ `git status sample --porcelain` ]]; then
               git add sample
               git config user.name "CI Publisher"
