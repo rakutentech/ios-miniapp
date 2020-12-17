@@ -2,18 +2,18 @@ import MiniApp
 
 extension ViewController {
 
-    func getUserName() -> String? {
+    func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         guard let userProfile = getProfileSettings(), let userName = userProfile.displayName else {
-            return nil
+            return completionHandler(.failure(.unknownError(domain: "Unknown Error", code: 1, description: "Failed to retrieve User name")))
         }
-        return userName
+        completionHandler(.success(userName))
     }
 
-    func getProfilePhoto() -> String? {
+    func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         guard let userProfile = getProfileSettings(), let userProfilePhoto = userProfile.profileImageURI else {
-            return nil
+            return completionHandler(.failure(.unknownError(domain: "Unknown Error", code: 1, description: "Failed to retrieve Profile photo")))
         }
-        return userProfilePhoto
+        completionHandler(.success(userProfilePhoto))
     }
 
     func getContacts() -> [MAContact]? {

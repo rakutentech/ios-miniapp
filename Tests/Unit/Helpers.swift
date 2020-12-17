@@ -293,6 +293,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
+    func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success(mockUserName))
+    }
+
+    func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success(mockProfilePhoto))
+    }
+
     func getUserName() -> String? {
         return mockUserName
     }
