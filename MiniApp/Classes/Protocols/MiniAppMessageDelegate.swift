@@ -57,10 +57,13 @@ public enum MASDKProtocolResponse: String {
     case success = "SUCCESS"
 }
 
+/// Enumeration that is used to differentiate the response from the User
 public enum MASDKPermissionResponse: String {
+    /// User allowed the Device Permission
     case allowed = "ALLOWED"
 }
 
+/// Enumeration that is used to differentiate the device permission errors
 public enum MASDKPermissionError: String, MiniAppErrorProtocol {
 
     /// User has explicitly denied authorization
@@ -90,17 +93,29 @@ public enum MASDKPermissionError: String, MiniAppErrorProtocol {
     }
 }
 
+/// Enumeration that is used to differentiate the Custom permission errors
 public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
+
+    /// Unknown Error
     case unknownError = "UKNOWN_ERROR"
+
+    /// Host app failed to implement required interface
     case failedToConformToProtocol = "FAILED_TO_CONFORM_PROTOCOL"
+
+    /// Invalid Custom Permission request from Mini app
     case invalidCustomPermissionRequest
+
+    /// Invalid list of Custom Permission requested from Mini app
     case invalidCustomPermissionsList
+
+    /// User denied the Custom Permission
     case userDenied
 
     var name: String {
         return self.rawValue
     }
 
+    /// Detailed Description for every MASDKCustomPermissionError
     public var description: String {
         switch self {
         case .unknownError:

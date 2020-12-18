@@ -64,6 +64,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             fetchUserName(callbackId: callbackId)
         case .getProfilePhoto:
             fetchProfilePhoto(callbackId: callbackId)
+        case .getContacts:
+            fetchContacts(callbackId: callbackId)
         case .setScreenOrientation:
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
@@ -107,7 +109,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func getCurrentPosition(callbackId: String) {
-        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: getLocationInfo())
+        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.deviceLocation) {
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: getLocationInfo())
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
+        }
     }
 
     func getLocationInfo() -> String {
@@ -183,9 +189,25 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
     }
 
+    func fetchContacts(callbackId: String) {
+        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.contactsList) {
+            guard let contactList = ResponseEncoder.encode(data: hostAppMessageDelegate?.getContacts()) else {
+                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                return
+            }
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: contactList)
+            return
+        }
+        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
+    }
+
     func isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType) -> Bool {
         let customPermission = self.miniAppKeyStore.getCustomPermissions(forMiniApp: self.miniAppId).filter { $0.permissionName == customPermissionType }
-        return customPermission[0].isPermissionGranted.boolValue
+        if !customPermission.isEmpty {
+            return customPermission[0].isPermissionGranted.boolValue
+        } else {
+            return false
+        }
     }
 
     func setScreenOrientation(requestParam: RequestParameters?, callbackId: String) {

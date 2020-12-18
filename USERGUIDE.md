@@ -8,17 +8,11 @@ Mini App SDK also facilitates communication between a mini app and the host app 
 - Load MiniApp list
 - Load MiniApp metadata
 - Create a MiniApp view
-- Facilitate comm between host app and mini app
+- Facilitate communication between host app and mini app
+
+And much more features which you can find them in [Usage](#usage).
 
 All the MiniApp files downloaded by the MiniApp iOS library are cached locally
-
-## Getting started
-
-* [Requirements](#requirements)
-* [Documentation](https://rakutentech.github.io/ios-miniapp/)
-* [Installation](#installation)
-* [Configuration](#configuration)
-* [Usage](#usage)
 
 ## Requirements
 
@@ -26,15 +20,14 @@ This module supports **iOS 11.0 and above**. It has been tested on iOS 11.0 and 
 
 It is written in Swift 5.0 and can be used in compatible Xcode versions.
 
-In order to run your MiniApp you will have to provide the following,
+## Getting started
 
-* MiniApp host application identifier (```RASProjectId```)
-* Subscription key (```RASProjectSubscriptionKey```)
-* Base URL for API requests to the library (```RMAAPIEndpoint```)
-* Preference, if you want to make use of Test API Endpoints in your application or not
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Usage](#usage)
+* [Documentation](https://rakutentech.github.io/ios-miniapp/)
 
-
-## Installation
+### Installation
 
 Mini App SDK is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
 
@@ -42,7 +35,7 @@ Mini App SDK is available through [CocoaPods](https://cocoapods.org). To install
 pod 'MiniApp'
 ```
 
-## Configuration
+### Configuration
 
 In your project configuration .plist you should add below Key/Value :
 
@@ -59,83 +52,44 @@ If you don't want to use project settings, you have to pass this information one
 Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawValue)
 ```
 
-<div id="usage"></div>
+<a id="usage"></a>
 
-## Usage
+### Usage
 
-* [Overriding configuration on runtime](#runtime-conf)
+* [Create a MiniApp](#create-mini-app)
+* [Mini App Features](#mini-app-features)
+    * [Retrieving Unique ID](#retrieve-unique-id)
+    * [Requesting Location Permissions](#request-location-permission)
+    * [Custom Permissions](#custom-permissions)
+    * [Share Mini app content](#share-mini-app-content)
+    * [Retrieve User Profile details](#retrieve-user-profile-details)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
-* [Create a MiniApp](#create-mini-app)
-* [Communicate with MiniApp](#MiniAppMessageDelegate)
-* [Customize history navigation](#navigation)
-* [Custom Permissions](#custom-permissions)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
-* [Retrieve User Profile details](#user-profile-details)
-* [Orientation Lock](#orientation-lock)
-* [Access Token info](#access-token-info)
+* [Advanced Features](#advanced-features)
+    * [Overriding configuration on runtime](#runtime-conf)
+    * [Customize history navigation](#custom-navigation)
+    * [Opening external links](#Opening-external-links)
+    * [Orientation Lock](#orientation-lock)
 
-<div id="runtime-conf"></div>
-
-### Overriding configuration on runtime
----
-Every call to the API can be done with default parameters retrieved from the project .plist configuration file, or by providing a `MiniAppSdkConfig` object during the call. Here is a simple example class we use to create the configuration in samples below:
-
-```swift
-class Config: NSObject {
-    class func getCurrent() -> MiniAppSdkConfig {
-        return MiniAppSdkConfig(baseUrl: "https://your.custom.url"
-                                rasAppId: "your_RAS_App_id",
-                                subscriptionKey: "your_subscription_key",
-                                hostAppVersion: "your_custom_version",
-                                isTestMode: true")
-    }
-}
-```
-*NOTE:* `RMAHostAppUserAgentInfo` cannot be configured at run time.
-
-
-<div id="load-miniapp-list"></div>
-
-### Load the `MiniApp` list:
----
-MiniApp library calls are done via the `MiniApp.shared()` singleton with or without a `MiniAppSdkConfig` instance (you can get the current one with `Config.getCurrent()`). If you don't provide a config instance, values in custom iOS target properties will be used by default. 
-
-```swift
-MiniApp.shared().list { (result) in
-	...
-}
-```
-
-or
-
-```swift
-MiniApp.shared(with: Config.getCurrent()).list { (result) in
-	...
-}
-```
-<div id="get-mini-appinfo"></div>
-
-### Getting a `MiniAppInfo` :
----
-```swift
-MiniApp.shared().info(miniAppId: miniAppID) { (result) in
-	...
-}
-```
-
-or
-
-```swift
-MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) in
-	...
-}
-```
-
-<div id="create-mini-app"></div>
+<a id="create-mini-app"></a>
 
 ### Create a MiniApp for the given `MiniAppId` :
 ---
+**API Docs:** `MiniApp.create(appId:completionHandler:messageInterface:)`, `MiniAppDisplayDelegate`
+
+`MiniApp.create` is used to create a `View` for displaying a specific mini app. You must provide the mini app ID which you wish to create (you can get the mini-app ID by [Loading the Mini App List](#load-miniapp-list) first). Calling `MiniApp.create` will do the following:
+
+- Checks with the platform what is the latest and published version of the mini app.
+- Check if the latest version of the mini app has been already downloaded 
+    - If yes, return the already downloaded mini app view.
+    - If not, download the latest version and then return the view
+- If the device is disconnected from the internet and if the device already has a version of the mini app downloaded, then the already downloaded version will be returned immediately.
+
+After calling `MiniApp.create`, you will obtain an instance of `MiniAppDisplayDelegate` which is the delegate of the Display module. You can call `MiniAppDisplayDelegate.getMiniAppView` to obtain a `View` for displaying the mini app.
+
+The following is a simplified example:
+
 ```swift
 MiniApp.shared().create(appId: String, completionHandler: { (result) in
 	switch result {
@@ -149,15 +103,34 @@ MiniApp.shared().create(appId: String, completionHandler: { (result) in
 }, messageInterface: self)
 
 ```
-<div id="MiniAppMessageDelegate"></div>
 
-### Implement the MiniAppMessageDelegate in your View Controller
+<a id="mini-app-features"></a>
+
+### Mini App Features
 ---
+**API Docs:** [MiniAppMessageDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppMessageDelegate.html)
+
 The `MiniAppMessageDelegate` is used for passing messages between the Mini App (JavaScript) and the Host App (your native iOS App) and vice versa. Your App must provide the implementation for these functions.
+
+Mini App SDK provides default implementation for few interfaces in `MiniAppMessageDelegate`, however the Host app can still override them by implementing the interface in their side.
+
+| Method                       | Default  |
+| :----                        | :----:   |
+| getUniqueId                  | 🚫       |
+| requestPermission            | 🚫       |
+| requestCustomPermissions     | ✅       |
+| shareContent                 | ✅       |
+| getUserName                  | 🚫       |
+| getProfilePhoto              | 🚫       |
+| getAccessToken               | 🚫       |
 
 ```NOTE: Following code snippets is an example for implementing MiniAppMessageDelegate methods, you can add your own custom implementation or you can make use of the code which is provided in the Sample app.```
 
+<a id="retrieve-unique-id"></a>
+
 ##### Retrieving Unique ID
+---
+**API Docs:** [MiniAppUserInfoDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppUserInfoDelegate.html)
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
@@ -170,7 +143,11 @@ extension ViewController: MiniAppMessageDelegate {
 }
 ```
 
+<a id="request-location-permission"></a>
+
 ##### Requesting Location Permissions
+---
+**API Docs:** [MiniAppMessageDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppMessageDelegate.html)
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
@@ -186,9 +163,11 @@ extension ViewController: MiniAppMessageDelegate {
     }
 ```
 
-<div id="request-custom-permission"></div>
+<a id="custom-permissions"></a>
 
-##### Requesting Custom Permissions
+##### Custom Permissions
+---
+**API Docs:** [MiniAppMessageDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppMessageDelegate.html)
 
 SDK has its own implementation to show the list of requested custom permissions. If you want to display your own UI for requesting custom permissions, you can do it by overriding the method like below,
 
@@ -203,9 +182,31 @@ extension ViewController: MiniAppMessageDelegate {
             }
     
 ```
-<div id="share-mini-app-content"></div>
+
+##### Retrieving and storing Custom Permissions
+
+MiniApp iOS SDK supports list of Custom Permissions ( ```MiniAppCustomPermissionType```) and these can be stored and retrieved using the following public interfaces.
+
+##### Retrieving the Mini App Custom Permissions using MiniAppID
+
+Custom permissions and its status can be retrieved using the following interface. ```getCustomPermissions``` will return list  of ```MASDKCustomPermissionModel``` that contains the meta-info such as title and its granted status.
+
+```swift
+let miniAppPermissionsList = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppId)
+```
+
+##### Store the Mini App Custom Permissions
+Custom permissions for a mini app is cached by the SDK and you can use the following interface to store and retrieve it when you need.
+
+```swift
+ MiniApp.shared().setCustomPermissions(forMiniApp: String, permissionList: [MASDKCustomPermissionModel])
+```
+
+<a id="share-mini-app-content"></a>
 
 ##### Share Mini app content
+---
+**API Docs:** [MiniAppShareContentDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppShareContentDelegate.html)
 
 By default, Mini App iOS SDK can open its own controller for content sharing. If you want to override this, you just have to implement the `shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)` from `MiniAppShareContentDelegate`, which is part of `MiniAppMessageDelegate`.
 
@@ -221,10 +222,162 @@ extension ViewController: MiniAppMessageDelegate {
 }
 ```
 
-<div id="navigation"></div>
+<a id="user-profile-details"></a>
 
-### Add a web navigation interface to the MiniApp view
+##### Retrieve User Profile details
 ---
+**API Docs:** [MiniAppUserInfoDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppUserInfoDelegate.html)
+
+Get the User profile related details using 'MiniAppMessageDelegate'.
+The following delegates/interfaces will be called only if the user has allowed respective [Custom permissions](#custom-permissions)
+
+<a id="user-profile-details-username"></a>
+
+###### User Name
+
+Retrieve user name of the User
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getUserName() -> String? {
+        // Implementation to return the User name
+        return ""
+    }
+}
+```
+
+<a id="user-profile-details-profilephoto"></a>
+
+###### Profile Photo
+
+Retrieve Profile Photo of the User
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getProfilePhoto() -> String? {
+        // Implementation to return the Profile photo URI
+        return ""
+    }
+}
+```
+
+<a id="user-profile-details-contactlist"></a>
+
+###### Contact List
+
+Retrieve the Contact list of the User
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getContacts() -> [MAContact]? {
+        // Implementation to return the contact list
+        return []
+    }
+}
+```
+
+<a id="access-token-info"></a>
+
+###### Access Token Info
+
+Retrieve access token and expiry date
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+
+        completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
+    }
+}
+```
+
+<a id="load-miniapp-list"></a>
+
+### Load the `MiniApp` list:
+---
+**API Docs:** [MiniApp.list](https://rakutentech.github.io/ios-miniapp/Classes/MiniApp.html)
+
+MiniApp library calls are done via the `MiniApp.shared()` singleton with or without a `MiniAppSdkConfig` instance (you can get the current one with `Config.getCurrent()`). If you don't provide a config instance, values in custom iOS target properties will be used by default. 
+
+```swift
+MiniApp.shared().list { (result) in
+	...
+}
+```
+
+or
+
+```swift
+MiniApp.shared(with: Config.getCurrent()).list { (result) in
+	...
+}
+```
+<a id="get-mini-appinfo"></a>
+
+### Getting a `MiniAppInfo` :
+---
+**API Docs:** [MiniApp.info](https://rakutentech.github.io/ios-miniapp/Classes/MiniApp.html)
+
+```swift
+MiniApp.shared().info(miniAppId: miniAppID) { (result) in
+	...
+}
+```
+
+or
+
+```swift
+MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) in
+	...
+}
+```
+
+<a id="list-downloaded-mini-apps"></a>
+
+### List Downloaded Mini apps
+---
+**API Docs:** [MiniApp.listDownloadedWithCustomPermissions](https://rakutentech.github.io/ios-miniapp/Classes/MiniApp.html)
+
+Gets the list of downloaded Mini apps info and associated custom permissions status
+
+```swift
+ MiniApp.shared().listDownloadedWithCustomPermissions()
+```
+
+<a id="navigation"></a>
+
+### Advanced Features
+---
+**API Docs:** [MiniAppSdkConfig](https://rakutentech.github.io/ios-miniapp/Classes/MiniAppSdkConfig.html)
+
+Along with Mini app features, Mini app SDK does provides more customization for the user. Some of the more customizable features are below,
+
+
+<a id="runtime-conf"></a>
+
+#### Overriding configuration on runtime
+
+Every call to the API can be done with default parameters retrieved from the project .plist configuration file, or by providing a `MiniAppSdkConfig` object during the call. Here is a simple example class we use to create the configuration in samples below:
+
+```swift
+class Config: NSObject {
+    class func getCurrent() -> MiniAppSdkConfig {
+        return MiniAppSdkConfig(baseUrl: "https://your.custom.url"
+                                rasAppId: "your_RAS_App_id",
+                                subscriptionKey: "your_subscription_key",
+                                hostAppVersion: "your_custom_version",
+                                isTestMode: true")
+    }
+}
+```
+*NOTE:* `RMAHostAppUserAgentInfo` cannot be configured at run time.
+
+<a id="custom-navigation"></a>
+
+#### Add a web navigation interface to the MiniApp view
+---
+**API Docs:** [MiniAppNavigationConfig](https://rakutentech.github.io/ios-miniapp/Classes/MiniAppNavigationConfig.html)
+
 MiniApp iOS SDK provides a fully customizable way to implement a navigation interface inside your html pages with a `MiniAppNavigationConfig` object. The class takes 3 arguments:
 
 - `navigationBarVisibility` : 
@@ -246,6 +399,8 @@ MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(mi
 ```
 
 #### Opening external links
+---
+**API Docs:** [MiniAppNavigationConfig](https://rakutentech.github.io/ios-miniapp/Classes/MiniAppExternalUrlLoader.html)
 
 By default MiniApp iOS SDK will open external links into a separate modal controller when tapped. `MiniAppNavigationDelegate` implements a method that allows to override this behaviour and provide your own external links management. Here is an example of implementation:
 
@@ -278,96 +433,14 @@ extension ExternalWebViewController: WKNavigationDelegate {
 }
 ```
 
-<div id="custom-permissions"></div>
+<a id="orientation-lock"></a>
 
-### Custom Permissions
----
-MiniApp iOS SDK supports list of Custom Permissions ( ```MiniAppCustomPermissionType```) and these can be stored and retrieved using the following public interfaces.
+#### Orientation Lock
 
-#### Retrieving the Mini App Custom Permissions using MiniAppID
-
-Custom permissions and its status can be retrieved using the following interface. ```getCustomPermissions``` will return list  of ```MASDKCustomPermissionModel``` that contains the meta-info such as title and its granted status.
-
-```swift
-let miniAppPermissionsList = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppId)
-```
-
-#### Store the Mini App Custom Permissions
-Custom permissions for a mini app is cached by the SDK and you can use the following interface to store and retrieve it when you need.
-
-```swift
- MiniApp.shared().setCustomPermissions(forMiniApp: String, permissionList: [MASDKCustomPermissionModel])
-```
-
-<div id="list-downloaded-mini-apps"></div>
-
-### List Downloaded Mini apps
-Gets the list of downloaded Mini apps info and associated custom permissions status
-
-```swift
- MiniApp.shared().listDownloadedWithCustomPermissions()
-```
-
-<div id="user-profile-details"></div>
-
-### Retrieve User Profile details
----
-Get the User profile related details using 'MiniAppMessageDelegate'.
-The following delegates/interfaces will be called only if the user has allowed respective [Custom permissions](#custom-permissions)
-
-<div id="user-profile-details-username"></div>
-
-#### User Name
-
-Retrieve user name of the User
-
-```swift
-extension ViewController: MiniAppMessageDelegate {
-    func getUserName() -> String? {
-        // Implementation to return the User name
-        return ""
-    }
-}
-```
-
-<div id="user-profile-details-profilephoto"></div>
-
-#### Profile Photo
-
-Retrieve Profile Photo of the User
-
-```swift
-extension ViewController: MiniAppMessageDelegate {
-    func getProfilePhoto() -> String? {
-        // Implementation to return the Profile photo URI
-        return ""
-    }
-}
-```
-
-<div id="access-token-info"></div>
-
-#### Access Token Info
-
-Retrieve access token and expiry date
-
-```swift
-extension ViewController: MiniAppMessageDelegate {
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
-
-        completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
-    }
-}
-```
-
-<div id="orientation-lock"></div>
-
-### Orientation Lock
----
 
 You can choose to give orientation lock control to mini apps. However, this requires you to add some code to your `AppDelegate` which could have an affect on your entire App. If you do not wish to do this, please see the section *"Allow only full screen videos to change orientation".*
 
-### Allow mini apps to lock the view to any orientation
+##### Allow mini apps to lock the view to any orientation
     
 ```swift
 func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -384,7 +457,7 @@ func application(_ application: UIApplication, supportedInterfaceOrientationsFor
     }
 ```
 
-### Allow full screen videos to change orientation
+##### Allow full screen videos to change orientation
 
 You can add the following if you want to enable videos to change orientation. Note that if you do not wish to add code to `AppDelegate` as in the above example, you can still allow videos inside the mini app to use landscape mode even when your App is locked to portrait mode and vice versa.
 
@@ -402,7 +475,7 @@ extension AVPlayerViewController {
 }
 ```
 
-<div id="change-log"></div>
+<a id="change-log"></a>
 
 ## Changelog
 

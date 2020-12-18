@@ -1,11 +1,16 @@
 extension NSError {
 
     class func serverError(code: Int, message: String) -> NSError {
-        return NSError(
-            domain: "APIClient",
-            code: code,
-            userInfo: [NSLocalizedDescriptionKey: message]
-        )
+        switch code {
+        case 404:
+            return miniAppNotFound(message: message)
+        default:
+            return NSError(
+                domain: MiniAppSDKServerErrorDomain,
+                code: code,
+                userInfo: [NSLocalizedDescriptionKey: message]
+            )
+        }
     }
 
     class func unknownServerError(httpResponse: HTTPURLResponse?) -> NSError {
@@ -17,33 +22,57 @@ extension NSError {
 
     class func invalidURLError() -> NSError {
         return NSError(
-            domain: "APIClient",
-            code: 0,
-            userInfo: [NSLocalizedDescriptionKey: "Invalid URL error"]
+            domain: MiniAppSDKErrorDomain,
+            code: MiniAppSDKErrorCode.invalidURLError.rawValue
         )
     }
 
     class func invalidAppId() -> NSError {
         return NSError(
-            domain: "APIClient",
-            code: 0,
-            userInfo: [NSLocalizedDescriptionKey: "Invalid AppID error"]
+            domain: MiniAppSDKErrorDomain,
+            code: MiniAppSDKErrorCode.invalidAppId.rawValue
         )
     }
 
     class func invalidResponseData() -> NSError {
         return NSError(
-            domain: "APIClient",
-            code: 0,
-            userInfo: [NSLocalizedDescriptionKey: "Invalid response received"]
+            domain: MiniAppSDKErrorDomain,
+            code: MiniAppSDKErrorCode.invalidResponseData.rawValue
         )
     }
 
     class func downloadingFailed() -> NSError {
         return NSError(
-            domain: "Downloader",
-            code: 0,
-            userInfo: [NSLocalizedDescriptionKey: "Downloading failed"]
+            domain: MiniAppSDKErrorDomain,
+            code: MiniAppSDKErrorCode.downloadingFailed.rawValue
         )
     }
+
+    class func noPublishedVersion() -> NSError {
+        return NSError(
+            domain: MiniAppSDKErrorDomain,
+            code: MiniAppSDKErrorCode.noPublishedVersion.rawValue
+        )
+    }
+
+    class func miniAppNotFound(message: String) -> NSError {
+        return NSError(
+            domain: MiniAppSDKErrorDomain,
+            code: MiniAppSDKErrorCode.miniAppNotFound.rawValue,
+            userInfo: [NSLocalizedDescriptionKey: message]
+        )
+    }
+}
+
+// swiftlint:disable identifier_name
+var MiniAppSDKErrorDomain = "MiniAppSDKErrorDomain"
+var MiniAppSDKServerErrorDomain = "MiniAppSDKServerErrorDomain"
+
+enum MiniAppSDKErrorCode: Int {
+    case invalidURLError = 1,
+         invalidAppId,
+         invalidResponseData,
+         downloadingFailed,
+         noPublishedVersion,
+         miniAppNotFound
 }
