@@ -1,12 +1,15 @@
 use_frameworks!
 
-platform :ios, '11.0'
-target 'MiniApp_Example' do
-  project 'MiniApp.xcodeproj'
-  workspace 'MiniApp.xcworkspace'
-  pod 'MiniApp', :path => './'
+sdk_name = "MiniApp"
+secrets = ["RMA_API_ENDPOINT", "RAS_PROJECT_SUBSCRIPTION_KEY", "RAS_PROJECT_IDENTIFIER"]
 
-  target 'MiniApp_Tests' do
+platform :ios, '11.0'
+target sdk_name + '_Example' do
+  project sdk_name + '.xcodeproj'
+  workspace sdk_name + '.xcworkspace'
+  pod sdk_name , :path => './'
+
+  target sdk_name + '_Tests' do
     inherit! :search_paths
     pod 'Quick'
     pod 'Nimble'
@@ -14,5 +17,5 @@ target 'MiniApp_Example' do
 end
 
 post_install do |installer|
-  system("./configure-secrets.sh")
+  system("./configure-secrets.sh #{sdk_name} #{secrets.join(" ")}")
 end
