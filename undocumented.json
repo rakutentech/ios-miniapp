@@ -2,7 +2,7 @@
   "warnings": [
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppExternalWebViewController.swift",
-      "line": 64,
+      "line": 74,
       "symbol": "MiniAppExternalWebViewController.webView(_:decidePolicyFor:decisionHandler:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -23,70 +23,70 @@
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
-      "line": 73,
+      "line": 92,
       "symbol": "MiniAppNavigationAction.back",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
-      "line": 73,
+      "line": 92,
       "symbol": "MiniAppNavigationAction.forward",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
-      "line": 81,
+      "line": 100,
       "symbol": "MiniAppNavigationVisibility.always",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
-      "line": 81,
+      "line": 100,
       "symbol": "MiniAppNavigationVisibility.auto",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/MiniAppNavigationConfig.swift",
-      "line": 81,
+      "line": 100,
       "symbol": "MiniAppNavigationVisibility.never",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Display/RealMiniAppView.swift",
-      "line": 181,
+      "line": 227,
       "symbol": "RealMiniAppView.webView(_:didFinish:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 29,
+      "line": 30,
       "symbol": "MiniAppCustomPermissionType",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 30,
+      "line": 31,
       "symbol": "MiniAppCustomPermissionType.userName",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 31,
+      "line": 32,
       "symbol": "MiniAppCustomPermissionType.profilePhoto",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 32,
+      "line": 33,
       "symbol": "MiniAppCustomPermissionType.contactsList",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -94,63 +94,49 @@
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
       "line": 34,
+      "symbol": "MiniAppCustomPermissionType.deviceLocation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 36,
       "symbol": "MiniAppCustomPermissionType.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 46,
+      "line": 50,
       "symbol": "MiniAppCustomPermissionGrantedStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 47,
+      "line": 51,
       "symbol": "MiniAppCustomPermissionGrantedStatus.allowed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 48,
+      "line": 52,
       "symbol": "MiniAppCustomPermissionGrantedStatus.denied",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 49,
+      "line": 53,
       "symbol": "MiniAppCustomPermissionGrantedStatus.permissionNotAvailable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 51,
+      "line": 55,
       "symbol": "MiniAppCustomPermissionGrantedStatus.boolValue",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptPermissionManager.swift",
-      "line": 138,
-      "symbol": "MASDKCustomPermissionModel.permissionName",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptPermissionManager.swift",
-      "line": 139,
-      "symbol": "MASDKCustomPermissionModel.isPermissionGranted",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/JavascriptBridge/MiniAppJavaScriptPermissionManager.swift",
-      "line": 140,
-      "symbol": "MASDKCustomPermissionModel.permissionDescription",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -159,6 +145,27 @@
       "line": 5,
       "symbol": "MiniApp.MAOrientationLock",
       "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/MiniApp.swift",
+      "line": 97,
+      "symbol": "MiniApp.list(completionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/MiniApp.swift",
+      "line": 112,
+      "symbol": "MiniApp.info(miniAppId:completionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/MiniApp.swift",
+      "line": 127,
+      "symbol": "MiniApp.create(appId:completionHandler:messageInterface:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -190,76 +197,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageDelegate.swift",
-      "line": 60,
-      "symbol": "MASDKPermissionResponse",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageDelegate.swift",
-      "line": 61,
-      "symbol": "MASDKPermissionResponse.allowed",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageDelegate.swift",
-      "line": 64,
-      "symbol": "MASDKPermissionError",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageDelegate.swift",
-      "line": 93,
-      "symbol": "MASDKCustomPermissionError",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageDelegate.swift",
-      "line": 94,
-      "symbol": "MASDKCustomPermissionError.unknownError",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageDelegate.swift",
-      "line": 95,
-      "symbol": "MASDKCustomPermissionError.failedToConformToProtocol",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageDelegate.swift",
-      "line": 96,
-      "symbol": "MASDKCustomPermissionError.invalidCustomPermissionRequest",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageDelegate.swift",
-      "line": 97,
-      "symbol": "MASDKCustomPermissionError.invalidCustomPermissionsList",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageDelegate.swift",
-      "line": 98,
-      "symbol": "MASDKCustomPermissionError.userDenied",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageDelegate.swift",
-      "line": 104,
-      "symbol": "MASDKCustomPermissionError.description",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppMessageModels.swift",
       "line": 1,
       "symbol": "MiniAppShareContent",
@@ -275,15 +212,29 @@
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 30,
+      "line": 37,
       "symbol": "MATokenInfo",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 34,
+      "line": 41,
       "symbol": "MATokenInfo.init(accessToken:expirationDate:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppUserInfoDelegate.swift",
+      "line": 49,
+      "symbol": "MAContact.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Protocols/MiniAppUserInfoDelegate.swift",
+      "line": 51,
+      "symbol": "MAContact.init(id:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -312,6 +263,13 @@
       "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Utilities/MiniAppExternalUrlLoader.swift",
       "line": 5,
       "symbol": "MiniAppExternalUrlLoader.currentResponseHandler",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/rakutentech/ios-miniapp/MiniApp/Classes/Utilities/MiniAppExternalUrlLoader.swift",
+      "line": 6,
+      "symbol": "MiniAppExternalUrlLoader.customMiniAppURL",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     }
