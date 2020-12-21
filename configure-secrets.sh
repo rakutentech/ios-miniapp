@@ -72,7 +72,7 @@ do
   fi
   secureDoubleSlashForXCConfig $value
   # Set secrets from environment variables
-  cmd='echo "${var_name} = $SECURE_DOUBLE_SLASH_FOR_XCCONFIG_RESULT"'
+  cmd='echo "${var_name} = ${SECURE_DOUBLE_SLASH_FOR_XCCONFIG_RESULT:=${var_name}}"'
   eval ${cmd} >> $SECRETS_FILE
 done
 
