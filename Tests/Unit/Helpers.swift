@@ -234,6 +234,16 @@ class MockFile {
     }
 }
 
+class MockMessageInterfaceExtension: MiniAppMessageDelegate {
+    func getUniqueId() -> String {
+        let mockMessageInterface = MockMessageInterface()
+        return mockMessageInterface.getUniqueId()
+    }
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        return mockMessageInterface.requestPermission(permissionType: permissionType, completionHandler: completionHandler)
+    }
+}
 class MockMessageInterface: MiniAppMessageDelegate {
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
