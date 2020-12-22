@@ -11,10 +11,7 @@ class QueryParamViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        guard let queryString = getQueryParam() else {
-            return
-        }
-        self.queryStringTextfield.text = queryString
+        self.queryStringTextfield.text = getQueryParam()
     }
 
     override func viewDidDisappear(_ animated: Bool) {

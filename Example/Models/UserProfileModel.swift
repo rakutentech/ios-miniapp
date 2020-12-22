@@ -90,10 +90,10 @@ func saveQueryParam(queryParam: String, forKey key: String = "QueryParam") -> Bo
     return false
 }
 
-func getQueryParam(key: String = "QueryParam") -> String? {
+func getQueryParam(key: String = "QueryParam") -> String {
     if let data = UserDefaults.standard.data(forKey: key) {
         let queryParam = try? PropertyListDecoder().decode(QueryParamInfo.self, from: data)
-        return queryParam?.queryString
+        return queryParam?.queryString ?? ""
     }
-    return nil
+    return ""
 }
