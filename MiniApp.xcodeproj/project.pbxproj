@@ -92,6 +92,11 @@
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
 		18CC83362538172F00EEDB00 /* UIWindow+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIWindow+MiniApp.swift"; path = "../../MiniApp/Classes/Extensions/UIWindow+MiniApp.swift"; sourceTree = "<group>"; };
+		31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "MiniApp-Secrets.xcconfig"; path = "../../../MiniApp-Secrets.xcconfig"; sourceTree = "<group>"; };
+		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
+		31070C63258C554500BED77C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		31070C64258C554500BED77C /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEV.md; sourceTree = "<group>"; };
+		31070C66258C55C000BED77C /* configure-secrets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "configure-secrets.sh"; sourceTree = SOURCE_ROOT; };
 		3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStatusTests.swift; sourceTree = "<group>"; };
 		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
 		38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestAPITests.swift; sourceTree = "<group>"; };
@@ -188,11 +193,25 @@
 		183AF07724CE63FA000ABCBF /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				31070C66258C55C000BED77C /* configure-secrets.sh */,
+				31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */,
 				183AF07C24CE642F000ABCBF /* Config-debug.xcconfig */,
 				183AF07824CE640F000ABCBF /* Config-release.xcconfig */,
 			);
 			name = Config;
 			path = Example/Config;
+			sourceTree = "<group>";
+		};
+		31070C65258C557D00BED77C /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				D85784C7998D04CE64578236 /* README.md */,
+				31070C62258C552F00BED77C /* USERGUIDE.md */,
+				31070C63258C554500BED77C /* CHANGELOG.md */,
+				31070C64258C554500BED77C /* DEV.md */,
+				7FB3A4D3F3350D35AED2F43D /* LICENSE */,
+			);
+			name = Documentation;
 			sourceTree = "<group>";
 		};
 		38920ACA251D9C57004C5DDD /* Utils */ = {
@@ -333,6 +352,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				31070C65258C557D00BED77C /* Documentation */,
 				607FACD21AFB9204008FA782 /* Example for MiniApp */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				183AF07724CE63FA000ABCBF /* Config */,
@@ -398,8 +418,6 @@
 			isa = PBXGroup;
 			children = (
 				A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */,
-				D85784C7998D04CE64578236 /* README.md */,
-				7FB3A4D3F3350D35AED2F43D /* LICENSE */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
@@ -753,7 +771,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.6.0;
+				MARKETING_VERSION = 2.7.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.miniapp.MiniAppDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -767,7 +785,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.6.0;
+				MARKETING_VERSION = 2.7.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.miniapp.MiniAppDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
