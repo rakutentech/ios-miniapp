@@ -23,6 +23,14 @@ struct AccessTokenInfo: Codable {
     }
 }
 
+struct QueryParamInfo: Codable {
+    var queryString: String
+
+    init(queryString: String) {
+        self.queryString = queryString
+    }
+}
+
 func setProfileSettings(forKey key: String = "UserProfileDetail", userDisplayName: String?, profileImageURI: String?, contactList: [MAContact]? = getContactList()) -> Bool {
     if let data = try? PropertyListEncoder().encode(UserProfileModel(displayName: userDisplayName ?? "", profileImageURI: profileImageURI, contactList: contactList)) {
         UserDefaults.standard.set(data, forKey: key)
@@ -69,6 +77,23 @@ func getTokenInfo(key: String = "AccessTokenInfo") -> AccessTokenInfo? {
     if let data = UserDefaults.standard.data(forKey: key) {
         let accessTokenInfo = try? PropertyListDecoder().decode(AccessTokenInfo.self, from: data)
         return accessTokenInfo
+    }
+    return nil
+}
+
+func saveQueryParam(queryParam: String, forKey key: String = "QueryParam") -> Bool {
+    if let data = try? PropertyListEncoder().encode(QueryParamInfo(queryString: queryParam)) {
+        UserDefaults.standard.set(data, forKey: key)
+        UserDefaults.standard.synchronize()
+        return true
+    }
+    return false
+}
+
+func getQueryParam(key: String = "QueryParam") -> String? {
+    if let data = UserDefaults.standard.data(forKey: key) {
+        let queryParam = try? PropertyListDecoder().decode(QueryParamInfo.self, from: data)
+        return queryParam?.queryString
     }
     return nil
 }
