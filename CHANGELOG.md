@@ -1,5 +1,22 @@
 ## CHANGELOG
 
+### 2.7.0 (2020-12-18)
+
+**SDK**
+
+- **Feature:** Added support for requesting a contact list from a MiniApp
+- **Feature:** Added support to load a MiniApp from an URL
+- **Feature:** Added location permission to custom permissions management
+- **Fixed:** A specific exception is now raised when an app has no published version 
+- **Fixed:** Location permissions glitch
+
+**Sample App**
+
+- **Fixed:** Permissions toggles did not fit the screen
+- **Fixed:** Location permissions glitch
+
+---
+
 ### 2.6.0 (2020-11-27)
 
 **SDK**
