@@ -176,11 +176,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     }
                     self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: userName)
                 case .failure(let error):
-                    if !error.localizedDescription.isEmpty {
-                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
-                        return
-                    }
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
+                    self.handleMASDKError(error: error, callbackId: callbackId)
                 }
             }
         } else {
@@ -199,11 +195,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     }
                     self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: profilePhoto)
                 case .failure(let error):
-                    if !error.localizedDescription.isEmpty {
-                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
-                        return
-                    }
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
+                    self.handleMASDKError(error: error, callbackId: callbackId)
                 }
             }
         } else {
@@ -263,6 +255,14 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(error))
             }
         }
+    }
+
+    func handleMASDKError(error: MASDKError, callbackId: String) {
+        if !error.localizedDescription.isEmpty {
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+            return
+        }
+        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
     }
 }
 
