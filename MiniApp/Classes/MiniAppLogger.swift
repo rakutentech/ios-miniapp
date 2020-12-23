@@ -23,7 +23,7 @@ internal class MiniAppLogger {
         #if DEBUG
         // Disabled by default to prevent spamming apps with verbose logging.
         // In future this could be made switchable via plist.
-        //print("🔍 \(message)")
+        // print("🔍 \(message)")
         #endif
     }
 

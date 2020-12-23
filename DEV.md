@@ -75,17 +75,17 @@ The generated docs will be output to a folder named `docs` in the root of this r
 
 Before any deployment, be sure the project will build and run unit tests by running `fastlane ci`.
 
-[TravisCI](https://travis-ci.org/github/rakutentech/ios-miniapp) is used for building and testing the project for every pull request. It is also used for publishing the SDK and Sample App.
+[BitRise](https://app.bitrise.io/app/bddaf16e1f0fc0d6) is used for building and testing the project for every pull request. It is also used for publishing the SDK and Sample App.
 
 Note that two Sample App builds are created on merge to master or during a release: 
-- One build for the iOS Simulator (built on TravisCI and then uploaded to App Center - App Center does not support building for the Simulator target)
+- One build for the iOS Simulator (built on CI and then uploaded to App Center - App Center does not support building for the Simulator target)
 - One build for iOS Devices (built directly on App Center in order to keep the certificate and provisioning profile secret)
 
 ### Merge to Master
 
 The following describes the steps that CI performs when a branch is merged to master.
 
-1. We trigger a build on TravisCI by merging a branch to master.
+1. We trigger a build on CI by merging a branch to master.
 2. CI builds SDK and Sample App, run tests, linting, etc.
 3. CI creates a ZIP file for the iOS Simulator (Staging) build of the Sample App.
     - Publishes build to App Center "Testers" group.
@@ -96,7 +96,7 @@ The following describes the steps that CI performs when a branch is merged to ma
 
 The following describes the steps that CI performs when releasing a new version of the SDK.
 
-1. We trigger a build on TravisCI by pushing a Git tag to the repo in the format `vX.X.X`.
+1. We trigger a build on CI by pushing a Git tag to the repo in the format `vX.X.X`.
 2. CI builds SDK and Sample App, run tests, linting, etc.
 3. CI publishes the SDK to [Cocoapods](https://cocoapods.org/pods/MiniApp).
 4. CI creates ZIP file for the iOS Simulator (Production) build of the Sample App.
