@@ -114,6 +114,7 @@ internal class RealMiniApp {
         DispatchQueue.main.async {
             let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
                                                                        versionId: appInfo.version.versionId,
+                                                                       projectId: self.miniAppClient.environment.projectId,
                                                                        miniAppTitle: appInfo.displayName ?? "Mini app",
                                                                        hostAppMessageDelegate: messageInterface ?? self)
             self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
@@ -137,6 +138,7 @@ internal class RealMiniApp {
             DispatchQueue.main.async {
                 let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId,
                                                                            versionId: cachedVersion,
+                                                                           projectId: self.miniAppClient.environment.projectId,
                                                                            miniAppTitle: miniAppInfo.displayName ?? "Mini App",
                                                                            hostAppMessageDelegate: messageInterface ?? self)
                 completionHandler(.success(miniAppDisplayProtocol))

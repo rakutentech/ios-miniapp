@@ -5,6 +5,9 @@ internal class RealMiniAppView: UIView {
     internal var webView: WKWebView
     internal var miniAppTitle: String
     internal var miniAppURL: URL?
+    internal var miniAppId: String?
+    internal var projectId: String?
+    internal var miniAppVersion: String?
     internal var navBar: (UIView & MiniAppNavigationDelegate)?
     internal var webViewBottomConstraintStandalone: NSLayoutConstraint?
     internal var webViewBottomConstraintWithNavBar: NSLayoutConstraint?
@@ -20,6 +23,7 @@ internal class RealMiniAppView: UIView {
     init(
         miniAppId: String,
         versionId: String,
+        projectId: String,
         miniAppTitle: String,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         displayNavBar: MiniAppNavigationVisibility = .never,
@@ -31,6 +35,8 @@ internal class RealMiniAppView: UIView {
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
+        self.miniAppVersion = versionId
+        self.projectId = projectId
 
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
@@ -72,6 +78,7 @@ internal class RealMiniAppView: UIView {
         hostAppMessageDelegate: MiniAppMessageDelegate,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+        self.miniAppId = miniAppId
 
         webView.navigationDelegate = self
 
@@ -101,7 +108,24 @@ internal class RealMiniAppView: UIView {
             webViewBottomConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
             webViewBottomConstraintStandalone?.isActive = false
         }
-
+        NotificationCenter.default.sendAnalytics(event:.mini_app_open, type:.click, parameters:getAnalyticsInfo())
+    }
+    
+    func getAnalyticsInfo() -> [(String,String)] {
+        var result = [(String,String)]()
+        if let miniAppId = self.miniAppId {
+            result.append(("cp.mini_app_id",miniAppId))
+        }
+        if let version = self.miniAppVersion {
+            result.append(("cp.mini_app_version_id",version))
+        }
+        if let projectId = self.projectId {
+            result.append(("cp.mini_app_project_id",projectId))
+        }
+        if let version = Bundle(identifier: "org.cocoapods.MiniApp")?.infoDictionary?["CFBundleShortVersionString"] as? String {
+            result.append(("cp.mini_app_sdk_version",version))
+        }
+        return result
     }
 
     func refreshNavBar() {
@@ -141,6 +165,7 @@ internal class RealMiniAppView: UIView {
     }
 
     deinit {
+        NotificationCenter.default.sendAnalytics(event:.mini_app_close, type:.click, parameters:getAnalyticsInfo())
         MiniApp.MAOrientationLock = []
         UIViewController.attemptRotationToDeviceOrientation()
         webView.configuration.userContentController.removeMessageHandler()

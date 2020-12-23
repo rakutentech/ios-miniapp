@@ -10,11 +10,21 @@ extension OSLog {
 }
 
 internal class MiniAppLogger {
+    static let encoder = JSONEncoder()
     /// Debug
     class func d(_ message: String) {
         #if DEBUG
 
         print("🔍\(Date().timeIntervalSince1970) \(message)")
+        #endif
+    }
+    
+    /// Debug
+    class func d<T: Codable>(codable: T) {
+        #if DEBUG
+        if let jsonData = try? Self.encoder.encode(codable), let jsonString = String(data: jsonData, encoding: . utf8) {
+            d(jsonString)
+        }
         #endif
     }
 

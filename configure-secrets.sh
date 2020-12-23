@@ -43,7 +43,7 @@ echo "// **DO NOT** add this file to git." >> $SECRETS_FILE
 echo "//" >> $SECRETS_FILE
 echo "// Auto-generated file. Any modifications will be lost on next 'pod install'" >> $SECRETS_FILE
 echo "//" >> $SECRETS_FILE
-echo "// Add new secrets configuration in ./configure-secrets.sh" >> $SECRETS_FILE
+echo "// Add new secrets configuration in podfile" >> $SECRETS_FILE
 echo "//" >> $SECRETS_FILE
 echo "// In order to have the // in https://, we need to split it with an empty" >> $SECRETS_FILE
 echo "// variable substitution via \$() e.g. ROOT_URL = https:/\$()/www.example.com" >> $SECRETS_FILE
