@@ -64,8 +64,8 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                     miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(10))
-                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-alert"), timeout: .seconds(10))
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
+                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-alert"), timeout: .seconds(30))
                     miniAppView.tapButton(.okButton)
                 }
             }
@@ -89,9 +89,9 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                     miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(10))
-                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(10))
-                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: .seconds(10))
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
+                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
+                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: .seconds(30))
                     miniAppView.tapButton(.okButton)
                 }
             }
@@ -115,9 +115,9 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                     miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(10))
-                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(10))
-                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: .seconds(10))
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
+                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
+                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: .seconds(30))
                     miniAppView.tapButton(.cancelButton)
                 }
             }
@@ -141,10 +141,10 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                     miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(10))
-                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(10))
-                    expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: .seconds(10))
-                    expect(miniAppView.dialogTextFieldText).toEventually(equal("Rakuten Mini app"), timeout: .seconds(10))
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
+                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
+                    expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: .seconds(30))
+                    expect(miniAppView.dialogTextFieldText).toEventually(equal("Rakuten Mini app"), timeout: .seconds(30))
                     miniAppView.tapButton(.okButton)
                 }
             }
@@ -167,10 +167,10 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                         miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                        expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(10))
-                        expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(10))
-                        expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: .seconds(10))
-                        expect(miniAppView.dialogTextFieldText).toEventually(equal(""), timeout: .seconds(10))
+                        expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
+                        expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
+                        expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: .seconds(30))
+                        expect(miniAppView.dialogTextFieldText).toEventually(equal(""), timeout: .seconds(30))
                         miniAppView.tapButton(.cancelButton)
                     }
                 }
