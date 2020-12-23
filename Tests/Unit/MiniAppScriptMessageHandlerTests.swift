@@ -312,7 +312,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue), timeout: .seconds(10))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("hostAppError"), timeout: .seconds(10))
                 }
                 it("will return Error if User didn't allow User Name permission") {
                     mockMessageInterface.mockUserName = ""
@@ -346,6 +346,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(mockCallbackProtocol.response).toEventually(contain(mockMessageInterface.mockProfilePhoto ?? ""), timeout: .seconds(10))
                 }
                 it("will return Error if User didn't set the Profile Photo in the User Profile") {
+                    mockMessageInterface.mockProfilePhoto = nil
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
                     let scriptMessageHandler = MiniAppScriptMessageHandler(
                         delegate: mockCallbackProtocol,
@@ -353,11 +354,10 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         miniAppId: self.name, miniAppTitle: mockMiniAppTitle
                     )
                     updateCustomPermissionStatus(miniAppId: self.name, permissionType: .profilePhoto, status: .allowed)
-                    mockMessageInterface.mockProfilePhoto = ""
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue), timeout: .seconds(10))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("hostAppError"), timeout: .seconds(10))
                 }
                 it("will return Error if User didn't allow Profile Photo permission") {
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
