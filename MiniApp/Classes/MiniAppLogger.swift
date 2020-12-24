@@ -12,10 +12,10 @@ extension OSLog {
 internal class MiniAppLogger {
     static let encoder = JSONEncoder()
     /// Debug
-    class func d(_ message: String) {
+    class func d(_ message: String,_ customBullet: String? = nil) {
         #if DEBUG
 
-        print("🔍\(Date().timeIntervalSince1970) \(message)")
+        print("\(customBullet ?? "🔍") \(Date().timeIntervalSince1970) \(message)")
         #endif
     }
     

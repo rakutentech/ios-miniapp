@@ -13,6 +13,15 @@ public class MiniApp: NSObject {
         shared.realMiniApp.update(with: settings, navigationSettings: navigationSettings)
         return shared
     }
+    
+    /// Initiates MiniApp SDK using the default config settings as defined in Info.plist.
+    /// A MiniAppSdkConfig object can be provided to override this configuration
+    ///
+    /// - Parameters:
+    ///     -   settings: A MiniAppSdkConfig object containing values to override default config settings.
+    public class func configure(with settings: MiniAppSdkConfig? = nil){
+        shared(with:settings).initialLaunchConfig()
+    }
 
     /// Fetch the List of [MiniAppInfo] information.
     /// Error information will be returned if any problem while fetching from the backed
@@ -156,5 +165,14 @@ public extension MiniApp {
         return realMiniApp.createMiniApp(url: url,
                                          errorHandler: errorHandler,
                                          messageInterface: messageInterface)
+    }
+}
+
+// MARK: - Internal
+internal extension MiniApp {
+    func initialLaunchConfig() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            MiniAppAnalytics.sendAnalytics(event:.host_launch)
+        }
     }
 }
