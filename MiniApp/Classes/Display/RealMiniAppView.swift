@@ -108,9 +108,9 @@ internal class RealMiniAppView: UIView {
             webViewBottomConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
             webViewBottomConstraintStandalone?.isActive = false
         }
-        MiniAppAnalytics.sendAnalytics(event:.open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId)
+        MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId)
     }
-    
+
     func refreshNavBar() {
         var actionsAvailable = [MiniAppNavigationAction]()
         if webView.canGoBack || navBarVisibility == .always {
