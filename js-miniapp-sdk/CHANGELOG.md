@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.X.X (In progress)
+- **Fix:** Location permission support for iOS/Android Mini App SDK 2.6 and below.
+
 ### 1.6.0 (2020-12-18)
 - **Feature:** Added `CustomPermissionName.LOCATION`.
 - **Change:** Updated `requestLocationPermission()` to `requestLocationPermission(permissionDescription?: string)`. From now `requestLocationPermission` will request both custom and device permission respectively. [See here](README.md#Request-Permissions).

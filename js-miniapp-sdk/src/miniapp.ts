@@ -188,8 +188,18 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return this.requestCustomPermissions(locationPermission)
       .then(permission =>
         permission.find(
-          result => result.status === CustomPermissionStatus.ALLOWED
+          result =>
+            result.status === CustomPermissionStatus.ALLOWED ||
+            // Case where older Android SDK doesn't support the Location custom permission
+            result.status === CustomPermissionStatus.PERMISSION_NOT_AVAILABLE
         )
+      )
+      .catch(error =>
+        // Case where older iOS SDK doesn't support the Location custom permission
+        typeof error === 'string' &&
+        error.startsWith('invalidCustomPermissionsList')
+          ? Promise.resolve(true)
+          : Promise.reject(error)
       )
       .then(hasPermission =>
         hasPermission ? this.requestPermission(DevicePermission.LOCATION) : null
