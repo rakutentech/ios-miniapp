@@ -35,6 +35,7 @@ interface MiniAppFeatures {
    * and the custom permission for location {@link CustomPermissionName.LOCATION}.
    * @param permissionDescription Description of location permission.
    * @returns The Promise of permission result of mini app from injected side.
+   * Rejects the promise if the user denied the location permission (either the device permission or custom permission).
    */
   requestLocationPermission(permissionDescription?: string): Promise<string>;
 
@@ -202,7 +203,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
           : Promise.reject(error)
       )
       .then(hasPermission =>
-        hasPermission ? this.requestPermission(DevicePermission.LOCATION) : null
+        hasPermission
+          ? this.requestPermission(DevicePermission.LOCATION)
+          : Promise.reject('User denied location permission to this mini app.')
       );
   }
 

@@ -2,6 +2,7 @@
 
 ### 1.X.X (In progress)
 - **Fix:** Location permission support for iOS/Android Mini App SDK 2.6 and below.
+- **Fix:** Reject promise from `MiniApp.requestLocationPermission` when the user denies location custom permission.
 
 ### 1.6.0 (2020-12-18)
 - **Feature:** Added `CustomPermissionName.LOCATION`.

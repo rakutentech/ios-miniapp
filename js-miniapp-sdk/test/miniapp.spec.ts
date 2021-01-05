@@ -78,15 +78,28 @@ describe('requestLocationPermission', () => {
   });
 
   it('should request location custom permission', () => {
-    return miniApp.requestLocationPermission('test_description')
-      .then(() => {
-        sinon.assert.calledWith(window.MiniAppBridge.requestCustomPermissions, [
-          {
-            name: CustomPermissionName.LOCATION,
-            description: 'test_description',
-          },
-        ]);
-      })
+    return miniApp.requestLocationPermission('test_description').then(() => {
+      sinon.assert.calledWith(window.MiniAppBridge.requestCustomPermissions, [
+        {
+          name: CustomPermissionName.LOCATION,
+          description: 'test_description',
+        },
+      ]);
+    });
+  });
+
+  it('should reject when user denies location custom permission', () => {
+    window.MiniAppBridge.requestCustomPermissions.resolves({
+      permissions: [
+        {
+          name: CustomPermissionName.LOCATION,
+          status: CustomPermissionStatus.DENIED,
+        },
+      ],
+    });
+
+    return expect(miniApp.requestLocationPermission('test_description')).to.be
+      .rejected;
   });
 
   it('should handle case where Android SDK does not support location custom permission', () => {
