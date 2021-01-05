@@ -239,9 +239,9 @@ Retrieve user name of the User
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getUserName() -> String? {
+    func getUserName(completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
         // Implementation to return the User name
-        return ""
+        completionHandler(.success(""))
     }
 }
 ```
@@ -254,9 +254,9 @@ Retrieve Profile Photo of the User
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getProfilePhoto() -> String? {
+    func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         // Implementation to return the Profile photo URI
-        return ""
+        completionHandler(.success(""))
     }
 }
 ```

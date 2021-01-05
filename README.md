@@ -1,5 +1,5 @@
 [![Cocoapods](https://img.shields.io/cocoapods/v/MiniApp)](https://cocoapods.org/pods/MiniApp)
-[![Build Status](https://travis-ci.org/rakutentech/ios-miniapp.svg?branch=master)](https://travis-ci.org/rakutentech/ios-miniapp)
+[![Build Status](https://app.bitrise.io/app/bddaf16e1f0fc0d6/status.svg?token=79YRf2JDkNHluFGQUlNCPg&branch=master)](https://app.bitrise.io/app/bddaf16e1f0fc0d6)
 [![codecov](https://codecov.io/gh/rakutentech/ios-miniapp/branch/master/graph/badge.svg)](https://codecov.io/gh/rakutentech/ios-miniapp)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)

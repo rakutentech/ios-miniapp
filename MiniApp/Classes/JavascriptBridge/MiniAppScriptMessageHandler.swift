@@ -167,26 +167,40 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func fetchUserName(callbackId: String) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.userName) {
-            guard let userName = hostAppMessageDelegate?.getUserName() else {
-                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-                return
+            hostAppMessageDelegate?.getUserName { (result) in
+                switch result {
+                case .success(let response):
+                    guard let userName = response else {
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                        return
+                    }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: userName)
+                case .failure(let error):
+                    self.handleMASDKError(error: error, callbackId: callbackId)
+                }
             }
-            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: userName)
-            return
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
         }
-        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
     }
 
     func fetchProfilePhoto(callbackId: String) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.profilePhoto) {
-            guard let profilePhoto = hostAppMessageDelegate?.getProfilePhoto(), !profilePhoto.isEmpty else {
-                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-                return
+            hostAppMessageDelegate?.getProfilePhoto { (result) in
+                switch result {
+                case .success(let response):
+                    guard let profilePhoto = response else {
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                        return
+                    }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: profilePhoto)
+                case .failure(let error):
+                    self.handleMASDKError(error: error, callbackId: callbackId)
+                }
             }
-            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: profilePhoto)
-            return
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
         }
-        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
     }
 
     func fetchContacts(callbackId: String) {
@@ -241,6 +255,14 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(error))
             }
         }
+    }
+
+    func handleMASDKError(error: MASDKError, callbackId: String) {
+        if !error.localizedDescription.isEmpty {
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+            return
+        }
+        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
     }
 }
 
