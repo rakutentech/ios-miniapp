@@ -30,7 +30,12 @@ const useGeoLocation = () => {
           }
         )
       )
-      .catch((error) => console.error(error));
+      .catch((error) =>
+        setState({
+          isWatching: false,
+          error,
+        })
+      );
   };
 
   const unwatch = () => {

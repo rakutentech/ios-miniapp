@@ -59,6 +59,8 @@ const Location = (props: any) => {
   return (
     <GreyCard>
       <CardContent className={classes.content}>
+        {state.error && <div>Error: {state.error}</div>}
+
         {state.location && state.isWatching && (
           <div
             className={classes.locationContainer}
