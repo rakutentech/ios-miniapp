@@ -36,6 +36,17 @@ internal enum MiniAppAnalyticsParameter: String, CaseIterable {
     }
 }
 
+// Swift doesn't have load-time initialization so we need
+// this proxy class that is called by LoaderObjC's `load`
+// method.
+public class MiniAppAnalyticsLoader: NSObject {
+    @objc public static func loadMiniAppAnalytics() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            MiniAppAnalytics.sendAnalytics(event: .hostLaunch)
+        }
+    }
+}
+
 internal class MiniAppAnalytics {
     static let notificationName = Notification.Name("com.rakuten.esd.sdk.events.custom")
     static let acc = "1553", aid = "1"
