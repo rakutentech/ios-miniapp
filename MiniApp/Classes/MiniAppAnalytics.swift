@@ -32,14 +32,13 @@ internal enum MiniAppAnalyticsParameter: String, CaseIterable {
     case sdkVersion = "sdk_version"
 
     func name() -> String {
-        return "cp.mini_app_\(rawValue)"
+        return "mini_app_\(rawValue)"
     }
 }
 
 internal class MiniAppAnalytics {
-    class func notification(type: MiniAppRATEventType) -> Notification.Name {
-        return Notification.Name("com.rakuten.esd.sdk.events.\(type.rawValue)")
-    }
+    static let notificationName = Notification.Name("com.rakuten.esd.sdk.events.custom")
+    static let acc = "477", aid = "999"
 
     class func getAnalyticsInfo(miniAppId: String? = nil, miniAppVersion: String? = nil, projectId: String? = nil) -> [(String, String)] {
         var result = [(String, String)]()
