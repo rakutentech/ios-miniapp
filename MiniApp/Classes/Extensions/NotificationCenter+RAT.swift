@@ -1,15 +1,18 @@
 internal extension NotificationCenter {
-    func sendAnalytics(event: MiniAppRATEvent, type: MiniAppRATEventType = .custom, parameters customData: (String, String)...) {
+    func sendAnalytics(event: MiniAppRATEvent, type: MiniAppRATEventType? = nil, parameters customData: (String, String)...) {
         sendAnalytics(event: event, type: type, parameters: customData)
     }
 
-    func sendAnalytics(event: MiniAppRATEvent, type: MiniAppRATEventType = .custom, parameters customData: [(String, String)]? = nil) {
-        //@{@"eventName":@"blah",@"eventData":@{@"foo":@"bar"}};
+    func sendAnalytics(event: MiniAppRATEvent, type: MiniAppRATEventType? = nil, parameters customData: [(String, String)]? = nil) {
         var parameters = [String: Codable]()
-        parameters["acc"] = MiniAppAnalytics.acc
-        parameters["aid"] = MiniAppAnalytics.aid
-        parameters["actype"] = event.name()
-        parameters["etype"] = type.rawValue
+        var topLevel = [String: String]()
+
+        topLevel["acc"] = MiniAppAnalytics.acc
+        topLevel["aid"] = MiniAppAnalytics.aid
+        topLevel["actype"] = event.name()
+
+        parameters["topLevelObject"] = topLevel
+        parameters["eventName"] = (type ?? event.eType()).rawValue
         parameters["eventData"] = customData?.reduce([String: String]()) { (eventData, param) in
             var mutableEventData = eventData
             mutableEventData.updateValue(param.1, forKey: param.0)
