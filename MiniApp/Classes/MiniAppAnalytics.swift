@@ -38,7 +38,7 @@ internal enum MiniAppAnalyticsParameter: String, CaseIterable {
 
 internal class MiniAppAnalytics {
     static let notificationName = Notification.Name("com.rakuten.esd.sdk.events.custom")
-    static let acc = "477", aid = "999"
+    static let acc = "1553", aid = "1"
 
     class func getAnalyticsInfo(miniAppId: String? = nil, miniAppVersion: String? = nil, projectId: String? = nil) -> [(String, String)] {
         var result = [(String, String)]()
