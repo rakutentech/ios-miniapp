@@ -28,11 +28,8 @@ internal class MiniAppWebView: WKWebView {
     }
 
     private static func getQueryParams(queryParams: String?) -> String {
-        guard let queryString = queryParams else {
+        guard let param = queryParams, let queryString =  param.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return ""
-        }
-        if queryString.hasPrefix("?") {
-            return queryString
         }
         return "?" + queryString
     }

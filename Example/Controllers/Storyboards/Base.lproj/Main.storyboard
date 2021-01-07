@@ -192,7 +192,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Query parameters" footerTitle="Enter your custom query string that you would like to send to Miniapp." id="NN7-h3-sv4">
+                            <tableViewSection headerTitle="Query parameters" footerTitle="Enter your custom query string that you would like to send to Miniapp. For eg., param1=value1&amp;param2=value2" id="NN7-h3-sv4">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="AP3-Vo-hvR">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="43.5"/>
