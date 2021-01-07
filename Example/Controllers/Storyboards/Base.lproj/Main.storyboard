@@ -411,6 +411,7 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="5qa-hz-rgq" firstAttribute="top" secondItem="3M3-38-H1t" secondAttribute="top" constant="15" id="aMt-uO-yMl"/>
                                                 <constraint firstItem="wed-vG-fWf" firstAttribute="leading" secondItem="5qa-hz-rgq" secondAttribute="trailing" constant="13" id="c80-lQ-PBt"/>
                                                 <constraint firstAttribute="trailing" secondItem="wed-vG-fWf" secondAttribute="trailing" id="cbj-hd-bhV"/>
                                                 <constraint firstItem="wed-vG-fWf" firstAttribute="centerY" secondItem="5qa-hz-rgq" secondAttribute="centerY" id="fZW-94-g7e"/>
@@ -449,7 +450,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="68V-Kp-pZG" firstAttribute="leading" secondItem="4Wi-Yp-mmF" secondAttribute="leading" constant="10" id="0NO-kn-KKo"/>
-                                                <constraint firstItem="68V-Kp-pZG" firstAttribute="top" secondItem="4Wi-Yp-mmF" secondAttribute="top" constant="15" id="9qJ-0a-bgU"/>
+                                                <constraint firstItem="68V-Kp-pZG" firstAttribute="top" secondItem="4Wi-Yp-mmF" secondAttribute="top" constant="15" id="AXl-1N-Je0"/>
                                                 <constraint firstItem="68V-Kp-pZG" firstAttribute="centerY" secondItem="4Wi-Yp-mmF" secondAttribute="centerY" constant="1" id="CId-dD-OiV"/>
                                                 <constraint firstItem="25o-bO-dEo" firstAttribute="leading" secondItem="68V-Kp-pZG" secondAttribute="trailing" constant="13" id="G8c-na-yRf"/>
                                                 <constraint firstAttribute="trailing" secondItem="25o-bO-dEo" secondAttribute="trailing" id="L6c-WY-tih"/>
