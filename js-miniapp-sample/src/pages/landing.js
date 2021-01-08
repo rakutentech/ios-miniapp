@@ -37,7 +37,7 @@ const Landing = () => {
         <p>Demo Mini App JS SDK</p>
         <p className={classes.info}>Platform: {MiniApp.getPlatform()}</p>
         <p className={classes.info}>
-          Parameters: {window.location.search || 'None'}
+          Parameters: {window.location.search + window.location.hash || 'None'}
         </p>
       </CardContent>
     </GreyCard>

@@ -45,3 +45,5 @@ jsconfig.json
 #Exclude tsc generated files
 js/*.map
 js/ts.js
+
+_site/
