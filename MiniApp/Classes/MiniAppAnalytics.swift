@@ -52,31 +52,6 @@ public class MiniAppAnalytics {
     internal static let acc = "1553", aid = "1"
 
     internal class func getAnalyticsInfo(miniAppId: String? = nil, miniAppVersion: String? = nil, projectId: String? = nil) -> [(String, String)] {
-        let schemeName = "http"
-                
-        guard var urlComps = URLComponents(string: "miniapp/" + Constants.rootFileName) else {
-            return nil
-        }
-        urlComps.scheme = schemeName
-        urlComps.queryItems = "queryParams".components(separatedBy: "&").compactMap({ (param) -> URLQueryItem? in
-            var components = param.components(separatedBy: "=")
-            let name = components[0]
-            let value: String
-            if components.count > 1 {
-                components.remove(at: 0)
-                value = components.joined(separator: "=")
-            }else {
-                value = ""
-            }
-            return URLQueryItem(name: name, value: value)
-        })
-        
-        guard let url = urlComps.url else {
-            return nil
-        }
-        
-        return URLRequest(url:url)
-        
         var result = [(String, String)]()
         if let miniAppId = miniAppId {
             result.append((MiniAppAnalyticsParameter.miniAppId.name(), miniAppId))
