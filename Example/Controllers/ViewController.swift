@@ -163,7 +163,7 @@ extension ViewController: UISearchBarDelegate {
 
         decodeResponse = unfilteredResults?.filter {
             $0.displayName?.uppercased().contains(searchText.uppercased()) == true
-            || $0.id == searchText
+            || $0.id.uppercased().contains(searchText.uppercased()) == true
         }
 
         if decodeResponse?.isEmpty == true && !searchText.isEmpty {
