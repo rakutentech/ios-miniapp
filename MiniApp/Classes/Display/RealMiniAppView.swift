@@ -6,6 +6,9 @@ internal class RealMiniAppView: UIView {
     internal var miniAppTitle: String
     internal var queryParams: String?
     internal var miniAppURL: URL?
+    internal var miniAppId: String?
+    internal var projectId: String?
+    internal var miniAppVersion: String?
     internal var navBar: (UIView & MiniAppNavigationDelegate)?
     internal var webViewBottomConstraintStandalone: NSLayoutConstraint?
     internal var webViewBottomConstraintWithNavBar: NSLayoutConstraint?
@@ -21,6 +24,7 @@ internal class RealMiniAppView: UIView {
     init(
         miniAppId: String,
         versionId: String,
+        projectId: String,
         miniAppTitle: String,
         queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
@@ -33,6 +37,8 @@ internal class RealMiniAppView: UIView {
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
+        self.miniAppVersion = versionId
+        self.projectId = projectId
 
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
@@ -75,6 +81,7 @@ internal class RealMiniAppView: UIView {
         hostAppMessageDelegate: MiniAppMessageDelegate,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+        self.miniAppId = miniAppId
 
         webView.navigationDelegate = self
 
@@ -104,7 +111,7 @@ internal class RealMiniAppView: UIView {
             webViewBottomConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
             webViewBottomConstraintStandalone?.isActive = false
         }
-
+        MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId)
     }
 
     func refreshNavBar() {
@@ -144,6 +151,7 @@ internal class RealMiniAppView: UIView {
     }
 
     deinit {
+        MiniAppAnalytics.sendAnalytics(event: .close, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId)
         MiniApp.MAOrientationLock = []
         UIViewController.attemptRotationToDeviceOrientation()
         webView.configuration.userContentController.removeMessageHandler()

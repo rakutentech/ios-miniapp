@@ -7,18 +7,20 @@ internal class Displayer {
 
     func getMiniAppView(miniAppId: String,
                         versionId: String,
+                        projectId: String,
                         miniAppTitle: String,
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate) -> MiniAppDisplayProtocol {
         return RealMiniAppView(
-            miniAppId: miniAppId,
-            versionId: versionId,
-            miniAppTitle: miniAppTitle,
-            queryParams: queryParams,
-            hostAppMessageDelegate: hostAppMessageDelegate,
-            displayNavBar: navConfig?.navigationBarVisibility ?? .never,
-            navigationDelegate: navConfig?.navigationDelegate,
-            navigationView: navConfig?.navigationView)
+          miniAppId: miniAppId,
+          versionId: versionId,
+          projectId: projectId,
+          miniAppTitle: miniAppTitle,
+          queryParams: queryParams,
+          hostAppMessageDelegate: hostAppMessageDelegate,
+          displayNavBar: navConfig?.navigationBarVisibility ?? .never,
+          navigationDelegate: navConfig?.navigationDelegate,
+          navigationView: navConfig?.navigationView)
     }
 
     func getMiniAppView(miniAppURL: URL,

@@ -134,6 +134,7 @@ internal class RealMiniApp {
         DispatchQueue.main.async {
             let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
                                                                        versionId: appInfo.version.versionId,
+                                                                       projectId: self.miniAppClient.environment.projectId,
                                                                        miniAppTitle: appInfo.displayName ?? "Mini app",
                                                                        queryParams: queryParams,
                                                                        hostAppMessageDelegate: messageInterface ?? self)
@@ -159,6 +160,7 @@ internal class RealMiniApp {
             DispatchQueue.main.async {
                 let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId,
                                                                            versionId: cachedVersion,
+                                                                           projectId: self.miniAppClient.environment.projectId,
                                                                            miniAppTitle: miniAppInfo.displayName ?? "Mini App",
                                                                            queryParams: queryParams,
                                                                            hostAppMessageDelegate: messageInterface ?? self)

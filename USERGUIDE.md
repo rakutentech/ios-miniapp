@@ -71,6 +71,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Customize history navigation](#custom-navigation)
     * [Opening external links](#Opening-external-links)
     * [Orientation Lock](#orientation-lock)
+    * [Catching analytics events](#analytics-events)
     * [Passing Query parameters while creating Mini-app](#query-param-mini-app)
 
 <a id="create-mini-app"></a>
@@ -473,6 +474,43 @@ extension AVPlayerViewController {
             return MiniApp.MAOrientationLock
         }
     }
+}
+```
+
+<a id="analytics-events"></a>
+
+#### Analytics events
+
+MiniApp iOS SDK sends some notification to your app when some events are triggered by a MiniApp:
+
+- When it is launched
+- When it is closed
+
+To catch this events and retrieve insight data, you simply have to register to the notification center like this:
+
+```swift
+NotificationCenter.default.addObserver(self, selector: #selector(yourMethod(_:)), name: MiniAppAnalytics.notificationName, object: nil)
+```
+
+```swift
+@objc func yourMethod(_ notification:Notification) {
+  if let payload = notification.object as? [String:String] {
+    // do something with the data   
+  }
+}
+```
+
+Here is an example of data contained in payload:
+
+```json
+{
+  "etype": "click",
+  "actype": "mini_app_open",
+  "cp": {
+    "mini_app_project_id": "1234",
+    "mini_app_id": "4321",
+    "mini_app_version_id": "123456"
+  }
 }
 ```
 
