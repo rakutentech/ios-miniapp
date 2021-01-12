@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   info: {
     fontSize: 16,
     lineBreak: 'anywhere',
+    wordBreak: 'break-all',
     marginTop: 0,
   },
 }));
