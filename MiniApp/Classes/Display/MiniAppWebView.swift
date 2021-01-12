@@ -28,7 +28,7 @@ internal class MiniAppWebView: WKWebView {
     }
 
     private static func getQueryParams(queryParams: String?) -> String {
-        guard let param = queryParams, let queryString =  param.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+        guard let param = queryParams, let queryString =  param.encodeURLParam() else {
             return ""
         }
         return "?" + queryString

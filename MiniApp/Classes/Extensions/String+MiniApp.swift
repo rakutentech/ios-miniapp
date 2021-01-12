@@ -18,9 +18,24 @@ extension String {
         }
         let defaultValue = NSLocalizedString(self, bundle: podBundle, comment: "")
         return NSLocalizedString(self,
-                                 tableName: "Localizable",
-                                 bundle: Bundle.main,
-                                 value: defaultValue,
-                                 comment: "")
+            tableName: "Localizable",
+            bundle: Bundle.main,
+            value: defaultValue,
+            comment: "")
     }
+
+    func encodeURLParam() -> String? {
+        var characterSet = CharacterSet.urlAllowed
+        characterSet.insert(charactersIn: "#?")
+        return addingPercentEncoding(withAllowedCharacters: characterSet)
+    }
+}
+
+extension CharacterSet {
+    static let urlAllowed = CharacterSet.urlFragmentAllowed
+        .union(.urlHostAllowed)
+        .union(.urlPasswordAllowed)
+        .union(.urlQueryAllowed)
+        .union(.urlUserAllowed)
+        .union(.alphanumerics)
 }
