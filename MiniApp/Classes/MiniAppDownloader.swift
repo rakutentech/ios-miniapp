@@ -39,7 +39,7 @@ class MiniAppDownloader {
             if cacheVerifier.verify(appId: appId, version: versionId) {
                 cleanApp(appId, for: versionId)
                 let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
-                MiniAppLogger.d("📂 \(miniAppStoragePath.absoluteString)")
+                MiniAppLogger.d("\(miniAppStoragePath.absoluteString)", "📂")
                 completionHandler(.success(miniAppStoragePath))
             } else {
                 MiniAppLogger.w("Cached Mini App did not pass the hash verification. The Mini App will be re-downloaded.")

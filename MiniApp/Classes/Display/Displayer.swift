@@ -7,11 +7,13 @@ internal class Displayer {
 
     func getMiniAppView(miniAppId: String,
                         versionId: String,
+                        projectId: String,
                         miniAppTitle: String,
                         hostAppMessageDelegate: MiniAppMessageDelegate) -> MiniAppDisplayProtocol {
         return RealMiniAppView(
           miniAppId: miniAppId,
           versionId: versionId,
+          projectId: projectId,
           miniAppTitle: miniAppTitle,
           hostAppMessageDelegate: hostAppMessageDelegate,
           displayNavBar: navConfig?.navigationBarVisibility ?? .never,
