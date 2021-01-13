@@ -10,11 +10,21 @@ extension OSLog {
 }
 
 internal class MiniAppLogger {
+    static let encoder = JSONEncoder()
     /// Debug
-    class func d(_ message: String) {
+    class func d(_ message: String, _ customBullet: String? = nil) {
         #if DEBUG
 
-        print("🔍\(Date().timeIntervalSince1970) \(message)")
+        print("\(customBullet ?? "🔍") \(Date().timeIntervalSince1970) \(message)")
+        #endif
+    }
+
+    /// Debug
+    class func d<T: Codable>(codable: T) {
+        #if DEBUG
+        if let jsonData = try? Self.encoder.encode(codable), let jsonString = String(data: jsonData, encoding: . utf8) {
+            d(jsonString)
+        }
         #endif
     }
 
@@ -23,7 +33,7 @@ internal class MiniAppLogger {
         #if DEBUG
         // Disabled by default to prevent spamming apps with verbose logging.
         // In future this could be made switchable via plist.
-        //print("🔍 \(message)")
+        // print("🔍 \(message)")
         #endif
     }
 

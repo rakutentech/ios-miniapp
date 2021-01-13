@@ -2,18 +2,18 @@ import MiniApp
 
 extension ViewController {
 
-    func getUserName() -> String? {
+    func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         guard let userProfile = getProfileSettings(), let userName = userProfile.displayName else {
-            return nil
+            return completionHandler(.failure(.unknownError(domain: "Unknown Error", code: 1, description: "Failed to retrieve User name")))
         }
-        return userName
+        completionHandler(.success(userName))
     }
 
-    func getProfilePhoto() -> String? {
+    func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         guard let userProfile = getProfileSettings(), let userProfilePhoto = userProfile.profileImageURI else {
-            return nil
+            return completionHandler(.failure(.unknownError(domain: "Unknown Error", code: 1, description: "Failed to retrieve Profile photo")))
         }
-        return userProfilePhoto
+        completionHandler(.success(userProfilePhoto))
     }
 
     func getContacts() -> [MAContact]? {
@@ -25,7 +25,7 @@ extension ViewController {
 
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         guard let tokenInfo = getTokenInfo() else {
-            completionHandler(.failure(.unknownError))
+            completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
             return
         }
         completionHandler(.success(.init(accessToken: tokenInfo.tokenString, expirationDate: tokenInfo.expiryDate)))

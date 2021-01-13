@@ -26,6 +26,9 @@
 "input_miniapp_title" = "Please enter Miniapp ID";
 "input_valid_miniapp_title" = "Please enter valid Miniapp ID and try again";
 
+"host_app_error" = "Host app Error";
+"failed_to_conform_to_protocol" = "Host app failed to implement required interface";
+
 "message_save_title" = "Parameters saved";
 "message_save_text" = "Configuration is saved and Miniapp list is updated";
 

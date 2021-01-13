@@ -87,9 +87,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
                 }
             }
             okAction.isEnabled = false
-            alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: { (_) in
-                    self.dismiss(animated: true, completion: nil)
-                }))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
         }

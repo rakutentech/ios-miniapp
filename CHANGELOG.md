@@ -1,5 +1,16 @@
 ## CHANGELOG
 
+### 2.x.x (In-progress)
+
+**SDK**
+
+- **Feature** Added analytics for Mini App usage tracking
+
+**Sample App**
+
+
+---
+
 ### 2.7.0 (2020-12-18)
 
 **SDK**
