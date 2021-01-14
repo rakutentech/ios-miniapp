@@ -59,6 +59,7 @@
 		38920B0B251D9C57004C5DDD /* ViewController+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38920AEF251D9C57004C5DDD /* ViewController+MiniApp.swift */; };
 		38920B0C251D9C57004C5DDD /* DisplayNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38920AF0251D9C57004C5DDD /* DisplayNavigationController.swift */; };
 		3899C2C0242331900087A619 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3899C2BF242331900087A619 /* URLSchemeHandlerTests.swift */; };
+		389C7A9C2592593C00F2D5FE /* QueryParamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389C7A9B2592593C00F2D5FE /* QueryParamViewController.swift */; };
 		389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */; };
 		38A2E93A24A2E3E600E58233 /* MimeTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */; };
 		38D04804252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */; };
@@ -146,6 +147,7 @@
 		38920AEF251D9C57004C5DDD /* ViewController+MiniApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+MiniApp.swift"; sourceTree = "<group>"; };
 		38920AF0251D9C57004C5DDD /* DisplayNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayNavigationController.swift; sourceTree = "<group>"; };
 		3899C2BF242331900087A619 /* URLSchemeHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemeHandlerTests.swift; sourceTree = "<group>"; };
+		389C7A9B2592593C00F2D5FE /* QueryParamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamViewController.swift; sourceTree = "<group>"; };
 		389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppClientTests.swift; sourceTree = "<group>"; };
 		38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypesTests.swift; sourceTree = "<group>"; };
 		38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+MiniAppUserInfoProtocol.swift"; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				38D4C7AD255BCBF400CD5CE6 /* AccessTokenViewController.swift */,
+				389C7A9B2592593C00F2D5FE /* QueryParamViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -469,7 +472,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 1140;
-				ORGANIZATIONNAME = CocoaPods;
+				ORGANIZATIONNAME = "Rakuten inc.";
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -554,6 +557,7 @@
 				38920AF3251D9C57004C5DDD /* UIImageView+Extensions.swift in Sources */,
 				38920AFC251D9C57004C5DDD /* MiniAppCell.swift in Sources */,
 				38920AF5251D9C57004C5DDD /* Number+MiniApp.swift in Sources */,
+				389C7A9C2592593C00F2D5FE /* QueryParamViewController.swift in Sources */,
 				38920AF9251D9C57004C5DDD /* UIViewController+MiniApp.swift in Sources */,
 				38480100251DB4E00079D6EB /* CustomPermissionsListViewController.swift in Sources */,
 				38920B07251D9C57004C5DDD /* DisplayController.swift in Sources */,

@@ -12,19 +12,26 @@ internal class MiniAppWebView: WKWebView {
         return config
     }
 
-    convenience init(miniAppId: String, versionId: String) {
+    convenience init(miniAppId: String, versionId: String, queryParams: String? = nil) {
         let schemeName = Constants.miniAppSchemePrefix + miniAppId
-        let urlRequest = URLRequest(url: URL(string: schemeName + "://miniapp/" + Constants.rootFileName)!)
+        let urlRequest = URLRequest(url: URL(string: schemeName + "://miniapp/" + Constants.rootFileName + MiniAppWebView.getQueryParams(queryParams: queryParams))!)
         let config = MiniAppWebView.defaultConfig()
         config.setURLSchemeHandler(URLSchemeHandler(versionId: versionId), forURLScheme: schemeName)
         self.init(frame: .zero, configuration: config)
         commonInit(urlRequest: urlRequest)
     }
 
-    convenience init(miniAppURL: URL) {
+    convenience init(miniAppURL: URL, queryParams: String? = nil) {
         let urlRequest = URLRequest(url: miniAppURL)
         self.init(frame: .zero, configuration: MiniAppWebView.defaultConfig())
         commonInit(urlRequest: urlRequest)
+    }
+
+    private static func getQueryParams(queryParams: String?) -> String {
+        guard let param = queryParams, let queryString =  param.encodeURLParam() else {
+            return ""
+        }
+        return "?" + queryString
     }
 
     private func commonInit(urlRequest: URLRequest) {

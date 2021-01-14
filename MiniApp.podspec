@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '11.0'
 
-  s.source_files = 'MiniApp/Classes/**/*.swift'
+  s.source_files = 'MiniApp/Classes/**/*.{swift,h,m}'
   s.resources = ['MiniApp/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
   s.resource_bundle = {"Localization" => ["MiniApp/*.lproj/*.strings"]}
 

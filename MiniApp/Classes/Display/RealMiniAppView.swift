@@ -4,7 +4,11 @@ internal class RealMiniAppView: UIView {
 
     internal var webView: WKWebView
     internal var miniAppTitle: String
+    internal var queryParams: String?
     internal var miniAppURL: URL?
+    internal var miniAppId: String?
+    internal var projectId: String?
+    internal var miniAppVersion: String?
     internal var navBar: (UIView & MiniAppNavigationDelegate)?
     internal var webViewBottomConstraintStandalone: NSLayoutConstraint?
     internal var webViewBottomConstraintWithNavBar: NSLayoutConstraint?
@@ -20,17 +24,21 @@ internal class RealMiniAppView: UIView {
     init(
         miniAppId: String,
         versionId: String,
+        projectId: String,
         miniAppTitle: String,
+        queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
 
         self.miniAppTitle = miniAppTitle
-        webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId)
+        webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId, queryParams: queryParams)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
+        self.miniAppVersion = versionId
+        self.projectId = projectId
 
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
@@ -42,6 +50,7 @@ internal class RealMiniAppView: UIView {
     init(
         miniAppURL: URL,
         miniAppTitle: String,
+        queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         initialLoadCallback: ((Bool) -> Void)? = nil,
         displayNavBar: MiniAppNavigationVisibility = .never,
@@ -51,7 +60,7 @@ internal class RealMiniAppView: UIView {
         self.miniAppTitle = miniAppTitle
         self.miniAppURL = miniAppURL
         self.initialLoadCallback = initialLoadCallback
-        webView = MiniAppWebView(miniAppURL: miniAppURL)
+        webView = MiniAppWebView(miniAppURL: miniAppURL, queryParams: queryParams)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
@@ -72,6 +81,7 @@ internal class RealMiniAppView: UIView {
         hostAppMessageDelegate: MiniAppMessageDelegate,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+        self.miniAppId = miniAppId
 
         webView.navigationDelegate = self
 
@@ -101,7 +111,7 @@ internal class RealMiniAppView: UIView {
             webViewBottomConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
             webViewBottomConstraintStandalone?.isActive = false
         }
-
+        MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId)
     }
 
     func refreshNavBar() {
@@ -141,6 +151,7 @@ internal class RealMiniAppView: UIView {
     }
 
     deinit {
+        MiniAppAnalytics.sendAnalytics(event: .close, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId)
         MiniApp.MAOrientationLock = []
         UIViewController.attemptRotationToDeviceOrientation()
         webView.configuration.userContentController.removeMessageHandler()

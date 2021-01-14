@@ -54,16 +54,10 @@ If you need to test your SDK fork into your host app before making a pull reques
 ---
 
 You may want to generate the SDK documentation locally so that you can ensure that the generated docs look correct. 
-We use [Jazzy](https://github.com/realm/jazzy) for this, so you can run the following commands:
+We use [Jazzy](https://github.com/realm/jazzy) for this, so you can run the following command:
 
-```ruby
-bundle exec jazzy \
-  --xcodebuild-arguments -scheme,Tests \
-  --module MiniApp \
-  --source-directory MiniApp \
-  --podspec MiniApp.podspec \
-  --theme fullwidth \
-  --readme USERGUIDE.md
+```
+bundle exec jazzy
 ```
 
 The generated docs will be output to a folder named `docs` in the root of this repo.
