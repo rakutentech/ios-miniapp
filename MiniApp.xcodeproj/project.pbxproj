@@ -32,6 +32,7 @@
 		3871A8E124C54AD600BEC6CF /* MiniApp+StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871A8E024C54AD600BEC6CF /* MiniApp+StringTests.swift */; };
 		3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878D4D123B44F85001E27F8 /* AppDelegate.swift */; };
 		3879499824FCFB0900DB099B /* MiniAppKeyChainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3879499724FCFB0900DB099B /* MiniAppKeyChainTests.swift */; };
+		387AD4712590F0130025033F /* MessageInterfaceExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387AD4702590F0130025033F /* MessageInterfaceExtensionTests.swift */; };
 		388FEEE623DEABCF0062382F /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388FEEE523DEABCF0062382F /* EnvironmentTests.swift */; };
 		38920AF2251D9C57004C5DDD /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38920ACB251D9C57004C5DDD /* ImageCache.swift */; };
 		38920AF3251D9C57004C5DDD /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38920ACC251D9C57004C5DDD /* UIImageView+Extensions.swift */; };
@@ -58,6 +59,7 @@
 		38920B0B251D9C57004C5DDD /* ViewController+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38920AEF251D9C57004C5DDD /* ViewController+MiniApp.swift */; };
 		38920B0C251D9C57004C5DDD /* DisplayNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38920AF0251D9C57004C5DDD /* DisplayNavigationController.swift */; };
 		3899C2C0242331900087A619 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3899C2BF242331900087A619 /* URLSchemeHandlerTests.swift */; };
+		389C7A9C2592593C00F2D5FE /* QueryParamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389C7A9B2592593C00F2D5FE /* QueryParamViewController.swift */; };
 		389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */; };
 		38A2E93A24A2E3E600E58233 /* MimeTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */; };
 		38D04804252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */; };
@@ -95,6 +97,11 @@
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
 		18CC83362538172F00EEDB00 /* UIWindow+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIWindow+MiniApp.swift"; path = "../../MiniApp/Classes/Extensions/UIWindow+MiniApp.swift"; sourceTree = "<group>"; };
+		31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "MiniApp-Secrets.xcconfig"; path = "../../../MiniApp-Secrets.xcconfig"; sourceTree = "<group>"; };
+		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
+		31070C63258C554500BED77C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		31070C64258C554500BED77C /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEV.md; sourceTree = "<group>"; };
+		31070C66258C55C000BED77C /* configure-secrets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "configure-secrets.sh"; sourceTree = SOURCE_ROOT; };
 		3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStatusTests.swift; sourceTree = "<group>"; };
 		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
 		38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestAPITests.swift; sourceTree = "<group>"; };
@@ -114,6 +121,7 @@
 		3878D4D123B44F85001E27F8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Example/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		3878D4D723B44F8E001E27F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Example/Info.plist; sourceTree = SOURCE_ROOT; };
 		3879499724FCFB0900DB099B /* MiniAppKeyChainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppKeyChainTests.swift; sourceTree = "<group>"; };
+		387AD4702590F0130025033F /* MessageInterfaceExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInterfaceExtensionTests.swift; sourceTree = "<group>"; };
 		388FEEE523DEABCF0062382F /* EnvironmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentTests.swift; sourceTree = "<group>"; };
 		38920ACB251D9C57004C5DDD /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		38920ACC251D9C57004C5DDD /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -143,6 +151,7 @@
 		38920AEF251D9C57004C5DDD /* ViewController+MiniApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+MiniApp.swift"; sourceTree = "<group>"; };
 		38920AF0251D9C57004C5DDD /* DisplayNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayNavigationController.swift; sourceTree = "<group>"; };
 		3899C2BF242331900087A619 /* URLSchemeHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemeHandlerTests.swift; sourceTree = "<group>"; };
+		389C7A9B2592593C00F2D5FE /* QueryParamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamViewController.swift; sourceTree = "<group>"; };
 		389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppClientTests.swift; sourceTree = "<group>"; };
 		38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypesTests.swift; sourceTree = "<group>"; };
 		38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+MiniAppUserInfoProtocol.swift"; sourceTree = "<group>"; };
@@ -200,11 +209,25 @@
 		183AF07724CE63FA000ABCBF /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				31070C66258C55C000BED77C /* configure-secrets.sh */,
+				31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */,
 				183AF07C24CE642F000ABCBF /* Config-debug.xcconfig */,
 				183AF07824CE640F000ABCBF /* Config-release.xcconfig */,
 			);
 			name = Config;
 			path = Example/Config;
+			sourceTree = "<group>";
+		};
+		31070C65258C557D00BED77C /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				D85784C7998D04CE64578236 /* README.md */,
+				31070C62258C552F00BED77C /* USERGUIDE.md */,
+				31070C63258C554500BED77C /* CHANGELOG.md */,
+				31070C64258C554500BED77C /* DEV.md */,
+				7FB3A4D3F3350D35AED2F43D /* LICENSE */,
+			);
+			name = Documentation;
 			sourceTree = "<group>";
 		};
 		38920ACA251D9C57004C5DDD /* Utils */ = {
@@ -329,6 +352,7 @@
 				3879499724FCFB0900DB099B /* MiniAppKeyChainTests.swift */,
 				38F07E0B2535CC3600E32B32 /* MiniAppExternalUrlLoaderTests.swift */,
 				D07452302567B72A00B6E842 /* MASDKErrorTests.swift */,
+				387AD4702590F0130025033F /* MessageInterfaceExtensionTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -337,6 +361,7 @@
 			isa = PBXGroup;
 			children = (
 				38D4C7AD255BCBF400CD5CE6 /* AccessTokenViewController.swift */,
+				389C7A9B2592593C00F2D5FE /* QueryParamViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -344,6 +369,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				31070C65258C557D00BED77C /* Documentation */,
 				607FACD21AFB9204008FA782 /* Example for MiniApp */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				183AF07724CE63FA000ABCBF /* Config */,
@@ -410,8 +436,6 @@
 			isa = PBXGroup;
 			children = (
 				A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */,
-				D85784C7998D04CE64578236 /* README.md */,
-				7FB3A4D3F3350D35AED2F43D /* LICENSE */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
@@ -478,7 +502,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 1140;
-				ORGANIZATIONNAME = CocoaPods;
+				ORGANIZATIONNAME = "Rakuten inc.";
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -693,6 +717,7 @@
 				38920AF3251D9C57004C5DDD /* UIImageView+Extensions.swift in Sources */,
 				38920AFC251D9C57004C5DDD /* MiniAppCell.swift in Sources */,
 				38920AF5251D9C57004C5DDD /* Number+MiniApp.swift in Sources */,
+				389C7A9C2592593C00F2D5FE /* QueryParamViewController.swift in Sources */,
 				38920AF9251D9C57004C5DDD /* UIViewController+MiniApp.swift in Sources */,
 				38480100251DB4E00079D6EB /* CustomPermissionsListViewController.swift in Sources */,
 				38920B07251D9C57004C5DDD /* DisplayController.swift in Sources */,
@@ -747,6 +772,7 @@
 				38F73B4723D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift in Sources */,
 				388FEEE623DEABCF0062382F /* EnvironmentTests.swift in Sources */,
 				38D0C7C624C1A00000384422 /* MiniAppSdkConfigTests.swift in Sources */,
+				387AD4712590F0130025033F /* MessageInterfaceExtensionTests.swift in Sources */,
 				38A2E93A24A2E3E600E58233 /* MimeTypesTests.swift in Sources */,
 				3862EFB523EAF6B8004D518C /* MiniApp+NSErrorTests.swift in Sources */,
 				183E680E2499D49A00BAADB2 /* MiniAppLoggerTests.swift in Sources */,
@@ -911,7 +937,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.6.0;
+				MARKETING_VERSION = 2.7.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.miniapp.MiniAppDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -926,7 +952,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.6.0;
+				MARKETING_VERSION = 2.7.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.miniapp.MiniAppDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

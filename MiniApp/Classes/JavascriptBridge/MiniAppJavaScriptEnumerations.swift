@@ -10,6 +10,7 @@ enum MiniAppJSActionCommand: String {
     case getAccessToken
     case loadAd
     case showAd
+    case getContacts
 }
 
 enum JavaScriptExecResult: String {

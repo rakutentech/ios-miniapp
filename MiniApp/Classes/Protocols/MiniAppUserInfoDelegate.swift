@@ -3,22 +3,51 @@
  with the Native implementation for User profile related retrieval
 */
 public protocol MiniAppUserInfoDelegate: class {
+
     /// Interface that is used to retrieve the user name from the User Profile
-    func getUserName() -> String?
+    func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
 
     /// Interface that is used to retrieve the Image URI
+    func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
+
+    @available(*, deprecated,
+    renamed: "getUserName(completionHandler:)")
+    func getUserName() -> String?
+
+    @available(*, deprecated,
+    renamed: "getProfilePhoto(completionHandler:)")
     func getProfilePhoto() -> String?
+
+    /// Interface that is used to retrieve the Contact list
+    func getContacts() -> [MAContact]?
 
     /// Interface that is used to retrieve the Token Info
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
 }
 
 public extension MiniAppUserInfoDelegate {
+
+    func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.failure(.unknownError(domain: NSLocalizedString("host_app_error", comment: ""), code: 1, description: NSLocalizedString("failed_to_conform_to_protocol", comment: ""))))
+    }
+
+    func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.failure(.unknownError(domain: NSLocalizedString("host_app_error", comment: ""), code: 1, description: NSLocalizedString("failed_to_conform_to_protocol", comment: ""))))
+    }
+
+    @available(*, deprecated,
+    renamed: "getUserName(completionHandler:)")
     func getUserName() -> String? {
         return nil
     }
 
+    @available(*, deprecated,
+    renamed: "getProfilePhoto(completionHandler:)")
     func getProfilePhoto() -> String? {
+        return nil
+    }
+
+    func getContacts() -> [MAContact]? {
         return nil
     }
 
@@ -34,6 +63,15 @@ public class MATokenInfo: Codable {
     public init(accessToken: String, expirationDate: Date) {
         self.token = accessToken
         self.validUntil = expirationDate.dateToNumber()
+    }
+}
+
+/** Contact object for miniapp. */
+public class MAContact: Codable {
+    public let id: String
+
+    public init(id: String) {
+        self.id = id
     }
 }
 

@@ -27,13 +27,13 @@ class MockAPIClient: MiniAppClient {
         let bundle = MockBundle()
         bundle.mockPreviewMode = previewMode
         super.init(with:
-                    MiniAppSdkConfig(
-                        baseUrl: bundle.mockEndpoint,
-                        rasProjectId: bundle.mockProjectId,
-                        subscriptionKey: bundle.mockSubscriptionKey,
-                        hostAppVersion: bundle.mockHostAppUserAgentInfo,
-                        isPreviewMode: bundle.mockPreviewMode
-                    )
+                MiniAppSdkConfig(
+                    baseUrl: bundle.mockEndpoint,
+                    rasProjectId: bundle.mockProjectId,
+                    subscriptionKey: bundle.mockSubscriptionKey,
+                    hostAppVersion: bundle.mockHostAppUserAgentInfo,
+                    isPreviewMode: bundle.mockPreviewMode
+                )
         )
     }
 
@@ -234,6 +234,16 @@ class MockFile {
     }
 }
 
+class MockMessageInterfaceExtension: MiniAppMessageDelegate {
+    func getUniqueId() -> String {
+        let mockMessageInterface = MockMessageInterface()
+        return mockMessageInterface.getUniqueId()
+    }
+    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        return mockMessageInterface.requestPermission(permissionType: permissionType, completionHandler: completionHandler)
+    }
+}
 class MockMessageInterface: MiniAppMessageDelegate {
     var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
@@ -243,6 +253,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var userSettingsAllowed: Bool = false
     var mockUserName: String? = ""
     var mockProfilePhoto: String? = ""
+    var mockContactList: [MAContact]? = [MAContact(id: "contact_id")]
     var messageContentAllowed: Bool = false
     var mockAccessToken = false
 
@@ -277,9 +288,10 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
-                                  miniAppTitle: String,
-                                  completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
+    func requestCustomPermissions(
+        permissions: [MASDKCustomPermissionModel],
+        miniAppTitle: String,
+        completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         if customPermissions {
             completionHandler(.success(permissions))
         } else {
@@ -291,12 +303,24 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
+    func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success(mockUserName))
+    }
+
+    func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success(mockProfilePhoto))
+    }
+
     func getUserName() -> String? {
         return mockUserName
     }
 
     func getProfilePhoto() -> String? {
         return mockProfilePhoto
+    }
+
+    func getContacts() -> [MAContact]? {
+        return mockContactList
     }
 
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
@@ -407,6 +431,7 @@ class MockDisplayer: Displayer {
 
     override func getMiniAppView(miniAppURL: URL,
                                  miniAppTitle: String,
+                                 queryParams: String? = nil,
                                  hostAppMessageDelegate: MiniAppMessageDelegate,
                                  initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayProtocol {
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
@@ -415,9 +440,9 @@ class MockDisplayer: Displayer {
             }
         }
         return super.getMiniAppView(miniAppURL: miniAppURL,
-                                    miniAppTitle: miniAppTitle,
-                                    hostAppMessageDelegate: hostAppMessageDelegate,
-                                    initialLoadCallback: { _ in })
+            miniAppTitle: miniAppTitle,
+            hostAppMessageDelegate: hostAppMessageDelegate,
+            initialLoadCallback: { _ in })
     }
 }
 

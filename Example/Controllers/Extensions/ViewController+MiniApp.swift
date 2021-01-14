@@ -54,7 +54,11 @@ extension ViewController: MiniAppNavigationDelegate {
 
     func fetchMiniApp(for appInfo: MiniAppInfo) {
         MiniApp.shared(with: Config.getCurrent(),
-                       navigationSettings: Config.getNavConfig(delegate: self)).create(appId: appInfo.id, version: appInfo.version.versionId, completionHandler: { (result) in
+                       navigationSettings: Config.getNavConfig(delegate: self))
+            .create(appId: appInfo.id,
+                    version: appInfo.version.versionId,
+                    queryParams: getQueryParam(),
+                    completionHandler: { (result) in
             switch result {
             case .success(let miniAppDisplay):
                 self.dismissProgressIndicator {
@@ -73,6 +77,7 @@ extension ViewController: MiniAppNavigationDelegate {
     func loadMiniAppUsingURL(_ url: URL) {
         let miniAppDisplay = MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).create(
             url: url,
+            queryParams: getQueryParam(),
             errorHandler: { error in
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
                 print("Errored: ", error.localizedDescription)

@@ -64,6 +64,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             fetchUserName(callbackId: callbackId)
         case .getProfilePhoto:
             fetchProfilePhoto(callbackId: callbackId)
+        case .getContacts:
+            fetchContacts(callbackId: callbackId)
         case .setScreenOrientation:
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
@@ -115,7 +117,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func getCurrentPosition(callbackId: String) {
-        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: getLocationInfo())
+        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.deviceLocation) {
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: getLocationInfo())
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
+        }
     }
 
     func getLocationInfo() -> String {
@@ -211,23 +217,49 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func fetchUserName(callbackId: String) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.userName) {
-            guard let userName = hostAppMessageDelegate?.getUserName() else {
-                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-                return
+            hostAppMessageDelegate?.getUserName { (result) in
+                switch result {
+                case .success(let response):
+                    guard let userName = response else {
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                        return
+                    }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: userName)
+                case .failure(let error):
+                    self.handleMASDKError(error: error, callbackId: callbackId)
+                }
             }
-            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: userName)
-            return
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
         }
-        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
     }
 
     func fetchProfilePhoto(callbackId: String) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.profilePhoto) {
-            guard let profilePhoto = hostAppMessageDelegate?.getProfilePhoto(), !profilePhoto.isEmpty else {
+            hostAppMessageDelegate?.getProfilePhoto { (result) in
+                switch result {
+                case .success(let response):
+                    guard let profilePhoto = response else {
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                        return
+                    }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: profilePhoto)
+                case .failure(let error):
+                    self.handleMASDKError(error: error, callbackId: callbackId)
+                }
+            }
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
+        }
+    }
+
+    func fetchContacts(callbackId: String) {
+        if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.contactsList) {
+            guard let contactList = ResponseEncoder.encode(data: hostAppMessageDelegate?.getContacts()) else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
                 return
             }
-            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: profilePhoto)
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: contactList)
             return
         }
         executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
@@ -273,6 +305,14 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(error))
             }
         }
+    }
+
+    func handleMASDKError(error: MASDKError, callbackId: String) {
+        if !error.localizedDescription.isEmpty {
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+            return
+        }
+        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
     }
 }
 

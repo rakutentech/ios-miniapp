@@ -11,12 +11,14 @@ class RealMiniAppViewTests: QuickSpec {
             let mockMessageInterface = MockMessageInterface()
             let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing",
                                               versionId: "version-id",
+                                              projectId: "project-id",
                                               miniAppTitle: "Mini app title",
                                               hostAppMessageDelegate: mockMessageInterface)
             context("when initialized with valid parameters") {
                 it("will return MiniAppView object for given app id") {
                     let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing",
                                                       versionId: "version-id",
+                                                      projectId: "project-id",
                                                       miniAppTitle: "",
                                                       hostAppMessageDelegate: mockMessageInterface)
                     expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self))
@@ -38,6 +40,7 @@ class RealMiniAppViewTests: QuickSpec {
                     let miniAppView = RealMiniAppView(
                         miniAppId: "miniappid-testing",
                         versionId: "version-id",
+                        projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface)
                     expect(miniAppView.webView.customUserAgent).toEventually(contain("MiniApp Demo App"), timeout: .seconds(6))
@@ -49,6 +52,7 @@ class RealMiniAppViewTests: QuickSpec {
             let miniAppView = MockRealMiniAppView(
                 miniAppId: "miniappid-testing",
                 versionId: "version-id",
+                projectId: "project-id",
                 miniAppTitle: "Mini app title",
                 hostAppMessageDelegate: mockMessageInterface)
 
@@ -64,8 +68,8 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                     miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(10))
-                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-alert"), timeout: .seconds(10))
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
+                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-alert"), timeout: .seconds(30))
                     miniAppView.tapButton(.okButton)
                 }
             }
@@ -75,6 +79,7 @@ class RealMiniAppViewTests: QuickSpec {
             let miniAppView = MockRealMiniAppView(
                 miniAppId: "miniappid-testing",
                 versionId: "version-id",
+                projectId: "project-id",
                 miniAppTitle: "Mini app title",
                 hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with confirm javascript dialog") {
@@ -89,9 +94,9 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                     miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(10))
-                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(10))
-                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: .seconds(10))
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
+                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
+                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: .seconds(30))
                     miniAppView.tapButton(.okButton)
                 }
             }
@@ -101,6 +106,7 @@ class RealMiniAppViewTests: QuickSpec {
             let miniAppView = MockRealMiniAppView(
                 miniAppId: "miniappid-testing",
                 versionId: "version-id",
+                projectId: "project-id",
                 miniAppTitle: "Mini app title",
                 hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with confirm javascript dialog") {
@@ -115,9 +121,9 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                     miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(10))
-                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(10))
-                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: .seconds(10))
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
+                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
+                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: .seconds(30))
                     miniAppView.tapButton(.cancelButton)
                 }
             }
@@ -127,6 +133,7 @@ class RealMiniAppViewTests: QuickSpec {
                 let miniAppView = MockRealMiniAppView(
                     miniAppId: "miniappid-testing",
                     versionId: "version-id",
+                    projectId: "project-id",
                     miniAppTitle: "Mini app title",
                     hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with prompt javascript dialog") {
@@ -141,10 +148,10 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                     miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(10))
-                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(10))
-                    expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: .seconds(10))
-                    expect(miniAppView.dialogTextFieldText).toEventually(equal("Rakuten Mini app"), timeout: .seconds(10))
+                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
+                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
+                    expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: .seconds(30))
+                    expect(miniAppView.dialogTextFieldText).toEventually(equal("Rakuten Mini app"), timeout: .seconds(30))
                     miniAppView.tapButton(.okButton)
                 }
             }
@@ -153,6 +160,7 @@ class RealMiniAppViewTests: QuickSpec {
                 let miniAppView = MockRealMiniAppView(
                     miniAppId: "miniappid-testing",
                     versionId: "version-id",
+                    projectId: "project-id",
                     miniAppTitle: "Mini app title",
                     hostAppMessageDelegate: mockMessageInterface)
                 context("when webview is loaded with prompt javascript dialog") {
@@ -167,10 +175,10 @@ class RealMiniAppViewTests: QuickSpec {
                     </html>
                     """
                         miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                        expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(10))
-                        expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(10))
-                        expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: .seconds(10))
-                        expect(miniAppView.dialogTextFieldText).toEventually(equal(""), timeout: .seconds(10))
+                        expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
+                        expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
+                        expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: .seconds(30))
+                        expect(miniAppView.dialogTextFieldText).toEventually(equal(""), timeout: .seconds(30))
                         miniAppView.tapButton(.cancelButton)
                     }
                 }
@@ -188,6 +196,7 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                     let miniAppView = RealMiniAppView(
                         miniAppId: "miniappid-testing",
                         versionId: "version-id",
+                        projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .never
@@ -201,6 +210,7 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                     let miniAppView = RealMiniAppView(
                         miniAppId: "miniappid-testing",
                         versionId: "version-id",
+                        projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .always
@@ -218,7 +228,7 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                 it("will return MiniAppView with navigation hidden") {
                     let miniAppView = RealMiniAppView(
                         miniAppId: "miniappid-testing",
-                        versionId: "version-id", miniAppTitle: "",
+                        versionId: "version-id", projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .auto
                     )
@@ -240,7 +250,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to never") {
                 it("will return MiniAppView without navigation") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "",
+                        miniAppId: "miniappid-testing", versionId: "version-id", projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .never,
                         navigationDelegate: customNav,
@@ -253,10 +263,10 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to always") {
                 it("will return MiniAppView with navigation visible") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "", hostAppMessageDelegate: mockMessageInterface,
+                        miniAppId: "miniappid-testing", versionId: "version-id", projectId: "project-id", miniAppTitle: "",
+                        hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .always,
-                        navigationDelegate: customNav,
-                        navigationView: customNav
+                        navigationDelegate: customNav, navigationView: customNav
                     )
                     miniAppView.refreshNavBar()
                     customNav.actionGoBack()
@@ -268,7 +278,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to auto") {
                 it("will return MiniAppView with navigation hidden") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", miniAppTitle: "",
+                        miniAppId: "miniappid-testing", versionId: "version-id", projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .auto,
                         navigationDelegate: customNav,

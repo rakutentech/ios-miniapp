@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MiniApp'
-  s.version          = '2.6.0'
+  s.version          = '2.7.0'
   s.authors      = "Rakuten Ecosystem Mobile"
   s.summary      = "Rakuten's Mini App SDK"
   s.homepage     = "https://github.com/rakutentech/ios-miniapp"
@@ -25,13 +25,9 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '11.0'
 
-  s.source_files = 'MiniApp/Classes/**/*.swift'
-  s.resource_bundle = {
-    "MiniApp" => ['MiniApp/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js'],
-    "Localization" => ["MiniApp/*.lproj/*.strings"]
-  }
-
-  s.static_framework = true
+  s.source_files = 'MiniApp/Classes/**/*.{swift,h,m}'
+  s.resources = ['MiniApp/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
+  s.resource_bundle = {"Localization" => ["MiniApp/*.lproj/*.strings"]}
 
   s.dependency 'RSDKUtils', '>= 1.1.0'
   s.dependency 'ZIPFoundation'
