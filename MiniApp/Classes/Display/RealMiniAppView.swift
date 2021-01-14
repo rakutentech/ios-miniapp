@@ -4,6 +4,7 @@ internal class RealMiniAppView: UIView {
 
     internal var webView: WKWebView
     internal var miniAppTitle: String
+    internal var queryParams: String?
     internal var miniAppURL: URL?
     internal var miniAppId: String?
     internal var projectId: String?
@@ -25,13 +26,14 @@ internal class RealMiniAppView: UIView {
         versionId: String,
         projectId: String,
         miniAppTitle: String,
+        queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
 
         self.miniAppTitle = miniAppTitle
-        webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId)
+        webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId, queryParams: queryParams)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
@@ -48,6 +50,7 @@ internal class RealMiniAppView: UIView {
     init(
         miniAppURL: URL,
         miniAppTitle: String,
+        queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         initialLoadCallback: ((Bool) -> Void)? = nil,
         displayNavBar: MiniAppNavigationVisibility = .never,
@@ -57,7 +60,7 @@ internal class RealMiniAppView: UIView {
         self.miniAppTitle = miniAppTitle
         self.miniAppURL = miniAppURL
         self.initialLoadCallback = initialLoadCallback
-        webView = MiniAppWebView(miniAppURL: miniAppURL)
+        webView = MiniAppWebView(miniAppURL: miniAppURL, queryParams: queryParams)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []

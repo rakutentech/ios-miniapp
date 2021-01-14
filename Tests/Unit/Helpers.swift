@@ -429,11 +429,11 @@ class MockNavigationWebView: MiniAppWebView {
 class MockDisplayer: Displayer {
     var mockedInitialLoadCallbackResponse = true
 
-    override func getMiniAppView(
-        miniAppURL: URL,
-        miniAppTitle: String,
-        hostAppMessageDelegate: MiniAppMessageDelegate,
-        initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayProtocol {
+    override func getMiniAppView(miniAppURL: URL,
+                                 miniAppTitle: String,
+                                 queryParams: String? = nil,
+                                 hostAppMessageDelegate: MiniAppMessageDelegate,
+                                 initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayProtocol {
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
             DispatchQueue.main.async {
                 initialLoadCallback(self.mockedInitialLoadCallbackResponse)
