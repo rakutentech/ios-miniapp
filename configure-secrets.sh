@@ -68,12 +68,13 @@ do
     >&2 echo "➜ ${BOLD}$var_name${NOCOLOR} ${stars// /*} ${RED}ERROR!${NOCOLOR} Missing environment variable ${BOLD}$var_name${NOCOLOR}."
     success=false
   else
-      echo "➜ ${BOLD}$var_name${NOCOLOR} ${stars// /*} ${GREEN}OK${NOCOLOR}"
+    secureDoubleSlashForXCConfig $value
+    # Set secrets from environment variables
+    cmd='echo "${var_name} = ${SECURE_DOUBLE_SLASH_FOR_XCCONFIG_RESULT:=${var_name}}"'
+    eval ${cmd} >> $SECRETS_FILE
+
+    echo "➜ ${BOLD}$var_name${NOCOLOR} ${stars// /*} ${GREEN}OK${NOCOLOR}"
   fi
-  secureDoubleSlashForXCConfig $value
-  # Set secrets from environment variables
-  cmd='echo "${var_name} = ${SECURE_DOUBLE_SLASH_FOR_XCCONFIG_RESULT:=${var_name}}"'
-  eval ${cmd} >> $SECRETS_FILE
 done
 
 if [ $success = false ] ; then
