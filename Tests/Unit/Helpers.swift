@@ -239,9 +239,9 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.getUniqueId()
     }
-    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
+    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
-        return mockMessageInterface.requestPermission(permissionType: permissionType, completionHandler: completionHandler)
+        return mockMessageInterface.requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
     }
 }
 class MockMessageInterface: MiniAppMessageDelegate {
@@ -276,7 +276,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
+    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         if locationAllowed {
             completionHandler(.success(.allowed))
         } else {

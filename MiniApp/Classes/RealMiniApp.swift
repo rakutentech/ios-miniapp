@@ -200,7 +200,7 @@ extension RealMiniApp: MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
+    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 

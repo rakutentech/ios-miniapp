@@ -22,7 +22,8 @@ internal class MiniAppWebView: WKWebView {
     }
 
     convenience init(miniAppURL: URL, queryParams: String? = nil) {
-        let urlRequest = URLRequest(url: miniAppURL)
+        let urlWithQueryParam = miniAppURL.appendingPathComponent(MiniAppWebView.getQueryParams(queryParams: queryParams))
+        let urlRequest = URLRequest(url: urlWithQueryParam)
         self.init(frame: .zero, configuration: MiniAppWebView.defaultConfig())
         commonInit(urlRequest: urlRequest)
     }
