@@ -25,17 +25,18 @@ extension String {
     }
 
     func encodeURLParam() -> String? {
-        var characterSet = CharacterSet.urlAllowed
-        characterSet.insert(charactersIn: "#?")
-        return addingPercentEncoding(withAllowedCharacters: characterSet)
+        let skipEncodingChar = "?=&@"
+        let allowed = NSMutableCharacterSet.alphanumeric()
+        allowed.addCharacters(in: skipEncodingChar)
+        let encodedString = addingPercentEncoding(withAllowedCharacters: allowed as CharacterSet)
+        return encodedString?.replaceFirst(of: "%23", with: "#")
     }
-}
 
-extension CharacterSet {
-    static let urlAllowed = CharacterSet.urlFragmentAllowed
-        .union(.urlHostAllowed)
-        .union(.urlPasswordAllowed)
-        .union(.urlQueryAllowed)
-        .union(.urlUserAllowed)
-        .union(.alphanumerics)
+    func replaceFirst(of searchString: String, with replacementString: String) -> String {
+        if let range = self.range(of: searchString) {
+            return self.replacingCharacters(in: range, with: replacementString)
+        } else {
+            return self
+        }
+    }
 }
