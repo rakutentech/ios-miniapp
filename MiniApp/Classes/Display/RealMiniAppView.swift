@@ -187,6 +187,10 @@ internal class RealMiniAppView: UIView {
         }
         decisionHandler(.cancel)
     }
+
+    internal func presentAlert(alertController: UIAlertController) {
+        UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension RealMiniAppView: MiniAppDisplayProtocol {
