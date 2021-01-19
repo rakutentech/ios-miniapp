@@ -25,10 +25,9 @@ extension String {
     }
 
     func encodeURLParam() -> String? {
-        let skipEncodingChar = "?=&@"
-        let allowed = NSMutableCharacterSet.alphanumeric()
-        allowed.addCharacters(in: skipEncodingChar)
-        let encodedString = addingPercentEncoding(withAllowedCharacters: allowed as CharacterSet)
+        var characterSet = CharacterSet.urlAllowed
+        characterSet.insert(charactersIn: "?=&@")
+        let encodedString = addingPercentEncoding(withAllowedCharacters: characterSet)
         return encodedString?.replaceFirst(of: "%23", with: "#")
     }
 
@@ -39,4 +38,14 @@ extension String {
             return self
         }
     }
+}
+
+extension CharacterSet {
+    static let urlAllowed = CharacterSet.urlFragmentAllowed
+        .union(.urlHostAllowed)
+        .union(.urlPasswordAllowed)
+        .union(.urlQueryAllowed)
+        .union(.urlUserAllowed)
+        .union(.urlPathAllowed)
+        .union(.alphanumerics)
 }
