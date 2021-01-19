@@ -26,8 +26,17 @@ extension String {
 
     func encodeURLParam() -> String? {
         var characterSet = CharacterSet.urlAllowed
-        characterSet.insert(charactersIn: "#?")
-        return addingPercentEncoding(withAllowedCharacters: characterSet)
+        characterSet.insert(charactersIn: "?=&@")
+        let encodedString = addingPercentEncoding(withAllowedCharacters: characterSet)
+        return encodedString?.replaceFirst(of: "%23", with: "#")
+    }
+
+    func replaceFirst(of searchString: String, with replacementString: String) -> String {
+        if let range = self.range(of: searchString) {
+            return self.replacingCharacters(in: range, with: replacementString)
+        } else {
+            return self
+        }
     }
 }
 
@@ -37,5 +46,6 @@ extension CharacterSet {
         .union(.urlPasswordAllowed)
         .union(.urlQueryAllowed)
         .union(.urlUserAllowed)
+        .union(.urlPathAllowed)
         .union(.alphanumerics)
 }
