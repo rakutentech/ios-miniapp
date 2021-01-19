@@ -10,7 +10,7 @@ extension RealMiniAppView: WKUIDelegate {
             completionHandler()
         })
         currentDialogController = alertController
-        UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
+        presentAlert(alertController: alertController)
     }
 
     func webView(_ webView: WKWebView,
@@ -25,7 +25,7 @@ extension RealMiniAppView: WKUIDelegate {
             completionHandler(false)
         }))
         currentDialogController = alertController
-        UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
+        presentAlert(alertController: alertController)
     }
 
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String,
@@ -47,6 +47,6 @@ extension RealMiniAppView: WKUIDelegate {
             completionHandler(nil)
         }))
         currentDialogController = alertController
-        UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
+        presentAlert(alertController: alertController)
     }
 }
