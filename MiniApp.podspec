@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |core|
     core.source_files = 'MiniApp/Classes/core/**/*.{swift,h,m}'
-    core.resources = ['MiniApp/**/core/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
+    core.resources = ['MiniApp/Classes/core/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
   end
 
   s.resource_bundle = {"Localization" => ["MiniApp/*.lproj/*.strings"]}
