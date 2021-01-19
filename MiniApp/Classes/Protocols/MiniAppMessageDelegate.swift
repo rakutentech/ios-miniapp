@@ -60,11 +60,11 @@ public extension MiniAppMessageDelegate {
     }
 
     func requestPermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
-        requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
+        completionHandler(.failure(.failedToConformToProtocol))
     }
 
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
-        completionHandler(.failure(.failedToConformToProtocol))
+        self.requestPermission(permissionType: permissionType, completionHandler: completionHandler)
     }
 }
 
