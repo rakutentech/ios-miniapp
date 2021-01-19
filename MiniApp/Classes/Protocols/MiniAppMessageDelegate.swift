@@ -62,6 +62,10 @@ public extension MiniAppMessageDelegate {
     func requestPermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
     }
+
+    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
 }
 
 public enum MASDKProtocolResponse: String {
