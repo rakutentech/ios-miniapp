@@ -10,7 +10,7 @@ class RealMiniAppPermissionTests: QuickSpec {
             context("when RealMiniApp class has no message interface method object and when requestPermission is called") {
                 it("will return error") {
                     var testError: MASDKPermissionError?
-                    realMiniApp.requestPermission(permissionType: MiniAppPermissionType.init(rawValue: "location")!) { (result) in
+                    realMiniApp.requestDevicePermission(permissionType: MiniAppDevicePermissionType.init(rawValue: "location")!) { (result) in
                         switch result {
                         case .success:
                             break

@@ -52,7 +52,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .getUniqueId:
             sendUniqueId(messageId: callbackId)
         case .requestPermission:
-            requestPermission(requestParam: requestParam, callbackId: callbackId)
+            requestDevicePermission(requestParam: requestParam, callbackId: callbackId)
         case .getCurrentPosition:
             locationManager = LocationManager(enableHighAccuracy: requestParam?.locationOptions?.enableHighAccuracy ?? false)
             getCurrentPosition(callbackId: callbackId)
@@ -89,12 +89,12 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         executeJavaScriptCallback(responseStatus: .onSuccess, messageId: messageId, response: uniqueId)
     }
 
-    func requestPermission(requestParam: RequestParameters?, callbackId: String) {
+    func requestDevicePermission(requestParam: RequestParameters?, callbackId: String) {
         guard let requestParamValue = requestParam?.permission else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidPermissionType))
             return
         }
-        guard let requestPermissionType = MiniAppPermissionType(rawValue: requestParamValue) else {
+        guard let requestPermissionType = MiniAppDevicePermissionType(rawValue: requestParamValue) else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidPermissionType))
             return
         }
@@ -105,8 +105,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func getPermissionResult(requestPermissionType: MiniAppPermissionType, callbackId: String) {
-        hostAppMessageDelegate?.requestPermission(permissionType: requestPermissionType) { (result) in
+    func getPermissionResult(requestPermissionType: MiniAppDevicePermissionType, callbackId: String) {
+        hostAppMessageDelegate?.requestDevicePermission(permissionType: requestPermissionType) { (result) in
             switch result {
             case .success(let responseMessage):
                 self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: responseMessage.rawValue)

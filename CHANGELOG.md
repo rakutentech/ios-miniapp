@@ -7,6 +7,7 @@
 - **Feature** Added analytics for Mini App usage tracking
 - **Feature** Updated `getUserName` and `getProfilePhoto` interfaces to be asynchronous. Old methods are deprecated
 - **Feature** Updated `MiniApp().shared.create` interface to accept another optional query string parameter.
+- **Deprecated:** `requestPermission(permissionType:completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `requestDevicePermission(permissionType:completionHandler:))` instead
 
 **Sample App**
 

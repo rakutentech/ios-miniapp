@@ -119,7 +119,7 @@ Mini App SDK provides default implementation for few interfaces in `MiniAppMessa
 | Method                       | Default  |
 | :----                        | :----:   |
 | getUniqueId                  | 🚫       |
-| requestPermission            | 🚫       |
+| requestDevicePermission      | 🚫       |
 | requestCustomPermissions     | ✅       |
 | shareContent                 | ✅       |
 | getUserName                  | 🚫       |
@@ -153,7 +153,7 @@ extension ViewController: MiniAppMessageDelegate {
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
+    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
         switch permissionType {
         case .location:
             let locStatus = CLLocationManager.authorizationStatus()
