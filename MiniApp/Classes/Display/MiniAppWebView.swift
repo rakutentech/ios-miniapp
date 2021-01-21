@@ -21,12 +21,12 @@ internal class MiniAppWebView: WKWebView {
     }
 
     convenience init(miniAppURL: URL, queryParams: String? = nil) {
-        let urlRequest = URLRequest(url: Self.getLoadByURLRequest(miniAppURL: miniAppURL, queryParams: queryParams))
+        let urlRequest = URLRequest(url: Self.getURL(miniAppURL: miniAppURL, queryParams: queryParams))
         self.init(frame: .zero, configuration: MiniAppWebView.defaultConfig())
         commonInit(urlRequest: urlRequest)
     }
 
-    private static func getLoadByURLRequest(miniAppURL: URL, queryParams: String?) -> URL {
+    private static func getURL(miniAppURL: URL, queryParams: String?) -> URL {
         guard let urlWithQueryParam = miniAppURL.appendingPathComponent(Self.getQueryParams(queryParams: queryParams)).absoluteString.removingPercentEncoding else {
             return miniAppURL
         }
