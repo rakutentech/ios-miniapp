@@ -79,7 +79,7 @@ internal class MiniAppAdDisplayer: NSObject, MiniAppAdDisplayDelegate {
 
 extension MiniAppAdDisplayer: GADInterstitialDelegate {
 	// function predicate comes from Google's SDK, had to disable swiftlint rule
-	func interstitialDidDismissScreen(_ ad: GADInterstitial) { //swiftlint:disable:this identifier_name
+	func interstitialDidDismissScreen(_ ad: GADInterstitial) { // swiftlint:disable:this identifier_name
 		if let id = ad.adUnitID {
 			interstitialAds[id] = nil
 		}

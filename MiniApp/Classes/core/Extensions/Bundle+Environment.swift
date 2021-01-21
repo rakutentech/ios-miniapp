@@ -27,7 +27,7 @@ extension Bundle: EnvironmentProtocol {
         // Create a bundle object for the bundle found at that URL.
         guard let resourceBundle = Bundle(url: resourceBundleURL)
             else { fatalError("Cannot access MiniApp.bundle!") }
-        
+
         return resourceBundle
     }
 }
