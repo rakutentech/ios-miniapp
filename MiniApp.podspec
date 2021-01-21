@@ -17,6 +17,7 @@ Pod::Spec.new do |s|
     :submodules => true
   }
   s.documentation_url = "https://rakutentech.github.io/ios-miniapp/"
+  s.platform = :ios
   s.ios.deployment_target = '11.0'
   s.default_subspec = 'Core'
   s.static_framework = true
@@ -34,11 +35,10 @@ Pod::Spec.new do |s|
 
   s.subspec 'Ads' do |ads|
     ads.source_files = 'MiniApp/Classes/ads/**/*.{swift,h,m}'
-    ads.resource_bundle = {
-        "MiniAppAds" => ['MiniApp/Classes/ads/**/*.{xcassets,js,pdf,xib}']
-    }
     ads.dependency 'MiniApp/Core'
     ads.dependency 'Google-Mobile-Ads-SDK'
     ads.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADS' }
+    ads.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+    ads.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   end
 end
