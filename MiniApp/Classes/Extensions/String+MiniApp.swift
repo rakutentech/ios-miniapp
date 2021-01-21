@@ -42,6 +42,8 @@ extension String {
 
 extension CharacterSet {
     static let urlAllowed = CharacterSet.urlFragmentAllowed
+        .union(.urlHostAllowed)
+        .union(.urlPasswordAllowed)
         .union(.urlQueryAllowed)
         .union(.urlUserAllowed)
         .union(.urlPathAllowed)
