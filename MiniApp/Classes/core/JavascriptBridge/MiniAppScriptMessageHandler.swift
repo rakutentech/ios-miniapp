@@ -70,15 +70,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
+    #if RMA_SDK_ADS
         case .loadAd:
-            if MiniAppAdmobDisplayer.shared.loadRequestedAd(forParams: requestParam) {
+            if MiniAppAdDisplayer.shared.loadRequestedAd(forParams: requestParam) {
                 executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "")
             } else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
             }
         case .showAd:
             showRequestedAd(callbackId: callbackId, params: requestParam)
+    #endif
         }
+
     }
 
     func sendUniqueId(messageId: String) {
@@ -135,6 +138,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             "}, \"timestamp\":\(Date().epochInMilliseconds)}"
     }
 
+    #if RMA_SDK_ADS
     func showRequestedAd(callbackId: String, params: RequestParameters?) {
         guard let adTypeRaw = params?.adType, let adType = MiniAppAdType(rawValue: adTypeRaw), let adUnitId = params?.adUnitId else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
@@ -148,9 +152,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             showRewarded(callbackId: callbackId, adUnitId: adUnitId)
         }
     }
+    #endif
 
+    #if RMA_SDK_ADS
     func showInterstitial(callbackId: String, adUnitId: String) {
-        MiniAppAdmobDisplayer.shared.showInterstitial(
+        MiniAppAdDisplayer.shared.showInterstitial(
             forId: adUnitId,
             onClosed: { [weak self] in
                 self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "")
@@ -160,9 +166,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             }
         )
     }
+    #endif
 
+    #if RMA_SDK_ADS
     func showRewarded(callbackId: String, adUnitId: String) {
-        MiniAppAdmobDisplayer.shared.showRewarded(
+        MiniAppAdDisplayer.shared.showRewarded(
             forId: adUnitId,
             onClosed: { [weak self] reward in
                 if let response = ResponseEncoder.encode(data: reward) {
@@ -176,6 +184,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             }
         )
     }
+    #endif
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {
         switch responseStatus {

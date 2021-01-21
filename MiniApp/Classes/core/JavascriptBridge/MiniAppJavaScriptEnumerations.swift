@@ -8,8 +8,10 @@ enum MiniAppJSActionCommand: String {
     case getProfilePhoto
     case setScreenOrientation
     case getAccessToken
+    #if RMA_SDK_ADS
     case loadAd
     case showAd
+    #endif
     case getContacts
 }
 

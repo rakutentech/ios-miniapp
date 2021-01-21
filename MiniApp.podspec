@@ -3,6 +3,7 @@ Pod::Spec.new do |s|
   s.version      = '2.7.0'
   s.authors      = "Rakuten Ecosystem Mobile"
   s.summary      = "Rakuten's Mini App SDK"
+  s.description  = "This open-source library allows you to integrate Mini App ecosystem into your iOS applications. Mini App SDK also facilitates communication between a mini app and the host app via a message bridge."
   s.homepage     = "https://github.com/rakutentech/ios-miniapp"
   s.license      = {
     :type => 'MIT',
@@ -18,18 +19,26 @@ Pod::Spec.new do |s|
   s.documentation_url = "https://rakutentech.github.io/ios-miniapp/"
   s.ios.deployment_target = '11.0'
   s.default_subspec = 'Core'
-  s.resource_bundle = {"Localization" => ["MiniApp/*.lproj/*.strings"]}
+  s.static_framework = true
+  s.swift_versions = [5.0, 5.3]
 
   s.subspec 'Core' do |core|
     core.source_files = 'MiniApp/Classes/core/**/*.{swift,h,m}'
-    core.resources = ['MiniApp/Classes/core/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
+    core.resource_bundle = {
+        "Localization" => ["MiniApp/*.lproj/*.strings"],
+        "MiniApp" => ['MiniApp/Classes/core/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
+    }
     core.dependency 'RSDKUtils', '>= 1.1.0'
     core.dependency 'ZIPFoundation'
   end
 
-  s.subspec 'Admobs' do |admobs|
-    admobs.dependency = "MiniApp/Core"
-    admobs.static_framework = true
-    admobs.dependency 'Google-Mobile-Ads-SDK'
+  s.subspec 'Ads' do |ads|
+    ads.source_files = 'MiniApp/Classes/ads/**/*.{swift,h,m}'
+    ads.resource_bundle = {
+        "MiniAppAds" => ['MiniApp/Classes/ads/**/*.{xcassets,js,pdf,xib}']
+    }
+    ads.dependency 'MiniApp/Core'
+    ads.dependency 'Google-Mobile-Ads-SDK'
+    ads.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADS' }
   end
 end

@@ -42,7 +42,7 @@ public extension MiniAppMessageDelegate {
         permissions: [MASDKCustomPermissionModel], miniAppTitle: String,
         completionHandler: @escaping (
             Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
-        let podBundle: Bundle = Bundle(for: MiniApp.self)
+        let podBundle: Bundle = Bundle.miniAppSDKBundle()
         let customPermissionRequestController = CustomPermissionsRequestViewController(nibName: "CustomPermissionsRequestViewController", bundle: podBundle)
         customPermissionRequestController.customPermissionHandlerObj = completionHandler
         customPermissionRequestController.permissionsRequestList = permissions
