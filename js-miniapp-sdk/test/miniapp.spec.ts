@@ -8,6 +8,7 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
   ScreenOrientation,
+  MessageToContact,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 
@@ -35,8 +36,16 @@ window.MiniAppBridge = {
   getContacts: sandbox.stub(),
   getAccessToken: sandbox.stub(),
   setScreenOrientation: sandbox.stub(),
+  sendMessageToContact: sandbox.stub(),
 };
 const miniApp = new MiniApp();
+const messageToContact: MessageToContact = {
+  text: 'test',
+  image: 'test',
+  caption: 'test',
+  title: 'test',
+  action: 'test',
+};
 
 describe('getUniqueId', () => {
   it('should retrieve the unique id from the Mini App Bridge', () => {
@@ -338,5 +347,25 @@ describe('requestScreenOrientation', () => {
     return expect(
       miniApp.setScreenOrientation(ScreenOrientation.LOCK_PORTRAIT)
     ).to.eventually.equal(error);
+  });
+});
+
+describe('sendMessage', () => {
+  it('possible to retrieve empty result from the MiniAppBridge when request is successful', () => {
+    const response = '';
+
+    window.MiniAppBridge.sendMessageToContact.resolves(response);
+    return expect(
+      miniApp.chatService.sendMessageToContact(messageToContact)
+    ).to.eventually.equal(response);
+  });
+
+  it('possible to retrieve undefined result from the MiniAppBridge when request is successful', () => {
+    const response = undefined;
+
+    window.MiniAppBridge.sendMessageToContact.resolves(response);
+    return expect(
+      miniApp.chatService.sendMessageToContact(messageToContact)
+    ).to.eventually.equal(response);
   });
 });

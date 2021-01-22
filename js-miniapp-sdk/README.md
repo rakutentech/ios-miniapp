@@ -71,9 +71,9 @@ miniApp.getUniqueId()
 
 ### Request Permissions
 
-**API:** [MiniAppFeatures.requestCustomPermissions](api/interfaces/miniappfeatures.md#requestcustompermissions), 
-[CustomPermissionName](api/enums/custompermissionname.md), 
-[CustomPermissionStatus](api/enums/custompermissionstatus.md), 
+**API:** [MiniAppFeatures.requestCustomPermissions](api/interfaces/miniappfeatures.md#requestcustompermissions),
+[CustomPermissionName](api/enums/custompermissionname.md),
+[CustomPermissionStatus](api/enums/custompermissionstatus.md),
 [MiniAppFeatures.requestLocationPermission](api/interfaces/miniappfeatures.md#requestlocationpermission)
 
 There must be permission requests from miniapp to access some mobile components and data. Users can revoke a permission at any time, so you must always request the permission every time before you use the associated API. Note that accepted permissions are cached, so if a User has already accepted a permission then they will not be shown the permission dialog again unless they manually revoke the permission.
@@ -124,11 +124,11 @@ miniApp.requestCustomPermissions([
 
 ### Show Ads
 
-**API:** [Ad.loadInterstitialAd](api/interfaces/ad.md#loadinterstitialad), 
-[Ad.loadRewardedAd](api/interfaces/ad.md#loadrewardedad), 
-[Ad.showInterstitialAd](api/interfaces/ad.md#showinterstitialad), 
+**API:** [Ad.loadInterstitialAd](api/interfaces/ad.md#loadinterstitialad),
+[Ad.loadRewardedAd](api/interfaces/ad.md#loadrewardedad),
+[Ad.showInterstitialAd](api/interfaces/ad.md#showinterstitialad),
 [Ad.showRewardedAd](api/interfaces/ad.md#showrewardedad),
-[Reward](api/interfaces/reward.md) 
+[Reward](api/interfaces/reward.md)
 
 Mini App SDK allows you to display ads upon requesting from a Mini App with an ad unit id.
 This requires you to first load an Ad by passing an ID. You can then display an Ad in the Ad Unit by passing the same ID which was used for loading.
@@ -165,7 +165,7 @@ miniApp.loadRewardedAd(adUnitID)
 
 ### Share Info
 
-**API:** [MiniAppFeatures.shareInfo](api/interfaces/miniappfeatures.md#shareinfo), 
+**API:** [MiniAppFeatures.shareInfo](api/interfaces/miniappfeatures.md#shareinfo),
 [ShareInfoType](api/interfaces/shareinfotype.md)
 
 It is possible for the mini app user to share data with another App by showing the native content sharing chooser.
@@ -188,7 +188,7 @@ Please make sure that User have allowed respective custom permission before requ
 
 #### User name
 
-**API:** [UserInfoProvider.getUserName](api/interfaces/userinfoprovider.md#getusername), 
+**API:** [UserInfoProvider.getUserName](api/interfaces/userinfoprovider.md#getusername),
 [CustomPermissionName.USER_NAME](api/enums/custompermissionname.html#user_name)
 
 Returns the Username text from the Host app.
@@ -204,7 +204,7 @@ miniApp.user.getUserName()
 
 #### Profile Photo
 
-**API:** [UserInfoProvider.getProfilePhoto](api/interfaces/userinfoprovider.md#getprofilephoto), 
+**API:** [UserInfoProvider.getProfilePhoto](api/interfaces/userinfoprovider.md#getprofilephoto),
 [CustomPermissionName.PROFILE_PHOTO](api/enums/custompermissionname.html#profile_photo)
 
 Returns the Profile Photo URI from the Host app.
@@ -220,8 +220,8 @@ miniApp.user.getProfilePhoto()
 
 #### Contact List
 
-**API:** [UserInfoProvider.getContacts](api/interfaces/userinfoprovider.md#getcontacts), 
-[Contact](api/interfaces/contact.md), 
+**API:** [UserInfoProvider.getContacts](api/interfaces/userinfoprovider.md#getcontacts),
+[Contact](api/interfaces/contact.md),
 [CustomPermissionName.CONTACT_LIST](api/enums/custompermissionname.html#contact_list)
 
 Returns the [Contact](api/interfaces/contact.md) list from the Host app.
@@ -237,7 +237,7 @@ miniApp.user.getContacts()
 
 #### Access Token
 
-**API:** [UserInfoProvider.getAccessToken](api/interfaces/userinfoprovider.md#getaccesstoken), 
+**API:** [UserInfoProvider.getAccessToken](api/interfaces/userinfoprovider.md#getaccesstoken),
 [AccessTokenData](api/classes/accesstokendata.md)
 
 You can get an access token provided by the Host App. The Host App will be able to deny your request if your mini app ID is not approved to access the token.
@@ -258,7 +258,7 @@ miniApp.user.getAccessToken()
 
 ### Set screen orientation
 
-**API:** [MiniAppFeatures.setScreenOrientation](api/interfaces/miniappfeatures.md#setscreenorientation), 
+**API:** [MiniAppFeatures.setScreenOrientation](api/interfaces/miniappfeatures.md#setscreenorientation),
 [ScreenOrientation](api/enums/screenorientation.md)
 
 It is possible to change and lock device screen orientation.
@@ -275,6 +275,21 @@ miniApp.setScreenOrientation(ScreenOrientation.LOCK_LANDSCAPE) // or LOCK_PORTRA
   .catch((error) => {
     console.error(error);
   });
+```
+
+### Send message
+
+**API:** [ChatServiceProvider](api/interfaces/chatserviceprovider.md)
+
+#### Send message to the single contact
+
+```javascript
+miniApp.chatService.sendMessageToContact()
+    .then(messageId => {
+		console.log(messageId);
+	}).catch(error => {
+		console.error(error);
+	});
 ```
 
 ## Advanced Usage

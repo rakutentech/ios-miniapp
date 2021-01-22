@@ -14,6 +14,7 @@ import {
   ScreenOrientation,
   AccessTokenData,
   Contact,
+  MessageToContact,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -32,4 +33,5 @@ export {
   ScreenOrientation,
   AccessTokenData,
   Contact,
+  MessageToContact,
 };

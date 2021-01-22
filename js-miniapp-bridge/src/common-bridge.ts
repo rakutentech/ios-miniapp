@@ -15,6 +15,7 @@ import { ShareInfoType } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
 import { NativeTokenData, AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
+import { MessageToContact } from './types/message-to-contact';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -309,6 +310,23 @@ export class MiniAppBridge {
         'setScreenOrientation',
         { action: screenAction },
         success => resolve(success),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * @param message The message to send to contact.
+   * @returns Promise resolves with the Unique ID which was sent the message.
+   * Can also resolve with empty (undefined) response in the case that the message was not sent to a contact, such as if the user cancelled sending the message.
+   * Promise rejects in the case that there was an error.
+   */
+  sendMessageToContact(message: MessageToContact) {
+    return new Promise<string | undefined>((resolve, reject) => {
+      return this.executor.exec(
+        'sendMessageToContact',
+        { messageToContact: message },
+        messageId => resolve(messageId),
         error => reject(error)
       );
     });
