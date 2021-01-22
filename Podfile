@@ -7,7 +7,7 @@ platform :ios, '11.0'
 target sdk_name + '_Example' do
   project sdk_name + '.xcodeproj'
   workspace sdk_name + '.xcworkspace'
-  pod sdk_name , :path => './'
+  pod sdk_name, :path => './'
 
   target sdk_name + '_Tests' do
     inherit! :search_paths
