@@ -20,8 +20,8 @@ internal class MiniAppWebView: WKWebView {
         commonInit(urlRequest: Self.getURLRequest(miniAppId: miniAppId, schemeName: schemeName, queryParams: queryParams))
     }
 
-    convenience init(miniAppURL: URL, queryParams: String? = nil) {
-        let urlRequest = URLRequest(url: Self.getURL(miniAppURL: miniAppURL, queryParams: queryParams))
+    convenience init(miniAppURL: URL) {
+        let urlRequest = URLRequest(url: miniAppURL)
         self.init(frame: .zero, configuration: MiniAppWebView.defaultConfig())
         commonInit(urlRequest: urlRequest)
     }
@@ -35,7 +35,9 @@ internal class MiniAppWebView: WKWebView {
     }
 
     private static func getURLRequest(miniAppId: String, schemeName: String, queryParams: String?) -> URLRequest {
-        guard let url = URL(string: schemeName + "://miniapp/" + Constants.rootFileName + MiniAppWebView.getQueryParams(queryParams: queryParams)) else {
+        let baseUrl = schemeName + "://miniapp/" + Constants.rootFileName
+        guard let url = URL(string: baseUrl + MiniAppWebView.getQueryParams(queryParams: queryParams)) else {
+            MiniAppLogger.e("MiniAppWebView failed to parse Query Parameters, trying to load using only URL")
             return URLRequest(url: URL(string: schemeName + "://miniapp/" + Constants.rootFileName)!)
         }
         return URLRequest(url: url)
