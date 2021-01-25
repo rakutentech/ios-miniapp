@@ -14,52 +14,68 @@ extension NSError {
     }
 
     class func unknownServerError(httpResponse: HTTPURLResponse?) -> NSError {
-        return NSError.serverError(
+         NSError.serverError(
             code: (httpResponse)?.statusCode ?? 0,
             message: "Unknown server error occurred"
         )
     }
 
     class func invalidURLError() -> NSError {
-        return NSError(
+         NSError(
             domain: MiniAppSDKErrorDomain,
             code: MiniAppSDKErrorCode.invalidURLError.rawValue
         )
     }
 
     class func invalidAppId() -> NSError {
-        return NSError(
+         NSError(
             domain: MiniAppSDKErrorDomain,
             code: MiniAppSDKErrorCode.invalidAppId.rawValue
         )
     }
 
     class func invalidResponseData() -> NSError {
-        return NSError(
+         NSError(
             domain: MiniAppSDKErrorDomain,
             code: MiniAppSDKErrorCode.invalidResponseData.rawValue
         )
     }
 
     class func downloadingFailed() -> NSError {
-        return NSError(
+         NSError(
             domain: MiniAppSDKErrorDomain,
             code: MiniAppSDKErrorCode.downloadingFailed.rawValue
         )
     }
 
     class func noPublishedVersion() -> NSError {
-        return NSError(
+         NSError(
             domain: MiniAppSDKErrorDomain,
             code: MiniAppSDKErrorCode.noPublishedVersion.rawValue
         )
     }
 
     class func miniAppNotFound(message: String) -> NSError {
-        return NSError(
+         NSError(
             domain: MiniAppSDKErrorDomain,
             code: MiniAppSDKErrorCode.miniAppNotFound.rawValue,
             userInfo: [NSLocalizedDescriptionKey: message]
+        )
+    }
+
+    class func miniAppAdNotLoaded(message: String) -> NSError {
+         NSError(
+                domain: MiniAppSDKErrorDomain,
+                code: MiniAppSDKErrorCode.adNotLoaded.rawValue,
+                userInfo: [NSLocalizedDescriptionKey: message]
+        )
+    }
+
+    class func miniAppAdNotDisplayed(message: String) -> NSError {
+        NSError(
+                domain: MiniAppSDKErrorDomain,
+                code: MiniAppSDKErrorCode.adNotDisplayed.rawValue,
+                userInfo: [NSLocalizedDescriptionKey: message]
         )
     }
 }
@@ -74,5 +90,7 @@ enum MiniAppSDKErrorCode: Int {
          invalidResponseData,
          downloadingFailed,
          noPublishedVersion,
-         miniAppNotFound
+         miniAppNotFound,
+         adNotLoaded,
+         adNotDisplayed
 }

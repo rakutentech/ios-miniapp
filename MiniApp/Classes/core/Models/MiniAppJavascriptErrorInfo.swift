@@ -22,7 +22,7 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
 }
 
 func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
-    return "\(error.name): \(error.description)"
+    "\(error.name): \(error.description)"
 }
 
 enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
@@ -30,9 +30,11 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case unexpectedMessageFormat
     case invalidPermissionType
     case valueIsEmpty
+    case adNotLoadable
+    case adNotDisplayable
 
     var name: String {
-        return self.rawValue
+        self.rawValue
     }
 
     var description: String {
@@ -45,6 +47,10 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
         return "Permission type that is requested is invalid"
         case .valueIsEmpty:
         return "The value which is passed is empty."
+        case .adNotLoadable:
+        return "The ad could not be loaded"
+        case .adNotDisplayable:
+        return "The ad could not be displayed"
         }
     }
 }

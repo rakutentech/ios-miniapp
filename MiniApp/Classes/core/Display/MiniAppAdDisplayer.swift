@@ -28,21 +28,27 @@ internal class MiniAppAdDisplayer: NSObject {
 	func initFramework() {
 	}
 
-	func loadRequestedAd(forParams params: RequestParameters?) -> Bool {
+	func loadRequestedAd(forParams params: RequestParameters?, onLoaded: @escaping () -> Void, onFailed: @escaping (Error) -> Void) {
 		guard let delegate = delegate, let params = params, let adTypeRaw = params.adType, let adType = MiniAppAdType(rawValue: adTypeRaw), let adId = params.adUnitId else {
-			return false
+			return onFailed(NSError.miniAppAdNotLoaded(message: "Delegate, parameters or ad type not found"))
 		}
 		switch adType {
 		case .interstitial:
-			delegate.loadInterstitial(forId: adId)
+			delegate.loadInterstitial(for: adId, onLoaded: {
+				onLoaded()
+			}, onFailed: { error in
+				onFailed(error)
+			})
 		case .rewarded:
-			delegate.loadRewarded(forId: adId)
+			delegate.loadRewarded(for: adId, onLoaded: {
+				onLoaded()
+			}, onFailed: { error in
+				onFailed(error)
+			})
 		}
-		return true
 	}
 
 	func cleanReward(_ adId: String) {
-		onRewardedClosed.removeValue(forKey: adId)
 		rewards.removeValue(forKey: adId)
 	}
 

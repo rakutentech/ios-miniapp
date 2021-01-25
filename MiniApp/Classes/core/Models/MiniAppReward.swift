@@ -6,4 +6,9 @@ import Foundation
 public struct MiniAppReward: Codable {
 	let type: String
 	let amount: Int
+
+	public init(type: String, amount: Int) {
+		self.type = type
+		self.amount = amount
+	}
 }

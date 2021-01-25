@@ -71,7 +71,7 @@ extension ViewController: MiniAppNavigationDelegate {
                 }
                 print("Errored: ", error.localizedDescription)
             }
-        }, messageInterface: self)
+        }, messageInterface: self, adsDelegate: adsDelegate)
     }
 
     func loadMiniAppUsingURL(_ url: URL) {
@@ -81,7 +81,7 @@ extension ViewController: MiniAppNavigationDelegate {
             errorHandler: { error in
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
                 print("Errored: ", error.localizedDescription)
-            }, messageInterface: self)
+            }, messageInterface: self, adsDelegate: adsDelegate)
 
         currentMiniAppView = miniAppDisplay
         performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
@@ -95,5 +95,28 @@ extension ViewController: MiniAppNavigationDelegate {
                 self.fetchMiniAppUsingId(title: NSLocalizedString("error_invalid_miniapp_id", comment: ""), message: NSLocalizedString("input_valid_miniapp_title", comment: ""))
             }
         }
+    }
+}
+// This block implements a custom ad management example. In ViewController class uncomment `adsDelegate = self` in `viewDidLoad` method
+extension ViewController: MiniAppAdDisplayDelegate {
+    func loadInterstitial(for adId: String, onLoaded: @escaping () -> Void, onFailed: @escaping (Error) -> Void) {
+        print("LoadInterstitial")
+        onLoaded()
+    }
+
+    func showInterstitial(for adId: String, onClosed: @escaping () -> Void, onFailed: @escaping (Error) -> Void) {
+        print("\(adId)")
+        onClosed()
+    }
+
+    func loadRewarded(for adId: String, onLoaded: @escaping () -> Void, onFailed: @escaping (Error) -> Void) {
+        print("reward \(adId) loaded")
+        onLoaded()
+    }
+
+    func showRewarded(for adId: String, onClosed: @escaping (MiniAppReward?) -> Void, onFailed: @escaping (Error) -> Void) {
+        print("showing reward \(adId)")
+        var reward = MiniAppReward(type: "test", amount: 6)
+        onClosed(reward)
     }
 }

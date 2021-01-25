@@ -7,6 +7,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     let refreshControl = UIRefreshControl()
+    weak var adsDelegate: MiniAppAdDisplayDelegate?
 
     var unfilteredResults: [MiniAppInfo]? {
         didSet {
@@ -40,6 +41,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // adsDelegate = self //uncomment this line to experience a custom ads implementation
         self.navigationController?.viewControllers = [self]
         self.navigationItem.hidesBackButton = true
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
