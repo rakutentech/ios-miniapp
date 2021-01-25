@@ -136,7 +136,7 @@ extension ViewController: SettingsDelegate {
 extension ViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        guard searchBar.returnKeyType == .go, let search = searchBar.text else {
+        guard let search = searchBar.text else {
             return
         }
 
