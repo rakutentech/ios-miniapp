@@ -170,19 +170,23 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func showRewarded(callbackId: String, adUnitId: String) {
-        MiniAppAdDisplayer.shared.showRewarded(
-            forId: adUnitId,
-            onClosed: { [weak self] reward in
-                if let response = ResponseEncoder.encode(data: reward) {
-                    self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: response)
-                } else {
-                    self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-                }
-            },
-            onFailed: { [weak self] _ in
-                self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-            }
-        )
+        if let adDelegate = MiniAppAdDisplayer.shared.delegate {
+            adDelegate.showRewarded(
+                    forId: adUnitId,
+                    onClosed: { [weak self] reward in
+                        if let response = ResponseEncoder.encode(data: reward) {
+                            self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: response)
+                        } else {
+                            self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                        }
+                    },
+                    onFailed: { [weak self] _ in
+                        self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                    }
+            )
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+        }
     }
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {

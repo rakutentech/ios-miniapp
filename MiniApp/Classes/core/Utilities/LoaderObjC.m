@@ -7,8 +7,6 @@
 @implementation LoaderObjC : NSObject
 + (void)load {
     [MiniAppAnalyticsLoader loadMiniAppAnalytics];
-    #ifdef MAP_SDK_ADS
     [MiniAppAdLoader loadMiniAds];
-    #endif
 }
 @end
