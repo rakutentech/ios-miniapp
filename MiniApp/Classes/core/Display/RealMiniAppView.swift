@@ -28,6 +28,7 @@ internal class RealMiniAppView: UIView {
         miniAppTitle: String,
         queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
+        adsDelegate: MiniAppAdDisplayDelegate? = nil,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
@@ -43,6 +44,7 @@ internal class RealMiniAppView: UIView {
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
+                   adsDelegate: adsDelegate,
                    navigationDelegate: navigationDelegate,
                    navigationView: navigationView)
     }
@@ -52,6 +54,7 @@ internal class RealMiniAppView: UIView {
         miniAppTitle: String,
         queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
+        adsDelegate: MiniAppAdDisplayDelegate? = nil,
         initialLoadCallback: ((Bool) -> Void)? = nil,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
@@ -68,6 +71,7 @@ internal class RealMiniAppView: UIView {
         super.init(frame: .zero)
         commonInit(miniAppId: "custom\(Int32.random(in: 0...Int32.max))", // some id is needed to handle permissions
                    hostAppMessageDelegate: hostAppMessageDelegate,
+                   adsDelegate: adsDelegate,
                    navigationDelegate: navigationDelegate,
                    navigationView: navigationView)
     }
@@ -79,6 +83,7 @@ internal class RealMiniAppView: UIView {
     private func commonInit(
         miniAppId: String,
         hostAppMessageDelegate: MiniAppMessageDelegate,
+        adsDelegate: MiniAppAdDisplayDelegate? = nil,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
         self.miniAppId = miniAppId
@@ -96,6 +101,7 @@ internal class RealMiniAppView: UIView {
         navBar?.miniAppNavigation(delegate: self)
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self,
                                                                                    hostAppMessageDelegate: hostAppMessageDelegate,
+                                                                                   adsDelegate: adsDelegate,
                                                                                    miniAppId: miniAppId,
                                                                                    miniAppTitle: self.miniAppTitle)
         webView.configuration.userContentController.addBridgingJavaScript()

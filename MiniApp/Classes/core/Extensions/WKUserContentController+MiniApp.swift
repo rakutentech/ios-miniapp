@@ -6,8 +6,14 @@ extension WKUserContentController {
     /// - Parameters:
     ///   - delegate: Callback protocol to handle the message from the WebView
     ///   - hostMessageInterface: Message interface protocol of the host application
-    func addMiniAppScriptMessageHandler(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, miniAppId: String, miniAppTitle: String) {
-        add(MiniAppScriptMessageHandler(delegate: delegate, hostAppMessageDelegate: hostAppMessageDelegate, miniAppId: miniAppId, miniAppTitle: miniAppTitle), name: Constants.javascriptInterfaceName)
+    func addMiniAppScriptMessageHandler(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDelegate: MiniAppAdDisplayDelegate?, miniAppId: String, miniAppTitle: String) {
+        add(MiniAppScriptMessageHandler(
+                delegate: delegate,
+                hostAppMessageDelegate: hostAppMessageDelegate,
+                adsDelegate: adsDelegate,
+                miniAppId: miniAppId,
+                miniAppTitle: miniAppTitle
+        ), name: Constants.javascriptInterfaceName)
     }
 
     /// Method to remove the custom WKScriptMessageHandler. Removing the message handler will help to avoid memory leaks

@@ -33,12 +33,12 @@ Pod::Spec.new do |s|
     core.dependency 'ZIPFoundation'
   end
 
-  s.subspec 'Ads' do |ads|
-    ads.source_files = 'MiniApp/Classes/ads/**/*.{swift,h,m}'
-    ads.dependency 'MiniApp/Core'
-    ads.dependency 'Google-Mobile-Ads-SDK'
-    ads.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADS' }
-    ads.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-    ads.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.subspec 'Admob' do |admob|
+    admob.source_files = 'MiniApp/Classes/admob/**/*.{swift,h,m}'
+    admob.dependency 'MiniApp/Core'
+    admob.dependency 'Google-Mobile-Ads-SDK'
+    admob.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADMOB' }
+    admob.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+    admob.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   end
 end

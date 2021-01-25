@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow()?.rootViewController) -> UIViewController? {
     if let tabController = controller as? UITabBarController {
       return topViewController(controller: tabController.selectedViewController)
     }

@@ -21,11 +21,14 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
     var miniAppKeyStore = MiniAppKeyChain()
 
-    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, miniAppId: String, miniAppTitle: String) {
+    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDelegate: MiniAppAdDisplayDelegate?, miniAppId: String, miniAppTitle: String) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
         self.miniAppId = miniAppId
         self.miniAppTitle = miniAppTitle
+        if let adsDelegate = adsDelegate {
+            MiniAppAdDisplayer.shared.delegate = adsDelegate
+        }
         super.init()
     }
 
@@ -70,7 +73,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
-    #if RMA_SDK_ADS
         case .loadAd:
             if MiniAppAdDisplayer.shared.loadRequestedAd(forParams: requestParam) {
                 executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "")
@@ -79,7 +81,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             }
         case .showAd:
             showRequestedAd(callbackId: callbackId, params: requestParam)
-    #endif
         }
 
     }
@@ -138,7 +139,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             "}, \"timestamp\":\(Date().epochInMilliseconds)}"
     }
 
-    #if RMA_SDK_ADS
     func showRequestedAd(callbackId: String, params: RequestParameters?) {
         guard let adTypeRaw = params?.adType, let adType = MiniAppAdType(rawValue: adTypeRaw), let adUnitId = params?.adUnitId else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
@@ -152,23 +152,23 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             showRewarded(callbackId: callbackId, adUnitId: adUnitId)
         }
     }
-    #endif
 
-    #if RMA_SDK_ADS
     func showInterstitial(callbackId: String, adUnitId: String) {
-        MiniAppAdDisplayer.shared.showInterstitial(
-            forId: adUnitId,
-            onClosed: { [weak self] in
-                self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "")
-            },
-            onFailed: { [weak self] _ in
-                self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-            }
-        )
+        if let adDelegate = MiniAppAdDisplayer.shared.delegate {
+            adDelegate.showInterstitial(
+                    forId: adUnitId,
+                    onClosed: { [weak self] in
+                        self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "")
+                    },
+                    onFailed: { [weak self] _ in
+                        self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                    }
+            )
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+        }
     }
-    #endif
 
-    #if RMA_SDK_ADS
     func showRewarded(callbackId: String, adUnitId: String) {
         MiniAppAdDisplayer.shared.showRewarded(
             forId: adUnitId,
@@ -184,7 +184,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             }
         )
     }
-    #endif
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {
         switch responseStatus {
