@@ -60,7 +60,7 @@ internal class RealMiniAppView: UIView {
         self.miniAppTitle = miniAppTitle
         self.miniAppURL = miniAppURL
         self.initialLoadCallback = initialLoadCallback
-        webView = MiniAppWebView(miniAppURL: miniAppURL, queryParams: queryParams)
+        webView = MiniAppWebView(miniAppURL: miniAppURL)
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
