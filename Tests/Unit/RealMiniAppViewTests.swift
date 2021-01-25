@@ -64,7 +64,6 @@ class RealMiniAppViewTests: QuickSpec {
 
                     expect(miniAppView.alertController?.message).to(equal("mini-app-alert"))
                     expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
-                    miniAppView.tapButton(.okButton)
                 }
                 it("will call completion handler when OK is tapped") {
                     var okTapped = false
