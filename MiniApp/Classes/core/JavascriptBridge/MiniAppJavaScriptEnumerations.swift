@@ -83,7 +83,10 @@ enum MiniAppInterfaceOrientation: String, Codable {
     }
 }
 
+/// This enum is used by [MiniAppAdDisplayer](x-source-tag://MiniAppAdDisplayer) to know which kind of ad is manipulated
 enum MiniAppAdType: Int {
+    /// Interstitial ads are interactive, full-screen ads that cover the interface of their host app
     case interstitial = 0
+    /// Rewarded ads are interstistial ads that provide a pre-defined reward to the user if they display it for a certain time
     case rewarded
 }

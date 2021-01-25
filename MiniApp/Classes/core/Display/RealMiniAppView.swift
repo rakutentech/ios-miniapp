@@ -77,7 +77,7 @@ internal class RealMiniAppView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        return nil
+        nil
     }
 
     private func commonInit(
@@ -202,7 +202,7 @@ internal class RealMiniAppView: UIView {
 extension RealMiniAppView: MiniAppDisplayProtocol {
 
     public func getMiniAppView() -> UIView {
-        return self
+        self
     }
 }
 

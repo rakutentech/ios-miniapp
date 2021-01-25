@@ -11,8 +11,8 @@ public class MiniAppAdLoader: NSObject {
 	}
 }
 
-/// Made to be a singleton and has to be used with shared instance
-/// It has to be a single instance to avoid multiple initializations of Admob SDK
+/// This class is the parent class meant to be overriden when implementing ads SDK
+/// - Tag: MiniAppAdDisplayer
 internal class MiniAppAdDisplayer: NSObject {
 	#if RMA_SDK_ADMOB
 	static let shared = AdMobDisplayer()
@@ -21,8 +21,8 @@ internal class MiniAppAdDisplayer: NSObject {
 	#endif
 
 	weak var delegate: MiniAppAdDisplayDelegate?
-	var onInterstitialClosed: (() -> Void)?
-	var onRewardedClosed: ((MiniAppReward?) -> Void)?
+	var onInterstitialClosed: [String: () -> Void] = [:]
+	var onRewardedClosed: [String: (MiniAppReward?) -> Void] = [:]
 	var rewards: [String: MiniAppReward] = [:]
 
 	func initFramework() {
@@ -39,5 +39,14 @@ internal class MiniAppAdDisplayer: NSObject {
 			delegate.loadRewarded(forId: adId)
 		}
 		return true
+	}
+
+	func cleanReward(_ adId: String) {
+		onRewardedClosed.removeValue(forKey: adId)
+		rewards.removeValue(forKey: adId)
+	}
+
+	func cleanInterstitial(_ adId: String) {
+		onInterstitialClosed.removeValue(forKey: adId)
 	}
 }

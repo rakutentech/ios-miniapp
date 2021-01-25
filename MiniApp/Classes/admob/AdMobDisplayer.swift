@@ -1,8 +1,7 @@
 import Foundation
 import GoogleMobileAds
 
-/// Made to be a singleton and has to be used with shared instance
-/// It has to be a single instance to avoid multiple initializations of Admob SDK
+/// This subclass of [MiniAppAdDisplayer](x-source-tag://MiniAppAdDisplayer) is internally used by Mini App SDK to display Google Ads
 internal class AdMobDisplayer: MiniAppAdDisplayer {
 	var interstitialAds: [String: GADInterstitial?] = [:]
 	var rewardedAds: [String: GADRewardedAd?] = [:]
@@ -14,6 +13,16 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
 
 	override func initFramework() {
 		GADMobileAds.sharedInstance().start(completionHandler: nil)
+	}
+
+	override func cleanReward(_ adId: String) {
+		rewardedAds.removeValue(forKey: adId)
+		super.cleanReward(adId)
+	}
+
+	override func cleanInterstitial(_ adId: String) {
+		interstitialAds.removeValue(forKey: adId)
+		super.cleanInterstitial(adId)
 	}
 }
 
@@ -29,25 +38,23 @@ extension AdMobDisplayer: MiniAppAdDisplayDelegate {
 		interstitialAds[id]??.load(GADRequest())
 	}
 
-	func showInterstitial(forId id: String, onClosed: @escaping (() -> Void), onFailed: @escaping ((Error) -> Void)) {
+	func showInterstitial(forId id: String, onClosed: @escaping () -> Void, onFailed: @escaping (Error) -> Void) {
 		if interstitialAds[id]??.isReady == true,
 		   let viewController = UIApplication.topViewController() {
-			onInterstitialClosed = onClosed
+			onInterstitialClosed[id] = onClosed
 			interstitialAds[id]??.present(fromRootViewController: viewController)
 		} else {
 			onFailed(NSError())
 		}
-		return
 	}
 
-	func showRewarded(forId id: String, onClosed: @escaping ((MiniAppReward?) -> Void), onFailed: @escaping ((Error) -> Void)) {
+	func showRewarded(forId id: String, onClosed: @escaping (MiniAppReward?) -> Void, onFailed: @escaping (Error) -> Void) {
 		if rewardedAds[id]??.isReady == true, let viewController = UIApplication.topViewController() {
-			onRewardedClosed = onClosed
+			onRewardedClosed[id] = onClosed
 			rewardedAds[id]??.present(fromRootViewController: viewController, delegate: self)
 		} else {
 			onFailed(NSError())
 		}
-		return
 	}
 }
 
@@ -55,9 +62,10 @@ extension AdMobDisplayer: GADInterstitialDelegate {
 	// function predicate comes from Google's SDK, had to disable swiftlint rule
 	func interstitialDidDismissScreen(_ ad: GADInterstitial) { // swiftlint:disable:this identifier_name
 		if let id = ad.adUnitID {
-			interstitialAds[id] = nil
+			onInterstitialClosed[id]?()
+			cleanInterstitial(id)
 		}
-		self.onInterstitialClosed?()
+
 	}
 }
 
@@ -67,7 +75,7 @@ extension AdMobDisplayer: GADRewardedAdDelegate {
 	}
 
 	func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
-		rewardedAds[rewardedAd.adUnitID] = nil
-		self.onRewardedClosed?(self.rewards[rewardedAd.adUnitID])
+		onRewardedClosed[rewardedAd.adUnitID]?(rewards[rewardedAd.adUnitID])
+		cleanReward(rewardedAd.adUnitID)
 	}
 }

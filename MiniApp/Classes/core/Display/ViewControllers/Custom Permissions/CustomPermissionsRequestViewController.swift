@@ -58,7 +58,7 @@ class CustomPermissionsRequestViewController: UIViewController {
 extension CustomPermissionsRequestViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return permissionsRequestList?.count ?? 0
+        permissionsRequestList?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
