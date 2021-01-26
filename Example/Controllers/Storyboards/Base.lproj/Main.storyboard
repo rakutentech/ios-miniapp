@@ -919,6 +919,7 @@
                                                 <constraint firstItem="YF2-kK-9FF" firstAttribute="leading" secondItem="yt1-f4-u6j" secondAttribute="trailing" constant="10" id="9l1-Vm-Tje"/>
                                                 <constraint firstItem="fpy-QX-q3b" firstAttribute="top" secondItem="wrl-SU-kWl" secondAttribute="topMargin" constant="27" id="Ayj-EF-4bd"/>
                                                 <constraint firstItem="fpy-QX-q3b" firstAttribute="leading" secondItem="yt1-f4-u6j" secondAttribute="trailing" constant="10" id="DqH-ij-G7P"/>
+                                                <constraint firstAttribute="bottom" secondItem="yt1-f4-u6j" secondAttribute="bottom" constant="10" id="Hxs-y3-hHP"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="YF2-kK-9FF" secondAttribute="trailing" constant="10" id="IHn-Iz-mYL"/>
                                                 <constraint firstItem="fpy-QX-q3b" firstAttribute="bottom" secondItem="wrl-SU-kWl" secondAttribute="bottomMargin" id="dWv-VD-vIi"/>
                                                 <constraint firstItem="fpy-QX-q3b" firstAttribute="trailing" secondItem="wrl-SU-kWl" secondAttribute="trailingMargin" id="i5y-ul-BX4"/>
@@ -1243,7 +1244,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="KN6-HW-6Lh"/>
+        <segue reference="6nU-Qi-B5w"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
