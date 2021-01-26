@@ -48,139 +48,120 @@ class RealMiniAppViewTests: QuickSpec {
             }
         }
         describe("WKUIDelegate") {
-            let mockMessageInterface = MockMessageInterface()
-            let miniAppView = MockRealMiniAppView(
-                miniAppId: "miniappid-testing",
-                versionId: "version-id",
-                projectId: "project-id",
-                miniAppTitle: "Mini app title",
-                hostAppMessageDelegate: mockMessageInterface)
-
+            func createMiniAppView() -> MockRealMiniAppView {
+                return MockRealMiniAppView(
+                    miniAppId: "miniappid-testing",
+                    versionId: "version-id",
+                    projectId: "project-id",
+                    miniAppTitle: "Mini app title",
+                    hostAppMessageDelegate: MockMessageInterface())
+            }
             context("when webview is loaded with alert javascript dialog") {
-                it("will show native alert with request message, ok with no crash") {
-                    let html = """
-                    <html>
-                    <body>
-                    <script>
-                    alert("mini-app-alert")
-                    </script>
-                    </body>
-                    </html>
-                    """
-                    miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
-                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-alert"), timeout: .seconds(30))
+                it("will show native alert with request message") {
+                    let miniAppView = createMiniAppView()
+                    miniAppView.webView(miniAppView.webView, runJavaScriptAlertPanelWithMessage: "mini-app-alert",
+                                        initiatedByFrame: WKFrameInfo(), completionHandler: {})
+
+                    expect(miniAppView.alertController?.message).to(equal("mini-app-alert"))
+                    expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
+                }
+                it("will call completion handler when OK is tapped") {
+                    var okTapped = false
+                    let miniAppView = createMiniAppView()
+                    miniAppView.webView(miniAppView.webView, runJavaScriptAlertPanelWithMessage: "mini-app-alert",
+                                        initiatedByFrame: WKFrameInfo(), completionHandler: { okTapped = true })
+
                     miniAppView.tapButton(.okButton)
+                    expect(okTapped).toEventually(beTrue(), timeout: .seconds(5))
                 }
             }
-        }
-        describe("WKUIDelegate") {
-            let mockMessageInterface = MockMessageInterface()
-            let miniAppView = MockRealMiniAppView(
-                miniAppId: "miniappid-testing",
-                versionId: "version-id",
-                projectId: "project-id",
-                miniAppTitle: "Mini app title",
-                hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with confirm javascript dialog") {
-                it("will show native alert with request message, ok and cancel button, ok don't crash") {
-                    let html = """
-                    <html>
-                    <body>
-                    <script>
-                    confirm("mini-app-confirm")
-                    </script>
-                    </body>
-                    </html>
-                    """
-                    miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
-                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
-                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: .seconds(30))
-                    miniAppView.tapButton(.okButton)
+                it("will show native alert with request message, ok and cancel button") {
+                    let miniAppView = createMiniAppView()
+                    miniAppView.webView(miniAppView.webView, runJavaScriptConfirmPanelWithMessage: "mini-app-confirm",
+                                        initiatedByFrame: WKFrameInfo(), completionHandler: {(_) in })
+
+                    expect(miniAppView.alertController?.message).to(equal("mini-app-confirm"))
+                    expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
+                    expect(miniAppView.alertController?.actions[1].title).to(equal("Cancel"))
                 }
-            }
-        }
-        describe("WKUIDelegate") {
-            let mockMessageInterface = MockMessageInterface()
-            let miniAppView = MockRealMiniAppView(
-                miniAppId: "miniappid-testing",
-                versionId: "version-id",
-                projectId: "project-id",
-                miniAppTitle: "Mini app title",
-                hostAppMessageDelegate: mockMessageInterface)
-            context("when webview is loaded with confirm javascript dialog") {
-                it("will show native alert with request message, ok and cancel button, cancel don't crash") {
-                    let html = """
-                    <html>
-                    <body>
-                    <script>
-                    confirm("mini-app-confirm")
-                    </script>
-                    </body>
-                    </html>
-                    """
-                    miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
-                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
-                    expect(miniAppView.dialogMessage).toEventually(equal("mini-app-confirm"), timeout: .seconds(30))
+                it("will return true to completion handler when OK button is tapped") {
+                    var confirm = false
+                    let miniAppView = createMiniAppView()
+                    miniAppView.webView(miniAppView.webView, runJavaScriptConfirmPanelWithMessage: "mini-app-confirm",
+                                        initiatedByFrame: WKFrameInfo(), completionHandler: {(status) in
+                                            confirm = status
+                                        })
+
+                    miniAppView.tapButton(.okButton)
+                    expect(confirm).toEventually(beTrue(), timeout: .seconds(5))
+                }
+                it("will show native alert with request message, ok and cancel button") {
+                    let miniAppView = createMiniAppView()
+                    miniAppView.webView(miniAppView.webView, runJavaScriptConfirmPanelWithMessage: "mini-app-confirm",
+                                        initiatedByFrame: WKFrameInfo(), completionHandler: {(_) in })
+
+                    expect(miniAppView.alertController).toEventuallyNot(beNil(), timeout: .seconds(10))
+                    expect(miniAppView.alertController?.message).to(equal("mini-app-confirm"))
+                    expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
+                    expect(miniAppView.alertController?.actions[1].title).to(equal("Cancel"))
+                }
+                it("will return false to completion handler when Cancel button is tapped") {
+                    var confirm = true
+                    let miniAppView = createMiniAppView()
+                    miniAppView.webView(miniAppView.webView, runJavaScriptConfirmPanelWithMessage: "mini-app-confirm",
+                                        initiatedByFrame: WKFrameInfo(), completionHandler: {(status) in
+                                            confirm = status
+                                        })
+
                     miniAppView.tapButton(.cancelButton)
+                    expect(confirm).toEventually(beFalse(), timeout: .seconds(5))
                 }
             }
-        }
-        describe("WKUIDelegate") {
-                let mockMessageInterface = MockMessageInterface()
-                let miniAppView = MockRealMiniAppView(
-                    miniAppId: "miniappid-testing",
-                    versionId: "version-id",
-                    projectId: "project-id",
-                    miniAppTitle: "Mini app title",
-                    hostAppMessageDelegate: mockMessageInterface)
             context("when webview is loaded with prompt javascript dialog") {
-                it("will show native alert with request message and wanted text in textfield, ok will transmit text with no crash") {
-                    let html = """
-                    <html>
-                    <body>
-                    <script>
-                    prompt("Please enter your name:", "Rakuten Mini app");
-                    </script>
-                    </body>
-                    </html>
-                    """
-                    miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                    expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
-                    expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
-                    expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: .seconds(30))
-                    expect(miniAppView.dialogTextFieldText).toEventually(equal("Rakuten Mini app"), timeout: .seconds(30))
-                    miniAppView.tapButton(.okButton)
+                it("will show native alert with request message and wanted text in textfield") {
+                    let miniAppView = createMiniAppView()
+                    miniAppView.webView(miniAppView.webView, runJavaScriptTextInputPanelWithPrompt: "Please enter your name:",
+                                        defaultText: "Rakuten Mini app", initiatedByFrame: WKFrameInfo(), completionHandler: {(_) in })
+
+                    expect(miniAppView.alertController).toEventuallyNot(beNil(), timeout: .seconds(10))
+                    expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
+                    expect(miniAppView.alertController?.actions[1].title).to(equal("Cancel"))
+                    expect(miniAppView.alertController?.message).to(equal("Please enter your name:"))
+                    expect(miniAppView.alertController?.textFields?.first?.text).to(equal("Rakuten Mini app"))
                 }
-            }
-            describe("WKUIDelegate") {
-                let mockMessageInterface = MockMessageInterface()
-                let miniAppView = MockRealMiniAppView(
-                    miniAppId: "miniappid-testing",
-                    versionId: "version-id",
-                    projectId: "project-id",
-                    miniAppTitle: "Mini app title",
-                    hostAppMessageDelegate: mockMessageInterface)
-                context("when webview is loaded with prompt javascript dialog") {
-                    it("will show native alert with request message and wanted no in textfield, cancel won't crash") {
-                        let html = """
-                    <html>
-                    <body>
-                    <script>
-                    prompt("Please enter your name:", "");
-                    </script>
-                    </body>
-                    </html>
-                    """
-                        miniAppView.webView.loadHTMLString(html, baseURL: nil)
-                        expect(miniAppView.okText).toEventually(equal("OK"), timeout: .seconds(30))
-                        expect(miniAppView.cancelText).toEventually(equal("Cancel"), timeout: .seconds(30))
-                        expect(miniAppView.dialogMessage).toEventually(equal("Please enter your name:"), timeout: .seconds(30))
-                        expect(miniAppView.dialogTextFieldText).toEventually(equal(""), timeout: .seconds(30))
-                        miniAppView.tapButton(.cancelButton)
-                    }
+                it("will return text field value to completion handler when OK button is tapped") {
+                    var userInput: String?
+                    let miniAppView = createMiniAppView()
+                    miniAppView.webView(miniAppView.webView, runJavaScriptTextInputPanelWithPrompt: "Please enter your name:",
+                                        defaultText: "Rakuten Mini app", initiatedByFrame: WKFrameInfo(), completionHandler: {(value) in
+                                            userInput = value
+                                        })
+
+                    miniAppView.tapButton(.okButton)
+                    expect(userInput).toEventually(equal("Rakuten Mini app"), timeout: .seconds(5))
+                }
+                it("will show native alert with request message and wanted no in textfield") {
+                    let miniAppView = createMiniAppView()
+                    miniAppView.webView(miniAppView.webView, runJavaScriptTextInputPanelWithPrompt: "Please enter your name:",
+                                        defaultText: "", initiatedByFrame: WKFrameInfo(), completionHandler: {(_) in })
+
+                    expect(miniAppView.alertController).toEventuallyNot(beNil(), timeout: .seconds(10))
+                    expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
+                    expect(miniAppView.alertController?.actions[1].title).to(equal("Cancel"))
+                    expect(miniAppView.alertController?.message).to(equal("Please enter your name:"))
+                    expect(miniAppView.alertController?.textFields?.first?.text).to(equal(""))
+                }
+                it("will return nil to completion handler when Cancel button is tapped") {
+                    var userInput: String? = "fake-text"
+                    let miniAppView = createMiniAppView()
+                    miniAppView.webView(miniAppView.webView, runJavaScriptTextInputPanelWithPrompt: "Please enter your name:",
+                                        defaultText: "", initiatedByFrame: WKFrameInfo(), completionHandler: {(value) in
+                                            userInput = value
+                                        })
+
+                    miniAppView.tapButton(.cancelButton)
+                    expect(userInput).toEventually(beNil(), timeout: .seconds(5))
                 }
             }
         }

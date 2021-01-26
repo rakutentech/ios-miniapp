@@ -18,9 +18,9 @@ extension String {
         }
         let defaultValue = NSLocalizedString(self, bundle: podBundle, comment: "")
         return NSLocalizedString(self,
-                                 tableName: "Localizable",
-                                 bundle: Bundle.main,
-                                 value: defaultValue,
-                                 comment: "")
+            tableName: "Localizable",
+            bundle: Bundle.main,
+            value: defaultValue,
+            comment: "")
     }
 }

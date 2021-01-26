@@ -72,6 +72,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Opening external links](#Opening-external-links)
     * [Orientation Lock](#orientation-lock)
     * [Catching analytics events](#analytics-events)
+    * [Passing Query parameters while creating Mini-app](#query-param-mini-app)
 
 <a id="create-mini-app"></a>
 
@@ -118,7 +119,7 @@ Mini App SDK provides default implementation for few interfaces in `MiniAppMessa
 | Method                       | Default  |
 | :----                        | :----:   |
 | getUniqueId                  | 🚫       |
-| requestPermission            | 🚫       |
+| requestDevicePermission      | 🚫       |
 | requestCustomPermissions     | ✅       |
 | shareContent                 | ✅       |
 | getUserName                  | 🚫       |
@@ -152,7 +153,7 @@ extension ViewController: MiniAppMessageDelegate {
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
+    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<String, Error>) -> Void) {
         switch permissionType {
         case .location:
             let locStatus = CLLocationManager.authorizationStatus()
@@ -512,6 +513,32 @@ Here is an example of data contained in payload:
   }
 }
 ```
+
+<a id="query-param-mini-app"></a>
+
+### Passing Query parameters while creating Mini-app
+
+While creating a mini app, you can pass the optional query parameter as well. This query parameter will be appended to the mini-app's URL.
+
+For eg.,
+
+```swift
+MiniApp.shared().create(appId: String, queryParams: "param1=value1&param2=value2", completionHandler: { (result) in
+	switch result {
+            case .success(let miniAppDisplay):
+                let view = miniAppDisplay.getMiniAppView()
+                view.frame = self.view.bounds
+                self.view.addSubview(view)
+            case .failure(let error):
+                print("Error: ", error.localizedDescription)
+            }
+}, messageInterface: self)
+
+```
+
+And the mini-app will be loaded like the following scheme,
+
+```mscheme.rakuten//miniapp/index.html?param1=value1&param2=value2```
 
 <a id="change-log"></a>
 

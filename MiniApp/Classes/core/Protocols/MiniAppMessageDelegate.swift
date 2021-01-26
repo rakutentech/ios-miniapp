@@ -12,6 +12,13 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
 
     /// Interface that should be implemented in the host app that handles the code to request any permission and the
     /// result (allowed/denied) should be returned.
+    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void)
+
+    /// Interface that should be implemented in the host app that handles the code to request any permission and the
+    /// result (allowed/denied) should be returned.
+    @available(*, deprecated,
+        message: "Since version 2.8.0, this method is deprecated",
+        renamed: "requestDevicePermission(permissionType:completionHandler:)")
     func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void)
 
     /// Optional Interface that can be implemented in the host app to handle the Custom Permissions.
@@ -50,6 +57,14 @@ public extension MiniAppMessageDelegate {
         permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (
             Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         self.requestCustomPermissions(permissions: permissions, miniAppTitle: "Mini App", completionHandler: completionHandler)
+    }
+
+    func requestPermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
+
+    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
+        self.requestPermission(permissionType: permissionType, completionHandler: completionHandler)
     }
 }
 

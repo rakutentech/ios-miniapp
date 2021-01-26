@@ -43,14 +43,15 @@ public class MiniApp: NSObject {
     ///
     /// - Parameters:
     ///   - appId: Mini AppId String value
-    ///   - version: optional Mini App version String value. If omitted the modt recent one is picked
+    ///   - version: optional Mini App version String value. If omitted the most recent one is picked
+    ///   - queryParams: Optional Query parameters that the host app would like to share while creating a mini app
     ///   - completionHandler: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
-    public func create(appId: String, version: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate) {
-        return realMiniApp.createMiniApp(appId: appId, version: version, completionHandler: completionHandler, messageInterface: messageInterface)
+    public func create(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate) {
+        return realMiniApp.createMiniApp(appId: appId, version: version, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 
     /// Cache the Custom permissions status for a given MiniApp ID
@@ -82,13 +83,14 @@ public class MiniApp: NSObject {
     ///
     /// - Parameters:
     ///   - appInfo: Mini App info object
+    ///   - queryParams: Optional Query parameters that the host app would like to share while creating a mini app
     ///   - completionHandler: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
-    public func create(appInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate) {
-        return realMiniApp.createMiniApp(appInfo: appInfo, completionHandler: completionHandler, messageInterface: messageInterface)
+    public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate) {
+        return realMiniApp.createMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 
     @available(*, deprecated,
@@ -146,14 +148,17 @@ public extension MiniApp {
     ///
     /// - Parameters:
     ///   - url: a HTTP url containing Mini App content
+    ///   - queryParams: Optional Query parameters that the host app would like to share while creating a mini app
     ///   - errorHandler: A block to be called on unsuccessful initial load of Mini App's web content. The handler block receives the following parameter
     ///         -   Error: Error details if Mini App's url content loading is failed, otherwise nil.
     /// - Returns: MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     func create(url: URL,
+                queryParams: String? = nil,
                 errorHandler: @escaping (Error) -> Void,
                 messageInterface: MiniAppMessageDelegate) -> MiniAppDisplayProtocol {
         return realMiniApp.createMiniApp(url: url,
+                                         queryParams: queryParams,
                                          errorHandler: errorHandler,
                                          messageInterface: messageInterface)
     }
