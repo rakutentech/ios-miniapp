@@ -6,6 +6,7 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
     var interstitialAds: [String: GADInterstitial] = [:]
     var rewardedAds: [String: GADRewardedAd] = [:]
     var onInterstitialLoaded: [String: (Result<Void, Error>) -> Void] = [:]
+    var admobStartResult: [String : GADAdapterStatus]?
 
     override init() {
         super.init()
@@ -13,7 +14,9 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
     }
 
     override func initFramework() {
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        GADMobileAds.sharedInstance().start {[weak self] status in
+            self?.admobStartResult = status.adapterStatusesByClassName
+        }
     }
 
     override func cleanReward(_ adId: String) {
@@ -50,7 +53,9 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
     }
 
     override func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
-        if let gad = interstitialAds[adId] {
+        if admobStartResult == nil {
+            onLoaded(.failure(NSError.miniAppAdNotLoaded(message: MASDKAdsDisplayError.sdkError.localizedDescription)))
+        } else if let gad = interstitialAds[adId] {
             let ready = gad.isReady
             onLoaded(.failure(onReadyFailCheck(ready: ready, adId: adId, gad: gad)))
         } else {
@@ -62,7 +67,9 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
     }
 
     override func loadRewarded(for adId: String, onLoaded: @escaping (Result<(), Error>) -> Void) {
-        if let gad = rewardedAds[adId] {
+        if admobStartResult == nil {
+            onLoaded(.failure(NSError.miniAppAdNotLoaded(message: MASDKAdsDisplayError.sdkError.localizedDescription)))
+        } else if let gad = rewardedAds[adId] {
             let ready = gad.isReady
             onLoaded(.failure(onReadyFailCheck(ready: ready, adId: adId, gad: gad)))
         } else {

@@ -7,6 +7,5 @@
 @implementation LoaderObjC : NSObject
 + (void)load {
     [MiniAppAnalyticsLoader loadMiniAppAnalytics];
-    [MiniAppAdLoader loadMiniAds];
 }
 @end

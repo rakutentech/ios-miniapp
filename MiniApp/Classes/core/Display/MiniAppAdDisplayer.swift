@@ -1,16 +1,5 @@
 import Foundation
 
-// Swift doesn't have load-time initialization so we need
-// this proxy class that is called by LoaderObjC's `load`
-// method.
-public class MiniAppAdLoader: NSObject {
-    @objc public static func loadMiniAds() {
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
-            MiniAppAdDisplayer.shared.initFramework()
-        }
-    }
-}
-
 /// This class is the parent class meant to be overriden when implementing ads SDK
 /// - Tag: MiniAppAdDisplayer
 internal class MiniAppAdDisplayer: NSObject, MiniAppAdDisplayDelegate {
@@ -24,6 +13,11 @@ internal class MiniAppAdDisplayer: NSObject, MiniAppAdDisplayDelegate {
     var onInterstitialClosed: [String: (Result<Void, Error>) -> Void] = [:]
     var onRewardedClosed: [String: (Result<MiniAppReward, Error>) -> Void] = [:]
     var rewards: [String: MiniAppReward] = [:]
+
+    override init() {
+        super.init()
+        initFramework()
+    }
 
     func initFramework() {
     }
