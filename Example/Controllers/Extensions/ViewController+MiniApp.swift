@@ -99,24 +99,24 @@ extension ViewController: MiniAppNavigationDelegate {
 }
 // This block implements a custom ad management example. In ViewController class uncomment `adsDelegate = self` in `viewDidLoad` method
 extension ViewController: MiniAppAdDisplayDelegate {
-    func loadInterstitial(for adId: String, onLoaded: @escaping () -> Void, onFailed: @escaping (Error) -> Void) {
+    func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
         print("LoadInterstitial")
-        onLoaded()
+        onLoaded(.success(()))
     }
 
-    func showInterstitial(for adId: String, onClosed: @escaping () -> Void, onFailed: @escaping (Error) -> Void) {
+    func showInterstitial(for adId: String, onClosed: @escaping (Result<Void, Error>) -> Void) {
         print("\(adId)")
-        onClosed()
+        onClosed(.success(()))
     }
 
-    func loadRewarded(for adId: String, onLoaded: @escaping () -> Void, onFailed: @escaping (Error) -> Void) {
+    func loadRewarded(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
         print("reward \(adId) loaded")
-        onLoaded()
+        onLoaded(.success(()))
     }
 
-    func showRewarded(for adId: String, onClosed: @escaping (MiniAppReward?) -> Void, onFailed: @escaping (Error) -> Void) {
+    func showRewarded(for adId: String, onClosed: @escaping (Result<MiniAppReward, Error>) -> Void) {
         print("showing reward \(adId)")
-        var reward = MiniAppReward(type: "test", amount: 6)
-        onClosed(reward)
+        let reward = MiniAppReward(type: "test", amount: 6)
+        onClosed(.success(reward))
     }
 }

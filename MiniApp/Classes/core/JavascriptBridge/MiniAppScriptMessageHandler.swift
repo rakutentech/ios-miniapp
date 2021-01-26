@@ -28,6 +28,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         self.miniAppTitle = miniAppTitle
         if let adsDelegate = adsDelegate {
             MiniAppAdDisplayer.shared.delegate = adsDelegate
+        } else {
+            MiniAppAdDisplayer.shared.delegate = MiniAppAdDisplayer.shared
         }
         super.init()
     }
@@ -74,11 +76,14 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
         case .loadAd:
-            MiniAppAdDisplayer.shared.loadRequestedAd(forParams: requestParam, onLoaded: { [weak self] in
-                self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Ad loaded")
-            }, onFailed: {[weak self] error in
-                self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
-            })
+            MiniAppAdDisplayer.shared.loadRequestedAd(forParams: requestParam) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Ad loaded")
+                case .failure(let error):
+                    self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                }
+            }
         case .showAd:
             showRequestedAd(callbackId: callbackId, params: requestParam)
         }
@@ -155,15 +160,14 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func showInterstitial(callbackId: String, adUnitId: String) {
         if let adDelegate = MiniAppAdDisplayer.shared.delegate {
-            adDelegate.showInterstitial(
-                    for: adUnitId,
-                    onClosed: { [weak self] in
-                        self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Ad loaded successfully")
-                    },
-                    onFailed: { [weak self] error in
-                        self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
-                    }
-            )
+            adDelegate.showInterstitial(for: adUnitId) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Ad loaded successfully")
+                case .failure(let error):
+                    self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                }
+            }
         } else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.adNotDisplayable))
         }
@@ -171,19 +175,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func showRewarded(callbackId: String, adUnitId: String) {
         if let adDelegate = MiniAppAdDisplayer.shared.delegate {
-            adDelegate.showRewarded(
-                    for: adUnitId,
-                    onClosed: { [weak self] reward in
-                        if let response = ResponseEncoder.encode(data: reward) {
-                            self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: response)
-                        } else {
-                            self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-                        }
-                    },
-                    onFailed: { [weak self] error  in
-                        self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+            adDelegate.showRewarded(for: adUnitId) { [weak self] result in
+                switch result {
+                case .success(let reward):
+                    if let response = ResponseEncoder.encode(data: reward) {
+                        self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: response)
+                    } else {
+                        self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
                     }
-            )
+                case .failure(let error):
+                    self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                }
+            }
         } else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.adNotDisplayable))
         }
