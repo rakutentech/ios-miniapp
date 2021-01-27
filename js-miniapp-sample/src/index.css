@@ -5,6 +5,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* iOS fix: ensure that App screen is not scrollable */
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
 }
 
 code {

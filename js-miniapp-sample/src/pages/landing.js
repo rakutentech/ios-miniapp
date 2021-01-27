@@ -11,10 +11,11 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     height: '25%',
+    width: '100%',
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'stretch',
     fontSize: 18,
     color: theme.color.primary,
     fontWeight: 'bold',
