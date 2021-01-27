@@ -116,7 +116,7 @@ export class MiniAppBridge {
 
   /**
    * Associating requestPermission function to MiniAppBridge object.
-   * @param {DevicePermission} permissionType Type of permission that is requested. For eg., location
+   * @param {DevicePermission} permissionType Type of permission that is requested e.g. location
    */
   requestPermission(permissionType: DevicePermission) {
     return new Promise<string>((resolve, reject) => {
@@ -148,7 +148,7 @@ export class MiniAppBridge {
    * Associating loadInterstitialAd function to MiniAppBridge object.
    * This function preloads interstitial ad before they are requested for display.
    * Can be called multiple times to pre-load multiple ads.
-   * @param {string} id ad unit id of the intertitial ad that needs to be loaded.
+   * @param {string} id ad unit id of the interstitial ad that needs to be loaded.
    */
   loadInterstitialAd(id: string) {
     return new Promise<string>((resolve, reject) => {
@@ -334,9 +334,9 @@ export class MiniAppBridge {
 }
 
 /**
- * Method to remove the callback object from the message queue after successfull/error communication
+ * Method to remove the callback object from the message queue after successful/error communication
  * with the native application
- * @param  {[Object]} queueObj Queue Object that holds the references of callback informations
+ * @param  {[Object]} queueObj Queue Object that holds the references of callback information
  *
  * @internal
  */

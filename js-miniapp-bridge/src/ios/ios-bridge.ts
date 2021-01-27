@@ -16,7 +16,7 @@ const GeolocationPositionError = {
   TIMEOUT: 3,
 };
 
-class IOSExcecutor implements PlatformExecutor {
+class IOSExecutor implements PlatformExecutor {
   exec(action, param, onSuccess, onError) {
     const callback = {} as Callback;
     callback.onSuccess = onSuccess;
@@ -34,11 +34,11 @@ class IOSExcecutor implements PlatformExecutor {
   }
 }
 
-const iOSExcecutor = new IOSExcecutor();
-(window as any).MiniAppBridge = new MiniAppBridge(iOSExcecutor);
+const iOSExecutor = new IOSExecutor();
+(window as any).MiniAppBridge = new MiniAppBridge(iOSExecutor);
 
 navigator.geolocation.getCurrentPosition = (success, error, options) => {
-  return iOSExcecutor.exec(
+  return iOSExecutor.exec(
     'getCurrentPosition',
     { locationOptions: options },
     value => {

@@ -9,7 +9,7 @@ import { Platform } from '../types/platform';
 /* tslint:disable:no-any */
 let uniqueId = Math.random();
 
-class AndroidExcecutor implements PlatformExecutor {
+class AndroidExecutor implements PlatformExecutor {
   exec(action, param, onSuccess, onError) {
     const callback = {} as Callback;
     callback.onSuccess = onSuccess;
@@ -27,4 +27,4 @@ class AndroidExcecutor implements PlatformExecutor {
   }
 }
 
-(window as any).MiniAppBridge = new MiniAppBridge(new AndroidExcecutor());
+(window as any).MiniAppBridge = new MiniAppBridge(new AndroidExecutor());
