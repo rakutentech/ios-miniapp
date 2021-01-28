@@ -1,6 +1,7 @@
 import Foundation
 
 public protocol MiniAppAdDisplayDelegate: class {
+
 	/// Load Interstitial ad
 	/// This function preloads Interstitial ad before they are requested for display.
 	/// Can be called multiple times to pre-load multiple ads.
@@ -33,6 +34,9 @@ public enum MASDKAdsDisplayError: String, MiniAppErrorProtocol {
 	/// Ad is not ready to be displayed
 	case adNotLoaded
 
+	/// Ad identifiers not provided or wrong request parameters format
+	case adIdError
+
 	/// Failed to get a reward from ad displaying
 	case rewardFailure
 
@@ -40,7 +44,7 @@ public enum MASDKAdsDisplayError: String, MiniAppErrorProtocol {
 	case hostUIError
 
 	var name: String {
-		return self.rawValue
+		self.rawValue
 	}
 
 	/// Detailed Description for every MASDKAdsDisplayError
@@ -58,6 +62,8 @@ public enum MASDKAdsDisplayError: String, MiniAppErrorProtocol {
 			return "A reward could not be generated"
 		case .hostUIError:
 			return "The host controller is not able to display the ad"
+		case .adIdError:
+			return "Ad identifiers not provided or wrong request parameters format"
 		}
 	}
 }

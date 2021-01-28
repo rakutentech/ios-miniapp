@@ -44,6 +44,7 @@ PODS:
   - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
+  - Google-Mobile-Ads-SDK
   - MiniApp/Admob (from `./`)
   - Nimble
   - Quick
@@ -78,6 +79,6 @@ SPEC CHECKSUMS:
   RSDKUtils: 9940b99fa0494181b8ee2cfa2ac742bb0958b984
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: acf5baf8bf773426e62aa0568ca6ab0aa16831f3
+PODFILE CHECKSUM: e7c0e2ae9f35611e82ef1d24cccfc91c4011f2d7
 
 COCOAPODS: 1.10.1

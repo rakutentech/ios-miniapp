@@ -53,7 +53,7 @@
 	<array>
 		<dict>
 			<key>SKAdNetworkIdentifier</key>
-			<string>$(RMA_SK_AD_NETWORK_IDENTIFIER)</string>
+			<string>cstr6suwn9.skadnetwork</string>
 		</dict>
 	</array>
 	<key>UILaunchStoryboardName</key>

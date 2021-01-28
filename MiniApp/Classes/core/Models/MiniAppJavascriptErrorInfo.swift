@@ -8,7 +8,7 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
     case unknownError
 
     var name: String {
-        return self.rawValue
+        self.rawValue
     }
 
     public var description: String {
@@ -30,8 +30,6 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case unexpectedMessageFormat
     case invalidPermissionType
     case valueIsEmpty
-    case adNotLoadable
-    case adNotDisplayable
 
     var name: String {
         self.rawValue
@@ -47,10 +45,6 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
         return "Permission type that is requested is invalid"
         case .valueIsEmpty:
         return "The value which is passed is empty."
-        case .adNotLoadable:
-        return "The ad could not be loaded"
-        case .adNotDisplayable:
-        return "The ad could not be displayed"
         }
     }
 }

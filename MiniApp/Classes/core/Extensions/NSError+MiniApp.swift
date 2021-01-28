@@ -78,6 +78,14 @@ extension NSError {
                 userInfo: [NSLocalizedDescriptionKey: message]
         )
     }
+
+    class func miniAppAdProtocoleError() -> NSError {
+        NSError(
+                domain: MiniAppSDKErrorDomain,
+                code: MiniAppSDKErrorCode.adNotDisplayed.rawValue,
+                userInfo: [NSLocalizedDescriptionKey: MASDKAdsDisplayError.failedToConformToProtocol.localizedDescription]
+        )
+    }
 }
 
 // swiftlint:disable identifier_name

@@ -53,6 +53,7 @@ extension ViewController: MiniAppNavigationDelegate {
     }
 
     func fetchMiniApp(for appInfo: MiniAppInfo) {
+        let adsDelegate = AdMobDisplayer()
         MiniApp.shared(with: Config.getCurrent(),
                        navigationSettings: Config.getNavConfig(delegate: self))
             .create(appId: appInfo.id,
@@ -75,6 +76,7 @@ extension ViewController: MiniAppNavigationDelegate {
     }
 
     func loadMiniAppUsingURL(_ url: URL) {
+        let adsDelegate = AdMobDisplayer()
         let miniAppDisplay = MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).create(
             url: url,
             queryParams: getQueryParam(),
@@ -95,28 +97,5 @@ extension ViewController: MiniAppNavigationDelegate {
                 self.fetchMiniAppUsingId(title: NSLocalizedString("error_invalid_miniapp_id", comment: ""), message: NSLocalizedString("input_valid_miniapp_title", comment: ""))
             }
         }
-    }
-}
-// This block implements a custom ad management example. In ViewController class uncomment `adsDelegate = self` in `viewDidLoad` method
-extension ViewController: MiniAppAdDisplayDelegate {
-    func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
-        print("LoadInterstitial")
-        onLoaded(.success(()))
-    }
-
-    func showInterstitial(for adId: String, onClosed: @escaping (Result<Void, Error>) -> Void) {
-        print("\(adId)")
-        onClosed(.success(()))
-    }
-
-    func loadRewarded(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
-        print("reward \(adId) loaded")
-        onLoaded(.success(()))
-    }
-
-    func showRewarded(for adId: String, onClosed: @escaping (Result<MiniAppReward, Error>) -> Void) {
-        print("showing reward \(adId)")
-        let reward = MiniAppReward(type: "test", amount: 6)
-        onClosed(.success(reward))
     }
 }

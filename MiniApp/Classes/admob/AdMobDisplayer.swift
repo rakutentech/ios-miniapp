@@ -2,21 +2,14 @@ import Foundation
 import GoogleMobileAds
 
 /// This subclass of [MiniAppAdDisplayer](x-source-tag://MiniAppAdDisplayer) is internally used by Mini App SDK to display Google Ads
-internal class AdMobDisplayer: MiniAppAdDisplayer {
-    var interstitialAds: [String: GADInterstitial] = [:]
-    var rewardedAds: [String: GADRewardedAd] = [:]
-    var onInterstitialLoaded: [String: (Result<Void, Error>) -> Void] = [:]
-    var admobStartResult: [String : GADAdapterStatus]?
+public class AdMobDisplayer: MiniAppAdDisplayer {
+    internal var interstitialAds: [String: GADInterstitial] = [:]
+    internal var rewardedAds: [String: GADRewardedAd] = [:]
+    internal var onInterstitialLoaded: [String: (Result<Void, Error>) -> Void] = [:]
 
-    override init() {
+    public override init() {
         super.init()
         delegate = self
-    }
-
-    override func initFramework() {
-        GADMobileAds.sharedInstance().start {[weak self] status in
-            self?.admobStartResult = status.adapterStatusesByClassName
-        }
     }
 
     override func cleanReward(_ adId: String) {
@@ -30,10 +23,8 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
         super.cleanInterstitial(adId)
     }
 
-    private func onReadyFailCheck(ready: Bool, adId: String, gad: NSObject?) -> Error {
-        if gad == nil {
-            return NSError.miniAppAdNotLoaded(message: createNotLoadingReqError(adUnitId: adId))
-        } else if ready {
+    private func onReadyFailCheck(ready: Bool, adId: String) -> Error {
+        if ready {
             return NSError.miniAppAdNotLoaded(message: createLoadTwiceError(adUnitId: adId))
         } else {
             return NSError.miniAppAdNotLoaded(message: createLoadReqError(adUnitId: adId))
@@ -52,12 +43,10 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
         "Ad \(adUnitId) is already loaded"
     }
 
-    override func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
-        if admobStartResult == nil {
-            onLoaded(.failure(NSError.miniAppAdNotLoaded(message: MASDKAdsDisplayError.sdkError.localizedDescription)))
-        } else if let gad = interstitialAds[adId] {
+    public override func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
+        if let gad = interstitialAds[adId] {
             let ready = gad.isReady
-            onLoaded(.failure(onReadyFailCheck(ready: ready, adId: adId, gad: gad)))
+            onLoaded(.failure(onReadyFailCheck(ready: ready, adId: adId)))
         } else {
             onInterstitialLoaded[adId] = onLoaded
             interstitialAds[adId] = GADInterstitial(adUnitID: adId)
@@ -66,12 +55,10 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
         }
     }
 
-    override func loadRewarded(for adId: String, onLoaded: @escaping (Result<(), Error>) -> Void) {
-        if admobStartResult == nil {
-            onLoaded(.failure(NSError.miniAppAdNotLoaded(message: MASDKAdsDisplayError.sdkError.localizedDescription)))
-        } else if let gad = rewardedAds[adId] {
+    public override func loadRewarded(for adId: String, onLoaded: @escaping (Result<(), Error>) -> Void) {
+        if let gad = rewardedAds[adId] {
             let ready = gad.isReady
-            onLoaded(.failure(onReadyFailCheck(ready: ready, adId: adId, gad: gad)))
+            onLoaded(.failure(onReadyFailCheck(ready: ready, adId: adId)))
         } else {
             rewardedAds[adId] = GADRewardedAd(adUnitID: adId)
             rewardedAds[adId]?.load(GADRequest()) { error in
@@ -84,7 +71,7 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
         }
     }
 
-    override func showInterstitial(for adId: String, onClosed: @escaping (Result<Void, Error>) -> Void) {
+    public override func showInterstitial(for adId: String, onClosed: @escaping (Result<Void, Error>) -> Void) {
         if interstitialAds[adId]?.isReady ?? false {
             if let viewController = UIApplication.topViewController() {
                 onInterstitialClosed[adId] = onClosed
@@ -93,11 +80,11 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
                 onClosed(.failure(NSError.miniAppAdNotLoaded(message: MASDKAdsDisplayError.hostUIError.localizedDescription)))
             }
         } else {
-            onClosed(.failure(onReadyFailCheck(ready: false, adId: adId, gad: interstitialAds[adId])))
+            onClosed(.failure(onReadyFailCheck(ready: false, adId: adId)))
         }
     }
 
-    override func showRewarded(for adId: String, onClosed: @escaping (Result<MiniAppReward, Error>) -> Void) {
+    public override func showRewarded(for adId: String, onClosed: @escaping (Result<MiniAppReward, Error>) -> Void) {
         if rewardedAds[adId]?.isReady ?? false {
             if let viewController = UIApplication.topViewController() {
                 onRewardedClosed[adId] = onClosed
@@ -106,14 +93,14 @@ internal class AdMobDisplayer: MiniAppAdDisplayer {
                 onClosed(.failure(NSError.miniAppAdNotLoaded(message: MASDKAdsDisplayError.hostUIError.localizedDescription)))
             }
         } else {
-            onClosed(.failure(onReadyFailCheck(ready: false, adId: adId, gad: interstitialAds[adId])))
+            onClosed(.failure(onReadyFailCheck(ready: false, adId: adId)))
         }
     }
 }
 
 extension AdMobDisplayer: GADInterstitialDelegate {
     // function predicate comes from Google's SDK, had to disable swiftlint rule
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) { // swiftlint:disable:this identifier_name
+    public func interstitialDidDismissScreen(_ ad: GADInterstitial) { // swiftlint:disable:this identifier_name
         if let id = ad.adUnitID {
             onInterstitialClosed[id]?(.success(()))
             cleanInterstitial(id)
@@ -122,7 +109,7 @@ extension AdMobDisplayer: GADInterstitialDelegate {
 
     /// Called when an interstitial ad request succeeded. Show it at the next transition point in your
     /// application such as when transitioning between view controllers.
-    func interstitialDidReceiveAd(_ ad: GADInterstitial) { // swiftlint:disable:this identifier_name
+    public func interstitialDidReceiveAd(_ ad: GADInterstitial) { // swiftlint:disable:this identifier_name
         if let id = ad.adUnitID {
             onInterstitialLoaded[id]?(.success(()))
         }
@@ -130,7 +117,7 @@ extension AdMobDisplayer: GADInterstitialDelegate {
 
     /// Called when an interstitial ad request completed without an interstitial to
     /// show. This is common since interstitials are shown sparingly to users.
-    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) { // swiftlint:disable:this identifier_name
+    public func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) { // swiftlint:disable:this identifier_name
         if let id = ad.adUnitID {
             onInterstitialLoaded[id]?(.failure(error))
         }
@@ -138,11 +125,11 @@ extension AdMobDisplayer: GADInterstitialDelegate {
 }
 
 extension AdMobDisplayer: GADRewardedAdDelegate {
-    func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
+    public func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
         rewards[rewardedAd.adUnitID] = MiniAppReward(type: reward.type, amount: Int(truncating: reward.amount))
     }
 
-    func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
+    public func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
         if let reward = rewards[rewardedAd.adUnitID] {
             onRewardedClosed[rewardedAd.adUnitID]?(.success(reward))
         } else {
