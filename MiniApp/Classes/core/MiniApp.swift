@@ -50,9 +50,9 @@ public class MiniApp: NSObject {
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
-    ///   - adsDelegate: a delegate that will handle Miniapp ads requests
-    public func create(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDelegate: MiniAppAdDisplayDelegate? = nil) {
-        return realMiniApp.createMiniApp(appId: appId, version: version, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDelegate: adsDelegate)
+    ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
+    public func create(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+        return realMiniApp.createMiniApp(appId: appId, version: version, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
     }
 
     /// Cache the Custom permissions status for a given MiniApp ID
@@ -90,9 +90,9 @@ public class MiniApp: NSObject {
     ///                         to interact with View component of mini app.
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
-    ///   - adsDelegate: a delegate that will handle Miniapp ads requests
-    public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDelegate: MiniAppAdDisplayDelegate? = nil) {
-        return realMiniApp.createMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDelegate: adsDelegate)
+    ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
+    public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+        return realMiniApp.createMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
     }
 
     @available(*, deprecated,
@@ -128,7 +128,7 @@ public class MiniApp: NSObject {
     @available(*, deprecated,
     message:"Use MASDKError instead of Error in your completionHandler.",
     renamed: "create(appId:completionHandler:)")
-    public func create<T>(appId: String, completionHandler: @escaping (Result<MiniAppDisplayProtocol, T>) -> Void, messageInterface: MiniAppMessageDelegate, adsDelegate: MiniAppAdDisplayDelegate? = nil) where T: Error {
+    public func create<T>(appId: String, completionHandler: @escaping (Result<MiniAppDisplayProtocol, T>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) where T: Error {
         let handler: (Result<MiniAppDisplayProtocol, MASDKError>) -> Void = { (result) in
                 switch result {
                 case .success(let responseData):
@@ -138,7 +138,7 @@ public class MiniApp: NSObject {
                     completionHandler(.failure(error as! T))
             }
         }
-        return realMiniApp.createMiniApp(appId: appId, completionHandler: handler, messageInterface: messageInterface, adsDelegate: adsDelegate)
+        return realMiniApp.createMiniApp(appId: appId, completionHandler: handler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
     }
 }
 
@@ -154,18 +154,17 @@ public extension MiniApp {
     ///   - errorHandler: A block to be called on unsuccessful initial load of Mini App's web content. The handler block receives the following parameter
     ///         -   Error: Error details if Mini App's url content loading is failed, otherwise nil.
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
-    //    - adsDelegate: a delegate that will handle Miniapp ads requests
+    //    - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     /// - Returns: MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
-    func create(url: URL,
-                queryParams: String? = nil,
-                errorHandler: @escaping (Error) -> Void,
-                messageInterface: MiniAppMessageDelegate,
-                adsDelegate: MiniAppAdDisplayDelegate? = nil) -> MiniAppDisplayProtocol {
+    public func create(url: URL, queryParams: String? = nil,
+                       errorHandler: @escaping (Error) -> Void,
+                       messageInterface: MiniAppMessageDelegate,
+                       adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayProtocol {
         return realMiniApp.createMiniApp(url: url,
                                          queryParams: queryParams,
                                          errorHandler: errorHandler,
                                          messageInterface: messageInterface,
-                                         adsDelegate: adsDelegate)
+                                         adsDisplayer: adsDisplayer)
     }
 }

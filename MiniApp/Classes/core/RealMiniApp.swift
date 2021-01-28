@@ -48,17 +48,13 @@ internal class RealMiniApp {
     ///   - queryParams: Optional Query parameters that the host app would like to share while creating a mini app
     ///   - completionHandler: Completion Handler that needed to pass back the MiniAppDisplayProtocol
     ///   - messageInterface: Miniapp communication protocol object.
-    ///   - adsDelegate: a delegate that will handle Miniapp ads requests
-    func createMiniApp(appInfo: MiniAppInfo,
-                       queryParams: String? = nil,
-                       completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
-                       messageInterface: MiniAppMessageDelegate? = nil,
-                       adsDelegate: MiniAppAdDisplayDelegate? = nil) {
+    ///   - adsDisplayer: a delegate that will handle Miniapp ads requests
+    func createMiniApp(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         getMiniApp(miniAppId: appInfo.id, miniAppVersion: appInfo.version.versionId) { (result) in
             switch result {
             case .success(let responseData):
                 if appInfo.version.versionId != responseData.version.versionId {
-                    self.downloadMiniApp(appInfo: responseData, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDelegate: adsDelegate)
+                    self.downloadMiniApp(appInfo: responseData, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
                     return
                 }
                 self.downloadMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface)
@@ -68,16 +64,11 @@ internal class RealMiniApp {
                                  queryParams: queryParams,
                                  completionHandler: completionHandler,
                                  messageInterface: messageInterface,
-                                 adsDelegate: adsDelegate)
+                                 adsDisplayer: adsDisplayer)
             } }
     }
 
-    func createMiniApp(appId: String,
-                       version: String? = nil,
-                       queryParams: String? = nil,
-                       completionHandler: @escaping (Result<MiniAppDisplayProtocol, MASDKError>) -> Void,
-                       messageInterface: MiniAppMessageDelegate? = nil,
-                       adsDelegate: MiniAppAdDisplayDelegate? = nil) {
+    func createMiniApp(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         getMiniApp(miniAppId: appId, miniAppVersion: version) { (result) in
             switch result {
             case .success(let responseData):
@@ -86,27 +77,23 @@ internal class RealMiniApp {
                                      queryParams: queryParams,
                                      completionHandler: self.createCompletionHandler(completionHandler: completionHandler),
                                      messageInterface: messageInterface,
-                                     adsDelegate: adsDelegate)
+                                     adsDisplayer: adsDisplayer)
             case .failure(let error):
                 self.handleMiniAppDownloadError(appId: appId,
                                  error: error,
                                  queryParams: queryParams,
                                  completionHandler: self.createCompletionHandler(completionHandler: completionHandler),
                                  messageInterface: messageInterface,
-                                 adsDelegate: adsDelegate)
+                                 adsDisplayer: adsDisplayer)
             } }
     }
 
-    func createMiniApp(url: URL,
-                       queryParams: String? = nil,
-                       errorHandler: @escaping (Error) -> Void,
-                       messageInterface: MiniAppMessageDelegate? = nil,
-                       adsDelegate: MiniAppAdDisplayDelegate? = nil) -> MiniAppDisplayProtocol {
+    func createMiniApp(url: URL, queryParams: String? = nil, errorHandler: @escaping (Error) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayProtocol {
         return displayer.getMiniAppView(miniAppURL: url,
                                         miniAppTitle: "Mini app",
                                         queryParams: queryParams,
                                         hostAppMessageDelegate: messageInterface ?? self,
-                                        adsDelegate: adsDelegate,
+                                        adsDisplayer: adsDisplayer,
                                         initialLoadCallback: { success in
             if !success {
                 errorHandler(NSError.invalidURLError())
@@ -120,28 +107,28 @@ internal class RealMiniApp {
     ///   - queryParams: Optional Query parameters that the host app would like to share while creating a mini app
     ///   - completionHandler: Completion Handler that needed to pass back the MiniAppDisplayProtocol
     ///   - messageInterface: Miniapp communication protocol object.
-    ///   - adsDelegate: a delegate that will handle Miniapp ads requests
+    ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     func downloadMiniApp(appInfo: MiniAppInfo,
                          queryParams: String? = nil,
                          completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
                          messageInterface: MiniAppMessageDelegate? = nil,
-                         adsDelegate: MiniAppAdDisplayDelegate? = nil) {
+                         adsDisplayer: MiniAppAdDisplayer? = nil) {
         return miniAppDownloader.verifyAndDownload(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
             switch result {
             case .success:
-                self.getMiniAppView(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDelegate: adsDelegate)
+                self.getMiniAppView(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
             case .failure(let error):
                 self.handleMiniAppDownloadError(appId: appInfo.id,
                                  error: error,
                                  queryParams: queryParams,
                                  completionHandler: completionHandler,
                                  messageInterface: messageInterface,
-                                 adsDelegate: adsDelegate)
+                                 adsDisplayer: adsDisplayer)
             }
         }
     }
 
-    func getMiniAppView(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDelegate: MiniAppAdDisplayDelegate? = nil) {
+    func getMiniAppView(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         DispatchQueue.main.async {
             let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
                                                                        versionId: appInfo.version.versionId,
@@ -149,7 +136,7 @@ internal class RealMiniApp {
                                                                        miniAppTitle: appInfo.displayName ?? "Mini app",
                                                                        queryParams: queryParams,
                                                                        hostAppMessageDelegate: messageInterface ?? self,
-                                                                       adsDelegate: adsDelegate)
+                                                                       adsDisplayer: adsDisplayer)
             self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
             self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
             completionHandler(.success(miniAppDisplayProtocol))
@@ -161,7 +148,7 @@ internal class RealMiniApp {
                                     queryParams: String? = nil,
                                     completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
                                     messageInterface: MiniAppMessageDelegate? = nil,
-                                    adsDelegate: MiniAppAdDisplayDelegate? = nil) {
+                                    adsDisplayer: MiniAppAdDisplayer? = nil) {
         let downloadError = error as NSError
         if self.offlineErrorCodeList.contains(downloadError.code) {
             guard let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId) else {
@@ -177,7 +164,7 @@ internal class RealMiniApp {
                                                                            miniAppTitle: miniAppInfo.displayName ?? "Mini App",
                                                                            queryParams: queryParams,
                                                                            hostAppMessageDelegate: messageInterface ?? self,
-                                                                           adsDelegate: adsDelegate)
+                                                                           adsDisplayer: adsDisplayer)
                 completionHandler(.success(miniAppDisplayProtocol))
             }
         } else {

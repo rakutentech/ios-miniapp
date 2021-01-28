@@ -22,12 +22,12 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
     var miniAppKeyStore = MiniAppKeyChain()
 
-    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDelegate: MiniAppAdDisplayDelegate?, miniAppId: String, miniAppTitle: String) {
+    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
         self.miniAppId = miniAppId
         self.miniAppTitle = miniAppTitle
-        self.adsDelegate = adsDelegate
+        self.adsDelegate = adsDisplayer
         super.init()
     }
 

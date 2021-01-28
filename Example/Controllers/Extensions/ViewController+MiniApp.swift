@@ -71,7 +71,7 @@ extension ViewController: MiniAppNavigationDelegate {
                 }
                 print("Errored: ", error.localizedDescription)
             }
-        }, messageInterface: self, adsDelegate: adsDelegate)
+        }, messageInterface: self, adsDisplayer: adsDisplayer)
     }
 
     func loadMiniAppUsingURL(_ url: URL) {
@@ -81,7 +81,7 @@ extension ViewController: MiniAppNavigationDelegate {
             errorHandler: { error in
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
                 print("Errored: ", error.localizedDescription)
-            }, messageInterface: self, adsDelegate: adsDelegate)
+            }, messageInterface: self, adsDisplayer: adsDisplayer)
 
         currentMiniAppView = miniAppDisplay
         performSegue(withIdentifier: "DisplayMiniApp", sender: nil)

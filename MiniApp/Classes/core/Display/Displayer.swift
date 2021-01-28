@@ -11,7 +11,7 @@ internal class Displayer {
                         miniAppTitle: String,
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
-                        adsDelegate: MiniAppAdDisplayDelegate? = nil) -> MiniAppDisplayProtocol {
+                        adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayProtocol {
         return RealMiniAppView(
           miniAppId: miniAppId,
           versionId: versionId,
@@ -19,7 +19,7 @@ internal class Displayer {
           miniAppTitle: miniAppTitle,
           queryParams: queryParams,
           hostAppMessageDelegate: hostAppMessageDelegate,
-          adsDelegate: adsDelegate,
+          adsDisplayer: adsDisplayer,
           displayNavBar: navConfig?.navigationBarVisibility ?? .never,
           navigationDelegate: navConfig?.navigationDelegate,
           navigationView: navConfig?.navigationView)
@@ -29,14 +29,14 @@ internal class Displayer {
                         miniAppTitle: String,
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
-                        adsDelegate: MiniAppAdDisplayDelegate? = nil,
+                        adsDisplayer: MiniAppAdDisplayer? = nil,
                         initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayProtocol {
         return RealMiniAppView(
             miniAppURL: miniAppURL,
             miniAppTitle: miniAppTitle,
             queryParams: queryParams,
             hostAppMessageDelegate: hostAppMessageDelegate,
-            adsDelegate: adsDelegate,
+            adsDisplayer: adsDisplayer,
             initialLoadCallback: initialLoadCallback,
             displayNavBar: navConfig?.navigationBarVisibility ?? .never,
             navigationDelegate: navConfig?.navigationDelegate,

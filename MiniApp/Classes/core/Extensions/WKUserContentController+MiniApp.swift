@@ -5,12 +5,13 @@ extension WKUserContentController {
     /// Method to add Mini App custom WKScriptMessageHandler.
     /// - Parameters:
     ///   - delegate: Callback protocol to handle the message from the WebView
+    ///   - adsDisplayer: a MiniAppAdDisplayer that will handle ads requests
     ///   - hostMessageInterface: Message interface protocol of the host application
-    func addMiniAppScriptMessageHandler(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDelegate: MiniAppAdDisplayDelegate?, miniAppId: String, miniAppTitle: String) {
+    func addMiniAppScriptMessageHandler(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String) {
         add(MiniAppScriptMessageHandler(
                 delegate: delegate,
                 hostAppMessageDelegate: hostAppMessageDelegate,
-                adsDelegate: adsDelegate,
+                adsDisplayer: adsDisplayer,
                 miniAppId: miniAppId,
                 miniAppTitle: miniAppTitle
         ), name: Constants.javascriptInterfaceName)
