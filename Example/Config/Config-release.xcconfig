@@ -2,3 +2,4 @@
 
 // IMPORTANT: Secrets MUST be added to MiniApp-Secrets.xcconfig and that file MUST NOT be added to git.
 #include "../../../MiniApp-Secrets.xcconfig"
+#include "Config-common.xcconfig"

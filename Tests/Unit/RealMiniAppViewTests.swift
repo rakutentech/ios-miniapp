@@ -64,7 +64,6 @@ class RealMiniAppViewTests: QuickSpec {
 
                     expect(miniAppView.alertController?.message).to(equal("mini-app-alert"))
                     expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
-                    miniAppView.tapButton(.okButton)
                 }
                 it("will call completion handler when OK is tapped") {
                     var okTapped = false
@@ -73,7 +72,7 @@ class RealMiniAppViewTests: QuickSpec {
                                         initiatedByFrame: WKFrameInfo(), completionHandler: { okTapped = true })
 
                     miniAppView.tapButton(.okButton)
-                    expect(okTapped).toEventually(beTrue())
+                    expect(okTapped).toEventually(beTrue(), timeout: .seconds(5))
                 }
             }
             context("when webview is loaded with confirm javascript dialog") {
@@ -95,7 +94,7 @@ class RealMiniAppViewTests: QuickSpec {
                                         })
 
                     miniAppView.tapButton(.okButton)
-                    expect(confirm).toEventually(beTrue())
+                    expect(confirm).toEventually(beTrue(), timeout: .seconds(5))
                 }
                 it("will show native alert with request message, ok and cancel button") {
                     let miniAppView = createMiniAppView()
@@ -116,7 +115,7 @@ class RealMiniAppViewTests: QuickSpec {
                                         })
 
                     miniAppView.tapButton(.cancelButton)
-                    expect(confirm).toEventually(beFalse())
+                    expect(confirm).toEventually(beFalse(), timeout: .seconds(5))
                 }
             }
             context("when webview is loaded with prompt javascript dialog") {
@@ -131,7 +130,7 @@ class RealMiniAppViewTests: QuickSpec {
                     expect(miniAppView.alertController?.message).to(equal("Please enter your name:"))
                     expect(miniAppView.alertController?.textFields?.first?.text).to(equal("Rakuten Mini app"))
                 }
-                it("will return text field value to completion hanlder when OK button is tapped") {
+                it("will return text field value to completion handler when OK button is tapped") {
                     var userInput: String?
                     let miniAppView = createMiniAppView()
                     miniAppView.webView(miniAppView.webView, runJavaScriptTextInputPanelWithPrompt: "Please enter your name:",
@@ -140,7 +139,7 @@ class RealMiniAppViewTests: QuickSpec {
                                         })
 
                     miniAppView.tapButton(.okButton)
-                    expect(userInput).toEventually(equal("Rakuten Mini app"))
+                    expect(userInput).toEventually(equal("Rakuten Mini app"), timeout: .seconds(5))
                 }
                 it("will show native alert with request message and wanted no in textfield") {
                     let miniAppView = createMiniAppView()
@@ -162,7 +161,7 @@ class RealMiniAppViewTests: QuickSpec {
                                         })
 
                     miniAppView.tapButton(.cancelButton)
-                    expect(userInput).toEventually(beNil())
+                    expect(userInput).toEventually(beNil(), timeout: .seconds(5))
                 }
             }
         }
