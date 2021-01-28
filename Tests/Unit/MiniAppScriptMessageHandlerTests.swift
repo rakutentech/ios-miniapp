@@ -166,24 +166,11 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.response).toEventually(contain("latitude"))
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .denied)
-                }
-            }
-            context("when MiniAppScriptMessageHandler receives valid getCurrentPosition command") {
-                it("will return valid latitude and longitude values") {
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
-                    )
-                    mockMessageInterface.locationAllowed = false
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .allowed)
-                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
-                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.response).toEventually(contain("longitude"))
                     updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .denied)
                 }
             }
+
             context("when MiniAppScriptMessageHandler receives valid custom permissions command") {
                 it("will return response with name and status for all permission that is requested") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(

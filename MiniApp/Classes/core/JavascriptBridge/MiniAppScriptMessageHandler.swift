@@ -275,7 +275,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 class LocationManager: NSObject {
     let manager: CLLocationManager
     let location: CLLocation?
-    var locationListener: ((Result<CLLocation, Error>) -> Void)?
+    var locationListener: ((Result<CLLocation?, Error>) -> Void)?
 
     init(enableHighAccuracy: Bool) {
         manager = CLLocationManager()
@@ -285,12 +285,12 @@ class LocationManager: NSObject {
         manager.delegate = self
     }
 
-    func updateLocation(result: @escaping (Result<CLLocation, Error>) -> Void) {
+    func updateLocation(result: @escaping (Result<CLLocation?, Error>) -> Void) {
         if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             self.locationListener = result
             manager.startUpdatingLocation()
         } else {
-            result(.failure(NSError()))
+            result(.success(manager.location))
         }
     }
 }
