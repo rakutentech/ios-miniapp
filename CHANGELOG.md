@@ -4,6 +4,7 @@
 
 **SDK**
 
+- **Feature** Made MiniApp SDK a static framework 
 - **Feature** Added analytics for Mini App usage tracking
 - **Feature** Added ads for Mini Apps host
 - **Feature** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec

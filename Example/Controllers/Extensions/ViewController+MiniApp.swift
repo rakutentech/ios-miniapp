@@ -53,7 +53,6 @@ extension ViewController: MiniAppNavigationDelegate {
     }
 
     func fetchMiniApp(for appInfo: MiniAppInfo) {
-        let adsDelegate = AdMobDisplayer()
         MiniApp.shared(with: Config.getCurrent(),
                        navigationSettings: Config.getNavConfig(delegate: self))
             .create(appId: appInfo.id,
@@ -76,7 +75,6 @@ extension ViewController: MiniAppNavigationDelegate {
     }
 
     func loadMiniAppUsingURL(_ url: URL) {
-        let adsDelegate = AdMobDisplayer()
         let miniAppDisplay = MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).create(
             url: url,
             queryParams: getQueryParam(),

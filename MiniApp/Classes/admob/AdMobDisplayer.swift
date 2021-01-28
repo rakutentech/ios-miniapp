@@ -32,7 +32,7 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
     }
 
     func createNotLoadingReqError(adUnitId: String) -> String {
-        "Ad \(adUnitId) is not loading"
+        "Ad \(adUnitId) is not loaded yet"
     }
 
     func createLoadReqError(adUnitId: String) -> String {
