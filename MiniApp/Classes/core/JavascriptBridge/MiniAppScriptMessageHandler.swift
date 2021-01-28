@@ -55,7 +55,13 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             requestDevicePermission(requestParam: requestParam, callbackId: callbackId)
         case .getCurrentPosition:
             locationManager = LocationManager(enableHighAccuracy: requestParam?.locationOptions?.enableHighAccuracy ?? false)
-            getCurrentPosition(callbackId: callbackId)
+            locationManager?.updateLocation {[weak self] result in
+                switch result {
+                case .success:
+                    self?.getCurrentPosition(callbackId: callbackId)
+                default: self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
+                }
+            }
         case .requestCustomPermissions:
             requestCustomPermissions(requestParam: requestParam, callbackId: callbackId)
         case .shareInfo:
@@ -269,11 +275,33 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 class LocationManager: NSObject {
     let manager: CLLocationManager
     let location: CLLocation?
+    var locationListener: ((Result<CLLocation, Error>) -> Void)?
 
     init(enableHighAccuracy: Bool) {
         manager = CLLocationManager()
         location = manager.location
         super.init()
         manager.desiredAccuracy = enableHighAccuracy ? kCLLocationAccuracyBest : kCLLocationAccuracyHundredMeters
+        manager.delegate = self
+    }
+
+    func updateLocation(result: @escaping (Result<CLLocation, Error>) -> Void) {
+        if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            self.locationListener = result
+            manager.startUpdatingLocation()
+        } else {
+            result(.failure(NSError()))
+        }
+    }
+}
+
+extension LocationManager: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        manager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locationListener?(.success(locations[0]))
+        manager.stopUpdatingLocation()
     }
 }
