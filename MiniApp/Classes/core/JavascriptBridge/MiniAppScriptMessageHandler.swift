@@ -299,7 +299,7 @@ extension LocationManager: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         manager.startUpdatingLocation()
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationListener?(.success(locations[0]))
         manager.stopUpdatingLocation()
