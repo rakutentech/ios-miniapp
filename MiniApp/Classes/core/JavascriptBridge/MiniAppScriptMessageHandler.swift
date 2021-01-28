@@ -55,13 +55,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             requestDevicePermission(requestParam: requestParam, callbackId: callbackId)
         case .getCurrentPosition:
             locationManager = LocationManager(enableHighAccuracy: requestParam?.locationOptions?.enableHighAccuracy ?? false)
-            locationManager?.updateLocation {[weak self] result in
-                switch result {
-                case .success:
-                    self?.getCurrentPosition(callbackId: callbackId)
-                default: self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
-                }
-            }
+            updateLocation(callbackId: callbackId)
         case .requestCustomPermissions:
             requestCustomPermissions(requestParam: requestParam, callbackId: callbackId)
         case .shareInfo:
@@ -76,6 +70,16 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
+        }
+    }
+
+    private func updateLocation(callbackId: String) {
+        locationManager?.updateLocation {[weak self] result in
+            switch result {
+            case .success:
+                self?.getCurrentPosition(callbackId: callbackId)
+            default: self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
+            }
         }
     }
 
