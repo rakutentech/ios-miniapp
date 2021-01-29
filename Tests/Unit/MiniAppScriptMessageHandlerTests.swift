@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import WebKit
+import CoreLocation
 @testable import MiniApp
 
 // swiftlint:disable function_body_length
@@ -165,8 +166,12 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     mockMessageInterface.locationAllowed = false
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.response).toEventually(contain("latitude"))
-                    expect(callbackProtocol.response).toEventually(contain("longitude"))
+                    if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+                        expect(callbackProtocol.response).toEventually(contain("latitude"))
+                        expect(callbackProtocol.response).toEventually(contain("longitude"))
+                    } else {
+                        expect(callbackProtocol.errorMessage).toEventually(contain("application does not have sufficient geolocation permissions"))
+                    }
                     updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .denied)
                 }
             }

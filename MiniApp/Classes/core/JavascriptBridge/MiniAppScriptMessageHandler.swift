@@ -78,7 +78,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             switch result {
             case .success(let location):
                 self?.getCurrentPosition(callbackId: callbackId, location: location)
-            default: self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
+            case .failure(let error): self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
             }
         }
     }
@@ -292,7 +292,7 @@ class LocationManager: NSObject {
             self.locationListener = result
             manager.startUpdatingLocation()
         } else {
-            result(.success(manager.location))
+            result(.failure(NSError.genericError(message: "application does not have sufficient geolocation permissions")))
         }
     }
 }
