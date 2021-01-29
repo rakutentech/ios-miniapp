@@ -76,8 +76,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     private func updateLocation(callbackId: String) {
         locationManager?.updateLocation {[weak self] result in
             switch result {
-            case .success:
-                self?.getCurrentPosition(callbackId: callbackId)
+            case .success(let location):
+                self?.getCurrentPosition(callbackId: callbackId, location: location)
             default: self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
             }
         }
@@ -118,22 +118,22 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func getCurrentPosition(callbackId: String) {
+    func getCurrentPosition(callbackId: String, location: CLLocation?) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.deviceLocation) {
-            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: getLocationInfo())
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: getLocationInfo(location: location))
         } else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
         }
     }
 
-    func getLocationInfo() -> String {
-        return "{\"coords\":{\"latitude\":\(locationManager?.location?.coordinate.latitude ?? 0)" +
-            ",\"longitude\":\(locationManager?.location?.coordinate.longitude ?? 0)" +
-            ", \"altitude\":\(locationManager?.location?.altitude ?? "null" as Any)" +
-            ", \"altitudeAccuracy\":\(locationManager?.location?.verticalAccuracy ?? "null" as Any)" +
-            ", \"accuracy\":\(locationManager?.location?.horizontalAccuracy ?? 0)" +
-            ", \"speed\":\(locationManager?.location?.speed ?? "null" as Any)" +
-            ", \"heading\":\(locationManager?.location?.course ?? "null" as Any)" +
+    func getLocationInfo(location: CLLocation?) -> String {
+        return "{\"coords\":{\"latitude\":\(location?.coordinate.latitude ?? 0)" +
+            ",\"longitude\":\(location?.coordinate.longitude ?? 0)" +
+            ", \"altitude\":\(location?.altitude ?? "null" as Any)" +
+            ", \"altitudeAccuracy\":\(location?.verticalAccuracy ?? "null" as Any)" +
+            ", \"accuracy\":\(location?.horizontalAccuracy ?? 0)" +
+            ", \"speed\":\(location?.speed ?? "null" as Any)" +
+            ", \"heading\":\(location?.course ?? "null" as Any)" +
             "}, \"timestamp\":\(Date().epochInMilliseconds)}"
     }
 
@@ -278,12 +278,10 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
 class LocationManager: NSObject {
     let manager: CLLocationManager
-    let location: CLLocation?
     var locationListener: ((Result<CLLocation?, Error>) -> Void)?
 
     init(enableHighAccuracy: Bool) {
         manager = CLLocationManager()
-        location = manager.location
         super.init()
         manager.desiredAccuracy = enableHighAccuracy ? kCLLocationAccuracyBest : kCLLocationAccuracyHundredMeters
         manager.delegate = self
