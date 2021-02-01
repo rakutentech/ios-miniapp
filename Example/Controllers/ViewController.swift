@@ -71,6 +71,24 @@ class ViewController: UIViewController {
             }
         }
     }
+
+    func showFirstTimeLaunchScreen(miniAppInfo: MiniAppInfo) {
+        if isMiniAppLaunchedAlready(key: miniAppInfo.id) {
+            self.showProgressIndicator {
+                self.currentMiniAppInfo = miniAppInfo
+                self.fetchMiniApp(for: miniAppInfo)
+                self.currentMiniAppTitle = miniAppInfo.displayName
+            }
+        } else {
+            if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MAFirstTimeLaunch") as? MAFirstLaunchController {
+                self.currentMiniAppInfo = miniAppInfo
+                viewController.miniAppInfo = miniAppInfo
+                viewController.launchScreenDelegate = self
+                viewController.modalPresentationStyle = .fullScreen
+                self.present(viewController, animated: true)
+            }
+        }
+    }
 }
 
 // MARK: - Actions
@@ -112,12 +130,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.showProgressIndicator {
-            if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
-                self.currentMiniAppInfo = miniAppInfo
-                self.fetchMiniApp(for: miniAppInfo)
-                self.currentMiniAppTitle = miniAppInfo.displayName
-            }
+        if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
+            self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)
         }
     }
 }
@@ -131,6 +145,19 @@ extension ViewController: SettingsDelegate {
     }
 }
 
+extension ViewController: MALaunchScreenDelegate {
+    func didUserResponded(agreed: Bool, miniAppInfo: MiniAppInfo?) {
+        if agreed {
+            guard let info = miniAppInfo else {
+                return
+            }
+            self.showProgressIndicator {
+                self.fetchMiniApp(for: info)
+                self.currentMiniAppTitle = info.displayName
+            }
+        }
+    }
+}
 extension ViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
