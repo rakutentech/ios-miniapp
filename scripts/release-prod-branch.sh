@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -ex
 
 # Pushes a release tag ($RELEASE_TAG) to the "prod" branch in order to trigger a prod build on App Center
