@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 2.x.x (In-progress)
+### 2.8.0 (2021-02-01)
 
 **SDK**
 
