@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -ex
 
 # Publishes SDK documentation to Github Pages for a Git tag ($RELEASE_TAG)
