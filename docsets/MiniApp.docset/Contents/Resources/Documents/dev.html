@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 2.7.0 Docs
+          MiniApp 2.8.0 Docs
         </a>
-         (71% documented)
+         (67% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -76,6 +76,12 @@
                 <a class="nav-group-task-link" href="Classes/MiniApp.html">MiniApp</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppAnalytics.html">MiniAppAnalytics</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppAnalyticsLoader.html">MiniAppAnalyticsLoader</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
               </li>
               <li class="nav-group-task">
@@ -111,13 +117,13 @@
                 <a class="nav-group-task-link" href="Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppDevicePermissionType.html">MiniAppDevicePermissionType</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/MiniAppPermissionType.html">MiniAppPermissionType</a>
               </li>
             </ul>
           </li>
@@ -172,6 +178,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB14PermissionTypea">MiniAppPermissionType</a>
               </li>
             </ul>
           </li>
@@ -236,14 +245,8 @@
 <hr>
 
 <p>You may want to generate the SDK documentation locally so that you can ensure that the generated docs look correct. 
-We use <a href="https://github.com/realm/jazzy">Jazzy</a> for this, so you can run the following commands:</p>
-<pre class="highlight ruby"><code><span class="n">bundle</span> <span class="nb">exec</span> <span class="n">jazzy</span> <span class="p">\</span>
-  <span class="o">--</span><span class="n">xcodebuild</span><span class="o">-</span><span class="n">arguments</span> <span class="o">-</span><span class="n">scheme</span><span class="p">,</span><span class="no">Tests</span> <span class="p">\</span>
-  <span class="o">--</span><span class="k">module</span> <span class="nn">MiniApp</span> <span class="p">\</span>
-  <span class="o">--</span><span class="n">source</span><span class="o">-</span><span class="n">directory</span> <span class="no">MiniApp</span> <span class="p">\</span>
-  <span class="o">--</span><span class="n">podspec</span> <span class="no">MiniApp</span><span class="p">.</span><span class="nf">podspec</span> <span class="p">\</span>
-  <span class="o">--</span><span class="n">theme</span> <span class="n">fullwidth</span> <span class="p">\</span>
-  <span class="o">--</span><span class="n">readme</span> <span class="no">USERGUIDE</span><span class="p">.</span><span class="nf">md</span>
+We use <a href="https://github.com/realm/jazzy">Jazzy</a> for this, so you can run the following command:</p>
+<pre class="highlight plaintext"><code>bundle exec jazzy
 </code></pre>
 
 <p>The generated docs will be output to a folder named <code>docs</code> in the root of this repo.</p>
@@ -255,12 +258,12 @@ We use <a href="https://github.com/realm/jazzy">Jazzy</a> for this, so you can r
 
 <p>Before any deployment, be sure the project will build and run unit tests by running <code>fastlane ci</code>.</p>
 
-<p><a href="https://travis-ci.org/github/rakutentech/ios-miniapp">TravisCI</a> is used for building and testing the project for every pull request. It is also used for publishing the SDK and Sample App.</p>
+<p><a href="https://app.bitrise.io/app/bddaf16e1f0fc0d6">BitRise</a> is used for building and testing the project for every pull request. It is also used for publishing the SDK and Sample App.</p>
 
 <p>Note that two Sample App builds are created on merge to master or during a release: </p>
 
 <ul>
-<li>One build for the iOS Simulator (built on TravisCI and then uploaded to App Center - App Center does not support building for the Simulator target)</li>
+<li>One build for the iOS Simulator (built on CI and then uploaded to App Center - App Center does not support building for the Simulator target)</li>
 <li>One build for iOS Devices (built directly on App Center in order to keep the certificate and provisioning profile secret)</li>
 </ul>
 <h3 id='merge-to-master' class='heading'>Merge to Master</h3>
@@ -268,7 +271,7 @@ We use <a href="https://github.com/realm/jazzy">Jazzy</a> for this, so you can r
 <p>The following describes the steps that CI performs when a branch is merged to master.</p>
 
 <ol>
-<li>We trigger a build on TravisCI by merging a branch to master.</li>
+<li>We trigger a build on CI by merging a branch to master.</li>
 <li>CI builds SDK and Sample App, run tests, linting, etc.</li>
 <li>CI creates a ZIP file for the iOS Simulator (Staging) build of the Sample App.
 
@@ -286,7 +289,7 @@ We use <a href="https://github.com/realm/jazzy">Jazzy</a> for this, so you can r
 <p>The following describes the steps that CI performs when releasing a new version of the SDK.</p>
 
 <ol>
-<li>We trigger a build on TravisCI by pushing a Git tag to the repo in the format <code>vX.X.X</code>.</li>
+<li>We trigger a build on CI by pushing a Git tag to the repo in the format <code>vX.X.X</code>.</li>
 <li>CI builds SDK and Sample App, run tests, linting, etc.</li>
 <li>CI publishes the SDK to <a href="https://cocoapods.org/pods/MiniApp">Cocoapods</a>.</li>
 <li>CI creates ZIP file for the iOS Simulator (Production) build of the Sample App.
@@ -310,7 +313,7 @@ We use <a href="https://github.com/realm/jazzy">Jazzy</a> for this, so you can r
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-12-18)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-02-01)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

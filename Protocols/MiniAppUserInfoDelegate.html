@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          MiniApp 2.7.0 Docs
+          MiniApp 2.8.0 Docs
         </a>
-         (71% documented)
+         (67% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -77,6 +77,12 @@
                 <a class="nav-group-task-link" href="../Classes/MiniApp.html">MiniApp</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/MiniAppAnalytics.html">MiniAppAnalytics</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/MiniAppAnalyticsLoader.html">MiniAppAnalyticsLoader</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
               </li>
               <li class="nav-group-task">
@@ -112,13 +118,13 @@
                 <a class="nav-group-task-link" href="../Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MiniAppDevicePermissionType.html">MiniAppDevicePermissionType</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/MiniAppPermissionType.html">MiniAppPermissionType</a>
               </li>
             </ul>
           </li>
@@ -174,6 +180,9 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7MiniApp0aB14PermissionTypea">MiniAppPermissionType</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -203,9 +212,9 @@ with the Native implementation for User profile related retrieval</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB16UserInfoDelegateP03getC4NameSSSgyF"></a>
-                    <a name="//apple_ref/swift/Method/getUserName()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegateP03getC4NameSSSgyF">getUserName()</a>
+                    <a name="/s:7MiniApp0aB16UserInfoDelegateP03getC4Name17completionHandleryys6ResultOySSSgAA10MASDKErrorOGc_tF"></a>
+                    <a name="//apple_ref/swift/Method/getUserName(completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegateP03getC4Name17completionHandleryys6ResultOySSSgAA10MASDKErrorOGc_tF">getUserName(completionHandler:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Default implementation
@@ -222,6 +231,75 @@ with the Native implementation for User profile related retrieval</p>
                       <h4>Default Implementation</h4>
                       <div class="default_impl abstract">
                         
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getUserName</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">?,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB16UserInfoDelegateP15getProfilePhoto17completionHandleryys6ResultOySSSgAA10MASDKErrorOGc_tF"></a>
+                    <a name="//apple_ref/swift/Method/getProfilePhoto(completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegateP15getProfilePhoto17completionHandleryys6ResultOySSSgAA10MASDKErrorOGc_tF">getProfilePhoto(completionHandler:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Interface that is used to retrieve the Image URI</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getProfilePhoto</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">?,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB16UserInfoDelegateP03getC4NameSSSgyF"></a>
+                    <a name="//apple_ref/swift/Method/getUserName()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegateP03getC4NameSSSgyF">getUserName()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        <p>Undocumented</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -250,12 +328,13 @@ with the Native implementation for User profile related retrieval</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Interface that is used to retrieve the Image URI</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <h4>Default Implementation</h4>
                       <div class="default_impl abstract">
-                        
+                        <p>Undocumented</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -344,7 +423,7 @@ with the Native implementation for User profile related retrieval</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2020-12-18)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-02-01)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
