@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.8",
     "@material-ui/icons": "^4.9.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bowser": "^2.9.0",
     "js-miniapp-sdk": "^1.1.0",
     "react": "^16.13.1",
