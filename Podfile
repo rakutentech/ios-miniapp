@@ -17,5 +17,5 @@ target sdk_name + '_Example' do
 end
 
 post_install do |installer|
-  system("./configure-secrets.sh #{sdk_name} #{secrets.join(" ")}")
+  system("./scripts/configure-secrets.sh #{sdk_name} #{secrets.join(" ")}")
 end

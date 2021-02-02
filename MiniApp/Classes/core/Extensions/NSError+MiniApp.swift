@@ -62,6 +62,13 @@ extension NSError {
             userInfo: [NSLocalizedDescriptionKey: message]
         )
     }
+
+    class func genericError(message: String, code: Int = 0) -> NSError {
+        return NSError.serverError(
+            code: code,
+            message: message
+        )
+    }
 }
 
 // swiftlint:disable identifier_name
