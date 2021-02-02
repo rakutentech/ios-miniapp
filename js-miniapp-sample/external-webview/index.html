@@ -101,7 +101,9 @@
                 const passedParams = window.location.search
                     // This page is loaded via a query parameter so we must remove the section which isn't relevant
                     .replace(/^[?](.*?)[?]/, '?'); 
-                document.getElementById('PassedParams').innerHTML = passedParams || 'None';
+                const text = document.createElement('span');
+                text.innerText = passedParams || 'None';
+                document.getElementById('PassedParams').appendChild(text);
 
                 // Set return URL and params
                 const returnInput = document.getElementById('ReturnInput');
