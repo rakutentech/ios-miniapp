@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import WebKit
+import CoreLocation
 @testable import MiniApp
 
 // swiftlint:disable function_body_length
@@ -193,26 +194,16 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     mockMessageInterface.locationAllowed = false
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.response).toEventually(contain("latitude"))
+                    if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+                        expect(callbackProtocol.response).toEventually(contain("latitude"))
+                        expect(callbackProtocol.response).toEventually(contain("longitude"))
+                    } else {
+                        expect(callbackProtocol.errorMessage).toEventually(contain("application does not have sufficient geolocation permissions"))
+                    }
                     updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .denied)
                 }
             }
-            context("when MiniAppScriptMessageHandler receives valid getCurrentPosition command") {
-                it("will return valid latitude and longitude values") {
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
-                    )
-                    mockMessageInterface.locationAllowed = false
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .allowed)
-                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
-                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.response).toEventually(contain("longitude"))
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .denied)
-                }
-            }
+
             context("when MiniAppScriptMessageHandler receives valid custom permissions command") {
                 it("will return response with name and status for all permission that is requested") {
                     let scriptMessageHandler = MiniAppScriptMessageHandler(

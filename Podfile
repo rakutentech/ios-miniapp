@@ -24,5 +24,5 @@ post_install do |installer|
       config.build_settings["ONLY_ACTIVE_ARCH"] = "YES"
     end
   end
-  system("./configure-secrets.sh #{sdk_name} #{secrets.join(" ")}")
+  system("./scripts/configure-secrets.sh #{sdk_name} #{secrets.join(" ")}")
 end

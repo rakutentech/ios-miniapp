@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 2.x.x (In-progress)
+### 2.8.0 (2021-02-01)
 
 **SDK**
 
@@ -11,6 +11,7 @@
 - **Feature** Updated `getUserName` and `getProfilePhoto` interfaces to be asynchronous. Old methods are deprecated
 - **Feature** Updated `MiniApp().shared.create` interface to accept another optional query string parameter.
 - **Deprecated:** `requestPermission(permissionType:completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `requestDevicePermission(permissionType:completionHandler:))` instead
+- **Fixed** Geolocation was not updated after the first GPS fix
 
 **Sample App**
 
@@ -26,7 +27,7 @@
 - **Feature:** Added support for requesting a contact list from a MiniApp
 - **Feature:** Added support to load a MiniApp from an URL
 - **Feature:** Added location permission to custom permissions management
-- **Fixed:** A specific exception is now raised when an app has no published version
+- **Fixed:** A specific exception is now raised when an app has no published version 
 - **Fixed:** Location permissions glitch
 
 **Sample App**

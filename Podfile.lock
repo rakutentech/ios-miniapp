@@ -26,10 +26,10 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.2.0)"
   - GoogleUtilities/Reachability (7.2.0):
     - GoogleUtilities/Logger
-  - MiniApp/Admob (2.7.0):
+  - MiniApp/Admob (2.8.0):
     - Google-Mobile-Ads-SDK
     - MiniApp/Core
-  - MiniApp/Core (2.7.0):
+  - MiniApp/Core (2.8.0):
     - RSDKUtils (>= 1.1.0)
     - ZIPFoundation
   - nanopb (2.30907.0):
@@ -71,7 +71,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 65a1071e5f52f63ab03d0a4d814a54fd762d885a
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
   GoogleUtilities: d866834472f1324d080496bc67ab3ce5d0d46027
-  MiniApp: 8a782c086b592d9d515f78ef1666add00868e903
+  MiniApp: 6eba6194219c27059393513a55febca864c237e0
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
@@ -79,6 +79,6 @@ SPEC CHECKSUMS:
   RSDKUtils: 9940b99fa0494181b8ee2cfa2ac742bb0958b984
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: e7c0e2ae9f35611e82ef1d24cccfc91c4011f2d7
+PODFILE CHECKSUM: f30cfad7ce677e29af36b33c4a4770af1a1b27cb
 
 COCOAPODS: 1.10.1
