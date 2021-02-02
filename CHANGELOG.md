@@ -1,13 +1,18 @@
 ## CHANGELOG
 
+### 2.x.x
+
+**SDK**
+
+- **Feature** Made MiniApp SDK a static framework
+- **Feature** Added ads for Mini Apps host
+- **Feature** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
+
 ### 2.8.0 (2021-02-01)
 
 **SDK**
 
-- **Feature** Made MiniApp SDK a static framework 
 - **Feature** Added analytics for Mini App usage tracking
-- **Feature** Added ads for Mini Apps host
-- **Feature** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
 - **Feature** Updated `getUserName` and `getProfilePhoto` interfaces to be asynchronous. Old methods are deprecated
 - **Feature** Updated `MiniApp().shared.create` interface to accept another optional query string parameter.
 - **Deprecated:** `requestPermission(permissionType:completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `requestDevicePermission(permissionType:completionHandler:))` instead
