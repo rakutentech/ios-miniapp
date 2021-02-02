@@ -26,35 +26,45 @@ public class MiniAppAdDisplayer: NSObject, MiniAppAdDisplayDelegate {
         onInterstitialClosed.removeValue(forKey: adId)
     }
 
+    // MARK: - MiniAppAdDisplayDelegate
+
+    /// Load Interstitial ad
+    /// This function preloads Interstitial ad before they are requested for display.
+    /// Can be called multiple times to pre-load multiple ads.
     public func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
         if let delegate = delegate {
             delegate.loadInterstitial(for: adId, onLoaded: onLoaded)
         } else {
-            return onLoaded(.failure(NSError.miniAppAdProtocoleError()))
+            return onLoaded(.failure(NSError.miniAppAdProtocolError()))
         }
     }
 
+    /// Show a pre-loaded Interstitial ad
     public func showInterstitial(for adId: String, onClosed: @escaping (Result<Void, Error>) -> Void) {
         if let delegate = delegate {
             delegate.showInterstitial(for: adId, onClosed: onClosed)
         } else {
-            return onClosed(.failure(NSError.miniAppAdProtocoleError()))
+            return onClosed(.failure(NSError.miniAppAdProtocolError()))
         }
     }
 
+    /// Load Rewarded ad
+    /// This function preloads Interstitial ad before they are requested for display.
+    /// Can be called multiple times to pre-load multiple ads.
     public func loadRewarded(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
         if let delegate = delegate {
             delegate.loadRewarded(for: adId, onLoaded: onLoaded)
         } else {
-            return onLoaded(.failure(NSError.miniAppAdProtocoleError()))
+            return onLoaded(.failure(NSError.miniAppAdProtocolError()))
         }
     }
 
+    /// Show a pre-loaded Rewarded ad
     public func showRewarded(for adId: String, onClosed: @escaping (Result<MiniAppReward, Error>) -> Void) {
         if let delegate = delegate {
             delegate.showRewarded(for: adId, onClosed: onClosed)
         } else {
-            return onClosed(.failure(NSError.miniAppAdProtocoleError()))
+            return onClosed(.failure(NSError.miniAppAdProtocolError()))
         }
     }
 }

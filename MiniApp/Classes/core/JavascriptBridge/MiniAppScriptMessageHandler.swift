@@ -73,36 +73,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
         case .loadAd:
-            loadRequestedAd(forParams: requestParam) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Ad loaded")
-                case .failure(let error):
-                    self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
-                }
-            }
+            loadRequestedAd(with: callbackId, for: requestParam)
         case .showAd:
-            showRequestedAd(callbackId: callbackId, params: requestParam)
+            showRequestedAd(with: callbackId, for: requestParam)
         }
 
-    }
-
-    func loadRequestedAd(forParams params: RequestParameters?, onLoaded: @escaping (Result<Void, Error>) -> Void) {
-        guard let delegate = adsDelegate else {
-            return onLoaded(.failure(NSError.miniAppAdProtocoleError()))
-        }
-        guard let params = params,
-              let adTypeRaw = params.adType,
-              let adType = MiniAppAdType(rawValue: adTypeRaw),
-              let adId = params.adUnitId else {
-            return onLoaded(.failure(NSError.miniAppAdNotLoaded(message: MASDKAdsDisplayError.adIdError.localizedDescription)))
-        }
-        switch adType {
-        case .interstitial:
-            delegate.loadInterstitial(for: adId, onLoaded: onLoaded)
-        case .rewarded:
-            delegate.loadRewarded(for: adId, onLoaded: onLoaded)
-        }
     }
 
     private func updateLocation(callbackId: String) {
@@ -169,7 +144,40 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             "}, \"timestamp\":\(Date().epochInMilliseconds)}"
     }
 
-    func showRequestedAd(callbackId: String, params: RequestParameters?) {
+    func loadRequestedAd(with callbackId: String, for params: RequestParameters?) {
+        guard let delegate = adsDelegate else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: NSError.miniAppAdProtocolError().localizedDescription)
+            return
+        }
+        guard let params = params,
+              let adTypeRaw = params.adType,
+              let adType = MiniAppAdType(rawValue: adTypeRaw),
+              let adId = params.adUnitId else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MASDKAdsDisplayError.adIdError.localizedDescription)
+            return
+        }
+        switch adType {
+        case .interstitial:
+            delegate.loadInterstitial(for: adId) { [weak self] result in
+                self?.manageAdResult(result: result, callbackId: callbackId)
+            }
+        case .rewarded:
+            delegate.loadRewarded(for: adId) { [weak self] result in
+                self?.manageAdResult(result: result, callbackId: callbackId)
+            }
+        }
+    }
+
+    private func manageAdResult(result: Result<(), Error>, callbackId: String) {
+        switch result {
+        case .success:
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Ad loaded")
+        case .failure(let error):
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+        }
+    }
+
+    func showRequestedAd(with callbackId: String, for params: RequestParameters?) {
         guard let adTypeRaw = params?.adType,
               let adType = MiniAppAdType(rawValue: adTypeRaw),
               let adUnitId = params?.adUnitId else {

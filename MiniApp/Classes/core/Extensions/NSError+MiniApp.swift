@@ -79,7 +79,7 @@ extension NSError {
         )
     }
 
-    class func miniAppAdProtocoleError() -> NSError {
+    class func miniAppAdProtocolError() -> NSError {
         NSError(
                 domain: MiniAppSDKErrorDomain,
                 code: MiniAppSDKErrorCode.adNotDisplayed.rawValue,
@@ -103,5 +103,7 @@ enum MiniAppSDKErrorCode: Int {
          invalidResponseData,
          downloadingFailed,
          noPublishedVersion,
+         adNotLoaded,
+         adNotDisplayed,
          miniAppNotFound
 }
