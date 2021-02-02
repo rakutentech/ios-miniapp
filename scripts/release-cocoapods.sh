@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -ex
 
 # Publishes the SDKs podspec to public CocoPods repo
