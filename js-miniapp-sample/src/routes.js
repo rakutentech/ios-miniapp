@@ -18,7 +18,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
-import TalkToChatBot from './pages/chatbot';
+import TalkToChatBot from './pages/message';
 import FetchCredentials from './pages/fetch-credentials';
 import FileUploader from './pages/file-upload';
 import GifPage from './pages/gifs';
@@ -74,7 +74,7 @@ const appItems = [
   },
   {
     icon: <ChatIcon />,
-    label: 'Message to Chatbot',
+    label: 'Message',
     navLink: '/chatbot',
     component: TalkToChatBot,
   },
@@ -127,8 +127,8 @@ const appItems = [
     component: GifPage,
   },
 ];
-// $FlowFixMe
-const navItems = homeItem.concat(
+
+const navItems: Object[] = homeItem.concat(
   appItems.sort((a, b) => a.label.localeCompare(b.label))
 );
 
