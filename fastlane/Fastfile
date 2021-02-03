@@ -25,7 +25,7 @@ platform :ios do
       clean: true,
       output_directory: './artifacts/unit-tests',
       scheme: 'MiniApp_Tests',
-      device: 'iPhone 11 Pro Max',
+      device: 'iPhone 6',
       code_coverage: true,
       output_types: 'json-compilation-database,html,junit',
       output_files: 'compile_commands.json,report.html,report.junit')
