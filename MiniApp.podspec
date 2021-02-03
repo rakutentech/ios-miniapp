@@ -38,7 +38,5 @@ Pod::Spec.new do |s|
     admob.dependency 'MiniApp/Core'
     admob.dependency 'Google-Mobile-Ads-SDK'
     admob.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADMOB' }
-    admob.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-    admob.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   end
 end
