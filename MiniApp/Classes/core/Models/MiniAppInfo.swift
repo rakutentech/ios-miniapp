@@ -1,7 +1,7 @@
 /// Model for a Mini App information
 public struct MiniAppInfo: Codable, Hashable {
     public static func == (lhs: MiniAppInfo, rhs: MiniAppInfo) -> Bool {
-        return lhs.id == rhs.id
+        lhs.id == rhs.id
     }
 
     /// Unique identifier of a Miniapp

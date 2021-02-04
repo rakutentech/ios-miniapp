@@ -357,6 +357,56 @@ class MockWKScriptMessage: WKScriptMessage {
     }
 }
 
+class MockAdsDisplayer: MiniAppAdDisplayer {
+    enum AdState {
+        case unloaded,
+             loaded
+    }
+    var     interstitialState: AdState = .unloaded,
+            rewardState: AdState = .unloaded,
+            failing: Bool = false
+
+    override func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
+        if failing {
+            interstitialState = .unloaded
+            onLoaded(.failure(NSError.miniAppAdNotLoaded(message: "")))
+        } else {
+            interstitialState = .loaded
+            onLoaded(.success(()))
+        }
+    }
+
+    override func showInterstitial(for adId: String, onClosed: @escaping (Result<Void, Error>) -> Void) {
+        switch interstitialState {
+        case .unloaded:
+            onClosed(.failure(NSError.miniAppAdNotLoaded(message: "Ad not loaded")))
+        case .loaded:
+            interstitialState = .unloaded
+            onClosed(.success(()))
+        }
+    }
+
+    override func loadRewarded(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
+        if failing {
+            rewardState = .unloaded
+            onLoaded(.failure(NSError.miniAppAdNotLoaded(message: "")))
+        } else {
+            rewardState = .loaded
+            onLoaded(.success(()))
+        }
+    }
+
+    override func showRewarded(for adId: String, onClosed: @escaping (Result<MiniAppReward, Error>) -> Void) {
+        switch interstitialState {
+        case .unloaded:
+            onClosed(.failure(NSError.miniAppAdNotLoaded(message: "Ad not loaded")))
+        case .loaded:
+            interstitialState = .unloaded
+            onClosed(.success(MiniAppReward(type: "test", amount: Int.max)))
+        }
+    }
+}
+
 class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     var messageId: String?
     var response: String?
@@ -433,6 +483,7 @@ class MockDisplayer: Displayer {
                                  miniAppTitle: String,
                                  queryParams: String? = nil,
                                  hostAppMessageDelegate: MiniAppMessageDelegate,
+                                 adsDisplayer: MiniAppAdDisplayer?,
                                  initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayProtocol {
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
             DispatchQueue.main.async {

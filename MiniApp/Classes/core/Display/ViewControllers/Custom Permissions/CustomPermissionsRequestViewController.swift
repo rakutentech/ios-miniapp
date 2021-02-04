@@ -15,7 +15,7 @@ class CustomPermissionsRequestViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let podBundle: Bundle = Bundle(for: MiniApp.self)
+        let podBundle: Bundle = Bundle.miniAppSDKBundle()
         let nib = UINib(nibName: "MACustomPermissionCell", bundle: podBundle)
         self.tableView.register(nib, forCellReuseIdentifier: "MACustomPermissionCell")
         self.tableView.tableFooterView = UIView(frame: .zero)
@@ -58,7 +58,7 @@ class CustomPermissionsRequestViewController: UIViewController {
 extension CustomPermissionsRequestViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return permissionsRequestList?.count ?? 0
+        permissionsRequestList?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

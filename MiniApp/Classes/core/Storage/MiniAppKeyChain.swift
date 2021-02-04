@@ -46,7 +46,7 @@ import Foundation
     /// Returns all key and values that is stored in Keychain,
     /// - Returns: List of KeysDictionary
     func getAllStoredCustomPermissionsList() -> KeysDictionary? {
-        return keys()
+        keys()
     }
 
     /// Remove Key from the KeyChain

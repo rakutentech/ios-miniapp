@@ -1,6 +1,7 @@
 import UIKit
 import MiniApp
 import AVKit
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -9,6 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window?.tintColor = #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         return true
     }
 

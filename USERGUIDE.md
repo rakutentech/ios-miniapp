@@ -35,6 +35,12 @@ Mini App SDK is available through [CocoaPods](https://cocoapods.org). To install
 pod 'MiniApp'
 ```
 
+If you need to support display of Google ads triggered from your Mini App, you need to add the following subspec instead:
+
+```ruby
+pod 'MiniApp/Admob'
+```
+
 ### Configuration
 
 In your project configuration .plist you should add below Key/Value :
@@ -45,6 +51,8 @@ In your project configuration .plist you should add below Key/Value :
 | RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
 | RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
 | RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent. The value specified in the plist is retrieved only at the build time.` |YES      |`none`   |
+
+<a id="setting-admob"></a>Additionally, if you support Google ads with `MiniApp/Admob` subspec, you need to configure Google ads framework as advised into this [documentation](https://developers.google.com/admob/ios/quick-start)
 
 If you don't want to use project settings, you have to pass this information one by one to the `Config.userDefaults` using a `Config.Key` as key:
 
@@ -62,6 +70,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Requesting Location Permissions](#request-location-permission)
     * [Custom Permissions](#custom-permissions)
     * [Share Mini app content](#share-mini-app-content)
+    * [Ads integration](#ads-integration)
     * [Retrieve User Profile details](#retrieve-user-profile-details)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
@@ -224,6 +233,95 @@ extension ViewController: MiniAppMessageDelegate {
 }
 ```
 
+<a id="ads-integration"></a>
+##### Ads integration
+---
+**API Docs:** [MiniAppAdDisplayDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppAdDisplayDelegate.html)
+
+Mini App SDK gives you the possibility to display ads triggered by your Mini App from your host app.
+There are 2 ways to achieve this: 
+- by implementing [MiniAppAdDisplayDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppAdDisplayDelegate.html) by yourself 
+- if you rely on Google ads to display your ads you can simply implement `pod MiniApp/Admob` into your pod dependencies (see [settings section](#setting-admob)).
+###### Google ads displayer
+
+When you chose to implement Google Ads support for your Mini Apps (see [configuration section](#setting-admob)), you must provide an [`AdMobDisplayer`](https://rakutentech.github.io/ios-miniapp/Classes/AdMobDisplayer.html) as adsDelegate parameter when creating your Mini App display:
+
+Be careful when declaring your variable, as Mini App SDK does not keep a strong reference to it, it is preferable to declare it as a global variable or in most cases it will become nil once your method called.
+
+```swift
+let adsDelegate = AdMobDisplayer() // This is just declared here as a convenience for the example.
+
+MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self))
+        .create(appId: appInfo.id, 
+                version: appInfo.version.versionId,
+                queryParams: getQueryParam(),
+                completionHandler: { (result) in }, // retrieve your Mini App view in the result success 
+                messageInterface: someMessageInterfaceDelegate, 
+                adsDelegate: adsDelegate) // notice the new parameter for ads delegation
+```
+
+###### Custom ads displayer
+
+If you chose to implement ads displaying by yourself, you first need do implement [`MiniAppAdDisplayDelegate`](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppAdDisplayDelegate.html) and provide it to a [`MiniAppAdDisplayer`](https://rakutentech.github.io/ios-miniapp/Classes/MiniAppAdDisplayer.html).
+
+For the same reasons mentioned in `AdMobDisplayer` section above, prefer declaring your `MiniAppAdDisplayer` globally.
+
+```swift
+class ViewController: UIViewController {
+    let adsDelegate: MiniAppAdDisplayer 
+    
+    override func viewDidLoad() {
+      super.viewDidLoad()
+      adsDelegate = MiniAppAdDisplayer(with: self) // you must provide your ads displayer a MiniAppAdDisplayDelegate
+    }
+
+}
+
+extension ViewController: MiniAppAdDisplayDelegate {
+    func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
+        // Here your code to load and prepare an interstitial ad
+        let isLoaded = onInterstitiaLoaded()
+        if isLoaded {
+          onLoaded(.success(()))
+        } else {
+          onLoaded(.failure(NSError("Custom interstitial failed loading")))
+        }
+    }
+
+    func showInterstitial(for adId: String, onClosed: @escaping (Result<Void, Error>) -> Void) {
+      // Here your code to display an interstitial ad
+      var interstitialController = getCustomInsterstialController(for: adId, onClosed: onClosed)
+    }
+
+    func loadRewarded(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
+      // Here your code to load and prepare an ad 
+      let isLoaded = onRewardedAdLoaded()
+      if isLoaded {
+        onLoaded(.success(()))
+      } else {
+        onLoaded(.failure(NSError("Custom rewarded ad failed loading")))
+      }
+    }
+
+    func showRewarded(forId: String, onClosed: @escaping (MiniAppReward?) -> Void, onFailed: @escaping (Error) -> Void) {
+      // Here your code to display your rewarded ad.
+      // When the onClosed closure is called the user receives a reward you defined
+      var interstitialController = getCustomRewrdedController(for: adId, onClosed: onClosed, reward: MiniAppReward(type: "star", amount: 100))
+    }
+}
+```
+
+Once the delegate implemented, don't forget to provide it when you call a Mini App creation with the parameter `adsDelegate`:
+
+```swift
+MiniApp.shared(with: Config.getCurrent())
+            .create(appId: appInfo.id,
+                    version: appInfo.version.versionId,
+                    queryParams: getQueryParam(),
+                    completionHandler: { (result) in
+            // Some code to manage Mini App view creation callbacks
+        }, messageInterface: self, adsDelegate: self)
+```
 <a id="user-profile-details"></a>
 
 ##### Retrieve User Profile details

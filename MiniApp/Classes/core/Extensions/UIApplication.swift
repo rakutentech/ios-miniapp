@@ -1,5 +1,13 @@
 extension UIApplication {
-  class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+  func keyWindow() -> UIWindow? {
+    if #available(iOS 13, *) {
+      return windows.filter { $0.isKeyWindow }.first
+    } else {
+      return keyWindow
+    }
+  }
+
+  class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow()?.topController()) -> UIViewController? {
     if let tabController = controller as? UITabBarController {
       return topViewController(controller: tabController.selectedViewController)
     }

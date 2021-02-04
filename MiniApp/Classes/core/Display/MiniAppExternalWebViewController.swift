@@ -20,12 +20,6 @@ class MiniAppExternalWebViewController: UIViewController {
     public class func presentModally(url: URL,
                                      externalLinkResponseHandler: MiniAppNavigationResponseHandler?,
                                      customMiniAppURL: URL? = nil) {
-        let window: UIWindow?
-        if #available(iOS 13, *) {
-            window = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
-        } else {
-            window = UIApplication.shared.keyWindow
-        }
         let webctrl = MiniAppExternalWebViewController()
         webctrl.currentURL = url
         webctrl.customMiniAppURL = customMiniAppURL
@@ -35,7 +29,7 @@ class MiniAppExternalWebViewController: UIViewController {
         webctrl.miniAppExternalUrlLoader = MiniAppExternalUrlLoader(webViewController: webctrl,
                                                                     responseHandler: externalLinkResponseHandler,
                                                                     customMiniAppURL: customMiniAppURL)
-        window?.topController()?.present(navigationController, animated: true)
+        UIApplication.shared.keyWindow()?.topController()?.present(navigationController, animated: true)
     }
 
     override func loadView() {

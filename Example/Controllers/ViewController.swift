@@ -7,7 +7,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     let refreshControl = UIRefreshControl()
-
+    let adsDisplayer = AdMobDisplayer()
     var unfilteredResults: [MiniAppInfo]? {
         didSet {
             self.decodeResponse = self.unfilteredResults
