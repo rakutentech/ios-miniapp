@@ -34,13 +34,6 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Admob' do |admob|
-    admob.source_files = 'MiniApp/Classes/admob/**/*.{swift,h,m}'
-    admob.dependency 'MiniApp/Core'
-    admob.dependency 'Google-Mobile-Ads-SDK', '~> 8.0'
-    admob.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADMOB' }
-  end
-
-  s.subspec 'Admob7' do |admob|
     admob.source_files = 'MiniApp/Classes/admob7/**/*.{swift,h,m}'
     admob.dependency 'MiniApp/Core'
     admob.dependency 'Google-Mobile-Ads-SDK', '~> 7.0'

@@ -1,5 +1,5 @@
 PODS:
-  - Google-Mobile-Ads-SDK (8.0.0):
+  - Google-Mobile-Ads-SDK (7.69.0):
     - GoogleAppMeasurement (~> 7.0)
     - GoogleUserMessagingPlatform (~> 1.1)
   - GoogleAppMeasurement (7.5.0):
@@ -27,7 +27,7 @@ PODS:
   - GoogleUtilities/Reachability (7.2.2):
     - GoogleUtilities/Logger
   - MiniApp/Admob (2.8.0):
-    - Google-Mobile-Ads-SDK (~> 8.0)
+    - Google-Mobile-Ads-SDK (~> 7.0)
     - MiniApp/Core
   - MiniApp/Core (2.8.0):
     - RSDKUtils (>= 1.1.0)
@@ -67,11 +67,11 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  Google-Mobile-Ads-SDK: 9509c62617e8d77e2524833eed0b73dd028f0bc6
+  Google-Mobile-Ads-SDK: 2f288748a42920d1c744946a460896a95b0e9110
   GoogleAppMeasurement: 65a1071e5f52f63ab03d0a4d814a54fd762d885a
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
   GoogleUtilities: 31c5b01f978a70c6cff2afc6272b3f1921614b43
-  MiniApp: 17c1d77e6767f3dddcf3e5155a2cfeccb03def6d
+  MiniApp: c2817cccf3f713bc17a286a06832d6efa3112238
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97

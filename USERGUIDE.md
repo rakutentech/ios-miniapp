@@ -37,13 +37,8 @@ pod 'MiniApp'
 
 If you need to support display of Google ads triggered from your Mini App, you need to add the following subspec instead:
 
-- For the latest Google ads support (8.0.0+):
 ```ruby
 pod 'MiniApp/Admob'
-```
-- For the Google ads 7.0+ support:
-```ruby
-pod 'MiniApp/Admob7'
 ```
 
 ### Configuration
