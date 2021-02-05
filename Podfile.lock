@@ -1,4 +1,7 @@
 PODS:
+  - AppCenter/Core (4.1.0)
+  - AppCenter/Crashes (4.1.0):
+    - AppCenter/Core
   - Google-Mobile-Ads-SDK (7.69.0):
     - GoogleAppMeasurement (~> 7.0)
     - GoogleUserMessagingPlatform (~> 1.1)
@@ -39,11 +42,12 @@ PODS:
   - nanopb/encode (2.30907.0)
   - Nimble (9.0.0)
   - PromisesObjC (1.2.12)
-  - Quick (3.0.0)
+  - Quick (3.0.1)
   - RSDKUtils (1.1.0)
   - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
+  - AppCenter/Crashes
   - Google-Mobile-Ads-SDK
   - MiniApp/Admob (from `./`)
   - Nimble
@@ -51,6 +55,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppCenter
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
@@ -67,6 +72,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
+  AppCenter: 8832b158d17e54845c3b88a91076218f0b07174d
   Google-Mobile-Ads-SDK: 2f288748a42920d1c744946a460896a95b0e9110
   GoogleAppMeasurement: 65a1071e5f52f63ab03d0a4d814a54fd762d885a
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
@@ -75,10 +81,10 @@ SPEC CHECKSUMS:
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
+  Quick: 947834f0d0f43fc933d0e9dd00086a76e783e4fb
   RSDKUtils: 9940b99fa0494181b8ee2cfa2ac742bb0958b984
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: f30cfad7ce677e29af36b33c4a4770af1a1b27cb
+PODFILE CHECKSUM: 67adfbf6b5fbb679e3f7a53c4b8f5d8dc911d5d5
 
 COCOAPODS: 1.10.1
