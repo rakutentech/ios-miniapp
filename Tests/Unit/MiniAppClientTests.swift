@@ -247,7 +247,6 @@ class MiniAppClientTests: QuickSpec {
             }
         }
         describe("override configuration at runtime") {
-            let applicationIdentifierKey = "RASApplicationIdentifier"
             let projectId = "RASProjectId"
             let versionKey = "CFBundleShortVersionString"
             let subscriptionKey = "RASProjectSubscriptionKey"
@@ -320,17 +319,6 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.projectId).to(equal(testProjectID))
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
-                    expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
-                }
-            }
-
-            context("when a custom parameter is provided to deprecated method") {
-                it("it uses provided custom parameters values as environment") {
-                    let miniAppClient = MiniAppClient(baseUrl: testURL, rasAppId: testID, subscriptionKey: subscriptionKey)
-
-                    expect(miniAppClient.environment.appId).to(equal(testID))
-                    expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
-                    expect(miniAppClient.environment.subscriptionKey).to(equal(subscriptionKey))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
                 }
             }

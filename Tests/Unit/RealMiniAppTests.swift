@@ -128,8 +128,8 @@ class RealMiniAppTests: QuickSpec {
                 }
             }
             context("when set config parameters of MiniAppSdkConfig passed to RealMiniApp to empty values") {
-                let config = MiniAppSdkConfig(rasAppId: "dummyId", subscriptionKey: "dummyKey", hostAppVersion: "dummyHostVersion")
-                config.rasAppId = nil
+                let config = MiniAppSdkConfig(rasProjectId: "dummyId", subscriptionKey: "dummyKey", hostAppVersion: "dummyHostVersion")
+                config.rasProjectId = nil
                 config.subscriptionKey = nil
                 config.hostAppVersion = nil
                 config.baseUrl = nil

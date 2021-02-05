@@ -94,52 +94,6 @@ public class MiniApp: NSObject {
     public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
         return realMiniApp.createMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
     }
-
-    @available(*, deprecated,
-    message:"Use MASDKError instead of Error in your completionHandler.",
-    renamed: "list(completionHandler:)")
-    public func list<T>(completionHandler: @escaping (Result<[MiniAppInfo], T>) -> Void) where T: Error {
-        return self.list { (result) in
-            switch result {
-            case .success(let responseData):
-                completionHandler(.success(responseData))
-            case .failure(let error):
-                // swiftlint:disable force_cast
-                completionHandler(.failure(error as! T))
-            }
-        }
-    }
-
-    @available(*, deprecated,
-    message:"Use MASDKError instead of Error in your completionHandler.",
-    renamed: "info(miniAppId:completionHandler:)")
-    public func info<T>(miniAppId: String, completionHandler: @escaping (Result<MiniAppInfo, T>) -> Void) where T: Error {
-        self.info(miniAppId: miniAppId) { (result) in
-                switch result {
-                case .success(let responseData):
-                    completionHandler(.success(responseData))
-                case .failure(let error):
-                    // swiftlint:disable force_cast
-                    completionHandler(.failure(error as! T))
-            }
-        }
-    }
-
-    @available(*, deprecated,
-    message:"Use MASDKError instead of Error in your completionHandler.",
-    renamed: "create(appId:completionHandler:)")
-    public func create<T>(appId: String, completionHandler: @escaping (Result<MiniAppDisplayProtocol, T>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) where T: Error {
-        let handler: (Result<MiniAppDisplayProtocol, MASDKError>) -> Void = { (result) in
-                switch result {
-                case .success(let responseData):
-                    completionHandler(.success(responseData))
-                case .failure(let error):
-                    // swiftlint:disable force_cast
-                    completionHandler(.failure(error as! T))
-            }
-        }
-        return realMiniApp.createMiniApp(appId: appId, completionHandler: handler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
-    }
 }
 
 // MARK: - Testing
@@ -157,10 +111,10 @@ public extension MiniApp {
     //    - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     /// - Returns: MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
-    public func create(url: URL, queryParams: String? = nil,
-                       errorHandler: @escaping (Error) -> Void,
-                       messageInterface: MiniAppMessageDelegate,
-                       adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayProtocol {
+    func create(url: URL, queryParams: String? = nil,
+                errorHandler: @escaping (Error) -> Void,
+                messageInterface: MiniAppMessageDelegate,
+                adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayProtocol {
         return realMiniApp.createMiniApp(url: url,
                                          queryParams: queryParams,
                                          errorHandler: errorHandler,

@@ -1,6 +1,3 @@
-@available(*, deprecated, message: "protocol renamed to MiniAppMessageDelegate")
-public typealias MiniAppMessageProtocol = MiniAppMessageDelegate
-
 /**
 Public Protocol that will be used by the Mini App to communicate
  with the Native implementation
@@ -14,26 +11,12 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     /// result (allowed/denied) should be returned.
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void)
 
-    /// Interface that should be implemented in the host app that handles the code to request any permission and the
-    /// result (allowed/denied) should be returned.
-    @available(*, deprecated,
-        message: "Since version 2.8.0, this method is deprecated",
-        renamed: "requestDevicePermission(permissionType:completionHandler:)")
-    func requestPermission(permissionType: MiniAppPermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void)
-
     /// Optional Interface that can be implemented in the host app to handle the Custom Permissions.
     /// SDK will open its default UI for prompting Custom Permissions request if this protocol interface is not overridden
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
                                   miniAppTitle: String,
                                   completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 
-    /// Interface that should be implemented in the host app to handle the Custom Permissions.
-    /// Host app is responsible to display the alert/dialog with the [MiniAppCustomPermissionType] permissions to the user and the result should be returned back to the SDK
-    @available(*, deprecated,
-        message: "Since version 2.3.0, this method is deprecated",
-        renamed: "requestCustomPermissions(permissions:miniAppTitle:completionHandler:)")
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
-                                  completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 }
 
 public extension MiniAppMessageDelegate {

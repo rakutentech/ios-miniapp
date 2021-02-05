@@ -10,20 +10,7 @@ class MockAPIClient: MiniAppClient {
     var zipFile: String?
     var headers: [String: String]?
 
-    init() {
-        let bundle = MockBundle()
-        super.init(with:
-                MiniAppSdkConfig(
-                    baseUrl: bundle.mockEndpoint,
-                    rasAppId: bundle.mockAppId,
-                    subscriptionKey: bundle.mockSubscriptionKey,
-                    hostAppVersion: bundle.mockHostAppUserAgentInfo,
-                    isTestMode: false
-                )
-        )
-    }
-
-    init(previewMode: Bool) {
+    init(previewMode: Bool? = false) {
         let bundle = MockBundle()
         bundle.mockPreviewMode = previewMode
         super.init(with:
@@ -181,19 +168,15 @@ class MockBundle: EnvironmentProtocol {
     }
 
     var mockValueNotFound: String?
-    var mockAppId: String?
     var mockProjectId: String?
     var mockSubscriptionKey: String?
     var mockAppVersion: String?
     var mockEndpoint: String? = "https://www.example.com/"
-    var mockTestMode: Bool?
     var mockPreviewMode: Bool?
     var mockHostAppUserAgentInfo: String?
 
     func bool(for key: String) -> Bool? {
         switch key {
-        case "RMAIsTestMode":
-            return mockTestMode
         case "RMAIsPreviewMode":
             return mockPreviewMode
         default:
@@ -203,8 +186,6 @@ class MockBundle: EnvironmentProtocol {
 
     func value(for key: String) -> String? {
         switch key {
-        case "RASApplicationIdentifier":
-            return mockAppId
         case "RASProjectId":
             return mockProjectId
         case "RASProjectSubscriptionKey":
