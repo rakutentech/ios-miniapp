@@ -1,7 +1,7 @@
 extension String {
 
     var hasHTTPPrefix: Bool {
-        return lowercased().hasPrefix("http://") || lowercased().hasPrefix("https://")
+        lowercased().hasPrefix("http://") || lowercased().hasPrefix("https://")
     }
 
     func deletingPrefix(_ prefix: String) -> String {

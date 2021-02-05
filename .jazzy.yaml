@@ -2,7 +2,7 @@ podspec: MiniApp.podspec
 documentation: "*.md"
 xcodebuild_arguments: -scheme,Tests
 module: MiniApp
-source-directory: MiniApp
-podspec: MiniApp.podspec
+sdk: iphone
+source_directory: MiniApp
 theme: fullwidth
 readme: USERGUIDE.md
