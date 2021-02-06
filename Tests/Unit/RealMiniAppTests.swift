@@ -136,7 +136,7 @@ class RealMiniAppTests: QuickSpec {
                 it("will reset environment to default") {
                     realMiniApp.update(with: config)
                     expect(realMiniApp.miniAppClient.environment.customUrl).to(beNil())
-                    expect(realMiniApp.miniAppClient.environment.customAppId).to(beNil())
+                    expect(realMiniApp.miniAppClient.environment.customProjectId).to(beNil())
                     expect(realMiniApp.miniAppClient.environment.customSubscriptionKey).to(beNil())
                     expect(realMiniApp.miniAppClient.environment.customAppVersion).to(beNil())
                 }
