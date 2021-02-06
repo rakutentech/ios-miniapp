@@ -10,7 +10,7 @@ class UrlParserTests: QuickSpec {
                 it("will returns the path to store the file") {
                     let urlString = env.baseUrl?.appendingPathComponent("mini-abc/ver-abc/img/onload/file.png").absoluteString ?? ""
                     let path = UrlParser.getFileStoragePath(from: urlString, with: env)
-                    expect(path).toEventually(equal("img/onload/file.png"))
+                    expect(path).to(equal("img/onload/file.png"))
                 }
             }
 
@@ -18,7 +18,7 @@ class UrlParserTests: QuickSpec {
                 it("will return nil") {
                     let urlString = env.baseUrl?.absoluteString ?? ""
                     let path = UrlParser.getFileStoragePath(from: urlString, with: env)
-                    expect(path).toEventually(beNil())
+                    expect(path).to(beNil())
                 }
             }
         }
