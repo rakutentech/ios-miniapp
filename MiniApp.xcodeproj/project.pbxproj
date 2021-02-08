@@ -13,6 +13,7 @@
 		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
+		3806DB6D25CFF13C00E299D2 /* CustomPermissionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3806DB6B25CFF13C00E299D2 /* CustomPermissionCell.xib */; };
 		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
 		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
 		38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */; };
@@ -101,6 +102,7 @@
 		31070C64258C554500BED77C /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEV.md; sourceTree = "<group>"; };
 		31070C66258C55C000BED77C /* configure-secrets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "configure-secrets.sh"; path = "scripts/configure-secrets.sh"; sourceTree = SOURCE_ROOT; };
 		31553D3525B6C6800091EE50 /* Config-common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
+		3806DB6C25CFF13C00E299D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CustomPermissionCell.xib; sourceTree = "<group>"; };
 		3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStatusTests.swift; sourceTree = "<group>"; };
 		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
 		38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestAPITests.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 		38920AE1251D9C57004C5DDD /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				3806DB6B25CFF13C00E299D2 /* CustomPermissionCell.xib */,
 				38920AE2251D9C57004C5DDD /* LaunchScreen.xib */,
 				38920AE4251D9C57004C5DDD /* Main.storyboard */,
 			);
@@ -511,6 +514,7 @@
 			files = (
 				38920AFE251D9C57004C5DDD /* Images.xcassets in Resources */,
 				38920B02251D9C57004C5DDD /* Main.storyboard in Resources */,
+				3806DB6D25CFF13C00E299D2 /* CustomPermissionCell.xib in Resources */,
 				38920B01251D9C57004C5DDD /* LaunchScreen.xib in Resources */,
 				38920AFD251D9C57004C5DDD /* Localizable.strings in Resources */,
 				750199315BA086562954E935 /* Config-test-debug.xcconfig in Resources */,
@@ -634,6 +638,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		3806DB6B25CFF13C00E299D2 /* CustomPermissionCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3806DB6C25CFF13C00E299D2 /* Base */,
+			);
+			name = CustomPermissionCell.xib;
+			sourceTree = "<group>";
+		};
 		38920AD9251D9C57004C5DDD /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -36,8 +36,28 @@ internal class RealMiniApp {
     }
 
     func getMiniApp(miniAppId: String, miniAppVersion: String? = nil, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
-        return miniAppInfoFetcher.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion, apiClient: self.miniAppClient,
-                                          completionHandler: self.createCompletionHandler(completionHandler: completionHandler))
+        miniAppInfoFetcher.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion, apiClient: self.miniAppClient) { (result) in
+            switch result {
+            case .success(let miniAppInfo):
+                self.fetchManifestUsing(miniAppInfo: miniAppInfo,
+                                   completionHandler: completionHandler)
+            case .failure(let error):
+                completionHandler(.failure(.fromError(error: error)))
+            }
+        }
+    }
+
+    func fetchManifestUsing(miniAppInfo: MiniAppInfo, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
+        self.retrieveMiniAppMetaData(appId: miniAppInfo.id, version: miniAppInfo.version.versionId) { (result) in
+            switch result {
+            case .success(let miniAppManifest):
+                var info = miniAppInfo
+                info.manifest = miniAppManifest
+                completionHandler(.success(info))
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
     }
 
     /// For a given Miniapp info object, this method will check whether the version id is the latest one with the platform.
@@ -192,6 +212,20 @@ internal class RealMiniApp {
                 completionHandler(.failure(.fromError(error: error)))
             }
         }
+    }
+
+    func retrieveMiniAppMetaData(appId: String,
+                                 version: String? = nil,
+                                 completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
+        if appId.isEmpty {
+            completionHandler(.failure(.invalidAppId))
+        }
+        guard let miniAppVersionId = version, !miniAppVersionId.isEmpty else {
+            return completionHandler(.failure(.invalidVersionId))
+        }
+        miniAppInfoFetcher.getMiniAppMetaInfo(miniAppId: appId,
+                                              miniAppVersion: miniAppVersionId,
+                                              apiClient: self.miniAppClient, completionHandler: self.createCompletionHandler(completionHandler: completionHandler))
     }
 }
 

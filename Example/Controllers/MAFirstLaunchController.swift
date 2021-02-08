@@ -9,13 +9,29 @@ class MAFirstLaunchController: UIViewController {
     @IBOutlet weak var miniAppName: UILabel!
     @IBOutlet weak var miniAppVersion: UILabel!
     @IBOutlet weak var miniAppImageView: UIImageView!
-    weak var launchScreenDelegate: MALaunchScreenDelegate?
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
 
+    weak var launchScreenDelegate: MALaunchScreenDelegate?
     var miniAppInfo: MiniAppInfo?
+    var permissionsCollections: [MASDKCustomPermissionModel]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let podBundle: Bundle = Bundle.main
+        let nib = UINib(nibName: "CustomPermissionCell", bundle: podBundle)
+        self.tableView.register(nib, forCellReuseIdentifier: "FirstLaunchCustomPermissionCell")
         setupUI()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+        permissionsCollections = (miniAppInfo?.manifest?.requiredPermissions ?? []) + (miniAppInfo?.manifest?.optionalPermissions ?? [])
+    }
+
+    override func viewDidLayoutSubviews() {
+        tableViewHeightConstraint.constant = tableView.contentSize.height
     }
 
     func setupUI() {
@@ -28,6 +44,7 @@ class MAFirstLaunchController: UIViewController {
     }
 
     @IBAction func acceptButtonPressed(_ sender: UIButton) {
+        MiniApp.shared().setCustomPermissions(forMiniApp: miniAppInfo?.id ?? "", permissionList: permissionsCollections ?? [])
         _ = saveMiniAppLaunchInfo(isMiniAppLaunched: true, forKey: miniAppInfo!.id)
         launchScreenDelegate?.didUserResponded(agreed: true, miniAppInfo: miniAppInfo)
         self.dismiss(animated: true, completion: nil)
@@ -39,6 +56,80 @@ class MAFirstLaunchController: UIViewController {
     }
 }
 
+// MARK: - UITableViewControllerDelegate
+extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return permissionsCollections?.count ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(
+            withIdentifier: "FirstLaunchCustomPermissionCell", for: indexPath) as? FirstLaunchCustomPermissionCell {
+                let permissionModel: MASDKCustomPermissionModel?
+                if miniAppInfo?.manifest?.requiredPermissions?.indices.contains(indexPath.row) ?? false {
+                    permissionModel =  miniAppInfo?.manifest?.requiredPermissions?[indexPath.row]
+                    cell.permissionTitle?.attributedText =  NSMutableAttributedString()
+                        .normalText(permissionModel?.permissionName.title ?? "")
+                        .highlightRedColor(" (required)")
+                    cell.permissionDescription?.text = permissionModel?.permissionDescription
+                    cell.toggle.isHidden = true
+                } else {
+                    if miniAppInfo?.manifest?.optionalPermissions?.indices.contains(indexPath.row - (miniAppInfo?.manifest?.requiredPermissions?.count ?? 0)) ?? false {
+                        permissionModel =  miniAppInfo?.manifest?.optionalPermissions?[indexPath.row - (miniAppInfo?.manifest?.requiredPermissions?.count ?? 0)]
+                        cell.permissionTitle?.text = permissionModel?.permissionName.title
+                        cell.permissionDescription?.text = permissionModel?.permissionDescription
+                    }
+                }
+            cell.toggle.tag = indexPath.row
+            cell.toggle.isOn = true
+            cell.toggle.addTarget(self, action: #selector(permissionValueChanged(_:)), for: .valueChanged)
+            return cell
+        }
+        return UITableViewCell()
+    }
+
+    @objc func permissionValueChanged(_ sender: UISwitch) {
+        if permissionsCollections?.indices.contains(sender.tag) ?? false {
+            let permissionModel = permissionsCollections?[sender.tag]
+            if sender.isOn {
+                permissionModel?.isPermissionGranted = .allowed
+            } else {
+                permissionModel?.isPermissionGranted = .denied
+            }
+        }
+    }
+}
+
 protocol MALaunchScreenDelegate: class {
     func didUserResponded(agreed: Bool, miniAppInfo: MiniAppInfo?)
+}
+
+class FirstLaunchCustomPermissionCell: UITableViewCell {
+
+    @IBOutlet weak var permissionTitle: UILabel!
+    @IBOutlet weak var permissionDescription: UILabel!
+    @IBOutlet weak var toggle: UISwitch!
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        toggle.isOn = true
+        permissionTitle.text = ""
+        permissionDescription.text = ""
+    }
+}
+
+extension NSMutableAttributedString {
+    func highlightRedColor(_ value: String) -> NSMutableAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.red
+        ]
+        self.append(NSAttributedString(string: value, attributes: attributes))
+        return self
+    }
+
+    func normalText(_ value: String) -> NSMutableAttributedString {
+        self.append(NSAttributedString(string: value, attributes: nil))
+        return self
+    }
 }

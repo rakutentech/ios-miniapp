@@ -93,6 +93,10 @@ public class MiniApp: NSObject {
         return realMiniApp.createMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 
+    public func getMiniAppManifest(miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
+        return realMiniApp.retrieveMiniAppMetaData(appId: miniAppId, version: miniAppVersion, completionHandler: completionHandler)
+    }
+
     @available(*, deprecated,
     message:"Use MASDKError instead of Error in your completionHandler.",
     renamed: "list(completionHandler:)")

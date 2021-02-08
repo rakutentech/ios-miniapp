@@ -41,4 +41,39 @@ internal class MiniAppInfoFetcher {
             }
         }
     }
+
+    func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, Error>) -> Void) {
+
+        apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion) { (result) in
+            switch result {
+            case .success(let responseData):
+                if let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
+                                                               data: responseData.data) {
+                    return completionHandler(.success(self.prepareMiniAppManifest(
+                                                        metaDataResponse: decodeResponse)))
+                }
+                return completionHandler(.failure(NSError.invalidResponseData()))
+            case .failure(let error):
+                return completionHandler(.failure(error))
+            }
+        }
+    }
+
+    func prepareMiniAppManifest(metaDataResponse: MetaDataResponse) -> MiniAppManifest {
+        var manifest = MiniAppManifest()
+        manifest.requiredPermissions = metaDataResponse.reqPermissions?.compactMap {
+            guard let name = $0.name, let reason = $0.reason else {
+                return nil
+            }
+            return MASDKCustomPermissionModel(permissionName: MiniAppCustomPermissionType(rawValue: name)!, isPermissionGranted: .allowed, permissionRequestDescription: reason)
+        }
+        manifest.optionalPermissions = metaDataResponse.optPermissions?.compactMap {
+            guard let name = $0.name, let reason = $0.reason else {
+                return nil
+            }
+            return MASDKCustomPermissionModel(permissionName: MiniAppCustomPermissionType(rawValue: name)!, isPermissionGranted: .allowed, permissionRequestDescription: reason)
+        }
+        manifest.exampleHostAppMetaData = metaDataResponse.exampleHostAppMetaData
+        return manifest
+    }
 }

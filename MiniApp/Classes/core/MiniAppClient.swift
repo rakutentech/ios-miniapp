@@ -13,6 +13,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let listingApi: ListingApi
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
+    let metaDataApi: MetaDataAPI
     var environment: Environment
     private var previewPath: String {
         self.environment.isPreviewMode ? "preview" : ""
@@ -38,6 +39,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.listingApi = ListingApi(environment: self.environment)
         self.manifestApi = ManifestApi(environment: self.environment)
         self.downloadApi = DownloadApi(environment: self.environment)
+        self.metaDataApi = MetaDataAPI(environment: self.environment)
     }
 
     func updateEnvironment(with config: MiniAppSdkConfig?) {
@@ -75,6 +77,48 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
         guard let urlRequest = self.manifestApi.createURLRequest(appId: appId, versionId: versionId, testPath: self.previewPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
+        }
+        return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
+    }
+
+    func getMiniAppMetaData(appId: String,
+                            versionId: String,
+                            completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId) else {
+            return completionHandler(.failure(NSError.invalidURLError()))
+        }
+        let mockString = """
+            {
+              "reqPermissions": [
+                {
+                  "name": "rakuten.miniapp.user.USER_NAME",
+                  "reason": "Describe your reason here (optional)."
+                },
+                {
+                  "name": "rakuten.miniapp.user.PROFILE_PHOTO",
+                  "reason": "Describe your reason here (optional)."
+                }
+              ],
+              "optPermissions": [
+                {
+                  "name": "rakuten.miniapp.user.CONTACT_LIST",
+                  "reason": "Describe your reason here (optional)."
+                },
+                {
+                  "name": "rakuten.miniapp.device.LOCATION",
+                  "reason": "Describe your reason here (optional)."
+                }
+              ],
+              "exampleHostAppMetaData": {
+                "exampleKey": "test"
+              }
+            }
+        """
+        var headers: [String: String]?
+
+        let responseData = mockString.data(using: .utf8)
+        if let httpResponse = HTTPURLResponse(url: urlRequest.url!, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
+            return completionHandler(.success(ResponseData(responseData!, httpResponse)))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
