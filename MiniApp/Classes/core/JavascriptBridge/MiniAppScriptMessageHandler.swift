@@ -15,17 +15,19 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var locationManager: LocationManager?
     weak var delegate: MiniAppCallbackDelegate?
     weak var hostAppMessageDelegate: MiniAppMessageDelegate?
+    weak var adsDelegate: MiniAppAdDisplayDelegate?
     var miniAppId: String
     var miniAppTitle: String
     var userAlreadyRespondedRequestList = [MASDKCustomPermissionModel]()
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
     var miniAppKeyStore = MiniAppKeyChain()
 
-    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, miniAppId: String, miniAppTitle: String) {
+    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
         self.miniAppId = miniAppId
         self.miniAppTitle = miniAppTitle
+        self.adsDelegate = adsDisplayer
         super.init()
     }
 
@@ -70,7 +72,12 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
             fetchTokenDetails(callbackId: callbackId)
+        case .loadAd:
+            loadRequestedAd(with: callbackId, for: requestParam)
+        case .showAd:
+            showRequestedAd(with: callbackId, for: requestParam)
         }
+
     }
 
     private func updateLocation(callbackId: String) {
@@ -135,6 +142,89 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             ", \"speed\":\(location?.speed ?? "null" as Any)" +
             ", \"heading\":\(location?.course ?? "null" as Any)" +
             "}, \"timestamp\":\(Date().epochInMilliseconds)}"
+    }
+
+    func loadRequestedAd(with callbackId: String, for params: RequestParameters?) {
+        guard let delegate = adsDelegate else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: NSError.miniAppAdProtocolError().localizedDescription)
+            return
+        }
+        guard let params = params,
+              let adTypeRaw = params.adType,
+              let adType = MiniAppAdType(rawValue: adTypeRaw),
+              let adId = params.adUnitId else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MASDKAdsDisplayError.adIdError.localizedDescription)
+            return
+        }
+        switch adType {
+        case .interstitial:
+            delegate.loadInterstitial(for: adId) { [weak self] result in
+                self?.manageAdResult(result: result, callbackId: callbackId)
+            }
+        case .rewarded:
+            delegate.loadRewarded(for: adId) { [weak self] result in
+                self?.manageAdResult(result: result, callbackId: callbackId)
+            }
+        }
+    }
+
+    private func manageAdResult(result: Result<(), Error>, callbackId: String) {
+        switch result {
+        case .success:
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Ad loaded")
+        case .failure(let error):
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+        }
+    }
+
+    func showRequestedAd(with callbackId: String, for params: RequestParameters?) {
+        guard let adTypeRaw = params?.adType,
+              let adType = MiniAppAdType(rawValue: adTypeRaw),
+              let adUnitId = params?.adUnitId else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKAdsDisplayError.adIdError))
+            return
+        }
+
+        switch adType {
+        case .interstitial:
+            showInterstitial(callbackId: callbackId, adUnitId: adUnitId)
+        case .rewarded:
+            showRewarded(callbackId: callbackId, adUnitId: adUnitId)
+        }
+    }
+
+    func showInterstitial(callbackId: String, adUnitId: String) {
+        if let adDelegate = adsDelegate {
+            adDelegate.showInterstitial(for: adUnitId) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "Ad loaded successfully")
+                case .failure(let error):
+                    self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                }
+            }
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKAdsDisplayError.failedToConformToProtocol))
+        }
+    }
+
+    func showRewarded(callbackId: String, adUnitId: String) {
+        if let adDelegate = adsDelegate {
+            adDelegate.showRewarded(for: adUnitId) { [weak self] result in
+                switch result {
+                case .success(let reward):
+                    if let response = ResponseEncoder.encode(data: reward) {
+                        self?.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: response)
+                    } else {
+                        self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                    }
+                case .failure(let error):
+                    self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                }
+            }
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKAdsDisplayError.failedToConformToProtocol))
+        }
     }
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {

@@ -133,7 +133,7 @@ extension MiniAppScriptMessageHandler {
 public class MASDKCustomPermissionModel: Codable, Equatable {
     /// Static func that will be used for Equatable
     public static func == (lhs: MASDKCustomPermissionModel, rhs: MASDKCustomPermissionModel) -> Bool {
-        return lhs.permissionName == rhs.permissionName
+        lhs.permissionName == rhs.permissionName
     }
 
     /// Name of the Custom permission that is requested

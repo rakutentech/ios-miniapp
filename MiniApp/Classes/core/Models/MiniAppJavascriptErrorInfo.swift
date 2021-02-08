@@ -8,7 +8,7 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
     case unknownError
 
     var name: String {
-        return self.rawValue
+        self.rawValue
     }
 
     public var description: String {
@@ -22,7 +22,7 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
 }
 
 func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
-    return "\(error.name): \(error.description)"
+    "\(error.name): \(error.description)"
 }
 
 enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
@@ -32,7 +32,7 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case valueIsEmpty
 
     var name: String {
-        return self.rawValue
+        self.rawValue
     }
 
     var description: String {
