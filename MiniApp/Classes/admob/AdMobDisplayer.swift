@@ -23,11 +23,21 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
         super.cleanInterstitial(adId)
     }
 
-    private func onReadyFailCheck(ready: Bool, adId: String) -> Error {
+    private func onReadyFailCheck(ready: Bool, adId: String, adType: MiniAppAdType) -> Error {
         if ready {
             return NSError.miniAppAdNotLoaded(message: createLoadTwiceError(adUnitId: adId))
         } else {
-            return NSError.miniAppAdNotLoaded(message: createLoadReqError(adUnitId: adId))
+            switch adType {
+            case .interstitial:
+                if interstitialAds[adId] != nil {
+                    return NSError.miniAppAdNotLoaded(message: createLoadReqError(adUnitId: adId))
+                }
+            case .rewarded:
+                if rewardedAds[adId] != nil {
+                    return NSError.miniAppAdNotLoaded(message: createLoadReqError(adUnitId: adId))
+                }
+            }
+            return NSError.miniAppAdNotLoaded(message: createNotLoadingReqError(adUnitId: adId))
         }
     }
 
@@ -45,7 +55,7 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
 
     public override func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
         if interstitialAds[adId] != nil {
-           onLoaded(.failure(onReadyFailCheck(ready: true, adId: adId)))
+           onLoaded(.failure(onReadyFailCheck(ready: true, adId: adId, adType: .interstitial)))
         } else {
             onInterstitialLoaded[adId] = onLoaded
             let request = GADRequest()
@@ -63,7 +73,7 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
 
     public override func loadRewarded(for adId: String, onLoaded: @escaping (Result<(), Error>) -> Void) {
         if rewardedAds[adId] != nil {
-            onLoaded(.failure(onReadyFailCheck(ready: true, adId: adId)))
+            onLoaded(.failure(onReadyFailCheck(ready: true, adId: adId, adType: .rewarded)))
         } else {
             let request = GADRequest()
             GADRewardedAd.load(withAdUnitID: adId,
@@ -88,7 +98,7 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
                 onClosed(.failure(NSError.miniAppAdNotLoaded(message: MASDKAdsDisplayError.hostUIError.localizedDescription)))
             }
         } else {
-            onClosed(.failure(onReadyFailCheck(ready: false, adId: adId)))
+            onClosed(.failure(onReadyFailCheck(ready: false, adId: adId, adType: .interstitial)))
         }
     }
 
@@ -104,7 +114,7 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
                 onClosed(.failure(NSError.miniAppAdNotLoaded(message: MASDKAdsDisplayError.hostUIError.localizedDescription)))
             }
         } else {
-            onClosed(.failure(onReadyFailCheck(ready: false, adId: adId)))
+            onClosed(.failure(onReadyFailCheck(ready: false, adId: adId, adType: .rewarded)))
         }
     }
 }
