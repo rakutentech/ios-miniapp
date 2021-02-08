@@ -39,7 +39,7 @@ PODS:
   - nanopb/encode (2.30907.0)
   - Nimble (9.0.0)
   - PromisesObjC (1.2.12)
-  - Quick (3.0.0)
+  - Quick (3.0.1)
   - RSDKUtils (1.1.0)
   - ZIPFoundation (0.9.11)
 
@@ -75,7 +75,7 @@ SPEC CHECKSUMS:
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
+  Quick: 947834f0d0f43fc933d0e9dd00086a76e783e4fb
   RSDKUtils: 9940b99fa0494181b8ee2cfa2ac742bb0958b984
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
