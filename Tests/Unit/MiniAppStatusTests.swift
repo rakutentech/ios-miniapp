@@ -14,32 +14,32 @@ class MiniAppStatusTests: QuickSpec {
                 it("will set status true value for given key") {
                     let miniAppStatus = MiniAppStatus()
                     miniAppStatus.setDownloadStatus(true, for: "mini-app/testing")
-                    expect(true).toEventually(equal(miniAppStatus.isDownloaded(key: "mini-app/testing")))
+                    expect(true).to(equal(miniAppStatus.isDownloaded(key: "mini-app/testing")))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
                 }
                 it("will set status false value for given key") {
                     let miniAppStatus = MiniAppStatus()
                     miniAppStatus.setDownloadStatus(false, for: "mini-app/testing")
-                    expect(false).toEventually(equal(miniAppStatus.isDownloaded(key: "mini-app/testing")))
+                    expect(false).to(equal(miniAppStatus.isDownloaded(key: "mini-app/testing")))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
                 }
                 it("will set status true for given appId and versionId") {
                     let miniAppStatus = MiniAppStatus()
                     miniAppStatus.setDownloadStatus(true, appId: "mini-app", versionId: "testing")
-                    expect(true).toEventually(equal(miniAppStatus.isDownloaded(appId: "mini-app", versionId: "testing")))
+                    expect(true).to(equal(miniAppStatus.isDownloaded(appId: "mini-app", versionId: "testing")))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
                 }
                 it("will set status false for given appId and versionId") {
                     let miniAppStatus = MiniAppStatus()
                     miniAppStatus.setDownloadStatus(false, appId: "mini-app", versionId: "testing")
-                    expect(false).toEventually(equal(miniAppStatus.isDownloaded(appId: "mini-app", versionId: "testing")))
+                    expect(false).to(equal(miniAppStatus.isDownloaded(appId: "mini-app", versionId: "testing")))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
                 }
             }
             context("when unknown key is used") {
                 it("will return false") {
                     let miniAppStatus = MiniAppStatus()
-                    expect(false).toEventually(equal(miniAppStatus.isDownloaded(key: "Test")))
+                    expect(false).to(equal(miniAppStatus.isDownloaded(key: "Test")))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp")
                 }
             }
@@ -48,8 +48,8 @@ class MiniAppStatusTests: QuickSpec {
                     let miniAppStatus = MiniAppStatus()
                     miniAppStatus.saveMiniAppInfo(appInfo: mockMiniAppInfo, key: mockMiniAppInfo.id)
                     let retrievedMiniAppInfo = miniAppStatus.getMiniAppInfo(appId: mockMiniAppInfo.id)
-                    expect(retrievedMiniAppInfo?.id).toEventually(equal(mockMiniAppInfo.id))
-                    expect(retrievedMiniAppInfo?.version.versionId).toEventually(equal(mockMiniAppInfo.version.versionId))
+                    expect(retrievedMiniAppInfo?.id).to(equal(mockMiniAppInfo.id))
+                    expect(retrievedMiniAppInfo?.version.versionId).to(equal(mockMiniAppInfo.version.versionId))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
                 }
                 it("will return nil for a invalid mini app id") {
@@ -70,15 +70,15 @@ class MiniAppStatusTests: QuickSpec {
                     permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.contactsList.rawValue)!, isPermissionGranted: MiniAppCustomPermissionGrantedStatus.denied)
                     miniAppKeyStore.storeCustomPermissions(permissions: [userNamePermission, profilePhotoPermission, contactListPermission], forMiniApp: "123")
                     var miniAppCustomPermissionList = miniAppKeyStore.getCustomPermissions(forMiniApp: "123")
-                    expect(miniAppCustomPermissionList[0].permissionName.rawValue).toEventually(equal("rakuten.miniapp.user.USER_NAME"))
-                    expect(miniAppCustomPermissionList[0].isPermissionGranted.rawValue).toEventually(equal("ALLOWED"))
-                    expect(miniAppCustomPermissionList[1].permissionName.rawValue).toEventually(equal("rakuten.miniapp.user.PROFILE_PHOTO"))
-                    expect(miniAppCustomPermissionList[1].isPermissionGranted.rawValue).toEventually(equal("DENIED"))
-                    expect(miniAppCustomPermissionList[2].isPermissionGranted.rawValue).toEventually(equal("DENIED"))
+                    expect(miniAppCustomPermissionList[0].permissionName.rawValue).to(equal("rakuten.miniapp.user.USER_NAME"))
+                    expect(miniAppCustomPermissionList[0].isPermissionGranted.rawValue).to(equal("ALLOWED"))
+                    expect(miniAppCustomPermissionList[1].permissionName.rawValue).to(equal("rakuten.miniapp.user.PROFILE_PHOTO"))
+                    expect(miniAppCustomPermissionList[1].isPermissionGranted.rawValue).to(equal("DENIED"))
+                    expect(miniAppCustomPermissionList[2].isPermissionGranted.rawValue).to(equal("DENIED"))
                     profilePhotoPermission.isPermissionGranted = .allowed
                     miniAppKeyStore.storeCustomPermissions(permissions: [profilePhotoPermission], forMiniApp: "123")
                     miniAppCustomPermissionList = miniAppKeyStore.getCustomPermissions(forMiniApp: "123")
-                    expect(miniAppCustomPermissionList[1].isPermissionGranted.rawValue).toEventually(equal("ALLOWED"))
+                    expect(miniAppCustomPermissionList[1].isPermissionGranted.rawValue).to(equal("ALLOWED"))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
                 }
             }

@@ -9,7 +9,7 @@ class MiniAppTests: QuickSpec {
             context("when getPermissions is called with empty mini app id") {
                 it("will return nil") {
                     let miniAppCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: "")
-                    expect(miniAppCustomPermissions).toEventually(equal([]))
+                    expect(miniAppCustomPermissions).to(equal([]))
                 }
             }
             context("when getPermissions is called with valid mini app id that has stored permissions") {
@@ -20,7 +20,7 @@ class MiniAppTests: QuickSpec {
                         isPermissionGranted: MiniAppCustomPermissionGrantedStatus.denied)
                     MiniApp.shared().setCustomPermissions(forMiniApp: "123", permissionList: [userNamePermission, profilePhotoPermission])
                     let miniAppCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: "123")
-                    expect(miniAppCustomPermissions.count).toEventually(equal(MiniAppCustomPermissionType.allCases.count))
+                    expect(miniAppCustomPermissions.count).to(equal(MiniAppCustomPermissionType.allCases.count))
                 }
             }
             context("when info method is called with empty mini app id") {

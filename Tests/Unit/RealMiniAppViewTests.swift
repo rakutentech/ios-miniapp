@@ -21,18 +21,18 @@ class RealMiniAppViewTests: QuickSpec {
                                                       projectId: "project-id",
                                                       miniAppTitle: "",
                                                       hostAppMessageDelegate: mockMessageInterface)
-                    expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self))
+                    expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))
                 }
                 it("will return MiniAppView object for given app url") {
                     let miniAppView = RealMiniAppView(miniAppURL: URL(string: "http://miniapp")!,
                                                       miniAppTitle: "",
                                                       hostAppMessageDelegate: mockMessageInterface)
-                    expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self))
+                    expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))
                 }
             }
             context("when getMiniAppView is called") {
                 it("will return object of UIView type") {
-                    expect(miniAppView.getMiniAppView()).toEventually(beAKindOf(UIView.self))
+                    expect(miniAppView.getMiniAppView()).to(beAKindOf(UIView.self))
                 }
             }
             context("when host app info is specified in plist") {

@@ -9,23 +9,23 @@ class MiniAppStringTests: QuickSpec {
             context("when localized key is passed that is available in Pod bundle") {
                 it("will return valid localized string") {
                     let okLocalizedTitle = "Ok_title".localizedString()
-                    expect(okLocalizedTitle).toEventually(equal("OK"), timeout: .seconds(10))
+                    expect(okLocalizedTitle).to(equal("OK"))
                 }
 
                 it("will return valid localized string") {
                     let cancelLocalizedTitle = "Cancel_title".localizedString()
-                    expect(cancelLocalizedTitle).toEventually(equal("Cancel"), timeout: .seconds(10))
+                    expect(cancelLocalizedTitle).to(equal("Cancel"))
                 }
             }
             context("when localized key is passed with pod bundle path as empty") {
                 it("will return the key as string") {
                     let okLocalizedTitle = "Ok_title".localizedString(path: "")
-                    expect(okLocalizedTitle).toEventually(equal("Ok_title"), timeout: .seconds(10))
+                    expect(okLocalizedTitle).to(equal("Ok_title"))
                 }
 
                 it("will return the key as string") {
                     let cancelLocalizedTitle = "Cancel_title".localizedString(path: "")
-                    expect(cancelLocalizedTitle).toEventually(equal("Cancel_title"), timeout: .seconds(10))
+                    expect(cancelLocalizedTitle).to(equal("Cancel_title"))
                 }
             }
             context("when calling hasHTTPPrefix with a valid http string") {
