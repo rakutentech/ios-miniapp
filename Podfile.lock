@@ -1,4 +1,7 @@
 PODS:
+  - AppCenter/Core (4.1.0)
+  - AppCenter/Crashes (4.1.0):
+    - AppCenter/Core
   - Google-Mobile-Ads-SDK (7.69.0):
     - GoogleAppMeasurement (~> 7.0)
     - GoogleUserMessagingPlatform (~> 1.1)
@@ -44,6 +47,7 @@ PODS:
   - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
+  - AppCenter/Crashes
   - Google-Mobile-Ads-SDK
   - MiniApp/Admob (from `./`)
   - Nimble
@@ -51,6 +55,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppCenter
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
@@ -67,6 +72,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
+  AppCenter: 8832b158d17e54845c3b88a91076218f0b07174d
   Google-Mobile-Ads-SDK: 2f288748a42920d1c744946a460896a95b0e9110
   GoogleAppMeasurement: 65a1071e5f52f63ab03d0a4d814a54fd762d885a
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
@@ -79,6 +85,6 @@ SPEC CHECKSUMS:
   RSDKUtils: 9940b99fa0494181b8ee2cfa2ac742bb0958b984
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: f30cfad7ce677e29af36b33c4a4770af1a1b27cb
+PODFILE CHECKSUM: 67adfbf6b5fbb679e3f7a53c4b8f5d8dc911d5d5
 
 COCOAPODS: 1.10.1

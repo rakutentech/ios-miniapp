@@ -13,7 +13,7 @@ class MiniAppExternalUrlLoaderTests: QuickSpec {
                     let externalURLLoader = MiniAppExternalUrlLoader()
                     let str = URLComponents(string: "mscheme.rakuten://")
                     let navigationPolicy = externalURLLoader.shouldOverrideURLLoading(str?.url)
-                    expect(navigationPolicy.rawValue).toEventually(equal(WKNavigationActionPolicy.cancel.rawValue), timeout: .seconds(5))
+                    expect(navigationPolicy.rawValue).to(equal(WKNavigationActionPolicy.cancel.rawValue))
                 }
             }
             context("when shouldOverrideURLLoading method is called with tel URL") {
@@ -21,7 +21,7 @@ class MiniAppExternalUrlLoaderTests: QuickSpec {
                     let externalURLLoader = MiniAppExternalUrlLoader()
                     let str = URLComponents(string: "tel://")
                     let navigationPolicy = externalURLLoader.shouldOverrideURLLoading(str?.url)
-                    expect(navigationPolicy.rawValue).toEventually(equal(WKNavigationActionPolicy.cancel.rawValue), timeout: .seconds(5))
+                    expect(navigationPolicy.rawValue).to(equal(WKNavigationActionPolicy.cancel.rawValue))
                 }
             }
             context("when shouldOverrideURLLoading method is called with https URL") {
@@ -29,7 +29,7 @@ class MiniAppExternalUrlLoaderTests: QuickSpec {
                     let externalURLLoader = MiniAppExternalUrlLoader()
                     let str = URLComponents(string: "https://www.google.com")
                     let navigationPolicy = externalURLLoader.shouldOverrideURLLoading(str?.url)
-                    expect(navigationPolicy.rawValue).toEventually(equal(WKNavigationActionPolicy.allow.rawValue), timeout: .seconds(5))
+                    expect(navigationPolicy.rawValue).to(equal(WKNavigationActionPolicy.allow.rawValue))
                 }
             }
         }

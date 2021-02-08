@@ -10,21 +10,21 @@ class URLSchemeHandlerTests: QuickSpec {
             context("when getAppIdFromScheme is called with scheme") {
                 it("will return mini app id") {
                     let appId = schemeHandler.getAppIdFromScheme(scheme: "mscheme.MINI_APP_ID")
-                    expect(appId).toEventually(equal("MINI_APP_ID"))
+                    expect(appId).to(equal("MINI_APP_ID"))
                 }
             }
             context("when getFileName is called with url that has valid url path") {
                 it("will return realtive file path") {
                     components?.path = "images/home.png"
                     let fileName = schemeHandler.getFileName(url: components?.url)
-                    expect(fileName).toEventually(equal(components?.path))
+                    expect(fileName).to(equal(components?.path))
                 }
             }
             context("when getFileName is called with url that has invalid url path") {
                 it("will return root file path") {
                     components?.path = ""
                     let fileName = schemeHandler.getFileName(url: components?.url)
-                    expect(fileName).toEventually(equal(Constants.rootFileName))
+                    expect(fileName).to(equal(Constants.rootFileName))
                 }
             }
             context("when getFilePath is called with valid path") {
@@ -43,7 +43,7 @@ class URLSchemeHandlerTests: QuickSpec {
                     let fileURL = schemeHandler.getFilePath(relativeFilePath: "HelloWorld.txt", appId: "Apple")
                     var expectedFilePath = FileManager.getMiniAppVersionDirectory(with: "Apple", and: "version-id")
                     expectedFilePath.appendPathComponent("HelloWorld.txt")
-                    expect(fileURL).toEventually(equal(expectedFilePath))
+                    expect(fileURL).to(equal(expectedFilePath))
                 }
             }
         }

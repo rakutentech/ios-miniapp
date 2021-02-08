@@ -22,7 +22,7 @@ class DisplayerTests: QuickSpec {
                                                                       projectId: "project-id",
                                                                       miniAppTitle: "Mini app title",
                                                                       hostAppMessageDelegate: mockMessageInterface)
-                    expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: .seconds(10))
+                    expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))
                 }
             }
 
@@ -32,14 +32,14 @@ class DisplayerTests: QuickSpec {
                                                                       miniAppTitle: "Mini app title",
                                                                       hostAppMessageDelegate: mockMessageInterface,
                                                                       initialLoadCallback: { _ in })
-                    expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: .seconds(10))
+                    expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))
                 }
                 it("will return MiniAppView for invalid url") {
                     let miniAppView = miniAppDisplayer.getMiniAppView(miniAppURL: URL(string: "file:/miniapp")!,
                                                                       miniAppTitle: "Mini app title",
                                                                       hostAppMessageDelegate: mockMessageInterface,
                                                                       initialLoadCallback: { _ in })
-                    expect(miniAppView).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: .seconds(10))
+                    expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))
                 }
             }
         }

@@ -24,7 +24,7 @@ class MiniAppURLRequestTests: QuickSpec {
                     mockBundle.mockSubscriptionKey = nil
                     let urlRequest = URLRequest.createURLRequest(url: url, environment: environment)
                     let headerField = urlRequest.value(forHTTPHeaderField: "apiKey")
-                    expect(headerField).toEventually(beNil())
+                    expect(headerField).to(beNil())
                 }
             }
         }
