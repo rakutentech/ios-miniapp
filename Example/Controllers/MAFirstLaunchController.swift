@@ -15,6 +15,7 @@ class MAFirstLaunchController: UIViewController {
 
     weak var launchScreenDelegate: MALaunchScreenDelegate?
     var miniAppInfo: MiniAppInfo?
+    var miniAppManifest: MiniAppManifest?
     var permissionsCollections: [MASDKCustomPermissionModel]?
 
     override func viewDidLoad() {
@@ -27,7 +28,7 @@ class MAFirstLaunchController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
-        permissionsCollections = (miniAppInfo?.manifest?.requiredPermissions ?? []) + (miniAppInfo?.manifest?.optionalPermissions ?? [])
+        permissionsCollections = (miniAppManifest?.requiredPermissions ?? []) + (miniAppManifest?.optionalPermissions ?? [])
     }
 
     override func viewDidLayoutSubviews() {
@@ -67,16 +68,16 @@ extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(
             withIdentifier: "FirstLaunchCustomPermissionCell", for: indexPath) as? FirstLaunchCustomPermissionCell {
                 let permissionModel: MASDKCustomPermissionModel?
-                if miniAppInfo?.manifest?.requiredPermissions?.indices.contains(indexPath.row) ?? false {
-                    permissionModel =  miniAppInfo?.manifest?.requiredPermissions?[indexPath.row]
+                if miniAppManifest?.requiredPermissions?.indices.contains(indexPath.row) ?? false {
+                    permissionModel =  miniAppManifest?.requiredPermissions?[indexPath.row]
                     cell.permissionTitle?.attributedText =  NSMutableAttributedString()
                         .normalText(permissionModel?.permissionName.title ?? "")
                         .highlightRedColor(" (required)")
                     cell.permissionDescription?.text = permissionModel?.permissionDescription
                     cell.toggle.isHidden = true
                 } else {
-                    if miniAppInfo?.manifest?.optionalPermissions?.indices.contains(indexPath.row - (miniAppInfo?.manifest?.requiredPermissions?.count ?? 0)) ?? false {
-                        permissionModel =  miniAppInfo?.manifest?.optionalPermissions?[indexPath.row - (miniAppInfo?.manifest?.requiredPermissions?.count ?? 0)]
+                    if miniAppManifest?.optionalPermissions?.indices.contains(indexPath.row - (miniAppManifest?.requiredPermissions?.count ?? 0)) ?? false {
+                        permissionModel =  miniAppManifest?.optionalPermissions?[indexPath.row - (miniAppManifest?.requiredPermissions?.count ?? 0)]
                         cell.permissionTitle?.text = permissionModel?.permissionName.title
                         cell.permissionDescription?.text = permissionModel?.permissionDescription
                     }

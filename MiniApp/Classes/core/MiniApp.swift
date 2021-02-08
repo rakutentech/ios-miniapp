@@ -4,6 +4,10 @@ public class MiniApp: NSObject {
     private let realMiniApp = RealMiniApp()
     public static var MAOrientationLock: UIInterfaceOrientationMask = []
 
+    private override init() {
+        realMiniApp.cleanUpKeychain()
+    }
+
     /// Instance of MiniApp which uses the default config settings as defined in Info.plist.
     /// A MiniAppSdkConfig object can be provided to override this configuration
     ///
@@ -93,6 +97,11 @@ public class MiniApp: NSObject {
         return realMiniApp.createMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface)
     }
 
+    /// Method to return the meta-data information of a mini-app
+    /// - Parameters:
+    ///   - miniAppId:  Mini AppId String value
+    ///   - miniAppVersion:  Mini VersionId String value
+    ///   - completionHandler: A block to be called on successful retrieval of mini-app meta data [MiniAppManifest] or throws errors if any
     public func getMiniAppManifest(miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         return realMiniApp.retrieveMiniAppMetaData(appId: miniAppId, version: miniAppVersion, completionHandler: completionHandler)
     }

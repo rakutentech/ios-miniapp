@@ -88,11 +88,10 @@ class ViewController: UIViewController {
         MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                var info = miniAppInfo
-                info.manifest = manifestData
                 if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MAFirstTimeLaunch") as? MAFirstLaunchController {
-                    self.currentMiniAppInfo = info
-                    viewController.miniAppInfo = info
+                    self.currentMiniAppInfo = miniAppInfo
+                    viewController.miniAppInfo = miniAppInfo
+                    viewController.miniAppManifest = manifestData
                     viewController.launchScreenDelegate = self
                     viewController.modalPresentationStyle = .fullScreen
                     self.present(viewController, animated: true)

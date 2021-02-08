@@ -22,10 +22,14 @@ internal struct MACustomPermissionsResponse: Decodable {
     }
 }
 
+/// Mini-app meta data information
 public struct MiniAppManifest: Codable {
 
+    /// List of required permissions for a mini-app
     public var requiredPermissions: [MASDKCustomPermissionModel]?
+    /// List of optional permissions for a mini-app
     public var optionalPermissions: [MASDKCustomPermissionModel]?
+    /// Key-value pair data that is received from the endpoint
     public var exampleHostAppMetaData: [String: String]?
 
     private enum CodingKeys: String, CodingKey {

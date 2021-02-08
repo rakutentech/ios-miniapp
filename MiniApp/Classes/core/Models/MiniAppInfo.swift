@@ -1,5 +1,5 @@
 /// Model for a Mini App information
-public struct MiniAppInfo: Codable {
+public struct MiniAppInfo: Codable, Hashable {
     public static func == (lhs: MiniAppInfo, rhs: MiniAppInfo) -> Bool {
         return lhs.id == rhs.id
     }
@@ -12,18 +12,12 @@ public struct MiniAppInfo: Codable {
     public var icon: URL
     /// Version information of a Miniapp
     public var version: Version
-    /// Latest Meta-data information of a Miniapp
-    public var manifest: MiniAppManifest?
-    /// Pervious version of meta-data information of a Miniapp
-    public var previousManifest: MiniAppManifest?
 
     private enum CodingKeys: String, CodingKey {
         case id,
         displayName,
         icon,
-        version,
-        manifest,
-        previousManifest
+        version
     }
 }
 

@@ -34,7 +34,6 @@ class MiniAppStatus {
     }
 
     func saveMiniAppInfo(appInfo: MiniAppInfo, key: String) {
-        validateCustomPermissions(appId: key)
         if let data = try? PropertyListEncoder().encode(appInfo) {
             self.miniAppInfoDefaults?.set(data, forKey: key)
         }
@@ -105,11 +104,11 @@ class MiniAppStatus {
         return storedPermissionsList ?? [:]
     }
 
-    /// Method to delete the existing custom permissions from the Keychain. If a mini app is downloaded for the first time, it is safe to remove the existing custom permission in the keychain.
-    /// - Parameter appId: Mini app ID
-    func validateCustomPermissions(appId: String) {
-        if getMiniAppInfo(appId: appId) == nil {
-            self.miniAppKeyStore.removeKey(for: appId)
+    /// Method to delete the existing custom permissions from the Keychain. Keystore should keep Custom Permissions for only downloaded mini-apps
+    func removeUnusedCustomPermissions() {
+        guard let downloadedList = getDownloadedMiniAppsList(), downloadedList.count != 0 else {
+            return
         }
+        _ = checkStoredPermissionList(downloadedMiniAppsList: downloadedList)
     }
 }
