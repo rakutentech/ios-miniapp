@@ -56,8 +56,8 @@ class RealMiniAppPermissionTests: QuickSpec {
                         forMiniApp: "test",
                         permissionList: [MASDKCustomPermissionModel(permissionName: .userName, isPermissionGranted: .allowed, permissionRequestDescription: "permissionDesc")])
                     let permissions = realMiniApp.retrieveCustomPermissions(forMiniApp: "test")
-                    expect(permissions[0].permissionName).toEventually(equal(.userName))
-                    expect(permissions[0].isPermissionGranted).toEventually(equal(.allowed))
+                    expect(permissions[0].permissionName).to(equal(.userName))
+                    expect(permissions[0].isPermissionGranted).to(equal(.allowed))
                 }
             }
         }

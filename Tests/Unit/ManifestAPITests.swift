@@ -15,14 +15,14 @@ class ManifestAPITests: QuickSpec {
                 it("will return valid URL Request") {
                     mockBundle.mockEndpoint = "http://example.com"
                     let urlRequest = manifestAPI.createURLRequest(appId: "1", versionId: "test")
-                    expect(urlRequest).toEventually(beAnInstanceOf(URLRequest.self))
+                    expect(urlRequest).to(beAnInstanceOf(URLRequest.self))
                 }
             }
             context("when endpoint is not properly configured") {
                 it("will return nil") {
                     mockBundle.mockEndpoint = nil
                     let urlRequest = manifestAPI.createURLRequest(appId: "1", versionId: "test")
-                    expect(urlRequest).toEventually(beNil())
+                    expect(urlRequest).to(beNil())
                 }
             }
         }
