@@ -167,7 +167,7 @@ extension ViewController: UISearchBarDelegate {
 
         if search.hasHTTPPrefix, let searchURL = URL(string: search) {
             loadMiniAppUsingURL(searchURL)
-        } else {
+        } else if self.miniApps?[search] != nil {
             fetchAppInfo(for: search)
         }
     }
