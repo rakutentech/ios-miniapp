@@ -199,7 +199,7 @@ internal class RealMiniApp {
                                  version: String? = nil,
                                  completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if appId.isEmpty {
-            completionHandler(.failure(.invalidAppId))
+            return completionHandler(.failure(.invalidAppId))
         }
         guard let miniAppVersionId = version, !miniAppVersionId.isEmpty else {
             return completionHandler(.failure(.invalidVersionId))

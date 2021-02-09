@@ -29,6 +29,7 @@
 		3862EFA823EA5752004D518C /* MiniApp+URLRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */; };
 		3862EFB123EABC15004D518C /* MiniAppDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */; };
 		3862EFB523EAF6B8004D518C /* MiniApp+NSErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */; };
+		38696B5225D27EF400CEC998 /* MetaDataAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696B5125D27EF400CEC998 /* MetaDataAPITests.swift */; };
 		3871A8E124C54AD600BEC6CF /* MiniApp+StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3871A8E024C54AD600BEC6CF /* MiniApp+StringTests.swift */; };
 		3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878D4D123B44F85001E27F8 /* AppDelegate.swift */; };
 		3879499824FCFB0900DB099B /* MiniAppKeyChainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3879499724FCFB0900DB099B /* MiniAppKeyChainTests.swift */; };
@@ -123,6 +124,7 @@
 		3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniApp+URLRequestTests.swift"; sourceTree = "<group>"; };
 		3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppDownloaderTests.swift; sourceTree = "<group>"; };
 		3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniApp+NSErrorTests.swift"; sourceTree = "<group>"; };
+		38696B5125D27EF400CEC998 /* MetaDataAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataAPITests.swift; sourceTree = "<group>"; };
 		3871A8E024C54AD600BEC6CF /* MiniApp+StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniApp+StringTests.swift"; sourceTree = "<group>"; };
 		3878D4D123B44F85001E27F8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Example/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		3878D4D723B44F8E001E27F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Example/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -335,6 +337,7 @@
 				388FEEE523DEABCF0062382F /* EnvironmentTests.swift */,
 				38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */,
 				38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */,
+				38696B5125D27EF400CEC998 /* MetaDataAPITests.swift */,
 				38F73B4423D554FE00F2C1CE /* Helpers.swift */,
 				188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */,
 				3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */,
@@ -641,6 +644,7 @@
 				38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */,
 				382B95FF24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift in Sources */,
 				38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */,
+				38696B5225D27EF400CEC998 /* MetaDataAPITests.swift in Sources */,
 				382B960124F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift in Sources */,
 				3899C2C0242331900087A619 /* URLSchemeHandlerTests.swift in Sources */,
 				3850AE722434E02D0046978C /* RealMiniAppTests.swift in Sources */,

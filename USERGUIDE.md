@@ -74,6 +74,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Retrieve User Profile details](#retrieve-user-profile-details)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
+* [Get a MiniApp meta-data](#get-mini-meta-data)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Advanced Features](#advanced-features)
     * [Overriding configuration on runtime](#runtime-conf)
@@ -428,6 +429,19 @@ or
 
 ```swift
 MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) in
+	...
+}
+```
+
+<a id="get-mini-meta-data"></a>
+
+### Getting a `MiniApp meta-data` :
+---
+
+Retrieve the meta-data of a MiniApp using the following method,
+
+```swift
+MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAppVersionId) { (result) in
 	...
 }
 ```

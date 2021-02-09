@@ -4,9 +4,14 @@
 
 **SDK**
 
-- **Feature** Made MiniApp SDK a static framework
-- **Feature** Added ads for Mini Apps host
-- **Feature** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
+- **Feature:** Made MiniApp SDK a static framework
+- **Feature:** Added ads for Mini Apps host
+- **Feature:** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
+- **Feature:** Added new interface `getMiniAppManifest(miniAppId:miniAppVersion:)` to retrieve the meta-data of a MiniApp
+
+**Sample App**
+
+- **Feature:** Added implementation to retrieve meta-data and show first-time launch screen to user before downloading any mini-app
 
 ### 2.8.0 (2021-02-01)
 
