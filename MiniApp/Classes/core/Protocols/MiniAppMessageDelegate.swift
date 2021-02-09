@@ -36,18 +36,8 @@ public extension MiniAppMessageDelegate {
             completion: nil)
     }
 
-    func requestCustomPermissions(
-        permissions: [MASDKCustomPermissionModel], completionHandler: @escaping (
-            Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
-        self.requestCustomPermissions(permissions: permissions, miniAppTitle: "Mini App", completionHandler: completionHandler)
-    }
-
-    func requestPermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
-        completionHandler(.failure(.failedToConformToProtocol))
-    }
-
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
-        self.requestPermission(permissionType: permissionType, completionHandler: completionHandler)
+        completionHandler(.failure(.failedToConformToProtocol))
     }
 }
 
