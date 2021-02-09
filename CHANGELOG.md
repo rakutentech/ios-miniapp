@@ -1,13 +1,15 @@
 ## CHANGELOG
 
-### 2.x.x
+### 3.0.0
 
 **SDK**
 
+- **Core** incremented minimum support version for iOS from 11.0 to 13.0 
 - **Feature** Made MiniApp SDK a static framework
 - **Feature** Added ads for Mini Apps host
 - **Feature** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
 
+---
 ### 2.8.0 (2021-02-01)
 
 **SDK**
