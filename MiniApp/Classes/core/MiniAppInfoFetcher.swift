@@ -59,7 +59,7 @@ internal class MiniAppInfoFetcher {
         }
     }
 
-    private func prepareMiniAppManifest(metaDataResponse: MetaDataResponse) -> MiniAppManifest {
+    func prepareMiniAppManifest(metaDataResponse: MetaDataResponse) -> MiniAppManifest {
         return MiniAppManifest(requiredPermissions: getCustomPermissionModel(metaDataCustomPermissionResponse: metaDataResponse.reqPermissions),
             optionalPermissions: getCustomPermissionModel(
                 metaDataCustomPermissionResponse: metaDataResponse.optPermissions),
