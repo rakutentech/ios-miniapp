@@ -196,16 +196,16 @@ internal class RealMiniApp {
     }
 
     func retrieveMiniAppMetaData(appId: String,
-                                 version: String? = nil,
+                                 version: String,
                                  completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if appId.isEmpty {
             return completionHandler(.failure(.invalidAppId))
         }
-        guard let miniAppVersionId = version, !miniAppVersionId.isEmpty else {
+        if version.isEmpty {
             return completionHandler(.failure(.invalidVersionId))
         }
         miniAppInfoFetcher.getMiniAppMetaInfo(miniAppId: appId,
-                                              miniAppVersion: miniAppVersionId,
+                                              miniAppVersion: version,
                                               apiClient: self.miniAppClient, completionHandler: self.createCompletionHandler(completionHandler: completionHandler))
     }
 

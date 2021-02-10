@@ -27,7 +27,7 @@ internal class MiniAppInfoFetcher {
                             appInfo.version.versionId == version
                         }).first
                     } else {
-                        miniAppInfo  = decodeResponse.first
+                        miniAppInfo = decodeResponse.first
                     }
                     if let miniApp = miniAppInfo {
                         return completionHandler(.success(miniApp))
@@ -48,9 +48,9 @@ internal class MiniAppInfoFetcher {
             switch result {
             case .success(let responseData):
                 if let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
-                                                               data: responseData.data) {
+                    data: responseData.data) {
                     return completionHandler(.success(self.prepareMiniAppManifest(
-                                                        metaDataResponse: decodeResponse)))
+                        metaDataResponse: decodeResponse)))
                 }
                 return completionHandler(.failure(NSError.invalidResponseData()))
             case .failure(let error):
@@ -59,21 +59,19 @@ internal class MiniAppInfoFetcher {
         }
     }
 
-    func prepareMiniAppManifest(metaDataResponse: MetaDataResponse) -> MiniAppManifest {
-        var manifest = MiniAppManifest()
-        manifest.requiredPermissions = metaDataResponse.reqPermissions?.compactMap {
-            guard let name = $0.name, let reason = $0.reason else {
+    private func prepareMiniAppManifest(metaDataResponse: MetaDataResponse) -> MiniAppManifest {
+        return MiniAppManifest(requiredPermissions: getCustomPermissionModel(metaDataCustomPermissionResponse: metaDataResponse.reqPermissions),
+            optionalPermissions: getCustomPermissionModel(
+                metaDataCustomPermissionResponse: metaDataResponse.optPermissions),
+            exampleHostAppMetaData: metaDataResponse.exampleHostAppMetaData)
+    }
+
+    private func getCustomPermissionModel(metaDataCustomPermissionResponse: [MACustomPermissionsResponse]?) -> [MASDKCustomPermissionModel]? {
+        return metaDataCustomPermissionResponse?.compactMap {
+            guard let name = $0.name else {
                 return nil
             }
-            return MASDKCustomPermissionModel(permissionName: MiniAppCustomPermissionType(rawValue: name)!, isPermissionGranted: .allowed, permissionRequestDescription: reason)
+            return MASDKCustomPermissionModel(permissionName: MiniAppCustomPermissionType(rawValue: name)!, isPermissionGranted: .allowed, permissionRequestDescription: $0.reason)
         }
-        manifest.optionalPermissions = metaDataResponse.optPermissions?.compactMap {
-            guard let name = $0.name, let reason = $0.reason else {
-                return nil
-            }
-            return MASDKCustomPermissionModel(permissionName: MiniAppCustomPermissionType(rawValue: name)!, isPermissionGranted: .allowed, permissionRequestDescription: reason)
-        }
-        manifest.exampleHostAppMetaData = metaDataResponse.exampleHostAppMetaData
-        return manifest
     }
 }

@@ -26,15 +26,23 @@ internal struct MACustomPermissionsResponse: Decodable {
 public struct MiniAppManifest: Codable {
 
     /// List of required permissions for a mini-app
-    public var requiredPermissions: [MASDKCustomPermissionModel]?
+    public let requiredPermissions: [MASDKCustomPermissionModel]?
     /// List of optional permissions for a mini-app
-    public var optionalPermissions: [MASDKCustomPermissionModel]?
+    public let optionalPermissions: [MASDKCustomPermissionModel]?
     /// Key-value pair data that is received from the endpoint
-    public var exampleHostAppMetaData: [String: String]?
+    public let exampleHostAppMetaData: [String: String]?
 
     private enum CodingKeys: String, CodingKey {
         case requiredPermissions,
              optionalPermissions,
              exampleHostAppMetaData
+    }
+
+    init(requiredPermissions: [MASDKCustomPermissionModel]?,
+         optionalPermissions: [MASDKCustomPermissionModel]?,
+         exampleHostAppMetaData: [String: String]?) {
+        self.requiredPermissions = requiredPermissions
+        self.optionalPermissions = optionalPermissions
+        self.exampleHostAppMetaData = exampleHostAppMetaData
     }
 }

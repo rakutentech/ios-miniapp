@@ -38,6 +38,7 @@ class MAFirstLaunchController: UIViewController {
     func setupUI() {
         miniAppMetaInfoContainer.roundCorners(radius: 10)
         acceptButton.roundedCornerButton()
+        self.tableView.layer.cornerRadius = 10.0
         closeButton.addBorderAndColor(color: #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1), width: 1, cornerRadius: 20, clipsToBounds: true)
         self.miniAppName.text = self.miniAppInfo?.displayName
         self.miniAppVersion.text = "Version: " + (self.miniAppInfo?.version.versionTag)!
