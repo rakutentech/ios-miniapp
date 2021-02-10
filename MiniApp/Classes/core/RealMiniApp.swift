@@ -49,7 +49,7 @@ internal class RealMiniApp {
     ///   - completionHandler: Completion Handler that needed to pass back the MiniAppDisplayProtocol
     ///   - messageInterface: Miniapp communication protocol object.
     ///   - adsDisplayer: a delegate that will handle Miniapp ads requests
-    func createMiniApp(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func createMiniApp(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         getMiniApp(miniAppId: appInfo.id, miniAppVersion: appInfo.version.versionId) { (result) in
             switch result {
             case .success(let responseData):
@@ -68,7 +68,7 @@ internal class RealMiniApp {
             } }
     }
 
-    func createMiniApp(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func createMiniApp(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         getMiniApp(miniAppId: appId, miniAppVersion: version) { (result) in
             switch result {
             case .success(let responseData):
@@ -88,8 +88,8 @@ internal class RealMiniApp {
             } }
     }
 
-    func createMiniApp(url: URL, queryParams: String? = nil, errorHandler: @escaping (Error) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayProtocol {
-        return displayer.getMiniAppView(miniAppURL: url,
+    func createMiniApp(url: URL, queryParams: String? = nil, errorHandler: @escaping (Error) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
+        displayer.getMiniAppView(miniAppURL: url,
                                         miniAppTitle: "Mini app",
                                         queryParams: queryParams,
                                         hostAppMessageDelegate: messageInterface ?? self,
@@ -110,7 +110,7 @@ internal class RealMiniApp {
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     func downloadMiniApp(appInfo: MiniAppInfo,
                          queryParams: String? = nil,
-                         completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
+                         completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void,
                          messageInterface: MiniAppMessageDelegate? = nil,
                          adsDisplayer: MiniAppAdDisplayer? = nil) {
         return miniAppDownloader.verifyAndDownload(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
@@ -128,7 +128,7 @@ internal class RealMiniApp {
         }
     }
 
-    func getMiniAppView(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func getMiniAppView(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         DispatchQueue.main.async {
             let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
                                                                        versionId: appInfo.version.versionId,
@@ -146,7 +146,7 @@ internal class RealMiniApp {
     func handleMiniAppDownloadError(appId: String,
                                     error: Error,
                                     queryParams: String? = nil,
-                                    completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void,
+                                    completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void,
                                     messageInterface: MiniAppMessageDelegate? = nil,
                                     adsDisplayer: MiniAppAdDisplayer? = nil) {
         let downloadError = error as NSError
@@ -173,19 +173,19 @@ internal class RealMiniApp {
     }
 
     func retrieveCustomPermissions(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
-        return self.miniAppKeyStore.getCustomPermissions(forMiniApp: id)
+        miniAppKeyStore.getCustomPermissions(forMiniApp: id)
     }
 
     func storeCustomPermissions(forMiniApp id: String, permissionList: [MASDKCustomPermissionModel]) {
-        return self.miniAppKeyStore.storeCustomPermissions(permissions: permissionList, forMiniApp: id)
+        miniAppKeyStore.storeCustomPermissions(permissions: permissionList, forMiniApp: id)
     }
 
     func getDownloadedListWithCustomPermissions() -> MASDKDownloadedListPermissionsPair {
-        return self.miniAppStatus.getMiniAppsListWithCustomPermissionsInfo() ?? []
+        miniAppStatus.getMiniAppsListWithCustomPermissionsInfo() ?? []
     }
 
     func createCompletionHandler<T>(completionHandler: @escaping (Result<T, MASDKError>) -> Void) -> (Result<T, Error>) -> Void {
-        return { (result) in
+        { (result) in
             switch result {
             case .success(let responseData):
                 completionHandler(.success(responseData))
@@ -206,7 +206,7 @@ extension RealMiniApp: MiniAppMessageDelegate {
     }
 
     func getUniqueId() -> String {
-        return "MiniAppMessageBridge has not been implemented by the host app"
+        "MiniAppMessageBridge has not been implemented by the host app"
     }
 
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {

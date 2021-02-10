@@ -12,20 +12,16 @@ internal class Environment {
         case subscriptionKey = "RASProjectSubscriptionKey"
         case endpoint = "RMAAPIEndpoint"
         case isPreviewMode = "RMAIsPreviewMode"
-        @available(*, deprecated, renamed: "isPreviewMode") case isTestMode = "RMAIsTestMode"
         case hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
     }
 
     let bundle: EnvironmentProtocol
 
     var customUrl: String?
-    @available(*, deprecated, renamed: "customProjectId")
-    var customAppId: String?
     var customProjectId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
     var customIsPreviewMode: Bool?
-    @available(*, deprecated, renamed: "customIsPreviewMode") var customIsTestMode: Bool?
 
     init(bundle: EnvironmentProtocol = Bundle.main) {
         self.bundle = bundle
@@ -34,20 +30,14 @@ internal class Environment {
     convenience init(with config: MiniAppSdkConfig, bundle: EnvironmentProtocol = Bundle.main) {
         self.init(bundle: bundle)
         self.customUrl = config.baseUrl
-        self.customAppId = config.rasAppId
         self.customProjectId = config.rasProjectId
         self.customSubscriptionKey = config.subscriptionKey
         self.customAppVersion = config.hostAppVersion
         self.customIsPreviewMode = config.isPreviewMode
     }
 
-    @available(*, deprecated, renamed: "projectId")
-    var appId: String {
-        return value(for: customAppId, fallback: .applicationIdentifier)
-    }
-
     var projectId: String {
-        return value(for: customProjectId, fallback: .projectId, fallbackParam: self.appId)
+        return value(for: customProjectId, fallback: .projectId)
     }
 
     var appVersion: String {
@@ -60,12 +50,6 @@ internal class Environment {
 
     var isPreviewMode: Bool {
         return bool(for: customIsPreviewMode, fallback: .isPreviewMode)
-    }
-
-    @available(*, deprecated, renamed: "isPreviewMode", message: "`isTestMode` is deprecated. If it has no defined value it will return value from `isPreviewMode`")
-    var isTestMode: Bool {
-        MiniAppLogger.w("`isTestMode` is deprecated. If it has no defined value it will return value from `isPreviewMode`")
-        return bool(for: customIsTestMode, fallback: .isPreviewMode)
     }
 
     var hostAppUserAgentInfo: String {

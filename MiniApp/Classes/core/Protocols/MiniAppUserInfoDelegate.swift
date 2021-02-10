@@ -10,14 +10,6 @@ public protocol MiniAppUserInfoDelegate: class {
     /// Interface that is used to retrieve the Image URI
     func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
 
-    @available(*, deprecated,
-    renamed: "getUserName(completionHandler:)")
-    func getUserName() -> String?
-
-    @available(*, deprecated,
-    renamed: "getProfilePhoto(completionHandler:)")
-    func getProfilePhoto() -> String?
-
     /// Interface that is used to retrieve the Contact list
     func getContacts() -> [MAContact]?
 
@@ -33,18 +25,6 @@ public extension MiniAppUserInfoDelegate {
 
     func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.failure(.unknownError(domain: NSLocalizedString("host_app_error", comment: ""), code: 1, description: NSLocalizedString("failed_to_conform_to_protocol", comment: ""))))
-    }
-
-    @available(*, deprecated,
-    renamed: "getUserName(completionHandler:)")
-    func getUserName() -> String? {
-        return nil
-    }
-
-    @available(*, deprecated,
-    renamed: "getProfilePhoto(completionHandler:)")
-    func getProfilePhoto() -> String? {
-        return nil
     }
 
     func getContacts() -> [MAContact]? {

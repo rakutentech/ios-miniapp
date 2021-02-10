@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     var miniApps: [String: [MiniAppInfo]]?
     var miniAppsSection: [String]?
     var currentMiniAppInfo: MiniAppInfo?
-    var currentMiniAppView: MiniAppDisplayProtocol?
+    var currentMiniAppView: MiniAppDisplayDelegate?
     let imageCache = ImageCache()
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?

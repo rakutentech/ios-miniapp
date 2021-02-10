@@ -6,7 +6,7 @@ class DisplayController: UIViewController {
     @IBOutlet var backButton: UIBarButtonItem!
     @IBOutlet var forwardButton: UIBarButtonItem!
     weak var navBarDelegate: MiniAppNavigationBarDelegate?
-    weak var miniAppDisplayDelegate: MiniAppDisplayProtocol?
+    weak var miniAppDisplayDelegate: MiniAppDisplayDelegate?
 
     override func viewDidAppear(_ animated: Bool) {
         guard let controller = self.navigationController as? DisplayNavigationController,

@@ -4,7 +4,25 @@
 
 **SDK**
 
+
 - **Core** incremented minimum support version for iOS from 11.0 to 13.0 
+- **Removed** Removed all deprecated and variables methods from v2:
+  - `MiniApp` :
+    - `list(completionHandler:)` now takes a `(Result<[MiniAppInfo], MASDKError>) -> Void` in place of a `(Result<[MiniAppInfo], Error>) -> Void`
+    - `info(miniAppId:completionHandler:)` now takes a `(Result<MiniAppInfo, MASDKError>) -> Void` in place of a `(Result<MiniAppInfo, Error>) -> Void`
+    - `create(appId:completionHandler:)` now takes a `(Result<MiniAppDisplayProtocol, MASDKError>) -> Void` in place of a `(Result<MiniAppDisplayProtocol, Error>) -> Void`
+  - `MiniAppSdkConfig`:
+    - `testMode` has been removed. Use `previewMode` instead
+    - `appId` has been removed. Use `projectId`
+  - `MiniAppPermissionType` has been renamed `MiniAppDevicePermissionType`
+  - `MiniAppDisplayProtocol` has been renamed `MiniAppDisplayDelegate`
+  - `MiniAppMessageDelegate`:
+    - `MiniAppMessageProtocol` has ben renamed `MiniAppMessageDelegate`
+    - `requestPermission(permissionType:completionHandler:)` has been removed. Use `requestDevicePermission(permissionType:completionHandler:)`
+    - `requestCustomPermissions(permissions:completionHandler:)` has been removed. Use `requestCustomPermissions(permissions:miniAppTitle:completionHandler:)`
+  - `MiniAppUserInfoDelegate`:
+    - `getUserName()` has been removed. Use `getUserName(completionHandler:)`
+    - `getProfilePhoto()` has been removed. Use `getProfilePhoto(completionHandler:)`
 - **Feature** Made MiniApp SDK a static framework
 - **Feature** Added ads for Mini Apps host
 - **Feature** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec

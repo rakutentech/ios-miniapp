@@ -15,12 +15,30 @@ class MessageInterfaceExtensionTests: QuickSpec {
             }
             context("and when getUserName interface method is called") {
                 it("it will return the default implementation value") {
-                    expect(mockMessageInterfaceExtension.getUserName()).to(beNil())
+                    var username: String? = "failed"
+                    mockMessageInterfaceExtension.getUserName { result in
+                        switch result {
+                        case .success(let name):
+                            username = name
+                        case .failure:
+                            username = nil
+                        }
+                    }
+                    expect(username).toEventually(beNil())
                 }
             }
             context("and when getProfilePhoto interface method is called") {
                 it("it will return the default implementation value") {
-                    expect(mockMessageInterfaceExtension.getProfilePhoto()).to(beNil())
+                    var profilePhoto: String? = "failed"
+                    mockMessageInterfaceExtension.getProfilePhoto { result in
+                        switch result {
+                        case .success(let photo):
+                            profilePhoto = photo
+                        case .failure:
+                            profilePhoto = nil
+                        }
+                    }
+                    expect(profilePhoto).toEventually(beNil())
                 }
             }
         }

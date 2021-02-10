@@ -12,13 +12,13 @@ class EnvironmentTests: QuickSpec {
 
                 expect(bundle).to(equal(Bundle.main))
             }
-            it("has the expected app id") {
+            it("has the expected project id") {
                 let mockBundle = MockBundle()
-                mockBundle.mockAppId = "1.1"
+                mockBundle.mockProjectId = "1.1"
 
                 let environment = Environment(bundle: mockBundle)
 
-                expect(environment.appId).to(equal("1.1"))
+                expect(environment.projectId).to(equal("1.1"))
             }
             it("has the expected app version") {
                 let mockBundle = MockBundle()
@@ -52,17 +52,15 @@ class EnvironmentTests: QuickSpec {
             }
             it("will return preview mode if it is provided") {
                 let mockBundle = MockBundle()
-                mockBundle.mockTestMode = true
                 mockBundle.mockPreviewMode = false
                 let environment = Environment(bundle: mockBundle)
 
-                expect(environment.isTestMode).to(equal(false))
                 expect(environment.isPreviewMode).to(equal(false))
             }
         }
         context("when bundle does not have valid key values") {
             let mockBundle = MockBundle()
-            mockBundle.mockAppId = nil
+            mockBundle.mockProjectId = nil
             mockBundle.mockSubscriptionKey = nil
             mockBundle.mockEndpoint = nil
             mockBundle.mockAppVersion = nil
@@ -70,7 +68,7 @@ class EnvironmentTests: QuickSpec {
             mockBundle.mockValueNotFound = "Value Not Found"
             let environment = Environment(bundle: mockBundle)
             it("will return app id as nil") {
-                expect(environment.appId).to(equal(mockBundle.valueNotFound))
+                expect(environment.projectId).to(equal(mockBundle.valueNotFound))
             }
             it("will return subscription key as nil") {
                 expect(environment.subscriptionKey).to(equal(mockBundle.valueNotFound))
