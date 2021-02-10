@@ -4,7 +4,7 @@
 
 **SDK**
 
-- **Refactor** Removed all deprecated and variables methods from v2:
+- **Removed** Removed all deprecated and variables methods from v2:
   - `MiniApp` :
     - `list(completionHandler:)` now takes a `(Result<[MiniAppInfo], MASDKError>) -> Void` in place of a `(Result<[MiniAppInfo], Error>) -> Void`
     - `info(miniAppId:completionHandler:)` now takes a `(Result<MiniAppInfo, MASDKError>) -> Void` in place of a `(Result<MiniAppInfo, Error>) -> Void`
@@ -13,6 +13,7 @@
     - `testMode` has been removed. Use `previewMode` instead
     - `appId` has been removed. Use `projectId`
   - `MiniAppPermissionType` has been renamed `MiniAppDevicePermissionType`
+  - `MiniAppDisplayProtocol` has been renamed `MiniAppDisplayDelegate`
   - `MiniAppMessageDelegate`:
     - `MiniAppMessageProtocol` has ben renamed `MiniAppMessageDelegate`
     - `requestPermission(permissionType:completionHandler:)` has been removed. Use `requestDevicePermission(permissionType:completionHandler:)`

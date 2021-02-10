@@ -241,7 +241,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
-                    var testResultData: MiniAppDisplayProtocol?
+                    var testResultData: MiniAppDisplayDelegate?
                     realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                         switch result {
                         case .success(let responseData):

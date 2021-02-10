@@ -51,7 +51,7 @@ public class MiniApp: NSObject {
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
         return realMiniApp.createMiniApp(appId: appId, version: version, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
     }
 
@@ -91,7 +91,7 @@ public class MiniApp: NSObject {
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayProtocol, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
         return realMiniApp.createMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
     }
 }
@@ -114,7 +114,7 @@ public extension MiniApp {
     func create(url: URL, queryParams: String? = nil,
                 errorHandler: @escaping (Error) -> Void,
                 messageInterface: MiniAppMessageDelegate,
-                adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayProtocol {
+                adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
         return realMiniApp.createMiniApp(url: url,
                                          queryParams: queryParams,
                                          errorHandler: errorHandler,

@@ -465,7 +465,7 @@ class MockDisplayer: Displayer {
                                  queryParams: String? = nil,
                                  hostAppMessageDelegate: MiniAppMessageDelegate,
                                  adsDisplayer: MiniAppAdDisplayer?,
-                                 initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayProtocol {
+                                 initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayDelegate {
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
             DispatchQueue.main.async {
                 initialLoadCallback(self.mockedInitialLoadCallbackResponse)
