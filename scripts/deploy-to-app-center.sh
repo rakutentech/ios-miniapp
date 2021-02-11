@@ -11,8 +11,8 @@ set -ex
 echo "Creating ZIP file for Simulator build."
 zip -r ./artifacts/miniapp.app.zip ./artifacts/MiniApp_Example.app/*
 
-#echo "Instaling App Center CLI."
-#npm install -g appcenter-cli
+echo "Instaling App Center CLI."
+npm install -g appcenter-cli
 
 echo "Deploying Simulator App build to $APP_CENTER_GROUP group on App Center."
 appcenter distribute release \
