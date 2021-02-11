@@ -43,6 +43,10 @@ platform :ios do
 
     updatePods
 
+    increment_build_number(
+      build_number: ENV["BITRISE_BUILD_NUMBER"] # set a specific number
+    )
+
     xcodebuild(
       archive: true,
       archive_path: "artifacts/MiniApp-Example.xcarchive",
