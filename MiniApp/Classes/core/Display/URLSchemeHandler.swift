@@ -18,11 +18,13 @@ class URLSchemeHandler: NSObject, WKURLSchemeHandler {
                 let miniAppId = getAppIdFromScheme(scheme: scheme)
                 let relativeFilePath = getFileName(url: urlSchemeTask.request.url)
                 let filePath = getFilePath(relativeFilePath: relativeFilePath, appId: miniAppId)
-                let data = try Data(contentsOf: filePath)
-                DispatchQueue.main.async {
-                    urlSchemeTask.didReceive(URLResponse(url: urlSchemeTask.request.url!, mimeType: filePath.pathExtension.mimeType(), expectedContentLength: data.count, textEncodingName: nil))
-                    urlSchemeTask.didReceive(data)
-                    urlSchemeTask.didFinish()
+                if FileManager.default.fileExists(atPath: filePath.absoluteString) {
+                    let data = try Data(contentsOf: filePath)
+                    DispatchQueue.main.async {
+                        urlSchemeTask.didReceive(URLResponse(url: urlSchemeTask.request.url!, mimeType: filePath.pathExtension.mimeType(), expectedContentLength: data.count, textEncodingName: nil))
+                        urlSchemeTask.didReceive(data)
+                        urlSchemeTask.didFinish()
+                    }
                 }
             } catch let error as NSError {
                 print("Error: ", error)

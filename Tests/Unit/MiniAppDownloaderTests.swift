@@ -8,7 +8,7 @@ class MiniAppDownloaderTests: QuickSpec {
     override func spec() {
         let miniAppStatus = MiniAppStatus()
         let appId = "TestMiniApp"
-        let versionId = "TestMiniAppVersion"
+        let versionId = "\(Date().timeIntervalSince1970)"
         let mockAPIClient = MockAPIClient()
         let mockManifestDownloader = MockManifestDownloader()
         let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
