@@ -18,12 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        if #available(iOS 12, *) {
-            if window?.isKeyWindow != true {
-                return .all
-            }
-        }
-        if MiniApp.MAOrientationLock.isEmpty {
+        if window?.isKeyWindow != true {
+            return .all
+        } else if MiniApp.MAOrientationLock.isEmpty {
             return .all
         } else {
             return MiniApp.MAOrientationLock

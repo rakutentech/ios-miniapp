@@ -544,10 +544,8 @@ You can choose to give orientation lock control to mini apps. However, this requ
     
 ```swift
 func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        if #available(iOS 12, *) {
-            if window?.isKeyWindow != true {
-                return .all
-            }
+        if window?.isKeyWindow != true {
+            return .all
         }
         if MiniApp.MAOrientationLock.isEmpty {
             return .all
