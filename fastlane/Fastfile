@@ -44,6 +44,8 @@ platform :ios do
     updatePods
 
     xcodebuild(
+      archive: true,
+      archive_path: "artifacts/MiniApp-Example.xcarchive",
       workspace: "MiniApp.xcworkspace",
       scheme: "MiniApp-Example",
       xcargs: "-configuration Debug -sdk 'iphonesimulator' -destination 'generic/platform=iOS Simulator' -derivedDataPath 'artifacts/derivedData'"
@@ -51,7 +53,7 @@ platform :ios do
 
     copy_artifacts(
       target_path: "artifacts",
-      artifacts: ["./artifacts/derivedData/Build/Products/Debug-iphonesimulator/MiniApp_Example.app"]
+      artifacts: ["./artifacts/MiniApp-Example.xcarchive/Products/Applications/MiniApp_Example.app","./artifacts/MiniApp-Example.xcarchive/dSYMs/MiniApp_Example.app.dSYM"]
     )
 
   end
