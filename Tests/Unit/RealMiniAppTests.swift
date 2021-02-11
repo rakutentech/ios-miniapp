@@ -128,8 +128,8 @@ class RealMiniAppTests: QuickSpec {
                 }
             }
             context("when set config parameters of MiniAppSdkConfig passed to RealMiniApp to empty values") {
-                let config = MiniAppSdkConfig(rasAppId: "dummyId", subscriptionKey: "dummyKey", hostAppVersion: "dummyHostVersion")
-                config.rasAppId = nil
+                let config = MiniAppSdkConfig(rasProjectId: "dummyId", subscriptionKey: "dummyKey", hostAppVersion: "dummyHostVersion")
+                config.rasProjectId = nil
                 config.subscriptionKey = nil
                 config.hostAppVersion = nil
                 config.baseUrl = nil
@@ -241,7 +241,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
-                    var testResultData: MiniAppDisplayProtocol?
+                    var testResultData: MiniAppDisplayDelegate?
                     realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                         switch result {
                         case .success(let responseData):

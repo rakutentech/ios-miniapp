@@ -23,8 +23,6 @@ enum MiniAppSupportedSchemes: String {
     case about // used to reveal internal state and built-in functions (e.g.: alert dialog)
 }
 
-@available(*, deprecated, message: "enum renamed to MiniAppDevicePermissionType")
-public typealias MiniAppPermissionType = MiniAppDevicePermissionType
 /// List of Device Permissions supported by the SDK that can be requested by a Mini app
 public enum MiniAppDevicePermissionType: String {
     /// Device Location permission type. Host app is expected to implement the logic only for requesting the location permission.

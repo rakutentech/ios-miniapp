@@ -20,16 +20,6 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
     weak var delegate: MiniAppDownloaderProtocol?
 
-    @available(*, deprecated, renamed: "init(baseUrl:rasProjectId:subscriptionKey:hostAppVersion:)")
-    convenience init(baseUrl: String? = nil, rasAppId: String, subscriptionKey: String, hostAppVersion: String? = nil) {
-        self.init(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: false)
-    }
-
-    @available(*, deprecated, renamed: "init(baseUrl:rasProjectId:subscriptionKey:hostAppVersion:isPreviewMode:)")
-    convenience init(baseUrl: String? = nil, rasAppId: String, subscriptionKey: String, hostAppVersion: String? = nil, isTestMode: Bool? = false) {
-        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasAppId: rasAppId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isTestMode: isTestMode))
-    }
-
     convenience init(baseUrl: String? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = true) {
         self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasProjectId: rasProjectId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: isPreviewMode))
     }
@@ -44,7 +34,6 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func updateEnvironment(with config: MiniAppSdkConfig?) {
         self.environment.customUrl = config?.baseUrl
-        self.environment.customAppId = config?.rasAppId
         self.environment.customProjectId = config?.rasProjectId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion

@@ -3,7 +3,7 @@ use_frameworks!
 sdk_name = "MiniApp"
 secrets = ["RMA_API_ENDPOINT", "RAS_PROJECT_SUBSCRIPTION_KEY", "RAS_PROJECT_IDENTIFIER", "RMA_DEMO_APP_BUILD_TYPE", "RMA_GAD_APPLICATION_IDENTIFIER", "RMA_APP_CENTER_SECRET"]
 
-platform :ios, '11.0'
+platform :ios, '13.0'
 target sdk_name + '_Example' do
   project sdk_name + '.xcodeproj'
   workspace sdk_name + '.xcworkspace'

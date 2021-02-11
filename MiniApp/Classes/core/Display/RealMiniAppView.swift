@@ -199,8 +199,7 @@ internal class RealMiniAppView: UIView {
     }
 }
 
-extension RealMiniAppView: MiniAppDisplayProtocol {
-
+extension RealMiniAppView: MiniAppDisplayDelegate {
     public func getMiniAppView() -> UIView {
         self
     }

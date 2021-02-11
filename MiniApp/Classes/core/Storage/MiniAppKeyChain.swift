@@ -103,12 +103,7 @@ import Foundation
         }
 
         if status != errSecSuccess {
-            var error: String?
-            if #available(iOS 11.3, *) {
-                error = SecCopyErrorMessageString(status, nil) as String?
-            } else {
-                error = "OSStatus \(status)"
-            }
+            let error = SecCopyErrorMessageString(status, nil) as String?
             print("KeyStore write error \(String(describing: error))")
         }
     }

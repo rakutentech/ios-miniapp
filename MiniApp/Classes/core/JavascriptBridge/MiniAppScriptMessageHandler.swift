@@ -2,9 +2,6 @@ import Foundation
 import WebKit
 import CoreLocation
 
-@available(*, deprecated, message: "protocol renamed to MiniAppCallbackDelegate")
-typealias MiniAppCallbackProtocol = MiniAppCallbackDelegate
-
 protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveScriptMessageResponse(messageId: String, response: String)
     func didReceiveScriptMessageError(messageId: String, errorMessage: String)
