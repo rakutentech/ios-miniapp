@@ -22,3 +22,9 @@ appcenter distribute release \
 --build-version $APP_CENTER_BUILD_VERSION \
 --file ./artifacts/miniapp.app.zip \
 --quiet
+
+appcenter crashes upload-symbols \
+--symbol ./artifacts/MiniApp_Example.app.dSYM \
+--token $APP_CENTER_TOKEN \
+--app $APP_CENTER_DSYM_NAME \
+--quiet
