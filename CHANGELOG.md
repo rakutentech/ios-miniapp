@@ -7,6 +7,7 @@
 - **Feature** Made MiniApp SDK a static framework
 - **Feature** Added ads for Mini Apps host
 - **Feature** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
+- **Feature** Added `rakuten.miniapp.user.ACCESS_TOKEN` custom permission
 
 ### 2.8.0 (2021-02-01)
 

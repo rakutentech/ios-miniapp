@@ -27,6 +27,13 @@ class MiniAppJavascriptEnumerationTests: QuickSpec {
                     expect(miniAppPermissionType?.title).to(equal("Contact List"))
                 }
             }
+            context("when MiniAppCustomPermissionType is initialized with Access Token custom permissions string") {
+                it("will return rawValue and title") {
+                    let miniAppPermissionType = MiniAppCustomPermissionType(rawValue: "rakuten.miniapp.user.ACCESS_TOKEN")
+                    expect(miniAppPermissionType).to(equal(MiniAppCustomPermissionType.accessToken))
+                    expect(miniAppPermissionType?.title).to(equal("Access Token"))
+                }
+            }
             context("when MiniAppCustomPermissionGrantedStatus is initialized with ALLOWED status") {
                 it("will return true") {
                     let miniAppPermissionStatus = MiniAppCustomPermissionGrantedStatus(rawValue: "ALLOWED")
