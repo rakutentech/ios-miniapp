@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
 gem "cocoapods", "~>1.9"
-gem "xcov", "1.7.3"
-gem "danger"
+gem "xcov", "1.7.5"
+gem "danger", "8.2.2"
 gem "danger-xcov", "0.5.0"
-gem "jazzy"
-gem "xcode-install"
-gem "fastlane", "2.171.0"
+gem "jazzy", "0.13.6"
+gem "xcode-install", "2.6.8"
+gem "fastlane", "2.174.0"
