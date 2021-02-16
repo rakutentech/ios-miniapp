@@ -29,11 +29,17 @@ public enum MiniAppDevicePermissionType: String {
     case location
 }
 
+/// Enumerations of Mini App Custom permission types that is used/checked by the MiniApp SDK before accessing any data from the host app
 public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
+    /// Custom permission for retrieving User name from the host app
     case userName = "rakuten.miniapp.user.USER_NAME"
+    /// Custom permission for retrieving Profile photo from the host app
     case profilePhoto = "rakuten.miniapp.user.PROFILE_PHOTO"
+    /// Custom permission for retrieving List of contacts from the host app
     case contactsList = "rakuten.miniapp.user.CONTACT_LIST"
+    /// Custom permission for retrieving Access token details from the host app
     case accessToken = "rakuten.miniapp.user.ACCESS_TOKEN"
+    /// Custom permission for retrieving device location details from the host app
     case deviceLocation = "rakuten.miniapp.device.LOCATION"
 
     public var title: String {

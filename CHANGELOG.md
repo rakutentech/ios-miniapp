@@ -1,12 +1,19 @@
 ## CHANGELOG
 
+### 3.x.x (2021-MM-DD)
+
+**SDK**
+
+- **Feature:** Added `rakuten.miniapp.user.ACCESS_TOKEN` custom permission
+
+---
+
 ### 3.0.0
 
 **SDK**
 
-
-- **Core** incremented minimum support version for iOS from 11.0 to 13.0 
-- **Removed** Removed all deprecated and variables methods from v2:
+- **Core:** Incremented minimum support version for iOS from 11.0 to 13.0 
+- **Removed:** Removed all deprecated and variables methods from v2:
   - `MiniApp` :
     - `list(completionHandler:)` now takes a `(Result<[MiniAppInfo], MASDKError>) -> Void` in place of a `(Result<[MiniAppInfo], Error>) -> Void`
     - `info(miniAppId:completionHandler:)` now takes a `(Result<MiniAppInfo, MASDKError>) -> Void` in place of a `(Result<MiniAppInfo, Error>) -> Void`
@@ -23,12 +30,12 @@
   - `MiniAppUserInfoDelegate`:
     - `getUserName()` has been removed. Use `getUserName(completionHandler:)`
     - `getProfilePhoto()` has been removed. Use `getProfilePhoto(completionHandler:)`
-- **Feature** Made MiniApp SDK a static framework
-- **Feature** Added ads for Mini Apps host
-- **Feature** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
-- **Feature** Added `rakuten.miniapp.user.ACCESS_TOKEN` custom permission
+- **Feature:** Made MiniApp SDK a static framework
+- **Feature:** Added ads for Mini Apps host
+- **Feature:** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
 
 ---
+
 ### 2.8.0 (2021-02-01)
 
 **SDK**
