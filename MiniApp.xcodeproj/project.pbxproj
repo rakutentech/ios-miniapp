@@ -13,6 +13,7 @@
 		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
+		316502FD25DB7DE8008CA92B /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 316502FC25DB7DE8008CA92B /* Settings.storyboard */; };
 		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
 		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
 		38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */; };
@@ -98,8 +99,9 @@
 		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
 		31070C63258C554500BED77C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		31070C64258C554500BED77C /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEV.md; sourceTree = "<group>"; };
-		31070C66258C55C000BED77C /* configure-secrets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "configure-secrets.sh"; path = "scripts/configure-secrets.sh"; sourceTree = SOURCE_ROOT; };
 		31553D3525B6C6800091EE50 /* Config-common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
+		316502FC25DB7DE8008CA92B /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		319D66D525D65C37005688F4 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
 		31AB8EE125CA43A30046F694 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = SOURCE_ROOT; };
 		31AB8EE225CA43E40046F694 /* Dangerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dangerfile; sourceTree = SOURCE_ROOT; };
 		31AB8EE325CA43FC0046F694 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; };
@@ -205,7 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				31AB8EE025CA438D0046F694 /* Fastlane */,
-				31070C66258C55C000BED77C /* configure-secrets.sh */,
 				31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */,
 				31553D3525B6C6800091EE50 /* Config-common.xcconfig */,
 				183AF07C24CE642F000ABCBF /* Config-debug.xcconfig */,
@@ -307,6 +308,7 @@
 			children = (
 				38920AE2251D9C57004C5DDD /* LaunchScreen.xib */,
 				38920AE4251D9C57004C5DDD /* Main.storyboard */,
+				316502FC25DB7DE8008CA92B /* Settings.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -372,6 +374,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				319D66D525D65C37005688F4 /* scripts */,
 				31070C65258C557D00BED77C /* Documentation */,
 				607FACD21AFB9204008FA782 /* Example for MiniApp */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -531,6 +534,7 @@
 				38920B02251D9C57004C5DDD /* Main.storyboard in Resources */,
 				38920B01251D9C57004C5DDD /* LaunchScreen.xib in Resources */,
 				38920AFD251D9C57004C5DDD /* Localizable.strings in Resources */,
+				316502FD25DB7DE8008CA92B /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
