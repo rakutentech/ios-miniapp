@@ -19,7 +19,7 @@ class QueryParamViewController: UITableViewController {
             return
         }
 
-        if URL(string: "https://www.rakuten.co.jp"+queryString) == nil {
+        if URL(string: "https://www.rakuten.co.jp?"+queryString) == nil {
             displayAlert(title: NSLocalizedString("Invalid string", comment: ""), message: NSLocalizedString("The query parameter string is bad formatted or contains invalid characters", comment: ""))
             return
         }
