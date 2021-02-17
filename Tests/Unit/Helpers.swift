@@ -236,7 +236,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockProfilePhoto: String? = ""
     var mockContactList: [MAContact]? = [MAContact(id: "contact_id")]
     var messageContentAllowed: Bool = false
-    var mockAccessToken = false
+    var mockAccessToken: String? = ""
 
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         if messageContentAllowed {
@@ -305,11 +305,10 @@ class MockMessageInterface: MiniAppMessageDelegate {
     }
 
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
-        if mockAccessToken {
-            completionHandler(.success(MATokenInfo(accessToken: "MOCK_ACCESS_TOKEN", expirationDate: Date())))
-        } else {
-            completionHandler(.failure(.unknownError))
+        guard let accessToken =  mockAccessToken, !accessToken.isEmpty else {
+            return completionHandler(.failure(.unknownError))
         }
+        return completionHandler(.success(MATokenInfo(accessToken: accessToken, expirationDate: Date())))
     }
 }
 
