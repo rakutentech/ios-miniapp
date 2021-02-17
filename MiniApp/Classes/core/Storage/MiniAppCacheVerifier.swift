@@ -1,19 +1,18 @@
 import CommonCrypto
-import RSDKUtils
 
 internal class MiniAppCacheVerifier {
-    let keystore = KeyStore()
+    let keystore = MiniAppKeyChain(serviceName: .cacheVerifier)
 
     private func generateKeyId(for appId: String, version: String) -> String {
         "\(appId) | \(version)"
     }
 
     func verify(appId: String, version: String) -> Bool {
-        if keystore.key(for: appId) != nil {
+        if keystore.getCacheInfo(for: appId) != nil {
             return false // v2.5 legacy cleaning
         }
         let cachedFilesHash = calculateHash(appId: appId, version: version)
-        let storedHash = keystore.key(for: generateKeyId(for: appId, version: version)) ?? ""
+        let storedHash = keystore.getCacheInfo(for: generateKeyId(for: appId, version: version)) ?? ""
         return cachedFilesHash == storedHash
     }
 
@@ -21,7 +20,7 @@ internal class MiniAppCacheVerifier {
         keystore.removeKey(for: appId) // v2.5 legacy cleaning
         let appKey = generateKeyId(for: appId, version: version)
         keystore.removeKey(for: appKey)
-        keystore.addKey(key: calculateHash(appId: appId, version: version), for: appKey)
+        keystore.setCacheInfo(key: calculateHash(appId: appId, version: version), for: appKey)
     }
 
     private func calculateHash(appId: String, version: String) -> String {
