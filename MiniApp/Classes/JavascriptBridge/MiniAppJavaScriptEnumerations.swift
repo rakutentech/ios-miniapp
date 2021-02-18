@@ -42,7 +42,7 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
         case .contactsList:
             return "Contact List"
         case .deviceLocation:
-            return "Device Location"
+            return "端末位置情報"
         }
     }
 }

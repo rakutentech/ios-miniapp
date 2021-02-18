@@ -45,12 +45,12 @@ class CustomPermissionsRequestViewController: UIViewController {
         if allPermissionsDenied {
             self.saveButton.title = "Save"
         } else {
-            self.saveButton.title = "Allow"
+            self.saveButton.title = "許可する"
         }
     }
 
     func addFooterInfo() {
-        self.footerLabel.text = " \(miniAppTitle) wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings"
+        self.footerLabel.text = "Linkにこの端末の位置情報へのアクセスを許可しますか？"
     }
 }
 
