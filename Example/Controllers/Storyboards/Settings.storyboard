@@ -23,7 +23,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BwQ-3R-zCW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2149" y="-416"/>
+            <point key="canvasLocation" x="1265" y="358"/>
         </scene>
         <!--Contacts-->
         <scene sceneID="Och-dq-LK0">
@@ -518,7 +518,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LDB-VW-OmZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2149.5999999999999" y="357.57121439280365"/>
+            <point key="canvasLocation" x="2132" y="358"/>
         </scene>
         <!--Profile-->
         <scene sceneID="yMh-UU-Jhl">
@@ -702,10 +702,6 @@
         <scene sceneID="LC2-xY-NEE">
             <objects>
                 <viewController id="g9i-UD-uYo" customClass="AccessTokenViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qRS-NO-myp"/>
-                        <viewControllerLayoutGuide type="bottom" id="Fkq-ZL-9cI"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4Le-fL-aBg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -733,7 +729,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="Dzj-zV-Yl6"/>
+                        <viewLayoutGuide key="safeArea" id="Oh9-ht-ZQ9"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="r2P-M2-xUF" firstAttribute="leading" secondItem="qCB-Lr-3h7" secondAttribute="leading" id="2X5-Tn-rJf"/>
@@ -746,8 +742,8 @@
                             <constraint firstItem="YDt-Wv-T6t" firstAttribute="top" secondItem="bRO-QS-Vrk" secondAttribute="bottom" constant="8" symbolic="YES" id="SEc-6V-p2h"/>
                             <constraint firstItem="bRO-QS-Vrk" firstAttribute="leading" secondItem="YDt-Wv-T6t" secondAttribute="leading" id="r2w-yf-p2H"/>
                             <constraint firstItem="YDt-Wv-T6t" firstAttribute="leading" secondItem="r2P-M2-xUF" secondAttribute="leading" id="rx0-0f-JE8"/>
-                            <constraint firstItem="bRO-QS-Vrk" firstAttribute="top" secondItem="qRS-NO-myp" secondAttribute="bottom" constant="26" id="vGx-yN-CHr"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bRO-QS-Vrk" secondAttribute="trailing" constant="20" symbolic="YES" id="vLS-R5-pLE"/>
+                            <constraint firstItem="bRO-QS-Vrk" firstAttribute="top" secondItem="Oh9-ht-ZQ9" secondAttribute="top" constant="26" id="vGx-yN-CHr"/>
+                            <constraint firstItem="Oh9-ht-ZQ9" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bRO-QS-Vrk" secondAttribute="trailing" constant="20" symbolic="YES" id="vLS-R5-pLE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="x6W-3u-uwR">
