@@ -1,5 +1,6 @@
 [![npm version](https://img.shields.io/npm/v/js-miniapp-sdk.svg?style=flat)](https://www.npmjs.com/package/js-miniapp-sdk)
 [![CircleCI](https://circleci.com/gh/rakutentech/js-miniapp.svg?style=svg)](https://circleci.com/gh/rakutentech/js-miniapp)
+[![codecov](https://codecov.io/gh/rakutentech/js-miniapp/branch/master/graph/badge.svg?token=JG77H8JRSK)](https://codecov.io/gh/rakutentech/js-miniapp)
 [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
