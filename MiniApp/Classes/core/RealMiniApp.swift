@@ -184,8 +184,7 @@ internal class RealMiniApp {
         miniAppStatus.getMiniAppsListWithCustomPermissionsInfo() ?? []
     }
 
-    func createCompletionHandler<T>(completionHandler: @escaping (Result<T, MASDKError>) -> Void) -> (Result<T, Error>) -> Void {
-        { (result) in
+    func createCompletionHandler<T>(completionHandler: @escaping (Result<T, MASDKError>) -> Void) -> (Result<T, Error>) -> Void { { (result) in
             switch result {
             case .success(let responseData):
                 completionHandler(.success(responseData))
