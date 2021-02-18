@@ -50,10 +50,14 @@ jobs:
       - run:
           name: Compile
           command: yarn bridge compile
+      - run:
+          name: code coverage
+          command: yarn bridge coverage
       - persist_to_workspace:
           root: ~/mini-js-bridge
           paths:
             - js-miniapp-bridge/build/
+            - js-miniapp-bridge/coverage/
 
   export-bridge:
     working_directory: ~/mini-js-bridge
@@ -100,9 +104,6 @@ jobs:
       - run: # run coverage report
           name: code coverage
           command: yarn sdk coverage
-      - run: # upload coverage report
-          name: upload coverage
-          command: bash <(curl -s https://codecov.io/bash)
       - store_artifacts: # special step to save test results as as artifact
           # Upload test summary for display in Artifacts
           path: js-miniapp-sdk/test-results/
@@ -123,6 +124,7 @@ jobs:
           paths:
             - js-miniapp-sdk/build/
             - js-miniapp-sdk/publishableDocs/
+            - js-miniapp-sdk/coverage/
 
   publish-sdk:
     working_directory: ~/mini-js-sdk
@@ -232,6 +234,18 @@ jobs:
               echo "Nothing to commit"
             fi
 
+  upload-coverage:
+    working_directory: ~/js-miniapp
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: upload coverage
+          command: bash <(curl -s https://codecov.io/bash)
+
 workflows:
   version: 2
   build-and-release:
@@ -273,3 +287,7 @@ workflows:
           filters:
             branches:
               only: master
+      - upload-coverage:
+          requires:
+           - build-sdk
+           - build-bridge
