@@ -5,7 +5,7 @@ internal class RealMiniApp {
     var manifestDownloader: ManifestDownloader
     var displayer: Displayer
     var miniAppStatus: MiniAppStatus
-    var miniAppKeyStore: MiniAppKeyChain
+    var miniAppPermissionStorage: MiniAppPermissionsStorage
     let offlineErrorCodeList: [Int] = [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut]
 
     convenience init() {
@@ -21,7 +21,7 @@ internal class RealMiniApp {
                                            isPreviewMode: settings?.isPreviewMode)
         self.manifestDownloader = ManifestDownloader()
         self.miniAppStatus = MiniAppStatus()
-        self.miniAppKeyStore = MiniAppKeyChain()
+        self.miniAppPermissionStorage = MiniAppPermissionsStorage()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer(navigationSettings)
     }
@@ -173,11 +173,11 @@ internal class RealMiniApp {
     }
 
     func retrieveCustomPermissions(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
-        miniAppKeyStore.getCustomPermissions(forMiniApp: id)
+        miniAppPermissionStorage.getCustomPermissions(forMiniApp: id)
     }
 
     func storeCustomPermissions(forMiniApp id: String, permissionList: [MASDKCustomPermissionModel]) {
-        miniAppKeyStore.storeCustomPermissions(permissions: permissionList, forMiniApp: id)
+        miniAppPermissionStorage.storeCustomPermissions(permissions: permissionList, forMiniApp: id)
     }
 
     func getDownloadedListWithCustomPermissions() -> MASDKDownloadedListPermissionsPair {

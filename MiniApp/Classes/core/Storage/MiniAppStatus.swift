@@ -1,12 +1,12 @@
 class MiniAppStatus {
     private let defaults: UserDefaults?
     private let miniAppInfoDefaults: UserDefaults?
-    private let miniAppKeyStore: MiniAppKeyChain
+    private let miniAppKeyStore: MiniAppPermissionsStorage
 
     init() {
         self.defaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp")
         self.miniAppInfoDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
-        self.miniAppKeyStore = MiniAppKeyChain()
+        self.miniAppKeyStore = MiniAppPermissionsStorage()
     }
 
     func setDownloadStatus(_ value: Bool, appId: String, versionId: String) {

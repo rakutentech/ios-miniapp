@@ -1,7 +1,7 @@
 import CommonCrypto
 
 internal class MiniAppCacheVerifier {
-    let keystore = MiniAppKeyChain(serviceName: .cacheVerifier)
+    let keystore = MiniAppVerificationStorage()
 
     private func generateKeyId(for appId: String, version: String) -> String {
         "\(appId) | \(version)"
@@ -17,9 +17,9 @@ internal class MiniAppCacheVerifier {
     }
 
     func storeHash(for appId: String, version: String) {
-        keystore.removeKey(for: appId) // v2.5 legacy cleaning
+        keystore.removeCacheInfo(for: appId) // v2.5 legacy cleaning
         let appKey = generateKeyId(for: appId, version: version)
-        keystore.removeKey(for: appKey)
+        keystore.removeCacheInfo(for: appKey)
         keystore.setCacheInfo(key: calculateHash(appId: appId, version: version), for: appKey)
     }
 
