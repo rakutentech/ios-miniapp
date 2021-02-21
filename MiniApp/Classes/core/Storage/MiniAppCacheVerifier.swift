@@ -1,26 +1,26 @@
 import CommonCrypto
 
 internal class MiniAppCacheVerifier {
-    let keystore = MiniAppVerificationStorage()
+    let miniAppVerificationStore = MiniAppVerificationStorage()
 
     private func generateKeyId(for appId: String, version: String) -> String {
         "\(appId) | \(version)"
     }
 
     func verify(appId: String, version: String) -> Bool {
-        if keystore.getCacheInfo(for: appId) != nil {
+        if miniAppVerificationStore.getCacheVerificationInfo(for: appId) != nil {
             return false // v2.5 legacy cleaning
         }
         let cachedFilesHash = calculateHash(appId: appId, version: version)
-        let storedHash = keystore.getCacheInfo(for: generateKeyId(for: appId, version: version)) ?? ""
+        let storedHash = miniAppVerificationStore.getCacheVerificationInfo(for: generateKeyId(for: appId, version: version)) ?? ""
         return cachedFilesHash == storedHash
     }
 
     func storeHash(for appId: String, version: String) {
-        keystore.removeCacheInfo(for: appId) // v2.5 legacy cleaning
+        miniAppVerificationStore.removeCacheInfo(for: appId) // v2.5 legacy cleaning
         let appKey = generateKeyId(for: appId, version: version)
-        keystore.removeCacheInfo(for: appKey)
-        keystore.setCacheInfo(key: calculateHash(appId: appId, version: version), for: appKey)
+        miniAppVerificationStore.removeCacheInfo(for: appKey)
+        miniAppVerificationStore.setCacheVerificationInfo(key: calculateHash(appId: appId, version: version), for: appKey)
     }
 
     private func calculateHash(appId: String, version: String) -> String {

@@ -6,7 +6,7 @@ internal class MiniAppVerificationStorage {
     typealias CacheVerifierKeysDictionary = [String: String]
     let keychainStore = MiniAppKeyChain(serviceName: .cacheVerifier)
 
-    func setCacheInfo(key: String, for keyId: String) {
+    func setCacheVerificationInfo(key: String, for keyId: String) {
         var keysDic = getAllCacheKeys()
         guard keysDic?[keyId] == nil else {
             return // key exists
@@ -23,7 +23,7 @@ internal class MiniAppVerificationStorage {
         }
     }
 
-    func getCacheInfo(for keyId: String) -> String? {
+    func getCacheVerificationInfo(for keyId: String) -> String? {
         return getAllCacheKeys()?[keyId]
     }
 
