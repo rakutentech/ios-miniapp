@@ -27,11 +27,13 @@ class MAFirstLaunchController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         tableView.reloadData()
         permissionsCollections = (miniAppManifest?.requiredPermissions ?? []) + (miniAppManifest?.optionalPermissions ?? [])
     }
 
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         tableViewHeightConstraint.constant = tableView.contentSize.height
     }
 
@@ -124,7 +126,7 @@ class FirstLaunchCustomPermissionCell: UITableViewCell {
 extension NSMutableAttributedString {
     func highlightRedColor(_ value: String) -> NSMutableAttributedString {
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.red
+            .foregroundColor: #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
         ]
         self.append(NSAttributedString(string: value, attributes: attributes))
         return self
