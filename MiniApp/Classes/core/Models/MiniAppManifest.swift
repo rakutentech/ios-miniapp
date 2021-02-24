@@ -1,5 +1,14 @@
 /// Mini App Meta data information
 internal struct MetaDataResponse: Decodable {
+    var bundleManifest: MetaDataCustomPermissionModel
+
+    private enum CodingKeys: String, CodingKey {
+        case bundleManifest
+    }
+}
+
+/// Mini App Meta data information
+internal struct MetaDataCustomPermissionModel: Decodable {
     var reqPermissions: [MACustomPermissionsResponse]?
     var optPermissions: [MACustomPermissionsResponse]?
 

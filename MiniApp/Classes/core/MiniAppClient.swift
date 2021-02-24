@@ -29,7 +29,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.listingApi = ListingApi(environment: self.environment)
         self.manifestApi = ManifestApi(environment: self.environment)
         self.downloadApi = DownloadApi(environment: self.environment)
-        self.metaDataApi = MetaDataAPI(environment: self.environment)
+        self.metaDataApi = MetaDataAPI(with: self.environment)
     }
 
     func updateEnvironment(with config: MiniAppSdkConfig?) {
@@ -77,31 +77,33 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         let mockString = """
-            {
-              "reqPermissions": [
                 {
-                  "name": "rakuten.miniapp.user.USER_NAME",
-                  "reason": "Describe your reason here (optional)."
-                },
-                {
-                  "name": "rakuten.miniapp.user.PROFILE_PHOTO",
-                  "reason": "Describe your reason here (optional)."
+                    "bundleManifest": {
+                        "reqPermissions": [
+                            {
+                                "name": "rakuten.miniapp.user.USER_NAME",
+                                "reason": "Describe your reason here (optional)."
+                            },
+                            {
+                                "name": "rakuten.miniapp.user.PROFILE_PHOTO",
+                                "reason": "Describe your reason here (optional)."
+                            }
+                        ],
+                        "optPermissions": [
+                            {
+                                "name": "rakuten.miniapp.user.CONTACT_LIST",
+                                "reason": "Describe your reason here (optional)."
+                            },
+                            {
+                                "name": "rakuten.miniapp.device.LOCATION",
+                                "reason": "Describe your reason here (optional)."
+                            }
+                        ],
+                        "customMetaData": {
+                            "exampleKey": "test"
+                        }
+                    }
                 }
-              ],
-              "optPermissions": [
-                {
-                  "name": "rakuten.miniapp.user.CONTACT_LIST",
-                  "reason": "Describe your reason here (optional)."
-                },
-                {
-                  "name": "rakuten.miniapp.device.LOCATION",
-                  "reason": "Describe your reason here (optional)."
-                }
-              ],
-              "exampleHostAppMetaData": {
-                "exampleKey": "test"
-              }
-            }
         """
         var headers: [String: String]?
 
@@ -132,6 +134,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                                                 httpResponse: responseData.httpResponse)
                         ))
                 }
+//                let str = String(decoding: responseData.data, as: UTF8.self)
                 return completionHandler(.success(ResponseData(responseData.data,
                                                                responseData.httpResponse)))
             case .failure(let error):

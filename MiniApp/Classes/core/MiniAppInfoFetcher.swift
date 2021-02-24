@@ -47,19 +47,20 @@ internal class MiniAppInfoFetcher {
         apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion) { (result) in
             switch result {
             case .success(let responseData):
-                if let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
-                    data: responseData.data) {
-                    return completionHandler(.success(self.prepareMiniAppManifest(
-                        metaDataResponse: decodeResponse)))
+                guard let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
+                    data: responseData.data) else {
+                    return completionHandler(.failure(NSError.invalidResponseData()))
                 }
-                return completionHandler(.failure(NSError.invalidResponseData()))
+                return completionHandler(.success(
+                                            self.prepareMiniAppManifest(
+                                                metaDataResponse: decodeResponse.bundleManifest)))
             case .failure(let error):
                 return completionHandler(.failure(error))
             }
         }
     }
 
-    func prepareMiniAppManifest(metaDataResponse: MetaDataResponse) -> MiniAppManifest {
+    func prepareMiniAppManifest(metaDataResponse: MetaDataCustomPermissionModel) -> MiniAppManifest {
         return MiniAppManifest(requiredPermissions: getCustomPermissionModel(metaDataCustomPermissionResponse: metaDataResponse.reqPermissions),
             optionalPermissions: getCustomPermissionModel(
                 metaDataCustomPermissionResponse: metaDataResponse.optPermissions),

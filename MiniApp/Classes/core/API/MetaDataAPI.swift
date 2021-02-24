@@ -1,7 +1,7 @@
 internal class MetaDataAPI {
     let environment: Environment
 
-    init(environment: Environment) {
+    init(with environment: Environment) {
         self.environment = environment
     }
 

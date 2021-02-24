@@ -9,7 +9,7 @@ class MetaDataAPITests: QuickSpec {
             let mockBundle = MockBundle()
             mockBundle.mockAppVersion = "1.0"
             let environment = Environment(bundle: mockBundle)
-            let manifestAPI = MetaDataAPI(environment: environment)
+            let manifestAPI = MetaDataAPI(with: environment)
 
             context("when endpoint is properly configured") {
                 it("will return valid URL Request") {
