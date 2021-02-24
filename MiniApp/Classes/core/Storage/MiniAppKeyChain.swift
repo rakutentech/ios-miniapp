@@ -4,81 +4,24 @@ import Foundation
     let service: String
     var account: String
 
-    typealias KeysDictionary = [String: [MASDKCustomPermissionModel]]
-
-    init(service: String = Bundle.main.bundleIdentifier!) {
+    init(service: String = Bundle.main.bundleIdentifier!, serviceName: ServiceName = .customPermission) {
         self.service = service
-        self.account = "\(service).rakuten.tech.permission.keys"
+        self.account = "\(service).\(serviceName)"
     }
 
-    func getCustomPermissions(forMiniApp keyId: String) -> [MASDKCustomPermissionModel] {
-        guard let allKeys = keys(), let permissionList = allKeys[keyId] as [MASDKCustomPermissionModel]? else {
-            return getDefaultSupportedPermissions()
-        }
-        return permissionList
-    }
-
-    func storeCustomPermissions(permissions: [MASDKCustomPermissionModel], forMiniApp keyId: String) {
-        guard !keyId.isEmpty else {
-            return
-        }
-        var keysDic = keys()
-        var cachedPermissions = self.getCustomPermissions(forMiniApp: keyId)
-        _ = permissions.map { (permissionModel: MASDKCustomPermissionModel) -> MASDKCustomPermissionModel in
-            if let index = cachedPermissions.firstIndex(of: permissionModel) {
-                cachedPermissions[index] = permissionModel
-                cachedPermissions[index].permissionDescription = ""
-            }
-            return permissionModel
-        }
-
-        if keysDic != nil {
-            keysDic?[keyId] = cachedPermissions
-        } else {
-            keysDic = [keyId: cachedPermissions]
-        }
-
-        if let keys = keysDic {
-            write(keys: keys)
-        }
-    }
-
-    /// Returns all key and values that is stored in Keychain,
-    /// - Returns: List of KeysDictionary
-    func getAllStoredCustomPermissionsList() -> KeysDictionary? {
-        keys()
-    }
-
-    /// Remove Key from the KeyChain
-    /// - Parameter keyId: Mini app ID
-    internal func removeKey(for keyId: String) {
-        var keysDic = keys()
-
-        keysDic?[keyId] = nil
-
-        if let keys = keysDic {
-            write(keys: keys)
-        }
-    }
-
-    internal func getDefaultSupportedPermissions() -> [MASDKCustomPermissionModel] {
-        var supportedPermissionList = [MASDKCustomPermissionModel]()
-        MiniAppCustomPermissionType.allCases.forEach {
-            supportedPermissionList.append(MASDKCustomPermissionModel(
-                permissionName: MiniAppCustomPermissionType(
-                    rawValue: $0.rawValue)!,
-                isPermissionGranted: .denied,
-                permissionRequestDescription: ""
-            ))
-        }
-        return supportedPermissionList
-    }
-
-    private func write(keys: KeysDictionary) {
+    internal func setInfoInKeyChain<T: Encodable>(keys: [String: T]) {
         guard let data = try? JSONEncoder().encode(keys) else {
             return
         }
+        write(data: data)
+    }
 
+    internal func getAllKeys() -> Data? {
+        return retrieve()
+    }
+
+    // MARK: - Methods used to set & get values from Keychain
+    private func write(data: Data) {
         let queryFind: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
@@ -108,7 +51,7 @@ import Foundation
         }
     }
 
-    private func keys() -> KeysDictionary? {
+    private func retrieve() -> Data? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
@@ -123,11 +66,11 @@ import Foundation
         guard status == errSecSuccess, let objectData = result as? Data else {
             return nil
         }
-
-        guard let keys = ResponseDecoder.decode(decodeType: KeysDictionary.self, data: objectData) else {
-            return nil
-        }
-
-        return keys
+        return objectData
     }
+}
+
+internal enum ServiceName: String {
+    case customPermission = "rakuten.tech.permission.keys"
+    case cacheVerifier = "rakuten.tech.keys"
 }
