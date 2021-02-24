@@ -8,7 +8,7 @@ class MiniAppKeyChainTests: QuickSpec {
         describe("Mini App Key chain tests") {
             context("when storeCustomPermissions method is called with valid params") {
                 it("will store the value in Keychain") {
-                    let miniAppKeyStore = MiniAppKeyChain()
+                    let miniAppKeyStore = MiniAppPermissionsStorage()
                     let customPermissions = miniAppKeyStore.getDefaultSupportedPermissions()
                     _ = customPermissions.map { return $0.isPermissionGranted = .allowed }
                     miniAppKeyStore.storeCustomPermissions(permissions: customPermissions, forMiniApp: mockMiniAppInfo.id)
