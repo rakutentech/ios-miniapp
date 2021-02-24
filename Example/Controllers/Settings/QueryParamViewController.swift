@@ -11,14 +11,23 @@ class QueryParamViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.queryStringTextfield.text = getQueryParam()
+        queryStringTextfield.text = getQueryParam()
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
+    @IBAction func actionSaveParam(_ sender: UIBarButtonItem) {
         guard let queryString = queryStringTextfield.text?.trimTrailingWhitespaces() else {
             return
         }
-        _ = saveQueryParam(queryParam: queryString)
+
+        if URL(string: "https://www.rakuten.co.jp?"+queryString) == nil {
+            displayAlert(title: NSLocalizedString("Invalid string", comment: ""), message: NSLocalizedString("The query parameter string is bad formatted or contains invalid characters", comment: ""))
+            return
+        }
+
+        if saveQueryParam(queryParam: queryString) {
+            navigationController?.popViewController(animated: true)
+        } else {
+            displayAlert(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Error while saving query parameters", comment: ""))
+        }
     }
 }
