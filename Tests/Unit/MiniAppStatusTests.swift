@@ -61,7 +61,7 @@ class MiniAppStatusTests: QuickSpec {
             }
             context("when mini app custom permissions info is saved and retrieved") {
                 it("will return the miniapp info for a valid mini app id") {
-                    let miniAppKeyStore = MiniAppKeyChain()
+                    let miniAppKeyStore = MiniAppPermissionsStorage()
                     let userNamePermission = MASDKCustomPermissionModel(
                         permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.userName.rawValue)!)
                     let profilePhotoPermission = MASDKCustomPermissionModel(
@@ -84,7 +84,7 @@ class MiniAppStatusTests: QuickSpec {
             }
             context("when checkStoredPermissionList is called with downloaded mini apps list") {
                 it("will return list of custom permissions if it is stored already") {
-                    let miniAppKeyStore = MiniAppKeyChain()
+                    let miniAppKeyStore = MiniAppPermissionsStorage()
                     let miniAppStatus = MiniAppStatus()
                     miniAppKeyStore.storeCustomPermissions(permissions: miniAppKeyStore.getDefaultSupportedPermissions(), forMiniApp: mockMiniAppInfo.id)
                     let miniAppCustomPermissionList = miniAppStatus.checkStoredPermissionList(downloadedMiniAppsList: [mockMiniAppInfo])
