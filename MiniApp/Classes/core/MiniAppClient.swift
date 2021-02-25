@@ -73,44 +73,8 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     func getMiniAppMetaData(appId: String,
                             versionId: String,
                             completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId,testPath: self.previewPath) else {
+        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId, testPath: self.previewPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
-        }
-
-        let mockString = """
-                {
-                    "bundleManifest": {
-                        "reqPermissions": [
-                            {
-                                "name": "rakuten.miniapp.user.USER_NAME",
-                                "reason": "Describe your reason here (optional)."
-                            },
-                            {
-                                "name": "rakuten.miniapp.user.PROFILE_PHOTO",
-                                "reason": "Describe your reason here (optional)."
-                            }
-                        ],
-                        "optPermissions": [
-                            {
-                                "name": "rakuten.miniapp.user.CONTACT_LIST",
-                                "reason": "Describe your reason here (optional)."
-                            },
-                            {
-                                "name": "rakuten.miniapp.device.LOCATION",
-                                "reason": "Describe your reason here (optional)."
-                            }
-                        ],
-                        "customMetaData": {
-                            "exampleKey": "test"
-                        }
-                    }
-                }
-        """
-        var headers: [String: String]?
-
-        let responseData = mockString.data(using: .utf8)
-        if let httpResponse = HTTPURLResponse(url: urlRequest.url!, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
-            return completionHandler(.success(ResponseData(responseData!, httpResponse)))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
@@ -135,7 +99,6 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                                                 httpResponse: responseData.httpResponse)
                         ))
                 }
-                let str = String(decoding: responseData.data, as: UTF8.self)
                 return completionHandler(.success(ResponseData(responseData.data,
                                                                responseData.httpResponse)))
             case .failure(let error):
