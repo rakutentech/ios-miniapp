@@ -73,9 +73,10 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     func getMiniAppMetaData(appId: String,
                             versionId: String,
                             completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId) else {
+        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId,testPath: self.previewPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
+
         let mockString = """
                 {
                     "bundleManifest": {
@@ -134,7 +135,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                                                 httpResponse: responseData.httpResponse)
                         ))
                 }
-//                let str = String(decoding: responseData.data, as: UTF8.self)
+                let str = String(decoding: responseData.data, as: UTF8.self)
                 return completionHandler(.success(ResponseData(responseData.data,
                                                                responseData.httpResponse)))
             case .failure(let error):
