@@ -34,7 +34,7 @@ function GIFComponent() {
     {
       label: 'Loop Count: Infinite (WebP)',
       // $FlowFixMe
-      iconSrc: require('../assets/images/webp/road.webp'),
+      iconSrc: require('../assets/images/webp/road_webp.gif'),
       altLabel: 'infinite_road_webp',
     },
   ];
