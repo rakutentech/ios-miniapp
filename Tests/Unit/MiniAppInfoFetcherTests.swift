@@ -211,29 +211,31 @@ class MiniAppInfoFetcherTests: QuickSpec {
                     let miniAppInfoFetcher = MiniAppInfoFetcher()
                     let responseString = """
                         {
-                          "reqPermissions": [
-                            {
-                              "name": "rakuten.miniapp.user.USER_NAME",
-                              "reason": "Describe your reason here (optional)."
-                            },
-                            {
-                              "name": "rakuten.miniapp.user.PROFILE_PHOTO",
-                              "reason": "Describe your reason here (optional)."
+                            "bundleManifest": {
+                                  "reqPermissions": [
+                                    {
+                                      "name": "rakuten.miniapp.user.USER_NAME",
+                                      "reason": "Describe your reason here (optional)."
+                                    },
+                                    {
+                                      "name": "rakuten.miniapp.user.PROFILE_PHOTO",
+                                      "reason": "Describe your reason here (optional)."
+                                    }
+                                  ],
+                                  "optPermissions": [
+                                    {
+                                      "name": "rakuten.miniapp.user.CONTACT_LIST",
+                                      "reason": "Describe your reason here (optional)."
+                                    },
+                                    {
+                                      "name": "rakuten.miniapp.device.LOCATION",
+                                      "reason": "Describe your reason here (optional)."
+                                    }
+                                  ],
+                                  "exampleHostAppMetaData": {
+                                    "exampleKey": "test"
+                                  }
                             }
-                          ],
-                          "optPermissions": [
-                            {
-                              "name": "rakuten.miniapp.user.CONTACT_LIST",
-                              "reason": "Describe your reason here (optional)."
-                            },
-                            {
-                              "name": "rakuten.miniapp.device.LOCATION",
-                              "reason": "Describe your reason here (optional)."
-                            }
-                          ],
-                          "exampleHostAppMetaData": {
-                            "exampleKey": "test"
-                          }
                         }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -248,6 +250,6 @@ class MiniAppInfoFetcherTests: QuickSpec {
                     expect(decodedResponse).toEventually(beAnInstanceOf(MiniAppManifest.self))
                 }
             }
-    }
+        }
     }
 }
