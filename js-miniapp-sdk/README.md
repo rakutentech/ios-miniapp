@@ -71,45 +71,40 @@ miniApp.getUniqueId()
 
 ### Request Permissions
 
-**API:** [MiniAppFeatures.requestCustomPermissions](api/interfaces/miniappfeatures.md#requestcustompermissions),
-[CustomPermissionName](api/enums/custompermissionname.md),
-[CustomPermissionStatus](api/enums/custompermissionstatus.md),
-[MiniAppFeatures.requestLocationPermission](api/interfaces/miniappfeatures.md#requestlocationpermission)
-
 There must be permission requests from miniapp to access some mobile components and data. Users can revoke a permission at any time, so you must always request the permission every time before you use the associated API. Note that accepted permissions are cached, so if a User has already accepted a permission then they will not be shown the permission dialog again unless they manually revoke the permission.
 
-Note that there are two types of permissions:
-- **Device permissions:** These permissions are for accessing device features, and they will display a platform-specific dialog which is controlled by the Android or iOS operating system. Device permissions can only be requested one at a time.
-- **Custom permissions:** These permissions are related to accessing the User's data which the Host App controls, and the Host App will display a custom permission dialog. Multiple permissions can be requested at once.
+There are two types of permissions:
+- [**Custom permissions:**](#custom-permissions) Access User data or device features which the Host App controls. Displays Host App's custom permission dialog.
+- [**Device permissions:**](#device-permissions) Access device features. Displays Android/iOS platform permission dialog.
 
-| Permission | Type | Method | Description |
-| --- | --- | --- | --- |
-| Location | Custom & Device | `requestLocationPermission()` | Custom and device permission respectively for location. Currently supported types are `CustomPermissionName.LOCATION` & `DevicePermission.LOCATION`.<br>Location data can be accessible via geolocation request (`navigator.geolocation`). |
-| User Data | Custom | `requestCustomPermissions()` | Custom permissions for User Data. Currently supported types are `CustomPermissionName.USER_NAME`, `CustomPermissionName.PROFILE_PHOTO`, and `CustomPermissionName.CONTACT_LIST`. These permissions should be requested before you attempt to access the User's data. |
+#### Custom Permissions
 
-#### Usage example
+**API:** [MiniAppFeatures.requestCustomPermissions](api/interfaces/miniappfeatures.md#requestcustompermissions),
+[CustomPermissionName](api/enums/custompermissionname.md),
+[CustomPermissionStatus](api/enums/custompermissionstatus.md)
 
-Simply call available permission request methods from `miniApp`.
+These permissions are related to accessing the User data or device features which the Host App controls, and the Host App will display a custom permission dialog. Multiple permissions can be requested at once. These permissions should be requested before you attempt to access the User's data or certain device features.
+
+These permissions are requested using the [MiniAppFeatures.requestCustomPermissions](api/interfaces/miniappfeatures.md#requestcustompermissions) method.
+
+| Permission Name | Description |
+| ---- | ---- |
+| `CustomPermissionName.USER_NAME` | Grant access to the User's name. |
+| `CustomPermissionName.PROFILE_PHOTO` | Grant access to the user's Profile Photo. |
+| `CustomPermissionName.CONTACT_LIST` | Grant access to the user's contact list. |
+| `CustomPermissionName.ACCESS_TOKEN` | Grant access to the a user's access token. |
+| `CustomPermissionName.LOCATION` | Grant access to the device's location (custom permission only). |
+
+##### Usage example
 
 ```javascript
-// Location Permission
-import miniApp from 'js-miniapp-sdk';
-miniApp.requestLocationPermission('This description will be shown to the user.')
-	.then(success => {
-		console.log(success); // Allowed.
-	}).catch(error => {
-		console.error(error); // Permission is not granted due to many circumstances.
-    });
-```
-
-```javascript
-// User Data Permissions
 import miniApp, { CustomPermissionResult, CustomPermissionName} from 'js-miniapp-sdk';
 miniApp.requestCustomPermissions([
     {name: CustomPermissionName.USER_NAME, description: 'This text will be shown to the user.'},
     {name: CustomPermissionName.PROFILE_PHOTO, description: 'This text will be shown to the user.'},
-    {name: CustomPermissionName.CONTACT_LIST, description: 'This text will be shown to the user.'}
-    {name: CustomPermissionName.ACCESS_TOKEN, description: 'This text will be shown to the user.'}
+    {name: CustomPermissionName.CONTACT_LIST, description: 'This text will be shown to the user.'},
+    {name: CustomPermissionName.ACCESS_TOKEN, description: 'This text will be shown to the user.'},
+    {name: CustomPermissionName.LOCATION, description: 'This text will be shown to the user.'}
 ]).then((result) => {
     const allowed = result
         .filter(permission => permission.status === CustomPermissionResult.ALLOWED)
@@ -121,6 +116,31 @@ miniApp.requestCustomPermissions([
 }).catch(error => {
     console.error(error); // An error occured
 });
+```
+
+#### Device Permissions
+
+**API:** [MiniAppFeatures.requestLocationPermission](api/interfaces/miniappfeatures.md#requestlocationpermission)
+
+These permissions are for accessing device features, and they will display a platform-specific dialog which is controlled by the Android or iOS operating system. Device permissions can only be requested one at a time.
+
+Each device permission is requested using a specific method for that permission. Device permissions also have an associated [Custom permissions](#custom-permissions), so you should first request the custom permission before requesting the device permission. However, if you did not request the custom permission first, then the method will automatically request the custom permission from the user.
+
+| Permission Method | Description |
+| ---- | ---- |
+| [`requestLocationPermission`](api/interfaces/miniappfeatures.md#requestlocationpermission) | Grant access to the device location (both device permission & custom permission). |
+
+##### Usage example
+
+```javascript
+// Location Permission
+import miniApp from 'js-miniapp-sdk';
+miniApp.requestLocationPermission('This description will be shown to the user.')
+	.then(success => {
+		console.log(success); // Allowed.
+	}).catch(error => {
+		console.error(error); // Permission is not granted due to many circumstances.
+    });
 ```
 
 ### Show Ads
