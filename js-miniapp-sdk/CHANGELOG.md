@@ -2,6 +2,7 @@
 
 ### In Progress (2021-XX-XX)
 - **Feature:** Support send message to contact. [See here](README.md#Send-message).
+- **Feature:** Added `Access Token` Custom permission.
 
 ### 1.6.1 (2021-01-06)
 - **Fix:** Location permission support for iOS/Android Mini App SDK 2.6 and below.

@@ -109,6 +109,7 @@ miniApp.requestCustomPermissions([
     {name: CustomPermissionName.USER_NAME, description: 'This text will be shown to the user.'},
     {name: CustomPermissionName.PROFILE_PHOTO, description: 'This text will be shown to the user.'},
     {name: CustomPermissionName.CONTACT_LIST, description: 'This text will be shown to the user.'}
+    {name: CustomPermissionName.ACCESS_TOKEN, description: 'This text will be shown to the user.'}
 ]).then((result) => {
     const allowed = result
         .filter(permission => permission.status === CustomPermissionResult.ALLOWED)
@@ -238,11 +239,14 @@ miniApp.user.getContacts()
 #### Access Token
 
 **API:** [UserInfoProvider.getAccessToken](api/interfaces/userinfoprovider.md#getaccesstoken),
-[AccessTokenData](api/classes/accesstokendata.md)
+[AccessTokenData](api/classes/accesstokendata.md), 
+[CustomPermissionName.ACCESS_TOKEN](api/enums/custompermissionname.html#access_token)
 
 You can get an access token provided by the Host App. The Host App will be able to deny your request if your mini app ID is not approved to access the token.
 
-This will return an object containing `token` and `validUntil` keys.
+Returns the [AccessTokenData](api/interfaces/accesstokendata.md) list from the Host app.
+
+AccessTokenData contains `token` and `validUntil` details.
 
 ```javascript
 miniApp.user.getAccessToken()

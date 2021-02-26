@@ -3,8 +3,12 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 
 import { wrapTheme } from '../../tests/test-utils';
-import AuthToken from '../auth-token';
+import { AuthToken } from '../auth-token';
 import { dataFetchReducer, initialState } from '../fetch-credentials';
+
+import '@testing-library/jest-dom/extend-expect';
+
+jest.mock('axios');
 
 afterEach(cleanup);
 

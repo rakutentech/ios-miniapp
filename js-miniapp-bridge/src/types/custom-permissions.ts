@@ -2,6 +2,7 @@ export enum CustomPermissionName {
   USER_NAME = 'rakuten.miniapp.user.USER_NAME',
   PROFILE_PHOTO = 'rakuten.miniapp.user.PROFILE_PHOTO',
   CONTACT_LIST = 'rakuten.miniapp.user.CONTACT_LIST',
+  ACCESS_TOKEN = 'rakuten.miniapp.user.ACCESS_TOKEN',
   LOCATION = 'rakuten.miniapp.device.LOCATION',
 }
 

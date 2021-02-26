@@ -4,11 +4,13 @@ import type {
   UserNameSuccessAction,
   ProfilePhotoSuccessAction,
   ContactListSuccessAction,
+  AccessTokenSuccessAction,
 } from './actions';
 import {
   REQUEST_CONTACT_LIST_SUCCESS,
   REQUEST_USER_NAME_SUCCESS,
   REQUEST_PROFILE_PHOTO_SUCCESS,
+  REQUEST_ACCESS_TOKEN_SUCCESS,
 } from './types';
 
 const defaultUserName = null;
@@ -50,8 +52,22 @@ const contactListReducer = (
   }
 };
 
+const defaultAccessToken = null;
+const accessTokenReducer = (
+  state: ?string = defaultAccessToken,
+  action: AccessTokenSuccessAction
+): ?string => {
+  switch (action.type) {
+    case REQUEST_ACCESS_TOKEN_SUCCESS:
+      return action.token;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   userName: userNameReducer,
   profilePhoto: profilePhotoReducer,
   contactList: contactListReducer,
+  accessToken: accessTokenReducer,
 });

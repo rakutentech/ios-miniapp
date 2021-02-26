@@ -14,10 +14,7 @@ const messageTypeState = {
   ],
 };
 
-export default (
-  state: MessageTypeState,
-  action: SetMessageTypeAction
-) => {
+export default (state: MessageTypeState, action: SetMessageTypeAction) => {
   if (action.type === SET_MESSAGE_TYPES) {
     return { ...state, messageTypes: action.payload };
   }
