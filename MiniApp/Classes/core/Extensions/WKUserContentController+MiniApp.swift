@@ -1,5 +1,6 @@
 import WebKit
 
+// swiftlint:disable function_parameter_count
 extension WKUserContentController {
 
     /// Method to add Mini App custom WKScriptMessageHandler.
@@ -7,13 +8,14 @@ extension WKUserContentController {
     ///   - delegate: Callback protocol to handle the message from the WebView
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle ads requests
     ///   - hostMessageInterface: Message interface protocol of the host application
-    func addMiniAppScriptMessageHandler(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String) {
+    func addMiniAppScriptMessageHandler(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String, miniAppScopes: [AccessTokenPermission]?) {
         add(MiniAppScriptMessageHandler(
                 delegate: delegate,
                 hostAppMessageDelegate: hostAppMessageDelegate,
                 adsDisplayer: adsDisplayer,
                 miniAppId: miniAppId,
-                miniAppTitle: miniAppTitle
+                miniAppTitle: miniAppTitle,
+                scopes: miniAppScopes
         ), name: Constants.javascriptInterfaceName)
     }
 

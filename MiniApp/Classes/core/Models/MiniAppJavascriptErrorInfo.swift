@@ -30,6 +30,9 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case unexpectedMessageFormat
     case invalidPermissionType
     case valueIsEmpty
+    case scopeError
+    case audienceError
+    case scopeConflictError
 
     var name: String {
         self.rawValue
@@ -45,6 +48,12 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
         return "Permission type that is requested is invalid"
         case .valueIsEmpty:
         return "The value which is passed is empty."
+        case .scopeError:
+        return "No scopes provided for the audience requested"
+        case .audienceError:
+        return "Audience requested not allowed on this MiniApp"
+        case .scopeConflictError:
+        return "Audience requested does not allows these scopes"
         }
     }
 }

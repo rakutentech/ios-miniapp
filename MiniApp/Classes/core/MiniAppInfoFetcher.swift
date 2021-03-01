@@ -64,7 +64,7 @@ internal class MiniAppInfoFetcher {
         return MiniAppManifest(requiredPermissions: getCustomPermissionModel(metaDataCustomPermissionResponse: metaDataResponse.reqPermissions),
             optionalPermissions: getCustomPermissionModel(
                 metaDataCustomPermissionResponse: metaDataResponse.optPermissions),
-            exampleHostAppMetaData: metaDataResponse.exampleHostAppMetaData)
+            exampleHostAppMetaData: metaDataResponse.exampleHostAppMetaData, accessTokenPermissions: metaDataResponse.accessTokenPermissions)
     }
 
     private func getCustomPermissionModel(metaDataCustomPermissionResponse: [MACustomPermissionsResponse]?) -> [MASDKCustomPermissionModel]? {

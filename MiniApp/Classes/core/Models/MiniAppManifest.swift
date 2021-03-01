@@ -11,13 +11,14 @@ internal struct MetaDataResponse: Decodable {
 internal struct MetaDataCustomPermissionModel: Decodable {
     var reqPermissions: [MACustomPermissionsResponse]?
     var optPermissions: [MACustomPermissionsResponse]?
-
     var exampleHostAppMetaData: [String: String]?
+    var accessTokenPermissions: [AccessTokenPermission]?
 
     private enum CodingKeys: String, CodingKey {
         case reqPermissions,
              optPermissions,
-             exampleHostAppMetaData
+             exampleHostAppMetaData,
+             accessTokenPermissions
     }
 }
 
@@ -31,6 +32,24 @@ internal struct MACustomPermissionsResponse: Decodable {
     }
 }
 
+public struct AccessTokenPermission: Codable, Equatable, Hashable {
+    var audience: String
+    var scopes: [String]
+
+    private enum CodingKeys: String, CodingKey {
+        case audience,
+             scopes
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(audience)
+    }
+
+    public static func == (lhs: AccessTokenPermission, rhs: AccessTokenPermission) -> Bool {
+        lhs.audience == rhs.audience
+    }
+}
+
 /// Mini-app meta data information
 public struct MiniAppManifest: Codable {
 
@@ -40,18 +59,23 @@ public struct MiniAppManifest: Codable {
     public let optionalPermissions: [MASDKCustomPermissionModel]?
     /// Key-value pair data that is received from the endpoint
     public let exampleHostAppMetaData: [String: String]?
+    /// List of scopes and audiences the MiniApp can require
+    public let accessTokenPermissions: [AccessTokenPermission]?
 
     private enum CodingKeys: String, CodingKey {
         case requiredPermissions,
              optionalPermissions,
-             exampleHostAppMetaData
+             exampleHostAppMetaData,
+             accessTokenPermissions
     }
 
     init(requiredPermissions: [MASDKCustomPermissionModel]?,
          optionalPermissions: [MASDKCustomPermissionModel]?,
-         exampleHostAppMetaData: [String: String]?) {
+         exampleHostAppMetaData: [String: String]?,
+         accessTokenPermissions: [AccessTokenPermission]?) {
         self.requiredPermissions = requiredPermissions
         self.optionalPermissions = optionalPermissions
         self.exampleHostAppMetaData = exampleHostAppMetaData
+        self.accessTokenPermissions = accessTokenPermissions
     }
 }

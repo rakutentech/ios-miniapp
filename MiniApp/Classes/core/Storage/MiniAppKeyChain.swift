@@ -72,5 +72,6 @@ import Foundation
 
 internal enum ServiceName: String {
     case customPermission = "rakuten.tech.permission.keys"
+    case accessTokenPermission = "rakuten.tech.scope.keys"
     case cacheVerifier = "rakuten.tech.keys"
 }

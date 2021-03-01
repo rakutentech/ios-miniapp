@@ -8,7 +8,6 @@ protocol MiniAppCallbackDelegate: AnyObject {
 }
 
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
-
     var locationManager: LocationManager?
     weak var delegate: MiniAppCallbackDelegate?
     weak var hostAppMessageDelegate: MiniAppMessageDelegate?
@@ -18,13 +17,15 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var userAlreadyRespondedRequestList = [MASDKCustomPermissionModel]()
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
     var miniAppKeyStore = MiniAppPermissionsStorage()
+    var miniAppScope: [AccessTokenPermission]? = [AccessTokenPermission]()
 
-    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String) {
+    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String, scopes: [AccessTokenPermission]?) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
         self.miniAppId = miniAppId
         self.miniAppTitle = miniAppTitle
         self.adsDelegate = adsDisplayer
+        self.miniAppScope = scopes
         super.init()
     }
 
@@ -68,13 +69,12 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .setScreenOrientation:
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
-            fetchTokenDetails(callbackId: callbackId)
+            fetchTokenDetails(callbackId: callbackId, for: requestParam)
         case .loadAd:
             loadRequestedAd(with: callbackId, for: requestParam)
         case .showAd:
             showRequestedAd(with: callbackId, for: requestParam)
         }
-
     }
 
     private func updateLocation(callbackId: String) {
@@ -104,7 +104,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.invalidPermissionType))
             return
         }
-
         switch requestPermissionType {
         case .location:
             getPermissionResult(requestPermissionType: requestPermissionType, callbackId: callbackId)
@@ -226,10 +225,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func executeJavaScriptCallback(responseStatus: JavaScriptExecResult, messageId: String, response: String) {
         switch responseStatus {
-        case .onSuccess:
-            delegate?.didReceiveScriptMessageResponse(messageId: messageId, response: response)
-        case .onError:
-            delegate?.didReceiveScriptMessageError(messageId: messageId, errorMessage: response)
+        case .onSuccess: delegate?.didReceiveScriptMessageResponse(messageId: messageId, response: response)
+        case .onError: delegate?.didReceiveScriptMessageError(messageId: messageId, errorMessage: response)
         }
     }
 
@@ -251,8 +248,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func manageShareResult(_ result: Result<MASDKProtocolResponse, Error>, with callbackId: String) {
         switch result {
-        case .success:
-            self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "SUCCESS")
+        case .success: self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "SUCCESS")
         case .failure(let error):
             if !error.localizedDescription.isEmpty {
                 self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
@@ -339,8 +335,21 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func fetchTokenDetails(callbackId: String) {
-        hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId) { (result) in
+    func fetchTokenDetails(callbackId: String, for requestParam: RequestParameters?) {
+        if let audience = requestParam?.audience {
+            guard let scopes = requestParam?.scopes else {
+                return sendScopeError(callbackId: callbackId, type: .scopeError)
+            }
+            if let authorizedScopes = miniAppScope?.first(where: {$0.audience == audience})?.scopes {
+                let scopesSet = Set(scopes), authorizedScopesSet = Set(authorizedScopes)
+                if !scopesSet.isSubset(of: authorizedScopesSet) {
+                    return sendScopeError(callbackId: callbackId, type: .scopeConflictError)
+                }
+            } else {
+                return sendScopeError(callbackId: callbackId, type: .audienceError)
+            }
+        }
+        hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId, audience: requestParam?.audience, scopes: requestParam?.scopes) { (result) in
             switch result {
             case .success(let responseMessage):
                 guard let jsonResponse = ResponseEncoder.encode(data: responseMessage) else {
@@ -353,7 +362,9 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             }
         }
     }
-
+    private func sendScopeError(callbackId: String, type: MiniAppJavaScriptError) {
+        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(type))
+    }
     func handleMASDKError(error: MASDKError, callbackId: String) {
         if !error.localizedDescription.isEmpty {
             self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
@@ -366,14 +377,12 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 class LocationManager: NSObject {
     let manager: CLLocationManager
     var locationListener: ((Result<CLLocation?, Error>) -> Void)?
-
     init(enableHighAccuracy: Bool) {
         manager = CLLocationManager()
         super.init()
         manager.desiredAccuracy = enableHighAccuracy ? kCLLocationAccuracyBest : kCLLocationAccuracyHundredMeters
         manager.delegate = self
     }
-
     func updateLocation(result: @escaping (Result<CLLocation?, Error>) -> Void) {
         if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             self.locationListener = result
@@ -383,7 +392,6 @@ class LocationManager: NSObject {
         }
     }
 }
-
 extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationListener?(.success(locations[0]))

@@ -55,8 +55,15 @@ public class MiniApp: NSObject {
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
-        return realMiniApp.createMiniApp(appId: appId, version: version, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
+    public func create(appId: String, scopes: [AccessTokenPermission]? = nil, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+        return realMiniApp.createMiniApp(
+                appId: appId,
+                scopes: scopes,
+                version: version,
+                queryParams: queryParams,
+                completionHandler: completionHandler,
+                messageInterface: messageInterface,
+                adsDisplayer: adsDisplayer)
     }
 
     /// Cache the Custom permissions status for a given MiniApp ID
@@ -67,12 +74,30 @@ public class MiniApp: NSObject {
         return realMiniApp.storeCustomPermissions(forMiniApp: appId, permissionList: permissionList)
     }
 
+    /// Cache the token scopes for a given MiniApp ID
+    /// - Parameters:
+    ///   - appId: Mini AppId String value
+    ///   - scopeList: List of AccessTokenPermission struct that contains the audience and scopes
+    public func setScopes(forMiniApp appId: String, scopeList: [AccessTokenPermission]) {
+        return realMiniApp.storeScopes(forMiniApp: appId, scopes: scopeList)
+    }
+
     /// Get the list of supported Custom permissions and its status for a given Mini app ID
     /// - Parameter appId: Mini AppId String value
     /// - Returns: List of MASDKCustomPermissionModel that contains the details of every custom permission type, status and description.
     public func getCustomPermissions(forMiniApp appId: String) -> [MASDKCustomPermissionModel] {
         if !appId.isEmpty {
             return realMiniApp.retrieveCustomPermissions(forMiniApp: appId)
+        }
+        return []
+    }
+
+    /// Get the list of supported scopes for a given Mini app ID
+    /// - Parameter appId: Mini AppId String value
+    /// - Returns: List of AccessTokenPermission that contains the details of every scopes.
+    public func getScopes(forMiniApp appId: String) -> [AccessTokenPermission] {
+        if !appId.isEmpty {
+            return realMiniApp.retrieveScopes(forMiniApp: appId)
         }
         return []
     }
@@ -95,8 +120,14 @@ public class MiniApp: NSObject {
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
-        return realMiniApp.createMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
+    public func create(appInfo: MiniAppInfo, scopes: [AccessTokenPermission]? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+        return realMiniApp.createMiniApp(
+                appInfo: appInfo,
+                scopes: scopes,
+                queryParams: queryParams,
+                completionHandler: completionHandler,
+                messageInterface: messageInterface,
+                adsDisplayer: adsDisplayer)
     }
 
     /// Method to return the meta-data information of a mini-app

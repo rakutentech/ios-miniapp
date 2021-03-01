@@ -23,7 +23,10 @@ extension ViewController {
         return contactList
     }
 
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String,
+                        audience: String?,
+                        scopes: [String]?,
+                        completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         guard let tokenInfo = getTokenInfo() else {
             completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
             return

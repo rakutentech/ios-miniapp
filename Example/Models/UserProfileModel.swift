@@ -81,7 +81,7 @@ func saveTokenInfo(accessToken: String, expiryDate: Date, forKey key: String = "
         return false
 }
 
-func getTokenInfo(key: String = "AccessTokenInfo") -> AccessTokenInfo? {
+func getTokenInfo(key: String = "AccessTokenInfo", miniApp: String? = nil, audience: String? = nil, scope: [String]? = nil) -> AccessTokenInfo? {
     if let data = UserDefaults.standard.data(forKey: key) {
         let accessTokenInfo = try? PropertyListDecoder().decode(AccessTokenInfo.self, from: data)
         return accessTokenInfo

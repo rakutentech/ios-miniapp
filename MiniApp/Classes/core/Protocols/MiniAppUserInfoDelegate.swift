@@ -14,7 +14,10 @@ public protocol MiniAppUserInfoDelegate: class {
     func getContacts() -> [MAContact]?
 
     /// Interface that is used to retrieve the Token Info
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
+    func getAccessToken(miniAppId: String,
+                        audience: String?,
+                        scopes: [String]?,
+                        completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
 }
 
 public extension MiniAppUserInfoDelegate {
@@ -31,7 +34,7 @@ public extension MiniAppUserInfoDelegate {
         return nil
     }
 
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String, audience: String?, scopes: [String]?, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }
