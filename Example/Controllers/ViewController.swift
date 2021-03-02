@@ -80,9 +80,27 @@ class ViewController: UIViewController {
                 self.currentMiniAppTitle = miniAppInfo.displayName
             }
         } else {
+            fetchMiniAppMetaData(miniAppInfo: miniAppInfo)
+        }
+    }
+
+    func fetchMiniAppMetaData(miniAppInfo: MiniAppInfo) {
+        MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
+            switch result {
+            case .success(let manifestData):
+                self.displayFirstTimeLaunchScreen(metadataResponse: manifestData, miniAppInfo: miniAppInfo)
+            case .failure:
+                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""), dismissController: true)
+            }
+        }
+    }
+
+    func displayFirstTimeLaunchScreen(metadataResponse: MiniAppManifest, miniAppInfo: MiniAppInfo) {
+        DispatchQueue.main.async {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MAFirstTimeLaunch") as? MAFirstLaunchController {
                 self.currentMiniAppInfo = miniAppInfo
                 viewController.miniAppInfo = miniAppInfo
+                viewController.miniAppManifest = metadataResponse
                 viewController.launchScreenDelegate = self
                 viewController.modalPresentationStyle = .fullScreen
                 self.present(viewController, animated: true)

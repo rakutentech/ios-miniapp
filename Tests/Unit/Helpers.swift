@@ -52,14 +52,7 @@ class MockAPIClient: MiniAppClient {
             return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
         }
 
-        guard let url = urlRequest.url else {
-            return
-        }
-
-        self.request = urlRequest
-        if let httpResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
-            return completionHandler(.success(ResponseData(data, httpResponse)))
-        }
+        requestServer(urlRequest: urlRequest, responseData: data, completionHandler: completionHandler)
     }
 
     override func getAppManifest(appId: String, versionId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
@@ -71,14 +64,19 @@ class MockAPIClient: MiniAppClient {
             return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
         }
 
-        guard let url = urlRequest.url else {
-            return
+        requestServer(urlRequest: urlRequest, responseData: responseData, completionHandler: completionHandler)
+    }
+
+    override func getMiniAppMetaData(appId: String, versionId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId) else {
+            return completionHandler(.failure(NSError.invalidURLError()))
         }
 
-        self.request = urlRequest
-        if let httpResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
-            return completionHandler(.success(ResponseData(responseData, httpResponse)))
+        guard let responseData = manifestData ?? data else {
+            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
         }
+
+        requestServer(urlRequest: urlRequest, responseData: responseData, completionHandler: completionHandler)
     }
 
     override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
@@ -110,6 +108,21 @@ class MockAPIClient: MiniAppClient {
         }
         delegate?.downloadFileTaskCompleted(url: url, error: error)
     }
+
+    private func requestServer(urlRequest: URLRequest, responseData: Data?, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+        guard let data = responseData else {
+            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+        }
+
+        guard let url = urlRequest.url else {
+            return
+        }
+
+        self.request = urlRequest
+        if let httpResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
+            return completionHandler(.success(ResponseData(data, httpResponse)))
+        }
+    }
 }
 
 class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
@@ -129,6 +142,25 @@ class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
                 }
                 return completionHandler(.success(miniApp))
 
+            case .failure(let error):
+                return completionHandler(.failure(error))
+            }
+        }
+    }
+
+    override func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, Error>) -> Void) {
+        if error != nil {
+            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+        }
+        apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion) { (result) in
+            switch result {
+            case .success(let responseData):
+                if let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
+                                                               data: responseData.data) {
+                    return completionHandler(.success(self.prepareMiniAppManifest(
+                                                        metaDataResponse: decodeResponse.bundleManifest)))
+                }
+                return completionHandler(.failure(NSError.invalidResponseData()))
             case .failure(let error):
                 return completionHandler(.failure(error))
             }

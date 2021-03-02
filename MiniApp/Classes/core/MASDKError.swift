@@ -16,6 +16,9 @@ public enum MASDKError: Error {
     /// The provided mini app ID was invalid. For example, the value cannot be an empty string.
     case invalidAppId
 
+    /// The provided mini app version ID was invalid. For example, the value cannot be an empty string.
+    case invalidVersionId
+
     /// The server provided an invalid response body.
     case invalidResponseData
 
@@ -46,6 +49,8 @@ extension MASDKError: LocalizedError {
             return NSLocalizedString("error_invalid_url", comment: "")
         case .invalidAppId:
             return NSLocalizedString("error_invalid_app_id", comment: "")
+        case .invalidVersionId:
+            return NSLocalizedString("error_invalid_version_id", comment: "")
         case .invalidResponseData:
             return NSLocalizedString("error_invalid_response", comment: "")
         case .downloadingFailed:

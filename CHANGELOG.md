@@ -4,9 +4,8 @@
 
 **SDK**
 
-
-- **Core** incremented minimum support version for iOS from 11.0 to 13.0 
-- **Removed** Removed all deprecated and variables methods from v2:
+- **Core:** incremented minimum support version for iOS from 11.0 to 13.0 
+- **Removed:** Removed all deprecated and variables methods from v2:
   - `MiniApp` :
     - `list(completionHandler:)` now takes a `(Result<[MiniAppInfo], MASDKError>) -> Void` in place of a `(Result<[MiniAppInfo], Error>) -> Void`
     - `info(miniAppId:completionHandler:)` now takes a `(Result<MiniAppInfo, MASDKError>) -> Void` in place of a `(Result<MiniAppInfo, Error>) -> Void`
@@ -23,9 +22,14 @@
   - `MiniAppUserInfoDelegate`:
     - `getUserName()` has been removed. Use `getUserName(completionHandler:)`
     - `getProfilePhoto()` has been removed. Use `getProfilePhoto(completionHandler:)`
-- **Feature** Made MiniApp SDK a static framework
-- **Feature** Added ads for Mini Apps host
-- **Feature** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
+- **Feature:** Made MiniApp SDK a static framework
+- **Feature:** Added ads for Mini Apps host
+- **Feature:** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
+- **Feature:** Added new interface `getMiniAppManifest(miniAppId:miniAppVersion:)` to retrieve the meta-data of a MiniApp
+
+**Sample App**
+
+- **Feature:** Added implementation to retrieve meta-data and show first-time launch screen to user before downloading any mini-app
 
 ---
 ### 2.8.0 (2021-02-01)

@@ -13,6 +13,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let listingApi: ListingApi
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
+    let metaDataApi: MetaDataAPI
     var environment: Environment
     private var previewPath: String {
         self.environment.isPreviewMode ? "preview" : ""
@@ -28,6 +29,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.listingApi = ListingApi(environment: self.environment)
         self.manifestApi = ManifestApi(environment: self.environment)
         self.downloadApi = DownloadApi(environment: self.environment)
+        self.metaDataApi = MetaDataAPI(with: self.environment)
     }
 
     func updateEnvironment(with config: MiniAppSdkConfig?) {
@@ -63,6 +65,15 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                         completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
 
         guard let urlRequest = self.manifestApi.createURLRequest(appId: appId, versionId: versionId, testPath: self.previewPath) else {
+            return completionHandler(.failure(NSError.invalidURLError()))
+        }
+        return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
+    }
+
+    func getMiniAppMetaData(appId: String,
+                            versionId: String,
+                            completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId, testPath: self.previewPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)

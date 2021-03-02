@@ -2,6 +2,7 @@ import Quick
 import Nimble
 @testable import MiniApp
 
+// swiftlint:disable function_body_length
 class MiniAppTests: QuickSpec {
 
     override func spec() {
@@ -40,6 +41,32 @@ class MiniAppTests: QuickSpec {
                 it("will return nil") {
                     let list = MiniApp.shared().listDownloadedWithCustomPermissions()
                     expect(list).to(beAKindOf(MASDKDownloadedListPermissionsPair.self))
+                }
+            }
+            context("when getMiniAppManifest is called with invalid miniappId") {
+                it("will return invalidAppId error") {
+                    var testError: MASDKError?
+                    MiniApp.shared().getMiniAppManifest(miniAppId: "", miniAppVersion: "", completionHandler: { (result) in
+                        switch result {
+                        case .success: break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    })
+                    expect(testError?.localizedDescription).to(equal(MASDKError.invalidAppId.localizedDescription))
+                }
+            }
+            context("when getMiniAppManifest is called with invalid miniapp versionId") {
+                it("will return invalidVersionId error") {
+                    var testError: MASDKError?
+                    MiniApp.shared().getMiniAppManifest(miniAppId: "abc", miniAppVersion: "", completionHandler: { (result) in
+                        switch result {
+                        case .success: break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    })
+                    expect(testError?.localizedDescription).to(equal(MASDKError.invalidVersionId.localizedDescription))
                 }
             }
         }
