@@ -16,7 +16,7 @@ All the MiniApp files downloaded by the MiniApp iOS library are cached locally
 
 ## Requirements
 
-This module supports **iOS 11.0 and above**. It has been tested on iOS 11.0 and above.
+This module supports **iOS 13.0 and above**. It has been tested on iOS 13.0 and above.
 
 It is written in Swift 5.0 and can be used in compatible Xcode versions.
 
@@ -385,7 +385,9 @@ Retrieve access token and expiry date
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String,
+                        scopes: MASDKAccessTokenPermission?,
+                        completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
 
         completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
     }
@@ -438,7 +440,11 @@ MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) 
 ### Getting a `MiniApp meta-data` :
 ---
 
-MiniApp developers can define the `required` & `optional` permissions in the `manifest.json` file like below. Also, they can add any custom variables/items inside `customMetaData`.
+MiniApp developers can define several metadata into the `manifest.json`:
+- `required` & `optional` permissions
+- access token audience/scope permissions
+- custom variables/items inside `customMetaData`.
+
 
 Host app will use the defined interfaces to retrieve these details from manifest.json
 
@@ -462,6 +468,16 @@ Host app will use the defined interfaces to retrieve these details from manifest
       {
          "name":"rakuten.miniapp.device.LOCATION",
          "reason":"Describe your reason here."
+      }
+   ],
+   "accessTokenPermissions":[
+      {
+          "audience":"rae",
+          "scopes":["idinfo_read_openid", "memberinfo_read_point"]
+      },
+      {
+          "audience":"api-c",
+          "scopes":["your_service_scope_here"]
       }
    ],
    "customMetaData":{

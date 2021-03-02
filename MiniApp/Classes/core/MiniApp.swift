@@ -138,15 +138,6 @@ public class MiniApp: NSObject {
     public func getMiniAppManifest(miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         return realMiniApp.retrieveMiniAppMetaData(appId: miniAppId, version: miniAppVersion, completionHandler: completionHandler)
     }
-
-    /// Method to return the meta-data information of a mini-app
-    /// - Parameters:
-    ///   - miniAppId:  Mini AppId String value
-    ///   - miniAppVersion:  Mini VersionId String value
-    ///   - completionHandler: A block to be called on successful retrieval of mini-app meta data [MiniAppManifest] or throws errors if any
-    public func getMiniAppManifest(miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
-        return realMiniApp.retrieveMiniAppMetaData(appId: miniAppId, version: miniAppVersion, completionHandler: completionHandler)
-    }
 }
 
 // MARK: - Testing

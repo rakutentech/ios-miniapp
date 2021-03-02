@@ -336,20 +336,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func fetchTokenDetails(callbackId: String, for requestParam: RequestParameters?) {
+        var accessTokenPermission: MASDKAccessTokenPermission?
         if let audience = requestParam?.audience {
+            accessTokenPermission = MASDKAccessTokenPermission(audience: audience, scopes: [])
             guard let scopes = requestParam?.scopes else {
                 return sendScopeError(callbackId: callbackId, type: .scopeError)
             }
-            if let authorizedScopes = miniAppScope?.first(where: {$0.audience == audience})?.scopes {
-                let scopesSet = Set(scopes), authorizedScopesSet = Set(authorizedScopes)
-                if !scopesSet.isSubset(of: authorizedScopesSet) {
-                    return sendScopeError(callbackId: callbackId, type: .scopeConflictError)
-                }
-            } else {
+            accessTokenPermission?.scopes = scopes
+            if !(miniAppScope?.contains(accessTokenPermission!) ?? false){
                 return sendScopeError(callbackId: callbackId, type: .audienceError)
             }
         }
-        hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId, audience: requestParam?.audience, scopes: requestParam?.scopes) { (result) in
+        hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId, scopes: accessTokenPermission) { (result) in
             switch result {
             case .success(let responseMessage):
                 guard let jsonResponse = ResponseEncoder.encode(data: responseMessage) else {

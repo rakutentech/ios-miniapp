@@ -336,7 +336,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
         return mockContactList
     }
 
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenPermission?, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         if mockAccessToken {
             completionHandler(.success(MATokenInfo(accessToken: "MOCK_ACCESS_TOKEN", expirationDate: Date())))
         } else {

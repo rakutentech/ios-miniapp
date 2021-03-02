@@ -33,8 +33,8 @@ internal struct MACustomPermissionsResponse: Decodable {
 }
 
 public struct MASDKAccessTokenPermission: Codable, Equatable, Hashable {
-    var audience: String
-    var scopes: [String]
+    public var audience: String
+    public var scopes: [String]
 
     private enum CodingKeys: String, CodingKey {
         case audience,
@@ -46,7 +46,7 @@ public struct MASDKAccessTokenPermission: Codable, Equatable, Hashable {
     }
 
     public static func == (lhs: MASDKAccessTokenPermission, rhs: MASDKAccessTokenPermission) -> Bool {
-        lhs.audience == rhs.audience
+        lhs.audience == rhs.audience && Set(rhs.scopes).isSubset(of: Set(lhs.scopes))
     }
 }
 
