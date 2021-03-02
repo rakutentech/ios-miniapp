@@ -9,7 +9,7 @@ internal class Displayer {
                         versionId: String,
                         projectId: String,
                         miniAppTitle: String,
-                        miniAppScopes: [AccessTokenPermission]?,
+                        miniAppScopes: [MASDKAccessTokenPermission]?,
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
                         adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
@@ -29,7 +29,7 @@ internal class Displayer {
 
     func getMiniAppView(miniAppURL: URL,
                         miniAppTitle: String,
-                        miniAppScopes: [AccessTokenPermission]?,
+                        miniAppScopes: [MASDKAccessTokenPermission]?,
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
                         adsDisplayer: MiniAppAdDisplayer? = nil,

@@ -11,13 +11,13 @@ internal struct MetaDataResponse: Decodable {
 internal struct MetaDataCustomPermissionModel: Decodable {
     var reqPermissions: [MACustomPermissionsResponse]?
     var optPermissions: [MACustomPermissionsResponse]?
-    var exampleHostAppMetaData: [String: String]?
-    var accessTokenPermissions: [AccessTokenPermission]?
+    var customMetaData: [String: String]?
+    var accessTokenPermissions: [MASDKAccessTokenPermission]?
 
     private enum CodingKeys: String, CodingKey {
         case reqPermissions,
              optPermissions,
-             exampleHostAppMetaData,
+             customMetaData,
              accessTokenPermissions
     }
 }
@@ -32,7 +32,7 @@ internal struct MACustomPermissionsResponse: Decodable {
     }
 }
 
-public struct AccessTokenPermission: Codable, Equatable, Hashable {
+public struct MASDKAccessTokenPermission: Codable, Equatable, Hashable {
     var audience: String
     var scopes: [String]
 
@@ -45,7 +45,7 @@ public struct AccessTokenPermission: Codable, Equatable, Hashable {
         hasher.combine(audience)
     }
 
-    public static func == (lhs: AccessTokenPermission, rhs: AccessTokenPermission) -> Bool {
+    public static func == (lhs: MASDKAccessTokenPermission, rhs: MASDKAccessTokenPermission) -> Bool {
         lhs.audience == rhs.audience
     }
 }
@@ -58,24 +58,24 @@ public struct MiniAppManifest: Codable {
     /// List of optional permissions for a mini-app
     public let optionalPermissions: [MASDKCustomPermissionModel]?
     /// Key-value pair data that is received from the endpoint
-    public let exampleHostAppMetaData: [String: String]?
+    public let customMetaData: [String: String]?
     /// List of scopes and audiences the MiniApp can require
-    public let accessTokenPermissions: [AccessTokenPermission]?
+    public let accessTokenPermissions: [MASDKAccessTokenPermission]?
 
     private enum CodingKeys: String, CodingKey {
         case requiredPermissions,
              optionalPermissions,
-             exampleHostAppMetaData,
+             customMetaData,
              accessTokenPermissions
     }
 
     init(requiredPermissions: [MASDKCustomPermissionModel]?,
          optionalPermissions: [MASDKCustomPermissionModel]?,
-         exampleHostAppMetaData: [String: String]?,
-         accessTokenPermissions: [AccessTokenPermission]?) {
+         customMetaData: [String: String]?,
+         accessTokenPermissions: [MASDKAccessTokenPermission]?) {
         self.requiredPermissions = requiredPermissions
         self.optionalPermissions = optionalPermissions
-        self.exampleHostAppMetaData = exampleHostAppMetaData
+        self.customMetaData = customMetaData
         self.accessTokenPermissions = accessTokenPermissions
     }
 }

@@ -52,7 +52,7 @@ internal class RealMiniApp {
     ///   - completionHandler: Completion Handler that needed to pass back the MiniAppDisplayProtocol
     ///   - messageInterface: Miniapp communication protocol object.
     ///   - adsDisplayer: a delegate that will handle Miniapp ads requests
-    func createMiniApp(appInfo: MiniAppInfo, scopes: [AccessTokenPermission]?, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func createMiniApp(appInfo: MiniAppInfo, scopes: [MASDKAccessTokenPermission]?, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         getMiniApp(miniAppId: appInfo.id, miniAppVersion: appInfo.version.versionId) { (result) in
             switch result {
             case .success(let responseData):
@@ -84,7 +84,7 @@ internal class RealMiniApp {
             } }
     }
 
-    func createMiniApp(appId: String, scopes: [AccessTokenPermission]?, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func createMiniApp(appId: String, scopes: [MASDKAccessTokenPermission]?, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         getMiniApp(miniAppId: appId, miniAppVersion: version) { (result) in
             switch result {
             case .success(let responseData):
@@ -106,7 +106,7 @@ internal class RealMiniApp {
             } }
     }
 
-    func createMiniApp(url: URL, miniAppScopes: [AccessTokenPermission]? = nil, queryParams: String? = nil, errorHandler: @escaping (Error) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
+    func createMiniApp(url: URL, miniAppScopes: [MASDKAccessTokenPermission]? = nil, queryParams: String? = nil, errorHandler: @escaping (Error) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
         displayer.getMiniAppView(miniAppURL: url,
                                         miniAppTitle: "Mini app",
                                         miniAppScopes: miniAppScopes,
@@ -128,7 +128,7 @@ internal class RealMiniApp {
     ///   - messageInterface: Miniapp communication protocol object.
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     func downloadMiniApp(appInfo: MiniAppInfo,
-                         scopes: [AccessTokenPermission]?,
+                         scopes: [MASDKAccessTokenPermission]?,
                          queryParams: String? = nil,
                          completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void,
                          messageInterface: MiniAppMessageDelegate? = nil,
@@ -156,7 +156,7 @@ internal class RealMiniApp {
         }
     }
 
-    func getMiniAppView(appInfo: MiniAppInfo, miniAppScopes: [AccessTokenPermission]?, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func getMiniAppView(appInfo: MiniAppInfo, miniAppScopes: [MASDKAccessTokenPermission]?, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         DispatchQueue.main.async {
             let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
                                                                        versionId: appInfo.version.versionId,
@@ -173,7 +173,7 @@ internal class RealMiniApp {
     }
 
     func handleMiniAppDownloadError(appId: String,
-                                    scopes: [AccessTokenPermission]?,
+                                    scopes: [MASDKAccessTokenPermission]?,
                                     error: Error,
                                     queryParams: String? = nil,
                                     completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void,
@@ -211,11 +211,11 @@ internal class RealMiniApp {
         miniAppPermissionStorage.storeCustomPermissions(permissions: permissionList, forMiniApp: id)
     }
 
-    func retrieveScopes(forMiniApp id: String) -> [AccessTokenPermission] {
+    func retrieveScopes(forMiniApp id: String) -> [MASDKAccessTokenPermission] {
         miniAppScopeStorage.getScopes(forMiniApp: id)
     }
 
-    func storeScopes(forMiniApp id: String, scopes: [AccessTokenPermission]) {
+    func storeScopes(forMiniApp id: String, scopes: [MASDKAccessTokenPermission]) {
         miniAppScopeStorage.setScopes(scopes: scopes, forMiniApp: id)
     }
 

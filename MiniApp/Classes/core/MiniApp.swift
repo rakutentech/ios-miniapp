@@ -55,7 +55,7 @@ public class MiniApp: NSObject {
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appId: String, scopes: [AccessTokenPermission]? = nil, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appId: String, scopes: [MASDKAccessTokenPermission]? = nil, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
         return realMiniApp.createMiniApp(
                 appId: appId,
                 scopes: scopes,
@@ -77,8 +77,8 @@ public class MiniApp: NSObject {
     /// Cache the token scopes for a given MiniApp ID
     /// - Parameters:
     ///   - appId: Mini AppId String value
-    ///   - scopeList: List of AccessTokenPermission struct that contains the audience and scopes
-    public func setScopes(forMiniApp appId: String, scopeList: [AccessTokenPermission]) {
+    ///   - scopeList: List of MASDKAccessTokenPermission struct that contains the audience and scopes
+    public func setScopes(forMiniApp appId: String, scopeList: [MASDKAccessTokenPermission]) {
         return realMiniApp.storeScopes(forMiniApp: appId, scopes: scopeList)
     }
 
@@ -94,8 +94,8 @@ public class MiniApp: NSObject {
 
     /// Get the list of supported scopes for a given Mini app ID
     /// - Parameter appId: Mini AppId String value
-    /// - Returns: List of AccessTokenPermission that contains the details of every scopes.
-    public func getScopes(forMiniApp appId: String) -> [AccessTokenPermission] {
+    /// - Returns: List of MASDKAccessTokenPermission that contains the details of every scopes.
+    public func getScopes(forMiniApp appId: String) -> [MASDKAccessTokenPermission] {
         if !appId.isEmpty {
             return realMiniApp.retrieveScopes(forMiniApp: appId)
         }
@@ -120,7 +120,7 @@ public class MiniApp: NSObject {
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appInfo: MiniAppInfo, scopes: [AccessTokenPermission]? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appInfo: MiniAppInfo, scopes: [MASDKAccessTokenPermission]? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
         return realMiniApp.createMiniApp(
                 appInfo: appInfo,
                 scopes: scopes,
@@ -128,6 +128,15 @@ public class MiniApp: NSObject {
                 completionHandler: completionHandler,
                 messageInterface: messageInterface,
                 adsDisplayer: adsDisplayer)
+    }
+
+    /// Method to return the meta-data information of a mini-app
+    /// - Parameters:
+    ///   - miniAppId:  Mini AppId String value
+    ///   - miniAppVersion:  Mini VersionId String value
+    ///   - completionHandler: A block to be called on successful retrieval of mini-app meta data [MiniAppManifest] or throws errors if any
+    public func getMiniAppManifest(miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
+        return realMiniApp.retrieveMiniAppMetaData(appId: miniAppId, version: miniAppVersion, completionHandler: completionHandler)
     }
 
     /// Method to return the meta-data information of a mini-app

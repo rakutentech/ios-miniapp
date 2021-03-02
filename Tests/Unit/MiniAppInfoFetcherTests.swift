@@ -232,7 +232,7 @@ class MiniAppInfoFetcherTests: QuickSpec {
                                       "reason": "Describe your reason here (optional)."
                                     }
                                   ],
-                                  "exampleHostAppMetaData": {
+                                  "customMetaData": {
                                     "exampleKey": "test"
                                   }
                             }

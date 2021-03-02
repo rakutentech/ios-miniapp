@@ -17,7 +17,7 @@ class MAFirstLaunchController: UIViewController {
     var miniAppInfo: MiniAppInfo?
     var miniAppManifest: MiniAppManifest?
     var permissionsCollections: [MASDKCustomPermissionModel]?
-    var scopeList: [AccessTokenPermission]?
+    var scopeList: [MASDKAccessTokenPermission]?
 
     override func viewDidLoad() {
         super.viewDidLoad()

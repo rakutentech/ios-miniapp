@@ -2,17 +2,17 @@ import Foundation
 
 internal class MiniAppScopeStorage {
 
-    typealias KeysDictionary = [String: [AccessTokenPermission]]
+    typealias KeysDictionary = [String: [MASDKAccessTokenPermission]]
     let keychainStore = MiniAppKeyChain(serviceName: .accessTokenPermission)
 
-    func getScopes(forMiniApp keyId: String) -> [AccessTokenPermission] {
-        guard let allKeys = retrieveAllScopes(), let scopeList = allKeys[keyId] as [AccessTokenPermission]? else {
-            return [AccessTokenPermission]()
+    func getScopes(forMiniApp keyId: String) -> [MASDKAccessTokenPermission] {
+        guard let allKeys = retrieveAllScopes(), let scopeList = allKeys[keyId] as [MASDKAccessTokenPermission]? else {
+            return [MASDKAccessTokenPermission]()
         }
         return scopeList
     }
 
-    func setScopes(scopes: [AccessTokenPermission], forMiniApp keyId: String) {
+    func setScopes(scopes: [MASDKAccessTokenPermission], forMiniApp keyId: String) {
         guard !keyId.isEmpty else {
             return
         }
