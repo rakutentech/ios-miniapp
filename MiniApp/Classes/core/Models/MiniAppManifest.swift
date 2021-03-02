@@ -12,12 +12,12 @@ internal struct MetaDataCustomPermissionModel: Decodable {
     var reqPermissions: [MACustomPermissionsResponse]?
     var optPermissions: [MACustomPermissionsResponse]?
 
-    var exampleHostAppMetaData: [String: String]?
+    var customMetaData: [String: String]?
 
     private enum CodingKeys: String, CodingKey {
         case reqPermissions,
              optPermissions,
-             exampleHostAppMetaData
+             customMetaData
     }
 }
 
@@ -39,19 +39,19 @@ public struct MiniAppManifest: Codable {
     /// List of optional permissions for a mini-app
     public let optionalPermissions: [MASDKCustomPermissionModel]?
     /// Key-value pair data that is received from the endpoint
-    public let exampleHostAppMetaData: [String: String]?
+    public let customMetaData: [String: String]?
 
     private enum CodingKeys: String, CodingKey {
         case requiredPermissions,
              optionalPermissions,
-             exampleHostAppMetaData
+             customMetaData
     }
 
     init(requiredPermissions: [MASDKCustomPermissionModel]?,
          optionalPermissions: [MASDKCustomPermissionModel]?,
-         exampleHostAppMetaData: [String: String]?) {
+         customMetaData: [String: String]?) {
         self.requiredPermissions = requiredPermissions
         self.optionalPermissions = optionalPermissions
-        self.exampleHostAppMetaData = exampleHostAppMetaData
+        self.customMetaData = customMetaData
     }
 }

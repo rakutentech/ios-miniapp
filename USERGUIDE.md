@@ -74,7 +74,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Retrieve User Profile details](#retrieve-user-profile-details)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
-* [Get a MiniApp meta-data](#get-mini-meta-data)
+* [Getting a MiniApp meta-data](#get-mini-meta-data)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Advanced Features](#advanced-features)
     * [Overriding configuration on runtime](#runtime-conf)
@@ -438,10 +438,48 @@ MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) 
 ### Getting a `MiniApp meta-data` :
 ---
 
+MiniApp developers can define the `required` & `optional` permissions in the `manifest.json` file like below. Also, they can add any custom variables/items inside `customMetaData`.
+
+Host app will use the defined interfaces to retrieve these details from manifest.json
+
+```json
+{
+   "reqPermissions":[
+      {
+         "name":"rakuten.miniapp.user.USER_NAME",
+         "reason":"Describe your reason here."
+      },
+      {
+         "name":"rakuten.miniapp.user.PROFILE_PHOTO",
+         "reason":"Describe your reason here."
+      }
+   ],
+   "optPermissions":[
+      {
+         "name":"rakuten.miniapp.user.CONTACT_LIST",
+         "reason":"Describe your reason here."
+      },
+      {
+         "name":"rakuten.miniapp.device.LOCATION",
+         "reason":"Describe your reason here."
+      }
+   ],
+   "customMetaData":{
+      "hostAppRandomTestKey":"metadata value"
+   }
+}
+```
+
 Retrieve the meta-data of a MiniApp using the following method,
 
 ```swift
 MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAppVersionId) { (result) in
+    switch result {
+        case .success(let manifestData):
+            // Retrieve the custom key/value pair like the following.
+            let randomTestKeyValue = manifestData.customMetaData?["hostAppRandomTestKey"]
+        case .failure
+    }
 	...
 }
 ```
