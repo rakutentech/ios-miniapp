@@ -31,7 +31,10 @@ public enum MASDKError: Error {
     /// The provided mini app ID was not found on the server.
     case miniAppNotFound
 
-    /// An unexpected error occured.
+    /// All required custom permissions is not allowed by the user
+    case metaDataFailure
+
+    /// An unexpected error occurred.
     ///
     /// - Parameters:
     ///     - domain: The domain from the original NSError.
@@ -59,6 +62,8 @@ extension MASDKError: LocalizedError {
             return NSLocalizedString("error_no_published_version", comment: "")
         case .miniAppNotFound:
             return NSLocalizedString("error_miniapp_id_not_found", comment: "")
+        case .metaDataFailure:
+            return NSLocalizedString("error_miniapp_meta_data_required_permissions_failure", comment: "")
         case .unknownError(let domain, let code, let description):
             return String(format: NSLocalizedString("error_unknown", comment: ""), domain, code, description)
         }
@@ -85,6 +90,8 @@ extension MASDKError {
                 return MASDKError.noPublishedVersion
             case .miniAppNotFound:
                 return MASDKError.miniAppNotFound
+            case .metaDataFailure:
+                return MASDKError.metaDataFailure
             default:
                 break
             }

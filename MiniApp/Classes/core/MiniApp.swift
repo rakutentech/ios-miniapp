@@ -107,6 +107,14 @@ public class MiniApp: NSObject {
     public func getMiniAppManifest(miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         return realMiniApp.retrieveMiniAppMetaData(appId: miniAppId, version: miniAppVersion, completionHandler: completionHandler)
     }
+
+    /// Method to return the cached meta-data information of a mini-app from the Keychain
+    /// - Parameters:
+    ///   - miniAppId:  Mini AppId String value
+    /// - Returns: MiniAppManifest object info from the cache
+    public func getDownloadedManifest(miniAppId: String) -> MiniAppManifest? {
+        return realMiniApp.getCachedManifestData(appId: miniAppId)
+    }
 }
 
 // MARK: - Testing

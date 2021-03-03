@@ -75,6 +75,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Getting a MiniApp meta-data](#get-mini-meta-data)
+* [How to use MiniApp meta-data](#how-to-use-meta-data)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Advanced Features](#advanced-features)
     * [Overriding configuration on runtime](#runtime-conf)
@@ -207,6 +208,7 @@ Custom permissions and its status can be retrieved using the following interface
 let miniAppPermissionsList = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppId)
 ```
 
+<a id="store-custom-permission"></a>
 ##### Store the Mini App Custom Permissions
 Custom permissions for a mini app is cached by the SDK and you can use the following interface to store and retrieve it when you need.
 
@@ -483,6 +485,19 @@ MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAp
 	...
 }
 ```
+
+<a id="get-mini-meta-data"></a>
+
+### How to use `MiniApp meta-data` :
+---
+
+SDK internally checks if the User has responded to the list of required/optional permissions that is enforced by the mini-app. So host app SHOULD make sure that the user is prompted with necessary custom permissions and get the response back from the user.
+
+Before calling the MiniApp.create, host app should make sure the following things are done,
+
+* Retrieve the meta-data for the mini-app using [getMiniAppManifest](#get-mini-meta-data)
+* Display/Prompt the list of required & optional permissions to the user and the user response should be stored using [MiniApp.setCustomPermissions](#store-custom-permission)
+* Call [MiniApp.create](#create-mini-app) to start downloading the mini-app
 
 <a id="list-downloaded-mini-apps"></a>
 
