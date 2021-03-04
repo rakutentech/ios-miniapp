@@ -27,6 +27,7 @@
 - **Feature:** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
 - **Feature:** Added new interface `getMiniAppManifest(miniAppId:miniAppVersion:)` to retrieve the meta-data of a MiniApp
 - **Feature:** Added new interface `getDownloadedManifest(miniAppId:)` to retrieve the cached meta-data of a MiniApp
+- **Removed:** RSDKUtils dependency removed
 
 **Sample App**
 
