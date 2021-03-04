@@ -7,6 +7,7 @@ internal class RealMiniApp {
     var miniAppStatus: MiniAppStatus
     var miniAppPermissionStorage: MiniAppPermissionsStorage
     var miniAppManifestStorage: MAManifestStorage
+    var miniAppManifest: MiniAppManifest?
     let offlineErrorCodeList: [Int] = [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut]
 
     convenience init() {
@@ -152,8 +153,8 @@ internal class RealMiniApp {
                         self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
                         completionHandler(.success(miniAppDisplayProtocol))
                     }
-            case .failure:
-                completionHandler(.failure(MASDKError.metaDataFailure))
+            case .failure(let error):
+                completionHandler(.failure(error))
             }
         }
     }
@@ -188,11 +189,30 @@ internal class RealMiniApp {
     }
 
     func retrieveCustomPermissions(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
-        miniAppPermissionStorage.getCustomPermissions(forMiniApp: id)
+        let cachedPermissions = miniAppPermissionStorage.getCustomPermissions(forMiniApp: id)
+        return filterCustomPermissions(forMiniApp: id, cachedPermissions: cachedPermissions)
     }
 
     func storeCustomPermissions(forMiniApp id: String, permissionList: [MASDKCustomPermissionModel]) {
-        miniAppPermissionStorage.storeCustomPermissions(permissions: permissionList, forMiniApp: id)
+        miniAppPermissionStorage.storeCustomPermissions(permissions: filterCustomPermissions(forMiniApp: id, cachedPermissions: permissionList), forMiniApp: id)
+    }
+
+    func filterCustomPermissions(forMiniApp id: String, cachedPermissions: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {
+        guard let manifestData = getValidManifest(forMiniApp: id) else {
+            return []
+        }
+        let manifestCustomPermissions = (manifestData.requiredPermissions ?? []) + (manifestData.optionalPermissions ?? [])
+        let filtered = cachedPermissions.filter {
+            manifestCustomPermissions.contains($0)
+        }
+        return filtered
+    }
+
+    func getValidManifest(forMiniApp id: String) -> MiniAppManifest? {
+        guard let manifest = self.miniAppManifest else {
+            return self.miniAppManifestStorage.getManifestInfo(forMiniApp: id)
+        }
+        return manifest
     }
 
     func getDownloadedListWithCustomPermissions() -> MASDKDownloadedListPermissionsPair {
@@ -220,7 +240,15 @@ internal class RealMiniApp {
         }
         miniAppInfoFetcher.getMiniAppMetaInfo(miniAppId: appId,
                                               miniAppVersion: version,
-                                              apiClient: self.miniAppClient, completionHandler: self.createCompletionHandler(completionHandler: completionHandler))
+                                              apiClient: self.miniAppClient) { (result) in
+            switch result {
+            case .success(let metaData):
+                self.miniAppManifest = metaData
+                completionHandler(.success(metaData))
+            case .failure(let error):
+                completionHandler(.failure(.fromError(error: error)))
+            }
+        }
     }
 
     /// Method to remove the unused/deleted items from the Keychain

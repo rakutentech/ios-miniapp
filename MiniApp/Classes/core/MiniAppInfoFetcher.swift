@@ -42,20 +42,20 @@ internal class MiniAppInfoFetcher {
         }
     }
 
-    func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, Error>) -> Void) {
+    func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
 
         apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion) { (result) in
             switch result {
             case .success(let responseData):
                 guard let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
                     data: responseData.data) else {
-                    return completionHandler(.failure(NSError.invalidResponseData()))
+                    return completionHandler(.failure(.invalidResponseData))
                 }
                 return completionHandler(.success(
                                             self.prepareMiniAppManifest(
                                                 metaDataResponse: decodeResponse.bundleManifest)))
             case .failure(let error):
-                return completionHandler(.failure(error))
+                return completionHandler(.failure(.fromError(error: error)))
             }
         }
     }
