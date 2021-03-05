@@ -86,18 +86,29 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.session.startDownloadTask(downloadUrl: url)
     }
 
-    func requestFromServer(urlRequest: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+    func requestFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
         return session.startDataTask(with: urlRequest) { (result) in
             switch result {
             case .success(let responseData):
                 let statusCode = responseData.httpResponse.statusCode
-                MiniAppLogger.d("[\(statusCode)] urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n\(String(data: responseData.data, encoding: .utf8) ?? "Empty response")", "🟢")
+                let logIcon = statusCode < 300 ? "🟢" : "🟠"
+                MiniAppLogger.d("[\(statusCode)] urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n\(String(data: responseData.data, encoding: .utf8) ?? "Empty response")", logIcon)
 
                 if !(200...299).contains(statusCode) {
-                    return completionHandler(.failure(
-                        self.handleHttpResponse(responseData: responseData.data,
-                                                httpResponse: responseData.httpResponse)
-                        ))
+                    let failure = self.handleHttpResponse(responseData: responseData.data, httpResponse: responseData.httpResponse)
+                    if statusCode >= 500, retry500 < 5 {
+                        let backOff = 2.0
+                        let retry = retry500 + 1
+                        let waitTime = 0.5*pow(backOff, Double(retry500))
+                        let failureMessage = "urlRequest \(urlRequest.url?.absoluteString ?? "-") : Failure (\(retry))."
+
+                        MiniAppLogger.d("\(failureMessage) \nRetry in \(waitTime)s", "🟠")
+                        return DispatchQueue.main.asyncAfter(deadline: .now() + waitTime) {
+                            self.requestFromServer(urlRequest: urlRequest, retry500: retry, completionHandler: completionHandler)
+                        }
+                    }
+                    MiniAppLogger.d("\(failure.localizedDescription)", "🔴")
+                    return completionHandler(.failure(failure))
                 }
                 return completionHandler(.success(ResponseData(responseData.data,
                                                                responseData.httpResponse)))
