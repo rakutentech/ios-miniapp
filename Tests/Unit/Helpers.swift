@@ -494,6 +494,7 @@ class MockDisplayer: Displayer {
 
     override func getMiniAppView(miniAppURL: URL,
                                  miniAppTitle: String,
+                                 miniAppScopes: [MASDKAccessTokenPermission]? = nil,
                                  queryParams: String? = nil,
                                  hostAppMessageDelegate: MiniAppMessageDelegate,
                                  adsDisplayer: MiniAppAdDisplayer?,

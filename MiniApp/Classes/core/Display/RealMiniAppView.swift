@@ -25,7 +25,7 @@ internal class RealMiniAppView: UIView {
         miniAppId: String,
         versionId: String,
         projectId: String,
-        miniAppScopes: [MASDKAccessTokenPermission]?,
+        miniAppScopes: [MASDKAccessTokenPermission]? = nil,
         miniAppTitle: String,
         queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
@@ -54,7 +54,7 @@ internal class RealMiniAppView: UIView {
     init(
         miniAppURL: URL,
         miniAppTitle: String,
-        miniAppScopes: [MASDKAccessTokenPermission]?,
+        miniAppScopes: [MASDKAccessTokenPermission]? = nil,
         queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         adsDisplayer: MiniAppAdDisplayer? = nil,

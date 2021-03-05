@@ -4,12 +4,11 @@ internal class Displayer {
     init(_ config: MiniAppNavigationConfig? = nil) {
         self.navConfig = config
     }
-    // swiftlint:disable function_parameter_count
     func getMiniAppView(miniAppId: String,
                         versionId: String,
                         projectId: String,
                         miniAppTitle: String,
-                        miniAppScopes: [MASDKAccessTokenPermission]?,
+                        miniAppScopes: [MASDKAccessTokenPermission]? = nil,
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
                         adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
@@ -29,7 +28,7 @@ internal class Displayer {
 
     func getMiniAppView(miniAppURL: URL,
                         miniAppTitle: String,
-                        miniAppScopes: [MASDKAccessTokenPermission]?,
+                        miniAppScopes: [MASDKAccessTokenPermission]? = nil,
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
                         adsDisplayer: MiniAppAdDisplayer? = nil,

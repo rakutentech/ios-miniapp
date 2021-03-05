@@ -19,7 +19,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var miniAppKeyStore = MiniAppPermissionsStorage()
     var miniAppScope: [MASDKAccessTokenPermission]? = [MASDKAccessTokenPermission]()
 
-    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String, scopes: [MASDKAccessTokenPermission]?) {
+    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String, scopes: [MASDKAccessTokenPermission]? = nil) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
         self.miniAppId = miniAppId
@@ -343,7 +343,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 return sendScopeError(callbackId: callbackId, type: .scopeError)
             }
             accessTokenPermission?.scopes = scopes
-            if !(miniAppScope?.contains(accessTokenPermission!) ?? false){
+            if !(miniAppScope?.contains(accessTokenPermission!) ?? false) {
                 return sendScopeError(callbackId: callbackId, type: .audienceError)
             }
         }
