@@ -100,8 +100,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                         let backOff = 2.0
                         let retry = retry500 + 1
                         let waitTime = 0.5*pow(backOff, Double(retry500))
-                        let failureMessage = "urlRequest \(urlRequest.url?.absoluteString ?? "-") : Failure (\(retry))."
-
+                        let failureMessage = "\(failure.localizedDescription) : Attempt [\(retry)]."
                         MiniAppLogger.d("\(failureMessage) \nRetry in \(waitTime)s", "🟠")
                         return DispatchQueue.main.asyncAfter(deadline: .now() + waitTime) {
                             self.requestFromServer(urlRequest: urlRequest, retry500: retry, completionHandler: completionHandler)
