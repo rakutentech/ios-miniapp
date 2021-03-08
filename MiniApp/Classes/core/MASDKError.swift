@@ -90,6 +90,12 @@ extension MASDKError {
                 return MASDKError.noPublishedVersion
             case .miniAppNotFound:
                 return MASDKError.miniAppNotFound
+            default:
+                break
+            }
+        }
+        if error.domain == MASDKErrorDomain {
+            switch MiniAppSDKErrorCode(rawValue: error.code) {
             case .metaDataFailure:
                 return MASDKError.metaDataFailure
             default:

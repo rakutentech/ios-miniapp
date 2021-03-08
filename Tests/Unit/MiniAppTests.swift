@@ -2,7 +2,6 @@ import Quick
 import Nimble
 @testable import MiniApp
 
-// swiftlint:disable function_body_length
 class MiniAppTests: QuickSpec {
 
     override func spec() {
@@ -11,17 +10,6 @@ class MiniAppTests: QuickSpec {
                 it("will return nil") {
                     let miniAppCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: "")
                     expect(miniAppCustomPermissions).to(equal([]))
-                }
-            }
-            context("when getPermissions is called with valid mini app id that has stored permissions") {
-                it("will return list of custom permissions") {
-                    let userNamePermission = MASDKCustomPermissionModel(permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.contactsList.rawValue)!)
-                    let profilePhotoPermission = MASDKCustomPermissionModel(
-                        permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.profilePhoto.rawValue)!,
-                        isPermissionGranted: MiniAppCustomPermissionGrantedStatus.denied)
-                    MiniApp.shared().setCustomPermissions(forMiniApp: "123", permissionList: [userNamePermission, profilePhotoPermission])
-                    let miniAppCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: "123")
-                    expect(miniAppCustomPermissions.count).to(equal(MiniAppCustomPermissionType.allCases.count))
                 }
             }
             context("when info method is called with empty mini app id") {

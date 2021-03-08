@@ -70,15 +70,20 @@ class MiniAppStatusTests: QuickSpec {
                     permissionName: MiniAppCustomPermissionType(rawValue: MiniAppCustomPermissionType.contactsList.rawValue)!, isPermissionGranted: MiniAppCustomPermissionGrantedStatus.denied)
                     miniAppKeyStore.storeCustomPermissions(permissions: [userNamePermission, profilePhotoPermission, contactListPermission], forMiniApp: "123")
                     var miniAppCustomPermissionList = miniAppKeyStore.getCustomPermissions(forMiniApp: "123")
-                    expect(miniAppCustomPermissionList[0].permissionName.rawValue).to(equal("rakuten.miniapp.user.USER_NAME"))
-                    expect(miniAppCustomPermissionList[0].isPermissionGranted.rawValue).to(equal("ALLOWED"))
-                    expect(miniAppCustomPermissionList[1].permissionName.rawValue).to(equal("rakuten.miniapp.user.PROFILE_PHOTO"))
-                    expect(miniAppCustomPermissionList[1].isPermissionGranted.rawValue).to(equal("DENIED"))
-                    expect(miniAppCustomPermissionList[2].isPermissionGranted.rawValue).to(equal("DENIED"))
-                    profilePhotoPermission.isPermissionGranted = .allowed
-                    miniAppKeyStore.storeCustomPermissions(permissions: [profilePhotoPermission], forMiniApp: "123")
-                    miniAppCustomPermissionList = miniAppKeyStore.getCustomPermissions(forMiniApp: "123")
-                    expect(miniAppCustomPermissionList[1].isPermissionGranted.rawValue).to(equal("ALLOWED"))
+                    if miniAppCustomPermissionList.count >= 3 {
+                        expect(miniAppCustomPermissionList[0].permissionName.rawValue).to(equal("rakuten.miniapp.user.USER_NAME"))
+                        expect(miniAppCustomPermissionList[0].isPermissionGranted.rawValue).to(equal("ALLOWED"))
+                        expect(miniAppCustomPermissionList[1].permissionName.rawValue).to(equal("rakuten.miniapp.user.PROFILE_PHOTO"))
+                        expect(miniAppCustomPermissionList[1].isPermissionGranted.rawValue).to(equal("DENIED"))
+                        expect(miniAppCustomPermissionList[2].isPermissionGranted.rawValue).to(equal("DENIED"))
+                        profilePhotoPermission.isPermissionGranted = .allowed
+                        miniAppKeyStore.storeCustomPermissions(permissions: [profilePhotoPermission], forMiniApp: "123")
+                        miniAppCustomPermissionList = miniAppKeyStore.getCustomPermissions(forMiniApp: "123")
+                        expect(miniAppCustomPermissionList[0].isPermissionGranted.rawValue).to(equal("ALLOWED"))
+                    } else {
+                        fail("Failed to store and retrieve custom permissions in KeyChain")
+                    }
+
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
                 }
             }
@@ -86,7 +91,7 @@ class MiniAppStatusTests: QuickSpec {
                 it("will return list of custom permissions if it is stored already") {
                     let miniAppKeyStore = MiniAppPermissionsStorage()
                     let miniAppStatus = MiniAppStatus()
-                    miniAppKeyStore.storeCustomPermissions(permissions: miniAppKeyStore.getDefaultSupportedPermissions(), forMiniApp: mockMiniAppInfo.id)
+                    miniAppKeyStore.storeCustomPermissions(permissions: getDefaultSupportedPermissions(), forMiniApp: mockMiniAppInfo.id)
                     let miniAppCustomPermissionList = miniAppStatus.checkStoredPermissionList(downloadedMiniAppsList: [mockMiniAppInfo])
                     expect(miniAppCustomPermissionList.keys).to(contain(mockMiniAppInfo.id))
                     let miniAppInfo = MiniAppInfo(id: "123", displayName: "Test", icon: URL(string: "https://www.example.com/icon.png")!, version: mockMiniAppInfo.version)

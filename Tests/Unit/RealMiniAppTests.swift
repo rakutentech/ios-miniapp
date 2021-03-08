@@ -145,7 +145,7 @@ class RealMiniAppTests: QuickSpec {
                 it("will return valid Mini App View instance with a default hostAppMessageDelegate and getUniqueId() will return an error message") {
                     let responseString = """
                     [{
-                        "id": "123",
+                        "id": "app-id-test",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
@@ -159,8 +159,13 @@ class RealMiniAppTests: QuickSpec {
                         "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
+
                     mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.metaData = mockMetaDataString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
+
                     waitUntil { done in
                         realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                             switch result {
@@ -185,7 +190,7 @@ class RealMiniAppTests: QuickSpec {
                 it("will return valid Mini App View instance with a default hostAppMessageDelegate and getUniqueId() will return an error message") {
                     let responseString = """
                     [{
-                        "id": "123",
+                        "id": "app-id-test",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
@@ -199,8 +204,11 @@ class RealMiniAppTests: QuickSpec {
                         "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
+                    mockAPIClient.metaData = mockMetaDataString.data(using: .utf8)
                     waitUntil { done in
                         realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
                             switch result {
@@ -225,7 +233,7 @@ class RealMiniAppTests: QuickSpec {
                 it("will download mini app with the mini app info that is passed on") {
                     let responseString = """
                     [{
-                        "id": "123",
+                        "id": "app-id-test",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
@@ -259,7 +267,7 @@ class RealMiniAppTests: QuickSpec {
 
                     let responseString = """
                     [{
-                        "id": "123",
+                        "id": "app-id-test",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
@@ -292,7 +300,7 @@ class RealMiniAppTests: QuickSpec {
                 it("will return error") {
                     let responseString = """
                     [{
-                        "id": "123",
+                        "id": "app-id-test",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
@@ -328,7 +336,7 @@ class RealMiniAppTests: QuickSpec {
 
                     let responseString = """
                     [{
-                        "id": "123",
+                        "id": "app-id-test",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {

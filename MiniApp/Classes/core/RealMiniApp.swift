@@ -246,7 +246,7 @@ internal class RealMiniApp {
                 self.miniAppManifest = metaData
                 completionHandler(.success(metaData))
             case .failure(let error):
-                completionHandler(.failure(.fromError(error: error)))
+                completionHandler(.failure(error))
             }
         }
     }
@@ -273,7 +273,7 @@ internal class RealMiniApp {
                                                requiredPermissions: requiredPermissions,
                                                completionHandler: completionHandler)
             case .failure(let error):
-                completionHandler(.failure(.fromError(error: error)))
+                completionHandler(.failure(error))
             }
         }
     }

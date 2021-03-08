@@ -7,7 +7,7 @@ internal class MiniAppPermissionsStorage {
 
     func getCustomPermissions(forMiniApp keyId: String) -> [MASDKCustomPermissionModel] {
         guard let allKeys = retrieveAllPermissions(), let permissionList = allKeys[keyId] as [MASDKCustomPermissionModel]? else {
-            return getDefaultSupportedPermissions()
+            return []
         }
         return permissionList
     }
@@ -21,11 +21,12 @@ internal class MiniAppPermissionsStorage {
         _ = permissions.map { (permissionModel: MASDKCustomPermissionModel) -> MASDKCustomPermissionModel in
             if let index = cachedPermissions.firstIndex(of: permissionModel) {
                 cachedPermissions[index] = permissionModel
-                cachedPermissions[index].permissionDescription = ""
+            } else {
+                cachedPermissions.append(permissionModel)
             }
+            permissionModel.permissionDescription = ""
             return permissionModel
         }
-
         if keysDic != nil {
             keysDic?[keyId] = cachedPermissions
         } else {
@@ -53,19 +54,6 @@ internal class MiniAppPermissionsStorage {
         if let keys = keysDic {
             keychainStore.setInfoInKeyChain(keys: keys)
         }
-    }
-
-    internal func getDefaultSupportedPermissions() -> [MASDKCustomPermissionModel] {
-        var supportedPermissionList = [MASDKCustomPermissionModel]()
-        MiniAppCustomPermissionType.allCases.forEach {
-            supportedPermissionList.append(MASDKCustomPermissionModel(
-                permissionName: MiniAppCustomPermissionType(
-                    rawValue: $0.rawValue)!,
-                isPermissionGranted: .denied,
-                permissionRequestDescription: ""
-            ))
-        }
-        return supportedPermissionList
     }
 
     private func retrieveAllPermissions() -> KeysDictionary? {
