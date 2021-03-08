@@ -99,7 +99,7 @@ extension ViewController: MiniAppNavigationDelegate {
         var errorMessage: String = ""
         switch error {
         case .metaDataFailure:
-            errorMessage = NSLocalizedString("error_miniapp_download_message", comment: "") + ". \nPlease make sure user agreed to all required permissions from Meta-data"
+            errorMessage = NSLocalizedString("error_miniapp_download_message", comment: "") + ".\n\(error.localizedDescription)"
         default:
             errorMessage = NSLocalizedString("error_miniapp_download_message", comment: "")
         }
