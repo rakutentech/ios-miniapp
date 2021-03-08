@@ -49,21 +49,21 @@ extension MASDKError: LocalizedError {
         case .serverError(let code, let message):
             return String(format: NSLocalizedString("error_server", comment: ""), code, message)
         case .invalidURLError:
-            return NSLocalizedString("error_invalid_url", comment: "")
+            return "error_invalid_url".localizedString()
         case .invalidAppId:
-            return NSLocalizedString("error_invalid_app_id", comment: "")
+            return "error_invalid_app_id".localizedString()
         case .invalidVersionId:
-            return NSLocalizedString("error_invalid_version_id", comment: "")
+            return "error_invalid_version_id".localizedString()
         case .invalidResponseData:
-            return NSLocalizedString("error_invalid_response", comment: "")
+            return "error_invalid_response".localizedString()
         case .downloadingFailed:
-            return NSLocalizedString("error_download_failed", comment: "")
+            return "error_invalid_response".localizedString()
         case .noPublishedVersion:
-            return NSLocalizedString("error_no_published_version", comment: "")
+            return "error_no_published_version".localizedString()
         case .miniAppNotFound:
-            return NSLocalizedString("error_miniapp_id_not_found", comment: "")
+            return "error_miniapp_id_not_found".localizedString()
         case .metaDataFailure:
-            return NSLocalizedString("error_miniapp_meta_data_required_permissions_failure", comment: "")
+            return "error_miniapp_meta_data_required_permissions_failure".localizedString()
         case .unknownError(let domain, let code, let description):
             return String(format: NSLocalizedString("error_unknown", comment: ""), domain, code, description)
         }
