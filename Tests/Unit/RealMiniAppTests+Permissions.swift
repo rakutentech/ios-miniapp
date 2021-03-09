@@ -52,7 +52,6 @@ class RealMiniAppPermissionTests: QuickSpec {
             }
             context("when we store permission") {
                 it("will store them persistently") {
-                    realMiniApp.miniAppManifest = mockMiniAppManifest
                     realMiniApp.storeCustomPermissions(
                         forMiniApp: "test",
                         permissionList: [MASDKCustomPermissionModel(permissionName: .userName, isPermissionGranted: .allowed, permissionRequestDescription: "permissionDesc")])

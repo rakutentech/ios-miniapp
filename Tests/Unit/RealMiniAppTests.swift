@@ -25,6 +25,11 @@ class RealMiniAppTests: QuickSpec {
             realMiniApp.miniAppDownloader = downloader
             let mockMessageInterface = MockMessageInterface()
 
+            beforeEach {
+                mockAPIClient.metaData = mockMetaDataString.data(using: .utf8)
+                updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
+                updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
+            }
             context("when getMiniApp is called with valid app id") {
                 it("will return valid MiniAppInfo") {
                     var decodedResponse: MiniAppInfo?

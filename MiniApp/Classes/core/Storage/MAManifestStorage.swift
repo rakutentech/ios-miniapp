@@ -3,10 +3,10 @@ import CommonCrypto
 
 internal class MAManifestStorage {
 
-    typealias KeysDictionary = [String: MiniAppManifest]
+    typealias KeysDictionary = [String: CachedMetaData]
     let keychainStore = MiniAppKeyChain(serviceName: .customPermission)
 
-    func saveManifestInfo(forMiniApp appId: String, manifest: MiniAppManifest) {
+    func saveManifestInfo(forMiniApp appId: String, manifest: CachedMetaData) {
         guard !appId.isEmpty else {
             return
         }
@@ -22,11 +22,11 @@ internal class MAManifestStorage {
         }
     }
 
-    func getManifestInfo(forMiniApp appId: String) -> MiniAppManifest? {
+    func getManifestInfo(forMiniApp appId: String) -> CachedMetaData? {
         guard !appId.isEmpty else {
             return nil
         }
-        guard let allKeys = retrieveAllManifestInfo(), let manifestInfo = allKeys[appId] as MiniAppManifest? else {
+        guard let allKeys = retrieveAllManifestInfo(), let manifestInfo = allKeys[appId] as CachedMetaData? else {
             return nil
         }
         return manifestInfo
