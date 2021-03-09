@@ -4,7 +4,7 @@ import CommonCrypto
 internal class MAManifestStorage {
 
     typealias KeysDictionary = [String: CachedMetaData]
-    let keychainStore = MiniAppKeyChain(serviceName: .customPermission)
+    let keychainStore = MiniAppKeyChain(serviceName: .miniAppManifest)
 
     func saveManifestInfo(forMiniApp appId: String, manifest: CachedMetaData) {
         guard !appId.isEmpty else {

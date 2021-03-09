@@ -22,7 +22,7 @@
 "error_download_failed" = "Failed to download the mini app.";
 "error_no_published_version" = "Server returned no published versions for the provided Mini App ID.";
 "error_miniapp_id_not_found" = "Server could not find the provided Mini App ID.";
-"error_miniapp_meta_data_required_permissions_failure" = "Please make sure you agreed to all required permissions for this Mini-app.";
+"error_miniapp_meta_data_required_permissions_failure" = "Mini App has not been granted all of the required permissions.";
 "error_unknown" = "Unknown error occurred in %@ domain with error code %@: %@";
 
 "input_miniapp_title" = "Please enter Miniapp ID";

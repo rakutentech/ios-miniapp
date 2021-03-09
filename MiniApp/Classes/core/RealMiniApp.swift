@@ -258,8 +258,10 @@ internal class RealMiniApp {
             retrieveMiniAppMetaData(appId: appId, version: versionId) { (result) in
                 switch result {
                 case .success(let manifest):
+                    self.miniAppManifestStorage.saveManifestInfo(forMiniApp: appId,
+                                                                 manifest: CachedMetaData(version: versionId,
+                                                                                          miniAppManifest: manifest))
                     self.verifyRequiredPermissions(appId: appId,
-                                                   versionId: versionId,
                                                    miniAppManifest: manifest,
                                                    completionHandler: completionHandler)
                 case .failure(let error):
@@ -268,7 +270,6 @@ internal class RealMiniApp {
             }
         } else {
             self.verifyRequiredPermissions(appId: appId,
-                                           versionId: versionId,
                                            miniAppManifest: cachedMetaData?.miniAppManifest,
                                            completionHandler: completionHandler)
         }
@@ -280,18 +281,19 @@ internal class RealMiniApp {
     ///   - requiredPermissions: List of required Custom permissions that is defined by the Mini App
     ///   - completionHandler: Handler that returns whether user agreed to required permissions or not.
     func verifyRequiredPermissions(appId: String,
-                                   versionId: String,
                                    miniAppManifest: MiniAppManifest?,
                                    completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
         guard let manifestData = miniAppManifest, let requiredPermissions = manifestData.requiredPermissions else {
             return completionHandler(.success(true))
         }
         let storedCustomPermissions = self.miniAppPermissionStorage.getCustomPermissions(forMiniApp: appId)
+        miniAppPermissionStorage.storeCustomPermissions(permissions: filterCustomPermissions(forMiniApp: appId,
+                                                                                             cachedPermissions: storedCustomPermissions),
+                                                        forMiniApp: appId)
         let filtered = storedCustomPermissions.filter {
             requiredPermissions.contains($0)
         }
         if filtered.count == requiredPermissions.count && filtered.allSatisfy({ $0.isPermissionGranted.boolValue == true }) {
-            self.miniAppManifestStorage.saveManifestInfo(forMiniApp: appId, manifest: CachedMetaData(version: versionId, miniAppManifest: manifestData))
             completionHandler(.success(true))
         } else {
             completionHandler(.failure(.metaDataFailure))
