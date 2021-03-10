@@ -354,8 +354,8 @@ var mockMiniAppInfo: MiniAppInfo {
 }
 
 var mockMiniAppManifest: MiniAppManifest {
-    var mockAudience = "TESTAUDIENCE"
-    var mockScopes = ["testScope1","testScope2"]
+    let mockAudience = "TESTAUDIENCE"
+    let mockScopes = ["testScope1", "testScope2"]
 
     let requiredPermissions: [MASDKCustomPermissionModel] = [MASDKCustomPermissionModel(permissionName: .userName,
                                                                                         isPermissionGranted: .allowed,
