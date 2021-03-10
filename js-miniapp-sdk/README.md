@@ -52,6 +52,65 @@ window.MiniApp.default.getUniqueId()
     // ...
 ```
 
+## Mini App Manifest
+
+There is a manifest for each mini app. The manifest provides the info for Android/iOS SDK to handle the mini app so the mini app developer should understand the structure and data type of manifest.
+
+The manifest contains:
+
+- Required permissions
+- Optional permissions
+- Access token permissions
+- Custom metadata
+
+Here is the example of manifest:
+
+```javascript
+{
+  // The mini app should use "reqPermissions" for setting which permissions it requires.
+  // These permissions will be requested by the host app before launching and downloading the mini app.
+  // The user MUST accept these permissions before the mini app can be launched.
+  "reqPermissions": [
+    {
+      "name": "rakuten.miniapp.user.USER_NAME",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.user.PROFILE_PHOTO",
+      "reason": "Describe your reason here (optional)."
+    }
+  ],
+  // The mini app should use "optPermissions" for setting which permissions it will optionally use.
+  // These permissions will be requested by the host app before launching and downloading the mini app.
+  // The user can choose to either accept or deny these permissions before the mini app is launched.
+  "optPermissions": [
+    {
+      "name": "rakuten.miniapp.user.CONTACT_LIST",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.device.LOCATION",
+      "reason": "Describe your reason here (optional)."
+    }
+  ],
+  // For access tokens, can define which "audience" and "scopes" you would like permission to use
+  "accessTokenPermissions": [
+    {
+      "audience": "rae",
+      "scopes": ["idinfo_read_openid", "memberinfo_read_point"]
+    },
+    {
+      "audience": "api-c",
+      "scopes": ["your_service_scope_here"]
+    }
+  ],
+  // The Host App can require additional keys that the mini app developer must set
+  "customMetaData": {
+    "exampleKey": "test"
+  }
+}
+```
+
 ## Mini App Features
 
 ### Retrieve a unique ID
@@ -76,6 +135,8 @@ There must be permission requests from miniapp to access some mobile components 
 There are two types of permissions:
 - [**Custom permissions:**](#custom-permissions) Access User data or device features which the Host App controls. Displays Host App's custom permission dialog.
 - [**Device permissions:**](#device-permissions) Access device features. Displays Android/iOS platform permission dialog.
+
+Mini app developer can define which permissions are required and optional in mini app manifest. You do not need to request permission when declaring them as required type.
 
 #### Custom Permissions
 
@@ -259,7 +320,7 @@ miniApp.user.getContacts()
 #### Access Token
 
 **API:** [UserInfoProvider.getAccessToken](api/interfaces/userinfoprovider.md#getaccesstoken),
-[AccessTokenData](api/classes/accesstokendata.md), 
+[AccessTokenData](api/classes/accesstokendata.md),
 [CustomPermissionName.ACCESS_TOKEN](api/enums/custompermissionname.html#access_token)
 
 You can get an access token provided by the Host App. The Host App will be able to deny your request if your mini app ID is not approved to access the token.
