@@ -88,7 +88,7 @@ class ViewController: UIViewController {
     }
 
     func fetchMiniAppMetaData(miniAppInfo: MiniAppInfo) {
-        MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
+        MiniApp.shared(with: Config.getCurrent()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
                 self.displayFirstTimeLaunchScreen(reqPermissions: manifestData.requiredPermissions ?? [], optPermissions: manifestData.optionalPermissions ?? [], miniAppInfo: miniAppInfo)
