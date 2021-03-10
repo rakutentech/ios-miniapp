@@ -54,7 +54,7 @@ window.MiniApp.default.getUniqueId()
 
 ## Mini App Manifest
 
-There is a manifest for each mini app. The manifest provides the info for Android/iOS SDK to handle the mini app so the mini app developer should understand the structure and data type of manifest.
+There is a manifest for each mini app. The manifest provides the info for Android/iOS SDK to handle the mini app so the mini app developers should understand the structure and data type of manifest.
 
 The manifest contains:
 
