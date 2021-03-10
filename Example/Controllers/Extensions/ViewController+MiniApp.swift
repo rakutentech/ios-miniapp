@@ -67,7 +67,9 @@ extension ViewController: MiniAppNavigationDelegate {
                     self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
                 }
             case .failure(let error):
-                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_download_message", comment: ""), dismissController: true) { _ in
+                self.displayAlert(title: NSLocalizedString("error_title", comment: ""),
+                                  message: NSLocalizedString("error_miniapp_download_message", comment: "") + ".\n\(error.localizedDescription)",
+                                  dismissController: true) { _ in
                     self.fetchAppList(inBackground: true)
                 }
                 print("Errored: ", error.localizedDescription)
