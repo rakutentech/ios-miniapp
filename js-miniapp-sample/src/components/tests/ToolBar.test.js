@@ -91,23 +91,4 @@ describe('ToolBar', () => {
     });
     expect(screen.getAllByText(navLabel).length).toEqual(2);
   });
-
-  test('should shrink drawer', () => {
-    renderWithRedux(
-      wrapRouter(
-        wrapTheme(
-          <ToolBar
-            showDrawer={true}
-            navItems={navItems}
-            onDrawerToggle={() => {}}
-            onShrinkToggle={() => {}}
-          />
-        )
-      )
-    );
-    const navList = screen.getByRole('presentation').querySelectorAll('ul a');
-    expect(navList.length).toEqual(1);
-    const navLabel = navItems[0].label;
-    expect(screen.getAllByText(navLabel).length).toEqual(1);
-  });
 });
