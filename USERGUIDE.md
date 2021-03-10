@@ -491,7 +491,7 @@ MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAp
 }
 ```
 
-<a id="get-mini-meta-data"></a>
+<a id="how-to-use-meta-data"></a>
 
 #### How to use `MiniApp meta-data` :
 ---
