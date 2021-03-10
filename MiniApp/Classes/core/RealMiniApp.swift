@@ -284,6 +284,7 @@ internal class RealMiniApp {
                                    miniAppManifest: MiniAppManifest?,
                                    completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
         guard let manifestData = miniAppManifest, let requiredPermissions = manifestData.requiredPermissions else {
+            miniAppPermissionStorage.removeKey(for: appId)
             return completionHandler(.success(true))
         }
         let storedCustomPermissions = self.miniAppPermissionStorage.getCustomPermissions(forMiniApp: appId)

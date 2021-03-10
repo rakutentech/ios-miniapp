@@ -74,10 +74,13 @@ class ViewController: UIViewController {
 
     func showFirstTimeLaunchScreen(miniAppInfo: MiniAppInfo) {
         if isMiniAppLaunchedAlready(key: miniAppInfo.id) {
-            self.showProgressIndicator {
-                self.currentMiniAppInfo = miniAppInfo
-                self.fetchMiniApp(for: miniAppInfo)
-                self.currentMiniAppTitle = miniAppInfo.displayName
+            compareMiniAppMetaData(miniAppInfo: miniAppInfo) { (result) in
+                switch result {
+                case .success:
+                    self.displayMiniApp(miniAppInfo: miniAppInfo)
+                case .failure:
+                    break
+                }
             }
         } else {
             fetchMiniAppMetaData(miniAppInfo: miniAppInfo)
@@ -95,6 +98,43 @@ class ViewController: UIViewController {
         }
     }
 
+    func compareMiniAppMetaData(miniAppInfo: MiniAppInfo, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        guard let downloadedManifest = MiniApp.shared().getDownloadedManifest(miniAppId: miniAppInfo.id) else {
+            return
+        }
+        MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
+            switch result {
+            case .success(let manifestData):
+                self.isNewManifestFound(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo, completionHandler: completionHandler)
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
+    }
+
+    func isNewManifestFound(latestManifest: MiniAppManifest,
+                            oldManifest: MiniAppManifest,
+                            miniAppInfo: MiniAppInfo,
+                            completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        if latestManifest == oldManifest {
+            displayMiniApp(miniAppInfo: miniAppInfo)
+        } else {
+            if filterAlreadyAgreedPerms(latestManifest: latestManifest, miniAppInfo: miniAppInfo).requiredPermissions?.count ?? 0 > 0 {
+                self.displayFirstTimeLaunchScreen(metadataResponse: filterAlreadyAgreedPerms(latestManifest: latestManifest, miniAppInfo: miniAppInfo), miniAppInfo: miniAppInfo)
+            } else {
+                displayMiniApp(miniAppInfo: miniAppInfo)
+            }
+        }
+    }
+
+    func filterAlreadyAgreedPerms(latestManifest: MiniAppManifest, miniAppInfo: MiniAppInfo) -> MiniAppManifest {
+        let storedCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo.id)
+        let filteredReqPermissions = latestManifest.requiredPermissions?.map {
+            storedCustomPermissions.contains($0)
+        }
+        return latestManifest
+    }
+
     func displayFirstTimeLaunchScreen(metadataResponse: MiniAppManifest, miniAppInfo: MiniAppInfo) {
         DispatchQueue.main.async {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MAFirstTimeLaunch") as? MAFirstLaunchController {
@@ -105,6 +145,14 @@ class ViewController: UIViewController {
                 viewController.modalPresentationStyle = .fullScreen
                 self.present(viewController, animated: true)
             }
+        }
+    }
+
+    func displayMiniApp(miniAppInfo: MiniAppInfo) {
+        self.showProgressIndicator {
+            self.currentMiniAppInfo = miniAppInfo
+            self.fetchMiniApp(for: miniAppInfo)
+            self.currentMiniAppTitle = miniAppInfo.displayName
         }
     }
 }

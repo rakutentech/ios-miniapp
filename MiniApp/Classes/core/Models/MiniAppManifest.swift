@@ -32,7 +32,7 @@ internal struct MACustomPermissionsResponse: Decodable {
 }
 
 /// Mini-app meta data information
-public struct MiniAppManifest: Codable {
+public struct MiniAppManifest: Codable, Equatable {
 
     /// List of required permissions for a mini-app
     public let requiredPermissions: [MASDKCustomPermissionModel]?
@@ -53,6 +53,13 @@ public struct MiniAppManifest: Codable {
         self.requiredPermissions = requiredPermissions
         self.optionalPermissions = optionalPermissions
         self.customMetaData = customMetaData
+    }
+
+    public static func ==(lhs: MiniAppManifest, rhs: MiniAppManifest) -> Bool {
+        guard lhs.requiredPermissions == rhs.requiredPermissions else { return false }
+        guard lhs.optionalPermissions == rhs.optionalPermissions else { return false }
+        guard lhs.customMetaData == rhs.customMetaData else { return false }
+        return true
     }
 }
 
