@@ -56,7 +56,6 @@ extension ViewController: MiniAppNavigationDelegate {
         MiniApp.shared(with: Config.getCurrent(),
                        navigationSettings: Config.getNavConfig(delegate: self))
             .create(appId: appInfo.id,
-                    manifest: manifests[appInfo.id],
                     version: appInfo.version.versionId,
                     queryParams: getQueryParam(),
                     completionHandler: { (result) in

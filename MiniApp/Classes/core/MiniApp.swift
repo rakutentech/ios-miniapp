@@ -47,7 +47,6 @@ public class MiniApp: NSObject {
     ///
     /// - Parameters:
     ///   - appId: Mini AppId String value
-    ///   - manifest: optional Mini App manifest containing permissions and other metadata
     ///   - version: optional Mini App version String value. If omitted the most recent one is picked
     ///   - queryParams: Optional Query parameters that the host app would like to share while creating a mini app
     ///   - completionHandler: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
@@ -56,10 +55,9 @@ public class MiniApp: NSObject {
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appId: String, manifest: MiniAppManifest? = nil, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
         return realMiniApp.createMiniApp(
                 appId: appId,
-                manifest: manifest,
                 version: version,
                 queryParams: queryParams,
                 completionHandler: completionHandler,

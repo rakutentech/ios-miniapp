@@ -84,8 +84,9 @@ internal class RealMiniApp {
             } }
     }
 
-    func createMiniApp(appId: String, manifest: MiniAppManifest? = nil, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func createMiniApp(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         getMiniApp(miniAppId: appId, miniAppVersion: version) { (result) in
+            let manifest = self.miniAppManifestStorage.getManifestInfo(forMiniApp: appId)?.miniAppManifest
             switch result {
             case .success(let responseData):
                 self.miniAppStatus.saveMiniAppInfo(appInfo: responseData, key: responseData.id)
