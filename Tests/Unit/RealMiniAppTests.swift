@@ -150,7 +150,7 @@ class RealMiniAppTests: QuickSpec {
                 it("will return valid Mini App View instance with a default hostAppMessageDelegate and getUniqueId() will return an error message") {
                     let responseString = """
                     [{
-                        "id": "app-id-test",
+                        "id": "\(mockMiniAppInfo.id)",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
@@ -195,7 +195,7 @@ class RealMiniAppTests: QuickSpec {
                 it("will return valid Mini App View instance with a default hostAppMessageDelegate and getUniqueId() will return an error message") {
                     let responseString = """
                     [{
-                        "id": "app-id-test",
+                        "id": "\(mockMiniAppInfo.id)",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
@@ -238,7 +238,7 @@ class RealMiniAppTests: QuickSpec {
                 it("will download mini app with the mini app info that is passed on") {
                     let responseString = """
                     [{
-                        "id": "app-id-test",
+                        "id": "\(mockMiniAppInfo.id)",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
@@ -272,7 +272,7 @@ class RealMiniAppTests: QuickSpec {
 
                     let responseString = """
                     [{
-                        "id": "app-id-test",
+                        "id": "\(mockMiniAppInfo.id)",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
@@ -305,7 +305,7 @@ class RealMiniAppTests: QuickSpec {
                 it("will return error") {
                     let responseString = """
                     [{
-                        "id": "app-id-test",
+                        "id": "\(mockMiniAppInfo.id)",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
@@ -341,7 +341,7 @@ class RealMiniAppTests: QuickSpec {
 
                     let responseString = """
                     [{
-                        "id": "app-id-test",
+                        "id": "\(mockMiniAppInfo.id)",
                         "displayName": "Test",
                         "icon": "https://test.com",
                         "version": {
