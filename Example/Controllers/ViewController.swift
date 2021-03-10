@@ -8,6 +8,7 @@ class ViewController: UIViewController {
     @IBOutlet var searchBar: UISearchBar!
     let refreshControl = UIRefreshControl()
     let adsDisplayer = AdMobDisplayer()
+    var manifests = [String: MiniAppManifest]()
     var unfilteredResults: [MiniAppInfo]? {
         didSet {
             self.decodeResponse = self.unfilteredResults
@@ -88,6 +89,7 @@ class ViewController: UIViewController {
         MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
+                self.manifests[miniAppInfo.id] = manifestData
                 self.displayFirstTimeLaunchScreen(metadataResponse: manifestData, miniAppInfo: miniAppInfo)
             case .failure:
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""), dismissController: true)

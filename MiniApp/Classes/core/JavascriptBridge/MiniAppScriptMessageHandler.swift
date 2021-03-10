@@ -17,15 +17,14 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var userAlreadyRespondedRequestList = [MASDKCustomPermissionModel]()
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
     var miniAppKeyStore = MiniAppPermissionsStorage()
-    var miniAppScope: [MASDKAccessTokenPermission]? = [MASDKAccessTokenPermission]()
-
-    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String, scopes: [MASDKAccessTokenPermission]? = nil) {
+    var miniAppManifest: MiniAppManifest?
+    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String, manifest: MiniAppManifest? = nil) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
         self.miniAppId = miniAppId
         self.miniAppTitle = miniAppTitle
         self.adsDelegate = adsDisplayer
-        self.miniAppScope = scopes
+        self.miniAppManifest = manifest
         super.init()
     }
 
@@ -337,15 +336,16 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func fetchTokenDetails(callbackId: String, for requestParam: RequestParameters?) {
         var accessTokenPermission: MASDKAccessTokenPermission?
-        if let audience = requestParam?.audience {
+        if let audience = requestParam?.audience { // if we request a token for a specific audience
             accessTokenPermission = MASDKAccessTokenPermission(audience: audience, scopes: [])
-            guard let scopes = requestParam?.scopes else {
-                return sendScopeError(callbackId: callbackId, type: .scopeError)
-            }
-            accessTokenPermission?.scopes = scopes
-            if !(miniAppScope?.contains(accessTokenPermission!) ?? false) {
-                return sendScopeError(callbackId: callbackId, type: .audienceError)
-            }
+            if let scopes = requestParam?.scopes { // we need a specific set of scopes
+                accessTokenPermission?.scopes = scopes
+            } else { return sendScopeError(callbackId: callbackId, type: .scopeError) }
+            if let accessTokenPermissions = miniAppManifest?.accessTokenPermissions { // we check that the Mini App manages scopes
+                if !(accessTokenPermission!.isPartOf(accessTokenPermissions)) { // and that these scopes are included in the Manifest
+                    return sendScopeError(callbackId: callbackId, type: .audienceError)
+                }
+            } else { return sendScopeError(callbackId: callbackId, type: .audienceError) }
         }
         hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId, scopes: accessTokenPermission) { (result) in
             switch result {

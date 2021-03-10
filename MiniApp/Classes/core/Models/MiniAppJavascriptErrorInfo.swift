@@ -50,7 +50,7 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
         case .scopeError:
         return "No scopes provided for the audience requested"
         case .audienceError:
-        return "Audience requested not allowed on this MiniApp"
+        return "Audience with scopes requested not allowed on this MiniApp"
         }
     }
 }

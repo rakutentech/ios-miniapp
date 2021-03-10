@@ -17,7 +17,6 @@ class MAFirstLaunchController: UIViewController {
     var miniAppInfo: MiniAppInfo?
     var miniAppManifest: MiniAppManifest?
     var permissionsCollections: [MASDKCustomPermissionModel]?
-    var scopeList: [MASDKAccessTokenPermission]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +30,6 @@ class MAFirstLaunchController: UIViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
         permissionsCollections = (miniAppManifest?.requiredPermissions ?? []) + (miniAppManifest?.optionalPermissions ?? [])
-        scopeList = miniAppManifest?.accessTokenPermissions ?? []
     }
 
     override func viewDidLayoutSubviews() {
@@ -52,7 +50,6 @@ class MAFirstLaunchController: UIViewController {
     @IBAction func acceptButtonPressed(_ sender: UIButton) {
         let appId = miniAppInfo?.id ?? ""
         MiniApp.shared().setCustomPermissions(forMiniApp: appId, permissionList: permissionsCollections ?? [])
-        MiniApp.shared().setScopes(forMiniApp: appId, scopeList: scopeList ?? [])
         _ = saveMiniAppLaunchInfo(isMiniAppLaunched: true, forKey: miniAppInfo!.id)
         launchScreenDelegate?.didUserResponded(agreed: true, miniAppInfo: miniAppInfo)
         self.dismiss(animated: true, completion: nil)

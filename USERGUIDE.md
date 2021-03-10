@@ -489,15 +489,34 @@ Host app will use the defined interfaces to retrieve these details from manifest
 Retrieve the meta-data of a MiniApp using the following method,
 
 ```swift
+var theManifest: MiniAppManifest?
+
 MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAppVersionId) { (result) in
     switch result {
         case .success(let manifestData):
             // Retrieve the custom key/value pair like the following.
+            theManifest = manifestData
             let randomTestKeyValue = manifestData.customMetaData?["hostAppRandomTestKey"]
-        case .failure
+        case .failure:
+          break
     }
 	...
 }
+```
+Manifest retrieved from this method can be passed to `MiniApp.create` method, this is used when a scope management is required for [access token](#access-token-info) for example:
+
+```swift
+MiniApp.shared().create(appId: String, manifest: theManifest, completionHandler: { (result) in
+	switch result {
+            case .success(let miniAppDisplay):
+                let view = miniAppDisplay.getMiniAppView()
+                view.frame = self.view.bounds
+                self.view.addSubview(view)
+            case .failure(let error):
+                print("Error: ", error.localizedDescription)
+            }
+}, messageInterface: self)
+
 ```
 
 <a id="list-downloaded-mini-apps"></a>

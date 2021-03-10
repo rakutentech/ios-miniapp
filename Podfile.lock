@@ -5,7 +5,7 @@ PODS:
   - Google-Mobile-Ads-SDK (7.69.0):
     - GoogleAppMeasurement (~> 7.0)
     - GoogleUserMessagingPlatform (~> 1.1)
-  - GoogleAppMeasurement (7.7.0):
+  - GoogleAppMeasurement (7.8.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
     - GoogleUtilities/Network (~> 7.0)
@@ -71,7 +71,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppCenter: 8832b158d17e54845c3b88a91076218f0b07174d
   Google-Mobile-Ads-SDK: 2f288748a42920d1c744946a460896a95b0e9110
-  GoogleAppMeasurement: 0c3b134b2c0a90c4c24833873894bfe0e42a0384
+  GoogleAppMeasurement: dccff6095ea1cd8972a8b96d0ee38b9e6d67acbb
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
   GoogleUtilities: 31c5b01f978a70c6cff2afc6272b3f1921614b43
   MiniApp: 1655d50cc391f183271204fae351ec5595239363

@@ -47,6 +47,7 @@ public class MiniApp: NSObject {
     ///
     /// - Parameters:
     ///   - appId: Mini AppId String value
+    ///   - manifest: optional Mini App manifest containing permissions and other metadata
     ///   - version: optional Mini App version String value. If omitted the most recent one is picked
     ///   - queryParams: Optional Query parameters that the host app would like to share while creating a mini app
     ///   - completionHandler: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
@@ -55,10 +56,10 @@ public class MiniApp: NSObject {
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appId: String, scopes: [MASDKAccessTokenPermission]? = nil, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appId: String, manifest: MiniAppManifest? = nil, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
         return realMiniApp.createMiniApp(
                 appId: appId,
-                scopes: scopes,
+                manifest: manifest,
                 version: version,
                 queryParams: queryParams,
                 completionHandler: completionHandler,
@@ -74,30 +75,12 @@ public class MiniApp: NSObject {
         return realMiniApp.storeCustomPermissions(forMiniApp: appId, permissionList: permissionList)
     }
 
-    /// Cache the token scopes for a given MiniApp ID
-    /// - Parameters:
-    ///   - appId: Mini AppId String value
-    ///   - scopeList: List of MASDKAccessTokenPermission struct that contains the audience and scopes
-    public func setScopes(forMiniApp appId: String, scopeList: [MASDKAccessTokenPermission]) {
-        return realMiniApp.storeScopes(forMiniApp: appId, scopes: scopeList)
-    }
-
     /// Get the list of supported Custom permissions and its status for a given Mini app ID
     /// - Parameter appId: Mini AppId String value
     /// - Returns: List of MASDKCustomPermissionModel that contains the details of every custom permission type, status and description.
     public func getCustomPermissions(forMiniApp appId: String) -> [MASDKCustomPermissionModel] {
         if !appId.isEmpty {
             return realMiniApp.retrieveCustomPermissions(forMiniApp: appId)
-        }
-        return []
-    }
-
-    /// Get the list of supported scopes for a given Mini app ID
-    /// - Parameter appId: Mini AppId String value
-    /// - Returns: List of MASDKAccessTokenPermission that contains the details of every scopes.
-    public func getScopes(forMiniApp appId: String) -> [MASDKAccessTokenPermission] {
-        if !appId.isEmpty {
-            return realMiniApp.retrieveScopes(forMiniApp: appId)
         }
         return []
     }
@@ -113,6 +96,7 @@ public class MiniApp: NSObject {
     ///
     /// - Parameters:
     ///   - appInfo: Mini App info object
+    ///   - manifest: optional Mini App manifest containing permissions and other metadata
     ///   - queryParams: Optional Query parameters that the host app would like to share while creating a mini app
     ///   - completionHandler: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
@@ -120,10 +104,10 @@ public class MiniApp: NSObject {
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appInfo: MiniAppInfo, scopes: [MASDKAccessTokenPermission]? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appInfo: MiniAppInfo, manifest: MiniAppManifest? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
         return realMiniApp.createMiniApp(
                 appInfo: appInfo,
-                scopes: scopes,
+                manifest: manifest,
                 queryParams: queryParams,
                 completionHandler: completionHandler,
                 messageInterface: messageInterface,
