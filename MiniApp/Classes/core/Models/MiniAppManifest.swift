@@ -55,11 +55,8 @@ public struct MiniAppManifest: Codable, Equatable {
         self.customMetaData = customMetaData
     }
 
-    public static func ==(lhs: MiniAppManifest, rhs: MiniAppManifest) -> Bool {
-        guard lhs.requiredPermissions == rhs.requiredPermissions else { return false }
-        guard lhs.optionalPermissions == rhs.optionalPermissions else { return false }
-        guard lhs.customMetaData == rhs.customMetaData else { return false }
-        return true
+    public static func == (lhs: MiniAppManifest, rhs: MiniAppManifest) -> Bool {
+        lhs.requiredPermissions == rhs.requiredPermissions
     }
 }
 

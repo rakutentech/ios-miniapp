@@ -117,22 +117,10 @@ class ViewController: UIViewController {
                             miniAppInfo: MiniAppInfo,
                             completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         if latestManifest == oldManifest {
-            displayMiniApp(miniAppInfo: miniAppInfo)
+            completionHandler(.success(true))
         } else {
-            if filterAlreadyAgreedPerms(latestManifest: latestManifest, miniAppInfo: miniAppInfo).requiredPermissions?.count ?? 0 > 0 {
-                self.displayFirstTimeLaunchScreen(metadataResponse: filterAlreadyAgreedPerms(latestManifest: latestManifest, miniAppInfo: miniAppInfo), miniAppInfo: miniAppInfo)
-            } else {
-                displayMiniApp(miniAppInfo: miniAppInfo)
-            }
+            self.displayFirstTimeLaunchScreen(metadataResponse: latestManifest, miniAppInfo: miniAppInfo)
         }
-    }
-
-    func filterAlreadyAgreedPerms(latestManifest: MiniAppManifest, miniAppInfo: MiniAppInfo) -> MiniAppManifest {
-        let storedCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo.id)
-        let filteredReqPermissions = latestManifest.requiredPermissions?.map {
-            storedCustomPermissions.contains($0)
-        }
-        return latestManifest
     }
 
     func displayFirstTimeLaunchScreen(metadataResponse: MiniAppManifest, miniAppInfo: MiniAppInfo) {

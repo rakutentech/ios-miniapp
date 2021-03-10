@@ -17,6 +17,9 @@ class MAFirstLaunchController: UIViewController {
     var miniAppInfo: MiniAppInfo?
     var miniAppManifest: MiniAppManifest?
     var permissionsCollections: [MASDKCustomPermissionModel]?
+    var alreadyAllowedPermissions: [MASDKCustomPermissionModel] = []
+    var requiredPermissions: [MASDKCustomPermissionModel] = []
+    var optionalPermissions: [MASDKCustomPermissionModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +32,17 @@ class MAFirstLaunchController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
+        alreadyAllowedPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo?.id ?? "").filter { $0.isPermissionGranted.boolValue == true }
         permissionsCollections = (miniAppManifest?.requiredPermissions ?? []) + (miniAppManifest?.optionalPermissions ?? [])
+        permissionsCollections = removeAllowedPermissions(permsArray: permissionsCollections ?? [])
+        requiredPermissions = removeAllowedPermissions(permsArray: miniAppManifest?.requiredPermissions ?? [])
+        optionalPermissions = removeAllowedPermissions(permsArray: miniAppManifest?.optionalPermissions ?? [])
+    }
+
+    func removeAllowedPermissions(permsArray: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {
+        return permsArray.filter {
+            !alreadyAllowedPermissions.contains($0)
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -58,6 +71,13 @@ class MAFirstLaunchController: UIViewController {
         launchScreenDelegate?.didUserResponded(agreed: false, miniAppInfo: miniAppInfo)
         self.dismiss(animated: true, completion: nil)
     }
+
+    func isPermissionAllowedAlready(permissionModel: MASDKCustomPermissionModel?) -> Bool {
+        guard let permission = permissionModel else {
+            return false
+        }
+        return alreadyAllowedPermissions.contains(permission)
+    }
 }
 
 // MARK: - UITableViewControllerDelegate
@@ -71,18 +91,26 @@ extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(
             withIdentifier: "FirstLaunchCustomPermissionCell", for: indexPath) as? FirstLaunchCustomPermissionCell {
                 let permissionModel: MASDKCustomPermissionModel?
-                if miniAppManifest?.requiredPermissions?.indices.contains(indexPath.row) ?? false {
-                    permissionModel =  miniAppManifest?.requiredPermissions?[indexPath.row]
-                    cell.permissionTitle?.attributedText =  NSMutableAttributedString()
-                        .normalText(permissionModel?.permissionName.title ?? "")
-                        .highlightRedColor(" (required)")
-                    cell.permissionDescription?.text = permissionModel?.permissionDescription
-                    cell.toggle.isHidden = true
-                } else {
-                    if miniAppManifest?.optionalPermissions?.indices.contains(indexPath.row - (miniAppManifest?.requiredPermissions?.count ?? 0)) ?? false {
-                        permissionModel =  miniAppManifest?.optionalPermissions?[indexPath.row - (miniAppManifest?.requiredPermissions?.count ?? 0)]
-                        cell.permissionTitle?.text = permissionModel?.permissionName.title
+                if requiredPermissions.indices.contains(indexPath.row) {
+                    permissionModel =  requiredPermissions[indexPath.row]
+                    if !isPermissionAllowedAlready(permissionModel: permissionModel) {
+                        cell.permissionTitle?.attributedText =  NSMutableAttributedString()
+                            .normalText(permissionModel?.permissionName.title ?? "")
+                            .highlightRedColor(" (required)")
                         cell.permissionDescription?.text = permissionModel?.permissionDescription
+                        cell.toggle.isHidden = true
+                    } else {
+                        return UITableViewCell()
+                    }
+                } else {
+                    if optionalPermissions.indices.contains(indexPath.row - (requiredPermissions.count)) {
+                            permissionModel =  optionalPermissions[indexPath.row - (requiredPermissions.count)]
+                        if !isPermissionAllowedAlready(permissionModel: permissionModel) {
+                            cell.permissionTitle?.text = permissionModel?.permissionName.title
+                            cell.permissionDescription?.text = permissionModel?.permissionDescription
+                        } else {
+                            return UITableViewCell()
+                        }
                     }
                 }
             cell.toggle.tag = indexPath.row
