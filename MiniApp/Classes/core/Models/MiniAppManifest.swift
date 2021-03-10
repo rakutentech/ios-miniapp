@@ -46,7 +46,7 @@ public struct MASDKAccessTokenPermission: Codable, Equatable, Hashable {
     }
 
     public static func == (lhs: MASDKAccessTokenPermission, rhs: MASDKAccessTokenPermission) -> Bool {
-        lhs.audience == rhs.audience && rhs.scopes.sorted().elementsEqual(lhs.scopes.sorted())
+        lhs.audience == rhs.audience && rhs.scopes.sorted() == lhs.scopes.sorted()
     }
 
     public func isPartOf(_ fullScopes: [MASDKAccessTokenPermission]) -> Bool {
