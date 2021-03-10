@@ -91,7 +91,7 @@ class ViewController: UIViewController {
         MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                self.displayFirstTimeLaunchScreen(metadataResponse: manifestData, miniAppInfo: miniAppInfo)
+                self.displayFirstTimeLaunchScreen(reqPermissions: manifestData.requiredPermissions ?? [], optPermissions: manifestData.optionalPermissions ?? [], miniAppInfo: miniAppInfo)
             case .failure:
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""), dismissController: true)
             }
@@ -100,35 +100,60 @@ class ViewController: UIViewController {
 
     func compareMiniAppMetaData(miniAppInfo: MiniAppInfo, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         guard let downloadedManifest = MiniApp.shared().getDownloadedManifest(miniAppId: miniAppInfo.id) else {
-            return
+            return completionHandler(.success(true))
         }
         MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                self.isNewManifestFound(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo, completionHandler: completionHandler)
+                self.checkRequiredPermissions(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
             case .failure(let error):
                 completionHandler(.failure(error))
             }
         }
     }
+//
+//    func isNewManifestFound(latestManifest: MiniAppManifest,
+//                            oldManifest: MiniAppManifest,
+//                            miniAppInfo: MiniAppInfo,
+//                            completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+//        if latestManifest == oldManifest {
+//            completionHandler(.success(true))
+//        } else {
+//            checkChangesInPermissions(latestManifest: latestManifest, miniAppInfo: miniAppInfo)
+//        }
+//    }
 
-    func isNewManifestFound(latestManifest: MiniAppManifest,
-                            oldManifest: MiniAppManifest,
-                            miniAppInfo: MiniAppInfo,
-                            completionHandler: @escaping (Result<Bool, Error>) -> Void) {
-        if latestManifest == oldManifest {
-            completionHandler(.success(true))
+    func checkRequiredPermissions(latestManifest: MiniAppManifest, oldManifest: MiniAppManifest, miniAppInfo: MiniAppInfo) {
+        let alreadyAllowedPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo.id).filter { $0.isPermissionGranted.boolValue == true }
+
+        let requiredPermissions = removeAllowedPermissions(permsArray: latestManifest.requiredPermissions ?? [], alreadyAllowedPermissions: alreadyAllowedPermissions)
+        let optionalPermissions = removeAllowedPermissions(permsArray: latestManifest.optionalPermissions ?? [], alreadyAllowedPermissions: alreadyAllowedPermissions)
+        if requiredPermissions.count > 0 || oldManifest != latestManifest {
+            if latestManifest.requiredPermissions == nil && latestManifest.optionalPermissions == nil {
+                self.displayMiniApp(miniAppInfo: miniAppInfo)
+            } else {
+                self.displayFirstTimeLaunchScreen(reqPermissions: requiredPermissions, optPermissions: optionalPermissions, miniAppInfo: miniAppInfo)
+            }
         } else {
-            self.displayFirstTimeLaunchScreen(metadataResponse: latestManifest, miniAppInfo: miniAppInfo)
+            self.displayMiniApp(miniAppInfo: miniAppInfo)
         }
     }
 
-    func displayFirstTimeLaunchScreen(metadataResponse: MiniAppManifest, miniAppInfo: MiniAppInfo) {
+    func removeAllowedPermissions(permsArray: [MASDKCustomPermissionModel], alreadyAllowedPermissions: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {
+        return permsArray.filter {
+            !alreadyAllowedPermissions.contains($0)
+        }
+    }
+
+    func displayFirstTimeLaunchScreen(reqPermissions: [MASDKCustomPermissionModel],
+                                      optPermissions: [MASDKCustomPermissionModel],
+                                      miniAppInfo: MiniAppInfo) {
         DispatchQueue.main.async {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MAFirstTimeLaunch") as? MAFirstLaunchController {
                 self.currentMiniAppInfo = miniAppInfo
                 viewController.miniAppInfo = miniAppInfo
-                viewController.miniAppManifest = metadataResponse
+                viewController.requiredPermissions = reqPermissions
+                viewController.optionalPermissions = optPermissions
                 viewController.launchScreenDelegate = self
                 viewController.modalPresentationStyle = .fullScreen
                 self.present(viewController, animated: true)
