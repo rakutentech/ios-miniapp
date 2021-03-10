@@ -1,10 +1,12 @@
 @testable import MiniApp
 import WebKit
+import Foundation
 
 // swiftlint:disable file_length
 class MockAPIClient: MiniAppClient {
     var data: Data?
     var manifestData: Data?
+    var metaData: Data?
     var error: Error?
     var request: URLRequest?
     var zipFile: String?
@@ -72,7 +74,7 @@ class MockAPIClient: MiniAppClient {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
 
-        guard let responseData = manifestData ?? data else {
+        guard let responseData = metaData ?? data else {
             return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
         }
 
@@ -148,9 +150,9 @@ class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
         }
     }
 
-    override func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, Error>) -> Void) {
+    override func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if error != nil {
-            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+            return completionHandler(.failure(.unknownError(domain: "Unknown Error", code: 1, description: "Failed to retrieve getMiniAppMetaInfo")))
         }
         apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion) { (result) in
             switch result {
@@ -160,9 +162,9 @@ class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
                     return completionHandler(.success(self.prepareMiniAppManifest(
                                                         metaDataResponse: decodeResponse.bundleManifest)))
                 }
-                return completionHandler(.failure(NSError.invalidResponseData()))
+                return completionHandler(.failure(.invalidResponseData))
             case .failure(let error):
-                return completionHandler(.failure(error))
+                return completionHandler(.failure(.fromError(error: error)))
             }
         }
     }
@@ -351,6 +353,66 @@ var mockMiniAppInfo: MiniAppInfo {
     return info
 }
 
+var mockMiniAppManifest: MiniAppManifest {
+    let requiredPermissions: [MASDKCustomPermissionModel] = [MASDKCustomPermissionModel(permissionName: .userName,
+                                                                                        isPermissionGranted: .allowed,
+                                                                                        permissionRequestDescription: "User name custom permission"),
+                                                             MASDKCustomPermissionModel(permissionName: .profilePhoto,
+                                                                                        isPermissionGranted: .allowed,
+                                                                                        permissionRequestDescription: "Profile Photo custom permission")
+                                                            ]
+    let optionalPermissions: [MASDKCustomPermissionModel] = [MASDKCustomPermissionModel(permissionName: .contactsList,
+                                                                                        isPermissionGranted: .allowed,
+                                                                                        permissionRequestDescription: "Contact List custom permission")
+                                                            ]
+    let customMetaData: [String: String] = ["exampleKey": "exampleValue"]
+    let manifest = MiniAppManifest.init(requiredPermissions: requiredPermissions, optionalPermissions: optionalPermissions, customMetaData: customMetaData)
+    return manifest
+}
+
+let mockMetaDataString = """
+    {
+        "bundleManifest": {
+              "reqPermissions": [
+                {
+                  "name": "rakuten.miniapp.user.USER_NAME",
+                  "reason": "Describe your reason here (optional)."
+                },
+                {
+                  "name": "rakuten.miniapp.user.PROFILE_PHOTO",
+                  "reason": "Describe your reason here (optional)."
+                }
+              ],
+              "optPermissions": [
+                {
+                  "name": "rakuten.miniapp.user.CONTACT_LIST",
+                  "reason": "Describe your reason here (optional)."
+                },
+                {
+                  "name": "rakuten.miniapp.device.LOCATION",
+                  "reason": "Describe your reason here (optional)."
+                }
+              ],
+              "customMetaData": {
+                "exampleKey": "test"
+              }
+        }
+    }
+"""
+
+func getDefaultSupportedPermissions() -> [MASDKCustomPermissionModel] {
+    var supportedPermissionList = [MASDKCustomPermissionModel]()
+    MiniAppCustomPermissionType.allCases.forEach {
+        supportedPermissionList.append(MASDKCustomPermissionModel(
+            permissionName: MiniAppCustomPermissionType(
+                rawValue: $0.rawValue)!,
+            isPermissionGranted: .denied,
+            permissionRequestDescription: ""
+        ))
+    }
+    return supportedPermissionList
+}
+
 class MockWKScriptMessage: WKScriptMessage {
 
     let mockBody: Any
@@ -522,11 +584,12 @@ func deleteStatusPreferences() {
 }
 
 func updateCustomPermissionStatus(miniAppId: String, permissionType: MiniAppCustomPermissionType, status: MiniAppCustomPermissionGrantedStatus) {
-    MiniApp.shared().setCustomPermissions(forMiniApp: miniAppId,
-        permissionList: [MASDKCustomPermissionModel(
-            permissionName: permissionType,
-            isPermissionGranted: status,
-            permissionRequestDescription: "")])
+    let miniAppPermissionsStorage = MiniAppPermissionsStorage()
+    miniAppPermissionsStorage.storeCustomPermissions(permissions: [MASDKCustomPermissionModel(
+                                                                    permissionName: permissionType,
+                                                                    isPermissionGranted: status,
+                                                                    permissionRequestDescription: "")],
+                                                     forMiniApp: miniAppId)
 }
 
 func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {

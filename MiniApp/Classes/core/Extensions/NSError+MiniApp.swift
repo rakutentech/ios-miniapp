@@ -96,6 +96,7 @@ extension NSError {
 // swiftlint:disable identifier_name
 var MiniAppSDKErrorDomain = "MiniAppSDKErrorDomain"
 var MiniAppSDKServerErrorDomain = "MiniAppSDKServerErrorDomain"
+var MASDKErrorDomain = "MiniApp.MASDKError"
 
 enum MiniAppSDKErrorCode: Int {
     case invalidURLError = 1,
@@ -105,5 +106,6 @@ enum MiniAppSDKErrorCode: Int {
          noPublishedVersion,
          adNotLoaded,
          adNotDisplayed,
-         miniAppNotFound
+         miniAppNotFound,
+         metaDataFailure
 }

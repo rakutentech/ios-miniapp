@@ -1,14 +1,14 @@
 # MiniApp
 
 This open-source library allows you to integrate Mini App ecosystem into your iOS applications.
-Mini App SDK also facilitates communication between a mini app and the host app via a message bridge.
+Mini App SDK also facilitates communication between a Mini App and the host app via a message bridge.
 
 ## Features
 
 - Load MiniApp list
 - Load MiniApp metadata
 - Create a MiniApp view
-- Facilitate communication between host app and mini app
+- Facilitate communication between host app and Mini App
 
 And much more features which you can find them in [Usage](#usage).
 
@@ -74,7 +74,9 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Retrieve User Profile details](#retrieve-user-profile-details)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
-* [Getting a MiniApp meta-data](#get-mini-meta-data)
+* [Mini App meta-data](#mini-meta-data)
+    * [Getting a MiniApp meta-data](#get-mini-meta-data)
+    * [How to use MiniApp meta-data](#how-to-use-meta-data)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Advanced Features](#advanced-features)
     * [Overriding configuration on runtime](#runtime-conf)
@@ -82,7 +84,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Opening external links](#Opening-external-links)
     * [Orientation Lock](#orientation-lock)
     * [Catching analytics events](#analytics-events)
-    * [Passing Query parameters while creating Mini-app](#query-param-mini-app)
+    * [Passing Query parameters while creating Mini App](#query-param-mini-app)
 
 <a id="create-mini-app"></a>
 
@@ -90,15 +92,15 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 ---
 **API Docs:** `MiniApp.create(appId:completionHandler:messageInterface:)`, `MiniAppDisplayDelegate`
 
-`MiniApp.create` is used to create a `View` for displaying a specific mini app. You must provide the mini app ID which you wish to create (you can get the mini-app ID by [Loading the Mini App List](#load-miniapp-list) first). Calling `MiniApp.create` will do the following:
+`MiniApp.create` is used to create a `View` for displaying a specific Mini App. You must provide the Mini App ID which you wish to create (you can get the Mini App ID by [Loading the Mini App List](#load-miniapp-list) first). Calling `MiniApp.create` will do the following:
 
-- Checks with the platform what is the latest and published version of the mini app.
-- Check if the latest version of the mini app has been already downloaded 
-    - If yes, return the already downloaded mini app view.
+- Checks with the platform what is the latest and published version of the Mini App.
+- Check if the latest version of the Mini App has been already downloaded 
+    - If yes, return the already downloaded Mini App view.
     - If not, download the latest version and then return the view
-- If the device is disconnected from the internet and if the device already has a version of the mini app downloaded, then the already downloaded version will be returned immediately.
+- If the device is disconnected from the internet and if the device already has a version of the Mini App downloaded, then the already downloaded version will be returned immediately.
 
-After calling `MiniApp.create`, you will obtain an instance of `MiniAppDisplayDelegate` which is the delegate of the Display module. You can call `MiniAppDisplayDelegate.getMiniAppView` to obtain a `View` for displaying the mini app.
+After calling `MiniApp.create`, you will obtain an instance of `MiniAppDisplayDelegate` which is the delegate of the Display module. You can call `MiniAppDisplayDelegate.getMiniAppView` to obtain a `View` for displaying the Mini App.
 
 The following is a simplified example:
 
@@ -207,8 +209,9 @@ Custom permissions and its status can be retrieved using the following interface
 let miniAppPermissionsList = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppId)
 ```
 
+<a id="store-custom-permission"></a>
 ##### Store the Mini App Custom Permissions
-Custom permissions for a mini app is cached by the SDK and you can use the following interface to store and retrieve it when you need.
+Custom permissions for a Mini App is cached by the SDK and you can use the following interface to store and retrieve it when you need.
 
 ```swift
  MiniApp.shared().setCustomPermissions(forMiniApp: String, permissionList: [MASDKCustomPermissionModel])
@@ -433,9 +436,13 @@ MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) 
 }
 ```
 
+<a id="mini-meta-data"></a>
+
+### Mini App meta-data
+
 <a id="get-mini-meta-data"></a>
 
-### Getting a `MiniApp meta-data` :
+#### Getting a `MiniApp meta-data` :
 ---
 
 MiniApp developers can define the `required` & `optional` permissions in the `manifest.json` file like below. Also, they can add any custom variables/items inside `customMetaData`.
@@ -483,6 +490,19 @@ MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAp
 	...
 }
 ```
+
+<a id="how-to-use-meta-data"></a>
+
+#### How to use `MiniApp meta-data` :
+---
+
+SDK internally checks if the User has responded to the list of required/optional permissions that are enforced by the Mini App. So host app SHOULD make sure that the user is prompted with necessary custom permissions and get the response back from the user.
+
+Before calling the `MiniApp.create`, host app should make sure the following things are done:
+
+* Retrieve the meta-data for the Mini App using [getMiniAppManifest](#get-mini-meta-data)
+* Display/Prompt the list of required & optional permissions to the user and the user response should be stored using [MiniApp.setCustomPermissions](#store-custom-permission)
+* Call [MiniApp.create](#create-mini-app) to start downloading the Mini App
 
 <a id="list-downloaded-mini-apps"></a>
 
@@ -590,9 +610,9 @@ extension ExternalWebViewController: WKNavigationDelegate {
 #### Orientation Lock
 
 
-You can choose to give orientation lock control to mini apps. However, this requires you to add some code to your `AppDelegate` which could have an affect on your entire App. If you do not wish to do this, please see the section *"Allow only full screen videos to change orientation".*
+You can choose to give orientation lock control to Mini Apps. However, this requires you to add some code to your `AppDelegate` which could have an affect on your entire App. If you do not wish to do this, please see the section *"Allow only full screen videos to change orientation".*
 
-##### Allow mini apps to lock the view to any orientation
+##### Allow Mini Apps to lock the view to any orientation
     
 ```swift
 func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -609,7 +629,7 @@ func application(_ application: UIApplication, supportedInterfaceOrientationsFor
 
 ##### Allow full screen videos to change orientation
 
-You can add the following if you want to enable videos to change orientation. Note that if you do not wish to add code to `AppDelegate` as in the above example, you can still allow videos inside the mini app to use landscape mode even when your App is locked to portrait mode and vice versa.
+You can add the following if you want to enable videos to change orientation. Note that if you do not wish to add code to `AppDelegate` as in the above example, you can still allow videos inside the Mini App to use landscape mode even when your App is locked to portrait mode and vice versa.
 
 ```swift
 import AVKit
@@ -664,9 +684,9 @@ Here is an example of data contained in payload:
 
 <a id="query-param-mini-app"></a>
 
-### Passing Query parameters while creating Mini-app
+### Passing Query parameters while creating Mini App
 
-While creating a mini app, you can pass the optional query parameter as well. This query parameter will be appended to the mini-app's URL.
+While creating a Mini App, you can pass the optional query parameter as well. This query parameter will be appended to the Mini App's URL.
 
 For eg.,
 
@@ -684,7 +704,7 @@ MiniApp.shared().create(appId: String, queryParams: "param1=value1&param2=value2
 
 ```
 
-And the mini-app will be loaded like the following scheme,
+And the Mini App will be loaded like the following scheme,
 
 ```mscheme.rakuten//miniapp/index.html?param1=value1&param2=value2```
 

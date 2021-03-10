@@ -31,7 +31,10 @@ public enum MASDKError: Error {
     /// The provided mini app ID was not found on the server.
     case miniAppNotFound
 
-    /// An unexpected error occured.
+    /// All required custom permissions is not allowed by the user
+    case metaDataFailure
+
+    /// An unexpected error occurred.
     ///
     /// - Parameters:
     ///     - domain: The domain from the original NSError.
@@ -46,19 +49,21 @@ extension MASDKError: LocalizedError {
         case .serverError(let code, let message):
             return String(format: NSLocalizedString("error_server", comment: ""), code, message)
         case .invalidURLError:
-            return NSLocalizedString("error_invalid_url", comment: "")
+            return "error_invalid_url".localizedString()
         case .invalidAppId:
-            return NSLocalizedString("error_invalid_app_id", comment: "")
+            return "error_invalid_app_id".localizedString()
         case .invalidVersionId:
-            return NSLocalizedString("error_invalid_version_id", comment: "")
+            return "error_invalid_version_id".localizedString()
         case .invalidResponseData:
-            return NSLocalizedString("error_invalid_response", comment: "")
+            return "error_invalid_response".localizedString()
         case .downloadingFailed:
-            return NSLocalizedString("error_download_failed", comment: "")
+            return "error_invalid_response".localizedString()
         case .noPublishedVersion:
-            return NSLocalizedString("error_no_published_version", comment: "")
+            return "error_no_published_version".localizedString()
         case .miniAppNotFound:
-            return NSLocalizedString("error_miniapp_id_not_found", comment: "")
+            return "error_miniapp_id_not_found".localizedString()
+        case .metaDataFailure:
+            return "error_miniapp_meta_data_required_permissions_failure".localizedString()
         case .unknownError(let domain, let code, let description):
             return String(format: NSLocalizedString("error_unknown", comment: ""), domain, code, description)
         }
@@ -85,6 +90,14 @@ extension MASDKError {
                 return MASDKError.noPublishedVersion
             case .miniAppNotFound:
                 return MASDKError.miniAppNotFound
+            default:
+                break
+            }
+        }
+        if error.domain == MASDKErrorDomain {
+            switch MiniAppSDKErrorCode(rawValue: error.code) {
+            case .metaDataFailure:
+                return MASDKError.metaDataFailure
             default:
                 break
             }
