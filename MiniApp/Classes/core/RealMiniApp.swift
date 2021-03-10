@@ -6,6 +6,7 @@ internal class RealMiniApp {
     var displayer: Displayer
     var miniAppStatus: MiniAppStatus
     var miniAppPermissionStorage: MiniAppPermissionsStorage
+    var miniAppManifestStorage: MAManifestStorage
     let offlineErrorCodeList: [Int] = [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut]
 
     convenience init() {
@@ -22,6 +23,7 @@ internal class RealMiniApp {
         self.manifestDownloader = ManifestDownloader()
         self.miniAppStatus = MiniAppStatus()
         self.miniAppPermissionStorage = MiniAppPermissionsStorage()
+        self.miniAppManifestStorage = MAManifestStorage()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer(navigationSettings)
     }
@@ -128,18 +130,31 @@ internal class RealMiniApp {
         }
     }
 
-    func getMiniAppView(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
-        DispatchQueue.main.async {
-            let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
-                                                                       versionId: appInfo.version.versionId,
-                                                                       projectId: self.miniAppClient.environment.projectId,
-                                                                       miniAppTitle: appInfo.displayName ?? "Mini app",
-                                                                       queryParams: queryParams,
-                                                                       hostAppMessageDelegate: messageInterface ?? self,
-                                                                       adsDisplayer: adsDisplayer)
-            self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
-            self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
-            completionHandler(.success(miniAppDisplayProtocol))
+    func getMiniAppView(appInfo: MiniAppInfo,
+                        queryParams: String? = nil,
+                        completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void,
+                        messageInterface: MiniAppMessageDelegate? = nil,
+                        adsDisplayer: MiniAppAdDisplayer? = nil) {
+        self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
+        self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
+        isRequiredPermissionsAllowed(
+            appId: appInfo.id,
+            versionId: appInfo.version.versionId) { (result) in
+            switch result {
+            case .success:
+                    DispatchQueue.main.async {
+                        let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
+                                                                                   versionId: appInfo.version.versionId,
+                                                                                   projectId: self.miniAppClient.environment.projectId,
+                                                                                   miniAppTitle: appInfo.displayName ?? "Mini app",
+                                                                                   queryParams: queryParams,
+                                                                                   hostAppMessageDelegate: messageInterface ?? self,
+                                                                                   adsDisplayer: adsDisplayer)
+                        completionHandler(.success(miniAppDisplayProtocol))
+                    }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
         }
     }
 
@@ -173,11 +188,23 @@ internal class RealMiniApp {
     }
 
     func retrieveCustomPermissions(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
-        miniAppPermissionStorage.getCustomPermissions(forMiniApp: id)
+        let cachedPermissions = miniAppPermissionStorage.getCustomPermissions(forMiniApp: id)
+        return filterCustomPermissions(forMiniApp: id, cachedPermissions: cachedPermissions)
     }
 
     func storeCustomPermissions(forMiniApp id: String, permissionList: [MASDKCustomPermissionModel]) {
         miniAppPermissionStorage.storeCustomPermissions(permissions: permissionList, forMiniApp: id)
+    }
+
+    func filterCustomPermissions(forMiniApp id: String, cachedPermissions: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {
+        guard let manifestData = self.miniAppManifestStorage.getManifestInfo(forMiniApp: id)?.miniAppManifest else {
+            return cachedPermissions
+        }
+        let manifestCustomPermissions = (manifestData.requiredPermissions ?? []) + (manifestData.optionalPermissions ?? [])
+        let filtered = cachedPermissions.filter {
+            manifestCustomPermissions.contains($0)
+        }
+        return filtered
     }
 
     func getDownloadedListWithCustomPermissions() -> MASDKDownloadedListPermissionsPair {
@@ -205,12 +232,79 @@ internal class RealMiniApp {
         }
         miniAppInfoFetcher.getMiniAppMetaInfo(miniAppId: appId,
                                               miniAppVersion: version,
-                                              apiClient: self.miniAppClient, completionHandler: self.createCompletionHandler(completionHandler: completionHandler))
+                                              apiClient: self.miniAppClient) { (result) in
+            switch result {
+            case .success(let metaData):
+                completionHandler(.success(metaData))
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
     }
 
     /// Method to remove the unused/deleted items from the Keychain
     func cleanUpKeychain() {
         self.miniAppStatus.removeUnusedCustomPermissions()
+    }
+
+    /// Method to check if all the required permissions mentioned in the manifest.json is agreed by the user.
+    /// - Parameters:
+    ///   - appId: MiniApp ID
+    ///   - versionId: Specific VersionID of a MiniApp
+    ///   - completionHandler: Handler that returns whether user agreed to required permissions or not.
+    func isRequiredPermissionsAllowed(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
+        let cachedMetaData = self.miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
+        if cachedMetaData?.version != versionId {
+            retrieveMiniAppMetaData(appId: appId, version: versionId) { (result) in
+                switch result {
+                case .success(let manifest):
+                    self.miniAppManifestStorage.saveManifestInfo(forMiniApp: appId,
+                                                                 manifest: CachedMetaData(version: versionId,
+                                                                                          miniAppManifest: manifest))
+                    self.verifyRequiredPermissions(appId: appId,
+                                                   miniAppManifest: manifest,
+                                                   completionHandler: completionHandler)
+                case .failure(let error):
+                    completionHandler(.failure(error))
+                }
+            }
+        } else {
+            self.verifyRequiredPermissions(appId: appId,
+                                           miniAppManifest: cachedMetaData?.miniAppManifest,
+                                           completionHandler: completionHandler)
+        }
+    }
+
+    /// Method that compares the required permissions from the manifest and the stored custom permissions.
+    /// - Parameters:
+    ///   - appId: MiniApp ID
+    ///   - requiredPermissions: List of required Custom permissions that is defined by the Mini App
+    ///   - completionHandler: Handler that returns whether user agreed to required permissions or not.
+    func verifyRequiredPermissions(appId: String,
+                                   miniAppManifest: MiniAppManifest?,
+                                   completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
+        guard let manifestData = miniAppManifest, let requiredPermissions = manifestData.requiredPermissions else {
+            return completionHandler(.success(true))
+        }
+        let storedCustomPermissions = self.miniAppPermissionStorage.getCustomPermissions(forMiniApp: appId)
+        miniAppPermissionStorage.storeCustomPermissions(permissions: filterCustomPermissions(forMiniApp: appId,
+                                                                                             cachedPermissions: storedCustomPermissions),
+                                                        forMiniApp: appId)
+        let filtered = storedCustomPermissions.filter {
+            requiredPermissions.contains($0)
+        }
+        if filtered.count == requiredPermissions.count && filtered.allSatisfy({ $0.isPermissionGranted.boolValue == true }) {
+            completionHandler(.success(true))
+        } else {
+            completionHandler(.failure(.metaDataFailure))
+        }
+    }
+
+    /// Method that returns the Cached MiniAppManifest from the Keychain
+    /// - Parameter appId: MiniApp ID
+    /// - Returns: MiniAppManifest object
+    func getCachedManifestData(appId: String) -> MiniAppManifest? {
+        return self.miniAppManifestStorage.getManifestInfo(forMiniApp: appId)?.miniAppManifest
     }
 }
 

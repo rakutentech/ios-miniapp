@@ -4,7 +4,7 @@
 
 **SDK**
 
-- **Core:** incremented minimum support version for iOS from 11.0 to 13.0 
+- **Core:** Incremented minimum support version for iOS from 11.0 to 13.0 
 - **Removed:** Removed all deprecated and variables methods from v2:
   - `MiniApp` :
     - `list(completionHandler:)` now takes a `(Result<[MiniAppInfo], MASDKError>) -> Void` in place of a `(Result<[MiniAppInfo], Error>) -> Void`
@@ -26,6 +26,8 @@
 - **Feature:** Added ads for Mini Apps host
 - **Feature:** Added Google mobile ads integration in a `MiniApps/Admob` pod subspec
 - **Feature:** Added new interface `getMiniAppManifest(miniAppId:miniAppVersion:)` to retrieve the meta-data of a MiniApp
+- **Feature:** Added new interface `getDownloadedManifest(miniAppId:)` to retrieve the cached meta-data of a MiniApp
+- **Removed:** RSDKUtils dependency removed
 
 **Sample App**
 

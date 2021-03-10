@@ -55,3 +55,13 @@ public struct MiniAppManifest: Codable {
         self.customMetaData = customMetaData
     }
 }
+
+internal struct CachedMetaData: Codable {
+    let version: String
+    let miniAppManifest: MiniAppManifest?
+
+    init(version: String, miniAppManifest: MiniAppManifest) {
+        self.version = version
+        self.miniAppManifest = miniAppManifest
+    }
+}

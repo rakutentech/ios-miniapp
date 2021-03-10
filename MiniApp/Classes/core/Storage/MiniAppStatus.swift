@@ -78,7 +78,7 @@ class MiniAppStatus {
             if let permMod = finalList[miniAppInfo.id] {
                 returnList.append((miniAppInfo, permMod))
             } else {
-                returnList.append((miniAppInfo, self.miniAppKeyStore.getDefaultSupportedPermissions()))
+                returnList.append((miniAppInfo, []))
             }
         }
         return returnList
