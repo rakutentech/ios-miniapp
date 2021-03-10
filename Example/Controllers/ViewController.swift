@@ -78,8 +78,8 @@ class ViewController: UIViewController {
                 switch result {
                 case .success:
                     self.displayMiniApp(miniAppInfo: miniAppInfo)
-                case .failure:
-                    break
+                case .failure(let error):
+                    self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: error.localizedDescription, dismissController: true)
                 }
             }
         } else {
@@ -111,17 +111,6 @@ class ViewController: UIViewController {
             }
         }
     }
-//
-//    func isNewManifestFound(latestManifest: MiniAppManifest,
-//                            oldManifest: MiniAppManifest,
-//                            miniAppInfo: MiniAppInfo,
-//                            completionHandler: @escaping (Result<Bool, Error>) -> Void) {
-//        if latestManifest == oldManifest {
-//            completionHandler(.success(true))
-//        } else {
-//            checkChangesInPermissions(latestManifest: latestManifest, miniAppInfo: miniAppInfo)
-//        }
-//    }
 
     func checkRequiredPermissions(latestManifest: MiniAppManifest, oldManifest: MiniAppManifest, miniAppInfo: MiniAppInfo) {
         let alreadyAllowedPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo.id).filter { $0.isPermissionGranted.boolValue == true }
