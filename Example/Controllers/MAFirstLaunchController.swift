@@ -71,21 +71,21 @@ extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(
             withIdentifier: "FirstLaunchCustomPermissionCell", for: indexPath) as? FirstLaunchCustomPermissionCell {
-                let permissionModel: MASDKCustomPermissionModel?
-                if requiredPermissions.indices.contains(indexPath.row) {
-                    permissionModel =  requiredPermissions[indexPath.row]
-                        cell.permissionTitle?.attributedText =  NSMutableAttributedString()
-                            .normalText(permissionModel?.permissionName.title ?? "")
-                            .highlightRedColor(" (required)")
-                        cell.permissionDescription?.text = permissionModel?.permissionDescription
-                        cell.toggle.isHidden = true
-                } else {
-                    if optionalPermissions.indices.contains(indexPath.row - (requiredPermissions.count)) {
-                        permissionModel =  optionalPermissions[indexPath.row - (requiredPermissions.count)]
-                        cell.permissionTitle?.text = permissionModel?.permissionName.title
-                        cell.permissionDescription?.text = permissionModel?.permissionDescription
-                    }
+            let permissionModel: MASDKCustomPermissionModel?
+            if requiredPermissions.indices.contains(indexPath.row) {
+                permissionModel = requiredPermissions[indexPath.row]
+                cell.permissionTitle?.attributedText = NSMutableAttributedString()
+                    .normalText(permissionModel?.permissionName.title ?? "")
+                    .highlightRedColor(" (required)")
+                cell.permissionDescription?.text = permissionModel?.permissionDescription
+                cell.toggle.isHidden = true
+            } else {
+                if optionalPermissions.indices.contains(indexPath.row - (requiredPermissions.count)) {
+                    permissionModel = optionalPermissions[indexPath.row - (requiredPermissions.count)]
+                    cell.permissionTitle?.text = permissionModel?.permissionName.title
+                    cell.permissionDescription?.text = permissionModel?.permissionDescription
                 }
+            }
             cell.toggle.tag = indexPath.row
             cell.toggle.isOn = true
             cell.toggle.addTarget(self, action: #selector(permissionValueChanged(_:)), for: .valueChanged)
@@ -127,7 +127,7 @@ class FirstLaunchCustomPermissionCell: UITableViewCell {
 extension NSMutableAttributedString {
     func highlightRedColor(_ value: String) -> NSMutableAttributedString {
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
+                .foregroundColor: #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
         ]
         self.append(NSAttributedString(string: value, attributes: attributes))
         return self

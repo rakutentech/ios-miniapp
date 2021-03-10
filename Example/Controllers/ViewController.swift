@@ -105,32 +105,41 @@ class ViewController: UIViewController {
         MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                self.checkRequiredPermissions(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
+                if manifestData.requiredPermissions == nil && manifestData.optionalPermissions == nil {
+                    self.displayMiniApp(miniAppInfo: miniAppInfo)
+                } else {
+                    self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
+                }
             case .failure(let error):
                 completionHandler(.failure(error))
             }
         }
     }
 
-    func checkRequiredPermissions(latestManifest: MiniAppManifest, oldManifest: MiniAppManifest, miniAppInfo: MiniAppInfo) {
-        let alreadyAllowedPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo.id).filter { $0.isPermissionGranted.boolValue == true }
-
-        let requiredPermissions = removeAllowedPermissions(permsArray: latestManifest.requiredPermissions ?? [], alreadyAllowedPermissions: alreadyAllowedPermissions)
-        let optionalPermissions = removeAllowedPermissions(permsArray: latestManifest.optionalPermissions ?? [], alreadyAllowedPermissions: alreadyAllowedPermissions)
-        if requiredPermissions.count > 0 || oldManifest != latestManifest {
-            if latestManifest.requiredPermissions == nil && latestManifest.optionalPermissions == nil {
-                self.displayMiniApp(miniAppInfo: miniAppInfo)
-            } else {
-                self.displayFirstTimeLaunchScreen(reqPermissions: requiredPermissions, optPermissions: optionalPermissions, miniAppInfo: miniAppInfo)
-            }
-        } else {
+    func checkIfManifestChanged(latestManifest: MiniAppManifest, oldManifest: MiniAppManifest, miniAppInfo: MiniAppInfo) {
+        if oldManifest == latestManifest {
             self.displayMiniApp(miniAppInfo: miniAppInfo)
+        } else {
+            let cachedPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo.id)
+            let cachedAllowedPermissions = cachedPermissions.filter { $0.isPermissionGranted.boolValue == true }
+
+            let requiredPermissions = filterPermissions(permsArray: latestManifest.requiredPermissions ?? [],
+                                                        cachedPermissions: cachedAllowedPermissions)
+            let optionalPermissions = filterPermissions(permsArray: latestManifest.optionalPermissions ?? [],
+                                                        cachedPermissions: cachedPermissions)
+            if requiredPermissions.count > 0 || optionalPermissions.count > 0 {
+                self.displayFirstTimeLaunchScreen(reqPermissions: requiredPermissions,
+                                                  optPermissions: optionalPermissions,
+                                                  miniAppInfo: miniAppInfo)
+            } else {
+                self.displayMiniApp(miniAppInfo: miniAppInfo)
+            }
         }
     }
 
-    func removeAllowedPermissions(permsArray: [MASDKCustomPermissionModel], alreadyAllowedPermissions: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {
+    func filterPermissions(permsArray: [MASDKCustomPermissionModel], cachedPermissions: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {
         return permsArray.filter {
-            !alreadyAllowedPermissions.contains($0)
+            !cachedPermissions.contains($0)
         }
     }
 

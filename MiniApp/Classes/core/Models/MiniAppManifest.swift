@@ -56,8 +56,8 @@ public struct MiniAppManifest: Codable, Equatable {
     }
 
     public static func == (lhs: MiniAppManifest, rhs: MiniAppManifest) -> Bool {
-        lhs.requiredPermissions == rhs.requiredPermissions &&
-            lhs.optionalPermissions == rhs.optionalPermissions &&
+        lhs.requiredPermissions?.sorted() == rhs.requiredPermissions?.sorted() &&
+            lhs.optionalPermissions?.sorted() == rhs.optionalPermissions?.sorted() &&
             lhs.customMetaData == rhs.customMetaData
     }
 }
