@@ -84,6 +84,7 @@ extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
                     permissionModel = optionalPermissions[indexPath.row - (requiredPermissions.count)]
                     cell.permissionTitle?.text = permissionModel?.permissionName.title
                     cell.permissionDescription?.text = permissionModel?.permissionDescription
+                    cell.toggle.isHidden = false
                 }
             }
             cell.toggle.tag = indexPath.row
