@@ -212,6 +212,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         adsDisplayer: mockAdsDelegate,
                         miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
                     )
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .userName, status: .allowed)
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
@@ -222,8 +223,12 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         return
                     }
                     let decodedObj = try JSONDecoder().decode(MiniAppCustomPermissionsResponse.self, from: responseData)
-                    expect(decodedObj.permissions[0].name).toEventually(equal("rakuten.miniapp.user.USER_NAME"), timeout: .seconds(10))
-                    expect(decodedObj.permissions[0].status).toEventually(equal("ALLOWED"), timeout: .seconds(10))
+                    if decodedObj.permissions.count > 0 {
+                        expect(decodedObj.permissions[0].name).toEventually(equal("rakuten.miniapp.user.USER_NAME"), timeout: .seconds(10))
+                        expect(decodedObj.permissions[0].status).toEventually(equal("ALLOWED"), timeout: .seconds(10))
+                    } else {
+                        fail("create MiniApp failure")
+                    }
                 }
             }
             context("when MiniAppScriptMessageHandler receives valid custom permissions command but invalid permission object title instead of name") {
