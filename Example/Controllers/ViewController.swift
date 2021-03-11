@@ -91,7 +91,11 @@ class ViewController: UIViewController {
         MiniApp.shared(with: Config.getCurrent()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                self.displayFirstTimeLaunchScreen(reqPermissions: manifestData.requiredPermissions ?? [], optPermissions: manifestData.optionalPermissions ?? [], miniAppInfo: miniAppInfo, customMetaData: manifestData.customMetaData ?? [:])
+                self.displayFirstTimeLaunchScreen(
+                    reqPermissions: manifestData.requiredPermissions ?? [],
+                    optPermissions: manifestData.optionalPermissions ?? [],
+                    miniAppInfo: miniAppInfo,
+                    customMetaData: manifestData.customMetaData ?? [:])
             case .failure:
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""), dismissController: true)
             }
