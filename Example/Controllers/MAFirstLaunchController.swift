@@ -7,6 +7,8 @@ class MAFirstLaunchController: UIViewController {
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var miniAppName: UILabel!
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var metatDataLabel: UILabel!
     @IBOutlet weak var miniAppVersion: UILabel!
     @IBOutlet weak var miniAppImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -18,6 +20,8 @@ class MAFirstLaunchController: UIViewController {
     var permissionsCollections: [MASDKCustomPermissionModel]?
     var requiredPermissions: [MASDKCustomPermissionModel] = []
     var optionalPermissions: [MASDKCustomPermissionModel] = []
+    var customMetaData: [String: String] = [:]
+    var isManifestUpdated: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +50,12 @@ class MAFirstLaunchController: UIViewController {
         self.miniAppName.text = self.miniAppInfo?.displayName
         self.miniAppVersion.text = "Version: " + (self.miniAppInfo?.version.versionTag)!
         self.miniAppImageView.loadImage(self.miniAppInfo!.icon, placeholder: "image_placeholder", cache: nil)
+        if isManifestUpdated {
+            self.headerLabel.text = "Updated permissions, would you like to agree?"
+        } else {
+            self.headerLabel.text = "Would you like to download this miniapp?"
+        }
+        self.metatDataLabel.text = customMetaData.dictToString
     }
 
     @IBAction func acceptButtonPressed(_ sender: UIButton) {
@@ -137,5 +147,16 @@ extension NSMutableAttributedString {
     func normalText(_ value: String) -> NSMutableAttributedString {
         self.append(NSAttributedString(string: value, attributes: nil))
         return self
+    }
+}
+
+extension Dictionary {
+    var dictToString: String {
+        var output: String = ""
+        for (key, value) in self {
+            output +=  "{\(key) : \(value)},"
+        }
+        output = String(output.dropLast())
+        return output
     }
 }

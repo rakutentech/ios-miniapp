@@ -427,16 +427,25 @@
                                             <outlet property="delegate" destination="B28-kb-Eaj" id="MC1-mK-t1u"/>
                                         </connections>
                                     </tableView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRZ-AU-7Gm">
+                                        <rect key="frame" x="17" y="476" width="341" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="systemGrayColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="zFk-JA-vJ0" firstAttribute="leading" secondItem="eaI-eN-Cin" secondAttribute="leading" constant="21" id="6qH-xM-1Ha"/>
                                     <constraint firstItem="zFk-JA-vJ0" firstAttribute="top" secondItem="eaI-eN-Cin" secondAttribute="top" constant="23" id="6wj-vo-vrB"/>
+                                    <constraint firstItem="JRZ-AU-7Gm" firstAttribute="trailing" secondItem="tEO-Sb-IKS" secondAttribute="trailing" id="7iN-Wj-iKp"/>
                                     <constraint firstAttribute="trailing" secondItem="tEO-Sb-IKS" secondAttribute="trailing" constant="17" id="AJe-wG-IU9"/>
                                     <constraint firstItem="tEO-Sb-IKS" firstAttribute="leading" secondItem="eaI-eN-Cin" secondAttribute="leading" constant="17" id="Hii-48-qiB"/>
+                                    <constraint firstItem="JRZ-AU-7Gm" firstAttribute="leading" secondItem="tEO-Sb-IKS" secondAttribute="leading" id="Qhf-jB-Wg6"/>
                                     <constraint firstAttribute="trailing" secondItem="zFk-JA-vJ0" secondAttribute="trailing" constant="7" id="cBf-5p-ILl"/>
                                     <constraint firstItem="tEO-Sb-IKS" firstAttribute="centerX" secondItem="Ssg-YL-BQm" secondAttribute="centerX" id="gna-m0-XzV"/>
                                     <constraint firstItem="tEO-Sb-IKS" firstAttribute="top" secondItem="Ssg-YL-BQm" secondAttribute="bottom" constant="21" id="pd9-9B-4yq"/>
                                     <constraint firstAttribute="bottom" secondItem="tEO-Sb-IKS" secondAttribute="bottom" constant="69" id="qad-4W-cxQ"/>
+                                    <constraint firstItem="JRZ-AU-7Gm" firstAttribute="top" secondItem="tEO-Sb-IKS" secondAttribute="bottom" constant="8" id="rfu-u8-7SG"/>
                                     <constraint firstItem="Ssg-YL-BQm" firstAttribute="top" secondItem="zFk-JA-vJ0" secondAttribute="bottom" constant="16" id="tZ9-3S-NhT"/>
                                     <constraint firstItem="Ssg-YL-BQm" firstAttribute="centerX" secondItem="eaI-eN-Cin" secondAttribute="centerX" id="zlJ-a5-ARa"/>
                                 </constraints>
@@ -496,6 +505,8 @@
                     <connections>
                         <outlet property="acceptButton" destination="o0i-YB-IIj" id="0Ez-5n-pbB"/>
                         <outlet property="closeButton" destination="lZG-xu-s9d" id="g6r-RR-Zhp"/>
+                        <outlet property="headerLabel" destination="zFk-JA-vJ0" id="r1R-Ua-1VU"/>
+                        <outlet property="metatDataLabel" destination="JRZ-AU-7Gm" id="Sbd-Um-1qv"/>
                         <outlet property="miniAppImageView" destination="SYZ-tS-FDQ" id="9wA-Rf-R2N"/>
                         <outlet property="miniAppMetaInfoContainer" destination="Ssg-YL-BQm" id="avh-Xe-NAw"/>
                         <outlet property="miniAppName" destination="hn9-XN-2FM" id="urN-M6-1Dr"/>
@@ -507,7 +518,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ZT-qq-69l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="129" y="1164"/>
+            <point key="canvasLocation" x="128.80000000000001" y="1163.568215892054"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -529,6 +540,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -91,7 +91,7 @@ class ViewController: UIViewController {
         MiniApp.shared(with: Config.getCurrent()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                self.displayFirstTimeLaunchScreen(reqPermissions: manifestData.requiredPermissions ?? [], optPermissions: manifestData.optionalPermissions ?? [], miniAppInfo: miniAppInfo)
+                self.displayFirstTimeLaunchScreen(reqPermissions: manifestData.requiredPermissions ?? [], optPermissions: manifestData.optionalPermissions ?? [], miniAppInfo: miniAppInfo, customMetaData: manifestData.customMetaData ?? [:])
             case .failure:
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""), dismissController: true)
             }
@@ -122,19 +122,14 @@ class ViewController: UIViewController {
 
         let requiredPermissions = filterPermissions(permsArray: latestManifest.requiredPermissions ?? [],
                                                     cachedPermissions: cachedAllowedPermissions)
-        let optionalPermissions = filterPermissions(permsArray: latestManifest.optionalPermissions ?? [],
-                                                    cachedPermissions: cachedPermissions)
-
         if oldManifest == latestManifest && requiredPermissions.count == 0 {
             self.displayMiniApp(miniAppInfo: miniAppInfo)
         } else {
-            if requiredPermissions.count > 0 || optionalPermissions.count > 0 {
-                self.displayFirstTimeLaunchScreen(reqPermissions: requiredPermissions,
-                                                  optPermissions: optionalPermissions,
-                                                  miniAppInfo: miniAppInfo)
-            } else {
-                self.displayMiniApp(miniAppInfo: miniAppInfo)
-            }
+                self.displayFirstTimeLaunchScreen(reqPermissions: latestManifest.requiredPermissions ?? [],
+                                                  optPermissions: latestManifest.optionalPermissions ?? [],
+                                                  miniAppInfo: miniAppInfo,
+                                                  manifestUpdated: true,
+                                                  customMetaData: latestManifest.customMetaData ?? [:])
         }
     }
 
@@ -146,13 +141,17 @@ class ViewController: UIViewController {
 
     func displayFirstTimeLaunchScreen(reqPermissions: [MASDKCustomPermissionModel],
                                       optPermissions: [MASDKCustomPermissionModel],
-                                      miniAppInfo: MiniAppInfo) {
+                                      miniAppInfo: MiniAppInfo,
+                                      manifestUpdated: Bool? = false,
+                                      customMetaData: [String: String]) {
         DispatchQueue.main.async {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MAFirstTimeLaunch") as? MAFirstLaunchController {
                 self.currentMiniAppInfo = miniAppInfo
                 viewController.miniAppInfo = miniAppInfo
                 viewController.requiredPermissions = reqPermissions
                 viewController.optionalPermissions = optPermissions
+                viewController.isManifestUpdated = manifestUpdated ?? false
+                viewController.customMetaData = customMetaData
                 viewController.launchScreenDelegate = self
                 viewController.modalPresentationStyle = .fullScreen
                 self.present(viewController, animated: true)
