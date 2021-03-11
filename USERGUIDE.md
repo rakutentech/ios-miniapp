@@ -77,6 +77,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Mini App meta-data](#mini-meta-data)
     * [Getting a MiniApp meta-data](#get-mini-meta-data)
     * [How to use MiniApp meta-data](#how-to-use-meta-data)
+    * [How to get downloaded MiniApp meta-data](#how-to-get-downloaded-meta-data)
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Advanced Features](#advanced-features)
     * [Overriding configuration on runtime](#runtime-conf)
@@ -503,6 +504,20 @@ Before calling the `MiniApp.create`, host app should make sure the following thi
 * Retrieve the meta-data for the Mini App using [getMiniAppManifest](#get-mini-meta-data)
 * Display/Prompt the list of required & optional permissions to the user and the user response should be stored using [MiniApp.setCustomPermissions](#store-custom-permission)
 * Call [MiniApp.create](#create-mini-app) to start downloading the Mini App
+
+
+<a id="how-to-get-downloaded-meta-data"></a>
+How to get downloaded `Mini App meta-data`
+
+---
+In Host App, we can get the downloaded manifest information as following:
+
+```kotlin
+  let downloadedManifest = MiniApp.shared().getDownloadedManifest(miniAppId:)
+```
+
+HostApp can compare the old `downloadedManifest` and the latest manifest by calling [MiniApp.shared().getMiniAppManifest](#get-mini-meta-data) to detect any new changes.
+
 
 <a id="list-downloaded-mini-apps"></a>
 

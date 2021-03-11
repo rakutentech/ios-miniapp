@@ -7,6 +7,8 @@ class MAFirstLaunchController: UIViewController {
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var miniAppName: UILabel!
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var metatDataLabel: UILabel!
     @IBOutlet weak var miniAppVersion: UILabel!
     @IBOutlet weak var miniAppImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -15,8 +17,11 @@ class MAFirstLaunchController: UIViewController {
 
     weak var launchScreenDelegate: MALaunchScreenDelegate?
     var miniAppInfo: MiniAppInfo?
-    var miniAppManifest: MiniAppManifest?
     var permissionsCollections: [MASDKCustomPermissionModel]?
+    var requiredPermissions: [MASDKCustomPermissionModel] = []
+    var optionalPermissions: [MASDKCustomPermissionModel] = []
+    var customMetaData: [String: String] = [:]
+    var isManifestUpdated: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +34,7 @@ class MAFirstLaunchController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-        permissionsCollections = (miniAppManifest?.requiredPermissions ?? []) + (miniAppManifest?.optionalPermissions ?? [])
+        permissionsCollections = requiredPermissions + optionalPermissions
     }
 
     override func viewDidLayoutSubviews() {
@@ -45,6 +50,12 @@ class MAFirstLaunchController: UIViewController {
         self.miniAppName.text = self.miniAppInfo?.displayName
         self.miniAppVersion.text = "Version: " + (self.miniAppInfo?.version.versionTag)!
         self.miniAppImageView.loadImage(self.miniAppInfo!.icon, placeholder: "image_placeholder", cache: nil)
+        if isManifestUpdated {
+            self.headerLabel.text = "Updated permissions, would you like to agree?"
+        } else {
+            self.headerLabel.text = "Would you like to download this miniapp?"
+        }
+        self.metatDataLabel.text = customMetaData.dictToString
     }
 
     @IBAction func acceptButtonPressed(_ sender: UIButton) {
@@ -70,21 +81,22 @@ extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(
             withIdentifier: "FirstLaunchCustomPermissionCell", for: indexPath) as? FirstLaunchCustomPermissionCell {
-                let permissionModel: MASDKCustomPermissionModel?
-                if miniAppManifest?.requiredPermissions?.indices.contains(indexPath.row) ?? false {
-                    permissionModel =  miniAppManifest?.requiredPermissions?[indexPath.row]
-                    cell.permissionTitle?.attributedText =  NSMutableAttributedString()
-                        .normalText(permissionModel?.permissionName.title ?? "")
-                        .highlightRedColor(" (required)")
+            let permissionModel: MASDKCustomPermissionModel?
+            if requiredPermissions.indices.contains(indexPath.row) {
+                permissionModel = requiredPermissions[indexPath.row]
+                cell.permissionTitle?.attributedText = NSMutableAttributedString()
+                    .normalText(permissionModel?.permissionName.title ?? "")
+                    .highlightRedColor(" (required)")
+                cell.permissionDescription?.text = permissionModel?.permissionDescription
+                cell.toggle.isHidden = true
+            } else {
+                if optionalPermissions.indices.contains(indexPath.row - (requiredPermissions.count)) {
+                    permissionModel = optionalPermissions[indexPath.row - (requiredPermissions.count)]
+                    cell.permissionTitle?.text = permissionModel?.permissionName.title
                     cell.permissionDescription?.text = permissionModel?.permissionDescription
-                    cell.toggle.isHidden = true
-                } else {
-                    if miniAppManifest?.optionalPermissions?.indices.contains(indexPath.row - (miniAppManifest?.requiredPermissions?.count ?? 0)) ?? false {
-                        permissionModel =  miniAppManifest?.optionalPermissions?[indexPath.row - (miniAppManifest?.requiredPermissions?.count ?? 0)]
-                        cell.permissionTitle?.text = permissionModel?.permissionName.title
-                        cell.permissionDescription?.text = permissionModel?.permissionDescription
-                    }
+                    cell.toggle.isHidden = false
                 }
+            }
             cell.toggle.tag = indexPath.row
             cell.toggle.isOn = true
             cell.toggle.addTarget(self, action: #selector(permissionValueChanged(_:)), for: .valueChanged)
@@ -126,7 +138,7 @@ class FirstLaunchCustomPermissionCell: UITableViewCell {
 extension NSMutableAttributedString {
     func highlightRedColor(_ value: String) -> NSMutableAttributedString {
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
+                .foregroundColor: #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
         ]
         self.append(NSAttributedString(string: value, attributes: attributes))
         return self
@@ -135,5 +147,16 @@ extension NSMutableAttributedString {
     func normalText(_ value: String) -> NSMutableAttributedString {
         self.append(NSAttributedString(string: value, attributes: nil))
         return self
+    }
+}
+
+extension Dictionary {
+    var dictToString: String {
+        var output: String = ""
+        for (key, value) in self {
+            output +=  "{\(key) : \(value)},"
+        }
+        output = String(output.dropLast())
+        return output
     }
 }

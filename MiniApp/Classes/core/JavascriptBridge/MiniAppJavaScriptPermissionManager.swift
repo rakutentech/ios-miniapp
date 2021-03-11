@@ -130,7 +130,11 @@ extension MiniAppScriptMessageHandler {
 /// MASDKCustomPermissionModel helps to communicate with the Host app back and forth when Custom Permissions are requested by a Mini App.
 /// When Custom Permissions received from Mini app, this class is used by SDK to define the type of custom permissions that is requested and
 /// the same is returned by Host app with isPermissionGranted values updated (Value returned after user responded to the list of permissions)
-public class MASDKCustomPermissionModel: Codable, Equatable {
+public class MASDKCustomPermissionModel: Codable, Equatable, Comparable {
+    public static func < (lhs: MASDKCustomPermissionModel, rhs: MASDKCustomPermissionModel) -> Bool {
+        lhs.permissionName.rawValue < rhs.permissionName.rawValue
+    }
+
     /// Static func that will be used for Equatable
     public static func == (lhs: MASDKCustomPermissionModel, rhs: MASDKCustomPermissionModel) -> Bool {
         lhs.permissionName == rhs.permissionName

@@ -66,11 +66,7 @@ extension ViewController: MiniAppNavigationDelegate {
                     self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
                 }
             case .failure(let error):
-                self.displayAlert(title: NSLocalizedString("error_title", comment: ""),
-                                  message: NSLocalizedString("error_miniapp_download_message", comment: "") + ".\n\(error.localizedDescription)",
-                                  dismissController: true) { _ in
-                    self.fetchAppList(inBackground: true)
-                }
+                self.checkSDKErrorAndDisplay(error: error)
                 print("Errored: ", error.localizedDescription)
             }
         }, messageInterface: self, adsDisplayer: adsDisplayer)
@@ -98,4 +94,21 @@ extension ViewController: MiniAppNavigationDelegate {
             }
         }
     }
+
+    func checkSDKErrorAndDisplay(error: MASDKError) {
+            var errorMessage: String = ""
+            switch error {
+            case .metaDataFailure:
+                guard let miniAppInfo = currentMiniAppInfo else {
+                    errorMessage = NSLocalizedString("error_miniapp_download_message", comment: "") + ". \nPlease make sure user agreed to all required permissions from Meta-data"
+                    return
+                }
+                self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)
+            default:
+                errorMessage = NSLocalizedString("error_miniapp_download_message", comment: "")
+            }
+            self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: errorMessage, dismissController: true) { _ in
+                self.fetchAppList(inBackground: true)
+            }
+        }
 }
