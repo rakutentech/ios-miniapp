@@ -59,7 +59,7 @@ public struct MASDKAccessTokenPermission: Codable, Equatable, Hashable {
 }
 
 /// Mini-app meta data information
-public struct MiniAppManifest: Codable {
+public struct MiniAppManifest: Codable, Equatable {
 
     /// List of required permissions for a mini-app
     public let requiredPermissions: [MASDKCustomPermissionModel]?
@@ -85,6 +85,12 @@ public struct MiniAppManifest: Codable {
         self.optionalPermissions = optionalPermissions
         self.customMetaData = customMetaData
         self.accessTokenPermissions = accessTokenPermissions
+    }
+
+    public static func == (lhs: MiniAppManifest, rhs: MiniAppManifest) -> Bool {
+        lhs.requiredPermissions?.sorted() == rhs.requiredPermissions?.sorted() &&
+            lhs.optionalPermissions?.sorted() == rhs.optionalPermissions?.sorted() &&
+            lhs.customMetaData == rhs.customMetaData
     }
 }
 

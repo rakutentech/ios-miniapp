@@ -302,16 +302,18 @@ internal class RealMiniApp {
                                    miniAppManifest: MiniAppManifest?,
                                    completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
         guard let manifestData = miniAppManifest, let requiredPermissions = manifestData.requiredPermissions else {
+            miniAppPermissionStorage.removeKey(for: appId)
             return completionHandler(.success(true))
         }
         let storedCustomPermissions = self.miniAppPermissionStorage.getCustomPermissions(forMiniApp: appId)
-        miniAppPermissionStorage.storeCustomPermissions(permissions: filterCustomPermissions(forMiniApp: appId,
-                                                                                             cachedPermissions: storedCustomPermissions),
-                                                        forMiniApp: appId)
         let filtered = storedCustomPermissions.filter {
             requiredPermissions.contains($0)
         }
-        if filtered.count == requiredPermissions.count && filtered.allSatisfy({ $0.isPermissionGranted.boolValue == true }) {
+        if filtered.allSatisfy({ $0.isPermissionGranted.boolValue == true }) {
+            miniAppPermissionStorage.removeKey(for: appId)
+            miniAppPermissionStorage.storeCustomPermissions(permissions: filterCustomPermissions(forMiniApp: appId,
+                                                                                                 cachedPermissions: storedCustomPermissions),
+                                                            forMiniApp: appId)
             completionHandler(.success(true))
         } else {
             completionHandler(.failure(.metaDataFailure))

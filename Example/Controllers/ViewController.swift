@@ -8,7 +8,6 @@ class ViewController: UIViewController {
     @IBOutlet var searchBar: UISearchBar!
     let refreshControl = UIRefreshControl()
     let adsDisplayer = AdMobDisplayer()
-    var manifests = [String: MiniAppManifest]()
     var unfilteredResults: [MiniAppInfo]? {
         didSet {
             self.decodeResponse = self.unfilteredResults
@@ -75,10 +74,13 @@ class ViewController: UIViewController {
 
     func showFirstTimeLaunchScreen(miniAppInfo: MiniAppInfo) {
         if isMiniAppLaunchedAlready(key: miniAppInfo.id) {
-            self.showProgressIndicator {
-                self.currentMiniAppInfo = miniAppInfo
-                self.fetchMiniApp(for: miniAppInfo)
-                self.currentMiniAppTitle = miniAppInfo.displayName
+            compareMiniAppMetaData(miniAppInfo: miniAppInfo) { (result) in
+                switch result {
+                case .success:
+                    self.displayMiniApp(miniAppInfo: miniAppInfo)
+                case .failure(let error):
+                    self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: error.localizedDescription, dismissController: true)
+                }
             }
         } else {
             fetchMiniAppMetaData(miniAppInfo: miniAppInfo)
@@ -86,27 +88,85 @@ class ViewController: UIViewController {
     }
 
     func fetchMiniAppMetaData(miniAppInfo: MiniAppInfo) {
-        MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
+        MiniApp.shared(with: Config.getCurrent()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                self.manifests[miniAppInfo.id] = manifestData
-                self.displayFirstTimeLaunchScreen(metadataResponse: manifestData, miniAppInfo: miniAppInfo)
+                self.displayFirstTimeLaunchScreen(
+                    reqPermissions: manifestData.requiredPermissions ?? [],
+                    optPermissions: manifestData.optionalPermissions ?? [],
+                    miniAppInfo: miniAppInfo,
             case .failure:
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""), dismissController: true)
             }
         }
     }
 
-    func displayFirstTimeLaunchScreen(metadataResponse: MiniAppManifest, miniAppInfo: MiniAppInfo) {
+    func compareMiniAppMetaData(miniAppInfo: MiniAppInfo, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        guard let downloadedManifest = MiniApp.shared().getDownloadedManifest(miniAppId: miniAppInfo.id) else {
+            return completionHandler(.success(true))
+        }
+        MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
+            switch result {
+            case .success(let manifestData):
+                if manifestData.requiredPermissions == nil && manifestData.optionalPermissions == nil {
+                    self.displayMiniApp(miniAppInfo: miniAppInfo)
+                } else {
+                    self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
+    }
+
+    func checkIfManifestChanged(latestManifest: MiniAppManifest, oldManifest: MiniAppManifest, miniAppInfo: MiniAppInfo) {
+        let cachedPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo.id)
+        let cachedAllowedPermissions = cachedPermissions.filter { $0.isPermissionGranted.boolValue == true }
+
+        let requiredPermissions = filterPermissions(permsArray: latestManifest.requiredPermissions ?? [],
+                                                    cachedPermissions: cachedAllowedPermissions)
+        if oldManifest == latestManifest && requiredPermissions.count == 0 {
+            self.displayMiniApp(miniAppInfo: miniAppInfo)
+        } else {
+                self.displayFirstTimeLaunchScreen(reqPermissions: latestManifest.requiredPermissions ?? [],
+                                                  optPermissions: latestManifest.optionalPermissions ?? [],
+                                                  miniAppInfo: miniAppInfo,
+                                                  manifestUpdated: true,
+                                                  customMetaData: latestManifest.customMetaData ?? [:])
+        }
+    }
+
+    func filterPermissions(permsArray: [MASDKCustomPermissionModel], cachedPermissions: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {
+        return permsArray.filter {
+            !cachedPermissions.contains($0)
+        }
+    }
+
+    func displayFirstTimeLaunchScreen(reqPermissions: [MASDKCustomPermissionModel],
+                                      optPermissions: [MASDKCustomPermissionModel],
+                                      miniAppInfo: MiniAppInfo,
+                                      manifestUpdated: Bool? = false,
+                                      customMetaData: [String: String]) {
         DispatchQueue.main.async {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MAFirstTimeLaunch") as? MAFirstLaunchController {
                 self.currentMiniAppInfo = miniAppInfo
                 viewController.miniAppInfo = miniAppInfo
-                viewController.miniAppManifest = metadataResponse
+                viewController.requiredPermissions = reqPermissions
+                viewController.optionalPermissions = optPermissions
+                viewController.isManifestUpdated = manifestUpdated ?? false
+                viewController.customMetaData = customMetaData
                 viewController.launchScreenDelegate = self
                 viewController.modalPresentationStyle = .fullScreen
                 self.present(viewController, animated: true)
             }
+        }
+    }
+
+    func displayMiniApp(miniAppInfo: MiniAppInfo) {
+        self.showProgressIndicator {
+            self.currentMiniAppInfo = miniAppInfo
+            self.fetchMiniApp(for: miniAppInfo)
+            self.currentMiniAppTitle = miniAppInfo.displayName
         }
     }
 }
