@@ -75,12 +75,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when handleBridgeMessage receive valid action, invalid id") {
                 it("will return error") {
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
-                    )
                     let requestParam = RequestParameters(
                         action: "",
                         permission: "location",
@@ -98,12 +92,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             context("when handleActionCommand receive valid action, but failed to retrieve unique id") {
                 it("will return error") {
                     mockMessageInterface.mockUniqueId = true
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
-                    )
                     scriptMessageHandler.sendUniqueId(messageId: "1234")
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue))
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.description))
@@ -111,12 +99,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user allow the location permission") {
                 it("will return ALLOWED") {
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
-                    )
                     mockMessageInterface.locationAllowed = true
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -125,12 +107,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user denied the permission") {
                 it("will return denied") {
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
-                    )
                     mockMessageInterface.locationAllowed = false
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"requestPermission\", \"param\": { \"permission\": \"location\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
