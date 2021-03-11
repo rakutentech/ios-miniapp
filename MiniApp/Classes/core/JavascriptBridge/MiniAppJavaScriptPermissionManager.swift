@@ -1,6 +1,7 @@
 extension MiniAppScriptMessageHandler {
     func requestCustomPermissions(requestParam: RequestParameters?, callbackId: String) {
         cachedUnknownCustomPermissionRequest.removeAll()
+        permissionsNotAddedInManifest.removeAll()
         userAlreadyRespondedRequestList.removeAll()
         guard let requestParamValue = requestParam?.permissions else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.invalidCustomPermissionRequest))
@@ -31,6 +32,7 @@ extension MiniAppScriptMessageHandler {
             !allowedList.contains($0)
         }
 
+        permissionsNotAddedInManifest = userNotRespondedRequestList.filter { !cachedPermissionsList.contains($0) }
         /// To make sure that only permissions mentioned in the manifest is allowed at run-time
         userNotRespondedRequestList = userNotRespondedRequestList.filter {
             cachedPermissionsList.contains($0)
@@ -78,6 +80,10 @@ extension MiniAppScriptMessageHandler {
         }
     }
 
+    /// Method used to prepare the custom MiniAppCustomPermissionsListResponse that is needed to send back to Mini app
+    /// - Parameters:
+    ///   - result: List of MASDKCustomPermissionModel that is responded by the user
+    ///   - callbackId: callbackId used to send the success/failure response back
     func sendCachedSuccessResponse(result: [MASDKCustomPermissionModel], callbackId: String) {
         var permissionListResponse = [MiniAppCustomPermissionsListResponse]()
         result.forEach {
@@ -86,6 +92,11 @@ extension MiniAppScriptMessageHandler {
         cachedUnknownCustomPermissionRequest.forEach {
             permissionListResponse.append($0)
         }
+
+        permissionsNotAddedInManifest.forEach {
+            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, status: MiniAppCustomPermissionGrantedStatus.denied.rawValue))
+        }
+
         sendSuccessResponse(result: permissionListResponse, callbackId: callbackId)
     }
 
@@ -114,6 +125,9 @@ extension MiniAppScriptMessageHandler {
         }
         cachedUnknownCustomPermissionRequest.forEach {
             permissionListResponse.append($0)
+        }
+        permissionsNotAddedInManifest.forEach {
+            permissionListResponse.append(MiniAppCustomPermissionsListResponse(name: $0.permissionName.rawValue, status: MiniAppCustomPermissionGrantedStatus.denied.rawValue))
         }
         return permissionListResponse
     }
