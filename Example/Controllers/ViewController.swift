@@ -95,6 +95,7 @@ class ViewController: UIViewController {
                     reqPermissions: manifestData.requiredPermissions ?? [],
                     optPermissions: manifestData.optionalPermissions ?? [],
                     miniAppInfo: miniAppInfo,
+                    customMetaData: manifestData.customMetaData ?? [:])
             case .failure:
                 self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""), dismissController: true)
             }
