@@ -27,8 +27,13 @@ extension MiniAppScriptMessageHandler {
             miniAppPermissionRequestModelList.contains($0)
         }
 
-        let userNotRespondedRequestList = miniAppPermissionRequestModelList.filter {
+        var userNotRespondedRequestList = miniAppPermissionRequestModelList.filter {
             !allowedList.contains($0)
+        }
+
+        /// To make sure that only permissions mentioned in the manifest is allowed at run-time
+        userNotRespondedRequestList = userNotRespondedRequestList.filter {
+            cachedPermissionsList.contains($0)
         }
 
         if userNotRespondedRequestList.count > 0 {
