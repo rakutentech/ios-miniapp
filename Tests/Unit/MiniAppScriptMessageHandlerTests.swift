@@ -182,12 +182,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
 
             context("when MiniAppScriptMessageHandler receives valid custom permissions command") {
                 it("will return response with name and status for all permission that is requested") {
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
-                    )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .userName, status: .allowed)
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
@@ -209,12 +203,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when MiniAppScriptMessageHandler receives valid custom permissions command but invalid permission object title instead of name") {
                 it("will return error response with error title and description for permission that is requested") {
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
-                    )
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"title\":\"rakuten.miniapp.user.USER_NAME\"," +
@@ -226,12 +214,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when MiniAppScriptMessageHandler receives valid custom permissions command but only one unknown custom permission") {
                 it("will return error response with error title and description for permission that is requested") {
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
-                    )
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"name\":\"rakuten.miniapp.user.LOCATION\"," +
