@@ -427,9 +427,9 @@
                                             <outlet property="delegate" destination="B28-kb-Eaj" id="MC1-mK-t1u"/>
                                         </connections>
                                     </tableView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRZ-AU-7Gm">
-                                        <rect key="frame" x="17" y="476" width="341" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRZ-AU-7Gm">
+                                        <rect key="frame" x="17" y="476" width="341" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" systemColor="systemGrayColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -505,8 +505,7 @@
                     <connections>
                         <outlet property="acceptButton" destination="o0i-YB-IIj" id="0Ez-5n-pbB"/>
                         <outlet property="closeButton" destination="lZG-xu-s9d" id="g6r-RR-Zhp"/>
-                        <outlet property="headerLabel" destination="zFk-JA-vJ0" id="r1R-Ua-1VU"/>
-                        <outlet property="metatDataLabel" destination="JRZ-AU-7Gm" id="Sbd-Um-1qv"/>
+                        <outlet property="metaDataLabel" destination="JRZ-AU-7Gm" id="U7J-nr-T5V"/>
                         <outlet property="miniAppImageView" destination="SYZ-tS-FDQ" id="9wA-Rf-R2N"/>
                         <outlet property="miniAppMetaInfoContainer" destination="Ssg-YL-BQm" id="avh-Xe-NAw"/>
                         <outlet property="miniAppName" destination="hn9-XN-2FM" id="urN-M6-1Dr"/>
