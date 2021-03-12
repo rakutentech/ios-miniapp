@@ -69,10 +69,10 @@ internal class MiniAppInfoFetcher {
 
     private func getCustomPermissionModel(metaDataCustomPermissionResponse: [MACustomPermissionsResponse]?) -> [MASDKCustomPermissionModel]? {
         return metaDataCustomPermissionResponse?.compactMap {
-            guard let name = $0.name else {
+            guard let name = $0.name, let permissionType = MiniAppCustomPermissionType(rawValue: name) else {
                 return nil
             }
-            return MASDKCustomPermissionModel(permissionName: MiniAppCustomPermissionType(rawValue: name)!, isPermissionGranted: .allowed, permissionRequestDescription: $0.reason)
+            return MASDKCustomPermissionModel(permissionName: permissionType, isPermissionGranted: .allowed, permissionRequestDescription: $0.reason)
         }
     }
 }
