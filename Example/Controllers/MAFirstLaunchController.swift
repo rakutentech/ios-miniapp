@@ -87,7 +87,7 @@ extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
                 permissionModel = requiredPermissions[indexPath.row]
                 cell.permissionTitle?.attributedText = NSMutableAttributedString()
                     .normalText(permissionModel?.permissionName.title ?? "")
-                    .highlightRedColor(" (required)")
+                    .highlightRedColor(" (Required)")
                 cell.permissionDescription?.text = permissionModel?.permissionDescription
                 cell.toggle.isHidden = true
             } else {

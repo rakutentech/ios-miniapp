@@ -109,11 +109,7 @@ class ViewController: UIViewController {
         MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                if manifestData.requiredPermissions == nil && manifestData.optionalPermissions == nil {
-                    self.displayMiniApp(miniAppInfo: miniAppInfo)
-                } else {
-                    self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
-                }
+                self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
             case .failure(let error):
                 completionHandler(.failure(error))
             }
