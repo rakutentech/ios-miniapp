@@ -11,5 +11,46 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+
+  "reqPermissions": [
+    {
+      "name": "rakuten.miniapp.user.USER_NAME",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.user.PROFILE_PHOTO",
+      "reason": "Describe your reason here (optional)."
+    }
+  ],
+
+  "optPermissions": [
+    {
+      "name": "rakuten.miniapp.user.CONTACT_LIST",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.device.LOCATION",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.user.ACCESS_TOKEN",
+      "reason": "Describe your reason here (optional)."
+    }
+  ],
+
+  "accessTokenPermissions": [
+    {
+      "audience": "rae",
+      "scopes": ["idinfo_read_openid", "memberinfo_read_point"]
+    },
+    {
+      "audience": "api-c",
+      "scopes": ["your_service_scope_here"]
+    }
+  ],
+
+  "customMetaData": {
+    "exampleKey": "test"
+  }
 }

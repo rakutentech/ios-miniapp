@@ -63,7 +63,7 @@ The manifest contains:
 - Access token permissions
 - Custom metadata
 
-Here is the example of manifest:
+Here is the example of manifest. You can also see [it](https://github.com/rakutentech/js-miniapp/blob/master/js-miniapp-sample/public/manifest.json) in our sample app.
 
 ```javascript
 {
