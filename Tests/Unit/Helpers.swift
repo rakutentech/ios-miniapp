@@ -270,7 +270,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockProfilePhoto: String? = ""
     var mockContactList: [MAContact]? = [MAContact(id: "contact_id")]
     var messageContentAllowed: Bool = false
-    var mockAccessToken = false
+    var mockAccessToken: String? = ""
 
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         if messageContentAllowed {
@@ -338,12 +338,11 @@ class MockMessageInterface: MiniAppMessageDelegate {
         return mockContactList
     }
 
-    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenPermission?, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
-        if mockAccessToken {
-            completionHandler(.success(MATokenInfo(accessToken: "MOCK_ACCESS_TOKEN", expirationDate: Date())))
-        } else {
-            completionHandler(.failure(.unknownError))
+    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+        guard let accessToken =  mockAccessToken, !accessToken.isEmpty else {
+            return completionHandler(.failure(.unknownError))
         }
+        return completionHandler(.success(MATokenInfo(accessToken: accessToken, expirationDate: Date())))
     }
 }
 
@@ -354,9 +353,6 @@ var mockMiniAppInfo: MiniAppInfo {
 }
 
 var mockMiniAppManifest: MiniAppManifest {
-    let mockAudience = "TESTAUDIENCE"
-    let mockScopes = ["testScope1", "testScope2"]
-
     let requiredPermissions: [MASDKCustomPermissionModel] = [MASDKCustomPermissionModel(permissionName: .userName,
                                                                                         isPermissionGranted: .allowed,
                                                                                         permissionRequestDescription: "User name custom permission"),
@@ -366,11 +362,10 @@ var mockMiniAppManifest: MiniAppManifest {
                                                             ]
     let optionalPermissions: [MASDKCustomPermissionModel] = [MASDKCustomPermissionModel(permissionName: .contactsList,
                                                                                         isPermissionGranted: .allowed,
-                                                                                        permissionRequestDescription: "Contact List custom permission")]
-    let scopes: [MASDKAccessTokenPermission] = [MASDKAccessTokenPermission(audience: mockAudience, scopes: mockScopes)]
-
+                                                                                        permissionRequestDescription: "Contact List custom permission")
+                                                            ]
     let customMetaData: [String: String] = ["exampleKey": "exampleValue"]
-    let manifest = MiniAppManifest.init(requiredPermissions: requiredPermissions, optionalPermissions: optionalPermissions, customMetaData: customMetaData, accessTokenPermissions: scopes)
+    let manifest = MiniAppManifest.init(requiredPermissions: requiredPermissions, optionalPermissions: optionalPermissions, customMetaData: customMetaData)
     return manifest
 }
 
@@ -560,7 +555,6 @@ class MockDisplayer: Displayer {
 
     override func getMiniAppView(miniAppURL: URL,
                                  miniAppTitle: String,
-                                 manifest: MiniAppManifest? = nil,
                                  queryParams: String? = nil,
                                  hostAppMessageDelegate: MiniAppMessageDelegate,
                                  adsDisplayer: MiniAppAdDisplayer?,
