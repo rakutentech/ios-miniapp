@@ -356,7 +356,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     return sendScopeError(callbackId: callbackId, type: .audienceError)
                 }
             }
-            hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId) { (result) in
+            hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId, scopes: accessTokenPermission) { (result) in
                 switch result {
                 case .success(let responseMessage):
                     guard let jsonResponse = ResponseEncoder.encode(data: responseMessage) else {
