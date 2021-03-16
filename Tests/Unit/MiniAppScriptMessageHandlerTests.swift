@@ -407,11 +407,12 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         adsDisplayer: mockAdsDelegate,
                         miniAppId: self.name, miniAppTitle: mockMiniAppTitle
                     )
-                    mockMessageInterface.mockAccessToken = true
+                    mockMessageInterface.mockAccessToken = "MOCK_ACCESS_TOKEN"
+                    updateCustomPermissionStatus(miniAppId: self.name, permissionType: .accessToken, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getAccessToken\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.response).toEventually(contain("MOCK_ACCESS_TOKEN"), timeout: .seconds(10))
+                    expect(mockCallbackProtocol.response).toEventually(contain(mockMessageInterface.mockAccessToken!), timeout: .seconds(10))
                 }
             }
             context("when MiniAppScriptMessageHandler receives valid getAccessToken command but host app returns error") {
@@ -423,7 +424,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         adsDisplayer: mockAdsDelegate,
                         miniAppId: self.name, miniAppTitle: mockMiniAppTitle
                     )
-                    mockMessageInterface.mockAccessToken = false
+                    mockMessageInterface.mockAccessToken = ""
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getAccessToken\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
