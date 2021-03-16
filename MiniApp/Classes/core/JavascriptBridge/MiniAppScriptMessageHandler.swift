@@ -340,19 +340,21 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func fetchTokenDetails(callbackId: String) {
+    func fetchTokenDetails(callbackId: String, for requestParam: RequestParameters?) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.accessToken) {
-            var accessTokenPermission: MASDKAccessTokenPermission?
+            var accessTokenPermission: MASDKAccessTokenScopes?
             if let audience = requestParam?.audience { // if we request a token for a specific audience
-                accessTokenPermission = MASDKAccessTokenPermission(audience: audience, scopes: [])
+                accessTokenPermission = MASDKAccessTokenScopes(audience: audience, scopes: [])
                 if let scopes = requestParam?.scopes { // we need a specific set of scopes
                     accessTokenPermission?.scopes = scopes
-                } else { return sendScopeError(callbackId: callbackId, type: .scopeError) }
-                if let accessTokenPermissions = miniAppManifest?.accessTokenPermissions { // we check that the Mini App manages scopes
-                    if !(accessTokenPermission!.isPartOf(accessTokenPermissions)) { // and that these scopes are included in the Manifest
-                        return sendScopeError(callbackId: callbackId, type: .audienceError)
-                    }
-                } else { return sendScopeError(callbackId: callbackId, type: .audienceError) }
+                } else {
+                    return sendScopeError(callbackId: callbackId, type: .scopeError)
+                }
+                let accessTokenPermissions = miniAppManifest?.accessTokenPermissions
+                // we check that the Mini App manages scopes and that these scopes are included in the Manifest
+                if accessTokenPermissions == nil || !(accessTokenPermission!.isPartOf(accessTokenPermissions!)) {
+                    return sendScopeError(callbackId: callbackId, type: .audienceError)
+                }
             }
             hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId) { (result) in
                 switch result {

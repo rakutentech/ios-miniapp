@@ -12,7 +12,7 @@ internal struct MetaDataCustomPermissionModel: Decodable {
     var reqPermissions: [MACustomPermissionsResponse]?
     var optPermissions: [MACustomPermissionsResponse]?
     var customMetaData: [String: String]?
-    var accessTokenPermissions: [MASDKAccessTokenPermission]?
+    var accessTokenPermissions: [MASDKAccessTokenScopes]?
 
     private enum CodingKeys: String, CodingKey {
         case reqPermissions,
@@ -32,7 +32,8 @@ internal struct MACustomPermissionsResponse: Decodable {
     }
 }
 
-public struct MASDKAccessTokenPermission: Codable, Equatable, Hashable {
+/// Mini App access token permissions containing audience and scopes, usually taken from manifest.json
+public struct MASDKAccessTokenScopes: Codable, Equatable, Hashable {
     public var audience: String
     public var scopes: [String]
 
@@ -45,11 +46,36 @@ public struct MASDKAccessTokenPermission: Codable, Equatable, Hashable {
         hasher.combine(audience)
     }
 
-    public static func == (lhs: MASDKAccessTokenPermission, rhs: MASDKAccessTokenPermission) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.audience == rhs.audience && rhs.scopes.sorted() == lhs.scopes.sorted()
     }
 
-    public func isPartOf(_ fullScopes: [MASDKAccessTokenPermission]) -> Bool {
+    /// This method checks if this Access Token permission is contained in an array of permissions by checking audience and scopes.
+    /// Scopes can be partially provided. Here is an example:
+    ///
+    ///    {
+    ///        "audience": "rae",
+    ///        "scopes": ["memberinfo_read_point"]
+    ///    }
+    ///
+    /// is part of
+    ///
+    ///    {
+    ///        "accessTokenPermissions": [
+    ///          {
+    ///            "audience": "rae",
+    ///            "scopes": ["idinfo_read_openid", "memberinfo_read_point"]
+    ///          },
+    ///          {
+    ///            "audience": "api-c",
+    ///            "scopes": ["your_service_scope_here"]
+    ///          }
+    ///        ]
+    ///    }
+    ///
+    /// - Parameter fullScopes: an array containing the Access Token permissions we want to compare this one
+    /// - Returns: a boolean stating if this access token permission is contained in fullScopes array
+    public func isPartOf(_ fullScopes: [Self]) -> Bool {
         var ret = false
         if let fullAudience = fullScopes.first(where: { scope in scope.audience == audience}) {
             ret = Set(scopes).isSubset(of: Set(fullAudience.scopes))
@@ -68,7 +94,7 @@ public struct MiniAppManifest: Codable, Equatable {
     /// Key-value pair data that is received from the endpoint
     public let customMetaData: [String: String]?
     /// List of scopes and audiences the MiniApp can require
-    public let accessTokenPermissions: [MASDKAccessTokenPermission]?
+    public let accessTokenPermissions: [MASDKAccessTokenScopes]?
 
     private enum CodingKeys: String, CodingKey {
         case requiredPermissions,
@@ -80,7 +106,7 @@ public struct MiniAppManifest: Codable, Equatable {
     init(requiredPermissions: [MASDKCustomPermissionModel]?,
          optionalPermissions: [MASDKCustomPermissionModel]?,
          customMetaData: [String: String]?,
-         accessTokenPermissions: [MASDKAccessTokenPermission]?) {
+         accessTokenPermissions: [MASDKAccessTokenScopes]?) {
         self.requiredPermissions = requiredPermissions
         self.optionalPermissions = optionalPermissions
         self.customMetaData = customMetaData

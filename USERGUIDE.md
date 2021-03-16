@@ -497,13 +497,10 @@ Host app will use the defined interfaces to retrieve these details from manifest
 Retrieve the meta-data of a MiniApp using the following method,
 
 ```swift
-var theManifest: MiniAppManifest?
-
 MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAppVersionId) { (result) in
     switch result {
         case .success(let manifestData):
             // Retrieve the custom key/value pair like the following.
-            theManifest = manifestData
             let randomTestKeyValue = manifestData.customMetaData?["hostAppRandomTestKey"]
         case .failure:
           break
