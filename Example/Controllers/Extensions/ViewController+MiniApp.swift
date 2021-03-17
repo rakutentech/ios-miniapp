@@ -3,7 +3,7 @@ import MiniApp
 extension ViewController: MiniAppNavigationDelegate {
     func fetchAppList(inBackground: Bool) {
         showProgressIndicator(silently: inBackground) {
-            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).list { (result) in
+            MiniApp.shared(with: Config.getCurrentConfig(), navigationSettings: Config.getNavConfig(delegate: self)).list { (result) in
                 DispatchQueue.main.async {
                     self.tableView.refreshControl?.endRefreshing()
                 }
@@ -28,7 +28,7 @@ extension ViewController: MiniAppNavigationDelegate {
 
     func fetchAppInfo(for miniAppID: String) {
         self.showProgressIndicator {
-            MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).info(miniAppId: miniAppID) { (result) in
+            MiniApp.shared(with: Config.getCurrentConfig(), navigationSettings: Config.getNavConfig(delegate: self)).info(miniAppId: miniAppID) { (result) in
                 switch result {
                 case .success(let responseData):
                     self.currentMiniAppInfo = responseData
@@ -53,7 +53,7 @@ extension ViewController: MiniAppNavigationDelegate {
     }
 
     func fetchMiniApp(for appInfo: MiniAppInfo) {
-        MiniApp.shared(with: Config.getCurrent(),
+        MiniApp.shared(with: Config.getCurrentConfig(),
                        navigationSettings: Config.getNavConfig(delegate: self))
             .create(appId: appInfo.id,
                     version: appInfo.version.versionId,
@@ -73,7 +73,7 @@ extension ViewController: MiniAppNavigationDelegate {
     }
 
     func loadMiniAppUsingURL(_ url: URL) {
-        let miniAppDisplay = MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self)).create(
+        let miniAppDisplay = MiniApp.shared(with: Config.getCurrentConfig(), navigationSettings: Config.getNavConfig(delegate: self)).create(
             url: url,
             queryParams: getQueryParam(),
             errorHandler: { error in

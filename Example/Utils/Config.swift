@@ -13,7 +13,7 @@ class Config: NSObject {
 
     static let userDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings")
 
-    class func getCurrent() -> MiniAppSdkConfig {
+    class func getCurrentConfig() -> MiniAppSdkConfig {
         MiniAppSdkConfig(baseUrl: Config.userDefaults?.string(forKey: Config.Key.endpoint.rawValue),
             rasProjectId: Config.userDefaults?.string(forKey: Config.Key.projectId.rawValue),
             subscriptionKey: Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue),
