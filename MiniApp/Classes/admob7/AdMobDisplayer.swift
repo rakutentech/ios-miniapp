@@ -128,6 +128,7 @@ extension AdMobDisplayer: GADInterstitialDelegate {
     public func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) { // swiftlint:disable:this identifier_name
         if let id = ad.adUnitID {
             onInterstitialLoaded[id]?(.failure(error))
+            cleanInterstitial(id)
         }
     }
 }
