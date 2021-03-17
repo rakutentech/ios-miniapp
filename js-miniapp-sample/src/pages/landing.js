@@ -39,7 +39,10 @@ const Landing = () => {
         <p>Demo Mini App JS SDK</p>
         <p className={classes.info}>Platform: {MiniApp.getPlatform()}</p>
         <p className={classes.info}>
-          Parameters: {window.location.search + window.location.hash || 'None'}
+          Query Parameters: {window.location.search || 'None'}
+        </p>
+        <p className={classes.info}>
+          URL Fragment: {window.location.hash || 'None'}
         </p>
       </CardContent>
     </GreyCard>
