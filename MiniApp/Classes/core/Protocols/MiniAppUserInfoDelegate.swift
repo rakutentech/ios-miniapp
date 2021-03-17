@@ -41,10 +41,14 @@ public extension MiniAppUserInfoDelegate {
 public class MATokenInfo: Codable {
     let token: String
     let validUntil: Int
+    let audience: String?
+    let scopes: [String]?
 
-    public init(accessToken: String, expirationDate: Date) {
+    public init(accessToken: String, expirationDate: Date, scopes: MASDKAccessTokenScopes?) {
         self.token = accessToken
         self.validUntil = expirationDate.dateToNumber()
+        self.audience = scopes?.audience
+        self.scopes = scopes?.scopes
     }
 }
 

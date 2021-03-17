@@ -159,18 +159,27 @@ internal class RealMiniApp {
     }
 
     func getMiniAppView(appInfo: MiniAppInfo, manifest: MiniAppManifest?, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
-        DispatchQueue.main.async {
-            let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
-                                                                       versionId: appInfo.version.versionId,
-                                                                       projectId: self.miniAppClient.environment.projectId,
-                                                                       miniAppTitle: appInfo.displayName ?? "Mini app",
-                                                                       manifest: manifest,
-                                                                       queryParams: queryParams,
-                                                                       hostAppMessageDelegate: messageInterface ?? self,
-                                                                       adsDisplayer: adsDisplayer)
-            self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
-            self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
-            completionHandler(.success(miniAppDisplayProtocol))
+        isRequiredPermissionsAllowed(
+                appId: appInfo.id,
+                versionId: appInfo.version.versionId) { (result) in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
+                                                                               versionId: appInfo.version.versionId,
+                                                                               projectId: self.miniAppClient.environment.projectId,
+                                                                               miniAppTitle: appInfo.displayName ?? "Mini app",
+                                                                               manifest: manifest,
+                                                                               queryParams: queryParams,
+                                                                               hostAppMessageDelegate: messageInterface ?? self,
+                                                                               adsDisplayer: adsDisplayer)
+                    self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
+                    self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
+                    completionHandler(.success(miniAppDisplayProtocol))
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
         }
     }
 

@@ -42,6 +42,15 @@ public struct MASDKAccessTokenScopes: Codable, Equatable, Hashable {
              scopes
     }
 
+    public init?(audience: String?, scopes: [String]?) {
+        if let audience = audience, let scopes = scopes {
+            self.audience = audience
+            self.scopes = scopes
+        } else {
+            return nil
+        }
+    }
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine(audience)
     }

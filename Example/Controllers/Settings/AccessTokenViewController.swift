@@ -29,7 +29,7 @@ class AccessTokenViewController: UIViewController {
     func setDefaultTokenInfo() {
         self.accessTokenTextField.text = "ACCESS_TOKEN"
         self.expiryDateTextField.text = formatDateToDisplay(date: Date())
-        _ = saveTokenInfo(accessToken: "ACCESS_TOKEN", expiryDate: Date())
+        saveTokenInfo(accessToken: "ACCESS_TOKEN", expiryDate: Date(), scopes: nil)
     }
 
     @IBAction func save() {
@@ -46,7 +46,7 @@ class AccessTokenViewController: UIViewController {
     }
 
     func saveTokenDetails() {
-        let saveStatus = saveTokenInfo(accessToken: self.accessTokenTextField.text ?? "ACCESS_TOKEN", expiryDate: expiryDate)
+        let saveStatus = saveTokenInfo(accessToken: self.accessTokenTextField.text ?? "ACCESS_TOKEN", expiryDate: expiryDate, scopes: nil)
         if saveStatus {
             self.displayAlert(title: "Info", message: "Access Token info saved")
         } else {

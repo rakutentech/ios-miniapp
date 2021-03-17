@@ -1,6 +1,6 @@
 PODS:
-  - AppCenter/Core (4.1.0)
-  - AppCenter/Crashes (4.1.0):
+  - AppCenter/Core (4.1.1)
+  - AppCenter/Crashes (4.1.1):
     - AppCenter/Core
   - Google-Mobile-Ads-SDK (7.69.0):
     - GoogleAppMeasurement (~> 7.0)
@@ -69,7 +69,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  AppCenter: 8832b158d17e54845c3b88a91076218f0b07174d
+  AppCenter: cd53e3ed3563cc720bcb806c9731a12389b40d44
   Google-Mobile-Ads-SDK: 2f288748a42920d1c744946a460896a95b0e9110
   GoogleAppMeasurement: 50a254ee92c1b94fbe2abea7e3da35e4c6dedce0
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367

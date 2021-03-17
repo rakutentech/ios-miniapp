@@ -7,6 +7,7 @@ protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveScriptMessageError(messageId: String, errorMessage: String)
 }
 
+// swiftlint:disable file_length
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     var locationManager: LocationManager?
