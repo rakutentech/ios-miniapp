@@ -49,8 +49,8 @@ class AccessTokenViewController: UITableViewController {
     }
 
     func isValidInput(textField: UITextField, showError: Bool = true) -> Bool {
-        if let text = textField.text?.trimTrailingWhitespaces() {
-            return !text.isEmpty
+        if let text = textField.text?.trimTrailingWhitespaces(), !text.isEmpty {
+            return true
         }
         if showError {
             DispatchQueue.main.async {
