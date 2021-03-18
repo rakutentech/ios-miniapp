@@ -56,20 +56,14 @@ class AccessTokenViewController: UITableViewController {
     }
 
     func isValidInput(textField: UITextField, showError: Bool = true) -> Bool {
-        guard let text = textField.text?.trimTrailingWhitespaces() else {
-            if showError { displayErrorAlert(textfield: textField) }
-            return false
+        if let text = textField.text?.trimTrailingWhitespaces() {
+            return !text.isEmpty
         }
-        if text.isEmpty {
-            if showError { displayErrorAlert(textfield: textField) }
-            return false
+        if showError {
+            DispatchQueue.main.async {
+                self.displayAlert(title: "Error", message: "Please enter valid Access Token")
+            }
         }
-        return true
-    }
-
-    func displayErrorAlert(textfield: UITextField) {
-        DispatchQueue.main.async {
-            self.displayAlert(title: "Error", message: "Please enter valid Access Token")
-        }
+        return false
     }
 }
