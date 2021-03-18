@@ -17,7 +17,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
         if userContactList == nil {
             userContactList = []
             for _ in 1...10 {
-                userContactList?.append(MAContact(id: UUID().uuidString))
+                userContactList?.append(MAContact(id: UUID().uuidString, name: "Example Name", email: "name@example.com"))
             }
             updateContactList(list: self.userContactList)
         }
@@ -57,7 +57,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
         DispatchQueue.main.async {
             self.getInputFromAlertWithTextField(title: title, message: message) { (_, textField) in
                 if let textField = textField, let contactId = textField.text, contactId.count > 0, !contactId.trimTrailingWhitespaces().isEmpty {
-                    self.userContactList?.append(MAContact(id: contactId))
+                    self.userContactList?.append(MAContact(id: contactId, name: "Example Name", email: "name@example.com"))
                     updateContactList(list: self.userContactList)
                     self.tableView.reloadData()
                 } else {
