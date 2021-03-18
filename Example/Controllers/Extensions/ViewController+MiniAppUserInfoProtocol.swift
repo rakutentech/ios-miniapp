@@ -28,18 +28,11 @@ extension ViewController {
                         completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         var resultToken = "ACCESS_TOKEN"
         var resultDate = Date()
-        var resultScopes = scopes
+        let resultScopes = scopes
 
-        // swiftlint:disable compiler_protocol_init
         if let tokenInfo = getTokenInfo() {
-           if tokenInfo.audience == scopes?.audience,
-           Set(arrayLiteral: scopes?.scopes).isSubset(of: Set(arrayLiteral: tokenInfo.scopes)) {
-               resultToken = tokenInfo.tokenString
-               resultDate = tokenInfo.expiryDate
-               resultScopes = MASDKAccessTokenScopes(audience: tokenInfo.audience, scopes: tokenInfo.scopes)
-           } else {
-               return completionHandler(.failure(.outOfScope))
-           }
+           resultToken = tokenInfo.tokenString
+           resultDate = tokenInfo.expiryDate
         }
         completionHandler(.success(.init(accessToken: resultToken, expirationDate: resultDate, scopes: resultScopes)))
     }
