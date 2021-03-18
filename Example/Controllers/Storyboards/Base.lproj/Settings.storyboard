@@ -832,66 +832,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Permissions" id="jlp-xj-ff2">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="100" id="gsG-6Z-rEM">
-                                        <rect key="frame" x="0.0" y="274" width="414" height="100"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gsG-6Z-rEM" id="QZn-Xr-AZP">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audience" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zfw-SN-Lgy">
-                                                    <rect key="frame" x="20" y="21" width="72" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" tag="112" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Access Token Audience" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="upl-DL-aZx">
-                                                    <rect key="frame" x="20" y="50" width="374" height="34"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="upl-DL-aZx" firstAttribute="leading" secondItem="QZn-Xr-AZP" secondAttribute="leadingMargin" id="A7A-qO-kv8"/>
-                                                <constraint firstItem="upl-DL-aZx" firstAttribute="top" secondItem="Zfw-SN-Lgy" secondAttribute="bottom" constant="8" symbolic="YES" id="Dht-KJ-LEu"/>
-                                                <constraint firstItem="Zfw-SN-Lgy" firstAttribute="leading" secondItem="upl-DL-aZx" secondAttribute="leading" id="EJB-Nb-QED"/>
-                                                <constraint firstItem="upl-DL-aZx" firstAttribute="top" secondItem="QZn-Xr-AZP" secondAttribute="top" constant="50" id="hFE-uC-FxA"/>
-                                                <constraint firstItem="upl-DL-aZx" firstAttribute="trailing" secondItem="QZn-Xr-AZP" secondAttribute="trailingMargin" id="u6M-oa-XDm"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="100" id="4h2-T6-M5G">
-                                        <rect key="frame" x="0.0" y="374" width="414" height="100"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4h2-T6-M5G" id="9ZF-eM-DPT">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scopes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RWj-MW-gL3">
-                                                    <rect key="frame" x="20" y="21" width="57" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" tag="113" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="comma separated scopes" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Wef-vF-zVD">
-                                                    <rect key="frame" x="20" y="50" width="374" height="34"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Wef-vF-zVD" firstAttribute="top" secondItem="RWj-MW-gL3" secondAttribute="bottom" constant="8" symbolic="YES" id="N6L-MH-34b"/>
-                                                <constraint firstItem="RWj-MW-gL3" firstAttribute="leading" secondItem="Wef-vF-zVD" secondAttribute="leading" id="bm6-b9-SrU"/>
-                                                <constraint firstItem="Wef-vF-zVD" firstAttribute="leading" secondItem="9ZF-eM-DPT" secondAttribute="leadingMargin" id="qBP-gM-hSa"/>
-                                                <constraint firstItem="Wef-vF-zVD" firstAttribute="trailing" secondItem="9ZF-eM-DPT" secondAttribute="trailingMargin" id="t6h-7s-VEK"/>
-                                                <constraint firstItem="Wef-vF-zVD" firstAttribute="top" secondItem="9ZF-eM-DPT" secondAttribute="top" constant="50" id="waL-ru-Z0r"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="mbX-F9-YpC" id="qOQ-hh-aDd"/>
@@ -907,9 +847,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="accessTokenTextField" destination="ZpF-3T-7X2" id="Kkz-wm-ngU"/>
-                        <outlet property="audienceTextField" destination="upl-DL-aZx" id="UTb-Ls-awG"/>
                         <outlet property="datePicker" destination="UqN-jH-OA5" id="zCB-qT-aev"/>
-                        <outlet property="scopesTextField" destination="Wef-vF-zVD" id="nfl-Fp-06J"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eav-Tq-b4d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
