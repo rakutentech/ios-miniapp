@@ -30,16 +30,9 @@ class AccessTokenViewController: UITableViewController {
     }
 
     @IBAction func save() {
-        if isValidTokenDetailsEntered() {
+        if isValidInput(textField: self.accessTokenTextField) {
             saveTokenDetails()
         }
-    }
-
-    func isValidTokenDetailsEntered() -> Bool {
-        if isValidInput(textField: self.accessTokenTextField) {
-            return true
-        }
-        return false
     }
 
     func saveTokenDetails() {
