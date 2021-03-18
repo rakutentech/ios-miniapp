@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 2.8.0 Docs
+          MiniApp 3.0.0 Docs
         </a>
-         (67% documented)
+         (75% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -64,6 +64,9 @@
             <a class="nav-group-name-link" href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/AdMobDisplayer.html">AdMobDisplayer</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MAContact.html">MAContact</a>
               </li>
               <li class="nav-group-task">
@@ -74,6 +77,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppAnalytics.html">MiniAppAnalytics</a>
@@ -95,6 +101,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MASDKAdsDisplayError.html">MASDKAdsDisplayError</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
               </li>
@@ -131,6 +140,9 @@
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/MiniAppAdDisplayDelegate.html">MiniAppAdDisplayDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -157,6 +169,12 @@
                 <a class="nav-group-task-link" href="Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppManifest.html">MiniAppManifest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppReward.html">MiniAppReward</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MiniAppShareContent.html">MiniAppShareContent</a>
               </li>
               <li class="nav-group-task">
@@ -171,16 +189,7 @@
                 <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB15DisplayProtocola">MiniAppDisplayProtocol</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB14PermissionTypea">MiniAppPermissionType</a>
               </li>
             </ul>
           </li>
@@ -192,6 +201,47 @@
           <div class="section-content top-matter">
             
             <h2 id='changelog' class='heading'>CHANGELOG</h2>
+<h3 id='3-0-0' class='heading'>3.0.0</h3>
+
+<p><strong>SDK</strong></p>
+
+<ul>
+<li><strong>Core:</strong> Incremented minimum support version for iOS from 11.0 to 13.0</li>
+<li><strong>Removed:</strong> Removed all deprecated and variables methods from v2:
+
+<ul>
+<li><code><a href="Classes/MiniApp.html">MiniApp</a></code> :</li>
+<li><code>list(completionHandler:)</code> now takes a <code>(Result&lt;[MiniAppInfo], MASDKError&gt;) -&gt; Void</code> in place of a <code>(Result&lt;[MiniAppInfo], Error&gt;) -&gt; Void</code></li>
+<li><code>info(miniAppId:completionHandler:)</code> now takes a <code>(Result&lt;MiniAppInfo, MASDKError&gt;) -&gt; Void</code> in place of a <code>(Result&lt;MiniAppInfo, Error&gt;) -&gt; Void</code></li>
+<li><code>create(appId:completionHandler:)</code> now takes a <code>(Result&lt;MiniAppDisplayProtocol, MASDKError&gt;) -&gt; Void</code> in place of a <code>(Result&lt;MiniAppDisplayProtocol, Error&gt;) -&gt; Void</code></li>
+<li><code><a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a></code>:</li>
+<li><code>testMode</code> has been removed. Use <code>previewMode</code> instead</li>
+<li><code>appId</code> has been removed. Use <code>projectId</code></li>
+<li><code>MiniAppPermissionType</code> has been renamed <code><a href="Enums/MiniAppDevicePermissionType.html">MiniAppDevicePermissionType</a></code></li>
+<li><code>MiniAppDisplayProtocol</code> has been renamed <code><a href="Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a></code></li>
+<li><code><a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></code>:</li>
+<li><code>MiniAppMessageProtocol</code> has ben renamed <code><a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></code></li>
+<li><code>requestPermission(permissionType:completionHandler:)</code> has been removed. Use <code>requestDevicePermission(permissionType:completionHandler:)</code></li>
+<li><code>requestCustomPermissions(permissions:completionHandler:)</code> has been removed. Use <code>requestCustomPermissions(permissions:miniAppTitle:completionHandler:)</code></li>
+<li><code><a href="Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a></code>:</li>
+<li><code>getUserName()</code> has been removed. Use <code>getUserName(completionHandler:)</code></li>
+<li><code>getProfilePhoto()</code> has been removed. Use <code>getProfilePhoto(completionHandler:)</code></li>
+</ul></li>
+<li><strong>Feature:</strong> Made MiniApp SDK a static framework</li>
+<li><strong>Feature:</strong> Added ads for Mini Apps host</li>
+<li><strong>Feature:</strong> Added Google mobile ads integration in a <code>MiniApps/Admob</code> pod subspec</li>
+<li><strong>Feature:</strong> Added new interface <code>getMiniAppManifest(miniAppId:miniAppVersion:)</code> to retrieve the meta-data of a MiniApp</li>
+<li><strong>Feature:</strong> Added new interface <code>getDownloadedManifest(miniAppId:)</code> to retrieve the cached meta-data of a MiniApp</li>
+<li><strong>Removed:</strong> RSDKUtils dependency removed</li>
+</ul>
+
+<p><strong>Sample App</strong></p>
+
+<ul>
+<li><strong>Feature:</strong> Added implementation to retrieve meta-data and show first-time launch screen to user before downloading any mini-app</li>
+</ul>
+
+<hr>
 <h3 id='2-8-0-2021-02-01' class='heading'>2.8.0 (2021-02-01)</h3>
 
 <p><strong>SDK</strong></p>
@@ -397,9 +447,9 @@
 <h3 id='1-1-0-2020-06-01' class='heading'>1.1.0 (2020-06-01)</h3>
 
 <ul>
-<li>Added JavaScript bridge for passing data between Mini App and Host App. Your App now must implement <code><a href="Typealiases.html#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a></code> in your view controller and provide the implementation when calling <code>MiniApp#create</code>. - <a href="USERGUIDE.md#MiniAppMessageProtocol">See here</a></li>
+<li>Added JavaScript bridge for passing data between Mini App and Host App. Your App now must implement <code>MiniAppMessageProtocol</code> in your view controller and provide the implementation when calling <code>MiniApp#create</code>. - <a href="USERGUIDE.md#MiniAppMessageProtocol">See here</a></li>
 <li>Deprecated <code>MiniApp#create(appInfo:completionHandler:)</code>. Your App should instead use <code>MiniApp#create(appInfo:completionHandler:messageInterface)</code>.</li>
-<li>Added <code>getUniqueId</code> function to <code><a href="Typealiases.html#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a></code>. This function should provide a unique identifier (unique to the user and device) to Mini Apps.</li>
+<li>Added <code>getUniqueId</code> function to <code>MiniAppMessageProtocol</code>. This function should provide a unique identifier (unique to the user and device) to Mini Apps.</li>
 </ul>
 
 <hr>
@@ -416,7 +466,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-02-01)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-03-18)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 2.8.0 Docs
+          MiniApp 3.0.0 Docs
         </a>
-         (67% documented)
+         (75% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -65,6 +65,9 @@
             <a class="nav-group-name-link" href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/AdMobDisplayer.html">AdMobDisplayer</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MAContact.html">MAContact</a>
               </li>
               <li class="nav-group-task">
@@ -75,6 +78,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppAnalytics.html">MiniAppAnalytics</a>
@@ -96,6 +102,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MASDKAdsDisplayError.html">MASDKAdsDisplayError</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
               </li>
@@ -132,6 +141,9 @@
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/MiniAppAdDisplayDelegate.html">MiniAppAdDisplayDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -158,6 +170,12 @@
                 <a class="nav-group-task-link" href="Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppManifest.html">MiniAppManifest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppReward.html">MiniAppReward</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MiniAppShareContent.html">MiniAppShareContent</a>
               </li>
               <li class="nav-group-task">
@@ -172,16 +190,7 @@
                 <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB15DisplayProtocola">MiniAppDisplayProtocol</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB14PermissionTypea">MiniAppPermissionType</a>
               </li>
             </ul>
           </li>
@@ -240,88 +249,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB14PermissionTypea"></a>
-                    <a name="//apple_ref/swift/Alias/MiniAppPermissionType" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB14PermissionTypea">MiniAppPermissionType</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">MiniAppPermissionType</span> <span class="o">=</span> <span class="kt"><a href="Enums/MiniAppDevicePermissionType.html">MiniAppDevicePermissionType</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp0aB15DisplayProtocola"></a>
-                    <a name="//apple_ref/swift/Alias/MiniAppDisplayProtocol" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB15DisplayProtocola">MiniAppDisplayProtocol</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Public Protocol that will be used by any hosting application
-to communicate with the Mini App display module</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">MiniAppDisplayProtocol</span> <span class="o">=</span> <span class="kt"><a href="Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp0aB15MessageProtocola"></a>
-                    <a name="//apple_ref/swift/Alias/MiniAppMessageProtocol" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">MiniAppMessageProtocol</span> <span class="o">=</span> <span class="kt"><a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:7MiniApp34MASDKDownloadedListPermissionsPaira"></a>
                     <a name="//apple_ref/swift/Alias/MASDKDownloadedListPermissionsPair" class="dashAnchor"></a>
                     <a class="token" href="#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
@@ -354,7 +281,7 @@ to communicate with the Mini App display module</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-02-01)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-03-18)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 2.8.0 Docs
+          MiniApp 3.0.0 Docs
         </a>
-         (67% documented)
+         (75% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -65,6 +65,9 @@
             <a class="nav-group-name-link" href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/AdMobDisplayer.html">AdMobDisplayer</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MAContact.html">MAContact</a>
               </li>
               <li class="nav-group-task">
@@ -75,6 +78,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppAnalytics.html">MiniAppAnalytics</a>
@@ -96,6 +102,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MASDKAdsDisplayError.html">MASDKAdsDisplayError</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
               </li>
@@ -132,6 +141,9 @@
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/MiniAppAdDisplayDelegate.html">MiniAppAdDisplayDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -158,6 +170,12 @@
                 <a class="nav-group-task-link" href="Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppManifest.html">MiniAppManifest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppReward.html">MiniAppReward</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MiniAppShareContent.html">MiniAppShareContent</a>
               </li>
               <li class="nav-group-task">
@@ -172,16 +190,7 @@
                 <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB15DisplayProtocola">MiniAppDisplayProtocol</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB15MessageProtocola">MiniAppMessageProtocol</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp0aB14PermissionTypea">MiniAppPermissionType</a>
               </li>
             </ul>
           </li>
@@ -260,6 +269,67 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7MiniApp0aB8ManifestV"></a>
+                    <a name="//apple_ref/swift/Struct/MiniAppManifest" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB8ManifestV">MiniAppManifest</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Mini-app meta data information</p>
+
+                        <a href="Structs/MiniAppManifest.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MiniAppManifest</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">Equatable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB6RewardV"></a>
+                    <a name="//apple_ref/swift/Struct/MiniAppReward" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB6RewardV">MiniAppReward</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A MiniAppReward is the structure that is returned to the Mini App when a rewarded ad is displayed to an user
+The host app developer can provide a reward type and the amount earned for watching the ad</p>
+
+<ul>
+<li>Tag: MiniAppReward</li>
+</ul>
+
+                        <a href="Structs/MiniAppReward.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MiniAppReward</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7MiniApp0aB12ShareContentV"></a>
                     <a name="//apple_ref/swift/Struct/MiniAppShareContent" class="dashAnchor"></a>
                     <a class="token" href="#/s:7MiniApp0aB12ShareContentV">MiniAppShareContent</a>
@@ -293,7 +363,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-02-01)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-03-18)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

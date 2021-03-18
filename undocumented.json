@@ -1,15 +1,64 @@
 {
   "warnings": [
     {
+      "file": "/Users/vagrant/git/MiniApp/Classes/admob7/AdMobDisplayer.swift",
+      "line": 111,
+      "symbol": "AdMobDisplayer.interstitialDidDismissScreen(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/admob7/AdMobDisplayer.swift",
+      "line": 137,
+      "symbol": "AdMobDisplayer.rewardedAd(_:userDidEarn:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/admob7/AdMobDisplayer.swift",
+      "line": 141,
+      "symbol": "AdMobDisplayer.rewardedAdDidDismiss(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppAdDisplayer.swift",
+      "line": 11,
+      "symbol": "MiniAppAdDisplayer.init(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppAdDisplayer.swift",
+      "line": 11,
+      "symbol": "MiniAppAdDisplayer.init(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppAdDisplayer.swift",
+      "line": 11,
+      "symbol": "MiniAppAdDisplayer.init(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppExternalWebViewController.swift",
-      "line": 74,
+      "line": 68,
       "symbol": "MiniAppExternalWebViewController.webView(_:decidePolicyFor:decisionHandler:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppExternalWebViewController.swift",
-      "line": 74,
+      "line": 68,
+      "symbol": "MiniAppExternalWebViewController.webView(_:decidePolicyFor:decisionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppExternalWebViewController.swift",
+      "line": 68,
       "symbol": "MiniAppExternalWebViewController.webView(_:decidePolicyFor:decisionHandler:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -26,6 +75,20 @@
       "line": 16,
       "symbol": "MiniAppNavigationConfig.init(navigationBarVisibility:navigationDelegate:customNavigationView:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppNavigationConfig.swift",
+      "line": 16,
+      "symbol": "MiniAppNavigationConfig.init(navigationBarVisibility:navigationDelegate:customNavigationView:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppNavigationConfig.swift",
+      "line": 27,
+      "symbol": "MiniAppNavigationResponseHandler",
+      "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
@@ -53,6 +116,20 @@
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppNavigationConfig.swift",
       "line": 92,
       "symbol": "MiniAppNavigationAction.back",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppNavigationConfig.swift",
+      "line": 92,
+      "symbol": "MiniAppNavigationAction.back",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppNavigationConfig.swift",
+      "line": 92,
+      "symbol": "MiniAppNavigationAction.forward",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -87,6 +164,20 @@
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppNavigationConfig.swift",
       "line": 100,
+      "symbol": "MiniAppNavigationVisibility.always",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppNavigationConfig.swift",
+      "line": 100,
+      "symbol": "MiniAppNavigationVisibility.auto",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppNavigationConfig.swift",
+      "line": 100,
       "symbol": "MiniAppNavigationVisibility.auto",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -113,31 +204,38 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/MiniAppNavigationConfig.swift",
+      "line": 100,
+      "symbol": "MiniAppNavigationVisibility.never",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/RealMiniAppView.swift",
-      "line": 242,
+      "line": 247,
       "symbol": "RealMiniAppView.webView(_:didFinish:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/RealMiniAppView.swift",
-      "line": 242,
+      "line": 247,
+      "symbol": "RealMiniAppView.webView(_:didFinish:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Display/RealMiniAppView.swift",
+      "line": 247,
       "symbol": "RealMiniAppView.webView(_:didFinish:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 25,
-      "symbol": "MiniAppPermissionType",
-      "symbol_kind": "source.lang.swift.decl.typealias",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 25,
-      "symbol": "MiniAppPermissionType",
-      "symbol_kind": "source.lang.swift.decl.typealias",
+      "line": 32,
+      "symbol": "MiniAppCustomPermissionType",
+      "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
@@ -165,6 +263,20 @@
       "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
       "line": 33,
       "symbol": "MiniAppCustomPermissionType.userName",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 33,
+      "symbol": "MiniAppCustomPermissionType.userName",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 34,
+      "symbol": "MiniAppCustomPermissionType.profilePhoto",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -198,6 +310,13 @@
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 35,
+      "symbol": "MiniAppCustomPermissionType.contactsList",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
       "line": 36,
       "symbol": "MiniAppCustomPermissionType.deviceLocation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
@@ -208,6 +327,20 @@
       "line": 36,
       "symbol": "MiniAppCustomPermissionType.deviceLocation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 36,
+      "symbol": "MiniAppCustomPermissionType.deviceLocation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 38,
+      "symbol": "MiniAppCustomPermissionType.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
@@ -240,6 +373,13 @@
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 52,
+      "symbol": "MiniAppCustomPermissionGrantedStatus",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
       "line": 53,
       "symbol": "MiniAppCustomPermissionGrantedStatus.allowed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
@@ -249,6 +389,20 @@
       "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
       "line": 53,
       "symbol": "MiniAppCustomPermissionGrantedStatus.allowed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 53,
+      "symbol": "MiniAppCustomPermissionGrantedStatus.allowed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 54,
+      "symbol": "MiniAppCustomPermissionGrantedStatus.denied",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -282,6 +436,20 @@
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 55,
+      "symbol": "MiniAppCustomPermissionGrantedStatus.permissionNotAvailable",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
+      "line": 57,
+      "symbol": "MiniAppCustomPermissionGrantedStatus.boolValue",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
       "line": 57,
       "symbol": "MiniAppCustomPermissionGrantedStatus.boolValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -310,44 +478,16 @@
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniApp.swift",
-      "line": 99,
-      "symbol": "MiniApp.list(completionHandler:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "line": 5,
+      "symbol": "MiniApp.MAOrientationLock",
+      "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniApp.swift",
-      "line": 99,
-      "symbol": "MiniApp.list(completionHandler:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniApp.swift",
-      "line": 114,
-      "symbol": "MiniApp.info(miniAppId:completionHandler:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniApp.swift",
-      "line": 114,
-      "symbol": "MiniApp.info(miniAppId:completionHandler:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniApp.swift",
-      "line": 129,
-      "symbol": "MiniApp.create(appId:completionHandler:messageInterface:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniApp.swift",
-      "line": 129,
-      "symbol": "MiniApp.create(appId:completionHandler:messageInterface:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniAppAnalytics.swift",
+      "line": 42,
+      "symbol": "MiniAppAnalyticsLoader",
+      "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
@@ -380,6 +520,20 @@
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniAppAnalytics.swift",
+      "line": 43,
+      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniAppAnalytics.swift",
+      "line": 50,
+      "symbol": "MiniAppAnalytics",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniAppAnalytics.swift",
       "line": 50,
       "symbol": "MiniAppAnalytics",
       "symbol_kind": "source.lang.swift.decl.class",
@@ -407,59 +561,101 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppDisplayProtocol.swift",
-      "line": 8,
-      "symbol": "MiniAppDisplayDelegate",
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/MiniAppAnalytics.swift",
+      "line": 51,
+      "symbol": "MiniAppAnalytics.notificationName",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Models/MiniAppReward.swift",
+      "line": 10,
+      "symbol": "MiniAppReward.init(type:amount:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Models/MiniAppReward.swift",
+      "line": 10,
+      "symbol": "MiniAppReward.init(type:amount:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Models/MiniAppReward.swift",
+      "line": 10,
+      "symbol": "MiniAppReward.init(type:amount:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppAdDisplayDelegate.swift",
+      "line": 3,
+      "symbol": "MiniAppAdDisplayDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppDisplayProtocol.swift",
-      "line": 8,
-      "symbol": "MiniAppDisplayDelegate",
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppAdDisplayDelegate.swift",
+      "line": 3,
+      "symbol": "MiniAppAdDisplayDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppAdDisplayDelegate.swift",
+      "line": 3,
+      "symbol": "MiniAppAdDisplayDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 2,
-      "symbol": "MiniAppMessageProtocol",
-      "symbol_kind": "source.lang.swift.decl.typealias",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 2,
-      "symbol": "MiniAppMessageProtocol",
-      "symbol_kind": "source.lang.swift.decl.typealias",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 71,
+      "line": 44,
       "symbol": "MASDKProtocolResponse",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 71,
+      "line": 44,
       "symbol": "MASDKProtocolResponse",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 72,
+      "line": 44,
+      "symbol": "MASDKProtocolResponse",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 45,
       "symbol": "MASDKProtocolResponse.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 72,
+      "line": 45,
       "symbol": "MASDKProtocolResponse.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 45,
+      "symbol": "MASDKProtocolResponse.success",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppMessageModels.swift",
+      "line": 1,
+      "symbol": "MiniAppShareContent",
+      "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
@@ -491,115 +687,101 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 15,
-      "symbol": "MiniAppUserInfoDelegate.getUserName()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppMessageModels.swift",
+      "line": 2,
+      "symbol": "MiniAppShareContent.messageContent",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 15,
-      "symbol": "MiniAppUserInfoDelegate.getUserName()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 19,
-      "symbol": "MiniAppUserInfoDelegate.getProfilePhoto()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 19,
-      "symbol": "MiniAppUserInfoDelegate.getProfilePhoto()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 40,
-      "symbol": "MiniAppUserInfoDelegate.getUserName()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 40,
-      "symbol": "MiniAppUserInfoDelegate.getUserName()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 46,
-      "symbol": "MiniAppUserInfoDelegate.getProfilePhoto()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 46,
-      "symbol": "MiniAppUserInfoDelegate.getProfilePhoto()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 59,
+      "line": 39,
       "symbol": "MATokenInfo",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 59,
+      "line": 39,
       "symbol": "MATokenInfo",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 63,
+      "line": 39,
+      "symbol": "MATokenInfo",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
+      "line": 43,
       "symbol": "MATokenInfo.init(accessToken:expirationDate:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 63,
+      "line": 43,
       "symbol": "MATokenInfo.init(accessToken:expirationDate:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 71,
+      "line": 43,
+      "symbol": "MATokenInfo.init(accessToken:expirationDate:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
+      "line": 51,
       "symbol": "MAContact.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 71,
+      "line": 51,
       "symbol": "MAContact.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 73,
+      "line": 51,
+      "symbol": "MAContact.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
+      "line": 53,
       "symbol": "MAContact.init(id:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
-      "line": 73,
+      "line": 53,
       "symbol": "MAContact.init(id:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Protocols/MiniAppUserInfoDelegate.swift",
+      "line": 53,
+      "symbol": "MAContact.init(id:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Utilities/Constants.swift",
+      "line": 9,
+      "symbol": "MASDKDownloadedListPermissionsPair",
+      "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
@@ -632,6 +814,20 @@
     },
     {
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Utilities/MiniAppExternalUrlLoader.swift",
+      "line": 3,
+      "symbol": "MiniAppExternalUrlLoader",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Utilities/MiniAppExternalUrlLoader.swift",
+      "line": 4,
+      "symbol": "MiniAppExternalUrlLoader.currentWebViewController",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Utilities/MiniAppExternalUrlLoader.swift",
       "line": 4,
       "symbol": "MiniAppExternalUrlLoader.currentWebViewController",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -655,6 +851,20 @@
       "file": "/Users/vagrant/git/MiniApp/Classes/core/Utilities/MiniAppExternalUrlLoader.swift",
       "line": 5,
       "symbol": "MiniAppExternalUrlLoader.currentResponseHandler",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Utilities/MiniAppExternalUrlLoader.swift",
+      "line": 5,
+      "symbol": "MiniAppExternalUrlLoader.currentResponseHandler",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vagrant/git/MiniApp/Classes/core/Utilities/MiniAppExternalUrlLoader.swift",
+      "line": 6,
+      "symbol": "MiniAppExternalUrlLoader.customMiniAppURL",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -673,5 +883,5 @@
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/vagrant/git"
+  "source_directory": "/Users/vagrant/git/MiniApp"
 }
