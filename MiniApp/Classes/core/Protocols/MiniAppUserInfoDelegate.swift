@@ -46,7 +46,6 @@ public class MATokenInfo: Codable {
     }
 }
 
-
 /// Contact Object of a User
 public class MAContact: Codable {
     /// Contact ID
