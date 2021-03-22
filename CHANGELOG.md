@@ -7,8 +7,7 @@
 - **Feature:** Added `rakuten.miniapp.user.ACCESS_TOKEN` custom permission
 
 ---
-
-### 3.0.0
+### 3.0.0 (2021-03-19)
 
 **SDK**
 

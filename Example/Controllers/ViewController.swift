@@ -103,10 +103,10 @@ class ViewController: UIViewController {
     }
 
     func compareMiniAppMetaData(miniAppInfo: MiniAppInfo, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
-        guard let downloadedManifest = MiniApp.shared().getDownloadedManifest(miniAppId: miniAppInfo.id) else {
+        guard let downloadedManifest = MiniApp.shared(with: Config.getCurrent()).getDownloadedManifest(miniAppId: miniAppInfo.id) else {
             return completionHandler(.success(true))
         }
-        MiniApp.shared().getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
+        MiniApp.shared(with: Config.getCurrent()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
                 self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
