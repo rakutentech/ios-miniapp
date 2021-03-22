@@ -55,7 +55,7 @@ public class MAContact: Codable {
     /// Contact Email address
     public let email: String?
 
-    public init(id: String, name: String? = "", email: String? = "") {
+    public init(id: String, name: String? = nil, email: String? = nil) {
         self.id = id
         self.name = name
         self.email = email
