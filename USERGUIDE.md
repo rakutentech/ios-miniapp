@@ -16,7 +16,7 @@ All the MiniApp files downloaded by the MiniApp iOS library are cached locally
 
 ## Requirements
 
-This module supports **iOS 11.0 and above**. It has been tested on iOS 11.0 and above.
+This module supports **iOS 13.0 and above**. It has been tested on iOS 13.0 and above.
 
 It is written in Swift 5.0 and can be used in compatible Xcode versions.
 
