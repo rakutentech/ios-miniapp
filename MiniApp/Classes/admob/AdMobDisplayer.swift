@@ -62,6 +62,7 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
             GADInterstitialAd.load(withAdUnitID: adId, request: request) { [weak self]  (interstitialAd, error) in
                 if let error = error {
                     self?.onInterstitialLoaded[adId]?(.failure(error))
+                    cleanInterstitial(adId)
                 } else {
                     interstitialAd?.fullScreenContentDelegate = self
                     self?.interstitialAds[adId] = interstitialAd
@@ -80,6 +81,7 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
                     request: request, completionHandler: { [weak self] (rewardedAd, error) in
                 if let err = error {
                     onLoaded(.failure(err))
+                    cleanReward(adId)
                 } else {
                     rewardedAd?.fullScreenContentDelegate = self
                     self?.rewardedAds[adId] = rewardedAd

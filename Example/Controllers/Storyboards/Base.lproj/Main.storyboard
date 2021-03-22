@@ -473,7 +473,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="q2J-lJ-7t0"/>
                                     <constraint firstAttribute="height" constant="40" id="wwU-eP-L6R"/>
                                 </constraints>
-                                <state key="normal" title="Close">
+                                <state key="normal" title="Cancel">
                                     <color key="titleColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
