@@ -46,12 +46,19 @@ public class MATokenInfo: Codable {
     }
 }
 
-/** Contact object for miniapp. */
+/// Contact Object of a User
 public class MAContact: Codable {
+    /// Contact ID
     public let id: String
+    /// Contact Name
+    public let name: String?
+    /// Contact Email address
+    public let email: String?
 
-    public init(id: String) {
+    public init(id: String, name: String? = nil, email: String? = nil) {
         self.id = id
+        self.name = name
+        self.email = email
     }
 }
 
