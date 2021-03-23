@@ -256,7 +256,7 @@ Be careful when declaring your variable, as Mini App SDK does not keep a strong 
 ```swift
 let adsDelegate = AdMobDisplayer() // This is just declared here as a convenience for the example.
 
-MiniApp.shared(with: Config.getCurrent(), navigationSettings: Config.getNavConfig(delegate: self))
+MiniApp.shared(with: Config.current(), navigationSettings: Config.getNavConfig(delegate: self))
         .create(appId: appInfo.id, 
                 version: appInfo.version.versionId,
                 queryParams: getQueryParam(),
@@ -319,7 +319,7 @@ extension ViewController: MiniAppAdDisplayDelegate {
 Once the delegate implemented, don't forget to provide it when you call a Mini App creation with the parameter `adsDelegate`:
 
 ```swift
-MiniApp.shared(with: Config.getCurrent())
+MiniApp.shared(with: Config.current())
             .create(appId: appInfo.id,
                     version: appInfo.version.versionId,
                     queryParams: getQueryParam(),
@@ -402,7 +402,7 @@ extension ViewController: MiniAppMessageDelegate {
 ---
 **API Docs:** [MiniApp.list](https://rakutentech.github.io/ios-miniapp/Classes/MiniApp.html)
 
-MiniApp library calls are done via the `MiniApp.shared()` singleton with or without a `MiniAppSdkConfig` instance (you can get the current one with `Config.getCurrent()`). If you don't provide a config instance, values in custom iOS target properties will be used by default. 
+MiniApp library calls are done via the `MiniApp.shared()` singleton with or without a `MiniAppSdkConfig` instance (you can get the current one with `Config.current()`). If you don't provide a config instance, values in custom iOS target properties will be used by default. 
 
 ```swift
 MiniApp.shared().list { (result) in
@@ -413,7 +413,7 @@ MiniApp.shared().list { (result) in
 or
 
 ```swift
-MiniApp.shared(with: Config.getCurrent()).list { (result) in
+MiniApp.shared(with: Config.current()).list { (result) in
 	...
 }
 ```
@@ -432,7 +432,7 @@ MiniApp.shared().info(miniAppId: miniAppID) { (result) in
 or
 
 ```swift
-MiniApp.shared(with: Config.getCurrent()).info(miniAppId: miniAppID) { (result) in
+MiniApp.shared(with: Config.current()).info(miniAppId: miniAppID) { (result) in
 	...
 }
 ```
@@ -580,7 +580,7 @@ let navConfig = MiniAppNavigationConfig(
                     navigationDelegate: myNavigationDelegate,
                     customNavigationView: mCustomView)
 
-MiniApp.shared(with: Config.getCurrent(), navigationSettings: navConfig).info(miniAppId: miniAppID) { (result) in
+MiniApp.shared(with: Config.current(), navigationSettings: navConfig).info(miniAppId: miniAppID) { (result) in
 ...
 }
 ```
