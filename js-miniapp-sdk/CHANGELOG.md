@@ -1,14 +1,20 @@
 ## CHANGELOG
 
 ### In Progress (2021-XX-XX)
+
 - **Feature:** Support send message to contact. [See here](README.md#Send-message).
 - **Feature:** Added `Access Token` Custom permission.
+- **Feature:** Added optional `Name` & `Email` properties to Contact object
+
+---
 
 ### 1.6.1 (2021-01-06)
+
 - **Fix:** Location permission support for iOS/Android Mini App SDK 2.6 and below.
 - **Fix:** Reject promise from `MiniApp.requestLocationPermission` when the user denies location custom permission.
 
 ### 1.6.0 (2020-12-18)
+
 - **Feature:** Added `CustomPermissionName.LOCATION`.
 - **Change:** Updated `requestLocationPermission()` to `requestLocationPermission(permissionDescription?: string)`. From now `requestLocationPermission` will request both custom and device permission respectively. [See here](README.md#Request-Permissions).
 - **Feature:** Added support for requesting Contact list from Host app. [See here](README.md#Requesting-User-details).

@@ -225,9 +225,7 @@ function UserDetails(props: UserDetailsProps) {
           hasPermission(CustomPermissionName.PROFILE_PHOTO, permissions)
             ? props.getProfilePhoto()
             : null,
-          hasPermission(CustomPermissionName.CONTACT_LIST, permissions)
-            ? props.getContacts()
-            : null,
+          props.getContacts(),
         ])
       )
       .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
@@ -310,11 +308,27 @@ function UserDetails(props: UserDetailsProps) {
           )}
           {props.contactList &&
             props.contactList.map((contact) => (
-              <ListItem>
+              <ListItem divider>
                 <ListItemAvatar>
                   <Avatar className={classes.contactIcon} />
                 </ListItemAvatar>
-                <ListItemText primary={contact.id} />
+                <ListItemText
+                  primary={contact.id}
+                  secondary={
+                    <React.Fragment>
+                      <Typography>
+                        {contact.name && contact.name !== '' && (
+                          <span>{'Name: ' + contact.name}</span>
+                        )}
+                      </Typography>
+                      <Typography>
+                        {contact.email && contact.email !== '' && (
+                          <span>{'Email: ' + contact.email}</span>
+                        )}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
               </ListItem>
             ))}
         </List>
