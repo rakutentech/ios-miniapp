@@ -15,7 +15,7 @@ public protocol MiniAppUserInfoDelegate: class {
 
     /// Interface that is used to retrieve the Token Info
     func getAccessToken(miniAppId: String,
-                        scopes: MASDKAccessTokenScopes?,
+                        scopes: MASDKAccessTokenScopes,
                         completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
 }
 
@@ -33,7 +33,7 @@ public extension MiniAppUserInfoDelegate {
         return nil
     }
 
-    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes?, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }
@@ -41,14 +41,12 @@ public extension MiniAppUserInfoDelegate {
 public class MATokenInfo: Codable {
     let token: String
     let validUntil: Int
-    let audience: String?
-    let scopes: [String]?
+    let scopes: MASDKAccessTokenScopes
 
     public init(accessToken: String, expirationDate: Date, scopes: MASDKAccessTokenScopes?) {
         self.token = accessToken
         self.validUntil = expirationDate.dateToNumber()
-        self.audience = scopes?.audience
-        self.scopes = scopes?.scopes
+        self.scopes = scopes ?? MASDKAccessTokenScopes(audience: "UNDEFINED", scopes: [])!
     }
 }
 

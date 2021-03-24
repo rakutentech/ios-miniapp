@@ -8,7 +8,6 @@ internal class Displayer {
                         versionId: String,
                         projectId: String,
                         miniAppTitle: String,
-                        manifest: MiniAppManifest? = nil,
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
                         adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
@@ -16,7 +15,6 @@ internal class Displayer {
           miniAppId: miniAppId,
           versionId: versionId,
           projectId: projectId,
-          manifest: manifest,
           miniAppTitle: miniAppTitle,
           queryParams: queryParams,
           hostAppMessageDelegate: hostAppMessageDelegate,
@@ -28,7 +26,6 @@ internal class Displayer {
 
     func getMiniAppView(miniAppURL: URL,
                         miniAppTitle: String,
-                        manifest: MiniAppManifest? = nil,
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
                         adsDisplayer: MiniAppAdDisplayer? = nil,
@@ -36,7 +33,6 @@ internal class Displayer {
         RealMiniAppView(
             miniAppURL: miniAppURL,
             miniAppTitle: miniAppTitle,
-            manifest: manifest,
             queryParams: queryParams,
             hostAppMessageDelegate: hostAppMessageDelegate,
             adsDisplayer: adsDisplayer,

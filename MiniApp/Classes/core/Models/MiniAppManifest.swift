@@ -42,6 +42,22 @@ public struct MASDKAccessTokenScopes: Codable, Equatable, Hashable {
              scopes
     }
 
+    /// Modifies this instance of MASDKAccessTokenScopes with a new audience or scopes
+    ///
+    /// - Parameters:
+    ///   - newAudience: optional. a new audience String. If nil is provided then it is ignored
+    ///   - newScopes: optional. a new scope array. If nil is provided then it is ignored
+    /// - Returns: self
+    mutating func with(audience newAudience: String? = nil, scopes newScopes: [String]? = nil) -> MASDKAccessTokenScopes {
+        if let aud = newAudience {
+            self.audience = aud
+        }
+        if let sco = newScopes {
+            self.scopes = sco
+        }
+        return  self
+    }
+
     public init?(audience: String?, scopes: [String]?) {
         if let audience = audience, let scopes = scopes {
             self.audience = audience

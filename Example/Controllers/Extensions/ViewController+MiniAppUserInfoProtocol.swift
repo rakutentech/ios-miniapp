@@ -1,6 +1,6 @@
 import MiniApp
 
-extension ViewController {
+extension ViewController: MiniAppUserInfoDelegate {
 
     func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         guard let userProfile = getProfileSettings(), let userName = userProfile.displayName else {
@@ -24,7 +24,7 @@ extension ViewController {
     }
 
     func getAccessToken(miniAppId: String,
-                        scopes: MASDKAccessTokenScopes?,
+                        scopes: MASDKAccessTokenScopes,
                         completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         var resultToken = "ACCESS_TOKEN"
         var resultDate = Date()

@@ -94,7 +94,6 @@ public class MiniApp: NSObject {
     ///
     /// - Parameters:
     ///   - appInfo: Mini App info object
-    ///   - manifest: optional Mini App manifest containing permissions and other metadata
     ///   - queryParams: Optional Query parameters that the host app would like to share while creating a mini app
     ///   - completionHandler: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
@@ -102,10 +101,9 @@ public class MiniApp: NSObject {
     ///         -   Error: Error details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appInfo: MiniAppInfo, manifest: MiniAppManifest? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
         return realMiniApp.createMiniApp(
                 appInfo: appInfo,
-                manifest: manifest,
                 queryParams: queryParams,
                 completionHandler: completionHandler,
                 messageInterface: messageInterface,

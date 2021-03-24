@@ -25,7 +25,6 @@ internal class RealMiniAppView: UIView {
         miniAppId: String,
         versionId: String,
         projectId: String,
-        manifest: MiniAppManifest? = nil,
         miniAppTitle: String,
         queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
@@ -44,7 +43,6 @@ internal class RealMiniAppView: UIView {
 
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
-                   manifest: manifest,
                    hostAppMessageDelegate: hostAppMessageDelegate,
                    adsDisplayer: adsDisplayer,
                    navigationDelegate: navigationDelegate,
@@ -54,7 +52,6 @@ internal class RealMiniAppView: UIView {
     init(
         miniAppURL: URL,
         miniAppTitle: String,
-        manifest: MiniAppManifest? = nil,
         queryParams: String? = nil,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         adsDisplayer: MiniAppAdDisplayer? = nil,
@@ -73,7 +70,6 @@ internal class RealMiniAppView: UIView {
 
         super.init(frame: .zero)
         commonInit(miniAppId: "custom\(Int32.random(in: 0...Int32.max))", // some id is needed to handle permissions
-                   manifest: manifest,
                    hostAppMessageDelegate: hostAppMessageDelegate,
                    adsDisplayer: adsDisplayer,
                    navigationDelegate: navigationDelegate,
@@ -86,7 +82,6 @@ internal class RealMiniAppView: UIView {
 
     private func commonInit(
         miniAppId: String,
-        manifest: MiniAppManifest?,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         adsDisplayer: MiniAppAdDisplayer? = nil,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
@@ -108,8 +103,7 @@ internal class RealMiniAppView: UIView {
                                                                                    hostAppMessageDelegate: hostAppMessageDelegate,
                                                                                    adsDisplayer: adsDisplayer,
                                                                                    miniAppId: miniAppId,
-                                                                                   miniAppTitle: self.miniAppTitle,
-                                                                                   manifest: manifest)
+                                                                                   miniAppTitle: self.miniAppTitle)
         webView.configuration.userContentController.addBridgingJavaScript()
         webView.uiDelegate = self
         self.navigationDelegate = navigationDelegate

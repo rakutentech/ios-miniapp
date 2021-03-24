@@ -508,21 +508,6 @@ MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAp
 	...
 }
 ```
-Manifest retrieved from this method can be passed to `MiniApp.create` method, this is used when a scope management is required for [access token](#access-token-info) for example:
-
-```swift
-MiniApp.shared().create(appId: String, manifest: theManifest, completionHandler: { (result) in
-	switch result {
-            case .success(let miniAppDisplay):
-                let view = miniAppDisplay.getMiniAppView()
-                view.frame = self.view.bounds
-                self.view.addSubview(view)
-            case .failure(let error):
-                print("Error: ", error.localizedDescription)
-            }
-}, messageInterface: self)
-
-```
 
 <a id="how-to-use-meta-data"></a>
 
