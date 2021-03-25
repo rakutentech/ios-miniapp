@@ -5,6 +5,7 @@
 - **Feature:** Support send message to contact. [See here](README.md#Send-message).
 - **Feature:** Added `Access Token` Custom permission.
 - **Feature:** Added optional `Name` & `Email` properties to Contact object
+- **Feature:** Added `Access Token` scopes and audience
 
 ---
 

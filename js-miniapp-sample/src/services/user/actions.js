@@ -74,22 +74,22 @@ const requestContactList = (): Function => {
   };
 };
 
-const requestAccessToken = (): Function => {
+const requestAccessToken = (audience: string, scopes: string[]): Function => {
   return (dispatch) => {
     return MiniApp.user
-      .getAccessToken()
+      .getAccessToken(audience, scopes)
       .then((token) => {
         dispatch({
           type: REQUEST_ACCESS_TOKEN_SUCCESS,
-          token,
+          token: token,
         });
-
         return Promise.resolve(token);
       })
-      .catch((_) => {
+      .catch((e) => {
         dispatch({
           type: REQUEST_ACCESS_TOKEN_FAILURE,
         });
+        throw e;
       });
   };
 };

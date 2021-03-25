@@ -1,5 +1,4 @@
-import React, { useReducer } from 'react';
-import { displayDate } from '../js_sdk';
+import React, { Fragment, useReducer, useState } from 'react';
 
 import {
   Button,
@@ -8,6 +7,8 @@ import {
   Typography,
   CardContent,
   ListItemText,
+  FormControl,
+  TextField,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,6 +23,7 @@ import {
 import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
+import { displayDate } from '../js_sdk';
 import { requestCustomPermissions } from '../services/permissions/actions';
 import { requestAccessToken } from '../services/user/actions';
 
@@ -101,7 +103,7 @@ const dataFetchReducer = (state, action) => {
 type AuthTokenProps = {
   permissions: CustomPermissionName[],
   accessToken: AccessTokenData,
-  getAccessToken: () => Promise<string>,
+  getAccessToken: (audience: string, scopes: string[]) => Promise<string>,
   requestPermissions: (
     permissions: CustomPermission[]
   ) => Promise<CustomPermissionResult[]>,
@@ -110,11 +112,20 @@ type AuthTokenProps = {
 function AuthToken(props: AuthTokenProps) {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
-
+  const [scope, setScope] = useState({
+    audience: 'rae',
+    scopes: ['idinfo_read_openid', 'memberinfo_read_point'],
+  });
   const buttonClassname = clsx({
     [classes.buttonFailure]: state.isError,
     [classes.buttonSuccess]: !state.isError,
   });
+  const onAudienceChange = (event) => {
+    setScope({ ...scope, audience: event.target.value });
+  };
+  const onScopesChange = (event) => {
+    setScope({ ...scope, scopes: event.target.value.split(', ') });
+  };
 
   function requestAccessTokenPermission() {
     const permissionsList = [
@@ -137,7 +148,7 @@ function AuthToken(props: AuthTokenProps) {
       .then((permissions) =>
         Promise.all([
           hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)
-            ? props.getAccessToken()
+            ? props.getAccessToken(scope.audience, scope.scopes)
             : null,
         ])
       )
@@ -198,15 +209,40 @@ function AuthToken(props: AuthTokenProps) {
     <GreyCard height="auto">
       <CardContent>
         <FormGroup column="true" classes={{ root: classes.rootFormGroup }}>
+          <Fragment>
+            <FormControl className={classes.formControl}>
+              <TextField
+                id="audience"
+                label="Audience"
+                className={classes.fields}
+                onChange={onAudienceChange}
+                value={scope.audience}
+              />
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <TextField
+                id="scopes"
+                label="Scopes"
+                className={classes.fields}
+                onChange={onScopesChange}
+                value={scope.scopes.join(', ')}
+              />
+            </FormControl>
+          </Fragment>
           {ButtonWrapper()}
-          {props.accessToken && (
+          {!state.isLoading && !state.isError && props.accessToken && (
             <Typography variant="body1" className={classes.success}>
               Token: {props.accessToken.token}
             </Typography>
           )}
-          {props.accessToken && (
+          {!state.isLoading && !state.isError && props.accessToken && (
             <Typography variant="body1" className={classes.success}>
               Valid until: {displayDate(props.accessToken.validUntil)}
+            </Typography>
+          )}
+          {!state.isLoading && state.isError && (
+            <Typography variant="body1" className={classes.red}>
+              Acces token permission scopes error
             </Typography>
           )}
           <div>{AccessToken()}</div>
@@ -225,7 +261,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAccessToken: () => dispatch(requestAccessToken()),
+    getAccessToken: (audience: string, scopes: string[]) =>
+      dispatch(requestAccessToken(audience, scopes)),
     requestPermissions: (permissions) =>
       dispatch(requestCustomPermissions(permissions)),
   };

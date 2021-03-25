@@ -321,16 +321,21 @@ miniApp.user.getContacts()
 
 **API:** [UserInfoProvider.getAccessToken](api/interfaces/userinfoprovider.md#getaccesstoken),
 [AccessTokenData](api/classes/accesstokendata.md),
+[AccessTokenScopes](api/classes/accesstokenscopes.md),
 [CustomPermissionName.ACCESS_TOKEN](api/enums/custompermissionname.html#access_token)
 
-You can get an access token provided by the Host App. The Host App will be able to deny your request if your mini app ID is not approved to access the token.
+You can get an access token provided by the Host App.
+
+There are 2 reasons your access token request can be rejected:
+ - The Host App will be able to deny your request if your mini app ID is not approved to access the token.
+ - Your request will also be denied by the MiniApp SDK if your audience and scopes do not match the ones defined in the [Mini App Manifest](#mini-app-manifest)
 
 Returns the [AccessTokenData](api/interfaces/accesstokendata.md) list from the Host app.
 
-AccessTokenData contains `token` and `validUntil` details.
+**AccessTokenData** contains `token`,`validUntil` and `scopes` details.
 
 ```javascript
-miniApp.user.getAccessToken()
+miniApp.user.getAccessToken("TOKEN_AUDIENCE", ["TOKEN_SCOPE1","TOKEN_SCOPE2"])
   .then(data => {
       const isValid = data.validUntil.getTime() >= Date.now();
       if (isValid) {

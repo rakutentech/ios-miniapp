@@ -326,7 +326,9 @@ describe('getAccessToken', () => {
     };
 
     window.MiniAppBridge.getAccessToken.resolves(response);
-    return expect(miniApp.user.getAccessToken()).to.eventually.equal(response);
+    return expect(
+      miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+    ).to.eventually.equal(response);
   });
 });
 

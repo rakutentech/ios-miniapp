@@ -28,9 +28,11 @@ export interface UserInfoProvider {
 
   /**
    * Fetches the access token from host app.
+   * @param audience one of the audiences provided in MiniApp manifest
+   * @param scopes scopes array associated to the audience
    * @returns Access token from native host app.
    */
-  getAccessToken(): Promise<AccessTokenData>;
+  getAccessToken(audience: string, scopes: string[]): Promise<AccessTokenData>;
 }
 
 /** @internal */
@@ -47,7 +49,7 @@ export class UserInfo implements UserInfoProvider {
     return getBridge().getContacts();
   }
 
-  getAccessToken(): Promise<AccessTokenData> {
-    return getBridge().getAccessToken();
+  getAccessToken(audience: string, scopes: string[]): Promise<AccessTokenData> {
+    return getBridge().getAccessToken(audience, scopes);
   }
 }
