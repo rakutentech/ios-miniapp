@@ -77,7 +77,9 @@ class MiniAppDownloaderTests: QuickSpec {
                      """
                      mockAPIClient.data = responseString.data(using: .utf8)
                      downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).1") { (_) in
-                         downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).2") { (_) in }
+                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { () -> () in
+                             downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).2") { (_) in }
+                         }
                      }
 
                      let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: "\(versionId).2")
