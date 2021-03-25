@@ -40,19 +40,24 @@ public struct MiniAppManifest: Codable, Equatable {
     public let optionalPermissions: [MASDKCustomPermissionModel]?
     /// Key-value pair data that is received from the endpoint
     public let customMetaData: [String: String]?
+    /// VersionId of the Mini-App
+    public let versionId: String?
 
     private enum CodingKeys: String, CodingKey {
         case requiredPermissions,
              optionalPermissions,
-             customMetaData
+             customMetaData,
+             versionId
     }
 
     init(requiredPermissions: [MASDKCustomPermissionModel]?,
          optionalPermissions: [MASDKCustomPermissionModel]?,
-         customMetaData: [String: String]?) {
+         customMetaData: [String: String]?,
+         versionId: String?) {
         self.requiredPermissions = requiredPermissions
         self.optionalPermissions = optionalPermissions
         self.customMetaData = customMetaData
+        self.versionId = versionId
     }
 
     public static func == (lhs: MiniAppManifest, rhs: MiniAppManifest) -> Bool {

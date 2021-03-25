@@ -160,7 +160,8 @@ class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
                 if let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
                                                                data: responseData.data) {
                     return completionHandler(.success(self.prepareMiniAppManifest(
-                                                        metaDataResponse: decodeResponse.bundleManifest)))
+                                                        metaDataResponse: decodeResponse.bundleManifest,
+                                                        versionId: miniAppVersion)))
                 }
                 return completionHandler(.failure(.invalidResponseData))
             case .failure(let error):
@@ -365,7 +366,7 @@ var mockMiniAppManifest: MiniAppManifest {
                                                                                         permissionRequestDescription: "Contact List custom permission")
                                                             ]
     let customMetaData: [String: String] = ["exampleKey": "exampleValue"]
-    let manifest = MiniAppManifest.init(requiredPermissions: requiredPermissions, optionalPermissions: optionalPermissions, customMetaData: customMetaData)
+    let manifest = MiniAppManifest.init(requiredPermissions: requiredPermissions, optionalPermissions: optionalPermissions, customMetaData: customMetaData, versionId: "ver-id-test")
     return manifest
 }
 
