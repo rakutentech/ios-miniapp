@@ -120,22 +120,27 @@ public struct MiniAppManifest: Codable, Equatable {
     public let customMetaData: [String: String]?
     /// List of scopes and audiences the MiniApp can require
     public let accessTokenPermissions: [MASDKAccessTokenScopes]?
+    /// VersionId of the Mini-App
+    public let versionId: String?
 
     private enum CodingKeys: String, CodingKey {
         case requiredPermissions,
              optionalPermissions,
              customMetaData,
-             accessTokenPermissions
+             accessTokenPermissions,
+             versionId
     }
 
     init(requiredPermissions: [MASDKCustomPermissionModel]?,
          optionalPermissions: [MASDKCustomPermissionModel]?,
          customMetaData: [String: String]?,
-         accessTokenPermissions: [MASDKAccessTokenScopes]?) {
+         accessTokenPermissions: [MASDKAccessTokenScopes]?,
+         versionId: String?) {
         self.requiredPermissions = requiredPermissions
         self.optionalPermissions = optionalPermissions
         self.customMetaData = customMetaData
         self.accessTokenPermissions = accessTokenPermissions
+        self.versionId = versionId
     }
 
     public static func == (lhs: MiniAppManifest, rhs: MiniAppManifest) -> Bool {

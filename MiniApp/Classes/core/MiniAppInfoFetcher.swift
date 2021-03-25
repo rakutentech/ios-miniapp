@@ -53,18 +53,21 @@ internal class MiniAppInfoFetcher {
                 }
                 return completionHandler(.success(
                                             self.prepareMiniAppManifest(
-                                                metaDataResponse: decodeResponse.bundleManifest)))
+                                                metaDataResponse: decodeResponse.bundleManifest,
+                                                versionId: miniAppVersion)))
             case .failure(let error):
                 return completionHandler(.failure(.fromError(error: error)))
             }
         }
     }
 
-    func prepareMiniAppManifest(metaDataResponse: MetaDataCustomPermissionModel) -> MiniAppManifest {
+    func prepareMiniAppManifest(metaDataResponse: MetaDataCustomPermissionModel, versionId: String) -> MiniAppManifest {
         return MiniAppManifest(requiredPermissions: getCustomPermissionModel(metaDataCustomPermissionResponse: metaDataResponse.reqPermissions),
             optionalPermissions: getCustomPermissionModel(
                 metaDataCustomPermissionResponse: metaDataResponse.optPermissions),
-            customMetaData: metaDataResponse.customMetaData, accessTokenPermissions: metaDataResponse.accessTokenPermissions)
+            customMetaData: metaDataResponse.customMetaData,
+            accessTokenPermissions: metaDataResponse.accessTokenPermissions,
+            versionId: versionId)
     }
 
     private func getCustomPermissionModel(metaDataCustomPermissionResponse: [MACustomPermissionsResponse]?) -> [MASDKCustomPermissionModel]? {
