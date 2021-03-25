@@ -77,7 +77,7 @@ class MiniAppDownloaderTests: QuickSpec {
                      """
                      mockAPIClient.data = responseString.data(using: .utf8)
                      downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).1") { (_) in
-                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { () -> () in
+                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { () -> Void in
                              downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).2") { (_) in }
                          }
                      }

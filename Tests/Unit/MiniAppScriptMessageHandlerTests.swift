@@ -419,7 +419,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.response).toEventually(beNil(), timeout: .seconds(2))
                     expect(mockCallbackProtocol.errorMessage).toEventually(contain("audienceError"), timeout: .seconds(2))
-                    removeMockManifestInCache(miniAppId: mockMiniAppID)
                 }
             }
             context("when MiniAppScriptMessageHandler receives getAccessToken command with bad audience") {
@@ -439,7 +438,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.response).toEventually(beNil(), timeout: .seconds(2))
                     expect(mockCallbackProtocol.errorMessage).toEventually(contain("audienceError"), timeout: .seconds(2))
-                    removeMockManifestInCache(miniAppId: mockMiniAppID)
                 }
             }
             context("when MiniAppScriptMessageHandler receives getAccessToken command with bad scopes") {
@@ -459,7 +457,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.response).toEventually(beNil(), timeout: .seconds(2))
                     expect(mockCallbackProtocol.errorMessage).toEventually(contain("scopeError"), timeout: .seconds(2))
-                    removeMockManifestInCache(miniAppId: mockMiniAppID)
                 }
             }
             context("when MiniAppScriptMessageHandler receives valid getAccessToken command") {
@@ -478,7 +475,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"scope_test\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.response).toEventually(contain(mockMessageInterface.mockAccessToken!), timeout: .seconds(2))
-                    removeMockManifestInCache(miniAppId: mockMiniAppID)
                 }
             }
             context("when MiniAppScriptMessageHandler receives valid getAccessToken command but host app returns error") {
@@ -496,7 +492,24 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"scope_test\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.unknownError.rawValue), timeout: .seconds(2))
+                }
+            }
+            context("when MiniApp manifest contained no scopes") {
+                it("will return error") {
                     removeMockManifestInCache(miniAppId: mockMiniAppID)
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                            delegate: mockCallbackProtocol,
+                            hostAppMessageDelegate: mockMessageInterface,
+                            adsDisplayer: mockAdsDelegate,
+                            miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                    )
+                    mockMessageInterface.mockAccessToken = ""
+                    let mockMessage = MockWKScriptMessage(
+                            name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"scope_test\"]}, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(beNil(), timeout: .seconds(2))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("audienceError"), timeout: .seconds(2))
                 }
             }
             context("when MiniAppScriptMessageHandler receives invalid orientation lock command") {

@@ -339,7 +339,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
         return mockContactList
     }
 
-    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> ()) {
+    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         guard let accessToken =  mockAccessToken, !accessToken.isEmpty else {
             return completionHandler(.failure(.unknownError))
         }
@@ -386,7 +386,7 @@ var mockMiniAppManifest: MiniAppManifest {
     }
 }
 
-func removeMockManifestInCache(miniAppId: String, version: String = "ver-id-test") {
+func removeMockManifestInCache(miniAppId: String) {
     MAManifestStorage().removeKey(forMiniApp: miniAppId)
 }
 
@@ -396,6 +396,7 @@ func getMockManifestInfo(miniAppId: String) throws -> MiniAppManifest? {
 }
 
 let jSONManifest = """
+{
       "reqPermissions": [
         {
           "name": "rakuten.miniapp.user.USER_NAME",
@@ -425,13 +426,13 @@ let jSONManifest = """
         "scopes": ["scope_test"]
       }
    ]
+}
 """
 
 let mockMetaDataString = """
     {
-        "bundleManifest": {
+        "bundleManifest":
               \(jSONManifest)
-        }
     }
 """
 
