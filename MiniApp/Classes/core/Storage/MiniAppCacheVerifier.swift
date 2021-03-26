@@ -8,7 +8,6 @@ internal class MiniAppCacheVerifier {
     }
 
     func verify(appId: String, version: String) -> Bool {
-        return true
         if miniAppVerificationStore.getCacheVerificationInfo(for: appId) != nil {
             return false // v2.5 legacy cleaning
         }
