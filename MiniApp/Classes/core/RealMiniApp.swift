@@ -147,6 +147,8 @@ internal class RealMiniApp {
     }
 
     func getMiniAppView(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+        self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
+        self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
         isRequiredPermissionsAllowed(
                 appId: appInfo.id,
                 versionId: appInfo.version.versionId) { (result) in
@@ -160,8 +162,6 @@ internal class RealMiniApp {
                                                                                queryParams: queryParams,
                                                                                hostAppMessageDelegate: messageInterface ?? self,
                                                                                adsDisplayer: adsDisplayer)
-                    self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
-                    self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
                     completionHandler(.success(miniAppDisplayProtocol))
                 }
             case .failure(let error):
