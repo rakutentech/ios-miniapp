@@ -73,5 +73,9 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>This will let you to take Photos</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need Microphone while recording video</string>
 </dict>
 </plist>
