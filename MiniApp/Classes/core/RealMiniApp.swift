@@ -55,17 +55,27 @@ internal class RealMiniApp {
             switch result {
             case .success(let responseData):
                 if appInfo.version.versionId != responseData.version.versionId {
-                    self.downloadMiniApp(appInfo: responseData, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
+                    self.downloadMiniApp(
+                            appInfo: responseData,
+                            queryParams: queryParams,
+                            completionHandler: completionHandler,
+                            messageInterface: messageInterface,
+                            adsDisplayer: adsDisplayer)
                     return
                 }
-                self.downloadMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface)
+                self.downloadMiniApp(
+                        appInfo: appInfo,
+                        queryParams: queryParams,
+                        completionHandler: completionHandler,
+                        messageInterface: messageInterface)
             case .failure(let error):
-                self.handleMiniAppDownloadError(appId: appInfo.id,
-                                 error: error,
-                                 queryParams: queryParams,
-                                 completionHandler: completionHandler,
-                                 messageInterface: messageInterface,
-                                 adsDisplayer: adsDisplayer)
+                self.handleMiniAppDownloadError(
+                        appId: appInfo.id,
+                        error: error,
+                        queryParams: queryParams,
+                        completionHandler: completionHandler,
+                        messageInterface: messageInterface,
+                        adsDisplayer: adsDisplayer)
             } }
     }
 
@@ -117,40 +127,42 @@ internal class RealMiniApp {
         return miniAppDownloader.verifyAndDownload(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
             switch result {
             case .success:
-                self.getMiniAppView(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
+                self.getMiniAppView(
+                        appInfo: appInfo,
+                        queryParams: queryParams,
+                        completionHandler: completionHandler,
+                        messageInterface: messageInterface,
+                        adsDisplayer: adsDisplayer)
             case .failure(let error):
-                self.handleMiniAppDownloadError(appId: appInfo.id,
-                                 error: error,
-                                 queryParams: queryParams,
-                                 completionHandler: completionHandler,
-                                 messageInterface: messageInterface,
-                                 adsDisplayer: adsDisplayer)
+                self.handleMiniAppDownloadError(
+                        appId: appInfo.id,
+                        error: error,
+                        queryParams: queryParams,
+                        completionHandler: completionHandler,
+                        messageInterface: messageInterface,
+                        adsDisplayer: adsDisplayer)
             }
         }
     }
 
-    func getMiniAppView(appInfo: MiniAppInfo,
-                        queryParams: String? = nil,
-                        completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void,
-                        messageInterface: MiniAppMessageDelegate? = nil,
-                        adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func getMiniAppView(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
         self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
         isRequiredPermissionsAllowed(
-            appId: appInfo.id,
-            versionId: appInfo.version.versionId) { (result) in
+                appId: appInfo.id,
+                versionId: appInfo.version.versionId) { (result) in
             switch result {
             case .success:
-                    DispatchQueue.main.async {
-                        let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
-                                                                                   versionId: appInfo.version.versionId,
-                                                                                   projectId: self.miniAppClient.environment.projectId,
-                                                                                   miniAppTitle: appInfo.displayName ?? "Mini app",
-                                                                                   queryParams: queryParams,
-                                                                                   hostAppMessageDelegate: messageInterface ?? self,
-                                                                                   adsDisplayer: adsDisplayer)
-                        completionHandler(.success(miniAppDisplayProtocol))
-                    }
+                DispatchQueue.main.async {
+                    let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appInfo.id,
+                                                                               versionId: appInfo.version.versionId,
+                                                                               projectId: self.miniAppClient.environment.projectId,
+                                                                               miniAppTitle: appInfo.displayName ?? "Mini app",
+                                                                               queryParams: queryParams,
+                                                                               hostAppMessageDelegate: messageInterface ?? self,
+                                                                               adsDisplayer: adsDisplayer)
+                    completionHandler(.success(miniAppDisplayProtocol))
+                }
             case .failure(let error):
                 completionHandler(.failure(error))
             }

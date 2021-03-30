@@ -99,6 +99,9 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
     /// User denied the Custom Permission
     case userDenied
 
+    /// Invalid scope request for the Custom Permission
+    case outOfScope
+
     var name: String {
         return self.rawValue
     }
@@ -116,6 +119,8 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
             return "Error in list of Custom permissions that is passed, please check whether valid permission associated with name "
         case .userDenied:
             return "User denied to share the detail"
+        case .outOfScope:
+            return "Invalid scope request for the Custom Permission"
         }
     }
 }
