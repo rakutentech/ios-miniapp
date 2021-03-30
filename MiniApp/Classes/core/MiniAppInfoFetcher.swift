@@ -66,6 +66,7 @@ internal class MiniAppInfoFetcher {
             optionalPermissions: getCustomPermissionModel(
                 metaDataCustomPermissionResponse: metaDataResponse.optPermissions),
             customMetaData: metaDataResponse.customMetaData,
+            accessTokenPermissions: metaDataResponse.accessTokenPermissions,
             versionId: versionId)
     }
 

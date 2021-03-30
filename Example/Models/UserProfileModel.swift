@@ -16,10 +16,14 @@ struct UserProfileModel: Codable {
 struct AccessTokenInfo: Codable {
     var tokenString: String
     var expiryDate: Date
+    let audience: String?
+    let scopes: [String]?
 
-    init(accessToken: String, expiry: Date) {
+    init(accessToken: String, expiry: Date, scopes: MASDKAccessTokenScopes?) {
         self.tokenString = accessToken
         self.expiryDate = expiry
+        self.audience = scopes?.audience
+        self.scopes = scopes?.scopes
     }
 }
 
@@ -42,8 +46,7 @@ struct MiniAppLaunchInfo: Codable {
 func setProfileSettings(forKey key: String = "UserProfileDetail", userDisplayName: String?, profileImageURI: String?, contactList: [MAContact]? = getContactList()) -> Bool {
     if let data = try? PropertyListEncoder().encode(UserProfileModel(displayName: userDisplayName ?? "", profileImageURI: profileImageURI, contactList: contactList)) {
         UserDefaults.standard.set(data, forKey: key)
-        UserDefaults.standard.synchronize()
-        return true
+        return UserDefaults.standard.synchronize()
     }
     return false
 }
@@ -72,13 +75,12 @@ func updateContactList(list: [MAContact]?) {
     }
 }
 
-func saveTokenInfo(accessToken: String, expiryDate: Date, forKey key: String = "AccessTokenInfo") -> Bool {
-        if let data = try? PropertyListEncoder().encode(AccessTokenInfo(accessToken: accessToken, expiry: expiryDate)) {
-            UserDefaults.standard.set(data, forKey: key)
-            UserDefaults.standard.synchronize()
-            return true
-        }
-        return false
+@discardableResult func saveTokenInfo(accessToken: String, expiryDate: Date, scopes: MASDKAccessTokenScopes?, forKey key: String = "AccessTokenInfo") -> Bool {
+    if let data = try? PropertyListEncoder().encode(AccessTokenInfo(accessToken: accessToken, expiry: expiryDate, scopes: scopes)) {
+        UserDefaults.standard.set(data, forKey: key)
+        return UserDefaults.standard.synchronize()
+    }
+    return false
 }
 
 func getTokenInfo(key: String = "AccessTokenInfo") -> AccessTokenInfo? {
@@ -92,8 +94,7 @@ func getTokenInfo(key: String = "AccessTokenInfo") -> AccessTokenInfo? {
 func saveQueryParam(queryParam: String, forKey key: String = "QueryParam") -> Bool {
     if let data = try? PropertyListEncoder().encode(QueryParamInfo(queryString: queryParam)) {
         UserDefaults.standard.set(data, forKey: key)
-        UserDefaults.standard.synchronize()
-        return true
+        return UserDefaults.standard.synchronize()
     }
     return false
 }
@@ -109,8 +110,7 @@ func getQueryParam(key: String = "QueryParam") -> String {
 func saveMiniAppLaunchInfo(isMiniAppLaunched: Bool, forKey key: String = "MAFirstTimeLaunch") -> Bool {
     if let data = try? PropertyListEncoder().encode(MiniAppLaunchInfo(isLaunchedAlready: isMiniAppLaunched)) {
         UserDefaults.standard.set(data, forKey: key)
-        UserDefaults.standard.synchronize()
-        return true
+        return UserDefaults.standard.synchronize()
     }
     return false
 }

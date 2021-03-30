@@ -102,6 +102,8 @@
 		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
 		31070C63258C554500BED77C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		31070C64258C554500BED77C /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEV.md; sourceTree = "<group>"; };
+		31462834260DE15B0015AD98 /* .codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .codecov.yml; sourceTree = SOURCE_ROOT; };
+		31462839260DE24E0015AD98 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		31553D3525B6C6800091EE50 /* Config-common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
 		317FED1F25E5EB1A00774919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CustomPermissionCell.xib; sourceTree = "<group>"; };
 		317FED2625E5EB4300774919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
@@ -239,7 +241,9 @@
 		31AB8EE025CA438D0046F694 /* Fastlane */ = {
 			isa = PBXGroup;
 			children = (
+				31462834260DE15B0015AD98 /* .codecov.yml */,
 				31BE315B25CB00B70022C948 /* .jazzy.yaml */,
+				31462839260DE24E0015AD98 /* .swiftlint.yml */,
 				31AB8EE225CA43E40046F694 /* Dangerfile */,
 				31AB8EE325CA43FC0046F694 /* Fastfile */,
 				31AB8EE125CA43A30046F694 /* Gemfile */,
