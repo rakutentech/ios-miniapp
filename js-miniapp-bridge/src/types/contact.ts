@@ -1,6 +1,6 @@
 /** Contact type. */
 export interface Contact {
   id: string;
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
 }
