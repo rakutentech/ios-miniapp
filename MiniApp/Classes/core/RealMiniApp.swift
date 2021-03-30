@@ -7,7 +7,6 @@ internal class RealMiniApp {
     var miniAppStatus: MiniAppStatus
     var miniAppPermissionStorage: MiniAppPermissionsStorage
     var miniAppManifestStorage: MAManifestStorage
-    let offlineErrorCodeList: [Int] = [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut]
 
     convenience init() {
         self.init(with: nil)
@@ -165,7 +164,7 @@ internal class RealMiniApp {
                                     messageInterface: MiniAppMessageDelegate? = nil,
                                     adsDisplayer: MiniAppAdDisplayer? = nil) {
         let downloadError = error as NSError
-        if self.offlineErrorCodeList.contains(downloadError.code) {
+        if isDeviceOfflineError(error: downloadError) {
             guard let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId) else {
                 return completionHandler(.failure(error))
             }
@@ -307,6 +306,18 @@ internal class RealMiniApp {
     /// - Returns: MiniAppManifest object
     func getCachedManifestData(appId: String) -> MiniAppManifest? {
         return self.miniAppManifestStorage.getManifestInfo(forMiniApp: appId)?.miniAppManifest
+    }
+
+    func isDeviceOfflineError(error: NSError) -> Bool {
+        if error.domain == MASDKErrorDomain {
+            guard let sdkError = error as? MASDKError, sdkError.isDeviceOfflineDownloadError() else {
+                return false
+            }
+            return true
+        } else if offlineErrorCodeList.contains(error.code) {
+            return true
+        }
+        return false
     }
 }
 

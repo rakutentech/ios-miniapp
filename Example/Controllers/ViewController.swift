@@ -111,7 +111,11 @@ class ViewController: UIViewController {
             case .success(let manifestData):
                 self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
             case .failure(let error):
-                completionHandler(.failure(error))
+                if self.isDownloadingFailed(error: error) {
+                    self.displayMiniApp(miniAppInfo: miniAppInfo)
+                } else {
+                    completionHandler(.failure(error))
+                }
             }
         }
     }
@@ -164,6 +168,14 @@ class ViewController: UIViewController {
             self.currentMiniAppInfo = miniAppInfo
             self.fetchMiniApp(for: miniAppInfo)
             self.currentMiniAppTitle = miniAppInfo.displayName
+        }
+    }
+
+    func isDownloadingFailed(error: MASDKError) -> Bool {
+        if error.isDeviceOfflineDownloadError() {
+            return true
+        } else {
+            return false
         }
     }
 }
