@@ -390,7 +390,9 @@ Retrieve access token and expiry date
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String,
+                        scopes: MASDKAccessTokenPermission?,
+                        completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
 
         completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
     }
@@ -447,7 +449,11 @@ MiniApp.shared(with: Config.current()).info(miniAppId: miniAppID) { (result) in
 #### Getting a `MiniApp meta-data` :
 ---
 
-MiniApp developers can define the `required` & `optional` permissions in the `manifest.json` file like below. Also, they can add any custom variables/items inside `customMetaData`.
+MiniApp developers can define several metadata into the `manifest.json`:
+- `required` & `optional` permissions
+- access token audience/scope permissions
+- custom variables/items inside `customMetaData`.
+
 
 Host app will use the defined interfaces to retrieve these details from manifest.json
 
@@ -473,6 +479,16 @@ Host app will use the defined interfaces to retrieve these details from manifest
          "reason":"Describe your reason here."
       }
    ],
+   "accessTokenPermissions":[
+      {
+          "audience":"rae",
+          "scopes":["idinfo_read_openid", "memberinfo_read_point"]
+      },
+      {
+          "audience":"api-c",
+          "scopes":["your_service_scope_here"]
+      }
+   ],
    "customMetaData":{
       "hostAppRandomTestKey":"metadata value"
    }
@@ -487,7 +503,8 @@ MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAp
         case .success(let manifestData):
             // Retrieve the custom key/value pair like the following.
             let randomTestKeyValue = manifestData.customMetaData?["hostAppRandomTestKey"]
-        case .failure
+        case .failure:
+          break
     }
 	...
 }
