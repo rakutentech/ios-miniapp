@@ -47,13 +47,10 @@ public enum MASDKError: Error {
     public func isDeviceOfflineDownloadError() -> Bool {
         switch self {
         case .unknownError(_, let code, _):
-            if offlineErrorCodeList.contains(code) {
-                return true
-            }
+            return offlineErrorCodeList.contains(code)
         default:
             return false
         }
-        return false
     }
 }
 
