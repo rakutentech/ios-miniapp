@@ -1,15 +1,12 @@
 import UIKit
 import MiniApp
 
-class AccessTokenViewController: UIViewController {
+class AccessTokenViewController: UITableViewController {
 
     @IBOutlet weak var accessTokenTextField: UITextField!
-    @IBOutlet weak var expiryDateTextField: UITextField!
-    var expiryDate = Date()
+    @IBOutlet weak var datePicker: UIDatePicker!
 
     override func viewDidLoad() {
-        self.expiryDateTextField.delegate = self
-        self.expiryDateTextField.setDatePickerInputView(target: self, selector: #selector(pickerViewDoneButtonTapped))
         retrieveAccessTokenInfo()
     }
 
@@ -23,30 +20,27 @@ class AccessTokenViewController: UIViewController {
 
     func setLayout(tokenInfo: AccessTokenInfo) {
         self.accessTokenTextField.text = tokenInfo.tokenString
-        self.expiryDateTextField.text = formatDateToDisplay(date: tokenInfo.expiryDate)
+        self.datePicker.date = tokenInfo.expiryDate
     }
 
     func setDefaultTokenInfo() {
         self.accessTokenTextField.text = "ACCESS_TOKEN"
-        self.expiryDateTextField.text = formatDateToDisplay(date: Date())
-        _ = saveTokenInfo(accessToken: "ACCESS_TOKEN", expiryDate: Date())
+        self.datePicker.date = Date()
+        saveTokenInfo(accessToken: "ACCESS_TOKEN", expiryDate: Date(), scopes: nil)
     }
 
     @IBAction func save() {
-        if isValidTokenDetailsEntered() {
+        if isValidInput(textField: self.accessTokenTextField) {
             saveTokenDetails()
         }
     }
 
-    func isValidTokenDetailsEntered() -> Bool {
-        if isValidInput(textField: self.accessTokenTextField) && isValidInput(textField: self.expiryDateTextField) {
-            return true
-        }
-        return false
-    }
-
     func saveTokenDetails() {
-        let saveStatus = saveTokenInfo(accessToken: self.accessTokenTextField.text ?? "ACCESS_TOKEN", expiryDate: expiryDate)
+        let saveStatus = saveTokenInfo(
+            accessToken: self.accessTokenTextField.text ?? "ACCESS_TOKEN",
+            expiryDate: self.datePicker.date,
+            scopes: nil
+        )
         if saveStatus {
             self.displayAlert(title: "Info", message: "Access Token info saved")
         } else {
@@ -54,73 +48,15 @@ class AccessTokenViewController: UIViewController {
         }
     }
 
-    func isValidInput(textField: UITextField) -> Bool {
-        guard let text = textField.text?.trimTrailingWhitespaces() else {
-            displayErrorAlert(textfield: textField)
-            return false
+    func isValidInput(textField: UITextField, showError: Bool = true) -> Bool {
+        if let text = textField.text?.trimTrailingWhitespaces(), !text.isEmpty {
+            return true
         }
-        if text.isEmpty {
-            displayErrorAlert(textfield: textField)
-            return false
-        }
-        return true
-    }
-
-    func displayErrorAlert(textfield: UITextField) {
-        if textfield.tag == 111 {
-            DispatchQueue.main.async {
-                self.displayAlert(title: "Error", message: "Please enter valid Expiry date")
-            }
-        } else {
+        if showError {
             DispatchQueue.main.async {
                 self.displayAlert(title: "Error", message: "Please enter valid Access Token")
             }
         }
-    }
-
-    @objc func pickerViewDoneButtonTapped() {
-        if let datePicker = self.expiryDateTextField.inputView as? UIDatePicker {
-            self.expiryDateTextField.text = formatDateToDisplay(date: datePicker.date)
-            expiryDate = datePicker.date
-        }
-        self.expiryDateTextField.resignFirstResponder()
-    }
-
-    func formatDateToDisplay(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        return dateFormatter.string(from: date)
-    }
-
-    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField.tag == 111 {
-            return false
-        } else {
-            return true
-        }
-    }
-}
-
-extension UITextField {
-
-    func setDatePickerInputView(target: Any, selector: Selector) {
-        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 216))
-        datePicker.datePickerMode = .date
-        datePicker.minimumDate = Date()
-        self.inputView = datePicker
-        self.inputAccessoryView = getPickerViewToolbar(selector: selector)
-    }
-
-    func getPickerViewToolbar(selector: Selector) -> UIToolbar {
-        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 44.0))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(dismissDatePicker))
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: target, action: selector)
-        toolBar.setItems([cancelButton, flexibleSpace, doneButton], animated: false)
-        return toolBar
-    }
-
-    @objc func dismissDatePicker() {
-        self.resignFirstResponder()
+        return false
     }
 }

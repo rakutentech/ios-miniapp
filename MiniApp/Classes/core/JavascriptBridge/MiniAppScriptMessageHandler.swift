@@ -7,6 +7,7 @@ protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveScriptMessageError(messageId: String, errorMessage: String)
 }
 
+// swiftlint:disable file_length
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     var locationManager: LocationManager?
@@ -19,7 +20,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
     var permissionsNotAddedInManifest = [MASDKCustomPermissionModel]()
     var miniAppKeyStore = MiniAppPermissionsStorage()
-
     init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
@@ -31,6 +31,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let messageBody = message.body as? String {
+            MiniAppLogger.d(messageBody, "♨️️")
             let bodyData: Data = messageBody.data(using: .utf8)!
             let responseJson = ResponseDecoder.decode(decodeType: MiniAppJavaScriptMessageInfo.self, data: bodyData)
             handleBridgeMessage(responseJson: responseJson)
@@ -69,13 +70,12 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .setScreenOrientation:
             setScreenOrientation(requestParam: requestParam, callbackId: callbackId)
         case .getAccessToken:
-            fetchTokenDetails(callbackId: callbackId)
+            fetchTokenDetails(callbackId: callbackId, for: requestParam)
         case .loadAd:
             loadRequestedAd(with: callbackId, for: requestParam)
         case .showAd:
             showRequestedAd(with: callbackId, for: requestParam)
         }
-
     }
 
     private func updateLocation(callbackId: String) {
@@ -340,9 +340,20 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func fetchTokenDetails(callbackId: String) {
+    func fetchTokenDetails(callbackId: String, for requestParam: RequestParameters?) {
         if isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType.accessToken) {
-            hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId) { (result) in
+            guard var accessTokenPermission = MASDKAccessTokenScopes(audience: requestParam?.audience, scopes: []),
+                  let accessTokenPermissions = MiniApp.shared().getDownloadedManifest(miniAppId: miniAppId)?.accessTokenPermissions,
+                  accessTokenPermission.isPartOf(accessTokenPermissions) // we check that the Mini App manages scopes and that these scopes are included in the Manifest
+                    else {
+                return sendScopeError(callbackId: callbackId, type: .audienceError)
+            }
+
+            guard let scopes = requestParam?.scopes, accessTokenPermission.with(scopes: scopes).isPartOf(accessTokenPermissions) else { // we need a specific set of scopes
+                return sendScopeError(callbackId: callbackId, type: .scopeError)
+            }
+
+            hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId, scopes: accessTokenPermission) { (result) in
                 switch result {
                 case .success(let responseMessage):
                     guard let jsonResponse = ResponseEncoder.encode(data: responseMessage) else {
@@ -357,6 +368,9 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         } else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
         }
+    }
+    private func sendScopeError(callbackId: String, type: MiniAppJavaScriptError) {
+        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(type))
     }
 
     func handleMASDKError(error: MASDKError, callbackId: String) {

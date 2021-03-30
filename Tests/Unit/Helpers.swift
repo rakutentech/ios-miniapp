@@ -339,11 +339,11 @@ class MockMessageInterface: MiniAppMessageDelegate {
         return mockContactList
     }
 
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         guard let accessToken =  mockAccessToken, !accessToken.isEmpty else {
             return completionHandler(.failure(.unknownError))
         }
-        return completionHandler(.success(MATokenInfo(accessToken: accessToken, expirationDate: Date())))
+        return completionHandler(.success(MATokenInfo(accessToken: accessToken, expirationDate: Date(), scopes: scopes)))
     }
 }
 
@@ -366,37 +366,73 @@ var mockMiniAppManifest: MiniAppManifest {
                                                                                         permissionRequestDescription: "Contact List custom permission")
                                                             ]
     let customMetaData: [String: String] = ["exampleKey": "exampleValue"]
-    let manifest = MiniAppManifest.init(requiredPermissions: requiredPermissions, optionalPermissions: optionalPermissions, customMetaData: customMetaData, versionId: "ver-id-test")
-    return manifest
+    let customScopes: MASDKAccessTokenScopes = MASDKAccessTokenScopes(audience: "AUDIENCE_TEST", scopes: ["scope_test"])!
+    return MiniAppManifest.init(
+            requiredPermissions: requiredPermissions,
+            optionalPermissions: optionalPermissions,
+            customMetaData: customMetaData,
+            accessTokenPermissions: [customScopes], versionId: "ver-id-test")
 }
+
+@discardableResult func saveMockManifestInCache(miniAppId: String, version: String = "ver-id-test") -> Bool {
+    do {
+       try MAManifestStorage().saveManifestInfo(
+                forMiniApp: miniAppId,
+            manifest: CachedMetaData(version: version, miniAppManifest: getMockManifestInfo(miniAppId: miniAppId)!)
+        )
+        return true
+    } catch {
+        return false
+    }
+}
+
+func removeMockManifestInCache(miniAppId: String) {
+    MAManifestStorage().removeKey(forMiniApp: miniAppId)
+}
+
+func getMockManifestInfo(miniAppId: String) throws -> MiniAppManifest? {
+    let manifestData = jSONManifest.data(using: .utf8)!
+    return try JSONDecoder().decode(MiniAppManifest.self, from: manifestData)
+}
+
+let jSONManifest = """
+{
+      "reqPermissions": [
+        {
+          "name": "rakuten.miniapp.user.USER_NAME",
+          "reason": "Describe your reason here (optional)."
+        },
+        {
+          "name": "rakuten.miniapp.user.PROFILE_PHOTO",
+          "reason": "Describe your reason here (optional)."
+        }
+      ],
+      "optPermissions": [
+        {
+          "name": "rakuten.miniapp.user.CONTACT_LIST",
+          "reason": "Describe your reason here (optional)."
+        },
+        {
+          "name": "rakuten.miniapp.device.LOCATION",
+          "reason": "Describe your reason here (optional)."
+        }
+      ],
+      "customMetaData": {
+        "exampleKey": "test"
+      },
+      "accessTokenPermissions": [
+      {
+        "audience": "AUDIENCE_TEST",
+        "scopes": ["scope_test"]
+      }
+   ]
+}
+"""
 
 let mockMetaDataString = """
     {
-        "bundleManifest": {
-              "reqPermissions": [
-                {
-                  "name": "rakuten.miniapp.user.USER_NAME",
-                  "reason": "Describe your reason here (optional)."
-                },
-                {
-                  "name": "rakuten.miniapp.user.PROFILE_PHOTO",
-                  "reason": "Describe your reason here (optional)."
-                }
-              ],
-              "optPermissions": [
-                {
-                  "name": "rakuten.miniapp.user.CONTACT_LIST",
-                  "reason": "Describe your reason here (optional)."
-                },
-                {
-                  "name": "rakuten.miniapp.device.LOCATION",
-                  "reason": "Describe your reason here (optional)."
-                }
-              ],
-              "customMetaData": {
-                "exampleKey": "test"
-              }
-        }
+        "bundleManifest":
+              \(jSONManifest)
     }
 """
 
