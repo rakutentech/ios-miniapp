@@ -41,6 +41,17 @@ public enum MASDKError: Error {
     ///     - message: The code from the original NSError.
     ///     - description: The description from the original NSError
     case unknownError(domain: String, code: Int, description: String)
+
+    /// Checks if the error is due to the Internet availability, returns true if yes
+    /// - Returns: Bool value - returns true if there is there error contains code from offlineErrorCodeList
+    public func isDeviceOfflineDownloadError() -> Bool {
+        switch self {
+        case .unknownError(_, let code, _):
+            return offlineErrorCodeList.contains(code)
+        default:
+            return false
+        }
+    }
 }
 
 extension MASDKError: LocalizedError {
