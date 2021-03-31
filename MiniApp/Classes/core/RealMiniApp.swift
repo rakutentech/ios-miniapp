@@ -323,7 +323,7 @@ internal class RealMiniApp {
     func isDeviceOfflineError(error: NSError) -> Bool {
         if error.domain == MASDKErrorDomain, let maSDKError = error as? MASDKError {
             return maSDKError.isDeviceOfflineDownloadError()
-        } 
+        }
         return offlineErrorCodeList.contains(error.code)
     }
 }
