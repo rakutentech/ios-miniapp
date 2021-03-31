@@ -86,6 +86,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Orientation Lock](#orientation-lock)
     * [Catching analytics events](#analytics-events)
     * [Passing Query parameters while creating Mini App](#query-param-mini-app)
+    * [Permissions required from the Host app](#permissions-from-host-app)
 
 <a id="create-mini-app"></a>
 
@@ -739,6 +740,19 @@ MiniApp.shared().create(appId: String, queryParams: "param1=value1&param2=value2
 And the Mini App will be loaded like the following scheme,
 
 ```mscheme.rakuten//miniapp/index.html?param1=value1&param2=value2```
+
+
+<a id="permissions-from-host-app"></a>
+
+### Permissions required from the Host app
+
+Mini App SDK requires the host app to include the following set of device permissions into its Info.plist file:
+
+| Plist key | Permission | Reason |
+|-----------|:----------:|--------|
+| [NSLocationAlwaysAndWhenInUseUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nslocationalwaysandwheninuseusagedescription) |  Location  | Mini app to track/get the current location of the user |
+| [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nscamerausagedescription)                                         |   Camera   | Camera permission required by Mini app to take pictures                              |
+| [NSMicrophoneUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsmicrophoneusagedescription)                                 | Microphone | Microphone permission required by Mini app to record a video.                             |
 
 <a id="change-log"></a>
 
