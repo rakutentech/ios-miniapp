@@ -748,8 +748,8 @@ And the Mini App will be loaded like the following scheme,
 
 Mini App SDK requires the host app to include the following set of device permissions into its Info.plist file:
 
-| Plist key                                                                                                                                                                        | Permission | Mini App requires it to                    |
-|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------:|--------------------------------------------|
+| Plist key | Permission | Reason |
+|-----------|:----------:|--------|
 | [NSLocationAlwaysAndWhenInUseUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nslocationalwaysandwheninuseusagedescription) |  Location  | Mini app to track/get the current location of the user |
 | [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nscamerausagedescription)                                         |   Camera   | Camera permission required by Mini app to take pictures                              |
 | [NSMicrophoneUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsmicrophoneusagedescription)                                 | Microphone | Microphone permission required by Mini app to record a video.                             |
