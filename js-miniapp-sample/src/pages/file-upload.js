@@ -12,9 +12,7 @@ import {
   TableHead,
   TableRow,
   TableContainer,
-  IconButton,
 } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,16 +41,19 @@ const FileUploader = () => {
   const classes = useStyles();
   const [rows, setRows] = useState([]);
 
-  const setFile = (e) => {
-    if (!e.target.files) {
+  const setFiles = (e) => {
+    const files = e.target.files;
+    if (!files) {
       return;
     }
-    const file = e.target.files[0];
-    setRows([...rows, { name: file.name, size: file.size, type: file.type }]);
-  };
 
-  const removeFile = (name) => {
-    setRows(rows.filter((item) => item.name !== name));
+    setRows(
+      Array.from(files).map((file) => ({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      }))
+    );
   };
 
   const numberCommaFormatter = (number) => {
@@ -62,7 +63,12 @@ const FileUploader = () => {
   return (
     <Card className={classes.root}>
       <CardContent className={(classes.content, classes.uploader)}>
-        <input type="file" onChange={setFile} data-testid="file-input" />
+        <input
+          type="file"
+          onChange={setFiles}
+          data-testid="file-input"
+          multiple
+        />
       </CardContent>
       <CardContent className={classes.content}>
         <TableContainer component={Paper} data-testid="file-table">
@@ -84,11 +90,6 @@ const FileUploader = () => {
                   <TableCell align="left">{row.type}</TableCell>
                   <TableCell align="right">
                     {numberCommaFormatter(row.size)}
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton onClick={() => removeFile(row.name)}>
-                      <DeleteIcon />
-                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
