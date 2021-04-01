@@ -117,6 +117,13 @@ public class MiniApp: NSObject {
     }
 }
 
+// MARK: - UI
+public extension MiniApp {
+    func launch(base: UIViewController, miniAppid: String, config: MiniAppSdkConfig? = nil) {
+        realMiniApp.launch(base: base, appId: miniAppid)
+    }
+}
+
 // MARK: - Testing
 public extension MiniApp {
     /// Creates a Mini App for the given url.

@@ -31,6 +31,12 @@ Pod::Spec.new do |s|
     }
     core.dependency 'ZIPFoundation'
   end
+  
+  s.subspec 'UI' do |ui|
+    ui.source_files = 'MiniApp/Classes/ui/**/*.{swift,h,m}'
+    ui.dependency 'MiniApp/Core'
+  end
+
 
   s.subspec 'Admob' do |admob|
     admob.source_files = 'MiniApp/Classes/admob7/**/*.{swift,h,m}'
