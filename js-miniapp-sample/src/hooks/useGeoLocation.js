@@ -10,7 +10,11 @@ const useGeoLocation = () => {
     return MiniApp.requestLocationPermission(
       'We would like to display the location of your device.'
     )
-      .then(() =>
+      .then(() => {
+        setState({
+          isWatching: true,
+        });
+
         navigator.geolocation.getCurrentPosition(
           (pos) => {
             const { longitude, latitude } = pos.coords;
@@ -28,8 +32,8 @@ const useGeoLocation = () => {
           {
             enableHighAccuracy: true,
           }
-        )
-      )
+        );
+      })
       .catch((error) =>
         setState({
           isWatching: false,
