@@ -119,8 +119,20 @@ public class MiniApp: NSObject {
 
 // MARK: - UI
 public extension MiniApp {
-    func launch(base: UIViewController, miniAppid: String, config: MiniAppSdkConfig? = nil) {
-        realMiniApp.launch(base: base, appId: miniAppid)
+    func launch(
+        base: UIViewController,
+        miniAppid: String,
+        config: MiniAppSdkConfig? = nil,
+        messageInterface: MiniAppMessageDelegate? = nil,
+        queryParams: String? = nil
+    ) {
+        realMiniApp.launch(
+            base: base,
+            appId: miniAppid,
+            config: config,
+            messageInterface: messageInterface,
+            queryParams: queryParams
+        )
     }
 }
 
