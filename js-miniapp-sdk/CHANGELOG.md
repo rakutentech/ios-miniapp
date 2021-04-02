@@ -1,8 +1,8 @@
 ## CHANGELOG
 
-### In Progress (2021-XX-XX)
+### 1.7.0 (2021-04-02)
 
-- **Feature:** Support send message to contact. [See here](README.md#Send-message).
+- **Feature:** Support send message to contact. [See Send message documentation](README.md#Send-message).
 - **Feature:** Added `Access Token` Custom permission.
 - **Feature:** Added optional `Name` & `Email` properties to Contact object
 - **Feature:** Added `Access Token` scopes and audience
