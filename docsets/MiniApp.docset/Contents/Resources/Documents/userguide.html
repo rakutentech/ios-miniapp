@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 3.0.0 Docs
+          MiniApp 3.1.0 Docs
         </a>
-         (78% documented)
+         (79% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -165,6 +165,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MASDKAccessTokenScopes.html">MASDKAccessTokenScopes</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
@@ -321,6 +324,7 @@ Mini App SDK also facilitates communication between a Mini App and the host app 
 <li><a href="#orientation-lock">Orientation Lock</a></li>
 <li><a href="#analytics-events">Catching analytics events</a></li>
 <li><a href="#query-param-mini-app">Passing Query parameters while creating Mini App</a></li>
+<li><a href="#permissions-from-host-app">Permissions required from the Host app</a></li>
 </ul></li>
 </ul>
 
@@ -518,7 +522,7 @@ There are 2 ways to achieve this: </p>
 <p>Be careful when declaring your variable, as Mini App SDK does not keep a strong reference to it, it is preferable to declare it as a global variable or in most cases it will become nil once your method called.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">adsDelegate</span> <span class="o">=</span> <span class="kt">AdMobDisplayer</span><span class="p">()</span> <span class="c1">// This is just declared here as a convenience for the example.</span>
 
-<span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">(),</span> <span class="nv">navigationSettings</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getNavConfig</span><span class="p">(</span><span class="nv">delegate</span><span class="p">:</span> <span class="k">self</span><span class="p">))</span>
+<span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">current</span><span class="p">(),</span> <span class="nv">navigationSettings</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getNavConfig</span><span class="p">(</span><span class="nv">delegate</span><span class="p">:</span> <span class="k">self</span><span class="p">))</span>
         <span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">appId</span><span class="p">:</span> <span class="n">appInfo</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> 
                 <span class="nv">version</span><span class="p">:</span> <span class="n">appInfo</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">versionId</span><span class="p">,</span>
                 <span class="nv">queryParams</span><span class="p">:</span> <span class="nf">getQueryParam</span><span class="p">(),</span>
@@ -576,7 +580,7 @@ There are 2 ways to achieve this: </p>
 </code></pre>
 
 <p>Once the delegate implemented, don&rsquo;t forget to provide it when you call a Mini App creation with the parameter <code>adsDelegate</code>:</p>
-<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">())</span>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">current</span><span class="p">())</span>
             <span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">appId</span><span class="p">:</span> <span class="n">appInfo</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                     <span class="nv">version</span><span class="p">:</span> <span class="n">appInfo</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">versionId</span><span class="p">,</span>
                     <span class="nv">queryParams</span><span class="p">:</span> <span class="nf">getQueryParam</span><span class="p">(),</span>
@@ -636,7 +640,9 @@ The following delegates/interfaces will be called only if the user has allowed r
 
 <p>Retrieve access token and expiry date</p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">getAccessToken</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">MATokenInfo</span><span class="p">,</span> <span class="kt">MASDKCustomPermissionError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">getAccessToken</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                        <span class="nv">scopes</span><span class="p">:</span> <span class="kt">MASDKAccessTokenPermission</span><span class="p">?,</span>
+                        <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">MATokenInfo</span><span class="p">,</span> <span class="kt">MASDKCustomPermissionError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
 
         <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">accessToken</span><span class="p">:</span> <span class="s">"ACCESS_TOKEN"</span><span class="p">,</span> <span class="nv">expirationDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">())))</span>
     <span class="p">}</span>
@@ -650,14 +656,14 @@ The following delegates/interfaces will be called only if the user has allowed r
 
 <p><strong>API Docs:</strong> <a href="https://rakutentech.github.io/ios-miniapp/Classes/MiniApp.html">MiniApp.list</a></p>
 
-<p>MiniApp library calls are done via the <code>MiniApp.shared()</code> singleton with or without a <code><a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a></code> instance (you can get the current one with <code>Config.getCurrent()</code>). If you don&rsquo;t provide a config instance, values in custom iOS target properties will be used by default. </p>
+<p>MiniApp library calls are done via the <code>MiniApp.shared()</code> singleton with or without a <code><a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a></code> instance (you can get the current one with <code>Config.current()</code>). If you don&rsquo;t provide a config instance, values in custom iOS target properties will be used by default. </p>
 <pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="n">list</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
     <span class="o">...</span>
 <span class="p">}</span>
 </code></pre>
 
 <p>or</p>
-<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">())</span><span class="o">.</span><span class="n">list</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">current</span><span class="p">())</span><span class="o">.</span><span class="n">list</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
     <span class="o">...</span>
 <span class="p">}</span>
 </code></pre>
@@ -674,7 +680,7 @@ The following delegates/interfaces will be called only if the user has allowed r
 </code></pre>
 
 <p>or</p>
-<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">())</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">current</span><span class="p">())</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
     <span class="o">...</span>
 <span class="p">}</span>
 </code></pre>
@@ -687,7 +693,13 @@ The following delegates/interfaces will be called only if the user has allowed r
 
 <hr>
 
-<p>MiniApp developers can define the <code>required</code> &amp; <code>optional</code> permissions in the <code>manifest.json</code> file like below. Also, they can add any custom variables/items inside <code>customMetaData</code>.</p>
+<p>MiniApp developers can define several metadata into the <code>manifest.json</code>:</p>
+
+<ul>
+<li><code>required</code> &amp; <code>optional</code> permissions</li>
+<li>access token audience/scope permissions</li>
+<li>custom variables/items inside <code>customMetaData</code>.</li>
+</ul>
 
 <p>Host app will use the defined interfaces to retrieve these details from manifest.json</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
@@ -711,6 +723,16 @@ The following delegates/interfaces will be called only if the user has allowed r
          </span><span class="s2">"reason"</span><span class="p">:</span><span class="s2">"Describe your reason here."</span><span class="w">
       </span><span class="p">}</span><span class="w">
    </span><span class="p">],</span><span class="w">
+   </span><span class="s2">"accessTokenPermissions"</span><span class="p">:[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"audience"</span><span class="p">:</span><span class="s2">"rae"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"scopes"</span><span class="p">:[</span><span class="s2">"idinfo_read_openid"</span><span class="p">,</span><span class="w"> </span><span class="s2">"memberinfo_read_point"</span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"audience"</span><span class="p">:</span><span class="s2">"api-c"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"scopes"</span><span class="p">:[</span><span class="s2">"your_service_scope_here"</span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+   </span><span class="p">],</span><span class="w">
    </span><span class="s2">"customMetaData"</span><span class="p">:{</span><span class="w">
       </span><span class="s2">"hostAppRandomTestKey"</span><span class="p">:</span><span class="s2">"metadata value"</span><span class="w">
    </span><span class="p">}</span><span class="w">
@@ -723,7 +745,8 @@ The following delegates/interfaces will be called only if the user has allowed r
         <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">manifestData</span><span class="p">):</span>
             <span class="c1">// Retrieve the custom key/value pair like the following.</span>
             <span class="k">let</span> <span class="nv">randomTestKeyValue</span> <span class="o">=</span> <span class="n">manifestData</span><span class="o">.</span><span class="n">customMetaData</span><span class="p">?[</span><span class="s">"hostAppRandomTestKey"</span><span class="p">]</span>
-        <span class="k">case</span> <span class="o">.</span><span class="n">failure</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">failure</span><span class="p">:</span>
+          <span class="k">break</span>
     <span class="p">}</span>
     <span class="o">...</span>
 <span class="p">}</span>
@@ -817,7 +840,7 @@ How to get downloaded <code>Mini App meta-data</code></p>
                     <span class="nv">navigationDelegate</span><span class="p">:</span> <span class="n">myNavigationDelegate</span><span class="p">,</span>
                     <span class="nv">customNavigationView</span><span class="p">:</span> <span class="n">mCustomView</span><span class="p">)</span>
 
-<span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">getCurrent</span><span class="p">(),</span> <span class="nv">navigationSettings</span><span class="p">:</span> <span class="n">navConfig</span><span class="p">)</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+<span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">current</span><span class="p">(),</span> <span class="nv">navigationSettings</span><span class="p">:</span> <span class="n">navConfig</span><span class="p">)</span><span class="o">.</span><span class="nf">info</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">miniAppID</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
 <span class="o">...</span>
 <span class="p">}</span>
 </code></pre>
@@ -939,6 +962,19 @@ How to get downloaded <code>Mini App meta-data</code></p>
 
 <p>And the Mini App will be loaded like the following scheme,</p>
 <pre class="highlight plaintext"><code>
+
+&lt;a id="permissions-from-host-app"&gt;&lt;/a&gt;
+
+### Permissions required from the Host app
+
+Mini App SDK requires the host app to include the following set of device permissions into its Info.plist file:
+
+| Plist key | Permission | Reason |
+|-----------|:----------:|--------|
+| [NSLocationAlwaysAndWhenInUseUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nslocationalwaysandwheninuseusagedescription) |  Location  | Mini app to track/get the current location of the user |
+| [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nscamerausagedescription)                                         |   Camera   | Camera permission required by Mini app to take pictures                              |
+| [NSMicrophoneUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsmicrophoneusagedescription)                                 | Microphone | Microphone permission required by Mini app to record a video.                             |
+
 &lt;a id="change-log"&gt;&lt;/a&gt;
 
 ## Changelog
@@ -953,7 +989,7 @@ See the full [CHANGELOG](https://github.com/rakutentech/ios-miniapp/blob/master/
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-03-19)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-04-02)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
