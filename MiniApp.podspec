@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
         "Localization" => ["MiniApp/*.lproj/*.strings"],
         "MiniApp" => ['MiniApp/Classes/core/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
     }
-    core.dependency 'ZIPFoundation'
+    core.dependency 'ZIPFoundation', '0.9.12'
   end
 
   s.subspec 'Admob' do |admob|
