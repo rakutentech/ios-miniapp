@@ -68,4 +68,15 @@ platform :ios do
       sh("bundle exec danger dry_run")
     end
   end
+
+  desc "Create pull request for candidate branch"
+  lane :candidate_pr do |options|
+      create_pull_request(
+        repo: "rakutentech/ios-miniapp",
+        title: "Candidate",
+        head: "candidate",       # optional, defaults to current branch name
+        base: "master", # optional, defaults to "master"
+        body: "This is the candidate merge after a successful SDK release"       # optional
+      )
+  end
 end

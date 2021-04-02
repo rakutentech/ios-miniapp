@@ -1,10 +1,11 @@
 ## CHANGELOG
 
-### 3.x.x (2021-MM-DD)
+### 3.1.0 (2021-04-02)
 
 **SDK**
 
 - **Feature:** Added `rakuten.miniapp.user.ACCESS_TOKEN` custom permission
+- **Feature:** Added `rakuten.miniapp.user.ACCESS_TOKEN` audiences and scopes
 
 ---
 ### 3.0.0 (2021-03-19)

@@ -14,6 +14,12 @@ public protocol MiniAppUserInfoDelegate: class {
     func getContacts() -> [MAContact]?
 
     /// Interface that is used to retrieve the Token Info
+    func getAccessToken(miniAppId: String,
+                        scopes: MASDKAccessTokenScopes,
+                        completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
+
+    /// Old interface that was used to retrieve the Token Info. Use of a MASDKAccessTokenScopes is now mandatory. Will be removed in v4.0+
+    @available(*, deprecated, renamed:"getAccessToken(miniAppId:scopes:completionHandler:)")
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
 }
 
@@ -31,6 +37,11 @@ public extension MiniAppUserInfoDelegate {
         return nil
     }
 
+    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
+
+    /// Old interface that was used to retrieve the Token Info. Use of a MASDKAccessTokenScopes is now mandatory. Will be removed in v4.0+
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
@@ -39,19 +50,28 @@ public extension MiniAppUserInfoDelegate {
 public class MATokenInfo: Codable {
     let token: String
     let validUntil: Int
+    let scopes: MASDKAccessTokenScopes
 
-    public init(accessToken: String, expirationDate: Date) {
+    public init(accessToken: String, expirationDate: Date, scopes: MASDKAccessTokenScopes?) {
         self.token = accessToken
         self.validUntil = expirationDate.dateToNumber()
+        self.scopes = scopes ?? MASDKAccessTokenScopes(audience: "UNDEFINED", scopes: [])!
     }
 }
 
-/** Contact object for miniapp. */
+/// Contact Object of a User
 public class MAContact: Codable {
+    /// Contact ID
     public let id: String
+    /// Contact Name
+    public let name: String?
+    /// Contact Email address
+    public let email: String?
 
-    public init(id: String) {
+    public init(id: String, name: String? = nil, email: String? = nil) {
         self.id = id
+        self.name = name
+        self.email = email
     }
 }
 
