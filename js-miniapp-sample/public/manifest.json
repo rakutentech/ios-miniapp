@@ -51,6 +51,12 @@
   ],
 
   "customMetaData": {
-    "exampleKey": "test"
+    "provider": "Rakuten Group Inc",
+    "description": "This is a sample mini app.",
+    "description_ja": "これはサンプルのミニアプリです。",
+    "fileSizeInMb": "2.3",
+    "termsAndConditions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "termsAndConditions_ja": "傍ワキヌケ春開意ヒ知他モ治要ロヨ夕局ミヘヨ見甲コウカ則整つ転写テヱヒメ型景企ツヲ育審ラ合天オネモ付31侍勃卑厩67退こルべ限門ミロウキ属39性サ員振損次克即かな。誕もすりい浪院築ぞ佐後ぴ作想フ査自ねじもク最同ずにぜ実面軽欧ばず目43弾提ス選協す稿社スソ飾狙そが都帳懸町ど。",
+    "privacyPolicyLink": "https://www.example.com"
   }
 }
