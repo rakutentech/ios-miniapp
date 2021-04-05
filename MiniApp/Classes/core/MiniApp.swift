@@ -56,7 +56,13 @@ public class MiniApp: NSObject {
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     public func create(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
-        return realMiniApp.createMiniApp(appId: appId, version: version, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
+        return realMiniApp.createMiniApp(
+                appId: appId,
+                version: version,
+                queryParams: queryParams,
+                completionHandler: completionHandler,
+                messageInterface: messageInterface,
+                adsDisplayer: adsDisplayer)
     }
 
     /// Cache the Custom permissions status for a given MiniApp ID
@@ -96,7 +102,12 @@ public class MiniApp: NSObject {
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
-        return realMiniApp.createMiniApp(appInfo: appInfo, queryParams: queryParams, completionHandler: completionHandler, messageInterface: messageInterface, adsDisplayer: adsDisplayer)
+        return realMiniApp.createMiniApp(
+                appInfo: appInfo,
+                queryParams: queryParams,
+                completionHandler: completionHandler,
+                messageInterface: messageInterface,
+                adsDisplayer: adsDisplayer)
     }
 
     /// Method to return the meta-data information of a mini-app

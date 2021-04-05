@@ -111,7 +111,11 @@ class ViewController: UIViewController {
             case .success(let manifestData):
                 self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
             case .failure(let error):
-                completionHandler(.failure(error))
+                if error.isDeviceOfflineDownloadError() {
+                    self.displayMiniApp(miniAppInfo: miniAppInfo)
+                } else {
+                    completionHandler(.failure(error))
+                }
             }
         }
     }
