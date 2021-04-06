@@ -59,11 +59,3 @@ internal class RealMiniAppUI {
     }
 
 }
-
-class TestMiniAppVC : MiniAppViewController {
-    
-    override func closePressed() {
-        print("close pressu")
-    }
-    
-}
