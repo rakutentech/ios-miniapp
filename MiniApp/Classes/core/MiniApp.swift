@@ -128,25 +128,6 @@ public class MiniApp: NSObject {
     }
 }
 
-// MARK: - UI
-public extension MiniApp {
-    func launch(
-        base: UIViewController,
-        miniAppid: String,
-        config: MiniAppSdkConfig? = nil,
-        messageInterface: MiniAppMessageDelegate? = nil,
-        queryParams: String? = nil
-    ) {
-        realMiniApp.launch(
-            base: base,
-            appId: miniAppid,
-            config: config,
-            messageInterface: messageInterface,
-            queryParams: queryParams
-        )
-    }
-}
-
 // MARK: - Testing
 public extension MiniApp {
     /// Creates a Mini App for the given url.

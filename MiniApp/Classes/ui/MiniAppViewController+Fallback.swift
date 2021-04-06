@@ -1,23 +1,27 @@
 import Foundation
 
-// MARK: - Fallback
+public protocol MiniAppFallbackViewable: UIView {
+    var onRetry: (() -> Void)? {get set}
+}
+
 extension MiniAppViewController {
 
-    class FallbackView: UIView {
+    class FallbackView: UIView, MiniAppFallbackViewable {
 
         var onRetry: (() -> Void)?
 
         lazy var contentStackView: UIStackView = {
             let view = UIStackView(arrangedSubviews: [iconImageView, titleLabel, retryButton])
             view.axis = .vertical
-            view.distribution = .fill
+            view.distribution = .fillProportionally
+            view.alignment = .center
             view.spacing = 20
             return view
         }()
 
         lazy var iconImageView: UIImageView = {
             let view = UIImageView()
-            view.image = UIImage(systemName: "info")
+            view.image = UIImage(named: "error_bubble", in: Bundle.miniAppSDKBundle(), with: .none)
             view.contentMode = .scaleAspectFit
             return view
         }()
@@ -38,6 +42,9 @@ extension MiniAppViewController {
             view.layer.cornerRadius = 20
             view.layer.borderWidth = 1
             view.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
+            view.contentEdgeInsets = UIEdgeInsets(top: 10, left: 30, bottom: 10, right: 30)
+            view.tintColor = .secondaryLabel
+            view.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
             return view
         }()
 
@@ -48,8 +55,7 @@ extension MiniAppViewController {
             contentStackView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 contentStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-                contentStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                contentStackView.widthAnchor.constraint(equalToConstant: 140)
+                contentStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
             ])
 
             retryButton.addTarget(self, action: #selector(retryPressed), for: .touchUpInside)

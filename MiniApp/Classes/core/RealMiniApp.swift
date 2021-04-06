@@ -346,19 +346,3 @@ extension RealMiniApp: MiniAppMessageDelegate {
         completionHandler(.failure(error as Error))
     }
 }
-
-// MARK: - UI
-extension RealMiniApp {
-    func launch(
-        base: UIViewController,
-        appId: String,
-        config: MiniAppSdkConfig? = nil,
-        messageInterface: MiniAppMessageDelegate? = nil,
-        queryParams: String? = nil
-    ) {
-        let miniAppVC = MiniAppViewController(appId: appId, config: config, messageDelegate: messageInterface ?? self, navDelegate: nil, queryParams: queryParams)
-        let nvc = UINavigationController(rootViewController: miniAppVC)
-        nvc.modalPresentationStyle = .fullScreen
-        base.present(nvc, animated: true, completion: nil)
-    }
-}

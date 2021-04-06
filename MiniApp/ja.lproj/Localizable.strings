@@ -2,6 +2,6 @@
 "Cancel_title" = "キャンセル";
 
 // MARK: - UI
-"ui_close_button_title" = "Close";
-"ui_loading_failed_error" = "An error has occured.\nPlease try again";
-"ui_retry_button_title" = "Retry";
+"ui_close_button_title" = "クローズ";
+"ui_loading_failed_error" = "情報を取得できませんでした。\n再度お試しください。";
+"ui_retry_button_title" = "更新する";

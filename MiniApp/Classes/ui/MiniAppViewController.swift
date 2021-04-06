@@ -1,7 +1,21 @@
 import Foundation
 import UIKit
 
-class MiniAppViewController: UIViewController {
+public protocol MiniAppUIDelegate: class {
+    func onError(error: Error)
+    func onSuccess()
+    func onForward()
+    func onBackward()
+    func onClose()
+}
+public extension MiniAppUIDelegate {
+    func onError(error: Error) {}
+    func onSuccess() {}
+    func onForward() {}
+    func onBackward() {}
+}
+
+public class MiniAppViewController: UIViewController {
 
     let appId: String
     var config: MiniAppSdkConfig?
@@ -14,18 +28,16 @@ class MiniAppViewController: UIViewController {
     weak var navDelegate: MiniAppNavigationDelegate?
     weak var navBarDelegate: MiniAppNavigationBarDelegate?
 
-    var onError: ((Error) -> Void)?
-    var onBackButton: (() -> Void)?
-    var onForwardButton: (() -> Void)?
+    weak var delegate: MiniAppUIDelegate?
 
     // MARK: UI - Navigation
     private lazy var backButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(image: UIImage(named: "arrow_left")!, style: .plain, target: self, action: #selector(backPressed))
+        let view = UIBarButtonItem(image: UIImage(named: "arrow_left-24", in: Bundle.miniAppSDKBundle(), with: .none), style: .plain, target: self, action: #selector(backPressed))
         return view
     }()
 
     private lazy var forwardButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(image: UIImage(named: "arrow_right")!, style: .plain, target: self, action: #selector(forwardPressed))
+        let view = UIBarButtonItem(image: UIImage(named: "arrow_right-24", in: Bundle.miniAppSDKBundle(), with: .none), style: .plain, target: self, action: #selector(forwardPressed))
         return view
     }()
 
@@ -34,30 +46,32 @@ class MiniAppViewController: UIViewController {
         return view
     }()
 
-    // MARK: UI - Fallback
+    // MARK: UI - ActivityIndicator
     private lazy var activityIndicatorView: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(style: .medium)
         return view
     }()
 
-    private lazy var fallbackView: FallbackView = {
+    // MARK: UI - Fallback
+    public lazy var fallbackView: MiniAppFallbackViewable = {
         let view = FallbackView()
         view.isHidden = true
         return view
     }()
 
-    init(appId: String, config: MiniAppSdkConfig?, messageDelegate: MiniAppMessageDelegate, navDelegate: MiniAppNavigationDelegate?, queryParams: String?) {
+    init(title: String, appId: String, config: MiniAppSdkConfig? = nil, messageDelegate: MiniAppMessageDelegate, navDelegate: MiniAppNavigationDelegate? = nil, queryParams: String? = nil) {
         self.appId = appId
         self.config = config
         self.queryParams = queryParams
         self.messageDelegate = messageDelegate
         self.navDelegate = navDelegate
         super.init(nibName: nil, bundle: nil)
+        self.title = title
     }
 
     required init?(coder: NSCoder) { return nil }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupMiniApp()
@@ -65,9 +79,17 @@ class MiniAppViewController: UIViewController {
     }
 
     func setupUI() {
+
         view.backgroundColor = .white
-        navigationItem.setLeftBarButtonItems([backButton, forwardButton], animated: true)
-        navigationItem.setRightBarButton(closeButton, animated: true)
+
+        if navigationController != nil {
+            if navigationItem.leftBarButtonItems == nil {
+                navigationItem.setLeftBarButtonItems([backButton, forwardButton], animated: true)
+            }
+            if navigationItem.rightBarButtonItems == nil {
+                navigationItem.setRightBarButton(closeButton, animated: true)
+            }
+        }
 
         view.addSubview(activityIndicatorView)
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,10 +124,10 @@ class MiniAppViewController: UIViewController {
                     view.frame = self.view.bounds
                     self.view.addSubview(view)
                     self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
+                    self.delegate?.onSuccess()
                     self.state = .success
                 case .failure(let error):
-                    self.onError?(error)
-                    self.showFallback()
+                    self.delegate?.onError(error: error)
                     self.state = .error
                 }
             },
@@ -137,25 +159,29 @@ class MiniAppViewController: UIViewController {
     }
 
     @objc
-    func backPressed() {
-        onBackButton?()
-        navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back)
+    public func backPressed() {
+        if delegate == nil {
+            delegate?.onBackward()
+        } else {
+            navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back)
+        }
     }
 
     @objc
-    func forwardPressed() {
-        onForwardButton?()
-        navBarDelegate?.miniAppNavigationBar(didTriggerAction: .forward)
+    public func forwardPressed() {
+        if delegate == nil {
+            delegate?.onForward()
+        } else {
+            navBarDelegate?.miniAppNavigationBar(didTriggerAction: .forward)
+        }
     }
 
     @objc
-    func closePressed() {
-        dismiss(animated: true, completion: nil)
-    }
-
-    private func showFallback() {
-        DispatchQueue.main.async {
-            self.fallbackView.isHidden = false
+    public func closePressed() {
+        if delegate == nil {
+            dismiss(animated: true, completion: nil)
+        } else {
+            delegate?.onClose()
         }
     }
 
