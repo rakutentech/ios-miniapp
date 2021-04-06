@@ -370,13 +370,25 @@ miniApp.setScreenOrientation(ScreenOrientation.LOCK_LANDSCAPE) // or LOCK_PORTRA
 ### Send message
 
 **API:** [ChatServiceProvider](api/interfaces/chatserviceprovider.md)
+[MessageToContact](api/interfaces/messagetocontact.md)
 
 #### Send message to the single contact
 
 ```javascript
-miniApp.chatService.sendMessageToContact()
-    .then(messageId => {
-		console.log(messageId);
+miniApp.chatService.sendMessageToContact(messageToContact)
+    .then(contactId => {
+		console.log(contactId);
+	}).catch(error => {
+		console.error(error);
+	});
+```
+
+#### Send message by contact id
+
+```javascript
+miniApp.chatService.sendMessageToContactId(id, messageToContact)
+    .then(contactId => {
+		console.log(contactId);
 	}).catch(error => {
 		console.error(error);
 	});

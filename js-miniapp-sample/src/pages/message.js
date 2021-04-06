@@ -99,10 +99,10 @@ const Message = (props: MessageTypeProps) => {
           message.action.trim() ?? '',
           message.title.trim() ?? ''
         )
-        .then((messageId) =>
+        .then((contactId) =>
           setMessageResponse({
             show: true,
-            response: 'Message Id: ' + messageId,
+            response: 'Contact Id: ' + contactId,
           })
         );
     }

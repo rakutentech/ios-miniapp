@@ -37,6 +37,7 @@ window.MiniAppBridge = {
   getAccessToken: sandbox.stub(),
   setScreenOrientation: sandbox.stub(),
   sendMessageToContact: sandbox.stub(),
+  sendMessageToContactId: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -357,8 +358,16 @@ describe('sendMessage', () => {
     const response = '';
 
     window.MiniAppBridge.sendMessageToContact.resolves(response);
-    return expect(
+    expect(
       miniApp.chatService.sendMessageToContact(messageToContact)
+    ).to.eventually.equal(response);
+
+    window.MiniAppBridge.sendMessageToContactId.resolves(response);
+    return expect(
+      miniApp.chatService.sendMessageToContactId(
+        'test_contact_id',
+        messageToContact
+      )
     ).to.eventually.equal(response);
   });
 
@@ -366,8 +375,16 @@ describe('sendMessage', () => {
     const response = undefined;
 
     window.MiniAppBridge.sendMessageToContact.resolves(response);
-    return expect(
+    expect(
       miniApp.chatService.sendMessageToContact(messageToContact)
     ).to.eventually.equal(response);
+
+    window.MiniAppBridge.sendMessageToContactId.resolves(null);
+    return expect(
+      miniApp.chatService.sendMessageToContactId(
+        'test_contact_id',
+        messageToContact
+      )
+    ).to.eventually.equal(null);
   });
 });
