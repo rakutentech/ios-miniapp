@@ -1,2 +1,7 @@
 "Ok_title" = "OK";
 "Cancel_title" = "キャンセル";
+
+// MARK: - UI
+"ui_close_button_title" = "Close";
+"ui_loading_failed_error" = "An error has occured.\nPlease try again";
+"ui_retry_button_title" = "Retry";
