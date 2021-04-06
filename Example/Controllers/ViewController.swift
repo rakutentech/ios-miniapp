@@ -37,9 +37,11 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
+    var messageHandlerObj: ChatMessageHandler?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("\(Bundle.main.infoDictionary?["CFBundleVersion"] as? Int) ?? 999")
         self.navigationController?.viewControllers = [self]
         self.navigationItem.hidesBackButton = true
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)

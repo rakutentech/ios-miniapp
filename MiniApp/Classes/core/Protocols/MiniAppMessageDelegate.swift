@@ -2,7 +2,7 @@
 Public Protocol that will be used by the Mini App to communicate
  with the Native implementation
 */
-public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareContentDelegate {
+public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareContentDelegate, ChatMessageBridgeDelegate {
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     func getUniqueId() -> String
@@ -49,6 +49,22 @@ public enum MASDKProtocolResponse: String {
 public enum MASDKPermissionResponse: String {
     /// User allowed the Device Permission
     case allowed = "ALLOWED"
+}
+
+public enum MASDKBaseError: String, MiniAppErrorProtocol {
+    /// Host app failed to implement required interface
+    case failedToConformToProtocol = "FAILED_TO_CONFORM_PROTOCOL"
+
+    var name: String {
+        self.rawValue
+    }
+
+    var description: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return "Host app failed to implement required interface"
+        }
+    }
 }
 
 /// Enumeration that is used to differentiate the device permission errors

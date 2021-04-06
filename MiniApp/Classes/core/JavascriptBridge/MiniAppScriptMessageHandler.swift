@@ -75,6 +75,21 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             loadRequestedAd(with: callbackId, for: requestParam)
         case .showAd:
             showRequestedAd(with: callbackId, for: requestParam)
+        case .sendMessageToContact:
+            sendMessageToContact(with: callbackId, parameters: requestParam)
+        }
+    }
+    
+    private func sendMessageToContact(with callBackId: String, parameters: RequestParameters?) {
+        if let message = parameters?.messageToContact {
+            self.hostAppMessageDelegate?.sendMessageToContact(message, completionHandler: { result in
+                switch result {
+                case .success(let contactId):
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: contactId ?? "")
+                case .failure(let error):
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.description)
+                }
+            })
         }
     }
 

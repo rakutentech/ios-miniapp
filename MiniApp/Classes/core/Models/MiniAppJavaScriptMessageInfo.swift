@@ -14,6 +14,7 @@ struct RequestParameters: Decodable {
     let adUnitId: String?
     let audience: String?
     let scopes: [String]?
+    let messageToContact: MessageToContact?
 }
 
 struct LocationOptions: Decodable {
