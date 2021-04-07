@@ -1,5 +1,11 @@
 internal class MiniAppInfoFetcher {
 
+    var manifestCache: MAManifestCache
+
+    init() {
+        self.manifestCache = MAManifestCache()
+    }
+
     func fetchList(apiClient: MiniAppClient, completionHandler: @escaping (Result<[MiniAppInfo], Error>) -> Void) {
 
         apiClient.getMiniAppsList { (result) in
@@ -44,21 +50,31 @@ internal class MiniAppInfoFetcher {
 
     func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
 
-        apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion) { (result) in
-            switch result {
-            case .success(let responseData):
-                guard let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
-                    data: responseData.data) else {
-                    return completionHandler(.failure(.invalidResponseData))
+        guard let manifest = getCachedManifest(miniAppId: miniAppId, miniAppVersion: miniAppVersion) else {
+            apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion) { (result) in
+                switch result {
+                case .success(let responseData):
+                    guard let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
+                        data: responseData.data) else {
+                        return completionHandler(.failure(.invalidResponseData))
+                    }
+                    let manifest = self.prepareMiniAppManifest(metaDataResponse: decodeResponse.bundleManifest, versionId: miniAppVersion)
+                    self.manifestCache.saveManifestInfo(forMiniApp: miniAppId,
+                        versionId: miniAppVersion,
+                        manifest: CachedMetaData(version: miniAppVersion, miniAppManifest: manifest)
+                    )
+                    return completionHandler(.success(manifest))
+                case .failure(let error):
+                    return completionHandler(.failure(.fromError(error: error)))
                 }
-                return completionHandler(.success(
-                                            self.prepareMiniAppManifest(
-                                                metaDataResponse: decodeResponse.bundleManifest,
-                                                versionId: miniAppVersion)))
-            case .failure(let error):
-                return completionHandler(.failure(.fromError(error: error)))
             }
+            return
         }
+        completionHandler(.success(manifest))
+    }
+
+    func getCachedManifest(miniAppId: String, miniAppVersion: String) -> MiniAppManifest? {
+        return self.manifestCache.getManifestInfo(forMiniApp: miniAppId, versionId: miniAppVersion)?.miniAppManifest
     }
 
     func prepareMiniAppManifest(metaDataResponse: MetaDataCustomPermissionModel, versionId: String) -> MiniAppManifest {
