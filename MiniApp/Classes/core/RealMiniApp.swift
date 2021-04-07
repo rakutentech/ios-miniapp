@@ -329,15 +329,15 @@ internal class RealMiniApp {
 }
 
 extension RealMiniApp: MiniAppMessageDelegate {
-    func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKBaseError>) -> Void) {
+    func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func sendMessageToContact(_ contactId: String, completionHandler: @escaping (Result<Void, MASDKBaseError>) -> Void) {
+    func sendMessageToContact(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<Void, MASDKError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String], MASDKBaseError>) -> Void) {
+    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String], MASDKError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 

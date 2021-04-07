@@ -51,22 +51,6 @@ public enum MASDKPermissionResponse: String {
     case allowed = "ALLOWED"
 }
 
-public enum MASDKBaseError: String, MiniAppErrorProtocol {
-    /// Host app failed to implement required interface
-    case failedToConformToProtocol = "FAILED_TO_CONFORM_PROTOCOL"
-
-    var name: String {
-        self.rawValue
-    }
-
-    var description: String {
-        switch self {
-        case .failedToConformToProtocol:
-            return "Host app failed to implement required interface"
-        }
-    }
-}
-
 /// Enumeration that is used to differentiate the device permission errors
 public enum MASDKPermissionError: String, MiniAppErrorProtocol {
 

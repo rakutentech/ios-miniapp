@@ -77,17 +77,52 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             showRequestedAd(with: callbackId, for: requestParam)
         case .sendMessageToContact:
             sendMessageToContact(with: callbackId, parameters: requestParam)
+        case .sendMessageToContactId:
+            sendMessageToContact(with: callbackId, parameters: requestParam)
+        case .sendMessageToMultipleContacts:
+            sendMessageToMultipleContacts(with: callbackId, parameters: requestParam)
         }
     }
-    
+
     private func sendMessageToContact(with callBackId: String, parameters: RequestParameters?) {
         if let message = parameters?.messageToContact {
-            self.hostAppMessageDelegate?.sendMessageToContact(message, completionHandler: { result in
+            if let contactId = parameters?.contactId {
+                hostAppMessageDelegate?.sendMessageToContact(contactId, message: message) { result in
+                    switch result {
+                    case .success:
+                        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: "")
+                    case .failure(let error):
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+                    }
+                }
+            } else {
+                hostAppMessageDelegate?.sendMessageToContact(message, completionHandler: { result in
+                    switch result {
+                    case .success(let contactId):
+                        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: contactId ?? "")
+                    case .failure(let error):
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+                    }
+                })
+            }
+        }
+    }
+
+    private func sendMessageToMultipleContacts(with callBackId: String, parameters: RequestParameters?) {
+        if let message = parameters?.messageToContact {
+            hostAppMessageDelegate?.sendMessageToMultipleContacts(message, completionHandler: { result in
                 switch result {
-                case .success(let contactId):
-                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: contactId ?? "")
+                case .success(let contactIds):
+                    guard let data = try? JSONEncoder().encode(contactIds),
+                          let response = String(data: data, encoding: .utf8) else {
+                        return self.executeJavaScriptCallback(
+                                responseStatus: .onError,
+                                messageId: callBackId,
+                                response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
+                    }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: response)
                 case .failure(let error):
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.description)
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
                 }
             })
         }

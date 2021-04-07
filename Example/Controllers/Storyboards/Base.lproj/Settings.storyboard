@@ -32,6 +32,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="PJy-Je-3Uy">
+                            <rect key="frame" x="0.0" y="111.5" width="414" height="90"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" textLabel="vLa-a8-iry" detailTextLabel="bJX-H8-Yfm" imageView="fe2-Tf-sZ8" style="IBUITableViewCellStyleSubtitle" id="Xum-sj-BwQ">
                                 <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
@@ -542,7 +547,7 @@
         <!--Profile-->
         <scene sceneID="yMh-UU-Jhl">
             <objects>
-                <tableViewController id="uyv-le-C26" customClass="UserSettingsTableViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="UserSettingsTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uyv-le-C26" customClass="UserSettingsTableViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="yUA-zi-gZv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

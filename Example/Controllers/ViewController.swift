@@ -41,7 +41,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("\(Bundle.main.infoDictionary?["CFBundleVersion"] as? Int) ?? 999")
         self.navigationController?.viewControllers = [self]
         self.navigationItem.hidesBackButton = true
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)

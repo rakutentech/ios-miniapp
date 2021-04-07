@@ -34,6 +34,9 @@ public enum MASDKError: Error {
     /// All required custom permissions is not allowed by the user
     case metaDataFailure
 
+    /// Host app failed to implement required interface
+    case failedToConformToProtocol
+
     /// An unexpected error occurred.
     ///
     /// - Parameters:
@@ -75,6 +78,9 @@ extension MASDKError: LocalizedError {
             return "error_miniapp_id_not_found".localizedString()
         case .metaDataFailure:
             return "error_miniapp_meta_data_required_permissions_failure".localizedString()
+        case .failedToConformToProtocol:
+            return "Host app failed to implement required interface".localizedString()
+
         case .unknownError(let domain, let code, let description):
             return String(format: NSLocalizedString("error_unknown", comment: ""), domain, code, description)
         }

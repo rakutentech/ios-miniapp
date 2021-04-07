@@ -2,28 +2,25 @@ import UIKit
 import MiniApp
 
 protocol ContactsListDelegate: class {
-    func contactsController(_ contactsController: ContactsListSettingsTableViewController, didSelect contact: MAContact?)
+    func contactsController(_ contactsController: ContactsListSettingsTableViewController, didSelect contact: [MAContact]?)
 }
 
 class ContactsListSettingsTableViewController: UITableViewController {
 
     var userContactList: [MAContact]? = []
     weak var contactDelegate: ContactsListDelegate?
-    var selectedContact: MAContact?
+    var selectedContacts = [MAContact]()
+    var allowMultipleSelection = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareRandomContactList()
         self.tableView.separatorStyle = .singleLine
-        self.tableView.tableFooterView = UIView(frame: .zero)
-        if contactDelegate != nil {
-            self.navigationItem.rightBarButtonItems = []
-        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if isBeingDismissed, selectedContact == nil {
+        if isBeingDismissed, selectedContacts.count == 0 {
             contactDelegate?.contactsController(self, didSelect: nil)
         }
     }
@@ -44,27 +41,52 @@ class ContactsListSettingsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell? ?? UITableViewCell()
-        if userContactList?.indices.contains(indexPath.row) ?? false {
-            let contact = userContactList?[indexPath.row]
-            cell.detailTextLabel?.text = "id: \(contact?.id ?? "-")"
-            cell.textLabel?.text = contact?.name
+        if let userContactList = userContactList, userContactList.indices.contains(indexPath.row) {
+            let contact = userContactList[indexPath.row]
+            cell.detailTextLabel?.text = "id: \(contact.id)"
+            cell.textLabel?.text = contact.name
             if contactDelegate != nil {
-                cell.accessoryType = .disclosureIndicator
+                if allowMultipleSelection {
+                    cell.accessoryType = selectedContacts.contains(contact) ? .checkmark : .none
+                } else {
+                    cell.accessoryType = .disclosureIndicator
+                }
             }
         }
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let delegate = contactDelegate, let contact = userContactList?[indexPath.row] {
-            selectedContact = contact
-            delegate.contactsController(self, didSelect: contact)
+        if let contact = userContactList?[indexPath.row] {
+
+            if allowMultipleSelection {
+                if selectedContacts.contains(contact) {
+                    selectedContacts.removeAll { contactToRemove -> Bool in
+                        contactToRemove == contact
+                    }
+                } else {
+                    selectedContacts.append(contact)
+                }
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                tableView.deselectRow(at: indexPath, animated: true)
+                selectedContacts = [contact]
+            }
+            contactDelegate?.contactsController(self, didSelect: selectedContacts)
         }
-        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if allowMultipleSelection, let selectedContact = userContactList?[indexPath.row] {
+            selectedContacts.removeAll(where: { contact in
+                contact == selectedContact
+            })
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userContactList?.count ?? 0
+        userContactList?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -139,7 +161,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
     }
 
     func randomFakeName() -> String {
-        return randomFakeFirstName() + " " + randomFakeLastName()
+        randomFakeFirstName() + " " + randomFakeLastName()
     }
 
     func randomFakeFirstName() -> String {

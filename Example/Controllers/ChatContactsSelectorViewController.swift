@@ -3,11 +3,34 @@ import MiniApp
 
 class ChatContactsSelectorViewController: UIViewController {
     var contactsController: ContactsListSettingsTableViewController?
+    var multipleSelection = false {
+        didSet {
+            contactsController?.allowMultipleSelection = multipleSelection
+        }
+    }
+    var contactToSend: MAContact?
+    var selectedContacts: [MAContact]? {
+        didSet {
+            buttonSend?.isEnabled = (selectedContacts?.count ?? 0) > 0
+        }
+    }
+
     weak var contactDelegate: ContactsListDelegate?
+    var contactsHandlerJob: ((Result<[String], MASDKError>) -> Void)?
+    var contactHandlerJob: ((Result<Void, MASDKError>) -> Void)?
+
     @IBOutlet weak var labelTitle: UILabel?
-    @IBOutlet weak var labelCaption: UILabel?
     @IBOutlet weak var labelMessage: UILabel?
     @IBOutlet weak var imageView: UIImageView?
+    @IBOutlet weak var buttonAction: UIButton?
+
+    @IBOutlet weak var viewContact: UIView?
+    @IBOutlet weak var labelContactName: UILabel?
+    @IBOutlet weak var labelContactEmail: UILabel?
+    @IBOutlet weak var labelContactId: UILabel?
+
+    @IBOutlet weak var buttonSend: UIButton?
+
     let imageCache = ImageCache()
 
     var message: MessageToContact? {
@@ -26,8 +49,13 @@ class ChatContactsSelectorViewController: UIViewController {
     }
 
     func refreshUI() {
-        labelTitle?.text = message?.title
-        labelCaption?.text = message?.caption
+        labelTitle?.text = message?.text
+        if message?.action != nil {
+            buttonAction?.setTitle(message?.caption ?? " ", for: .normal)
+        } else {
+            buttonAction?.isHidden = true
+            buttonAction?.setTitle(nil, for: .normal)
+        }
         labelMessage?.text = message?.text
         var imageOK = false
         if let imageUrlString = message?.image {
@@ -42,15 +70,48 @@ class ChatContactsSelectorViewController: UIViewController {
         if !imageOK {
             imageView?.image = nil
         }
+        self.buttonSend?.isHidden = shouldHideSendButton()
+        if contactToSend == nil {
+            self.viewContact?.removeFromSuperview()
+        } else {
+            self.buttonSend?.isEnabled = true
+            self.labelContactId?.text = contactToSend?.id
+            self.labelContactName?.text = contactToSend?.name
+            self.labelContactEmail?.text = contactToSend?.email
+        }
     }
 
-    // MARK: - Navigation
+    func shouldHideSendButton() -> Bool {
+        contactToSend == nil && !multipleSelection
+    }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    @IBAction func sendMessage() {
+        if selectedContacts != nil {
+            contactsHandlerJob?(.success(selectedContacts?.map { $0.id } ?? [] ))
+        } else if contactToSend != nil {
+            contactHandlerJob?(.success(()))
+        }
+        self.dismiss(animated: true)
+    }
+
+    @IBAction func sendAction() {
+        if let urlString = message?.action, let url = URL(string: urlString) {
+            UIApplication.shared.open(url)
+        }
+    }
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? ContactsListSettingsTableViewController {
-            self.contactsController = dest
-            self.contactsController?.contactDelegate = self.contactDelegate
+            contactsController = dest
+            contactsController?.contactDelegate = self
+            contactsController?.allowMultipleSelection = multipleSelection
         }
+    }
+}
+
+extension ChatContactsSelectorViewController: ContactsListDelegate {
+    func contactsController(_ contactsController: ContactsListSettingsTableViewController, didSelect contact: [MAContact]?) {
+        selectedContacts = contact
+        contactDelegate?.contactsController(contactsController, didSelect: contact)
     }
 }
