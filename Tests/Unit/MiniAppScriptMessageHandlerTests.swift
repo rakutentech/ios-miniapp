@@ -68,7 +68,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         adType: 0,
                         adUnitId: "",
                         audience: nil,
-                        scopes: nil
+                        scopes: nil,
+                        messageToContact: nil,
+                        contactId: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -86,7 +88,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         adType: 0,
                         adUnitId: "",
                         audience: nil,
-                        scopes: nil
+                        scopes: nil,
+                        messageToContact: nil,
+                        contactId: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)

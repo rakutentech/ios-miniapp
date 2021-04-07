@@ -49,7 +49,6 @@ class ChatContactsSelectorViewController: UIViewController {
     }
 
     func refreshUI() {
-        labelTitle?.text = message?.text
         if message?.action != nil {
             buttonAction?.setTitle(message?.caption ?? " ", for: .normal)
         } else {
