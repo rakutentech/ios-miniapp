@@ -56,17 +56,8 @@ class ChatContactsSelectorViewController: UIViewController {
             buttonAction?.setTitle(nil, for: .normal)
         }
         labelMessage?.text = message?.text
-        var imageOK = false
-        if let imageUrlString = message?.image {
-            if let url = URL(string: imageUrlString) {
-                imageOK = true
-                imageView?.loadImage(url, placeholder: "Rakuten", cache: imageCache)
-            } else if let imageData = Data(base64Encoded: imageUrlString, options: Data.Base64DecodingOptions.ignoreUnknownCharacters), let image = UIImage(data: imageData) {
-                imageOK = true
-                imageView?.image = image
-            }
-        }
-        if !imageOK {
+
+        if !retrieveImage() {
             imageView?.image = nil
         }
         self.buttonSend?.isHidden = shouldHideSendButton()
@@ -78,6 +69,19 @@ class ChatContactsSelectorViewController: UIViewController {
             self.labelContactName?.text = contactToSend?.name
             self.labelContactEmail?.text = contactToSend?.email
         }
+    }
+
+    func retrieveImage() -> Bool {
+        if let imageUrlString = message?.image {
+            if let image = imageUrlString.convertBase64ToImage() {
+                imageView?.image = image
+                return true
+            } else if let url = URL(string: imageUrlString) {
+                imageView?.loadImage(url, placeholder: "Rakuten", cache: imageCache)
+                return true
+            }
+        }
+        return false
     }
 
     func shouldHideSendButton() -> Bool {
