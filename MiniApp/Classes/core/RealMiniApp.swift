@@ -333,11 +333,11 @@ extension RealMiniApp: MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func sendMessageToContact(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<Void, MASDKError>) -> Void) {
+    func sendMessageToContact(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String], MASDKError>) -> Void) {
+    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 

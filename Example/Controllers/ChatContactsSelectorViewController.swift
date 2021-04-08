@@ -9,6 +9,7 @@ class ChatContactsSelectorViewController: UIViewController {
         }
     }
     var contactToSend: MAContact?
+    var messageSent = false
     var selectedContacts: [MAContact]? {
         didSet {
             buttonSend?.isEnabled = (selectedContacts?.count ?? 0) > 0
@@ -16,8 +17,8 @@ class ChatContactsSelectorViewController: UIViewController {
     }
 
     weak var contactDelegate: ContactsListDelegate?
-    var contactsHandlerJob: ((Result<[String], MASDKError>) -> Void)?
-    var contactHandlerJob: ((Result<Void, MASDKError>) -> Void)?
+    var contactsHandlerJob: ((Result<[String]?, MASDKError>) -> Void)?
+    var contactHandlerJob: ((Result<String?, MASDKError>) -> Void)?
 
     @IBOutlet weak var labelTitle: UILabel?
     @IBOutlet weak var labelMessage: UILabel?
@@ -46,6 +47,14 @@ class ChatContactsSelectorViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         refreshUI()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        // if the message was not sent by this controller and that we are in a single contact picker that did not pick
+        if !messageSent && !(shouldHideSendButton() && selectedContacts?.count ?? 0 > 0) {
+            contactDelegate?.contactsController(contactsController, didSelect: nil)
+        }
     }
 
     func refreshUI() {
@@ -90,11 +99,12 @@ class ChatContactsSelectorViewController: UIViewController {
 
     @IBAction func sendMessage() {
         if selectedContacts != nil {
-            contactsHandlerJob?(.success(selectedContacts?.map { $0.id } ?? [] ))
+            contactsHandlerJob?(.success(selectedContacts?.map { $0.id }))
         } else if contactToSend != nil {
-            contactHandlerJob?(.success(()))
+            contactHandlerJob?(.success(contactToSend?.id))
         }
-        self.dismiss(animated: true)
+        messageSent = true
+        dismiss(animated: true)
     }
 
     @IBAction func sendAction() {
@@ -113,7 +123,7 @@ class ChatContactsSelectorViewController: UIViewController {
 }
 
 extension ChatContactsSelectorViewController: ContactsListDelegate {
-    func contactsController(_ contactsController: ContactsListSettingsTableViewController, didSelect contact: [MAContact]?) {
+    func contactsController(_ contactsController: ContactsListSettingsTableViewController?, didSelect contact: [MAContact]?) {
         selectedContacts = contact
         contactDelegate?.contactsController(contactsController, didSelect: contact)
     }

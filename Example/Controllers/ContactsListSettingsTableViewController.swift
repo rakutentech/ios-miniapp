@@ -2,7 +2,7 @@ import UIKit
 import MiniApp
 
 protocol ContactsListDelegate: class {
-    func contactsController(_ contactsController: ContactsListSettingsTableViewController, didSelect contact: [MAContact]?)
+    func contactsController(_ contactsController: ContactsListSettingsTableViewController?, didSelect contact: [MAContact]?)
 }
 
 class ContactsListSettingsTableViewController: UITableViewController {
@@ -16,13 +16,6 @@ class ContactsListSettingsTableViewController: UITableViewController {
         super.viewDidLoad()
         prepareRandomContactList()
         self.tableView.separatorStyle = .singleLine
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if isBeingDismissed, selectedContacts.count == 0 {
-            contactDelegate?.contactsController(self, didSelect: nil)
-        }
     }
 
     func prepareRandomContactList() {
