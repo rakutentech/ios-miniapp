@@ -346,7 +346,7 @@ export class MiniAppBridge {
   sendMessageToContactId(id: string, message: MessageToContact) {
     return new Promise<string | undefined>((resolve, reject) => {
       return this.executor.exec(
-        'sendMessageToContact',
+        'sendMessageToContactId',
         { contactId: id, messageToContact: message },
         messageId => resolve(messageId),
         error => reject(error)

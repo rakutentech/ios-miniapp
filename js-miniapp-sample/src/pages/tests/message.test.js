@@ -19,7 +19,6 @@ describe('chatbot', () => {
     expect(screen.getByText('Text')).toBeInTheDocument();
     expect(screen.getByText('Caption')).toBeInTheDocument();
     expect(screen.getByText('Action')).toBeInTheDocument();
-    expect(screen.getByText('Title')).toBeInTheDocument();
     expect(screen.getByTestId('send-message')).toBeInTheDocument();
     expect(screen.queryByTestId('validation-error')).not.toBeInTheDocument();
   });

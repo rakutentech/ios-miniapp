@@ -44,7 +44,6 @@ const messageToContact: MessageToContact = {
   text: 'test',
   image: 'test',
   caption: 'test',
-  title: 'test',
   action: 'test',
 };
 

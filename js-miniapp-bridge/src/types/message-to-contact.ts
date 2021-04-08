@@ -8,6 +8,4 @@ export interface MessageToContact {
   caption: string;
   // Action which the call-to-action button will perform, i.e. a URI with parameters.
   action: string;
-  // Title to display to contact.
-  title: string;
 }

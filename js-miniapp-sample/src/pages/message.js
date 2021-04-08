@@ -16,7 +16,10 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { sendMessageToContact } from '../services/message/actions';
+import {
+  sendMessageToContact,
+  sendMessageToContactId,
+} from '../services/message/actions';
 
 import { getMessageTypeList } from '../services/message/actions';
 import type { MessageType } from '../services/message/types';
@@ -47,7 +50,13 @@ type MessageTypeProps = {
     image: string,
     text: string,
     caption: string,
-    title: string,
+    action: string
+  ) => Promise<string>,
+  sendMessageToContactId: (
+    contactId: string,
+    image: string,
+    text: string,
+    caption: string,
     action: string
   ) => Promise<string>,
 };
@@ -57,6 +66,7 @@ const Message = (props: MessageTypeProps) => {
   const messageTypes = props.messageTypes;
   const [message, setMessage] = useState({
     id: messageTypes[0] !== undefined ? messageTypes[0].id : -1,
+    contactId: '',
     image: '',
     text: '',
     caption: '',
@@ -81,6 +91,15 @@ const Message = (props: MessageTypeProps) => {
     } else if (message.text === undefined || message.text.trim().length === 0) {
       setValidationState({ error: true, message: 'text cannot be empty' });
       return false;
+    } else if (
+      message.id === 2 &&
+      (message.contactId === undefined || message.contactId.trim().length === 0)
+    ) {
+      setValidationState({
+        error: true,
+        message: 'contact id cannot be empty',
+      });
+      return false;
     } else {
       setValidationState({ error: false, message: '' });
     }
@@ -91,23 +110,42 @@ const Message = (props: MessageTypeProps) => {
   };
   const talkToChatbot = () => {
     if (validate()) {
-      props
-        .sendMessageToContact(
-          message.image.trim() ?? '',
-          message.text.trim(),
-          message.caption.trim() ?? '',
-          message.action.trim() ?? '',
-          message.title.trim() ?? ''
-        )
-        .then((contactId) =>
-          setMessageResponse({
-            show: true,
-            response: 'Contact Id: ' + contactId,
-          })
-        );
+      if (message.id === 1) {
+        props
+          .sendMessageToContact(
+            message.image.trim() ?? '',
+            message.text.trim(),
+            message.caption.trim() ?? '',
+            message.action.trim() ?? ''
+          )
+          .then((contactId) =>
+            setMessageResponse({
+              show: true,
+              response: 'Contact Id: ' + contactId,
+            })
+          );
+      } else if (message.id === 2) {
+        props
+          .sendMessageToContactId(
+            message.contactId.trim(),
+            message.image.trim() ?? '',
+            message.text.trim(),
+            message.caption.trim() ?? '',
+            message.action.trim() ?? ''
+          )
+          .then((contactId) =>
+            setMessageResponse({
+              show: true,
+              response: 'Contact Id: ' + contactId,
+            })
+          );
+      }
     }
   };
 
+  const onContactIdChange = (event) => {
+    setMessage({ ...message, contactId: event.target.value });
+  };
   const onImageChange = (event) => {
     setMessage({ ...message, image: event.target.value });
   };
@@ -119,9 +157,6 @@ const Message = (props: MessageTypeProps) => {
   };
   const onActionChange = (event) => {
     setMessage({ ...message, action: event.target.value });
-  };
-  const onTitleChange = (event) => {
-    setMessage({ ...message, title: event.target.value });
   };
 
   const onChatbotClose = () => {
@@ -146,6 +181,20 @@ const Message = (props: MessageTypeProps) => {
           ))}
         </Select>
       </FormControl>
+
+      {message.id === 2 && (
+        <FormControl className={classes.formControl}>
+          <TextField
+            id="contactId"
+            label="Contact ID"
+            className={classes.fields}
+            onChange={onContactIdChange}
+            placeholder="Input contact id receiving a message"
+            value={message.contactId}
+          />
+        </FormControl>
+      )}
+
       <FormControl className={classes.formControl}>
         <TextField
           id="image"
@@ -182,15 +231,6 @@ const Message = (props: MessageTypeProps) => {
           className={classes.fields}
           onChange={onActionChange}
           value={message.action}
-        />
-      </FormControl>
-      <FormControl className={classes.formControl}>
-        <TextField
-          id="title"
-          label="Title"
-          className={classes.fields}
-          onChange={onTitleChange}
-          value={message.title}
         />
       </FormControl>
       {validation.error && (
@@ -238,8 +278,10 @@ const mapStatetoProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getBots: () => dispatch(getMessageTypeList()),
-    sendMessageToContact: (image, text, caption, title, action) =>
-      dispatch(sendMessageToContact(image, text, caption, title, action)),
+    sendMessageToContact: (image, text, caption, action) =>
+      dispatch(sendMessageToContact(image, text, caption, action)),
+    sendMessageToContactId: (contactId, image, text, caption, action) =>
+      dispatch(sendMessageToContactId(contactId, image, text, caption, action)),
   };
 };
 
