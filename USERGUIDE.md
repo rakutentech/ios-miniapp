@@ -734,13 +734,13 @@ MiniApp.shared().create(appId: String, queryParams: "param1=value1&param2=value2
                 print("Error: ", error.localizedDescription)
             }
 }, messageInterface: self)
-
 ```
 
 And the Mini App will be loaded like the following scheme,
 
-```mscheme.rakuten//miniapp/index.html?param1=value1&param2=value2```
-
+```
+mscheme.rakuten//miniapp/index.html?param1=value1&param2=value2
+```
 
 <a id="permissions-from-host-app"></a>
 
@@ -753,6 +753,64 @@ Mini App SDK requires the host app to include the following set of device permis
 | [NSLocationAlwaysAndWhenInUseUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nslocationalwaysandwheninuseusagedescription) |  Location  | Mini app to track/get the current location of the user |
 | [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nscamerausagedescription)                                         |   Camera   | Camera permission required by Mini app to take pictures                              |
 | [NSMicrophoneUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsmicrophoneusagedescription)                                 | Microphone | Microphone permission required by Mini app to record a video.                             |
+
+<a id="faqs-and-troubleshooting"></a>
+
+## FAQs and Troubleshooting
+
+### How do I deep link to mini apps?
+
+If you want to have deep links directly to your mini apps, then you must implement deep link handling within your App. This can be done using either a custom deep link scheme (such as `myAppName://miniapp`) or a [Universal Link](https://developer.apple.com/ios/universal-links/) (such as `https://www.example.com/miniapp`). See the following resources for more information on how to implement deep linking capabilities:
+
+- [Allowing Apps and Websites to Link to Your Content](https://developer.apple.com/documentation/xcode/allowing_apps_and_websites_to_link_to_your_content)
+- [Supporting Associated Domains](https://developer.apple.com/documentation/safariservices/supporting_associated_domains)
+
+After you have implemented deep linking capabilities in your App, then you can configure your deep link to open and launch a Mini App. Note that your deep link should contain information about which mini app ID to open. Also, you can pass query parameters and a URL fragment to the mini app. The recommended deep link format is similar to `https://www.example.com/miniapp/MINI_APP_ID?myParam=myValue#myFragment` where the `myParam=myValue#myFragment` portion is optional and will be passed directly to the mini app. 
+
+The following is an example which will parse the mini app ID and query string from a deep link:
+
+```swift
+// In your AppDelegate
+func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+        let incomingURL = userActivity.webpageURL,
+        let components = URLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
+        return false
+    }
+
+    return handleDeepLink(components: components)
+}
+
+func handleDeepLink(components: URLComponents) -> Bool
+{
+    guard let host = components.host, host == "example.com" {
+        return false
+    }
+
+    let pathComponents = components.path.split("/")
+    guard
+        let rootPath = pathComponents.first
+    else { return false }
+
+    if (rootPath == "miniapp") {
+        guard
+            let id = pathComponents[1]
+        else { return false }
+        
+        let query = components.query ?? ""
+        let fragment = components.fragment ?? ""
+        let queryString = query + "#" + fragment
+        
+        // Note that `myMiniAppCoordinator` is just a placeholder example for your own class
+        // Inside this class you should call `MiniApp.create` in order to create and display the mini app
+        myMiniAppCoordinator.goToMiniApp(miniAppId: id, query: queryString)
+
+        return true
+    }
+
+    return false
+}
+```
 
 <a id="change-log"></a>
 
