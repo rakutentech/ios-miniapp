@@ -263,11 +263,11 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         let mockMessageInterface = MockMessageInterface()
         mockMessageInterface.sendMessageToContact(message, completionHandler: completionHandler)
     }
-    func sendMessageToContact(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<Void, MASDKError>) -> Void) {
+    func sendMessageToContact(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         mockMessageInterface.sendMessageToContact(contactId, message: message, completionHandler: completionHandler)
     }
-    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String], MASDKError>) -> Void) {
+    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         mockMessageInterface.sendMessageToMultipleContacts(message, completionHandler: completionHandler)
     }
@@ -290,7 +290,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     }
 
     func sendMessageToContact(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.success(()))
+        completionHandler(.success(contactId))
     }
 
     func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
