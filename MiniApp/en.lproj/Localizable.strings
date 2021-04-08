@@ -39,6 +39,6 @@
 "cancel" = "Cancel";
 
 // MARK: - UI
-"ui_close_button_title" = "Close";
-"ui_loading_failed_error" = "An error has occured.\nPlease try again";
-"ui_retry_button_title" = "Retry";
+"miniapp_ui_close_button_title" = "Close";
+"miniapp_ui_loading_failed_error" = "An error has occured.\nPlease try again";
+"miniapp_ui_retry_button_title" = "Retry";

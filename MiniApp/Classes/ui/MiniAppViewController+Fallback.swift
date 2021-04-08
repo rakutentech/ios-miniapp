@@ -28,7 +28,7 @@ extension MiniAppViewController {
 
         lazy var titleLabel: UILabel = {
             let view = UILabel()
-            view.text = "ui_loading_failed_error".localizedString()
+            view.text = "miniapp_ui_loading_failed_error".localizedString()
             view.textColor = .secondaryLabel
             view.font = .systemFont(ofSize: 12, weight: .regular)
             view.textAlignment = .center
@@ -38,7 +38,7 @@ extension MiniAppViewController {
 
         lazy var retryButton: UIButton = {
             let view = UIButton(type: .system)
-            view.setTitle("ui_retry_button_title".localizedString(), for: .normal)
+            view.setTitle("miniapp_ui_retry_button_title".localizedString(), for: .normal)
             view.layer.cornerRadius = 20
             view.layer.borderWidth = 1
             view.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor

@@ -2,17 +2,15 @@ import Foundation
 import UIKit
 
 public protocol MiniAppUIDelegate: class {
-    func onError(error: Error)
-    func onSuccess()
-    func onForward()
-    func onBackward()
+    func miniApp(_ viewController: MiniAppViewController, didLaunchWith config: MiniAppSdkConfig?)
+    func miniApp(_ viewController: MiniAppViewController, shouldExecute action: MiniAppNavigationAction)
+    func miniApp(_ viewController: MiniAppViewController, didLoadWith error: Error?)
     func onClose()
 }
 public extension MiniAppUIDelegate {
-    func onError(error: Error) {}
-    func onSuccess() {}
-    func onForward() {}
-    func onBackward() {}
+    func miniApp(_ viewController: MiniAppViewController, didLaunchWith config: MiniAppSdkConfig?) {}
+    func miniApp(_ viewController: MiniAppViewController, shouldExecute action: MiniAppNavigationAction) {}
+    func miniApp(_ viewController: MiniAppViewController, didLoadWith error: Error?) {}
 }
 
 public class MiniAppViewController: UIViewController {
@@ -42,7 +40,7 @@ public class MiniAppViewController: UIViewController {
     }()
 
     private lazy var closeButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(title: "ui_close_button_title".localizedString(), style: .plain, target: self, action: #selector(closePressed))
+        let view = UIBarButtonItem(title: "miniapp_ui_close_button_title".localizedString(), style: .plain, target: self, action: #selector(closePressed))
         return view
     }()
 
@@ -59,7 +57,14 @@ public class MiniAppViewController: UIViewController {
         return view
     }()
 
-    init(title: String, appId: String, config: MiniAppSdkConfig? = nil, messageDelegate: MiniAppMessageDelegate, navDelegate: MiniAppNavigationDelegate? = nil, queryParams: String? = nil) {
+    init(
+        title: String,
+        appId: String,
+        config: MiniAppSdkConfig? = nil,
+        messageDelegate: MiniAppMessageDelegate,
+        navDelegate: MiniAppNavigationDelegate? = nil,
+        queryParams: String? = nil
+    ) {
         self.appId = appId
         self.config = config
         self.queryParams = queryParams
@@ -124,10 +129,10 @@ public class MiniAppViewController: UIViewController {
                     view.frame = self.view.bounds
                     self.view.addSubview(view)
                     self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
-                    self.delegate?.onSuccess()
+                    self.delegate?.miniApp(self, didLoadWith: nil)
                     self.state = .success
                 case .failure(let error):
-                    self.delegate?.onError(error: error)
+                    self.delegate?.miniApp(self, didLoadWith: error)
                     self.state = .error
                 }
             },
@@ -161,7 +166,7 @@ public class MiniAppViewController: UIViewController {
     @objc
     public func backPressed() {
         if delegate == nil {
-            delegate?.onBackward()
+            delegate?.miniApp(self, shouldExecute: .back)
         } else {
             navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back)
         }
@@ -170,7 +175,7 @@ public class MiniAppViewController: UIViewController {
     @objc
     public func forwardPressed() {
         if delegate == nil {
-            delegate?.onForward()
+            delegate?.miniApp(self, shouldExecute: .forward)
         } else {
             navBarDelegate?.miniAppNavigationBar(didTriggerAction: .forward)
         }
