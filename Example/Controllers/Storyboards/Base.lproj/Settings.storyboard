@@ -556,9 +556,9 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="216"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rakuten-profile-image" translatesAutoresizingMaskIntoConstraints="NO" id="hgZ-y6-I6S">
+                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rakuten" translatesAutoresizingMaskIntoConstraints="NO" id="hgZ-y6-I6S">
                                     <rect key="frame" x="132" y="15" width="150" height="150"/>
-                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="150" id="J8d-iV-7aC"/>
@@ -873,7 +873,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Rakuten-profile-image" width="400" height="400"/>
+        <image name="Rakuten" width="120" height="120"/>
         <image name="Security" width="44" height="44"/>
         <image name="Settings" width="24" height="24"/>
         <image name="Switch" width="44" height="44"/>

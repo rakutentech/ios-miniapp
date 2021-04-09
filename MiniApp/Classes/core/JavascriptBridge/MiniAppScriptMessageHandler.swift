@@ -110,7 +110,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     private func sendMessageToContactId(with callBackId: String, parameters: RequestParameters?) {
         if let message = parameters?.messageToContact {
             if let contactId = parameters?.contactId {
-                hostAppMessageDelegate?.sendMessageToContact(contactId, message: message) { result in
+                hostAppMessageDelegate?.sendMessageToContactId(contactId, message: message) { result in
                     switch result {
                     case .success(let contact):
                         guard let data = try? JSONEncoder().encode(contact),
