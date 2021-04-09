@@ -32,7 +32,9 @@ interface ChatServiceProvider {
    * Can also resolve with an empty array in the case that the message was not sent to any contacts, such as if the user cancelled sending the message.
    * Promise rejects in the case that there was an error.
    */
-   sendMessageToMultipleContacts(message: MessageToContact): Promise<string[] | undefined>;
+  sendMessageToMultipleContacts(
+    message: MessageToContact
+  ): Promise<string[] | undefined>;
 }
 
 /** @internal */
@@ -48,7 +50,9 @@ export class ChatService {
     return getBridge().sendMessageToContactId(id, message);
   }
 
-  sendMessageToMultipleContacts(message: MessageToContact): Promise<string[] | undefined> {
+  sendMessageToMultipleContacts(
+    message: MessageToContact
+  ): Promise<string[] | undefined> {
     return getBridge().sendMessageToMultipleContacts(message);
   }
 }

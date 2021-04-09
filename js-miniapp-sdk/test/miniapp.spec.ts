@@ -38,6 +38,7 @@ window.MiniAppBridge = {
   setScreenOrientation: sandbox.stub(),
   sendMessageToContact: sandbox.stub(),
   sendMessageToContactId: sandbox.stub(),
+  sendMessageToMultipleContacts: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -361,6 +362,11 @@ describe('sendMessage', () => {
       miniApp.chatService.sendMessageToContact(messageToContact)
     ).to.eventually.equal(response);
 
+    window.MiniAppBridge.sendMessageToMultipleContacts.resolves(response);
+    expect(
+      miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
+    ).to.eventually.equal(response);
+
     window.MiniAppBridge.sendMessageToContactId.resolves(response);
     return expect(
       miniApp.chatService.sendMessageToContactId(
@@ -376,6 +382,11 @@ describe('sendMessage', () => {
     window.MiniAppBridge.sendMessageToContact.resolves(response);
     expect(
       miniApp.chatService.sendMessageToContact(messageToContact)
+    ).to.eventually.equal(response);
+
+    window.MiniAppBridge.sendMessageToMultipleContacts.resolves(response);
+    expect(
+      miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
     ).to.eventually.equal(response);
 
     window.MiniAppBridge.sendMessageToContactId.resolves(null);
