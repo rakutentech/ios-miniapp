@@ -23,6 +23,16 @@ interface ChatServiceProvider {
     id: string,
     message: MessageToContact
   ): Promise<string | undefined>;
+
+  /**
+   * Opens a contact chooser which allows the user to choose a multiple contacts
+   * and then sends the message to the all chosen contacts.
+   * @param message The message to send to contact.
+   * @returns Promise resolves with an array of contact id which were sent the message.
+   * Can also resolve with an empty array in the case that the message was not sent to any contacts, such as if the user cancelled sending the message.
+   * Promise rejects in the case that there was an error.
+   */
+   sendMessageToMultipleContacts(message: MessageToContact): Promise<string[] | undefined>;
 }
 
 /** @internal */
@@ -36,5 +46,9 @@ export class ChatService {
     message: MessageToContact
   ): Promise<string | undefined> {
     return getBridge().sendMessageToContactId(id, message);
+  }
+
+  sendMessageToMultipleContacts(message: MessageToContact): Promise<string[] | undefined> {
+    return getBridge().sendMessageToMultipleContacts(message);
   }
 }
