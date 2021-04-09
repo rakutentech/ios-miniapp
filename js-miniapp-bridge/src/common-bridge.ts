@@ -33,7 +33,7 @@ export interface PlatformExecutor {
   /**
    * Method to call the native interface methods for respective platforms
    * such as iOS & Android.
-   * @param  {[String]} action Action command/interface name that native side need to execute
+   * @param  {[string]} action Action command/interface name that native side need to execute
    * @param  {Object} param Object that contains request parameter values like permissions.
    * For eg., {permission: 'location'}
    * @param  {[Function]} onSuccess Success callback function
@@ -331,7 +331,7 @@ export class MiniAppBridge {
       return this.executor.exec(
         'sendMessageToContact',
         { messageToContact: message },
-        messageId => resolve(messageId),
+        contactId => resolve(contactId),
         error => reject(error)
       );
     });
@@ -348,7 +348,27 @@ export class MiniAppBridge {
       return this.executor.exec(
         'sendMessageToContactId',
         { contactId: id, messageToContact: message },
-        messageId => resolve(messageId),
+        contactId => resolve(contactId),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * @param message The message to send to contact.
+   * @returns Promise resolves with an array of contact id which were sent the message.
+   * Can also resolve with an empty array in the case that the message was not sent to any contacts, such as if the user cancelled sending the message.
+   * Promise rejects in the case that there was an error.
+   */
+  sendMessageToMultipleContacts(message: MessageToContact) {
+    return new Promise<string[] | undefined>((resolve, reject) => {
+      return this.executor.exec(
+        'sendMessageToMultipleContacts',
+        { messageToContact: message },
+        contactIds => {
+          const list = JSON.parse(contactIds) as string[];
+          resolve(list);
+        },
         error => reject(error)
       );
     });
