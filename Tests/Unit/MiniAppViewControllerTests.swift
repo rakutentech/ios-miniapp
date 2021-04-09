@@ -18,9 +18,9 @@ class MiniAppViewControllerTests: QuickSpec {
                 it("will show miniapp view") {
                     let miniAppVc = MiniAppViewController(title: "MiniAppTest", appId: self.mockAppId, config: self.mockConfig, messageDelegate: mockMessageInterface)
                     miniAppVc.setupMiniApp()
-                    expect(miniAppVc.state == .loading).to(beTrue())
+                    expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
                     expect(miniAppVc.fallbackView.isHidden).to(beTrue())
-                    expect(miniAppVc.state == .success).toEventually(beTrue(), timeout: .seconds(1))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.success), timeout: .seconds(1))
                     expect(miniAppVc.fallbackView.isHidden).toEventually(beTrue(), timeout: .seconds(1))
                     expect(miniAppVc.view.subviews.last).to(beAnInstanceOf(RealMiniAppView.self))
                 }
@@ -29,13 +29,13 @@ class MiniAppViewControllerTests: QuickSpec {
                     let miniAppVc = MiniAppViewController(title: "MiniAppTest", appId: self.mockAppId, config: self.emptyConfig, messageDelegate: mockMessageInterface)
                     miniAppVc.setupMiniApp()
                     miniAppVc.setup()
-                    expect(miniAppVc.state == .loading).to(beTrue())
-                    expect(miniAppVc.state == .error).toEventually(beTrue(), timeout: .seconds(1))
+                    expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(1))
 
                     miniAppVc.config = self.mockConfig
                     miniAppVc.fallbackView.onRetry?()
-                    expect(miniAppVc.state == .loading).to(beTrue())
-                    expect(miniAppVc.state == .success).toEventually(beTrue(), timeout: .seconds(1))
+                    expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.success), timeout: .seconds(1))
                 }
             }
 
@@ -43,9 +43,9 @@ class MiniAppViewControllerTests: QuickSpec {
                 it("will show fallback") {
                     let miniAppVc = MiniAppViewController(title: "MiniAppTest", appId: self.mockAppId, config: self.emptyConfig, messageDelegate: mockMessageInterface)
                     miniAppVc.setupMiniApp()
-                    expect(miniAppVc.state == .loading).to(beTrue())
+                    expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
                     expect(miniAppVc.fallbackView.isHidden).to(beTrue())
-                    expect(miniAppVc.state == .error).toEventually(beTrue(), timeout: .seconds(1))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(1))
                     expect(miniAppVc.fallbackView.isHidden).toEventually(beFalse(), timeout: .seconds(1))
                 }
 
@@ -53,12 +53,12 @@ class MiniAppViewControllerTests: QuickSpec {
                     let miniAppVc = MiniAppViewController(title: "MiniAppTest", appId: self.mockAppId, config: self.emptyConfig, messageDelegate: mockMessageInterface)
                     miniAppVc.setupMiniApp()
                     miniAppVc.setup()
-                    expect(miniAppVc.state == .loading).to(beTrue())
-                    expect(miniAppVc.state == .error).toEventually(beTrue(), timeout: .seconds(1))
+                    expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(1))
 
                     miniAppVc.fallbackView.onRetry?()
-                    expect(miniAppVc.state == .loading).to(beTrue())
-                    expect(miniAppVc.state == .error).toEventually(beTrue(), timeout: .seconds(1))
+                    expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(1))
                 }
             }
 
