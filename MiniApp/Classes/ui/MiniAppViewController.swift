@@ -8,9 +8,12 @@ public protocol MiniAppUIDelegate: class {
     func onClose()
 }
 public extension MiniAppUIDelegate {
-    func miniApp(_ viewController: MiniAppViewController, didLaunchWith config: MiniAppSdkConfig?) {}
-    func miniApp(_ viewController: MiniAppViewController, shouldExecute action: MiniAppNavigationAction) {}
-    func miniApp(_ viewController: MiniAppViewController, didLoadWith error: Error?) {}
+    func miniApp(_ viewController: MiniAppViewController, didLaunchWith config: MiniAppSdkConfig?) {
+    }
+    func miniApp(_ viewController: MiniAppViewController, shouldExecute action: MiniAppNavigationAction) {
+    }
+    func miniApp(_ viewController: MiniAppViewController, didLoadWith error: Error?) {
+    }
 }
 
 public class MiniAppViewController: UIViewController {
@@ -72,6 +75,9 @@ public class MiniAppViewController: UIViewController {
         self.navDelegate = navDelegate
         super.init(nibName: nil, bundle: nil)
         self.title = title
+        if navDelegate == nil {
+            self.navDelegate = self
+        }
     }
 
     required init?(coder: NSCoder) { return nil }
@@ -118,26 +124,33 @@ public class MiniAppViewController: UIViewController {
         state = .loading
 
         guard let messageDelegate = messageDelegate else { return }
-        MiniApp.shared(with: config).create(
-            appId: appId,
-            queryParams: queryParams,
-            completionHandler: { [weak self] (result) in
-                guard let self = self else { return }
-                switch result {
-                case .success(let miniAppDisplay):
-                    let view = miniAppDisplay.getMiniAppView()
-                    view.frame = self.view.bounds
-                    self.view.addSubview(view)
-                    self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
-                    self.delegate?.miniApp(self, didLoadWith: nil)
-                    self.state = .success
-                case .failure(let error):
-                    self.delegate?.miniApp(self, didLoadWith: error)
-                    self.state = .error
-                }
-            },
-            messageInterface: messageDelegate
+        let navSettings = MiniAppNavigationConfig(
+            navigationBarVisibility: .never,
+            navigationDelegate: navDelegate,
+            customNavigationView: nil
         )
+        MiniApp
+            .shared(with: config, navigationSettings: navSettings)
+            .create(
+                appId: appId,
+                queryParams: queryParams,
+                completionHandler: { [weak self] (result) in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let miniAppDisplay):
+                        let view = miniAppDisplay.getMiniAppView()
+                        view.frame = self.view.bounds
+                        self.view.addSubview(view)
+                        self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
+                        self.delegate?.miniApp(self, didLoadWith: nil)
+                        self.state = .success
+                    case .failure(let error):
+                        self.delegate?.miniApp(self, didLoadWith: error)
+                        self.state = .error
+                    }
+                },
+                messageInterface: messageDelegate
+            )
     }
 
     func setup() {
@@ -166,18 +179,18 @@ public class MiniAppViewController: UIViewController {
     @objc
     public func backPressed() {
         if delegate == nil {
-            delegate?.miniApp(self, shouldExecute: .back)
-        } else {
             navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back)
+        } else {
+            delegate?.miniApp(self, shouldExecute: .back)
         }
     }
 
     @objc
     public func forwardPressed() {
         if delegate == nil {
-            delegate?.miniApp(self, shouldExecute: .forward)
-        } else {
             navBarDelegate?.miniAppNavigationBar(didTriggerAction: .forward)
+        } else {
+            delegate?.miniApp(self, shouldExecute: .forward)
         }
     }
 
@@ -190,4 +203,18 @@ public class MiniAppViewController: UIViewController {
         }
     }
 
+}
+
+// MARK: - MiniAppNavigationDelegate
+extension MiniAppViewController: MiniAppNavigationDelegate {
+    
+    public func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
+        /// will be used soon when knowing the cases to react to
+//        MiniAppExternalWebViewController.presentModally(url: url, externalLinkResponseHandler: { url in
+//            if url.absoluteString == "miniapp://close" {
+//                // dismiss
+//            }
+//        })
+    }
+    
 }
