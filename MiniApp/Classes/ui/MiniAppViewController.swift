@@ -9,10 +9,13 @@ public protocol MiniAppUIDelegate: class {
 }
 public extension MiniAppUIDelegate {
     func miniApp(_ viewController: MiniAppViewController, didLaunchWith config: MiniAppSdkConfig?) {
+        /* This is the default conformance to the MiniAppUIDelegate. */
     }
     func miniApp(_ viewController: MiniAppViewController, shouldExecute action: MiniAppNavigationAction) {
+        /* This is the default conformance to the MiniAppUIDelegate. */
     }
     func miniApp(_ viewController: MiniAppViewController, didLoadWith error: Error?) {
+        /* This is the default conformance to the MiniAppUIDelegate. */
     }
 }
 
@@ -207,14 +210,14 @@ public class MiniAppViewController: UIViewController {
 
 // MARK: - MiniAppNavigationDelegate
 extension MiniAppViewController: MiniAppNavigationDelegate {
-    
+
+    /// will be used soon when knowing the cases to react to
     public func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
-        /// will be used soon when knowing the cases to react to
 //        MiniAppExternalWebViewController.presentModally(url: url, externalLinkResponseHandler: { url in
 //            if url.absoluteString == "miniapp://close" {
 //                // dismiss
 //            }
 //        })
     }
-    
+
 }

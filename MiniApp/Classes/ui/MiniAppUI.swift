@@ -2,13 +2,13 @@ import Foundation
 import UIKit
 
 public struct MiniAppUIParams {
-    
+
     var title: String
     var miniAppId: String
     var config: MiniAppSdkConfig?
     var messageInterface: MiniAppMessageDelegate
     var navigationInterface: MiniAppNavigationDelegate?
-    var queryParams: String?    
+    var queryParams: String?
 
     public init(
         title: String = "",
