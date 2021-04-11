@@ -1,5 +1,6 @@
 internal class RealMiniApp {
     var miniAppInfoFetcher: MiniAppInfoFetcher
+    var metaDataDownloader: MetaDataDownloader
     var miniAppClient: MiniAppClient
     var miniAppDownloader: MiniAppDownloader
     var manifestDownloader: ManifestDownloader
@@ -14,6 +15,7 @@ internal class RealMiniApp {
 
     init(with settings: MiniAppSdkConfig?, and navigationSettings: MiniAppNavigationConfig? = nil) {
         self.miniAppInfoFetcher = MiniAppInfoFetcher()
+        self.metaDataDownloader = MetaDataDownloader()
         self.miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl,
                                            rasProjectId: settings?.rasProjectId,
                                            subscriptionKey: settings?.subscriptionKey,
@@ -241,7 +243,7 @@ internal class RealMiniApp {
         if version.isEmpty {
             return completionHandler(.failure(.invalidVersionId))
         }
-        miniAppInfoFetcher.getMiniAppMetaInfo(miniAppId: appId,
+        metaDataDownloader.getMiniAppMetaInfo(miniAppId: appId,
                                               miniAppVersion: version,
                                               apiClient: self.miniAppClient) { (result) in
             switch result {
