@@ -149,6 +149,11 @@ class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
             }
         }
     }
+}
+
+class MockMetaDataDownloader: MetaDataDownloader {
+    var data: Data?
+    var error: Error?
 
     override func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if error != nil {
