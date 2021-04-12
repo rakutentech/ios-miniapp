@@ -867,12 +867,12 @@
     <color key="tintColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
         <image name="Rakuten" width="120" height="120"/>
-        <image name="Settings" width="24" height="24"/>
+        <image name="Settings" width="512" height="512"/>
         <image name="arrow_left" width="24" height="24"/>
         <image name="arrow_right" width="24" height="24"/>
-        <image name="curved-arrow" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="curved-arrow" width="155.13900756835938" height="155.13900756835938"/>
         <namedColor name="80percentsBg">
-            <color red="1" green="1" blue="1" alpha="0.90015448427200317" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="0.89999997615814209" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
