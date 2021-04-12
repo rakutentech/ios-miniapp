@@ -323,11 +323,11 @@ export class MiniAppBridge {
   /**
    * @param message The message to send to contact.
    * @returns Promise resolves with the contact id received a message.
-   * Can also resolve with empty (undefined) response in the case that the message was not sent to a contact, such as if the user cancelled sending the message.
+   * Can also resolve with null response in the case that the message was not sent to a contact, such as if the user cancelled sending the message.
    * Promise rejects in the case that there was an error.
    */
   sendMessageToContact(message: MessageToContact) {
-    return new Promise<string | undefined>((resolve, reject) => {
+    return new Promise<string | null>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToContact',
         { messageToContact: message },
@@ -344,7 +344,7 @@ export class MiniAppBridge {
    * @see {sendMessageToContact}
    */
   sendMessageToContactId(id: string, message: MessageToContact) {
-    return new Promise<string | undefined>((resolve, reject) => {
+    return new Promise<string | null>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToContactId',
         { contactId: id, messageToContact: message },
@@ -357,11 +357,11 @@ export class MiniAppBridge {
   /**
    * @param message The message to send to contact.
    * @returns Promise resolves with an array of contact id which were sent the message.
-   * Can also resolve with an empty array in the case that the message was not sent to any contacts, such as if the user cancelled sending the message.
+   * Can also resolve with null array in the case that the message was not sent to any contacts, such as if the user cancelled sending the message.
    * Promise rejects in the case that there was an error.
    */
   sendMessageToMultipleContacts(message: MessageToContact) {
-    return new Promise<string[] | undefined>((resolve, reject) => {
+    return new Promise<string[] | null>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToMultipleContacts',
         { messageToContact: message },

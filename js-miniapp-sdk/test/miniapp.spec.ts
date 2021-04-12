@@ -354,8 +354,31 @@ describe('requestScreenOrientation', () => {
 });
 
 describe('sendMessage', () => {
-  it('possible to retrieve empty result from the MiniAppBridge when request is successful', () => {
-    const response = '';
+  it('possible to retrieve result from the MiniAppBridge when request is successful', () => {
+    const response = 'test_contact_id';
+
+    window.MiniAppBridge.sendMessageToContact.resolves(response);
+    expect(
+      miniApp.chatService.sendMessageToContact(messageToContact)
+    ).to.eventually.equal(response);
+
+    const listResponse = [response];
+    window.MiniAppBridge.sendMessageToMultipleContacts.resolves(listResponse);
+    expect(
+      miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
+    ).to.eventually.equal(listResponse);
+
+    window.MiniAppBridge.sendMessageToContactId.resolves(response);
+    return expect(
+      miniApp.chatService.sendMessageToContactId(
+        'test_contact_id',
+        messageToContact
+      )
+    ).to.eventually.equal(response);
+  });
+
+  it('possible to retrieve null result from the MiniAppBridge when request is successful', () => {
+    const response = null;
 
     window.MiniAppBridge.sendMessageToContact.resolves(response);
     expect(
@@ -374,27 +397,5 @@ describe('sendMessage', () => {
         messageToContact
       )
     ).to.eventually.equal(response);
-  });
-
-  it('possible to retrieve undefined result from the MiniAppBridge when request is successful', () => {
-    const response = undefined;
-
-    window.MiniAppBridge.sendMessageToContact.resolves(response);
-    expect(
-      miniApp.chatService.sendMessageToContact(messageToContact)
-    ).to.eventually.equal(response);
-
-    window.MiniAppBridge.sendMessageToMultipleContacts.resolves(response);
-    expect(
-      miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
-    ).to.eventually.equal(response);
-
-    window.MiniAppBridge.sendMessageToContactId.resolves(null);
-    return expect(
-      miniApp.chatService.sendMessageToContactId(
-        'test_contact_id',
-        messageToContact
-      )
-    ).to.eventually.equal(null);
   });
 });
