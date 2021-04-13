@@ -19,10 +19,11 @@ import { connect } from 'react-redux';
 import {
   sendMessageToContact,
   sendMessageToContactId,
+  sendMessageToMultipleContacts,
 } from '../services/message/actions';
-
 import { getMessageTypeList } from '../services/message/actions';
 import type { MessageType } from '../services/message/types';
+import { pandaLogo } from '../assets/images/base64';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -59,6 +60,12 @@ type MessageTypeProps = {
     caption: string,
     action: string
   ) => Promise<string>,
+  sendMessageToMultipleContacts: (
+    image: string,
+    text: string,
+    caption: string,
+    action: string
+  ) => Promise<string>,
 };
 
 const Message = (props: MessageTypeProps) => {
@@ -67,11 +74,10 @@ const Message = (props: MessageTypeProps) => {
   const [message, setMessage] = useState({
     id: messageTypes[0] !== undefined ? messageTypes[0].id : -1,
     contactId: '',
-    image: '',
-    text: '',
-    caption: '',
-    action: '',
-    title: '',
+    image: pandaLogo,
+    text: 'Sample text',
+    caption: 'Sample caption',
+    action: 'https://www.example.com/',
   });
   const [validation, setValidationState] = useState({
     error: false,
@@ -118,12 +124,15 @@ const Message = (props: MessageTypeProps) => {
             message.caption.trim() ?? '',
             message.action.trim() ?? ''
           )
-          .then((contactId) =>
+          .then((contactId) => {
+            let respMsg = 'Message not sent';
+            if (contactId !== null)
+              respMsg = 'Message is sent to contact Id: ' + contactId;
             setMessageResponse({
               show: true,
-              response: 'Contact Id: ' + contactId,
-            })
-          );
+              response: respMsg,
+            });
+          });
       } else if (message.id === 2) {
         props
           .sendMessageToContactId(
@@ -133,12 +142,32 @@ const Message = (props: MessageTypeProps) => {
             message.caption.trim() ?? '',
             message.action.trim() ?? ''
           )
-          .then((contactId) =>
+          .then((contactId) => {
+            let respMsg = 'Message not sent';
+            if (contactId !== null)
+              respMsg = 'Message is sent to contact Id: ' + contactId;
             setMessageResponse({
               show: true,
-              response: 'Contact Id: ' + contactId,
-            })
-          );
+              response: respMsg,
+            });
+          });
+      } else if (message.id === 3) {
+        props
+          .sendMessageToMultipleContacts(
+            message.image.trim() ?? '',
+            message.text.trim(),
+            message.caption.trim() ?? '',
+            message.action.trim() ?? ''
+          )
+          .then((contactIds) => {
+            let respMsg = 'Message not sent';
+            if (contactIds !== null)
+              respMsg = contactIds.length + ' contacts sent';
+            setMessageResponse({
+              show: true,
+              response: respMsg,
+            });
+          });
       }
     }
   };
@@ -282,6 +311,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(sendMessageToContact(image, text, caption, action)),
     sendMessageToContactId: (contactId, image, text, caption, action) =>
       dispatch(sendMessageToContactId(contactId, image, text, caption, action)),
+    sendMessageToMultipleContacts: (image, text, caption, action) =>
+      dispatch(sendMessageToMultipleContacts(image, text, caption, action)),
   };
 };
 

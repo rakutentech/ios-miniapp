@@ -376,7 +376,7 @@ miniApp.setScreenOrientation(ScreenOrientation.LOCK_LANDSCAPE) // or LOCK_PORTRA
 
 ```javascript
 miniApp.chatService.sendMessageToContact(messageToContact)
-    .then(contactId => {
+    .then(contactId => {// contact id string.
 		console.log(contactId);
 	}).catch(error => {
 		console.error(error);
@@ -389,6 +389,17 @@ miniApp.chatService.sendMessageToContact(messageToContact)
 miniApp.chatService.sendMessageToContactId(id, messageToContact)
     .then(contactId => {
 		console.log(contactId);
+	}).catch(error => {
+		console.error(error);
+	});
+```
+
+#### Send message to multiple contacts
+
+```javascript
+miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
+    .then(contactIds => {// contact id string array.
+		console.log(contactIds);
 	}).catch(error => {
 		console.error(error);
 	});

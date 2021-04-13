@@ -331,7 +331,13 @@ export class MiniAppBridge {
       return this.executor.exec(
         'sendMessageToContact',
         { messageToContact: message },
-        contactId => resolve(contactId),
+        contactId => {
+          if (contactId !== 'null' && contactId !== null) {
+            resolve(contactId);
+          } else {
+            resolve(null);
+          }
+        },
         error => reject(error)
       );
     });
@@ -348,7 +354,13 @@ export class MiniAppBridge {
       return this.executor.exec(
         'sendMessageToContactId',
         { contactId: id, messageToContact: message },
-        contactId => resolve(contactId),
+        contactId => {
+          if (contactId !== 'null' && contactId !== null) {
+            resolve(contactId);
+          } else {
+            resolve(null);
+          }
+        },
         error => reject(error)
       );
     });
@@ -366,8 +378,11 @@ export class MiniAppBridge {
         'sendMessageToMultipleContacts',
         { messageToContact: message },
         contactIds => {
-          const list = JSON.parse(contactIds) as string[];
-          resolve(list);
+          if (contactIds !== 'null' && contactIds !== null) {
+            resolve(JSON.parse(contactIds) as string[]);
+          } else {
+            resolve(null);
+          }
         },
         error => reject(error)
       );

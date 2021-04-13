@@ -24,7 +24,10 @@ describe('chatbot', () => {
   });
 
   test('should show validation error message when user clicks send button without message', () => {
+    const textInput = screen.getByLabelText('Text');
+    userEvent.type(textInput, ' ');
     userEvent.click(screen.getByTestId('send-message'));
+
     const validationBlk = screen.queryByTestId('validation-error');
     expect(validationBlk).toBeInTheDocument();
     expect(validationBlk).toHaveTextContent('text cannot be empty');

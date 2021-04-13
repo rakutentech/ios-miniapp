@@ -15,6 +15,10 @@ const messageTypeState = {
       id: 2,
       name: 'Send a message to a specific contact',
     },
+    {
+      id: 3,
+      name: 'Send a message to multiple contacts',
+    },
   ],
 };
 
