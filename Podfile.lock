@@ -52,7 +52,7 @@ DEPENDENCIES:
   - Quick
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - AppCenter
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
@@ -81,6 +81,6 @@ SPEC CHECKSUMS:
   Quick: 60f0ea3b8e0cfc0df3259a5c06a238ad8b3c46e0
   ZIPFoundation: e27423c004a5a1410c15933407747374e7c6cb6e
 
-PODFILE CHECKSUM: 5ebd48f8a691819563d81a11f591885bd461f08a
+PODFILE CHECKSUM: 0d4a6b3c4863132cc471d772f3d37fe43826db20
 
 COCOAPODS: 1.10.1
