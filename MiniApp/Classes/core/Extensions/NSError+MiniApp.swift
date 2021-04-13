@@ -107,5 +107,6 @@ enum MiniAppSDKErrorCode: Int {
          adNotLoaded,
          adNotDisplayed,
          miniAppNotFound,
-         metaDataFailure
+         metaDataFailure,
+         failedToConformToProtocol
 }

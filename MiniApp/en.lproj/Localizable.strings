@@ -18,6 +18,7 @@
 "error_invalid_url" = "URL is invalid.";
 "error_invalid_app_id" = "Provided Mini App ID is invalid.";
 "error_invalid_version_id" = "Provided Mini App Version ID is invalid.";
+"error_invalid_contact_id" = "Provided contact ID is invalid.";
 "error_invalid_response" = "Invalid response received from server.";
 "error_download_failed" = "Failed to download the mini app.";
 "error_no_published_version" = "Server returned no published versions for the provided Mini App ID.";

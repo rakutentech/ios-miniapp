@@ -8,6 +8,7 @@ protocol MiniAppCallbackDelegate: AnyObject {
 }
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     var locationManager: LocationManager?
@@ -75,6 +76,85 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             loadRequestedAd(with: callbackId, for: requestParam)
         case .showAd:
             showRequestedAd(with: callbackId, for: requestParam)
+        case .sendMessageToContact:
+            sendMessageToContact(with: callbackId, parameters: requestParam)
+        case .sendMessageToContactId:
+            sendMessageToContactId(with: callbackId, parameters: requestParam)
+        case .sendMessageToMultipleContacts:
+            sendMessageToMultipleContacts(with: callbackId, parameters: requestParam)
+        }
+    }
+
+    private func sendMessageToContact(with callBackId: String, parameters: RequestParameters?) {
+        if let message = parameters?.messageToContact {
+            hostAppMessageDelegate?.sendMessageToContact(message, completionHandler: { result in
+                switch result {
+                case .success(let contact):
+                    let notEmptyId: String? = contact?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true ? nil : contact
+                    guard let data = try? JSONEncoder().encode(notEmptyId),
+                          let response = String(data: data, encoding: .utf8) else {
+                        return self.executeJavaScriptCallback(
+                                responseStatus: .onError,
+                                messageId: callBackId,
+                                response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
+                    }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: response)
+                case .failure(let error):
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+                }
+            })
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
+        }
+    }
+
+    private func sendMessageToContactId(with callBackId: String, parameters: RequestParameters?) {
+        if let message = parameters?.messageToContact {
+            if let contactId = parameters?.contactId {
+                hostAppMessageDelegate?.sendMessageToContactId(contactId, message: message) { result in
+                    switch result {
+                    case .success(let contact):
+                        let notEmptyId: String? = contact?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true ? nil : contact
+                        guard let data = try? JSONEncoder().encode(notEmptyId),
+                              let response = String(data: data, encoding: .utf8) else {
+                            return self.executeJavaScriptCallback(
+                                    responseStatus: .onError,
+                                    messageId: callBackId,
+                                    response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
+                        }
+                        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: response)
+                    case .failure(let error):
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+                    }
+                }
+            } else {
+                executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
+            }
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
+        }
+    }
+
+    private func sendMessageToMultipleContacts(with callBackId: String, parameters: RequestParameters?) {
+        if let message = parameters?.messageToContact {
+            hostAppMessageDelegate?.sendMessageToMultipleContacts(message, completionHandler: { result in
+                switch result {
+                case .success(let contactIds):
+                    let notEmptyId: [String]? = contactIds?.isEmpty ?? true ? nil : contactIds
+                    guard let data = try? JSONEncoder().encode(notEmptyId),
+                          let response = String(data: data, encoding: .utf8) else {
+                        return self.executeJavaScriptCallback(
+                                responseStatus: .onError,
+                                messageId: callBackId,
+                                response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
+                    }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: response)
+                case .failure(let error):
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+                }
+            })
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
         }
     }
 
