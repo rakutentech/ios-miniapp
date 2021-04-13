@@ -238,8 +238,7 @@
                                         <rect key="frame" x="10" y="54" width="126" height="148"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="148" id="LoO-h3-Rpk"/>
-                                            <constraint firstAttribute="width" constant="126" id="vgN-6D-O7q"/>
+                                            <constraint firstAttribute="width" secondItem="r3W-pi-0qm" secondAttribute="height" multiplier="63:74" id="330-Jr-wRE"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -283,6 +282,7 @@
                                     <constraint firstAttribute="trailing" secondItem="CgR-kq-1Yv" secondAttribute="trailing" id="P4g-Jp-sWB"/>
                                     <constraint firstItem="CgR-kq-1Yv" firstAttribute="leading" secondItem="oAe-Qz-kFO" secondAttribute="leading" id="PyL-P7-Pio"/>
                                     <constraint firstAttribute="trailing" secondItem="Qof-oA-iiB" secondAttribute="trailing" constant="10" id="Uae-lp-OuH"/>
+                                    <constraint firstItem="r3W-pi-0qm" firstAttribute="width" secondItem="Bix-gw-O01" secondAttribute="width" multiplier="0.367347" id="VVY-6N-z0A"/>
                                     <constraint firstItem="r3W-pi-0qm" firstAttribute="top" secondItem="Qof-oA-iiB" secondAttribute="bottom" constant="20" id="Wrt-1E-c7W"/>
                                     <constraint firstItem="Bix-gw-O01" firstAttribute="top" secondItem="Qof-oA-iiB" secondAttribute="bottom" constant="8" id="Wya-NV-LeY"/>
                                     <constraint firstAttribute="trailing" secondItem="Bix-gw-O01" secondAttribute="trailing" id="Xq6-yw-uoG"/>
@@ -862,7 +862,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="f4Y-XS-cWR"/>
+        <segue reference="TEz-gL-CO6"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.68448054790000001" green="0.1388459802" blue="0.090140916409999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>

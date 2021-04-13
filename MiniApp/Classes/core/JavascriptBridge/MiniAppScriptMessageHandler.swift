@@ -89,8 +89,9 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         if let message = parameters?.messageToContact {
             hostAppMessageDelegate?.sendMessageToContact(message, completionHandler: { result in
                 switch result {
-                case .success(let contactId):
-                    guard let data = try? JSONEncoder().encode(contactId),
+                case .success(let contact):
+                    let notEmptyId: String? = contact?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true ? nil : contact
+                    guard let data = try? JSONEncoder().encode(notEmptyId),
                           let response = String(data: data, encoding: .utf8) else {
                         return self.executeJavaScriptCallback(
                                 responseStatus: .onError,
@@ -113,7 +114,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 hostAppMessageDelegate?.sendMessageToContactId(contactId, message: message) { result in
                     switch result {
                     case .success(let contact):
-                        guard let data = try? JSONEncoder().encode(contact),
+                        let notEmptyId: String? = contact?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true ? nil : contact
+                        guard let data = try? JSONEncoder().encode(notEmptyId),
                               let response = String(data: data, encoding: .utf8) else {
                             return self.executeJavaScriptCallback(
                                     responseStatus: .onError,
@@ -138,7 +140,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             hostAppMessageDelegate?.sendMessageToMultipleContacts(message, completionHandler: { result in
                 switch result {
                 case .success(let contactIds):
-                    guard let data = try? JSONEncoder().encode(contactIds),
+                    let notEmptyId: [String]? = contactIds?.isEmpty ?? true ? nil : contactIds
+                    guard let data = try? JSONEncoder().encode(notEmptyId),
                           let response = String(data: data, encoding: .utf8) else {
                         return self.executeJavaScriptCallback(
                                 responseStatus: .onError,
