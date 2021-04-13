@@ -72,6 +72,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Share Mini app content](#share-mini-app-content)
     * [Ads integration](#ads-integration)
     * [Retrieve User Profile details](#retrieve-user-profile-details)
+    * [Send message to contacts](#send-message-to-contacts)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Mini App meta-data](#mini-meta-data)
@@ -328,9 +329,9 @@ MiniApp.shared(with: Config.current())
             // Some code to manage Mini App view creation callbacks
         }, messageInterface: self, adsDelegate: self)
 ```
-<a id="user-profile-details"></a>
+<a id="retrieve-user-profile-details"></a>
 
-##### Retrieve User Profile details
+#### Retrieve User Profile details
 ---
 **API Docs:** [MiniAppUserInfoDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppUserInfoDelegate.html)
 
@@ -396,6 +397,63 @@ extension ViewController: MiniAppMessageDelegate {
 
         completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
     }
+}
+```
+<a id="send-message-to-contacts"></a>
+
+#### Send message to contacts
+---
+**API Docs:** [MiniAppUserInfoDelegate](https://rakutentech.github.io/ios-miniapp/JavaScript/Chat/ChatMessageBridgeDelegate.html)
+
+Send a message to a contact from the [user profile contacts list](#user-profile-details-contactlist) using 'MiniAppMessageDelegate' methods.
+Three methods can be triggered by the Mini App, and here are the recommended behaviors for each one:
+
+| |`sendMessageToContact(_:completionHandler:)`|`sendMessageToContactId(_:message:completionHandler:)`|`sendMessageToMultipleContacts(_:completionHandler:)`|
+|---|---|---|---|
+|**Triggered when**|Mini App wants to send a message to a contact.|Triggered when Mini App wants to send a message to a specific contact.|Triggered when Mini App wants to send a message to multiple contacts. |
+| **Contact chooser needed** | single contact | None | multiple contacts |
+| **Action** | send the message to the chosen contact | send a message to the specified contactId without any prompt to the User | send the message to all chosen contacts |
+| **On success** | invoke completionHandler success with the ID of the contact which was sent the message. | invoke completionHandler success with the ID of the contact which was sent the message. | invoke completionHandler success with a list of IDs of the contacts which were successfully sent the message. |
+| **On cancellation** | invoke completionHandler success with nil value. | invoke completionHandler success with nil value. | invoke completionHandler success with nil value. |
+| **On error** | invoke completionHandler error when there was an error. | invoke completionHandler error when there was an error. | invoke completionHandler error when there was an error. |
+
+Here is an example of integration:
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+  public func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+    presentContactsPicker { controller in
+      controller.message = message
+      controller.title = NSLocalizedString("Pick a contact", comment: "")
+    }
+  }
+
+  public func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+    if let contacts = getContacts(), let contact = contacts.first(where: { $0.id == contactId }) {
+      presentContactsPicker { chatContactsSelectorViewController in
+        // insert here code to send the message
+        completionHandler(.success(contact.id))
+      }
+    } else {
+      completionHandler(.success(contact.id))
+    }
+  }
+
+  public func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
+    presentContactsPicker { chatContactsSelectorViewController in
+      chatContactsSelectorViewController.contactsHandlerJob = completionHandler
+      chatContactsSelectorViewController.message = message
+      chatContactsSelectorViewController.multipleSelection = true
+      chatContactsSelectorViewController.title = NSLocalizedString("Select contacts", comment: "")
+    }
+  }
+
+  func presentContactsPicker(controllerPresented: (() -> Void)? = nil, contactsPickerCreated: (ChatContactsSelectorViewController) -> Void) {
+    if let viewController = UIStoryboard(name: "Main", bundle: nil)
+            .instantiateViewController(withIdentifier: "ChatContactsSelectorViewController") as? ChatContactsSelectorViewController {
+      UINavigationController.topViewController()?.present(UINavigationController(rootViewController: viewController), animated: true, completion: controllerPresented)
+    }
+  }
 }
 ```
 

@@ -34,6 +34,12 @@ public enum MASDKError: Error {
     /// All required custom permissions is not allowed by the user
     case metaDataFailure
 
+    /// The provided contact ID was invalid. For example, a contact with this ID could not be found in the contact list
+    case invalidContactId
+
+    /// Host app failed to implement required interface
+    case failedToConformToProtocol
+
     /// An unexpected error occurred.
     ///
     /// - Parameters:
@@ -75,6 +81,11 @@ extension MASDKError: LocalizedError {
             return "error_miniapp_id_not_found".localizedString()
         case .metaDataFailure:
             return "error_miniapp_meta_data_required_permissions_failure".localizedString()
+        case .failedToConformToProtocol:
+            return "failed_to_conform_to_protocol".localizedString()
+        case .invalidContactId:
+            return "error_invalid_contact_id".localizedString()
+
         case .unknownError(let domain, let code, let description):
             return String(format: NSLocalizedString("error_unknown", comment: ""), domain, code, description)
         }
@@ -101,6 +112,8 @@ extension MASDKError {
                 return MASDKError.noPublishedVersion
             case .miniAppNotFound:
                 return MASDKError.miniAppNotFound
+            case .metaDataFailure:
+                return MASDKError.metaDataFailure
             default:
                 break
             }

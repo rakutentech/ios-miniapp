@@ -11,6 +11,9 @@ enum MiniAppJSActionCommand: String {
     case loadAd
     case showAd
     case getContacts
+    case sendMessageToContact
+    case sendMessageToContactId
+    case sendMessageToMultipleContacts
 }
 
 enum JavaScriptExecResult: String {
