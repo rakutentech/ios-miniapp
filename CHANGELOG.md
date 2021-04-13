@@ -1,5 +1,17 @@
 ## CHANGELOG
 
+### 3.x.x (2021-xx-xx)
+
+**SDK**
+
+- **Feature:** Added chat messages capabilities
+
+**Sample App**
+
+- **Feature:** Added chat messages screens with contact picker
+- **Fixed:** First launch screen metadata text was hidden
+
+
 ### 3.1.0 (2021-04-02)
 
 **SDK**

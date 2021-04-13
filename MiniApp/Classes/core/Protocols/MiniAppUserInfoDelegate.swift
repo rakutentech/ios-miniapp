@@ -60,7 +60,7 @@ public class MATokenInfo: Codable {
 }
 
 /// Contact Object of a User
-public class MAContact: Codable {
+public class MAContact: Codable, Equatable, Hashable {
     /// Contact ID
     public let id: String
     /// Contact Name
@@ -72,6 +72,16 @@ public class MAContact: Codable {
         self.id = id
         self.name = name
         self.email = email
+    }
+
+    public static func == (lhs: MAContact, rhs: MAContact) -> Bool {
+        lhs.hashValue == rhs.hashValue
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(name)
+        hasher.combine(email)
     }
 }
 

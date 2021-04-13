@@ -207,11 +207,15 @@ extension RealMiniAppView: MiniAppDisplayDelegate {
 
 extension RealMiniAppView: MiniAppCallbackDelegate {
     func didReceiveScriptMessageResponse(messageId: String, response: String) {
-        self.webView.evaluateJavaScript(Constants.javascriptSuccessCallback + "('\(messageId)'," + "'\(response)')")
+        let messageBody = Constants.javascriptSuccessCallback + "('\(messageId)'," + "'\(response)')"
+        MiniAppLogger.d(messageBody, "♨️️")
+        webView.evaluateJavaScript(messageBody)
     }
 
     func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
-        self.webView.evaluateJavaScript(Constants.javascriptErrorCallback + "('\(messageId)'," + "'\(errorMessage)')")
+        let messageBody = Constants.javascriptErrorCallback + "('\(messageId)'," + "'\(errorMessage)')"
+        MiniAppLogger.d(messageBody, "♨️️")
+        webView.evaluateJavaScript(messageBody)
     }
 
     func didOrientationChanged(orientation: UIInterfaceOrientationMask) {

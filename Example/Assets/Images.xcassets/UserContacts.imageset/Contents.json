@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "Material_Perm_Contact_Calendar.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "Material_Perm_Contact_Calendar@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Material_Perm_Contact_Calendar@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "customer.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
@@ -21,6 +10,7 @@
     "version" : 1
   },
   "properties" : {
+    "preserves-vector-representation" : true,
     "template-rendering-intent" : "template"
   }
 }

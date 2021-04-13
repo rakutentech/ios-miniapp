@@ -11,8 +11,7 @@ class MAFirstLaunchController: UIViewController {
     @IBOutlet weak var miniAppVersion: UILabel!
     @IBOutlet weak var miniAppImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var buttonsContainer: UIView!
 
     weak var launchScreenDelegate: MALaunchScreenDelegate?
     var miniAppInfo: MiniAppInfo?
@@ -24,9 +23,6 @@ class MAFirstLaunchController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let podBundle: Bundle = Bundle.main
-        let nib = UINib(nibName: "CustomPermissionCell", bundle: podBundle)
-        self.tableView.register(nib, forCellReuseIdentifier: "FirstLaunchCustomPermissionCell")
         setupUI()
     }
 
@@ -38,18 +34,25 @@ class MAFirstLaunchController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tableViewHeightConstraint.constant = tableView.contentSize.height
+        guard let footerView = self.tableView.tableFooterView else {
+            return
+        }
+
+        let width = self.tableView.bounds.size.width
+        let size = footerView.systemLayoutSizeFitting(CGSize(width: width, height: UIView.layoutFittingCompressedSize.height))
+
+        footerView.frame.size.height = size.height + buttonsContainer.frame.height
+        self.tableView.tableFooterView = footerView
     }
 
     func setupUI() {
         miniAppMetaInfoContainer.roundCorners(radius: 10)
         acceptButton.roundedCornerButton()
-        self.tableView.layer.cornerRadius = 10.0
         closeButton.addBorderAndColor(color: #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1), width: 1, cornerRadius: 20, clipsToBounds: true)
         self.miniAppName.text = self.miniAppInfo?.displayName
         self.miniAppVersion.text = "Version: " + (self.miniAppInfo?.version.versionTag)!
         self.miniAppImageView.loadImage(self.miniAppInfo!.icon, placeholder: "image_placeholder", cache: nil)
-        self.metaDataLabel.text = "Custom MetaData: {" + customMetaData.dictToString + "}"
+        self.metaDataLabel.text = "Custom MetaData: " + customMetaData.dictToString
     }
 
     @IBAction func acceptButtonPressed(_ sender: UIButton) {
@@ -146,11 +149,14 @@ extension NSMutableAttributedString {
 
 extension Dictionary {
     var dictToString: String {
-        var output: String = ""
-        for (key, value) in self {
-            output +=  "\"\(key)\" : \"\(value)\","
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: self, options: .prettyPrinted),
+              let output = String(data: jsonData, encoding: .utf8) else {
+            var output: String = ""
+            for (key, value) in self {
+                output +=  "\"\(key)\" : \"\(value)\","
+            }
+            return "{"+String(output.dropLast())+"}"
         }
-        output = String(output.dropLast())
         return output
     }
 }

@@ -264,6 +264,18 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
     }
+    func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.sendMessageToContact(message, completionHandler: completionHandler)
+    }
+    func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.sendMessageToContactId(contactId, message: message, completionHandler: completionHandler)
+    }
+    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.sendMessageToMultipleContacts(message, completionHandler: completionHandler)
+    }
 }
 class MockMessageInterface: MiniAppMessageDelegate {
     var mockUniqueId: Bool = false
@@ -277,6 +289,18 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockContactList: [MAContact]? = [MAContact(id: "contact_id")]
     var messageContentAllowed: Bool = false
     var mockAccessToken: String? = ""
+
+    func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success("contact_id"))
+    }
+
+    func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success(contactId))
+    }
+
+    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
+        completionHandler(.success(["contact_id1", "contact_id2"]))
+    }
 
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         if messageContentAllowed {
