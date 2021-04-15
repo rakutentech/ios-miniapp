@@ -132,6 +132,12 @@ const Message = (props: MessageTypeProps) => {
               show: true,
               response: respMsg,
             });
+          })
+          .catch((e) => {
+            setMessageResponse({
+              show: true,
+              response: e,
+            });
           });
       } else if (message.id === 2) {
         props
@@ -150,6 +156,12 @@ const Message = (props: MessageTypeProps) => {
               show: true,
               response: respMsg,
             });
+          })
+          .catch((e) => {
+            setMessageResponse({
+              show: true,
+              response: e,
+            });
           });
       } else if (message.id === 3) {
         props
@@ -166,6 +178,12 @@ const Message = (props: MessageTypeProps) => {
             setMessageResponse({
               show: true,
               response: respMsg,
+            });
+          })
+          .catch((e) => {
+            setMessageResponse({
+              show: true,
+              response: e,
             });
           });
       }
@@ -242,6 +260,7 @@ const Message = (props: MessageTypeProps) => {
           onChange={onTextChange}
           value={message.text}
           multiline
+          rowsMax="4"
         />
       </FormControl>
       <FormControl className={classes.formControl}>
