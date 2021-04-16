@@ -903,6 +903,21 @@ func handleDeepLink(components: URLComponents) -> Bool
 }
 ```
 
+### How do I clear the session data for Mini Apps?
+
+In the case that a user logs out of your App, you should clear the session data for all of your Mini Apps. This will ensure that the next user does not have access to the stored sensitive information about the previous user such as Local Storage, IndexedDB, and Web SQL.
+
+The session data can be cleared by using the following:
+
+```swift
+WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), 
+    modifiedSince: Date.distantPast, completionHandler: {
+    // Data removal complete
+})
+```
+
+**Note:** This will also clear the storage, cookies, and authentication data for ALL `WkWebViews` used by your App.
+
 <a id="change-log"></a>
 
 ## Changelog
