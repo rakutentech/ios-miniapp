@@ -58,7 +58,7 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DisplayMiniApp" {
             guard let miniAppDisplay = currentMiniAppView else {
-                displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
+                displayAlert(title: MiniAppLocalizable.localize("miniapp.sdk.error.title"), message: MiniAppLocalizable.localize("miniapp.sdk.error.message.miniapp"), dismissController: true)
                 return
             }
 
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
                 case .success:
                     self.displayMiniApp(miniAppInfo: miniAppInfo)
                 case .failure(let error):
-                    self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: error.localizedDescription, dismissController: true)
+                    self.displayAlert(title: MiniAppLocalizable.localize("miniapp.sdk.error.title"), message: error.localizedDescription, dismissController: true)
                 }
             }
         } else {
@@ -100,7 +100,7 @@ class ViewController: UIViewController {
                     miniAppInfo: miniAppInfo,
                     customMetaData: manifestData.customMetaData ?? [:])
             case .failure:
-                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""), dismissController: true)
+                self.displayAlert(title: MiniAppLocalizable.localize("miniapp.sdk.error.title"), message: MiniAppLocalizable.localize("miniapp.sdk.error.message.single"), dismissController: true)
             }
         }
     }

@@ -82,6 +82,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Advanced Features](#advanced-features)
     * [Overriding configuration on runtime](#runtime-conf)
+    * [Overriding localizations](#localization)
     * [Customize history navigation](#custom-navigation)
     * [Opening external links](#Opening-external-links)
     * [Orientation Lock](#orientation-lock)
@@ -635,6 +636,38 @@ class Config: NSObject {
 ```
 *NOTE:* `RMAHostAppUserAgentInfo` cannot be configured at run time.
 
+<a id="localization"></a>
+
+#### Overriding localizations
+
+Mini App SDK localization is based on [iOS framework localizable strings system](https://help.apple.com/xcode/mac/current/#/dev3255e0273).
+In the following table, you can find all the keys that the SDK is using to translate its texts to your UI language.
+Mini App SDK will look in the host app `Localizable.strings` for these keys to find local texts. If these keys are not present, a default text is provided.
+
+|                     Localization key                      | Usage | Default text | Parameters |
+|-----------------------------------------------------------|-------|:------------:|------------|
+| `miniapp.sdk.alert.title.ok`                              | alert dialogs validation button | OK | - |
+| `miniapp.sdk.alert.title.cancel`                          | alert dialogs cancellation button | Cancel | - |
+| `miniapp.sdk.ui.allow`                                    | permission screen authorization validation | Allow | - |
+| `miniapp.sdk.ui.save`                                     | permission screen denial validation | Save | - |
+| `miniapp.sdk.firstlaunch.footer`                          | used at the bottom of the permissions validation screen | %@<sup>[1]</sup> wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings | <sup>[1]</sup> Mini App name |
+| `miniapp.sdk.error.message.server`                        | error reporting (decription) | Server returned an error. %@<sup>[1]</sup>: %@<sup>[2]</sup> | <sup>[1]</sup> Error code<br/><sup>[2]</sup> Error message|
+| `miniapp.sdk.error.message.invalid_url`                   | error reporting (decription) | URL is invalid. | - |
+| `miniapp.sdk.error.message.invalid_app_id`                | error reporting (decription) | Provided Mini App ID is invalid. | - |
+| `miniapp.sdk.error.message.invalid_version_id`            | error reporting (decription) | Provided Mini App Version ID is invalid. | - |
+| `miniapp.sdk.error.message.invalid_contact_id`            | error reporting (decription) | Provided contact ID is invalid. | - |
+| `miniapp.sdk.error.message.invalid_response`              | error reporting (decription) | Invalid response received from server. | - |
+| `miniapp.sdk.error.message.download_failed`               | error reporting (decription) | Failed to download the mini app. | - |
+| `miniapp.sdk.error.message.miniapp_meta_data_required_permisions_failure` | error reporting (decription) | "Mini App has not been granted all of the required permissions. | - |
+| `miniapp.sdk.error.message.unknown`                       | error reporting (decription) | Unknown error occurred in %@<sup>[1]</sup> domain with error code %@<sup>[2]</sup>: %@<sup>[3]</sup> | <sup>[1]</sup> Error domain<br/><sup>[2]</sup> Error code<br/><sup>[3]</sup> Error message |
+| `miniapp.sdk.error.message.host_app`                      | error reporting (domain) | Host app Error | - |
+| `miniapp.sdk.error.message.failed_to_conform_to_protocol` | error reporting (decription) | Host app failed to implement required interface | - |
+| `miniapp.sdk.error.message.no_published_version`          | error reporting (decription) | Server returned no published versions for the provided Mini App ID. | - |
+| `miniapp.sdk.error.message.miniapp_id_not_found`          | error reporting (decription) | Server could not find the provided Mini App ID. | - |
+| `miniapp.sdk.error.message.unknown_server_error`          | error reporting (decription) | Unknown server error occurred | - |
+| `miniapp.sdk.error.message.ad_not_loaded`                 | error reporting (decription) | Ad %@<sup>[1]</sup> is not loaded yet | <sup>[1]</sup>Ad id |
+| `miniapp.sdk.error.message.ad_loading`                    | error reporting (decription) | Previous %@<sup>[1]</sup> is still in progress | <sup>[1]</sup>Ad id |
+| `miniapp.sdk.error.message.ad_loaded`                     | error reporting (decription) | Ad %@<sup>[1]</sup> is already loaded | <sup>[1]</sup>Ad id |
 <a id="custom-navigation"></a>
 
 #### Add a web navigation interface to the MiniApp view

@@ -16,7 +16,10 @@ extension ViewController: MiniAppNavigationDelegate {
                 case .failure(let error):
                     print(error.localizedDescription)
                     if !inBackground {
-                        self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: true)
+                        self.displayAlert(
+                            title: MiniAppLocalizable.localize("miniapp.sdk.error.title"),
+                            message: MiniAppLocalizable.localize("miniapp.sdk.error.message.list"),
+                            dismissController: true)
                     }
                 }
                 if !inBackground {
@@ -37,15 +40,15 @@ extension ViewController: MiniAppNavigationDelegate {
                     var message: String
                     switch error {
                     case .noPublishedVersion:
-                        message = NSLocalizedString("error_no_published_version", comment: "")
+                        message = MiniAppLocalizable.localize(.noPublishedVersion)
                     case .miniAppNotFound:
-                        message = NSLocalizedString("error_miniapp_id_not_found", comment: "")
+                        message = MiniAppLocalizable.localize(.miniappIdNotFound)
                     default:
-                        message = NSLocalizedString("error_single_message", comment: "")
+                        message = MiniAppLocalizable.localize("miniapp.sdk.error.message.single")
                     }
                     print(error.localizedDescription)
                     self.dismissProgressIndicator {
-                        self.fetchMiniAppUsingId(title: NSLocalizedString("error_title", comment: ""), message: message)
+                        self.fetchMiniAppUsingId(title: MiniAppLocalizable.localize("miniapp.sdk.error.title"), message: message)
                     }
                 }
             }
@@ -77,7 +80,7 @@ extension ViewController: MiniAppNavigationDelegate {
             url: url,
             queryParams: getQueryParam(),
             errorHandler: { error in
-                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
+                self.displayAlert(title: MiniAppLocalizable.localize("miniapp.sdk.error.title"), message: MiniAppLocalizable.localize("miniapp.sdk.error.message.miniapp"), dismissController: true)
                 print("Errored: ", error.localizedDescription)
             }, messageInterface: self, adsDisplayer: adsDisplayer)
 
@@ -90,7 +93,7 @@ extension ViewController: MiniAppNavigationDelegate {
             if let textField = textField, let miniAppID = textField.text, miniAppID.count > 0 {
                 self.fetchAppInfo(for: miniAppID)
             } else {
-                self.fetchMiniAppUsingId(title: NSLocalizedString("error_invalid_miniapp_id", comment: ""), message: NSLocalizedString("input_valid_miniapp_title", comment: ""))
+                self.fetchMiniAppUsingId(title: MiniAppLocalizable.localize("input_valid_miniapp_title"), message: NSLocalizedString("miniapp.sdk.error.message.invalid_miniapp_id", comment: ""))
             }
         }
     }
@@ -100,14 +103,14 @@ extension ViewController: MiniAppNavigationDelegate {
             switch error {
             case .metaDataFailure:
                 guard let miniAppInfo = currentMiniAppInfo else {
-                    errorMessage = NSLocalizedString("error_miniapp_download_message", comment: "") + ". \nPlease make sure user agreed to all required permissions from Meta-data"
+                    errorMessage =  MiniAppLocalizable.localize("miniapp.sdk.error.message.metadata", MiniAppLocalizable.localize(.downloadFailed))
                     return
                 }
                 self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)
             default:
-                errorMessage = NSLocalizedString("error_miniapp_download_message", comment: "")
+                errorMessage = MiniAppLocalizable.localize(.downloadFailed)
             }
-            self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: errorMessage, dismissController: true) { _ in
+            self.displayAlert(title: MiniAppLocalizable.localize("miniapp.sdk.error.title"), message: errorMessage, dismissController: true) { _ in
                 self.fetchAppList(inBackground: true)
             }
         }

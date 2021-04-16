@@ -42,15 +42,15 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
     }
 
     func createNotLoadingReqError(adUnitId: String) -> String {
-        "Ad \(adUnitId) is not loaded yet"
+        MiniAppLocalizable.localize(.adNotLoadedError, adUnitId)
     }
 
     func createLoadReqError(adUnitId: String) -> String {
-        "Previous \(adUnitId) is still in progress"
+        MiniAppLocalizable.localize(.adLoadingError, adUnitId)
     }
 
     func createLoadTwiceError(adUnitId: String) -> String {
-        "Ad \(adUnitId) is already loaded"
+        MiniAppLocalizable.localize(.adLoadedError, adUnitId)
     }
 
     public override func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {

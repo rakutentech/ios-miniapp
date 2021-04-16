@@ -8,24 +8,24 @@ class MiniAppStringTests: QuickSpec {
         describe("Mini app + String extension") {
             context("when localized key is passed that is available in Pod bundle") {
                 it("will return valid localized string") {
-                    let okLocalizedTitle = "Ok_title".localizedString()
+                    let okLocalizedTitle = "miniapp.sdk.alert.title.ok".localizedString()
                     expect(okLocalizedTitle).to(equal("OK"))
                 }
 
                 it("will return valid localized string") {
-                    let cancelLocalizedTitle = "Cancel_title".localizedString()
+                    let cancelLocalizedTitle = "miniapp.sdk.alert.title.cancel".localizedString()
                     expect(cancelLocalizedTitle).to(equal("Cancel"))
                 }
             }
             context("when localized key is passed with pod bundle path as empty") {
                 it("will return the key as string") {
-                    let okLocalizedTitle = "Ok_title".localizedString(path: "")
-                    expect(okLocalizedTitle).to(equal("Ok_title"))
+                    let okLocalizedTitle = "miniapp.sdk.alert.title.ok".localizedString(path: "")
+                    expect(okLocalizedTitle).to(equal("miniapp.sdk.alert.title.ok"))
                 }
 
                 it("will return the key as string") {
-                    let cancelLocalizedTitle = "Cancel_title".localizedString(path: "")
-                    expect(cancelLocalizedTitle).to(equal("Cancel_title"))
+                    let cancelLocalizedTitle = "miniapp.sdk.alert.title.cancel".localizedString(path: "")
+                    expect(cancelLocalizedTitle).to(equal("miniapp.sdk.alert.title.cancel"))
                 }
             }
             context("when calling hasHTTPPrefix with a valid http string") {
