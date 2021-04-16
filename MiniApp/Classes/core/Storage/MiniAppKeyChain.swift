@@ -73,5 +73,6 @@ import Foundation
 internal enum ServiceName: String {
     case customPermission = "rakuten.tech.permission.keys"
     case miniAppManifest = "rakuten.tech.manifest.keys"
+    case miniAppManifestCache = "rakuten.tech.manifest.cache.keys"
     case cacheVerifier = "rakuten.tech.keys"
 }
