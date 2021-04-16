@@ -66,6 +66,7 @@
 		389C7A9C2592593C00F2D5FE /* QueryParamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389C7A9B2592593C00F2D5FE /* QueryParamViewController.swift */; };
 		389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */; };
 		38A2E93A24A2E3E600E58233 /* MimeTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */; };
+		38AC730A26234835000B9D0E /* MetaDataDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AC730926234835000B9D0E /* MetaDataDownloaderTests.swift */; };
 		38CEFA4B25C0A3B300EE250A /* MAFirstLaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CEFA4A25C0A3B300EE250A /* MAFirstLaunchController.swift */; };
 		38CEFA5125C0A3CA00EE250A /* UIView+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CEFA5025C0A3CA00EE250A /* UIView+MiniApp.swift */; };
 		38D04804252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */; };
@@ -172,6 +173,7 @@
 		389C7A9B2592593C00F2D5FE /* QueryParamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamViewController.swift; sourceTree = "<group>"; };
 		389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppClientTests.swift; sourceTree = "<group>"; };
 		38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypesTests.swift; sourceTree = "<group>"; };
+		38AC730926234835000B9D0E /* MetaDataDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataDownloaderTests.swift; sourceTree = "<group>"; };
 		38CEFA4A25C0A3B300EE250A /* MAFirstLaunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAFirstLaunchController.swift; sourceTree = "<group>"; };
 		38CEFA5025C0A3CA00EE250A /* UIView+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+MiniApp.swift"; sourceTree = "<group>"; };
 		38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+MiniAppUserInfoProtocol.swift"; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 			children = (
 				389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */,
 				38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */,
+				38AC730926234835000B9D0E /* MetaDataDownloaderTests.swift */,
 				38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */,
 				388FEEE523DEABCF0062382F /* EnvironmentTests.swift */,
 				38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */,
@@ -804,6 +807,7 @@
 				382B960124F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift in Sources */,
 				3899C2C0242331900087A619 /* URLSchemeHandlerTests.swift in Sources */,
 				3850AE722434E02D0046978C /* RealMiniAppTests.swift in Sources */,
+				38AC730A26234835000B9D0E /* MetaDataDownloaderTests.swift in Sources */,
 				38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */,
 				188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */,
 				3871A8E124C54AD600BEC6CF /* MiniApp+StringTests.swift in Sources */,
