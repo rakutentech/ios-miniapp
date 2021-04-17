@@ -658,7 +658,7 @@ Mini App SDK will look in the host app `Localizable.strings` for these keys to f
 | `miniapp.sdk.error.message.invalid_contact_id`            | error reporting (decription) | Provided contact ID is invalid. | - |
 | `miniapp.sdk.error.message.invalid_response`              | error reporting (decription) | Invalid response received from server. | - |
 | `miniapp.sdk.error.message.download_failed`               | error reporting (decription) | Failed to download the mini app. | - |
-| `miniapp.sdk.error.message.miniapp_meta_data_required_permisions_failure` | error reporting (decription) | "Mini App has not been granted all of the required permissions. | - |
+| `miniapp.sdk.error.message.miniapp_meta_data_required_permisions_failure` | error reporting (decription) | Mini App has not been granted all of the required permissions. | - |
 | `miniapp.sdk.error.message.unknown`                       | error reporting (decription) | Unknown error occurred in %@<sup>[1]</sup> domain with error code %@<sup>[2]</sup>: %@<sup>[3]</sup> | <sup>[1]</sup> Error domain<br/><sup>[2]</sup> Error code<br/><sup>[3]</sup> Error message |
 | `miniapp.sdk.error.message.host_app`                      | error reporting (domain) | Host app Error | - |
 | `miniapp.sdk.error.message.failed_to_conform_to_protocol` | error reporting (decription) | Host app failed to implement required interface | - |
