@@ -64,30 +64,30 @@ extension MASDKError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .serverError(let code, let message):
-            return MiniAppLocalizable.localize(.serverError, code, message)
+            return MASDKLocale.localize(.serverError, code, message)
         case .invalidURLError:
-            return MiniAppLocalizable.localize(.invalidUrl)
+            return MASDKLocale.localize(.invalidUrl)
         case .invalidAppId:
-            return MiniAppLocalizable.localize(.invalidAppId)
+            return MASDKLocale.localize(.invalidAppId)
         case .invalidVersionId:
-            return MiniAppLocalizable.localize(.invalidVersionId)
+            return MASDKLocale.localize(.invalidVersionId)
         case .invalidResponseData:
-            return MiniAppLocalizable.localize(.invalidResponse)
+            return MASDKLocale.localize(.invalidResponse)
         case .downloadingFailed:
-            return MiniAppLocalizable.localize(.downloadFailed)
+            return MASDKLocale.localize(.downloadFailed)
         case .noPublishedVersion:
-            return MiniAppLocalizable.localize(.noPublishedVersion)
+            return MASDKLocale.localize(.noPublishedVersion)
         case .miniAppNotFound:
-            return MiniAppLocalizable.localize(.miniappIdNotFound)
+            return MASDKLocale.localize(.miniappIdNotFound)
         case .metaDataFailure:
-            return MiniAppLocalizable.localize(.metaDataRequiredPermissionsFailure)
+            return MASDKLocale.localize(.metaDataRequiredPermissionsFailure)
         case .failedToConformToProtocol:
-            return MiniAppLocalizable.localize(.failedToConformToProtocol)
+            return MASDKLocale.localize(.failedToConformToProtocol)
         case .invalidContactId:
-            return MiniAppLocalizable.localize(.invalidContactId)
+            return MASDKLocale.localize(.invalidContactId)
 
         case .unknownError(let domain, let code, let description):
-            return MiniAppLocalizable.localize(.unknownError, domain, code, description)
+            return MASDKLocale.localize(.unknownError, domain, code, description)
         }
     }
 }

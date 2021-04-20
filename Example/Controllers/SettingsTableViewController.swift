@@ -11,7 +11,7 @@ class SettingsTableViewController: UITableViewController {
     weak var configUpdateDelegate: SettingsDelegate?
 
     let predefinedKeys: [String] = ["RAS_PROJECT_IDENTIFIER", "RAS_SUBSCRIPTION_KEY", ""]
-    let localizedErrorTitle = MiniAppLocalizable.localize("miniapp.sdk.error.title")
+    let localizedErrorTitle = MASDKLocale.localize("miniapp.sdk.error.title")
 
     enum SectionHeader: Int {
         case RAS = 1
@@ -25,9 +25,9 @@ class SettingsTableViewController: UITableViewController {
         func stringValue() -> String {
             switch self {
             case .HOSTED:
-                return MiniAppLocalizable.localize("miniapp.sdk.mode.publishing")
+                return MASDKLocale.localize("miniapp.sdk.mode.publishing")
             case .PREVIEW:
-                return MiniAppLocalizable.localize("miniapp.sdk.mode.previewing")
+                return MASDKLocale.localize("miniapp.sdk.mode.previewing")
             }
         }
 
@@ -107,14 +107,14 @@ class SettingsTableViewController: UITableViewController {
                     if errorInfo.code != 200 {
                         print(error.localizedDescription)
                         self.displayAlert(
-                            title: MiniAppLocalizable.localize("miniapp.sdk.error.title"),
-                            message: MiniAppLocalizable.localize("miniapp.sdk.error.message.list"),
+                            title: MASDKLocale.localize("miniapp.sdk.error.title"),
+                            message: MASDKLocale.localize("miniapp.sdk.error.message.list"),
                             dismissController: true)
                     } else {
                         DispatchQueue.main.async {
                             self.displayAlert(
-                                title: MiniAppLocalizable.localize("Information"),
-                                message: MiniAppLocalizable.localize("miniapp.sdk.error.message.no_miniapp_found"), dismissController: true) { _ in
+                                title: MASDKLocale.localize("Information"),
+                                message: MASDKLocale.localize("miniapp.sdk.error.message.no_miniapp_found"), dismissController: true) { _ in
                                 self.saveCustomConfiguration(responseData: nil)
                                 self.dismiss(animated: true, completion: nil)
                             }
@@ -130,8 +130,8 @@ class SettingsTableViewController: UITableViewController {
         self.save(field: self.textFieldSubKey, for: .subscriptionKey)
         self.saveMode()
 
-        self.displayAlert(title: MiniAppLocalizable.localize("miniapp.sdk.param.save_title"),
-                          message: MiniAppLocalizable.localize("miniapp.sdk.param.save_text"),
+        self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.param.save_title"),
+                          message: MASDKLocale.localize("miniapp.sdk.param.save_text"),
                           autoDismiss: true) { _ in
             self.dismiss(animated: true, completion: nil)
             guard let miniAppList = responseData else {
@@ -217,11 +217,11 @@ class SettingsTableViewController: UITableViewController {
         switch forKey {
         case .projectId:
             displayAlert(title: localizedErrorTitle,
-                         message: MiniAppLocalizable.localize("miniapp.sdk.error.message.incorrect_appid"),
+                         message: MASDKLocale.localize("miniapp.sdk.error.message.incorrect_appid"),
                          autoDismiss: true)
         case .subscriptionKey:
             displayAlert(title: localizedErrorTitle,
-                         message: MiniAppLocalizable.localize("miniapp.sdk.error.message.incorrect_subscription_key"),
+                         message: MASDKLocale.localize("miniapp.sdk.error.message.incorrect_subscription_key"),
                          autoDismiss: false)
         default:
             break
@@ -231,11 +231,11 @@ class SettingsTableViewController: UITableViewController {
         switch forKey {
         case .projectId:
             displayAlert(title: localizedErrorTitle,
-                         message: MiniAppLocalizable.localize("miniapp.sdk.error.message.empty_appid_key"),
+                         message: MASDKLocale.localize("miniapp.sdk.error.message.empty_appid_key"),
                          autoDismiss: true)
         case .subscriptionKey:
             displayAlert(title: localizedErrorTitle,
-                         message: MiniAppLocalizable.localize("miniapp.sdk.error.message.empty_subscription_key"),
+                         message: MASDKLocale.localize("miniapp.sdk.error.message.empty_subscription_key"),
                          autoDismiss: false)
         default:
             break

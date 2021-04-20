@@ -17,8 +17,8 @@ extension ViewController: MiniAppNavigationDelegate {
                     print(error.localizedDescription)
                     if !inBackground {
                         self.displayAlert(
-                            title: MiniAppLocalizable.localize("miniapp.sdk.error.title"),
-                            message: MiniAppLocalizable.localize("miniapp.sdk.error.message.list"),
+                            title: MASDKLocale.localize("miniapp.sdk.error.title"),
+                            message: MASDKLocale.localize("miniapp.sdk.error.message.list"),
                             dismissController: true)
                     }
                 }
@@ -40,15 +40,15 @@ extension ViewController: MiniAppNavigationDelegate {
                     var message: String
                     switch error {
                     case .noPublishedVersion:
-                        message = MiniAppLocalizable.localize(.noPublishedVersion)
+                        message = MASDKLocale.localize(.noPublishedVersion)
                     case .miniAppNotFound:
-                        message = MiniAppLocalizable.localize(.miniappIdNotFound)
+                        message = MASDKLocale.localize(.miniappIdNotFound)
                     default:
-                        message = MiniAppLocalizable.localize("miniapp.sdk.error.message.single")
+                        message = MASDKLocale.localize("miniapp.sdk.error.message.single")
                     }
                     print(error.localizedDescription)
                     self.dismissProgressIndicator {
-                        self.fetchMiniAppUsingId(title: MiniAppLocalizable.localize("miniapp.sdk.error.title"), message: message)
+                        self.fetchMiniAppUsingId(title: MASDKLocale.localize("miniapp.sdk.error.title"), message: message)
                     }
                 }
             }
@@ -80,7 +80,7 @@ extension ViewController: MiniAppNavigationDelegate {
             url: url,
             queryParams: getQueryParam(),
             errorHandler: { error in
-                self.displayAlert(title: MiniAppLocalizable.localize("miniapp.sdk.error.title"), message: MiniAppLocalizable.localize("miniapp.sdk.error.message.miniapp"), dismissController: true)
+                self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.error.title"), message: MASDKLocale.localize("miniapp.sdk.error.message.miniapp"), dismissController: true)
                 print("Errored: ", error.localizedDescription)
             }, messageInterface: self, adsDisplayer: adsDisplayer)
 
@@ -93,7 +93,7 @@ extension ViewController: MiniAppNavigationDelegate {
             if let textField = textField, let miniAppID = textField.text, miniAppID.count > 0 {
                 self.fetchAppInfo(for: miniAppID)
             } else {
-                self.fetchMiniAppUsingId(title: MiniAppLocalizable.localize("input_valid_miniapp_title"), message: NSLocalizedString("miniapp.sdk.error.message.invalid_miniapp_id", comment: ""))
+                self.fetchMiniAppUsingId(title: MASDKLocale.localize("input_valid_miniapp_title"), message: NSLocalizedString("miniapp.sdk.error.message.invalid_miniapp_id", comment: ""))
             }
         }
     }
@@ -103,14 +103,14 @@ extension ViewController: MiniAppNavigationDelegate {
             switch error {
             case .metaDataFailure:
                 guard let miniAppInfo = currentMiniAppInfo else {
-                    errorMessage =  MiniAppLocalizable.localize("miniapp.sdk.error.message.metadata", MiniAppLocalizable.localize(.downloadFailed))
+                    errorMessage =  MASDKLocale.localize("miniapp.sdk.error.message.metadata", MASDKLocale.localize(.downloadFailed))
                     return
                 }
                 self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)
             default:
-                errorMessage = MiniAppLocalizable.localize(.downloadFailed)
+                errorMessage = MASDKLocale.localize(.downloadFailed)
             }
-            self.displayAlert(title: MiniAppLocalizable.localize("miniapp.sdk.error.title"), message: errorMessage, dismissController: true) { _ in
+            self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.error.title"), message: errorMessage, dismissController: true) { _ in
                 self.fetchAppList(inBackground: true)
             }
         }

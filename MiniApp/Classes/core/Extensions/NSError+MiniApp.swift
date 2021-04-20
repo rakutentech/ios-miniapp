@@ -16,7 +16,7 @@ extension NSError {
     class func unknownServerError(httpResponse: HTTPURLResponse?) -> NSError {
         return NSError.serverError(
                 code: (httpResponse)?.statusCode ?? 0,
-                message: MiniAppLocalizable.DefaultText.unknownServerError.rawValue
+                message: MASDKLocale.LocalizableKey.unknownServerError.rawValue
         )
     }
 

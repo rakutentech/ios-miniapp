@@ -10,7 +10,7 @@ extension UIViewController: UITextFieldDelegate {
                     launchCompletion()
                 }
             } else {
-                let alert = UIAlertController(title: nil, message: MiniAppLocalizable.localize("miniapp.sdk.message.wait"), preferredStyle: .alert)
+                let alert = UIAlertController(title: nil, message: MASDKLocale.localize("miniapp.sdk.message.wait"), preferredStyle: .alert)
                 let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
                 loadingIndicator.hidesWhenStopped = true
                 loadingIndicator.style = UIActivityIndicatorView.Style.medium
@@ -44,7 +44,7 @@ extension UIViewController: UITextFieldDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: MiniAppLocalizable.localize(.ok), style: .default, handler: { (action: UIAlertAction!) in
+            alert.addAction(UIAlertAction(title: MASDKLocale.localize(.ok), style: .default, handler: { (action: UIAlertAction!) in
                     if let actionHandler = okHandler {
                         actionHandler(action)
                     }
@@ -68,7 +68,7 @@ extension UIViewController: UITextFieldDelegate {
                 }
             }
 
-            let okAction = UIAlertAction(title: MiniAppLocalizable.localize(.ok), style: .default) { (action) in
+            let okAction = UIAlertAction(title: MASDKLocale.localize(.ok), style: .default) { (action) in
                 if alert.textFields![0].text!.isValidUUID() {
                     handler?(action, alert.textFields?.first)
                 } else {
@@ -76,7 +76,7 @@ extension UIViewController: UITextFieldDelegate {
                 }
             }
             okAction.isEnabled = false
-            alert.addAction(UIAlertAction(title: MiniAppLocalizable.localize(.cancel), style: .cancel, handler: { (_) in
+            alert.addAction(UIAlertAction(title: MASDKLocale.localize(.cancel), style: .cancel, handler: { (_) in
                     self.dismiss(animated: true, completion: nil)
                 }))
             alert.addAction(okAction)
