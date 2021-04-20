@@ -20,8 +20,8 @@ class MiniAppViewControllerTests: QuickSpec {
                     miniAppVc.setupMiniApp()
                     expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
                     expect(miniAppVc.fallbackView.isHidden).to(beTrue())
-                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.success), timeout: .seconds(1))
-                    expect(miniAppVc.fallbackView.isHidden).toEventually(beTrue(), timeout: .seconds(1))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.success), timeout: .seconds(self.timeoutDelaySeconds))
+                    expect(miniAppVc.fallbackView.isHidden).toEventually(beTrue(), timeout: .seconds(self.timeoutDelaySeconds))
                     expect(miniAppVc.view.subviews.last).to(beAnInstanceOf(RealMiniAppView.self))
                 }
 
@@ -30,12 +30,12 @@ class MiniAppViewControllerTests: QuickSpec {
                     miniAppVc.setupMiniApp()
                     miniAppVc.setup()
                     expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
-                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(1))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(self.timeoutDelaySeconds))
 
                     miniAppVc.config = self.mockConfig
                     miniAppVc.fallbackView.onRetry?()
                     expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
-                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.success), timeout: .seconds(1))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.success), timeout: .seconds(self.timeoutDelaySeconds))
                 }
             }
 
@@ -45,8 +45,8 @@ class MiniAppViewControllerTests: QuickSpec {
                     miniAppVc.setupMiniApp()
                     expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
                     expect(miniAppVc.fallbackView.isHidden).to(beTrue())
-                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(1))
-                    expect(miniAppVc.fallbackView.isHidden).toEventually(beFalse(), timeout: .seconds(1))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(self.timeoutDelaySeconds))
+                    expect(miniAppVc.fallbackView.isHidden).toEventually(beFalse(), timeout: .seconds(self.timeoutDelaySeconds))
                 }
 
                 it("retry button is pressed with invalid config") {
@@ -54,16 +54,18 @@ class MiniAppViewControllerTests: QuickSpec {
                     miniAppVc.setupMiniApp()
                     miniAppVc.setup()
                     expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
-                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(1))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(self.timeoutDelaySeconds))
 
                     miniAppVc.fallbackView.onRetry?()
                     expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
-                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(1))
+                    expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(self.timeoutDelaySeconds))
                 }
             }
 
         }
     }
+    
+    var timeoutDelaySeconds: Int = 2
 
     var mockAppId: String {
         ""
