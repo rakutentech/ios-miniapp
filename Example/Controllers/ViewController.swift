@@ -58,7 +58,7 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DisplayMiniApp" {
             guard let miniAppDisplay = currentMiniAppView else {
-                displayAlert(title: MASDKLocale.localize("miniapp.sdk.error.title"), message: MASDKLocale.localize("miniapp.sdk.error.message.miniapp"), dismissController: true)
+                displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.miniapp"), dismissController: true)
                 return
             }
 
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
                 case .success:
                     self.displayMiniApp(miniAppInfo: miniAppInfo)
                 case .failure(let error):
-                    self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.error.title"), message: error.localizedDescription, dismissController: true)
+                    self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: error.localizedDescription, dismissController: true)
                 }
             }
         } else {
@@ -100,7 +100,7 @@ class ViewController: UIViewController {
                     miniAppInfo: miniAppInfo,
                     customMetaData: manifestData.customMetaData ?? [:])
             case .failure:
-                self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.error.title"), message: MASDKLocale.localize("miniapp.sdk.error.message.single"), dismissController: true)
+                self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.single"), dismissController: true)
             }
         }
     }

@@ -20,12 +20,12 @@ class MiniAppStringTests: QuickSpec {
             context("when localized key is passed with pod bundle path as empty") {
                 it("will return the key as string") {
                     let okLocalizedTitle = MASDKLocale.localize(bundle: "", .ok)
-                    expect(okLocalizedTitle).to(equal("miniapp.sdk.alert.title.ok"))
+                    expect(okLocalizedTitle).to(equal(MASDKLocale.LocalizableKey.ok.rawValue))
                 }
 
                 it("will return the key as string") {
                     let cancelLocalizedTitle = MASDKLocale.localize(bundle: "", .cancel)
-                    expect(cancelLocalizedTitle).to(equal("miniapp.sdk.alert.title.cancel"))
+                    expect(cancelLocalizedTitle).to(equal(MASDKLocale.LocalizableKey.cancel.rawValue))
                 }
             }
             context("when calling hasHTTPPrefix with a valid http string") {
