@@ -649,7 +649,7 @@ Mini App SDK will look in the host app `Localizable.strings` for these keys to f
 | `miniapp.sdk.ios.alert.title.ok`                              | alert dialogs validation button | OK | - |
 | `miniapp.sdk.ios.alert.title.cancel`                          | alert dialogs cancellation button | Cancel | - |
 | `miniapp.sdk.ios.ui.allow`                                    | permission screen authorization validation | Allow | - |
-| `miniapp.sdk.ios.ui.save`                                     | permission screen denial validation | Save | - |
+| `miniapp.sdk.all.ui.save`                                     | permission screen denial validation | Save | - |
 | `miniapp.sdk.ios.firstlaunch.footer`                          | used at the bottom of the permissions validation screen | %@<sup>[1]</sup> wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings | <sup>[1]</sup> Mini App name |
 | `miniapp.sdk.ios.error.message.server`                        | error reporting (decription) | Server returned an error. %@<sup>[1]</sup>: %@<sup>[2]</sup> | <sup>[1]</sup> Error code<br/><sup>[2]</sup> Error message|
 | `miniapp.sdk.ios.error.message.invalid_url`                   | error reporting (decription) | URL is invalid. | - |

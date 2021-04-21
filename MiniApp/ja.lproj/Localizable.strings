@@ -1,9 +1,9 @@
 "miniapp.sdk.ios.alert.title.ok"                                = "OK";
 "miniapp.sdk.ios.alert.title.cancel"                            = "キャンセル";
-"miniapp.sdk.ios.ui.allow"                                      = "Allow";
-"miniapp.sdk.ios.ui.save"                                       = "Save";
+"miniapp.sdk.ios.ui.allow"                                      = "許可する";
+"miniapp.sdk.all.ui.save"                                       = "保存";
 
-"miniapp.sdk.ios.firstlaunch.footer"                            = "%@ wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings";
+"miniapp.sdk.ios.firstlaunch.footer"                            = "%@にこの端末の位置情報へのアクセスを許可しますか？";
 
 /* MASDKError messages */
 "miniapp.sdk.ios.error.message.server"                          = "Server returned an error. %@: %@";

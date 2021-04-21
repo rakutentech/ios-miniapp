@@ -1,7 +1,7 @@
 "miniapp.sdk.ios.alert.title.ok"                                = "OK";
 "miniapp.sdk.ios.alert.title.cancel"                            = "Cancel";
 "miniapp.sdk.ios.ui.allow"                                      = "Allow";
-"miniapp.sdk.ios.ui.save"                                       = "Save";
+"miniapp.sdk.all.ui.save"                                       = "Save";
 
 "miniapp.sdk.ios.firstlaunch.footer"                            = "%@ wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings";
 
