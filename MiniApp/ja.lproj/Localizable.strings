@@ -3,7 +3,7 @@
 "miniapp.sdk.ios.ui.allow"                                      = "許可する";
 "miniapp.sdk.all.ui.save"                                       = "保存";
 
-"miniapp.sdk.ios.firstlaunch.footer"                            = "%@にこの端末の位置情報へのアクセスを許可しますか？";
+"miniapp.sdk.ios.firstlaunch.footer"                            = "%@はそれらの許可を要求しています、許可しますか？";
 
 /* MASDKError messages */
 "miniapp.sdk.ios.error.message.server"                          = "Server returned an error. %@: %@";
