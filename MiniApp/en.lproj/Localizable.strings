@@ -1,21 +1,21 @@
-"miniapp_sdk_ios_alert_title_ok"                                = "OK";
-"miniapp_sdk_ios_alert_title_cancel"                            = "Cancel";
-"miniapp_sdk_ios_ui_allow"                                      = "Allow";
-"miniapp_sdk_ios_ui_save"                                       = "Save";
+"miniapp.sdk.ios.alert.title.ok"                                = "OK";
+"miniapp.sdk.ios.alert.title.cancel"                            = "Cancel";
+"miniapp.sdk.ios.ui.allow"                                      = "Allow";
+"miniapp.sdk.ios.ui.save"                                       = "Save";
 
-"miniapp_sdk_ios_firstlaunch_footer"                            = "%@ wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings";
+"miniapp.sdk.ios.firstlaunch.footer"                            = "%@ wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings";
 
 /* MASDKError messages */
-"miniapp_sdk_ios_error_message_server"                          = "Server returned an error. %@: %@";
-"miniapp_sdk_ios_error_message_invalid_url"                     = "URL is invalid.";
-"miniapp_sdk_ios_error_message_invalid_app_id"                  = "Provided Mini App ID is invalid.";
-"miniapp_sdk_ios_error_message_invalid_version_id"              = "Provided Mini App Version ID is invalid.";
-"miniapp_sdk_ios_error_message_invalid_contact_id"              = "Provided contact ID is invalid.";
-"miniapp_sdk_ios_error_message_invalid_response"                = "Invalid response received from server.";
-"miniapp_sdk_ios_error_message_download_failed"                 = "Failed to download the mini app.";
-"miniapp_sdk_ios_error_message_miniapp_meta_data_required_permissions_failure" = "Mini App has not been granted all of the required permissions.";
-"miniapp_sdk_ios_error_message_unknown"                         = "Unknown error occurred in %@ domain with error code %@: %@";
-"miniapp_sdk_ios_error_message_host_app"                        = "Host app Error";
-"miniapp_sdk_ios_error_message_failed_to_conform_to_protocol"   = "Host app failed to implement required interface";
-"miniapp_sdk_ios_error_message_no_published_version"            = "Server returned no published versions for the provided Mini App ID.";
-"miniapp_sdk_ios_error_message_miniapp_id_not_found"            = "Server could not find the provided Mini App ID.";
+"miniapp.sdk.ios.error.message.server"                          = "Server returned an error. %@: %@";
+"miniapp.sdk.ios.error.message.invalid_url"                     = "URL is invalid.";
+"miniapp.sdk.ios.error.message.invalid_app_id"                  = "Provided Mini App ID is invalid.";
+"miniapp.sdk.ios.error.message.invalid_version_id"              = "Provided Mini App Version ID is invalid.";
+"miniapp.sdk.ios.error.message.invalid_contact_id"              = "Provided contact ID is invalid.";
+"miniapp.sdk.ios.error.message.invalid_response"                = "Invalid response received from server.";
+"miniapp.sdk.ios.error.message.download_failed"                 = "Failed to download the mini app.";
+"miniapp.sdk.ios.error.message.miniapp_meta_data_required_permissions_failure" = "Mini App has not been granted all of the required permissions.";
+"miniapp.sdk.ios.error.message.unknown"                         = "Unknown error occurred in %@ domain with error code %@: %@";
+"miniapp.sdk.ios.error.message.host_app"                        = "Host app Error";
+"miniapp.sdk.ios.error.message.failed_to_conform_to_protocol"   = "Host app failed to implement required interface";
+"miniapp.sdk.ios.error.message.no_published_version"            = "Server returned no published versions for the provided Mini App ID.";
+"miniapp.sdk.ios.error.message.miniapp_id_not_found"            = "Server could not find the provided Mini App ID.";
