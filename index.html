@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 3.1.0 Docs
+          MiniApp 3.2.0 Docs
         </a>
-         (79% documented)
+         (77% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -74,6 +74,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MATokenInfo.html">MATokenInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MessageToContact.html">MessageToContact</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniApp.html">MiniApp</a>
@@ -139,6 +142,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/ChatMessageBridgeDelegate.html">ChatMessageBridgeDelegate</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/MiniAppAdDisplayDelegate.html">MiniAppAdDisplayDelegate</a>
               </li>
@@ -304,6 +310,7 @@ Mini App SDK also facilitates communication between a Mini App and the host app 
 <li><a href="#share-mini-app-content">Share Mini app content</a></li>
 <li><a href="#ads-integration">Ads integration</a></li>
 <li><a href="#retrieve-user-profile-details">Retrieve User Profile details</a></li>
+<li><a href="#send-message-to-contacts">Send message to contacts</a></li>
 </ul></li>
 <li><a href="#load-miniapp-list">Load the Mini App list</a></li>
 <li><a href="#get-mini-appinfo">Get a MiniAppInfo</a></li>
@@ -589,8 +596,8 @@ There are 2 ways to achieve this: </p>
         <span class="p">},</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="k">self</span><span class="p">,</span> <span class="nv">adsDelegate</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
 </code></pre>
 
-<p><a id="user-profile-details"></a></p>
-<h5 id='retrieve-user-profile-details' class='heading'>Retrieve User Profile details</h5>
+<p><a id="retrieve-user-profile-details"></a></p>
+<h4 id='retrieve-user-profile-details' class='heading'>Retrieve User Profile details</h4>
 
 <hr>
 
@@ -646,6 +653,100 @@ The following delegates/interfaces will be called only if the user has allowed r
 
         <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">accessToken</span><span class="p">:</span> <span class="s">"ACCESS_TOKEN"</span><span class="p">,</span> <span class="nv">expirationDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">())))</span>
     <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><a id="send-message-to-contacts"></a></p>
+<h4 id='send-message-to-contacts' class='heading'>Send message to contacts</h4>
+
+<hr>
+
+<p><strong>API Docs:</strong> <a href="https://rakutentech.github.io/ios-miniapp/JavaScript/Chat/ChatMessageBridgeDelegate.html">MiniAppUserInfoDelegate</a></p>
+
+<p>Send a message to a contact from the <a href="#user-profile-details-contactlist">user profile contacts list</a> using &lsquo;MiniAppMessageDelegate&rsquo; methods.
+Three methods can be triggered by the Mini App, and here are the recommended behaviors for each one:</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th><code>sendMessageToContact(_:completionHandler:)</code></th>
+<th><code>sendMessageToContactId(_:message:completionHandler:)</code></th>
+<th><code>sendMessageToMultipleContacts(_:completionHandler:)</code></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Triggered when</strong></td>
+<td>Mini App wants to send a message to a contact.</td>
+<td>Triggered when Mini App wants to send a message to a specific contact.</td>
+<td>Triggered when Mini App wants to send a message to multiple contacts.</td>
+</tr>
+<tr>
+<td><strong>Contact chooser needed</strong></td>
+<td>single contact</td>
+<td>None</td>
+<td>multiple contacts</td>
+</tr>
+<tr>
+<td><strong>Action</strong></td>
+<td>send the message to the chosen contact</td>
+<td>send a message to the specified contactId without any prompt to the User</td>
+<td>send the message to all chosen contacts</td>
+</tr>
+<tr>
+<td><strong>On success</strong></td>
+<td>invoke completionHandler success with the ID of the contact which was sent the message.</td>
+<td>invoke completionHandler success with the ID of the contact which was sent the message.</td>
+<td>invoke completionHandler success with a list of IDs of the contacts which were successfully sent the message.</td>
+</tr>
+<tr>
+<td><strong>On cancellation</strong></td>
+<td>invoke completionHandler success with nil value.</td>
+<td>invoke completionHandler success with nil value.</td>
+<td>invoke completionHandler success with nil value.</td>
+</tr>
+<tr>
+<td><strong>On error</strong></td>
+<td>invoke completionHandler error when there was an error.</td>
+<td>invoke completionHandler error when there was an error.</td>
+<td>invoke completionHandler error when there was an error.</td>
+</tr>
+</tbody></table>
+
+<p>Here is an example of integration:</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
+  <span class="kd">public</span> <span class="kd">func</span> <span class="nf">sendMessageToContact</span><span class="p">(</span><span class="n">_</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">MessageToContact</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">?,</span> <span class="kt">MASDKError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">presentContactsPicker</span> <span class="p">{</span> <span class="n">controller</span> <span class="k">in</span>
+      <span class="n">controller</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+      <span class="n">controller</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="kt">NSLocalizedString</span><span class="p">(</span><span class="s">"Pick a contact"</span><span class="p">,</span> <span class="nv">comment</span><span class="p">:</span> <span class="s">""</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">public</span> <span class="kd">func</span> <span class="nf">sendMessageToContactId</span><span class="p">(</span><span class="n">_</span> <span class="nv">contactId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">MessageToContact</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">?,</span> <span class="kt">MASDKError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">contacts</span> <span class="o">=</span> <span class="nf">getContacts</span><span class="p">(),</span> <span class="k">let</span> <span class="nv">contact</span> <span class="o">=</span> <span class="n">contacts</span><span class="o">.</span><span class="nf">first</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">contactId</span> <span class="p">})</span> <span class="p">{</span>
+      <span class="n">presentContactsPicker</span> <span class="p">{</span> <span class="n">chatContactsSelectorViewController</span> <span class="k">in</span>
+        <span class="c1">// insert here code to send the message</span>
+        <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">contact</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+      <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">contact</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">public</span> <span class="kd">func</span> <span class="nf">sendMessageToMultipleContacts</span><span class="p">(</span><span class="n">_</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">MessageToContact</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">String</span><span class="p">]?,</span> <span class="kt">MASDKError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">presentContactsPicker</span> <span class="p">{</span> <span class="n">chatContactsSelectorViewController</span> <span class="k">in</span>
+      <span class="n">chatContactsSelectorViewController</span><span class="o">.</span><span class="n">contactsHandlerJob</span> <span class="o">=</span> <span class="n">completionHandler</span>
+      <span class="n">chatContactsSelectorViewController</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+      <span class="n">chatContactsSelectorViewController</span><span class="o">.</span><span class="n">multipleSelection</span> <span class="o">=</span> <span class="kc">true</span>
+      <span class="n">chatContactsSelectorViewController</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="kt">NSLocalizedString</span><span class="p">(</span><span class="s">"Select contacts"</span><span class="p">,</span> <span class="nv">comment</span><span class="p">:</span> <span class="s">""</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">func</span> <span class="nf">presentContactsPicker</span><span class="p">(</span><span class="nv">controllerPresented</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">contactsPickerCreated</span><span class="p">:</span> <span class="p">(</span><span class="kt">ChatContactsSelectorViewController</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">viewController</span> <span class="o">=</span> <span class="kt">UIStoryboard</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Main"</span><span class="p">,</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+            <span class="o">.</span><span class="nf">instantiateViewController</span><span class="p">(</span><span class="nv">withIdentifier</span><span class="p">:</span> <span class="s">"ChatContactsSelectorViewController"</span><span class="p">)</span> <span class="k">as?</span> <span class="kt">ChatContactsSelectorViewController</span> <span class="p">{</span>
+      <span class="kt">UINavigationController</span><span class="o">.</span><span class="nf">topViewController</span><span class="p">()?</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="kt">UINavigationController</span><span class="p">(</span><span class="nv">rootViewController</span><span class="p">:</span> <span class="n">viewController</span><span class="p">),</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="n">controllerPresented</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -957,30 +1058,113 @@ How to get downloaded <code>Mini App meta-data</code></p>
                 <span class="nf">print</span><span class="p">(</span><span class="s">"Error: "</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="p">)</span>
             <span class="p">}</span>
 <span class="p">},</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
-
 </code></pre>
 
 <p>And the Mini App will be loaded like the following scheme,</p>
-<pre class="highlight plaintext"><code>
-
-&lt;a id="permissions-from-host-app"&gt;&lt;/a&gt;
-
-### Permissions required from the Host app
-
-Mini App SDK requires the host app to include the following set of device permissions into its Info.plist file:
-
-| Plist key | Permission | Reason |
-|-----------|:----------:|--------|
-| [NSLocationAlwaysAndWhenInUseUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nslocationalwaysandwheninuseusagedescription) |  Location  | Mini app to track/get the current location of the user |
-| [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nscamerausagedescription)                                         |   Camera   | Camera permission required by Mini app to take pictures                              |
-| [NSMicrophoneUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsmicrophoneusagedescription)                                 | Microphone | Microphone permission required by Mini app to record a video.                             |
-
-&lt;a id="change-log"&gt;&lt;/a&gt;
-
-## Changelog
-
-See the full [CHANGELOG](https://github.com/rakutentech/ios-miniapp/blob/master/CHANGELOG.md).
+<pre class="highlight plaintext"><code>mscheme.rakuten//miniapp/index.html?param1=value1&amp;param2=value2
 </code></pre>
+
+<p><a id="permissions-from-host-app"></a></p>
+<h3 id='permissions-required-from-the-host-app' class='heading'>Permissions required from the Host app</h3>
+
+<p>Mini App SDK requires the host app to include the following set of device permissions into its Info.plist file:</p>
+
+<table><thead>
+<tr>
+<th>Plist key</th>
+<th style="text-align: center">Permission</th>
+<th>Reason</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><a href="https://developer.apple.com/documentation/bundleresources/information_property_list/nslocationalwaysandwheninuseusagedescription">NSLocationAlwaysAndWhenInUseUsageDescription</a></td>
+<td style="text-align: center">Location</td>
+<td>Mini app to track/get the current location of the user</td>
+</tr>
+<tr>
+<td><a href="https://developer.apple.com/documentation/bundleresources/information_property_list/nscamerausagedescription">NSCameraUsageDescription</a></td>
+<td style="text-align: center">Camera</td>
+<td>Camera permission required by Mini app to take pictures</td>
+</tr>
+<tr>
+<td><a href="https://developer.apple.com/documentation/bundleresources/information_property_list/nsmicrophoneusagedescription">NSMicrophoneUsageDescription</a></td>
+<td style="text-align: center">Microphone</td>
+<td>Microphone permission required by Mini app to record a video.</td>
+</tr>
+</tbody></table>
+
+<p><a id="faqs-and-troubleshooting"></a></p>
+<h2 id='faqs-and-troubleshooting' class='heading'>FAQs and Troubleshooting</h2>
+<h3 id='how-do-i-deep-link-to-mini-apps' class='heading'>How do I deep link to mini apps?</h3>
+
+<p>If you want to have deep links directly to your mini apps, then you must implement deep link handling within your App. This can be done using either a custom deep link scheme (such as <code>myAppName://miniapp</code>) or a <a href="https://developer.apple.com/ios/universal-links/">Universal Link</a> (such as <code>https://www.example.com/miniapp</code>). See the following resources for more information on how to implement deep linking capabilities:</p>
+
+<ul>
+<li><a href="https://developer.apple.com/documentation/xcode/allowing_apps_and_websites_to_link_to_your_content">Allowing Apps and Websites to Link to Your Content</a></li>
+<li><a href="https://developer.apple.com/documentation/safariservices/supporting_associated_domains">Supporting Associated Domains</a></li>
+</ul>
+
+<p>After you have implemented deep linking capabilities in your App, then you can configure your deep link to open and launch a Mini App. Note that your deep link should contain information about which mini app ID to open. Also, you can pass query parameters and a URL fragment to the mini app. The recommended deep link format is similar to <code>https://www.example.com/miniapp/MINI_APP_ID?myParam=myValue#myFragment</code> where the <code>myParam=myValue#myFragment</code> portion is optional and will be passed directly to the mini app. </p>
+
+<p>The following is an example which will parse the mini app ID and query string from a deep link:</p>
+<pre class="highlight swift"><code><span class="c1">// In your AppDelegate</span>
+<span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="k">continue</span> <span class="nv">userActivity</span><span class="p">:</span> <span class="kt">NSUserActivity</span><span class="p">,</span> <span class="nv">restorationHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">([</span><span class="kt">UIUserActivityRestoring</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="k">guard</span> <span class="n">userActivity</span><span class="o">.</span><span class="n">activityType</span> <span class="o">==</span> <span class="kt">NSUserActivityTypeBrowsingWeb</span><span class="p">,</span>
+        <span class="k">let</span> <span class="nv">incomingURL</span> <span class="o">=</span> <span class="n">userActivity</span><span class="o">.</span><span class="n">webpageURL</span><span class="p">,</span>
+        <span class="k">let</span> <span class="nv">components</span> <span class="o">=</span> <span class="kt">URLComponents</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="n">incomingURL</span><span class="p">,</span> <span class="nv">resolvingAgainstBaseURL</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nf">handleDeepLink</span><span class="p">(</span><span class="nv">components</span><span class="p">:</span> <span class="n">components</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">handleDeepLink</span><span class="p">(</span><span class="nv">components</span><span class="p">:</span> <span class="kt">URLComponents</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="p">{</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">host</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">host</span> <span class="o">==</span> <span class="s">"example.com"</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span>
+
+    <span class="k">let</span> <span class="nv">pathComponents</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="nf">split</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+    <span class="k">guard</span>
+        <span class="k">let</span> <span class="nv">rootPath</span> <span class="o">=</span> <span class="n">pathComponents</span><span class="o">.</span><span class="n">first</span>
+    <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">false</span> <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">rootPath</span> <span class="o">==</span> <span class="s">"miniapp"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">guard</span>
+            <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="n">pathComponents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">false</span> <span class="p">}</span>
+
+        <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">query</span> <span class="p">??</span> <span class="s">""</span>
+        <span class="k">let</span> <span class="nv">fragment</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">fragment</span> <span class="p">??</span> <span class="s">""</span>
+        <span class="k">let</span> <span class="nv">queryString</span> <span class="o">=</span> <span class="n">query</span> <span class="o">+</span> <span class="s">"#"</span> <span class="o">+</span> <span class="n">fragment</span>
+
+        <span class="c1">// Note that `myMiniAppCoordinator` is just a placeholder example for your own class</span>
+        <span class="c1">// Inside this class you should call `MiniApp.create` in order to create and display the mini app</span>
+        <span class="n">myMiniAppCoordinator</span><span class="o">.</span><span class="nf">goToMiniApp</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="n">id</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="n">queryString</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">true</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="kc">false</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='how-do-i-clear-the-session-data-for-mini-apps' class='heading'>How do I clear the session data for Mini Apps?</h3>
+
+<p>In the case that a user logs out of your App, you should clear the session data for all of your Mini Apps. This will ensure that the next user does not have access to the stored sensitive information about the previous user such as Local Storage, IndexedDB, and Web SQL.</p>
+
+<p>The session data can be cleared by using the following:</p>
+<pre class="highlight swift"><code><span class="kt">WKWebsiteDataStore</span><span class="o">.</span><span class="nf">default</span><span class="p">()</span><span class="o">.</span><span class="nf">removeData</span><span class="p">(</span><span class="nv">ofTypes</span><span class="p">:</span> <span class="kt">WKWebsiteDataStore</span><span class="o">.</span><span class="nf">allWebsiteDataTypes</span><span class="p">(),</span> 
+    <span class="nv">modifiedSince</span><span class="p">:</span> <span class="kt">Date</span><span class="o">.</span><span class="n">distantPast</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">{</span>
+    <span class="c1">// Data removal complete</span>
+<span class="p">})</span>
+</code></pre>
+
+<p><strong>Note:</strong> This will also clear the storage, cookies, and authentication data for ALL <code>WkWebViews</code> used by your App.</p>
+
+<p><a id="change-log"></a></p>
+<h2 id='changelog' class='heading'>Changelog</h2>
+
+<p>See the full <a href="https://github.com/rakutentech/ios-miniapp/blob/master/CHANGELOG.md">CHANGELOG</a>.</p>
 
           </div>
         </section>
@@ -989,7 +1173,7 @@ See the full [CHANGELOG](https://github.com/rakutentech/ios-miniapp/blob/master/
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-04-02)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-04-22)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

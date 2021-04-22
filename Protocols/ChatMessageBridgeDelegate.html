@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppNavigationBarDelegate Protocol Reference</title>
+    <title>ChatMessageBridgeDelegate Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Protocol/MiniAppNavigationBarDelegate" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Protocol/ChatMessageBridgeDelegate" class="dashAnchor"></a>
 
-    <a title="MiniAppNavigationBarDelegate Protocol Reference"></a>
+    <a title="ChatMessageBridgeDelegate Protocol Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -38,7 +38,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">MiniApp Reference</a>
       <img class="carat" src="../img/carat.png" />
-      MiniAppNavigationBarDelegate Protocol Reference
+      ChatMessageBridgeDelegate Protocol Reference
     </p>
 
     <div class="content-wrapper">
@@ -209,15 +209,15 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>MiniAppNavigationBarDelegate</h1>
+            <h1>ChatMessageBridgeDelegate</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppNavigationBarDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ChatMessageBridgeDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                 </div>
               </div>
-            <p>A delegate implemented by the Mini App view to get the actions triggered by UI</p>
+            <p>Undocumented</p>
 
           </div>
         </section>
@@ -229,9 +229,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB21NavigationBarDelegateP04minibcD016didTriggerActionSbAA0abcI0O_tF"></a>
-                    <a name="//apple_ref/swift/Method/miniAppNavigationBar(didTriggerAction:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB21NavigationBarDelegateP04minibcD016didTriggerActionSbAA0abcI0O_tF">miniAppNavigationBar(didTriggerAction:<wbr>)</a>
+                    <a name="/s:7MiniApp25ChatMessageBridgeDelegateP04sendD9ToContact_17completionHandleryAA0dhI0C_ys6ResultOySSSgAA10MASDKErrorOGctF"></a>
+                    <a name="//apple_ref/swift/Method/sendMessageToContact(_:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp25ChatMessageBridgeDelegateP04sendD9ToContact_17completionHandleryAA0dhI0C_ys6ResultOySSSgAA10MASDKErrorOGctF">sendMessageToContact(_:<wbr>completionHandler:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -239,37 +239,84 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Method to call when a user want to interact with Mini App navigation history</p>
+                        <p>Triggered when Mini App wants to send a message to a contact.
+Should open a contact chooser which allows the user to choose a single contact,
+and should then send the message to the chosen contact.
+Should invoke completionHandler success with the ID of the contact which was sent the message.
+If the user cancelled sending the message, should invoke completionHandler success with nil value.
+Should invoke completionHandler error when there was an error.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">func</span> <span class="nf">miniAppNavigationBar</span><span class="p">(</span><span class="n">didTriggerAction</span> <span class="nv">action</span><span class="p">:</span> <span class="kt"><a href="../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sendMessageToContact</span><span class="p">(</span><span class="n">_</span> <span class="nv">message</span><span class="p">:</span> <span class="kt"><a href="../Classes/MessageToContact.html">MessageToContact</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">?,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>action</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>the action requested (go back or go forward)
-Returns if action has been triggered or not</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp25ChatMessageBridgeDelegateP04sendD11ToContactId_7message17completionHandlerySS_AA0dhI0Cys6ResultOySSSgAA10MASDKErrorOGctF"></a>
+                    <a name="//apple_ref/swift/Method/sendMessageToContactId(_:message:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp25ChatMessageBridgeDelegateP04sendD11ToContactId_7message17completionHandlerySS_AA0dhI0Cys6ResultOySSSgAA10MASDKErrorOGctF">sendMessageToContactId(_:<wbr>message:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Triggered when Mini App wants to send a message to a specific contact.
+Should send a message to the specified contactId without any prompt to the User.
+Should invoke completionHandler success with the ID of the contact which was sent the message.
+If the user cancelled sending the message, should invoke completionHandler success with nil value.
+Should invoke completionHandler error when there was an error.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sendMessageToContactId</span><span class="p">(</span><span class="n">_</span> <span class="nv">contactId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="kt"><a href="../Classes/MessageToContact.html">MessageToContact</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">?,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp25ChatMessageBridgeDelegateP04sendD18ToMultipleContacts_17completionHandleryAA0dH7ContactC_ys6ResultOySaySSGSgAA10MASDKErrorOGctF"></a>
+                    <a name="//apple_ref/swift/Method/sendMessageToMultipleContacts(_:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp25ChatMessageBridgeDelegateP04sendD18ToMultipleContacts_17completionHandleryAA0dH7ContactC_ys6ResultOySaySSGSgAA10MASDKErrorOGctF">sendMessageToMultipleContacts(_:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Triggered when Mini App wants to send a message to multiple contacts.
+Should open a contact chooser which allows the user to choose multiple contacts,
+and should then send the message to all chosen contacts.
+Should invoke completionHandler success with a list of IDs of the contacts which were successfully sent the message.
+If the user cancelled sending the message, should invoked completionHandler success with nil value.
+Should invoke completionHandler error when there was an error.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sendMessageToMultipleContacts</span><span class="p">(</span><span class="n">_</span> <span class="nv">message</span><span class="p">:</span> <span class="kt"><a href="../Classes/MessageToContact.html">MessageToContact</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">String</span><span class="p">]?,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
