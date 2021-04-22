@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 1.8.0 (in progress)
+### 1.8.0 (2021-04-22)
 
 - **Feature:** Support send message to specific and multiple contacts. [See here](README.md#Send-message).
 
