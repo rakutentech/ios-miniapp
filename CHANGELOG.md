@@ -5,6 +5,7 @@
 **SDK**
 
 - **Feature:** Added chat messages capabilities
+- **Feature:** Standardized texts localization
 
 **Sample App**
 

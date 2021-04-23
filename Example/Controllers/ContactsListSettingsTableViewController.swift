@@ -124,7 +124,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
                 preferredStyle: .alert)
             var textObserver: NSObjectProtocol?
 
-            let okAction = UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .default) { (action) in
+            let okAction = UIAlertAction(title: MASDKLocale.localize(.ok), style: .default) { (action) in
                 if !alert.textFields![0].text!.isEmpty {
                     handler?(action, alert.textFields?.first)
                 } else {
@@ -147,7 +147,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
             }
 
             okAction.isEnabled = !(textFieldDefaultValue?.isEmpty ?? true)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: MASDKLocale.localize(.cancel), style: .cancel, handler: nil))
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
         }

@@ -43,14 +43,14 @@ class CustomPermissionsRequestViewController: UIViewController {
             $0.isPermissionGranted == MiniAppCustomPermissionGrantedStatus.denied
             } ?? false
         if allPermissionsDenied {
-            self.saveButton.title = "Save"
+            self.saveButton.title = MASDKLocale.localize(.save)
         } else {
-            self.saveButton.title = "Allow"
+            self.saveButton.title = MASDKLocale.localize(.allow)
         }
     }
 
     func addFooterInfo() {
-        self.footerLabel.text = " \(miniAppTitle) wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings"
+        self.footerLabel.text = MASDKLocale.localize(.firstLaunchFooter, miniAppTitle)
     }
 }
 

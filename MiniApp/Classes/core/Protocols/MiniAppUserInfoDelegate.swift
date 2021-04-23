@@ -26,11 +26,11 @@ public protocol MiniAppUserInfoDelegate: class {
 public extension MiniAppUserInfoDelegate {
 
     func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.failure(.unknownError(domain: NSLocalizedString("host_app_error", comment: ""), code: 1, description: NSLocalizedString("failed_to_conform_to_protocol", comment: ""))))
+        completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
     }
 
     func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.failure(.unknownError(domain: NSLocalizedString("host_app_error", comment: ""), code: 1, description: NSLocalizedString("failed_to_conform_to_protocol", comment: ""))))
+        completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
     }
 
     func getContacts() -> [MAContact]? {

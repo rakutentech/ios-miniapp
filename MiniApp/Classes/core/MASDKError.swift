@@ -64,30 +64,30 @@ extension MASDKError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .serverError(let code, let message):
-            return String(format: NSLocalizedString("error_server", comment: ""), code, message)
+            return MASDKLocale.localize(.serverError, code, message)
         case .invalidURLError:
-            return "error_invalid_url".localizedString()
+            return MASDKLocale.localize(.invalidUrl)
         case .invalidAppId:
-            return "error_invalid_app_id".localizedString()
+            return MASDKLocale.localize(.invalidAppId)
         case .invalidVersionId:
-            return "error_invalid_version_id".localizedString()
+            return MASDKLocale.localize(.invalidVersionId)
         case .invalidResponseData:
-            return "error_invalid_response".localizedString()
+            return MASDKLocale.localize(.invalidResponse)
         case .downloadingFailed:
-            return "error_invalid_response".localizedString()
+            return MASDKLocale.localize(.downloadFailed)
         case .noPublishedVersion:
-            return "error_no_published_version".localizedString()
+            return MASDKLocale.localize(.noPublishedVersion)
         case .miniAppNotFound:
-            return "error_miniapp_id_not_found".localizedString()
+            return MASDKLocale.localize(.miniappIdNotFound)
         case .metaDataFailure:
-            return "error_miniapp_meta_data_required_permissions_failure".localizedString()
+            return MASDKLocale.localize(.metaDataRequiredPermissionsFailure)
         case .failedToConformToProtocol:
-            return "failed_to_conform_to_protocol".localizedString()
+            return MASDKLocale.localize(.failedToConformToProtocol)
         case .invalidContactId:
-            return "error_invalid_contact_id".localizedString()
+            return MASDKLocale.localize(.invalidContactId)
 
         case .unknownError(let domain, let code, let description):
-            return String(format: NSLocalizedString("error_unknown", comment: ""), domain, code, description)
+            return MASDKLocale.localize(.unknownError, domain, code, description)
         }
     }
 }
@@ -96,7 +96,7 @@ extension MASDKError {
     static func fromError(error: Error) -> MASDKError {
         let error = error as NSError
         if error.domain == MiniAppSDKServerErrorDomain {
-            return MASDKError.serverError(code: error.code, message: error.userInfo.description)
+            return MASDKError.serverError(code: error.code, message: error.localizedDescription)
         }
         if error.domain == MiniAppSDKErrorDomain {
             switch MiniAppSDKErrorCode(rawValue: error.code) {

@@ -8,7 +8,7 @@ extension NSError {
             return NSError(
                     domain: MiniAppSDKServerErrorDomain,
                     code: code,
-                    userInfo: [NSLocalizedDescriptionKey: message]
+                    userInfo: [NSLocalizedDescriptionKey: message.localizedString()]
             )
         }
     }
@@ -16,7 +16,7 @@ extension NSError {
     class func unknownServerError(httpResponse: HTTPURLResponse?) -> NSError {
         return NSError.serverError(
                 code: (httpResponse)?.statusCode ?? 0,
-                message: "Unknown server error occurred"
+                message: MASDKLocale.LocalizableKey.unknownServerError.rawValue
         )
     }
 
