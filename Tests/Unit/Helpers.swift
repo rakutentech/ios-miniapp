@@ -256,10 +256,6 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
-    func getUniqueId() -> String {
-        let mockMessageInterface = MockMessageInterface()
-        return mockMessageInterface.getUniqueId()
-    }
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
@@ -310,14 +306,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func getUniqueId() -> String {
+    func getUniqueId(completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
         if mockUniqueId {
-            return ""
+            completionHandler(.success(""))
         } else {
             guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
-                return ""
+                return completionHandler(.success(""))
             }
-            return deviceId
+            completionHandler(.success(deviceId))
         }
     }
 
