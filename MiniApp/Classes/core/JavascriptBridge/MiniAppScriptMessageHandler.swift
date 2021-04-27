@@ -169,7 +169,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func sendUniqueId(messageId: String) {
-        hostAppMessageDelegate?.getUserName { (result) in
+        hostAppMessageDelegate?.getUniqueId { (result) in
             switch result {
             case .success(let response):
                 guard let uniqueId = response else {

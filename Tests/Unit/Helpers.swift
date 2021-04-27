@@ -274,7 +274,6 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
     }
 }
 class MockMessageInterface: MiniAppMessageDelegate {
-    var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
     var permissionError: MASDKPermissionError?
@@ -306,15 +305,11 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func getUniqueId(completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
-        if mockUniqueId {
-            completionHandler(.success(""))
-        } else {
-            guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
-                return completionHandler(.success(""))
-            }
-            completionHandler(.success(deviceId))
+    func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+            return completionHandler(.failure(.unknownError(domain: "MASDKError", code: 1, description: "Unable to retrieve Unique ID")))
         }
+        completionHandler(.success(deviceId))
     }
 
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
