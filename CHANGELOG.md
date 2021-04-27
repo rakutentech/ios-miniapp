@@ -1,5 +1,14 @@
 ## CHANGELOG
 
+### 3.x.x (2021-05-DD)
+
+**SDK**
+
+- **Feature:** Added `rakuten.miniapp.user.SEND_MESSAGE` custom permission
+
+**Sample App**
+
+---
 ### 3.2.0 (2021-04-22)
 
 **SDK**
@@ -12,7 +21,7 @@
 - **Feature:** Added chat messages screens with contact picker
 - **Fixed:** First launch screen metadata text was hidden
 
-
+---
 ### 3.1.0 (2021-04-02)
 
 **SDK**
