@@ -86,20 +86,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     private func sendMessageToContact(with callBackId: String, parameters: RequestParameters?) {
-        if isUserAllowedPermission(customPermissionType: .sendMessage, callbackId: callBackId) {
-            if let message = parameters?.messageToContact {
-                hostAppMessageDelegate?.sendMessageToContact(message, completionHandler: { result in
-                    switch result {
-                    case .success(let contact):
-                        let notEmptyId: String? = contact?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true ? nil : contact
-                        self.messageSentSuccessResponse(callBackId: callBackId, notEmptyId: notEmptyId)
-                    case .failure(let error):
-                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
-                    }
-                })
-            } else {
-                executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
-            }
+        if let message = parameters?.messageToContact {
+            hostAppMessageDelegate?.sendMessageToContact(message, completionHandler: { result in
+                switch result {
+                case .success(let contact):
+                    let notEmptyId: String? = contact?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true ? nil : contact
+                    self.messageSentSuccessResponse(callBackId: callBackId, notEmptyId: notEmptyId)
+                case .failure(let error):
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+                }
+            })
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
         }
     }
 
@@ -126,27 +124,25 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     private func sendMessageToMultipleContacts(with callBackId: String, parameters: RequestParameters?) {
-        if isUserAllowedPermission(customPermissionType: .sendMessage, callbackId: callBackId) {
-            if let message = parameters?.messageToContact {
-                hostAppMessageDelegate?.sendMessageToMultipleContacts(message, completionHandler: { result in
-                    switch result {
-                    case .success(let contactIds):
-                        let notEmptyId: [String]? = contactIds?.isEmpty ?? true ? nil : contactIds
-                        guard let data = try? JSONEncoder().encode(notEmptyId),
-                              let response = String(data: data, encoding: .utf8) else {
-                            return self.executeJavaScriptCallback(
-                                    responseStatus: .onError,
-                                    messageId: callBackId,
-                                    response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
-                        }
-                        self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: response)
-                    case .failure(let error):
-                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+        if let message = parameters?.messageToContact {
+            hostAppMessageDelegate?.sendMessageToMultipleContacts(message, completionHandler: { result in
+                switch result {
+                case .success(let contactIds):
+                    let notEmptyId: [String]? = contactIds?.isEmpty ?? true ? nil : contactIds
+                    guard let data = try? JSONEncoder().encode(notEmptyId),
+                          let response = String(data: data, encoding: .utf8) else {
+                        return self.executeJavaScriptCallback(
+                                responseStatus: .onError,
+                                messageId: callBackId,
+                                response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
                     }
-                })
-            } else {
-                executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
-            }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: response)
+                case .failure(let error):
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+                }
+            })
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
         }
     }
 
