@@ -169,7 +169,7 @@ internal class RealMiniAppView: UIView {
             switch schemeType {
             case .about: // mainly implemented to manage built-in alert dialogs
                 return decisionHandler(.allow)
-            case .tel:
+            case .tel, .mailto:
                 UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
             default:
                 if requestURL.isMiniAppURL(customMiniAppURL: miniAppURL) {
