@@ -84,6 +84,17 @@ const UriSchemes = () => {
         </Button>
       </CardActions>
 
+      <CardContent className={classes.content}>mailto:</CardContent>
+      <CardActions className={classes.actions}>
+        <Button
+          variant="contained"
+          color="primary"
+          href="mailto:mail@example.com?cc=ccmail@example.com, ccmail2@example.com, &bcc=bccmail@example.com&subject=Sample subject&body=Sample body."
+        >
+          Address / cc / bcc/ subject / body
+        </Button>
+      </CardActions>
+
       <CardContent className={classes.content}>External Webview</CardContent>
       <CardContent className={classes.content}>
         <TextField
