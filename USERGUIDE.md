@@ -404,7 +404,7 @@ extension ViewController: MiniAppMessageDelegate {
 
 #### Send message to contacts
 ---
-**API Docs:** [MiniAppUserInfoDelegate](https://rakutentech.github.io/ios-miniapp/JavaScript/Chat/ChatMessageBridgeDelegate.html)
+**API Docs:** [ChatMessageBridgeDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/ChatMessageBridgeDelegate.html)
 
 Send a message to a contact from the [user profile contacts list](#user-profile-details-contactlist) using 'MiniAppMessageDelegate' methods.
 Three methods can be triggered by the Mini App, and here are the recommended behaviors for each one:
