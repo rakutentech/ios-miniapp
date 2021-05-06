@@ -91,7 +91,7 @@ const UriSchemes = () => {
           color="primary"
           href="mailto:mail@example.com?cc=ccmail@example.com, ccmail2@example.com, &bcc=bccmail@example.com&subject=Sample subject&body=Sample body."
         >
-          Address / cc / bcc/ subject / body
+          Address / cc / bcc / subject / body
         </Button>
       </CardActions>
 
