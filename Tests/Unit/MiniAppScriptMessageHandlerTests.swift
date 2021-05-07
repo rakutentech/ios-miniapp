@@ -28,27 +28,10 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when user controller receive valid action and id") {
                 it("will return unique id") {
-                    mockMessageInterface.mockUniqueId = false
                     let mockMessage = MockWKScriptMessage(name: "getUniqueId", body: "{\"action\": \"getUniqueId\", \"param\": { \"permission\": null}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.messageId).toEventually(equal("12345"))
                     expect(callbackProtocol.response).toEventuallyNot(beNil())
-                }
-            }
-            context("when user controller receive valid action and id but failed to retrieve unique id") {
-                it("will return error") {
-                    mockMessageInterface.mockUniqueId = true
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
-                    )
-                    let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getUniqueId\", \"param\": { \"permission\": null}, \"id\":\"12345\"}" as AnyObject)
-                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.messageId).toEventually(equal("12345"))
-                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue))
-                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.description))
                 }
             }
             context("when handleBridgeMessage receive invalid action, valid id") {
@@ -95,14 +78,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
-                }
-            }
-            context("when handleActionCommand receive valid action, but failed to retrieve unique id") {
-                it("will return error") {
-                    mockMessageInterface.mockUniqueId = true
-                    scriptMessageHandler.sendUniqueId(messageId: "1234")
-                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue))
-                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.description))
                 }
             }
             context("when MiniAppScriptMessageHandler receives valid requestPermission command and request parameter, but user allow the location permission") {
