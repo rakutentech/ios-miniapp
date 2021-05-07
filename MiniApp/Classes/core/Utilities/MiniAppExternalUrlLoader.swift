@@ -41,7 +41,7 @@ public class MiniAppExternalUrlLoader {
             return .allow
         }
         switch schemeType {
-        case .tel:
+        case .tel, .mailto:
             UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
         default:
             return .cancel
