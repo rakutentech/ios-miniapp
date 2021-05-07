@@ -25,11 +25,11 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
         }
     }
 
-    func getUniqueId() -> String {
+    func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
-            return ""
+            return completionHandler(.failure(.unknownError(domain: "Unknown Error", code: 1, description: "Failed to retrieve UniqueID")))
         }
-        return deviceId
+        completionHandler(.success(deviceId))
     }
 
     func displayLocationDisabledAlert() {
