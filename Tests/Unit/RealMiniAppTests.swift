@@ -178,7 +178,13 @@ class RealMiniAppTests: QuickSpec {
                                 expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
                                 if let rmap = responseData as? RealMiniAppView {
                                     expect(rmap.hostAppMessageDelegate).notTo(beNil())
-                                    expect(UUID(uuidString: rmap.hostAppMessageDelegate!.getUniqueId())).to(beNil())
+                                    rmap.hostAppMessageDelegate?.getUniqueId { (result) in
+                                        switch result {
+                                        case .success: break
+                                        case .failure(let error):
+                                            expect(error.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
+                                        }
+                                    }
                                 } else {
                                     fail("create RealMiniAppView failure")
                                 }
@@ -221,7 +227,13 @@ class RealMiniAppTests: QuickSpec {
                                 expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
                                 if let rmap = responseData as? RealMiniAppView {
                                     expect(rmap.hostAppMessageDelegate).notTo(beNil())
-                                    expect(UUID(uuidString: rmap.hostAppMessageDelegate!.getUniqueId())).to(beNil())
+                                    rmap.hostAppMessageDelegate?.getUniqueId { (result) in
+                                        switch result {
+                                        case .success: break
+                                        case .failure(let error):
+                                            expect(error.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
+                                        }
+                                    }
                                 } else {
                                     fail("create RealMiniAppView failure")
                                 }

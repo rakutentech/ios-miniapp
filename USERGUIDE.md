@@ -152,11 +152,9 @@ Mini App SDK provides default implementation for few interfaces in `MiniAppMessa
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getUniqueId() -> String {
-        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
-            return ""
-        }
-        return deviceId
+    func getUniqueId(completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+        // Implementation to return the Unique ID
+        completionHandler(.success(""))
     }
 }
 ```
