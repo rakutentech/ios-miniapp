@@ -169,11 +169,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func sendUniqueId(messageId: String) {
-        guard let uniqueId = hostAppMessageDelegate?.getUniqueId(), !uniqueId.isEmpty else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-            return
+        hostAppMessageDelegate?.getUniqueId { (result) in
+            switch result {
+            case .success(let response):
+                guard let uniqueId = response else {
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                    return
+                }
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: messageId, response: uniqueId)
+            case .failure(let error):
+                self.handleMASDKError(error: error, callbackId: messageId)
+            }
         }
-        executeJavaScriptCallback(responseStatus: .onSuccess, messageId: messageId, response: uniqueId)
     }
 
     func requestDevicePermission(requestParam: RequestParameters?, callbackId: String) {
