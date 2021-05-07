@@ -4,7 +4,10 @@
 
 **SDK**
 
+- **Feature:** Added `rakuten.miniapp.user.SEND_MESSAGE` custom permission
 - **Feature:** Support Email addresses (`mailto:`) hyperlinks from a mini app. See [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
+
+**Sample App**
 
 ---
 ### 3.2.0 (2021-04-22)
