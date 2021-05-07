@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### 3.x.x (2021-05-DD)
+
+**SDK**
+
+- **Feature:** Support Email addresses (`mailto:`) hyperlinks from a mini app. See [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
+
+---
 ### 3.2.0 (2021-04-22)
 
 **SDK**
@@ -12,7 +19,7 @@
 - **Feature:** Added chat messages screens with contact picker
 - **Fixed:** First launch screen metadata text was hidden
 
-
+---
 ### 3.1.0 (2021-04-02)
 
 **SDK**
