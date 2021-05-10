@@ -155,6 +155,7 @@ These permissions are requested using the [MiniAppFeatures.requestCustomPermissi
 | `CustomPermissionName.CONTACT_LIST` | Grant access to the user's contact list. |
 | `CustomPermissionName.ACCESS_TOKEN` | Grant access to the a user's access token. |
 | `CustomPermissionName.LOCATION` | Grant access to the device's location (custom permission only). |
+| `CustomPermissionName.SEND_MESSAGE` | Allow miniapp to send message to specific contact via hostapp. |
 
 ##### Usage example
 
@@ -165,7 +166,8 @@ miniApp.requestCustomPermissions([
     {name: CustomPermissionName.PROFILE_PHOTO, description: 'This text will be shown to the user.'},
     {name: CustomPermissionName.CONTACT_LIST, description: 'This text will be shown to the user.'},
     {name: CustomPermissionName.ACCESS_TOKEN, description: 'This text will be shown to the user.'},
-    {name: CustomPermissionName.LOCATION, description: 'This text will be shown to the user.'}
+    {name: CustomPermissionName.LOCATION, description: 'This text will be shown to the user.'},
+    {name: CustomPermissionName.SEND_MESSAGE, description: 'This text will be shown to the user.'}
 ]).then((result) => {
     const allowed = result
         .filter(permission => permission.status === CustomPermissionResult.ALLOWED)
@@ -384,6 +386,8 @@ miniApp.chatService.sendMessageToContact(messageToContact)
 ```
 
 #### Send message by contact id
+
+Please make sure that User have allowed message sending custom permission before sending message to specific contact.
 
 ```javascript
 miniApp.chatService.sendMessageToContactId(id, messageToContact)

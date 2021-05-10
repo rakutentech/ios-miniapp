@@ -36,6 +36,10 @@
     {
       "name": "rakuten.miniapp.user.ACCESS_TOKEN",
       "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.user.action.SEND_MESSAGE",
+      "reason": "Describe your reason here (optional)."
     }
   ],
 
