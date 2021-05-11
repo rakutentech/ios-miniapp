@@ -46,17 +46,17 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
-  - Nimble (9.2.0)
+  - Nimble (9.0.1)
   - PromisesObjC (1.2.12)
-  - Quick (4.0.0)
+  - Quick (3.1.2)
   - ZIPFoundation (0.9.12)
 
 DEPENDENCIES:
   - AppCenter/Crashes
   - Google-Mobile-Ads-SDK
   - MiniApp/Admob (from `./`)
-  - Nimble
-  - Quick
+  - Nimble (~> 9.0.0)
+  - Quick (~> 3.1.2)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -83,11 +83,11 @@ SPEC CHECKSUMS:
   GoogleUtilities: 284cddc7fffc14ae1907efb6f78ab95c1fccaedc
   MiniApp: 1fcaffcfa4c75738424c414c39584d3c5f3cde40
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
+  Nimble: 7bed62ffabd6dbfe05f5925cbc43722533248990
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
+  Quick: 60f0ea3b8e0cfc0df3259a5c06a238ad8b3c46e0
   ZIPFoundation: e27423c004a5a1410c15933407747374e7c6cb6e
 
-PODFILE CHECKSUM: 0d4a6b3c4863132cc471d772f3d37fe43826db20
+PODFILE CHECKSUM: af5a3a26d15a7b9bc2768143d68172dec2992e95
 
 COCOAPODS: 1.10.1
