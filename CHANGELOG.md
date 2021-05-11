@@ -6,6 +6,8 @@
 
 - **Feature:** Added `rakuten.miniapp.user.SEND_MESSAGE` custom permission
 - **Feature:** Support Email addresses (`mailto:`) hyperlinks from a mini app. See [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
+- **Deprecated:** `getUniqueId()` in `MiniAppMessageDelegate` protocol is deprecated. You should use `getUniqueId(completionHandler:)` instead
+- **Deprecated:** `getContacts()` in `MiniAppUserInfoDelegate` protocol is deprecated. You should use `getContacts(completionHandler:)` instead
 
 **Sample App**
 
@@ -72,7 +74,7 @@
 - **Feature** Added analytics for Mini App usage tracking
 - **Feature** Updated `getUserName` and `getProfilePhoto` interfaces to be asynchronous. Old methods are deprecated
 - **Feature** Updated `MiniApp().shared.create` interface to accept another optional query string parameter.
-- **Deprecated:** `requestPermission(permissionType:completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `requestDevicePermission(permissionType:completionHandler:))` instead
+- **Deprecated:** `requestPermission(permissionType:completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `requestDevicePermission(permissionType:completionHandler:)` instead
 - **Fixed** Geolocation was not updated after the first GPS fix
 
 **Sample App**
@@ -124,7 +126,7 @@
 - **Feature:** Added support for Orientation lock, that enables the mini app to lock `portrait` or `landscape` orientation for the mini-app. [Please check here](USERGUIDE.md#orientation-lock)
 - **Feature:** Added support to retrieve Access token and expiry date
 - **Feature:** Added default implementation in SDK for `requestCustomPermissions(permissions:miniAppTitle:completionHandler:)` [Please check here](USERGUIDE.md#request-custom-permission)
-- **Deprecated:** `requestCustomPermissions(permissions:completionHandler:)` in `MiniAppCallbackProtocol` protocol is deprecated. You should use `requestCustomPermissions(permissions:miniAppTitle:completionHandler:))` instead
+- **Deprecated:** `requestCustomPermissions(permissions:completionHandler:)` in `MiniAppCallbackProtocol` protocol is deprecated. You should use `requestCustomPermissions(permissions:miniAppTitle:completionHandler:)` instead
 
 **Sample App**
 
