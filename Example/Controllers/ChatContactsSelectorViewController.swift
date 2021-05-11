@@ -10,7 +10,6 @@ class ChatContactsSelectorViewController: UIViewController {
     }
     var sendById = false
     var messageSent = false
-    
     var selectedContacts: [MAContact]? {
         didSet {
             changeButtonState()
@@ -108,7 +107,7 @@ class ChatContactsSelectorViewController: UIViewController {
     fileprivate func canSend() -> Bool {
         return selectedContacts?.count ?? 0 > 0
     }
-    
+
     @IBAction func sendMessage() {
         if canSend() {
             contactsHandlerJob?(.success(selectedContacts?.map { $0.id }))

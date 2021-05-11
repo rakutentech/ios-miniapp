@@ -8,7 +8,7 @@ protocol ContactsListDelegate: class {
 class ContactsListSettingsTableViewController: UITableViewController {
 
     var userContactList: [MAContact]? = []
-    var delegate: ContactsListDelegate?
+    weak var delegate: ContactsListDelegate?
     var selectedContacts = [MAContact]()
     var allowMultipleSelection = true
 
