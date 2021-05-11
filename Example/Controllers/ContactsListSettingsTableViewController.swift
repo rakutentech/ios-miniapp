@@ -36,8 +36,9 @@ class ContactsListSettingsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell? ?? UITableViewCell()
         if let userContactList = userContactList, userContactList.indices.contains(indexPath.row) {
             let contact = userContactList[indexPath.row]
-            cell.detailTextLabel?.text = "id: \(contact.id)"
+            cell.detailTextLabel?.numberOfLines = 3
             cell.textLabel?.text = contact.name
+            cell.detailTextLabel?.text = "Id: \(contact.id)\nEmail: \(contact.email ?? "")"
             if contactDelegate != nil {
                 if allowMultipleSelection {
                     cell.accessoryType = selectedContacts.contains(contact) ? .checkmark : .none
@@ -97,17 +98,16 @@ class ContactsListSettingsTableViewController: UITableViewController {
     }
 
     @IBAction func addContact() {
-        self.addCustomContactId(title: "Please enter the custom ID you would like to add in Contacts", message: "")
+        self.addCustomContactId(title: "Please enter custom contact details", message: "")
     }
 
     func addCustomContactId(title: String, message: String) {
         DispatchQueue.main.async {
-            self.getInputFromAlertWithTextField(title: title, message: message, textFieldDefaultValue: UUID().uuidString) { (_, textField) in
+            self.getInputFromAlertWithTextField(title: title, message: message, textFieldDefaultValue: UUID().uuidString) { (_, textField, name, email) in
                 if let textField = textField, let contactId = textField.text, contactId.count > 0, !contactId.trimTrailingWhitespaces().isEmpty {
-                    let contactListCount = self.userContactList?.count ?? 0
                     self.userContactList?.append(MAContact(id: contactId,
-                                                           name: self.randomFakeName(),
-                                                           email: "name.\(contactListCount)@example.com"))
+                                                           name: name,
+                                                           email: email))
                     updateContactList(list: self.userContactList)
                     self.tableView.reloadData()
                 } else {
@@ -117,7 +117,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
         }
     }
 
-    func getInputFromAlertWithTextField(title: String? = nil, message: String? = nil, keyboardType: UIKeyboardType? = .asciiCapable, textFieldDefaultValue: String?, handler: ((UIAlertAction, UITextField?) -> Void)? = nil) {
+    func getInputFromAlertWithTextField(title: String? = nil, message: String? = nil, keyboardType: UIKeyboardType? = .asciiCapable, textFieldDefaultValue: String?, handler: ((UIAlertAction, UITextField?, String, String) -> Void)? = nil) {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             let alert = UIAlertController(title: title,
                 message: message,
@@ -126,15 +126,14 @@ class ContactsListSettingsTableViewController: UITableViewController {
 
             let okAction = UIAlertAction(title: MASDKLocale.localize(.ok), style: .default) { (action) in
                 if !alert.textFields![0].text!.isEmpty {
-                    handler?(action, alert.textFields?.first)
+                    handler?(action, alert.textFields?.first, alert.textFields?[1].text ?? "", alert.textFields?[2].text ?? "")
                 } else {
-                    handler?(action, nil)
+                    handler?(action, nil, "", "")
                 }
                 if let observer = textObserver {
                     NotificationCenter.default.removeObserver(observer)
                 }
             }
-
             alert.addTextField { (textField) in
                 textObserver = NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main) {_ in
                     okAction.isEnabled = !(textField.text?.isEmpty ?? true)
@@ -143,9 +142,18 @@ class ContactsListSettingsTableViewController: UITableViewController {
                 if let type = keyboardType {
                     textField.keyboardType = type
                 }
+                textField.placeholder = "Contact ID"
                 textField.clearButtonMode = .whileEditing
             }
 
+            alert.addTextField { (textField) in
+                textField.placeholder = "Name"
+                textField.clearButtonMode = .whileEditing
+            }
+            alert.addTextField { (textField) in
+                textField.placeholder = "Email"
+                textField.clearButtonMode = .whileEditing
+            }
             okAction.isEnabled = !(textFieldDefaultValue?.isEmpty ?? true)
             alert.addAction(UIAlertAction(title: MASDKLocale.localize(.cancel), style: .cancel, handler: nil))
             alert.addAction(okAction)
