@@ -51,22 +51,33 @@ class ContactsListSettingsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let contact = userContactList?[indexPath.row] {
-
-            if allowMultipleSelection {
-                if selectedContacts.contains(contact) {
-                    selectedContacts.removeAll { contactToRemove -> Bool in
-                        contactToRemove == contact
-                    }
-                } else {
-                    selectedContacts.append(contact)
-                }
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-            } else {
-                tableView.deselectRow(at: indexPath, animated: true)
-                selectedContacts = [contact]
+        if contactDelegate == nil {
+            if let contact = userContactList?[indexPath.row] {
+                editContact(title: "Edit Contact info",
+                            index: indexPath.row,
+                            contactId: contact.id,
+                            contactName: contact.name,
+                            contactEmail: contact.email)
             }
-            contactDelegate?.contactsController(self, didSelect: selectedContacts)
+            tableView.deselectRow(at: indexPath, animated: true)
+        } else {
+            if let contact = userContactList?[indexPath.row] {
+
+                if allowMultipleSelection {
+                    if selectedContacts.contains(contact) {
+                        selectedContacts.removeAll { contactToRemove -> Bool in
+                            contactToRemove == contact
+                        }
+                    } else {
+                        selectedContacts.append(contact)
+                    }
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                } else {
+                    tableView.deselectRow(at: indexPath, animated: true)
+                    selectedContacts = [contact]
+                }
+                contactDelegate?.contactsController(self, didSelect: selectedContacts)
+            }
         }
     }
 
@@ -117,7 +128,13 @@ class ContactsListSettingsTableViewController: UITableViewController {
         }
     }
 
-    func getInputFromAlertWithTextField(title: String? = nil, message: String? = nil, keyboardType: UIKeyboardType? = .asciiCapable, textFieldDefaultValue: String?, handler: ((UIAlertAction, UITextField?, String, String) -> Void)? = nil) {
+    func getInputFromAlertWithTextField(title: String? = nil,
+                                        message: String? = nil,
+                                        keyboardType: UIKeyboardType? = .asciiCapable,
+                                        textFieldDefaultValue: String?,
+                                        name: String? = "",
+                                        email: String? = "",
+                                        handler: ((UIAlertAction, UITextField?, String, String) -> Void)? = nil) {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             let alert = UIAlertController(title: title,
                 message: message,
@@ -147,10 +164,12 @@ class ContactsListSettingsTableViewController: UITableViewController {
             }
 
             alert.addTextField { (textField) in
+                textField.text = name
                 textField.placeholder = "Name"
                 textField.clearButtonMode = .whileEditing
             }
             alert.addTextField { (textField) in
+                textField.text = email
                 textField.placeholder = "Email"
                 textField.clearButtonMode = .whileEditing
             }
@@ -158,6 +177,24 @@ class ContactsListSettingsTableViewController: UITableViewController {
             alert.addAction(UIAlertAction(title: MASDKLocale.localize(.cancel), style: .cancel, handler: nil))
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    func editContact(title: String, index: Int, contactId: String? = "", contactName: String? = "", contactEmail: String? = "") {
+        DispatchQueue.main.async {
+            self.getInputFromAlertWithTextField(title: title, message: "", textFieldDefaultValue: contactId, name: contactName, email: contactEmail) { (_, textField, name, email) in
+                if let textField = textField, let contactId = textField.text, contactId.count > 0, !contactId.trimTrailingWhitespaces().isEmpty {
+                    self.userContactList?[index] = MAContact(id: contactId, name: name, email: email)
+                    updateContactList(list: self.userContactList)
+                    self.tableView.reloadData()
+                } else {
+                    self.editContact(title: "Invalid Contact ID, please try again",
+                                     index: index,
+                                     contactId: contactId,
+                                     contactName: name,
+                                     contactEmail: email)
+                }
+            }
         }
     }
 
