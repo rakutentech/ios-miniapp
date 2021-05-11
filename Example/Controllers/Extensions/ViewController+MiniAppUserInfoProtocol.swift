@@ -16,11 +16,11 @@ extension ViewController: MiniAppUserInfoDelegate {
         completionHandler(.success(userProfilePhoto))
     }
 
-    func getContacts() -> [MAContact]? {
-        guard let userProfile = getProfileSettings(), let contactList = userProfile.contactList else {
-            return nil
+    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
+        if let userProfile = getProfileSettings(), let contactsList = userProfile.contactList {
+            return completionHandler(.success(contactsList))
         }
-        return contactList
+        completionHandler(.failure(.unknownError(domain: "Unknown Error", code: 1, description: "Failed to retrieve contacts list")))
     }
 
     func getAccessToken(miniAppId: String,
