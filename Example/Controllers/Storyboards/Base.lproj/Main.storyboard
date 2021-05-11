@@ -380,15 +380,30 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="slF-qx-yVy">
-                                <rect key="frame" x="36" y="597" width="303" height="50"/>
-                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <rect key="frame" x="191.5" y="597" width="163.5" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="3xA-tR-yaW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="SEND"/>
+                                <state key="normal" title="SEND">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="sendMessage" destination="tcx-Cy-Sfe" eventType="touchUpInside" id="TGR-EQ-h25"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bz-1p-OcD">
+                                <rect key="frame" x="20" y="597" width="163.5" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="bPk-xj-YM7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="CANCEL"/>
+                                <connections>
+                                    <action selector="cancel" destination="tcx-Cy-Sfe" eventType="touchUpInside" id="wbb-zj-OzX"/>
+                                    <action selector="sendMessage" destination="tcx-Cy-Sfe" eventType="touchUpInside" id="Bxc-l1-ine"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -396,20 +411,24 @@
                         <constraints>
                             <constraint firstItem="kre-n5-5f9" firstAttribute="top" secondItem="Sv3-PC-lwp" secondAttribute="bottom" id="0eJ-C7-DjG"/>
                             <constraint firstItem="oAe-Qz-kFO" firstAttribute="leading" secondItem="mt0-4f-VXZ" secondAttribute="leadingMargin" id="2cx-fx-1Ur"/>
+                            <constraint firstItem="slF-qx-yVy" firstAttribute="width" secondItem="mt0-4f-VXZ" secondAttribute="width" multiplier="1/2" constant="-24" id="J1H-X4-m21"/>
+                            <constraint firstItem="2bz-1p-OcD" firstAttribute="width" secondItem="slF-qx-yVy" secondAttribute="width" id="LiB-41-cLd"/>
                             <constraint firstItem="oAe-Qz-kFO" firstAttribute="top" secondItem="HnH-ht-JTD" secondAttribute="bottom" constant="20" id="OLP-o3-S5C"/>
                             <constraint firstItem="Sv3-PC-lwp" firstAttribute="top" secondItem="oAe-Qz-kFO" secondAttribute="bottom" constant="15" id="OfU-bJ-hOo"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="slF-qx-yVy" secondAttribute="trailing" constant="20" id="R0j-32-oTD"/>
-                            <constraint firstItem="slF-qx-yVy" firstAttribute="leading" secondItem="mt0-4f-VXZ" secondAttribute="leadingMargin" constant="20" id="S7E-V7-KIj"/>
+                            <constraint firstAttribute="trailing" secondItem="slF-qx-yVy" secondAttribute="trailing" constant="20" id="R0j-32-oTD"/>
+                            <constraint firstItem="2bz-1p-OcD" firstAttribute="height" secondItem="slF-qx-yVy" secondAttribute="height" id="V8X-Q4-GCc"/>
                             <constraint firstItem="oAe-Qz-kFO" firstAttribute="trailing" secondItem="mt0-4f-VXZ" secondAttribute="trailingMargin" id="Vbf-cq-o0M"/>
                             <constraint firstAttribute="trailing" secondItem="Sv3-PC-lwp" secondAttribute="trailing" id="Wjh-Ls-4yy"/>
                             <constraint firstItem="oAe-Qz-kFO" firstAttribute="trailing" secondItem="mt0-4f-VXZ" secondAttribute="trailingMargin" id="asb-hL-ns0"/>
                             <constraint firstAttribute="trailing" secondItem="ds0-0E-Bhw" secondAttribute="trailing" id="cCW-Wh-iOE"/>
                             <constraint firstItem="Sv3-PC-lwp" firstAttribute="leading" secondItem="mt0-4f-VXZ" secondAttribute="leading" id="cTY-FK-XUj"/>
                             <constraint firstItem="ds0-0E-Bhw" firstAttribute="leading" secondItem="mt0-4f-VXZ" secondAttribute="leading" id="ffZ-oe-NBa"/>
+                            <constraint firstItem="2bz-1p-OcD" firstAttribute="leading" secondItem="mt0-4f-VXZ" secondAttribute="leading" constant="20" id="fpD-4r-e8k"/>
                             <constraint firstItem="kre-n5-5f9" firstAttribute="top" secondItem="ds0-0E-Bhw" secondAttribute="bottom" id="jBF-wz-ttF"/>
                             <constraint firstItem="ds0-0E-Bhw" firstAttribute="top" secondItem="oAe-Qz-kFO" secondAttribute="bottom" constant="15" id="ki5-rg-Q4j"/>
                             <constraint firstItem="kre-n5-5f9" firstAttribute="top" secondItem="slF-qx-yVy" secondAttribute="bottom" constant="20" id="rQ7-Fu-Wt9"/>
                             <constraint firstItem="oAe-Qz-kFO" firstAttribute="leading" secondItem="mt0-4f-VXZ" secondAttribute="leadingMargin" id="wYR-4n-AEi"/>
+                            <constraint firstItem="2bz-1p-OcD" firstAttribute="top" secondItem="slF-qx-yVy" secondAttribute="top" id="zGp-dr-oL2"/>
                         </constraints>
                     </view>
                     <connections>
