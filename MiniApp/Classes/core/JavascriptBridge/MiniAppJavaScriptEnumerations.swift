@@ -44,7 +44,7 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
     /// Custom permission for retrieving Access token details from the host app
     case accessToken = "rakuten.miniapp.user.ACCESS_TOKEN"
     /// Custom permission to send a message via the Host app
-    case sendMessage = "rakuten.miniapp.user.SEND_MESSAGE"
+    case sendMessage = "rakuten.miniapp.user.action.SEND_MESSAGE"
     /// Custom permission for retrieving device location details from the host app
     case deviceLocation = "rakuten.miniapp.device.LOCATION"
 
