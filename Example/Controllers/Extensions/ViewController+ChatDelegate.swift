@@ -32,16 +32,23 @@ extension ViewController: ChatMessageBridgeDelegate {
     }
 
     public func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping ChatContactHandler) {
-        if let contacts = getContacts(), let contact = contacts.first(where: { $0.id == contactId }) {
-            presentContactsPicker { chatContactsSelectorViewController in
-                switchCancelHandler(singleIdHandler: completionHandler)
-                chatContactsSelectorViewController.contactToSend = contact
-                chatContactsSelectorViewController.contactHandlerJob = completionHandler
-                chatContactsSelectorViewController.message = message
-                chatContactsSelectorViewController.title = NSLocalizedString("Single contact", comment: "")
+        getContacts { result in
+            switch result {
+            case .success(let contacts):
+                if let contact = contacts?.first(where: { $0.id == contactId }) {
+                    self.presentContactsPicker { chatContactsSelectorViewController in
+                        self.switchCancelHandler(singleIdHandler: completionHandler)
+                        chatContactsSelectorViewController.contactToSend = contact
+                        chatContactsSelectorViewController.contactHandlerJob = completionHandler
+                        chatContactsSelectorViewController.message = message
+                        chatContactsSelectorViewController.title = NSLocalizedString("Single contact", comment: "")
+                    }
+                } else {
+                    fallthrough
+                }
+            default:
+                completionHandler(.failure(.invalidContactId))
             }
-        } else {
-            completionHandler(.failure(.invalidContactId))
         }
     }
 

@@ -51,7 +51,19 @@ public extension MiniAppMessageDelegate {
     @available(*, deprecated,
         renamed: "getUniqueId(completionHandler:)")
     func getUniqueId() -> String? {
-        return nil
+        let semaphore = DispatchSemaphore(value: 0)
+        var uniqueId: String?
+        getUniqueId { result in
+            switch result {
+            case .success(let id):
+                uniqueId = id
+            default:
+                uniqueId = nil
+            }
+            semaphore.signal()
+        }
+        semaphore.wait()
+        return uniqueId
     }
 }
 

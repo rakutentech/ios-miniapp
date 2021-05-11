@@ -375,9 +375,9 @@ Retrieve the Contact list of the User
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getContacts() -> [MAContact]? {
+    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
         // Implementation to return the contact list
-        return []
+        completionHandler(.success([]))
     }
 }
 ```
@@ -428,13 +428,18 @@ extension ViewController: MiniAppMessageDelegate {
   }
 
   public func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-    if let contacts = getContacts(), let contact = contacts.first(where: { $0.id == contactId }) {
-      presentContactsPicker { chatContactsSelectorViewController in
-        // insert here code to send the message
-        completionHandler(.success(contact.id))
+    getContacts { result in
+      switch result {
+      case success(let contacts):
+        if let contact = contacts.first(where: { $0.id == contactId }) {
+          // insert here code to send the message
+          completionHandler(.success(contact.id))
+        } else {
+          fallthrough
+        }
+      default:
+        completionHandler(.failure(.invalidContactId))
       }
-    } else {
-      completionHandler(.success(contact.id))
     }
   }
 

@@ -383,11 +383,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func fetchContacts(callbackId: String) {
         if isUserAllowedPermission(customPermissionType: .contactsList, callbackId: callbackId) {
-            guard let contactList = ResponseEncoder.encode(data: hostAppMessageDelegate?.getContacts()) else {
-                executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
-                return
+            hostAppMessageDelegate?.getContacts { [self] result in
+                switch result {
+                case .success(let contactsList):
+                    if let contactsListJson = ResponseEncoder.encode(data: contactsList) {
+                        executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: contactsListJson)
+                    } else {
+                        fallthrough
+                    }
+                case .failure(_):
+                    executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                }
             }
-            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: contactList)
         }
     }
 
