@@ -8,6 +8,7 @@
 - **Feature:** Support Email addresses (`mailto:`) hyperlinks from a mini app. See [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
 - **Deprecated:** `getUniqueId()` in `MiniAppMessageDelegate` protocol is deprecated. You should use `getUniqueId(completionHandler:)` instead
 - **Deprecated:** `getContacts()` in `MiniAppUserInfoDelegate` protocol is deprecated. You should use `getContacts(completionHandler:)` instead
+- **Fixed:** Long messages were truncated in sample app
 
 **Sample App**
 
