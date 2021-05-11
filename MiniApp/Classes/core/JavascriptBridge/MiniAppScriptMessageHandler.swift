@@ -391,7 +391,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     } else {
                         fallthrough
                     }
-                case .failure(_):
+                case .failure:
                     executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
                 }
             }

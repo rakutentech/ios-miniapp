@@ -16,7 +16,7 @@ extension ViewController: MiniAppUserInfoDelegate {
         completionHandler(.success(userProfilePhoto))
     }
 
-    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> ()) {
+    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
         if let userProfile = getProfileSettings(), let contactsList = userProfile.contactList {
             return completionHandler(.success(contactsList))
         }

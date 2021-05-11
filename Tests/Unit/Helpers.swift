@@ -355,7 +355,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
         mockProfilePhoto
     }
 
-    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> ()) {
+    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
         completionHandler(.success(mockContactList))
     }
 
