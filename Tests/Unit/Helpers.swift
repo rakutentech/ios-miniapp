@@ -348,15 +348,15 @@ class MockMessageInterface: MiniAppMessageDelegate {
     }
 
     func getUserName() -> String? {
-        return mockUserName
+        mockUserName
     }
 
     func getProfilePhoto() -> String? {
-        return mockProfilePhoto
+        mockProfilePhoto
     }
 
-    func getContacts() -> [MAContact]? {
-        return mockContactList
+    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
+        completionHandler(.success(mockContactList))
     }
 
     func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {

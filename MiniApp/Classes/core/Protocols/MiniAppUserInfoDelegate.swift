@@ -11,6 +11,9 @@ public protocol MiniAppUserInfoDelegate: class {
     func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
 
     /// Interface that is used to retrieve the Contact list
+    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void)
+
+    @available(*, deprecated, renamed:"getContacts(completionHandler:)")
     func getContacts() -> [MAContact]?
 
     /// Interface that is used to retrieve the Token Info
@@ -33,8 +36,24 @@ public extension MiniAppUserInfoDelegate {
         completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
     }
 
+    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
+        completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
+    }
+
     func getContacts() -> [MAContact]? {
-        return nil
+        let semaphore = DispatchSemaphore(value: 0)
+        var contacts: [MAContact]?
+        getContacts { result in
+            switch result {
+            case .success(let listContacts):
+                contacts = listContacts
+            default:
+                contacts = nil
+            }
+            semaphore.signal()
+        }
+        semaphore.wait()
+        return contacts
     }
 
     func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
