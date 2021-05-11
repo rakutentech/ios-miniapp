@@ -20,7 +20,7 @@ class ChatContactsSelectorViewController: UIViewController {
     var contactHandlerJob: ((Result<String?, MASDKError>) -> Void)?
 
     @IBOutlet weak var labelTitle: UILabel?
-    @IBOutlet weak var labelMessage: UILabel?
+    @IBOutlet weak var labelMessage: UITextView?
     @IBOutlet weak var imageView: UIImageView?
     @IBOutlet weak var buttonAction: UIButton?
 
