@@ -8,7 +8,7 @@ protocol ContactsListDelegate: class {
 class ContactsListSettingsTableViewController: UITableViewController {
 
     var userContactList: [MAContact]? = []
-    weak var contactDelegate: ContactsListDelegate?
+    var delegate: ContactsListDelegate?
     var selectedContacts = [MAContact]()
     var allowMultipleSelection = true
 
@@ -38,12 +38,8 @@ class ContactsListSettingsTableViewController: UITableViewController {
             let contact = userContactList[indexPath.row]
             cell.detailTextLabel?.text = "id: \(contact.id)"
             cell.textLabel?.text = contact.name
-            if contactDelegate != nil {
-                if allowMultipleSelection {
-                    cell.accessoryType = selectedContacts.contains(contact) ? .checkmark : .none
-                } else {
-                    cell.accessoryType = .disclosureIndicator
-                }
+            if delegate != nil {
+                cell.accessoryType = selectedContacts.contains(contact) ? .checkmark : .none
             }
         }
         return cell
@@ -62,15 +58,20 @@ class ContactsListSettingsTableViewController: UITableViewController {
                 }
                 tableView.reloadRows(at: [indexPath], with: .automatic)
             } else {
-                tableView.deselectRow(at: indexPath, animated: true)
-                selectedContacts = [contact]
+                if selectedContacts.first != contact {
+                    selectedContacts.removeAll()
+                    selectedContacts.append(contact)
+                } else {
+                    selectedContacts.removeAll()
+                }
+                tableView.reloadData()
             }
-            contactDelegate?.contactsController(self, didSelect: selectedContacts)
+            delegate?.contactsController(self, didSelect: selectedContacts)
         }
     }
 
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if allowMultipleSelection, let selectedContact = userContactList?[indexPath.row] {
+        if let selectedContact = userContactList?[indexPath.row] {
             selectedContacts.removeAll(where: { contact in
                 contact == selectedContact
             })
@@ -83,7 +84,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return contactDelegate == nil
+        return delegate == nil
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

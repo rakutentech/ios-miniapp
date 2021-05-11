@@ -2,31 +2,14 @@ import MiniApp
 import CoreLocation
 import UIKit
 
-extension ViewController: ContactsListDelegate {
-    func contactsController(_ contactsController: ContactsListSettingsTableViewController?, didSelect contacts: [MAContact]?) {
-        if let contactsList = contacts {
-            if let controller = contactsController,
-               !controller.allowMultipleSelection {
-                controller.dismiss(animated: true) {
-                    self.messageHandlerObj?(.success(contactsList.first?.id))
-                }
-            }
-        } else {
-            messageHandlerObj?(.success(nil))
-            messageIdHandlerObj?(.success(nil))
-            messageMultipleHandlerObj?(.success(nil))
-        }
-    }
-}
-
 extension ViewController: ChatMessageBridgeDelegate {
     typealias ChatContactHandler = (Result<String?, MASDKError>) -> Void
     typealias ChatContactsHandler = (Result<[String]?, MASDKError>) -> Void
 
     public func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping ChatContactHandler) {
         presentContactsPicker { controller in
-            switchCancelHandler(messageHandler: completionHandler)
             controller.message = message
+            controller.contactHandlerJob = completionHandler
             controller.title = NSLocalizedString("Pick a contact", comment: "")
         }
     }
@@ -37,10 +20,10 @@ extension ViewController: ChatMessageBridgeDelegate {
             case .success(let contacts):
                 if let contact = contacts?.first(where: { $0.id == contactId }) {
                     self.presentContactsPicker { chatContactsSelectorViewController in
-                        self.switchCancelHandler(singleIdHandler: completionHandler)
-                        chatContactsSelectorViewController.contactToSend = contact
+                        chatContactsSelectorViewController.sendById = true
                         chatContactsSelectorViewController.contactHandlerJob = completionHandler
                         chatContactsSelectorViewController.message = message
+                        chatContactsSelectorViewController.selectedContacts = [contact]
                         chatContactsSelectorViewController.title = NSLocalizedString("Single contact", comment: "")
                     }
                 } else {
@@ -54,7 +37,6 @@ extension ViewController: ChatMessageBridgeDelegate {
 
     public func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping ChatContactsHandler) {
         presentContactsPicker { chatContactsSelectorViewController in
-            switchCancelHandler(messageMultipleHandler: completionHandler)
             chatContactsSelectorViewController.contactsHandlerJob = completionHandler
             chatContactsSelectorViewController.message = message
             chatContactsSelectorViewController.multipleSelection = true
@@ -62,16 +44,9 @@ extension ViewController: ChatMessageBridgeDelegate {
         }
     }
 
-    func switchCancelHandler(messageHandler: ChatContactHandler? = nil, singleIdHandler: ChatContactHandler? = nil, messageMultipleHandler: ChatContactsHandler? = nil) {
-        messageHandlerObj = messageHandler
-        messageIdHandlerObj = singleIdHandler
-        messageMultipleHandlerObj = messageMultipleHandler
-    }
-
-    func presentContactsPicker(controllerPresented: (() -> Void)? = nil, contactsPickerCreated: (ChatContactsSelectorViewController) -> Void) {
+     func presentContactsPicker(controllerPresented: (() -> Void)? = nil, contactsPickerCreated: (ChatContactsSelectorViewController) -> Void) {
         if let viewController = UIStoryboard(name: "Main", bundle: nil)
                 .instantiateViewController(withIdentifier: "ChatContactsSelectorViewController") as? ChatContactsSelectorViewController {
-            viewController.contactDelegate = self
             contactsPickerCreated(viewController)
             UINavigationController.topViewController()?.present(UINavigationController(rootViewController: viewController), animated: true, completion: controllerPresented)
         }
