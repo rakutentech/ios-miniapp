@@ -29,3 +29,19 @@ extension String {
         return nil
     }
 }
+
+extension NSMutableAttributedString {
+    func bold(_ value: String, fontSize: CGFloat = 14) -> NSMutableAttributedString {
+        let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
+        append(NSAttributedString(string: value, attributes: attributes))
+        return self
+    }
+
+    func normal(_ value: String, fontSize: CGFloat = 14) -> NSMutableAttributedString {
+        let font: UIFont = UIFont.systemFont(ofSize: fontSize)
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
+        append(NSAttributedString(string: value, attributes: attributes))
+        return self
+    }
+}
