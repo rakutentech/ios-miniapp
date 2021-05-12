@@ -37,9 +37,6 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
-    var messageHandlerObj: ChatContactHandler?
-    var messageIdHandlerObj: ChatContactHandler?
-    var messageMultipleHandlerObj: ChatContactsHandler?
 
     override func viewDidLoad() {
         super.viewDidLoad()
