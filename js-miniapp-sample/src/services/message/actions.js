@@ -57,21 +57,26 @@ const sendMessageToContactId = (
   caption: String,
   action: String
 ): Function => {
-  return (dispatch) => {
-    MiniApp.requestCustomPermissions(permissionsList).then((permissions) => {
-      if (permissions[0].status === CustomPermissionStatus.ALLOWED) {
-        const messageToContact: MessageToContact = {
-          text: text,
-          image: image,
-          caption: caption,
-          action: action,
-        };
-        return MiniApp.chatService.sendMessageToContactId(
-          contactId,
-          messageToContact
-        );
+  return async (dispatch) => {
+    const promise = MiniApp.requestCustomPermissions(permissionsList).then(
+      (permissions) => {
+        return permissions[0].status === CustomPermissionStatus.ALLOWED;
       }
-    });
+    );
+    const promiseResult = await promise;
+
+    if (promiseResult === true) {
+      const messageToContact: MessageToContact = {
+        text: text,
+        image: image,
+        caption: caption,
+        action: action,
+      };
+      return MiniApp.chatService.sendMessageToContactId(
+        contactId,
+        messageToContact
+      );
+    }
   };
 };
 
@@ -88,9 +93,7 @@ const sendMessageToMultipleContacts = (
       caption: caption,
       action: action,
     };
-    return MiniApp.chatService.sendMessageToMultipleContacts(
-      messageToContact
-    );
+    return MiniApp.chatService.sendMessageToMultipleContacts(messageToContact);
   };
 };
 

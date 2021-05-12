@@ -150,7 +150,7 @@ const Message = (props: MessageTypeProps) => {
           )
           .then((contactId) => {
             let respMsg = 'Message not sent';
-            if (contactId !== null)
+            if (contactId !== null && contactId !== undefined)
               respMsg = 'Message is sent to contact Id: ' + contactId;
             setMessageResponse({
               show: true,
