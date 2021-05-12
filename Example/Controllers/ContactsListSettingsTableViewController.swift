@@ -22,12 +22,15 @@ class ContactsListSettingsTableViewController: UITableViewController {
         userContactList = getContactList()
         if userContactList?.count ?? 0 == 0 {
             userContactList = []
-            for autogen in 0...9 {
+            repeat {
+                let name = Self.randomFakeName()
                 userContactList?.append(
                     MAContact(id: UUID().uuidString,
-                              name: self.randomFakeName(),
-                              email: "name.\(autogen)@example.com"))
-            }
+                              name: name,
+                              email: Self.fakeMail(with: name)
+                    )
+                )
+            } while (userContactList?.count ?? 10) < 10
             updateContactList(list: self.userContactList)
         }
     }
@@ -37,8 +40,17 @@ class ContactsListSettingsTableViewController: UITableViewController {
         if let userContactList = userContactList, userContactList.indices.contains(indexPath.row) {
             let contact = userContactList[indexPath.row]
             cell.detailTextLabel?.numberOfLines = 3
-            cell.textLabel?.text = contact.name
-            cell.detailTextLabel?.text = "Id: \(contact.id)\nEmail: \(contact.email ?? "")"
+            let titleSize = cell.textLabel?.font.pointSize ?? 12
+            var names = contact.name?.components(separatedBy: " ")
+            cell.textLabel?.attributedText = NSMutableAttributedString()
+                .normal(names?.removeFirst() ?? "", fontSize: titleSize)
+                .bold(" " + (names?.joined() ?? ""), fontSize: titleSize)
+            let size = cell.detailTextLabel?.font.pointSize ?? 10
+            cell.detailTextLabel?.attributedText = NSMutableAttributedString()
+                .bold("\(NSLocalizedString("contact.id", comment: "")): ", fontSize: size)
+                .normal(contact.id, fontSize: size-3)
+                .bold("\n\(NSLocalizedString("contact.email", comment: "")): ", fontSize: size)
+                .normal(contact.email ?? "", fontSize: size)
             if contactDelegate != nil {
                 if allowMultipleSelection {
                     cell.accessoryType = selectedContacts.contains(contact) ? .checkmark : .none
@@ -132,14 +144,16 @@ class ContactsListSettingsTableViewController: UITableViewController {
                                         message: String? = nil,
                                         keyboardType: UIKeyboardType? = .asciiCapable,
                                         textFieldDefaultValue: String?,
-                                        name: String? = "",
-                                        email: String? = "",
+                                        name: String? = randomFakeName(),
+                                        email: String? = nil,
                                         handler: ((UIAlertAction, UITextField?, String, String) -> Void)? = nil) {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             let alert = UIAlertController(title: title,
                 message: message,
                 preferredStyle: .alert)
             var textObserver: NSObjectProtocol?
+
+            let email = email ?? Self.fakeMail(with: name)
 
             let okAction = UIAlertAction(title: MASDKLocale.localize(.ok), style: .default) { (action) in
                 if !alert.textFields![0].text!.isEmpty {
@@ -159,18 +173,18 @@ class ContactsListSettingsTableViewController: UITableViewController {
                 if let type = keyboardType {
                     textField.keyboardType = type
                 }
-                textField.placeholder = "Contact ID"
+                textField.placeholder = NSLocalizedString("contact.id", comment: "")
                 textField.clearButtonMode = .whileEditing
             }
 
             alert.addTextField { (textField) in
                 textField.text = name
-                textField.placeholder = "Name"
+                textField.placeholder = NSLocalizedString("contact.name", comment: "")
                 textField.clearButtonMode = .whileEditing
             }
             alert.addTextField { (textField) in
                 textField.text = email
-                textField.placeholder = "Email"
+                textField.placeholder = NSLocalizedString("contact.email", comment: "")
                 textField.clearButtonMode = .whileEditing
             }
             okAction.isEnabled = !(textFieldDefaultValue?.isEmpty ?? true)
@@ -198,16 +212,20 @@ class ContactsListSettingsTableViewController: UITableViewController {
         }
     }
 
-    func randomFakeName() -> String {
+    class func fakeMail(with name: String?) -> String {
+        name != nil ? name!.replacingOccurrences(of: " ", with: ".", options: .literal, range: nil) + "@example.com" : ""
+    }
+
+    class func randomFakeName() -> String {
         randomFakeFirstName() + " " + randomFakeLastName()
     }
 
-    func randomFakeFirstName() -> String {
+    class func randomFakeFirstName() -> String {
         let firstNameList = ["哲也", "太郎", "ピエール", "レオ", "Yvonne", "Jamie", "Leticia", "Priscilla", "Sidney", "Nancy", "Edmund", "Bill", "Megan"]
         return firstNameList.randomElement()!
     }
 
-    func randomFakeLastName() -> String {
+    class func randomFakeLastName() -> String {
         let lastNameList = ["古室", "楽天", "ビラ", "ジョゼフ", "Andrews", "Casey", "Gross", "Lane", "Thomas", "Patrick", "Strickland", "Nicolas", "Freeman"]
         return lastNameList.randomElement()!
     }
