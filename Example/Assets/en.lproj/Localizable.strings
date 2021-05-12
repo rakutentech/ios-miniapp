@@ -2,6 +2,10 @@
 "miniapp.sdk.ios.error.message.invalid_miniapp_id"      = "Invalid Miniapp ID";
 "Information"                                           = "Information";
 
+"contact.id"                                            = "Contact ID";
+"contact.name"                                          = "Name";
+"contact.email"                                         = "E-Mail address";
+
 "miniapp.sdk.ios.message.wait"                          = "Please wait...";
 "miniapp.sdk.ios.mode.publishing"                       = "Published apps";
 "miniapp.sdk.ios.mode.previewing"                       = "Previewable apps";
