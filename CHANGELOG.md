@@ -11,6 +11,7 @@
 - **Fixed:** Long messages were truncated in sample app
 
 **Sample App**
+- **Feature:** Custom contact name and email can be added now from the settings
 
 ---
 ### 3.2.0 (2021-04-22)
