@@ -36,7 +36,7 @@ class MiniAppDownloader {
 
     func verifyAndDownload(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         if isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId) {
-            if cacheVerifier.verify(appId: appId, version: versionId) {
+            if !miniAppClient.environment.isPreviewMode, cacheVerifier.verify(appId: appId, version: versionId) {
                 cleanApp(appId, for: versionId)
                 let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                 MiniAppLogger.d("\(miniAppStoragePath.absoluteString)", "📂")
