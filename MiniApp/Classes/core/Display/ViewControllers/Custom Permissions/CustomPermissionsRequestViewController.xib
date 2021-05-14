@@ -40,7 +40,7 @@
                         <navigationItem id="CQG-Gc-gTL">
                             <barButtonItem key="rightBarButtonItem" title="Allow" id="guU-mA-ZL2">
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="miniapp.sdk.ui.allow"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="miniapp.sdk.ios.ui.allow"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="saveCustomPermission:" destination="-1" id="8d9-7h-Y7j"/>
