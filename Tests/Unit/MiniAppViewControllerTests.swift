@@ -64,7 +64,7 @@ class MiniAppViewControllerTests: QuickSpec {
 
         }
     }
-    
+
     var timeoutDelaySeconds: Int = 2
 
     var mockAppId: String {
