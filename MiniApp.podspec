@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'MiniApp'
-  s.version      = '3.2.0'
+  s.version      = '3.3.0'
   s.authors      = "Rakuten Ecosystem Mobile"
   s.summary      = "Rakuten's Mini App SDK"
   s.description  = "This open-source library allows you to integrate Mini App ecosystem into your iOS applications. Mini App SDK also facilitates communication between a mini app and the host app via a message bridge."
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '13.0'
   s.default_subspec = 'Core'
   s.static_framework = true
-  s.swift_versions = [5.0, 5.3]
+  s.swift_versions = [5.0, 5.3, 5.4]
 
   s.subspec 'Core' do |core|
     core.source_files = 'MiniApp/Classes/core/**/*.{swift,h,m}'
