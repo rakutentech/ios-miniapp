@@ -5,7 +5,11 @@ Public Protocol that will be used by the Mini App to communicate
 public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareContentDelegate, ChatMessageBridgeDelegate {
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
-    func getUniqueId() -> String
+    func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
+
+    @available(*, deprecated,
+        renamed: "getUniqueId(completionHandler:)")
+    func getUniqueId() -> String?
 
     /// Interface that should be implemented in the host app that handles the code to request any permission and the
     /// result (allowed/denied) should be returned.
@@ -38,6 +42,28 @@ public extension MiniAppMessageDelegate {
 
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
+    }
+
+    func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
+    }
+
+    @available(*, deprecated,
+        renamed: "getUniqueId(completionHandler:)")
+    func getUniqueId() -> String? {
+        let semaphore = DispatchSemaphore(value: 0)
+        var uniqueId: String?
+        getUniqueId { result in
+            switch result {
+            case .success(let id):
+                uniqueId = id
+            default:
+                uniqueId = nil
+            }
+            semaphore.signal()
+        }
+        semaphore.wait()
+        return uniqueId
     }
 }
 

@@ -8,20 +8,19 @@ class ChatContactsSelectorViewController: UIViewController {
             contactsController?.allowMultipleSelection = multipleSelection
         }
     }
-    var contactToSend: MAContact?
+    var sendById = false
     var messageSent = false
     var selectedContacts: [MAContact]? {
         didSet {
-            buttonSend?.isEnabled = (selectedContacts?.count ?? 0) > 0
+            changeButtonState()
         }
     }
 
-    weak var contactDelegate: ContactsListDelegate?
     var contactsHandlerJob: ((Result<[String]?, MASDKError>) -> Void)?
     var contactHandlerJob: ((Result<String?, MASDKError>) -> Void)?
 
     @IBOutlet weak var labelTitle: UILabel?
-    @IBOutlet weak var labelMessage: UILabel?
+    @IBOutlet weak var labelMessage: UITextView?
     @IBOutlet weak var imageView: UIImageView?
     @IBOutlet weak var buttonAction: UIButton?
 
@@ -49,11 +48,22 @@ class ChatContactsSelectorViewController: UIViewController {
         refreshUI()
     }
 
+    fileprivate func sendCancel() {
+        // if the message was not sent by this controller and that we are in a single contact picker that did not pick
+        if !messageSent {
+            contactsHandlerJob?(.success(nil))
+            contactHandlerJob?(.success(nil))
+        }
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        // if the message was not sent by this controller and that we are in a single contact picker that did not pick
-        if !messageSent && !(shouldHideSendButton() && selectedContacts?.count ?? 0 > 0) {
-            contactDelegate?.contactsController(contactsController, didSelect: nil)
+        sendCancel()
+    }
+
+    fileprivate func changeButtonState() {
+        if let button = buttonSend {
+            button.backgroundColor = canSend() ? UIColor(named: "Crimson") : .lightGray
         }
     }
 
@@ -69,15 +79,16 @@ class ChatContactsSelectorViewController: UIViewController {
         if !retrieveImage() {
             imageView?.image = nil
         }
-        self.buttonSend?.isHidden = shouldHideSendButton()
-        if contactToSend == nil {
+        self.buttonSend?.isEnabled = true
+
+        if !sendById {
             self.viewContact?.removeFromSuperview()
         } else {
-            self.buttonSend?.isEnabled = true
-            self.labelContactId?.text = contactToSend?.id
-            self.labelContactName?.text = contactToSend?.name
-            self.labelContactEmail?.text = contactToSend?.email
+            self.labelContactId?.text = selectedContacts?.first?.id
+            self.labelContactName?.text = selectedContacts?.first?.name
+            self.labelContactEmail?.text = selectedContacts?.first?.email
         }
+        changeButtonState()
     }
 
     func retrieveImage() -> Bool {
@@ -93,17 +104,21 @@ class ChatContactsSelectorViewController: UIViewController {
         return false
     }
 
-    func shouldHideSendButton() -> Bool {
-        contactToSend == nil && !multipleSelection
+    fileprivate func canSend() -> Bool {
+        return selectedContacts?.count ?? 0 > 0
     }
 
     @IBAction func sendMessage() {
-        if selectedContacts != nil {
+        if canSend() {
             contactsHandlerJob?(.success(selectedContacts?.map { $0.id }))
-        } else if contactToSend != nil {
-            contactHandlerJob?(.success(contactToSend?.id))
+            contactHandlerJob?(.success(selectedContacts?.first?.id))
+            messageSent = true
+            dismiss(animated: true)
         }
-        messageSent = true
+    }
+
+    @IBAction func cancel() {
+        selectedContacts?.removeAll()
         dismiss(animated: true)
     }
 
@@ -112,11 +127,12 @@ class ChatContactsSelectorViewController: UIViewController {
             UIApplication.shared.open(url)
         }
     }
+
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? ContactsListSettingsTableViewController {
             contactsController = dest
-            contactsController?.contactDelegate = self
+            contactsController?.delegate = self
             contactsController?.allowMultipleSelection = multipleSelection
         }
     }
@@ -125,6 +141,5 @@ class ChatContactsSelectorViewController: UIViewController {
 extension ChatContactsSelectorViewController: ContactsListDelegate {
     func contactsController(_ contactsController: ContactsListSettingsTableViewController?, didSelect contact: [MAContact]?) {
         selectedContacts = contact
-        contactDelegate?.contactsController(contactsController, didSelect: contact)
     }
 }

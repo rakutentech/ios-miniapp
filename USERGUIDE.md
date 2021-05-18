@@ -82,6 +82,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Advanced Features](#advanced-features)
     * [Overriding configuration on runtime](#runtime-conf)
+    * [Overriding localizations](#localization)
     * [Customize history navigation](#custom-navigation)
     * [Opening external links](#Opening-external-links)
     * [Orientation Lock](#orientation-lock)
@@ -151,11 +152,9 @@ Mini App SDK provides default implementation for few interfaces in `MiniAppMessa
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getUniqueId() -> String {
-        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
-            return ""
-        }
-        return deviceId
+    func getUniqueId(completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+        // Implementation to return the Unique ID
+        completionHandler(.success(""))
     }
 }
 ```
@@ -376,9 +375,9 @@ Retrieve the Contact list of the User
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getContacts() -> [MAContact]? {
+    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
         // Implementation to return the contact list
-        return []
+        completionHandler(.success([]))
     }
 }
 ```
@@ -403,7 +402,7 @@ extension ViewController: MiniAppMessageDelegate {
 
 #### Send message to contacts
 ---
-**API Docs:** [MiniAppUserInfoDelegate](https://rakutentech.github.io/ios-miniapp/JavaScript/Chat/ChatMessageBridgeDelegate.html)
+**API Docs:** [ChatMessageBridgeDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/ChatMessageBridgeDelegate.html)
 
 Send a message to a contact from the [user profile contacts list](#user-profile-details-contactlist) using 'MiniAppMessageDelegate' methods.
 Three methods can be triggered by the Mini App, and here are the recommended behaviors for each one:
@@ -429,13 +428,18 @@ extension ViewController: MiniAppMessageDelegate {
   }
 
   public func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-    if let contacts = getContacts(), let contact = contacts.first(where: { $0.id == contactId }) {
-      presentContactsPicker { chatContactsSelectorViewController in
-        // insert here code to send the message
-        completionHandler(.success(contact.id))
+    getContacts { result in
+      switch result {
+      case success(let contacts):
+        if let contact = contacts.first(where: { $0.id == contactId }) {
+          // insert here code to send the message
+          completionHandler(.success(contact.id))
+        } else {
+          fallthrough
+        }
+      default:
+        completionHandler(.failure(.invalidContactId))
       }
-    } else {
-      completionHandler(.success(contact.id))
     }
   }
 
@@ -635,6 +639,38 @@ class Config: NSObject {
 ```
 *NOTE:* `RMAHostAppUserAgentInfo` cannot be configured at run time.
 
+<a id="localization"></a>
+
+#### Overriding localizations
+
+Mini App SDK localization is based on [iOS framework localizable strings system](https://help.apple.com/xcode/mac/current/#/dev3255e0273).
+In the following table, you can find all the keys that the SDK is using to translate its texts to your UI language.
+Mini App SDK will look in the host app `Localizable.strings` for these keys to find local texts. If these keys are not present, a default text is provided.
+
+|                     Localization key                      | Usage | Default text | Parameters |
+|-----------------------------------------------------------|-------|:------------:|------------|
+| `miniapp.sdk.ios.alert.title.ok`                              | alert dialogs validation button | OK | - |
+| `miniapp.sdk.ios.alert.title.cancel`                          | alert dialogs cancellation button | Cancel | - |
+| `miniapp.sdk.ios.ui.allow`                                    | permission screen authorization validation | Allow | - |
+| `miniapp.sdk.all.ui.save`                                     | permission screen denial validation | Save | - |
+| `miniapp.sdk.ios.firstlaunch.footer`                          | used at the bottom of the permissions validation screen | %@<sup>[1]</sup> wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings | <sup>[1]</sup> Mini App name |
+| `miniapp.sdk.ios.error.message.server`                        | error reporting (decription) | Server returned an error. %@<sup>[1]</sup>: %@<sup>[2]</sup> | <sup>[1]</sup> Error code<br/><sup>[2]</sup> Error message|
+| `miniapp.sdk.ios.error.message.invalid_url`                   | error reporting (decription) | URL is invalid. | - |
+| `miniapp.sdk.ios.error.message.invalid_app_id`                | error reporting (decription) | Provided Mini App ID is invalid. | - |
+| `miniapp.sdk.ios.error.message.invalid_version_id`            | error reporting (decription) | Provided Mini App Version ID is invalid. | - |
+| `miniapp.sdk.ios.error.message.invalid_contact_id`            | error reporting (decription) | Provided contact ID is invalid. | - |
+| `miniapp.sdk.ios.error.message.invalid_response`              | error reporting (decription) | Invalid response received from server. | - |
+| `miniapp.sdk.ios.error.message.download_failed`               | error reporting (decription) | Failed to download the mini app. | - |
+| `miniapp.sdk.ios.error.message.miniapp_meta_data_required_permisions_failure` | error reporting (decription) | Mini App has not been granted all of the required permissions. | - |
+| `miniapp.sdk.ios.error.message.unknown`                       | error reporting (decription) | Unknown error occurred in %@<sup>[1]</sup> domain with error code %@<sup>[2]</sup>: %@<sup>[3]</sup> | <sup>[1]</sup> Error domain<br/><sup>[2]</sup> Error code<br/><sup>[3]</sup> Error message |
+| `miniapp.sdk.ios.error.message.host_app`                      | error reporting (domain) | Host app Error | - |
+| `miniapp.sdk.ios.error.message.failed_to_conform_to_protocol` | error reporting (decription) | Host app failed to implement required interface | - |
+| `miniapp.sdk.ios.error.message.no_published_version`          | error reporting (decription) | Server returned no published versions for the provided Mini App ID. | - |
+| `miniapp.sdk.ios.error.message.miniapp_id_not_found`          | error reporting (decription) | Server could not find the provided Mini App ID. | - |
+| `miniapp.sdk.ios.error.message.unknown_server_error`          | error reporting (decription) | Unknown server error occurred | - |
+| `miniapp.sdk.ios.error.message.ad_not_loaded`                 | error reporting (decription) | Ad %@<sup>[1]</sup> is not loaded yet | <sup>[1]</sup>Ad id |
+| `miniapp.sdk.ios.error.message.ad_loading`                    | error reporting (decription) | Previous %@<sup>[1]</sup> is still in progress | <sup>[1]</sup>Ad id |
+| `miniapp.sdk.ios.error.message.ad_loaded`                     | error reporting (decription) | Ad %@<sup>[1]</sup> is already loaded | <sup>[1]</sup>Ad id |
 <a id="custom-navigation"></a>
 
 #### Add a web navigation interface to the MiniApp view

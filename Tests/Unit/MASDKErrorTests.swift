@@ -56,7 +56,7 @@ class MASDKErrorTests: QuickSpec {
                 }
 
                 it("will convert return unknown error") {
-                    let originalError = NSError(domain: "test_domain", code: 1, userInfo: [self.description: "test_description"])
+                    let originalError = NSError(domain: "test_domain", code: 1, userInfo: [NSLocalizedDescriptionKey: "test_description"])
                     let newError = MASDKError.unknownError(domain: "test_domain", code: 1, description: "test_description")
 
                     expect(MASDKError.fromError(error: originalError).localizedDescription).to(equal(newError.localizedDescription))

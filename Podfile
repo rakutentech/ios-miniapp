@@ -15,8 +15,8 @@ target sdk_name + '_Example' do
 
   target sdk_name + '_Tests' do
     inherit! :search_paths
-    pod 'Quick'
-    pod 'Nimble'
+    pod 'Nimble', '~>9.0.0'
+    pod 'Quick', '~>3.1.2'
   end
 end
 

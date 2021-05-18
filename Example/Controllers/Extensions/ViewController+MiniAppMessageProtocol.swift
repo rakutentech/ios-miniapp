@@ -25,17 +25,17 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
         }
     }
 
-    func getUniqueId() -> String {
+    func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
-            return ""
+            return completionHandler(.failure(.unknownError(domain: "Unknown Error", code: 1, description: "Failed to retrieve UniqueID")))
         }
-        return deviceId
+        completionHandler(.success(deviceId))
     }
 
     func displayLocationDisabledAlert() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let alert = UIAlertController(title: "Location Services are disabled", message: "Please enable Location Services in your Settings", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let okAction = UIAlertAction(title: MASDKLocale.localize(.ok), style: .default, handler: nil)
             alert.addAction(okAction)
             UIViewController.topViewController()?.present(alert, animated: true, completion: nil)
         }
