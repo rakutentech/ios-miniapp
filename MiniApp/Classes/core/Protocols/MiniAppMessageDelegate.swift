@@ -151,58 +151,29 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
     }
 }
 
-///// Enumeration that is used to return  Access Token error
-//public enum MASDKAccessTokenError: Error {
-//
-//    /// Host app failed to implement required interface
-//    case failedToConformToProtocol
-//
-//    case audienceNotSupportedError
-//
-//    case scopesNotSupportedError
-//
-//    case authorizationFailureError(description: String)
-//
-//    case error(description: String)
-//
-//    /// Detailed Description for every MASDKCustomPermissionError
-//    public var description: String {
-//        switch self {
-//        case .failedToConformToProtocol:
-//            return "Host app failed to implement required interface"
-//        case .audienceNotSupportedError:
-//            return "The value passed for 'audience' is not supported."
-//        case .scopesNotSupportedError:
-//            return "The value passed for 'scopes' is not supported."
-//        case .authorizationFailureError(let description):
-//            return description
-//        case .error(let description):
-//            return description
-//        }
-//    }
-//}
-
 /// Enumeration that is used to return  Access Token error
-public enum MASDKAccessTokenError: String {
-    public typealias RawValue = String
-    
+public enum MASDKAccessTokenError: Error, MiniAppErrorProtocol {
 
     /// Host app failed to implement required interface
     case failedToConformToProtocol
 
+    /// Requested Audience is not supported
     case audienceNotSupportedError
 
+    /// Requested Scope is not supported
     case scopesNotSupportedError
 
+    /// Authorization failed and the reason will be shared by the host app
     case authorizationFailureError(description: String)
 
+    /// Unknown/Custom error
     case error(description: String)
 
-    /// Detailed Description for every MASDKCustomPermissionError
+    /// Detailed Description for every MASDKAccessTokenError
     public var description: String {
         switch self {
         case .failedToConformToProtocol:
-            return "Host app failed to implement required interface"
+            return MASDKLocale.localize(.failedToConformToProtocol)
         case .audienceNotSupportedError:
             return "The value passed for 'audience' is not supported."
         case .scopesNotSupportedError:
@@ -211,6 +182,22 @@ public enum MASDKAccessTokenError: String {
             return description
         case .error(let description):
             return description
+        }
+    }
+
+    /// Title of the error
+    public var name: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return "FailedToConformToProtocol"
+        case .audienceNotSupportedError:
+            return "AudienceNotSupportedError"
+        case .scopesNotSupportedError:
+            return "ScopesNotSupportedError"
+        case .authorizationFailureError:
+            return "AuthorizationFailureError"
+        case .error:
+            return "Error"
         }
     }
 }

@@ -56,7 +56,9 @@ public extension MiniAppUserInfoDelegate {
         return contacts
     }
 
-    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
+    func getAccessToken(miniAppId: String,
+                        scopes: MASDKAccessTokenScopes,
+                        completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 

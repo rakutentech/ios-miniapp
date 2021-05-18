@@ -26,15 +26,14 @@ extension ViewController: MiniAppUserInfoDelegate {
     func getAccessToken(miniAppId: String,
                         scopes: MASDKAccessTokenScopes,
                         completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
-        completionHandler(.failure(.failedToConformToProtocol))
-//        var resultToken = "ACCESS_TOKEN"
-//        var resultDate = Date()
-//        let resultScopes = scopes
-//
-//        if let tokenInfo = getTokenInfo() {
-//           resultToken = tokenInfo.tokenString
-//           resultDate = tokenInfo.expiryDate
-//        }
-//        completionHandler(.success(.init(accessToken: resultToken, expirationDate: resultDate, scopes: resultScopes)))
+        var resultToken = "ACCESS_TOKEN"
+        var resultDate = Date()
+        let resultScopes = scopes
+
+        if let tokenInfo = getTokenInfo() {
+           resultToken = tokenInfo.tokenString
+           resultDate = tokenInfo.expiryDate
+        }
+        completionHandler(.success(.init(accessToken: resultToken, expirationDate: resultDate, scopes: resultScopes)))
     }
 }
