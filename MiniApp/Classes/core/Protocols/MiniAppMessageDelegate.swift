@@ -150,3 +150,67 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
         }
     }
 }
+
+///// Enumeration that is used to return  Access Token error
+//public enum MASDKAccessTokenError: Error {
+//
+//    /// Host app failed to implement required interface
+//    case failedToConformToProtocol
+//
+//    case audienceNotSupportedError
+//
+//    case scopesNotSupportedError
+//
+//    case authorizationFailureError(description: String)
+//
+//    case error(description: String)
+//
+//    /// Detailed Description for every MASDKCustomPermissionError
+//    public var description: String {
+//        switch self {
+//        case .failedToConformToProtocol:
+//            return "Host app failed to implement required interface"
+//        case .audienceNotSupportedError:
+//            return "The value passed for 'audience' is not supported."
+//        case .scopesNotSupportedError:
+//            return "The value passed for 'scopes' is not supported."
+//        case .authorizationFailureError(let description):
+//            return description
+//        case .error(let description):
+//            return description
+//        }
+//    }
+//}
+
+/// Enumeration that is used to return  Access Token error
+public enum MASDKAccessTokenError: String {
+    public typealias RawValue = String
+    
+
+    /// Host app failed to implement required interface
+    case failedToConformToProtocol
+
+    case audienceNotSupportedError
+
+    case scopesNotSupportedError
+
+    case authorizationFailureError(description: String)
+
+    case error(description: String)
+
+    /// Detailed Description for every MASDKCustomPermissionError
+    public var description: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return "Host app failed to implement required interface"
+        case .audienceNotSupportedError:
+            return "The value passed for 'audience' is not supported."
+        case .scopesNotSupportedError:
+            return "The value passed for 'scopes' is not supported."
+        case .authorizationFailureError(let description):
+            return description
+        case .error(let description):
+            return description
+        }
+    }
+}
