@@ -359,9 +359,9 @@ class MockMessageInterface: MiniAppMessageDelegate {
         completionHandler(.success(mockContactList))
     }
 
-    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
         guard let accessToken =  mockAccessToken, !accessToken.isEmpty else {
-            return completionHandler(.failure(.unknownError))
+            return completionHandler(.failure(.error(description: "Unable to return Access Token")))
         }
         return completionHandler(.success(MATokenInfo(accessToken: accessToken, expirationDate: Date(), scopes: scopes)))
     }
