@@ -169,7 +169,7 @@ function Ads() {
         label={label}
         className={classes.textfield}
         value={value}
-        onChange={(e) => onChange.call(e.currentTarget.value)}
+        onChange={(e) => onChange.call(null, e.currentTarget.value)}
         variant="outlined"
         color="primary"
         inputProps={{

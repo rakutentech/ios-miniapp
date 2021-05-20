@@ -77,7 +77,7 @@ const FileUploader = () => {
               <TableRow>
                 <TableCell>Name</TableCell>
                 <TableCell align="left">Type</TableCell>
-                <TableCell align="right">Size(KB)</TableCell>
+                <TableCell align="right">Size(Bytes)</TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
