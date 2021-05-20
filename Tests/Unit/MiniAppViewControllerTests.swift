@@ -38,7 +38,7 @@ class MiniAppViewControllerTests: QuickSpec {
                 it("retry button is pressed with valid config") {
                     let miniAppVc = MockMiniAppViewController(title: "MiniAppTest", appId: self.mockAppId, config: self.emptyConfig, messageDelegate: mockMessageInterface)
                     miniAppVc.setupMiniApp()
-                    miniAppVc.setup()
+                    miniAppVc.setupFallback()
                     miniAppVc.resultState = .error
                     expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
                     expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(self.timeoutDelaySeconds))
@@ -64,7 +64,7 @@ class MiniAppViewControllerTests: QuickSpec {
                 it("retry button is pressed with invalid config") {
                     let miniAppVc = MiniAppViewController(title: "MiniAppTest", appId: self.mockAppId, config: self.emptyConfig, messageDelegate: mockMessageInterface)
                     miniAppVc.setupMiniApp()
-                    miniAppVc.setup()
+                    miniAppVc.setupFallback()
                     expect(miniAppVc.state).to(equal(MiniAppViewController.ViewState.loading))
                     expect(miniAppVc.state).toEventually(equal(MiniAppViewController.ViewState.error), timeout: .seconds(self.timeoutDelaySeconds))
 

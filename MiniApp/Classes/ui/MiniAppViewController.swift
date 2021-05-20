@@ -89,7 +89,7 @@ public class MiniAppViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupMiniApp()
-        setup()
+        setupFallback()
     }
 
     func setupUI() {
@@ -156,7 +156,7 @@ public class MiniAppViewController: UIViewController {
             )
     }
 
-    func setup() {
+    func setupFallback() {
         fallbackView.onRetry = { [weak self] in
             guard let self = self else { return }
             self.setupMiniApp()
