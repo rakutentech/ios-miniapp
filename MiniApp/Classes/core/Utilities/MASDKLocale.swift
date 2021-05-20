@@ -26,6 +26,9 @@ public struct MASDKLocale {
         case adNotLoadedError                       = "miniapp.sdk.ios.error.message.ad_not_loaded"
         case adLoadingError                         = "miniapp.sdk.ios.error.message.ad_loading"
         case adLoadedError                          = "miniapp.sdk.ios.error.message.ad_loaded"
+        case uiNavButtonClose                       = "miniapp.sdk.ios.ui.nav.button.close"
+        case uiFallbackTitle                        = "miniapp.sdk.ios.ui.fallback.title"
+        case uiFallbackButtonRetry                  = "miniapp.sdk.ios.ui.fallback.button.retry"
     }
 
     public static func localize(bundle path: String? = nil, _ key: String, _ params: CVarArg...) -> String {
