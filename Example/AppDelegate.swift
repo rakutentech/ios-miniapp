@@ -4,6 +4,7 @@ import AVKit
 import GoogleMobileAds
 import AppCenter
 import AppCenterCrashes
+import RAnalytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppCenter.start(withAppSecret: Bundle.main.value(for: "AppCenterSecret"), services: [Crashes.self])
         self.window?.tintColor = UIColor(named: "Crimson")
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        AnalyticsManager.shared().set(loggingLevel: .debug)
         return true
     }
 
