@@ -42,6 +42,10 @@ public struct MASDKLocale {
     }
 
     public static func localize(bundle path: String? = nil, _ key: LocalizableKey, _ params: CVarArg...) -> String {
-        localize(bundle: path, key.rawValue, params)
+        if params.count > 0 {
+            return localize(bundle: path, key.rawValue, params.first!)
+        } else {
+            return localize(bundle: path, key.rawValue, params)
+        }
     }
 }
