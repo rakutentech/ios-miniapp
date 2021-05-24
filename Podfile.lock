@@ -41,6 +41,8 @@ PODS:
     - MiniApp/Core
   - MiniApp/Core (3.2.0):
     - ZIPFoundation (= 0.9.12)
+  - MiniApp/UI (3.1.0):
+    - MiniApp/Core
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
