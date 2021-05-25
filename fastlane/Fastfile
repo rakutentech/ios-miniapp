@@ -47,6 +47,10 @@ platform :ios do
       build_number: ENV["BITRISE_BUILD_NUMBER"] # set a specific number
     )
 
+    # configure Analytics SDK
+    set_info_plist_value(path: "./Example/Info.plist", key: "RATAccountIdentifier", value: ENV['RAT_ACCOUNT_IDENTIFIER'].to_i)
+    set_info_plist_value(path: "./Example/Info.plist", key: "RATAppIdentifier", value: ENV['RAT_APP_IDENTIFIER'].to_i)
+
     xcodebuild(
       archive: true,
       archive_path: "artifacts/MiniApp-Example.xcarchive",
