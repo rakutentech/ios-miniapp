@@ -103,7 +103,7 @@ extension ViewController: MiniAppNavigationDelegate {
             switch error {
             case .metaDataFailure:
                 guard let miniAppInfo = currentMiniAppInfo else {
-                    errorMessage =  MASDKLocale.localize("miniapp.sdk.ios.error.message.metadata", MASDKLocale.localize(.downloadFailed))
+                    errorMessage =  String(format: MASDKLocale.localize("miniapp.sdk.ios.error.message.metadata"), MASDKLocale.localize(.downloadFailed))
                     return
                 }
                 self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)

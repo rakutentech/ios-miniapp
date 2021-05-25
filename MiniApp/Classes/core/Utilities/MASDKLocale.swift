@@ -28,24 +28,35 @@ public struct MASDKLocale {
         case adLoadedError                          = "miniapp.sdk.ios.error.message.ad_loaded"
     }
 
+    @available(*, deprecated, message: "This method is strongly dependant to the string format parameters and might lead to a crash", renamed:"localize(bundle:_:)")
     public static func localize(bundle path: String? = nil, _ key: String, _ params: CVarArg...) -> String {
-        let localizedString: String
-        if let path = path {
-            localizedString = key.localizedString(path: path)
-        } else {
-            localizedString = key.localizedString()
-        }
+        let localizedString = Self.localize(bundle: path, key)
         if params.count > 0 {
             return String(format: localizedString, arguments: params)
         }
         return localizedString
     }
 
+    public static func localize(bundle path: String? = nil, _ key: String) -> String {
+        let localizedString: String
+        if let path = path {
+            localizedString = key.localizedString(path: path)
+        } else {
+            localizedString = key.localizedString()
+        }
+        return localizedString
+    }
+
+    @available(*, deprecated, message: "This method is strongly dependant to the string format parameters and might lead to a crash", renamed:"localize(bundle:_:)")
     public static func localize(bundle path: String? = nil, _ key: LocalizableKey, _ params: CVarArg...) -> String {
         if params.count > 0 {
             return localize(bundle: path, key.rawValue, params.first!)
         } else {
-            return localize(bundle: path, key.rawValue, params)
+            return localize(bundle: path, key.rawValue)
         }
+    }
+
+    public static func localize(bundle path: String? = nil, _ key: LocalizableKey) -> String {
+        localize(bundle: path, key.rawValue)
     }
 }

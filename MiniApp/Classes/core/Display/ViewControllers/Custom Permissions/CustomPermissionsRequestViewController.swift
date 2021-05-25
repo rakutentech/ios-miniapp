@@ -51,7 +51,7 @@ class CustomPermissionsRequestViewController: UIViewController {
     }
 
     func addFooterInfo() {
-        self.footerLabel.text = MASDKLocale.localize(.firstLaunchFooter, miniAppTitle)
+        footerLabel.text = String(format: MASDKLocale.localize(.firstLaunchFooter), miniAppTitle)
     }
 }
 

@@ -64,7 +64,7 @@ extension MASDKError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .serverError(let code, let message):
-            return MASDKLocale.localize(.serverError, code, message)
+            return String(format: MASDKLocale.localize(.serverError), "\(code)", message)
         case .invalidURLError:
             return MASDKLocale.localize(.invalidUrl)
         case .invalidAppId:
@@ -87,7 +87,7 @@ extension MASDKError: LocalizedError {
             return MASDKLocale.localize(.invalidContactId)
 
         case .unknownError(let domain, let code, let description):
-            return MASDKLocale.localize(.unknownError, domain, code, description)
+            return String(format: MASDKLocale.localize(.unknownError), domain, "\(code)", description)
         }
     }
 }
