@@ -19,7 +19,7 @@ public protocol MiniAppUserInfoDelegate: class {
     /// Interface that is used to retrieve the Token Info
     func getAccessToken(miniAppId: String,
                         scopes: MASDKAccessTokenScopes,
-                        completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
+                        completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void)
 
     /// Old interface that was used to retrieve the Token Info. Use of a MASDKAccessTokenScopes is now mandatory. Will be removed in v4.0+
     @available(*, deprecated, renamed:"getAccessToken(miniAppId:scopes:completionHandler:)")
@@ -56,7 +56,9 @@ public extension MiniAppUserInfoDelegate {
         return contacts
     }
 
-    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String,
+                        scopes: MASDKAccessTokenScopes,
+                        completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 

@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### 3.x.x (2021-06-DD)
+
+**SDK**
+
+- **Updated:** Updated `getAccessToken` result with new Error type i.e `MASDKAccessTokenError` to support more errors
+
+---
 ### 3.x.x (2021-05-DD)
 
 **SDK**
