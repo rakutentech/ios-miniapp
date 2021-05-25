@@ -37,6 +37,12 @@ public struct MASDKLocale {
         return localizedString
     }
 
+    /// Method to retrieve a localizable from its key
+    ///
+    /// - Parameters:
+    ///   - path: the optional path to the bundle where the strings file is located
+    ///   - key: the key that defines the localizable in the strings file
+    /// - Returns:
     public static func localize(bundle path: String? = nil, _ key: String) -> String {
         let localizedString: String
         if let path = path {
@@ -56,6 +62,12 @@ public struct MASDKLocale {
         }
     }
 
+    /// Method to retrieve a MiniApp SDK localizable from its key
+    ///
+    /// - Parameters:
+    ///   - path: the optional path to the bundle where the strings file is located
+    ///   - key: a LocalizableKey that defines the localizable in the strings file
+    /// - Returns:
     public static func localize(bundle path: String? = nil, _ key: LocalizableKey) -> String {
         localize(bundle: path, key.rawValue)
     }
