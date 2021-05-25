@@ -9,6 +9,7 @@
 - **Feature:** Mini App SDK now supports code updates in preview mode
 - **Deprecated:** `getUniqueId()` in `MiniAppMessageDelegate` protocol is deprecated. You should use `getUniqueId(completionHandler:)` instead
 - **Deprecated:** `getContacts()` in `MiniAppUserInfoDelegate` protocol is deprecated. You should use `getContacts(completionHandler:)` instead
+- **Deprecated:** `localize(bundle:_:params:)` in `MASDKLocale` class is deprecated. You should use `localize(bundle:_:)` instead
 - **Fixed:** Long messages were truncated in sample app
 
 **Sample App**
