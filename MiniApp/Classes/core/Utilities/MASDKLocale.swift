@@ -7,7 +7,6 @@ public struct MASDKLocale {
         case cancel                                 = "miniapp.sdk.ios.alert.title.cancel"
         case allow                                  = "miniapp.sdk.ios.ui.allow"
         case save                                   = "miniapp.sdk.all.ui.save"
-        case customSettingsFooter                   = "miniapp.sdk.ios.customsettingsfooter"
         case firstLaunchFooter                      = "miniapp.sdk.ios.firstlaunch.footer"
         case serverError                            = "miniapp.sdk.ios.error.message.server"
         case invalidUrl                             = "miniapp.sdk.ios.error.message.invalid_url"
