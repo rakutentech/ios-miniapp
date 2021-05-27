@@ -47,8 +47,8 @@ public class MiniAppSdkConfig {
                 rasProjectId: String? = nil,
                 subscriptionKey: String? = nil,
                 hostAppVersion: String? = nil,
-                isPreviewMode: Bool? = true) {
-        self.isPreviewMode = isPreviewMode ?? true
+                isPreviewMode: Bool? = false) {
+        self.isPreviewMode = isPreviewMode ?? false
         self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
         self.rasProjectId = rasProjectId?.count ?? 0 > 0 ? rasProjectId  : nil
         self.subscriptionKey = subscriptionKey?.count ?? 0 > 0 ? subscriptionKey : nil

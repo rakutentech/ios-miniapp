@@ -23,7 +23,7 @@ class MiniAppSdkConfigTests: QuickSpec {
                     expect(config.rasProjectId).to(beNil())
                     expect(config.subscriptionKey).to(beNil())
                     expect(config.hostAppVersion).to(beNil())
-                    expect(config.isPreviewMode).to(be(true))
+                    expect(config.isPreviewMode).to(be(false))
                 }
             }
             context("when MiniAppSdkConfig is initialized with default constructor and value is set") {

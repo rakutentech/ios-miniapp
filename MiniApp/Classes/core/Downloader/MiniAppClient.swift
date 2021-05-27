@@ -20,7 +20,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
     weak var delegate: MiniAppDownloaderProtocol?
 
-    convenience init(baseUrl: String? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = true) {
+    convenience init(baseUrl: String? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = false) {
         self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasProjectId: rasProjectId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: isPreviewMode))
     }
 
@@ -37,7 +37,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.environment.customProjectId = config?.rasProjectId
         self.environment.customSubscriptionKey = config?.subscriptionKey
         self.environment.customAppVersion = config?.hostAppVersion
-        self.environment.customIsPreviewMode = config?.isPreviewMode ?? true
+        self.environment.customIsPreviewMode = config?.isPreviewMode
     }
 
     lazy var session: SessionProtocol = {
