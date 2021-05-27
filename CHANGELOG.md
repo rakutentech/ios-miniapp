@@ -1,12 +1,11 @@
 ## CHANGELOG
 
-### 3.3.0 (2021-05-25)
+### 3.3.0 (2021-05-27)
 
 **SDK**
 
 - **Feature:** Added `rakuten.miniapp.user.action.SEND_MESSAGE` custom permission
 - **Feature:** Support Email addresses (`mailto:`) hyperlinks from a mini app. See [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
-- **Feature:** Mini App SDK now supports code updates in preview mode
 - **Deprecated:** `getUniqueId()` in `MiniAppMessageDelegate` protocol is deprecated. You should use `getUniqueId(completionHandler:)` instead
 - **Deprecated:** `getContacts()` in `MiniAppUserInfoDelegate` protocol is deprecated. You should use `getContacts(completionHandler:)` instead
 - **Deprecated:** `localize(bundle:_:params:)` in `MASDKLocale` class is deprecated. You should use `localize(bundle:_:)` instead
