@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LocalizableKey Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../../js/jquery.min.js" defer></script>
+    <script src="../../js/jazzy.js" defer></script>
+    
+    <script src="../../js/lunr.min.js" defer></script>
+    <script src="../../js/typeahead.jquery.js" defer></script>
+    <script src="../../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Enum/LocalizableKey" class="dashAnchor"></a>
+
+    <a title="LocalizableKey Enumeration Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../../index.html">
+          MiniApp 3.3.0 Docs
+        </a>
+         (68% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../../index.html">MiniApp Reference</a>
+      <img class="carat" src="../../img/carat.png" />
+      LocalizableKey Enumeration Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../../Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../changelog.html">CHANGELOG</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../dev.html">DEV</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../readme.html">README</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../userguide.html">USERGUIDE</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/AdMobDisplayer.html">AdMobDisplayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MAContact.html">MAContact</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MATokenInfo.html">MATokenInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MessageToContact.html">MessageToContact</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MiniApp.html">MiniApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MiniAppAnalytics.html">MiniAppAnalytics</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MiniAppAnalyticsLoader.html">MiniAppAnalyticsLoader</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MASDKAdsDisplayError.html">MASDKAdsDisplayError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MASDKError.html">MASDKError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MASDKPermissionError.html">MASDKPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MASDKPermissionResponse.html">MASDKPermissionResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MiniAppCustomPermissionGrantedStatus.html">MiniAppCustomPermissionGrantedStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MiniAppCustomPermissionType.html">MiniAppCustomPermissionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MiniAppDevicePermissionType.html">MiniAppDevicePermissionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Protocols/ChatMessageBridgeDelegate.html">ChatMessageBridgeDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Protocols/MiniAppAdDisplayDelegate.html">MiniAppAdDisplayDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Protocols/MiniAppNavigationBarDelegate.html">MiniAppNavigationBarDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Protocols/MiniAppNavigationDelegate.html">MiniAppNavigationDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Protocols/MiniAppShareContentDelegate.html">MiniAppShareContentDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Structs/MASDKAccessTokenScopes.html">MASDKAccessTokenScopes</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Structs/MASDKLocale.html">MASDKLocale</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Structs/MASDKLocale/LocalizableKey.html">– LocalizableKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Structs/MiniAppInfo.html">MiniAppInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Structs/MiniAppManifest.html">MiniAppManifest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Structs/MiniAppReward.html">MiniAppReward</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Structs/MiniAppShareContent.html">MiniAppShareContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Structs/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Typealiases.html#/s:7MiniApp0aB25NavigationResponseHandlera">MiniAppNavigationResponseHandler</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            <h1>LocalizableKey</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">LocalizableKey</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                </div>
+              </div>
+            <p>This enum provides MiniApp UI and error related strings keys</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO2okyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/ok" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO2okyA2EmF">ok</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">ok</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.alert.title.ok"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO6cancelyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/cancel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO6cancelyA2EmF">cancel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">cancel</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.alert.title.cancel"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO5allowyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/allow" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO5allowyA2EmF">allow</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">allow</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.ui.allow"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO4saveyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/save" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO4saveyA2EmF">save</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">save</span> <span class="o">=</span> <span class="s">"miniapp.sdk.all.ui.save"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO20customSettingsFooteryA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/customSettingsFooter" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO20customSettingsFooteryA2EmF">customSettingsFooter</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">customSettingsFooter</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.customsettingsfooter"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO17firstLaunchFooteryA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/firstLaunchFooter" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO17firstLaunchFooteryA2EmF">firstLaunchFooter</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">firstLaunchFooter</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.firstlaunch.footer"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO11serverErroryA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/serverError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO11serverErroryA2EmF">serverError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">serverError</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.server"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO10invalidUrlyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidUrl" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO10invalidUrlyA2EmF">invalidUrl</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidUrl</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.invalid_url"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO07invalidB2IdyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidAppId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO07invalidB2IdyA2EmF">invalidAppId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidAppId</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.invalid_app_id"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO16invalidVersionIdyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidVersionId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO16invalidVersionIdyA2EmF">invalidVersionId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidVersionId</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.invalid_version_id"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO16invalidContactIdyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidContactId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO16invalidContactIdyA2EmF">invalidContactId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidContactId</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.invalid_contact_id"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO15invalidResponseyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidResponse" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO15invalidResponseyA2EmF">invalidResponse</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidResponse</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.invalid_response"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO14downloadFailedyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/downloadFailed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO14downloadFailedyA2EmF">downloadFailed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">downloadFailed</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.download_failed"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO18noPublishedVersionyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/noPublishedVersion" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO18noPublishedVersionyA2EmF">noPublishedVersion</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">noPublishedVersion</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.no_published_version"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO17miniappIdNotFoundyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/miniappIdNotFound" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO17miniappIdNotFoundyA2EmF">miniappIdNotFound</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">miniappIdNotFound</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.miniapp_id_not_found"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO34metaDataRequiredPermissionsFailureyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/metaDataRequiredPermissionsFailure" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO34metaDataRequiredPermissionsFailureyA2EmF">metaDataRequiredPermissionsFailure</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">metaDataRequiredPermissionsFailure</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.miniapp_meta_data_required_permissions_failure"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO12unknownErroryA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/unknownError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO12unknownErroryA2EmF">unknownError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">unknownError</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.unknown"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO04hostB5ErroryA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/hostAppError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO04hostB5ErroryA2EmF">hostAppError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">hostAppError</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.host_app"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO015failedToConformG8ProtocolyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/failedToConformToProtocol" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO015failedToConformG8ProtocolyA2EmF">failedToConformToProtocol</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">failedToConformToProtocol</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.failed_to_conform_to_protocol"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO18unknownServerErroryA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/unknownServerError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO18unknownServerErroryA2EmF">unknownServerError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">unknownServerError</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.unknown_server_error"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO16adNotLoadedErroryA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/adNotLoadedError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO16adNotLoadedErroryA2EmF">adNotLoadedError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">adNotLoadedError</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.ad_not_loaded"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO14adLoadingErroryA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/adLoadingError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO14adLoadingErroryA2EmF">adLoadingError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">adLoadingError</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.ad_loading"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO13adLoadedErroryA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/adLoadedError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO13adLoadedErroryA2EmF">adLoadedError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">adLoadedError</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.error.message.ad_loaded"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-05-27)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

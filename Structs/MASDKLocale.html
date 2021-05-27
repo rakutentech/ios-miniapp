@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppDevicePermissionType Enumeration Reference</title>
+    <title>MASDKLocale Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Enum/MiniAppDevicePermissionType" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Struct/MASDKLocale" class="dashAnchor"></a>
 
-    <a title="MiniAppDevicePermissionType Enumeration Reference"></a>
+    <a title="MASDKLocale Structure Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -38,7 +38,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">MiniApp Reference</a>
       <img class="carat" src="../img/carat.png" />
-      MiniAppDevicePermissionType Enumeration Reference
+      MASDKLocale Structure Reference
     </p>
 
     <div class="content-wrapper">
@@ -215,15 +215,15 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>MiniAppDevicePermissionType</h1>
+            <h1>MASDKLocale</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MiniAppDevicePermissionType</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MASDKLocale</span></code></pre>
 
                 </div>
               </div>
-            <p>List of Device Permissions supported by the SDK that can be requested by a Mini app</p>
+            <p>Undocumented</p>
 
           </div>
         </section>
@@ -235,9 +235,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB20DevicePermissionTypeO8locationyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/location" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB20DevicePermissionTypeO8locationyA2CmF">location</a>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO"></a>
+                    <a name="//apple_ref/swift/Enum/LocalizableKey" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO">LocalizableKey</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -245,16 +245,195 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Device Location permission type. Host app is expected to implement the logic only for requesting the location permission.</p>
+                        <p>This enum provides MiniApp UI and error related strings keys</p>
+
+                        <a href="../Structs/MASDKLocale/LocalizableKey.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">LocalizableKey</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV8localize6bundle__S2SSg_SSs7CVarArg_pdtFZ"></a>
+                    <a name="//apple_ref/swift/Method/localize(bundle:_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV8localize6bundle__S2SSg_SSs7CVarArg_pdtFZ">localize(bundle:<wbr>_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">location</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">localize</span><span class="p">(</span><span class="n">bundle</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kt">CVarArg</span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                         </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV8localize6bundle_S2SSg_SStFZ"></a>
+                    <a name="//apple_ref/swift/Method/localize(bundle:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV8localize6bundle_S2SSg_SStFZ">localize(bundle:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Method to retrieve a localizable from its key</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">localize</span><span class="p">(</span><span class="n">bundle</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>path</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the optional path to the bundle where the strings file is located</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the key that defines the localizable in the strings file</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p></p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV8localize6bundle__S2SSg_AC14LocalizableKeyOs7CVarArg_pdtFZ"></a>
+                    <a name="//apple_ref/swift/Method/localize(bundle:_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV8localize6bundle__S2SSg_AC14LocalizableKeyOs7CVarArg_pdtFZ">localize(bundle:<wbr>_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">localize</span><span class="p">(</span><span class="n">bundle</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt"><a href="../Structs/MASDKLocale/LocalizableKey.html">LocalizableKey</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kt">CVarArg</span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV8localize6bundle_S2SSg_AC14LocalizableKeyOtFZ"></a>
+                    <a name="//apple_ref/swift/Method/localize(bundle:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV8localize6bundle_S2SSg_AC14LocalizableKeyOtFZ">localize(bundle:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Method to retrieve a MiniApp SDK localizable from its key</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">localize</span><span class="p">(</span><span class="n">bundle</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt"><a href="../Structs/MASDKLocale/LocalizableKey.html">LocalizableKey</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>path</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the optional path to the bundle where the strings file is located</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a LocalizableKey that defines the localizable in the strings file</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p></p>
                       </div>
                     </section>
                   </div>

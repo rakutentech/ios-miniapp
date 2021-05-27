@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 3.2.0 Docs
+          MiniApp 3.3.0 Docs
         </a>
-         (77% documented)
+         (68% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -173,6 +173,12 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MASDKAccessTokenScopes.html">MASDKAccessTokenScopes</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MASDKLocale.html">MASDKLocale</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MASDKLocale/LocalizableKey.html">– LocalizableKey</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MiniAppInfo.html">MiniAppInfo</a>
@@ -326,6 +332,7 @@ Mini App SDK also facilitates communication between a Mini App and the host app 
 
 <ul>
 <li><a href="#runtime-conf">Overriding configuration on runtime</a></li>
+<li><a href="#localization">Overriding localizations</a></li>
 <li><a href="#custom-navigation">Customize history navigation</a></li>
 <li><a href="#Opening-external-links">Opening external links</a></li>
 <li><a href="#orientation-lock">Orientation Lock</a></li>
@@ -427,11 +434,9 @@ Mini App SDK also facilitates communication between a Mini App and the host app 
 
 <p><strong>API Docs:</strong> <a href="https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a></p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">getUniqueId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
-        <span class="k">guard</span> <span class="k">let</span> <span class="nv">deviceId</span> <span class="o">=</span> <span class="kt">UIDevice</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">identifierForVendor</span><span class="p">?</span><span class="o">.</span><span class="n">uuidString</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="s">""</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">deviceId</span>
+    <span class="kd">func</span> <span class="nf">getUniqueId</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">MASDKError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Implementation to return the Unique ID</span>
+        <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="s">""</span><span class="p">))</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -635,9 +640,9 @@ The following delegates/interfaces will be called only if the user has allowed r
 
 <p>Retrieve the Contact list of the User</p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">getContacts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">MAContact</span><span class="p">]?</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">getContacts</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">MAContact</span><span class="p">]?,</span> <span class="kt">MASDKError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// Implementation to return the contact list</span>
-        <span class="k">return</span> <span class="p">[]</span>
+        <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">([]))</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -661,7 +666,7 @@ The following delegates/interfaces will be called only if the user has allowed r
 
 <hr>
 
-<p><strong>API Docs:</strong> <a href="https://rakutentech.github.io/ios-miniapp/JavaScript/Chat/ChatMessageBridgeDelegate.html">MiniAppUserInfoDelegate</a></p>
+<p><strong>API Docs:</strong> <a href="https://rakutentech.github.io/ios-miniapp/Protocols/ChatMessageBridgeDelegate.html">ChatMessageBridgeDelegate</a></p>
 
 <p>Send a message to a contact from the <a href="#user-profile-details-contactlist">user profile contacts list</a> using &lsquo;MiniAppMessageDelegate&rsquo; methods.
 Three methods can be triggered by the Mini App, and here are the recommended behaviors for each one:</p>
@@ -722,13 +727,18 @@ Three methods can be triggered by the Mini App, and here are the recommended beh
   <span class="p">}</span>
 
   <span class="kd">public</span> <span class="kd">func</span> <span class="nf">sendMessageToContactId</span><span class="p">(</span><span class="n">_</span> <span class="nv">contactId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">MessageToContact</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">?,</span> <span class="kt">MASDKError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="k">let</span> <span class="nv">contacts</span> <span class="o">=</span> <span class="nf">getContacts</span><span class="p">(),</span> <span class="k">let</span> <span class="nv">contact</span> <span class="o">=</span> <span class="n">contacts</span><span class="o">.</span><span class="nf">first</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">contactId</span> <span class="p">})</span> <span class="p">{</span>
-      <span class="n">presentContactsPicker</span> <span class="p">{</span> <span class="n">chatContactsSelectorViewController</span> <span class="k">in</span>
-        <span class="c1">// insert here code to send the message</span>
-        <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">contact</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+    <span class="n">getContacts</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
+      <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">contacts</span><span class="p">):</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">contact</span> <span class="o">=</span> <span class="n">contacts</span><span class="o">.</span><span class="nf">first</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">contactId</span> <span class="p">})</span> <span class="p">{</span>
+          <span class="c1">// insert here code to send the message</span>
+          <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">contact</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          <span class="k">fallthrough</span>
+        <span class="p">}</span>
+      <span class="k">default</span><span class="p">:</span>
+        <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="o">.</span><span class="n">invalidContactId</span><span class="p">))</span>
       <span class="p">}</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="n">contact</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
     <span class="p">}</span>
   <span class="p">}</span>
 
@@ -915,6 +925,157 @@ How to get downloaded <code>Mini App meta-data</code></p>
 </span></code></pre>
 
 <p><em>NOTE:</em> <code>RMAHostAppUserAgentInfo</code> cannot be configured at run time.</p>
+
+<p><a id="localization"></a></p>
+<h4 id='overriding-localizations' class='heading'>Overriding localizations</h4>
+
+<p>Mini App SDK localization is based on <a href="https://help.apple.com/xcode/mac/current/#/dev3255e0273">iOS framework localizable strings system</a>.
+In the following table, you can find all the keys that the SDK is using to translate its texts to your UI language.
+Mini App SDK will look in the host app <code>Localizable.strings</code> for these keys to find local texts. If these keys are not present, a default text is provided.</p>
+
+<table><thead>
+<tr>
+<th>Localization key</th>
+<th>Usage</th>
+<th style="text-align: center">Default text</th>
+<th>Parameters</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>miniapp.sdk.ios.alert.title.ok</code></td>
+<td>alert dialogs validation button</td>
+<td style="text-align: center">OK</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.alert.title.cancel</code></td>
+<td>alert dialogs cancellation button</td>
+<td style="text-align: center">Cancel</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.ui.allow</code></td>
+<td>permission screen authorization validation</td>
+<td style="text-align: center">Allow</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.all.ui.save</code></td>
+<td>permission screen denial validation</td>
+<td style="text-align: center">Save</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.firstlaunch.footer</code></td>
+<td>used at the bottom of the permissions validation screen</td>
+<td style="text-align: center">%@<sup>[1]</sup> wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings</td>
+<td><sup>[1]</sup> Mini App name</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.server</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Server returned an error. %@<sup>[1]</sup>: %@<sup>[2]</sup></td>
+<td><sup>[1]</sup> Error code<br/><sup>[2]</sup> Error message</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.invalid_url</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">URL is invalid.</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.invalid_app_id</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Provided Mini App ID is invalid.</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.invalid_version_id</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Provided Mini App Version ID is invalid.</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.invalid_contact_id</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Provided contact ID is invalid.</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.invalid_response</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Invalid response received from server.</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.download_failed</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Failed to download the mini app.</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.miniapp_meta_data_required_permisions_failure</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Mini App has not been granted all of the required permissions.</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.unknown</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Unknown error occurred in %@<sup>[1]</sup> domain with error code %@<sup>[2]</sup>: %@<sup>[3]</sup></td>
+<td><sup>[1]</sup> Error domain<br/><sup>[2]</sup> Error code<br/><sup>[3]</sup> Error message</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.host_app</code></td>
+<td>error reporting (domain)</td>
+<td style="text-align: center">Host app Error</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.failed_to_conform_to_protocol</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Host app failed to implement required interface</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.no_published_version</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Server returned no published versions for the provided Mini App ID.</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.miniapp_id_not_found</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Server could not find the provided Mini App ID.</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.unknown_server_error</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Unknown server error occurred</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.ad_not_loaded</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Ad %@<sup>[1]</sup> is not loaded yet</td>
+<td><sup>[1]</sup>Ad id</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.ad_loading</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Previous %@<sup>[1]</sup> is still in progress</td>
+<td><sup>[1]</sup>Ad id</td>
+</tr>
+<tr>
+<td><code>miniapp.sdk.ios.error.message.ad_loaded</code></td>
+<td>error reporting (decription)</td>
+<td style="text-align: center">Ad %@<sup>[1]</sup> is already loaded</td>
+<td><sup>[1]</sup>Ad id</td>
+</tr>
+</tbody></table>
+
+<p>If you need to use one of this strings in your host application, you can use the convenience method <code>MASDKLocale.localize(_:_:)</code></p>
 
 <p><a id="custom-navigation"></a></p>
 <h4 id='add-a-web-navigation-interface-to-the-miniapp-view' class='heading'>Add a web navigation interface to the MiniApp view</h4>
@@ -1173,7 +1334,7 @@ How to get downloaded <code>Mini App meta-data</code></p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-04-22)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-05-27)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
