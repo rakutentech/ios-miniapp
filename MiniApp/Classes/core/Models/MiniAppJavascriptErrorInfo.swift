@@ -25,6 +25,11 @@ func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
     "\(error.name): \(error.description)"
 }
 
+/// Method to send in error in proper format i.e {type: "SomeError", message: "message"}
+func prepareMiniAppError<T: MiniAppErrorProtocol>(_ error: T) -> String {
+    "{type: \"\(error.name)\", message: \"\(error.description)\"}"
+}
+
 enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case internalError
     case unexpectedMessageFormat
