@@ -39,12 +39,22 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This will let you to take Photos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Demo app helps you find more information near you</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Needs Microphone while recording video</string>
 	<key>RASProjectId</key>
 	<string>$(RAS_PROJECT_IDENTIFIER)</string>
 	<key>RASProjectSubscriptionKey</key>
 	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY)</string>
+	<key>RATAccountIdentifier</key>
+	<integer>0</integer>
+	<key>RATAppIdentifier</key>
+	<integer>0</integer>
+	<key>RATEndpoint</key>
+	<string>$(RAT_ENDPOINT)</string>
 	<key>RMAAPIEndpoint</key>
 	<string>$(RMA_API_ENDPOINT)</string>
 	<key>RMAHostAppUserAgentInfo</key>
@@ -73,9 +83,5 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>This will let you to take Photos</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Needs Microphone while recording video</string>
 </dict>
 </plist>

@@ -26,6 +26,9 @@ public struct MASDKLocale {
         case adNotLoadedError                       = "miniapp.sdk.ios.error.message.ad_not_loaded"
         case adLoadingError                         = "miniapp.sdk.ios.error.message.ad_loading"
         case adLoadedError                          = "miniapp.sdk.ios.error.message.ad_loaded"
+        case uiNavButtonClose                       = "miniapp.sdk.ios.ui.nav.button.close"
+        case uiFallbackTitle                        = "miniapp.sdk.ios.ui.fallback.title"
+        case uiFallbackButtonRetry                  = "miniapp.sdk.ios.ui.fallback.button.retry"
     }
 
     @available(*, deprecated, message: "This method is strongly dependant to the string format parameters and might lead to a crash", renamed:"localize(bundle:_:)")

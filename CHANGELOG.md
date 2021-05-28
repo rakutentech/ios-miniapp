@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+### 3.4.0 (2021-06-DD)
+
+**SDK**
+
+- **Feature:** Mini App SDK now supports code updates in preview mode
+- **Updated:** Updated `getAccessToken` result with new Error type i.e `MASDKAccessTokenError` to support more errors
+
+---
 ### 3.3.0 (2021-05-27)
 
 **SDK**

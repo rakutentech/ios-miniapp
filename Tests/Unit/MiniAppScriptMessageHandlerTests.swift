@@ -470,7 +470,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"scope_test\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.unknownError.rawValue), timeout: .seconds(2))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("Error"), timeout: .seconds(2))
                 }
             }
             context("when MiniApp manifest contained no scopes") {

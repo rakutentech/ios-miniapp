@@ -26,6 +26,14 @@ RASProjectSubscriptionKey=test-subscription-key
 
 NOTE: `RASApplicationIdentifier` is deprecated
 
+The Sample App has a dependency on the [public version of the RAnalytics SDK](https://github.com/rakutentech/ios-analytics-framework) and the following environment variables need to be configured before building:
+
+```bash
+RAT_ENDPOINT=your-rat-endpoint
+RAT_ACCOUNT_IDENTIFIER=your-rat-account-id
+RAT_APP_IDENTIFIER=your-rat-app-id
+```
+
 Next, run `fastlane updatePods` from the root directory that will trigger a `pod install` and fetch git submodules, then open `MiniApp.xcworkspace`, and you should be able to successfully build the Sample App.
 
 *Note:* You need to define the environment variables before installing the pods because there is a post install script which sets up the project with your environment variables. If you don't want to use environment variables, you can edit the `MiniApp-Secrets.xcconfig` created after a `pod install` in the parent folder of the project,but be aware you will have to update this file after every `pod install`

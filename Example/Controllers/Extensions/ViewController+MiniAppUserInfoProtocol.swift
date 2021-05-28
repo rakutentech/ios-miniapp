@@ -25,7 +25,7 @@ extension ViewController: MiniAppUserInfoDelegate {
 
     func getAccessToken(miniAppId: String,
                         scopes: MASDKAccessTokenScopes,
-                        completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+                        completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
         var resultToken = "ACCESS_TOKEN"
         var resultDate = Date()
         let resultScopes = scopes

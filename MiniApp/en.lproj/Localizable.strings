@@ -19,3 +19,8 @@
 "miniapp.sdk.ios.error.message.failed_to_conform_to_protocol"   = "Host app failed to implement required interface";
 "miniapp.sdk.ios.error.message.no_published_version"            = "Server returned no published versions for the provided Mini App ID.";
 "miniapp.sdk.ios.error.message.miniapp_id_not_found"            = "Server could not find the provided Mini App ID.";
+
+/* MASDKUI */
+"miniapp.sdk.ios.ui.nav.button.close"                           = "Close";
+"miniapp.sdk.ios.ui.fallback.title"                             = "An error has occured.\nPlease try again";
+"miniapp.sdk.ios.ui.fallback.button.retry"                      = "Retry";
