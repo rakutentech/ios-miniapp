@@ -442,11 +442,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                   let accessTokenPermissions = MiniApp.shared().getDownloadedManifest(miniAppId: miniAppId)?.accessTokenPermissions,
                   accessTokenPermission.isPartOf(accessTokenPermissions) // we check that the Mini App manages scopes and that these scopes are included in the Manifest
                     else {
-                return sendScopeError(callbackId: callbackId, type: .audienceError)
+                return sendScopeError(callbackId: callbackId, type: .audienceNotSupportedError)
             }
 
             guard let scopes = requestParam?.scopes, accessTokenPermission.with(scopes: scopes).isPartOf(accessTokenPermissions) else { // we need a specific set of scopes
-                return sendScopeError(callbackId: callbackId, type: .scopeError)
+                return sendScopeError(callbackId: callbackId, type: .scopesNotSupportedError)
             }
 
             hostAppMessageDelegate?.getAccessToken(miniAppId: self.miniAppId, scopes: accessTokenPermission) { (result) in
@@ -463,7 +463,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             }
         }
     }
-    private func sendScopeError(callbackId: String, type: MiniAppJavaScriptError) {
+
+    private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {
         executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(type))
     }
 

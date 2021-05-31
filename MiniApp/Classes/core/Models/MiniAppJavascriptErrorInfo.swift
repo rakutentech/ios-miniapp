@@ -21,9 +21,9 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
     }
 }
 
-struct MiniAppError: Codable {
-    var type: String
-    var message: String
+struct MAJavascriptErrorModel: Codable {
+    var type: String?
+    var message: String?
 }
 
 enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {

@@ -16,5 +16,8 @@ func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
 
 /// Method to send in error in proper format i.e {type: "SomeError", message: "message"}
 func prepareMAJavascriptError<T: MiniAppErrorProtocol>(_ error: T) -> String {
-    return prepareJSONString(MiniAppError(type: error.name, message: error.description))
+    guard !error.name.isEmpty else {
+        return prepareJSONString(MAJavascriptErrorModel(type: nil, message: error.description))
+    }
+    return prepareJSONString(MAJavascriptErrorModel(type: error.name, message: error.description))
 }

@@ -197,7 +197,7 @@ public enum MASDKAccessTokenError: Error, MiniAppErrorProtocol {
         case .authorizationFailureError:
             return "AuthorizationFailureError"
         case .error:
-            return "Error"
+            return ""
         }
     }
 }
