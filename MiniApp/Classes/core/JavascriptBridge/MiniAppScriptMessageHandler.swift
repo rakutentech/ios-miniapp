@@ -458,13 +458,13 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     }
                     self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: jsonResponse)
                 case .failure(let error):
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMiniAppError(error))
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
                 }
             }
         }
     }
     private func sendScopeError(callbackId: String, type: MiniAppJavaScriptError) {
-        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMiniAppError(type))
+        executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(type))
     }
 
     func handleMASDKError(error: MASDKError, callbackId: String) {

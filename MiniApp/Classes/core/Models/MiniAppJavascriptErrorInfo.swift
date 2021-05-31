@@ -21,13 +21,9 @@ enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
     }
 }
 
-func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
-    "\(error.name): \(error.description)"
-}
-
-/// Method to send in error in proper format i.e {type: "SomeError", message: "message"}
-func prepareMiniAppError<T: MiniAppErrorProtocol>(_ error: T) -> String {
-    "{type: \"\(error.name)\", message: \"\(error.description)\"}"
+struct MiniAppError: Codable {
+    var type: String
+    var message: String
 }
 
 enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
