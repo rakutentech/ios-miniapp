@@ -42,15 +42,15 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
     }
 
     func createNotLoadingReqError(adUnitId: String) -> String {
-        MASDKLocale.localize(.adNotLoadedError, adUnitId)
+        String(format: MASDKLocale.localize(.adNotLoadedError), adUnitId)
     }
 
     func createLoadReqError(adUnitId: String) -> String {
-        MASDKLocale.localize(.adLoadingError, adUnitId)
+        String(format: MASDKLocale.localize(.adLoadingError), adUnitId)
     }
 
     func createLoadTwiceError(adUnitId: String) -> String {
-        MASDKLocale.localize(.adLoadedError, adUnitId)
+        String(format: MASDKLocale.localize(.adLoadedError), adUnitId)
     }
 
     public override func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {

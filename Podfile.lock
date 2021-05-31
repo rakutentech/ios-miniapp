@@ -29,10 +29,10 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.3.1)"
   - GoogleUtilities/Reachability (7.3.1):
     - GoogleUtilities/Logger
-  - MiniApp/Admob (3.2.0):
+  - MiniApp/Admob (3.3.0):
     - Google-Mobile-Ads-SDK (~> 7.0)
     - MiniApp/Core
-  - MiniApp/Core (3.2.0):
+  - MiniApp/Core (3.3.0):
     - ZIPFoundation (= 0.9.12)
   - MiniApp/UI (3.2.0):
     - MiniApp/Core
@@ -80,8 +80,8 @@ SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 2f288748a42920d1c744946a460896a95b0e9110
   GoogleAppMeasurement: 1c863b1161fc3c8cf614a7460d1be6a7c262aab3
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
-  GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
-  MiniApp: dc03ef2f717186fb3b99d6aa8449cb67f55f18ef
+  GoogleUtilities: f8a43108b38a68eebe8b3540e1f4f2d28843ce20
+  MiniApp: dd8527870971e051bd4b5bb8854c8c55071096e7
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
