@@ -297,7 +297,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.appVersion).to(equal(bundle.value(for: versionKey)))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
-                    expect(miniAppClient.environment.isPreviewMode).to(equal(bundle.bool(for: isPreviewMode)))
+                    expect(miniAppClient.environment.isPreviewMode).notTo(equal(bundle.bool(for: isPreviewMode)))
                 }
             }
 
