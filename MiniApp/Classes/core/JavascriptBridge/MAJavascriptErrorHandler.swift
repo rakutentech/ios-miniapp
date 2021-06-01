@@ -1,6 +1,5 @@
 func prepareJSONString<T: Codable>(_ value: T) -> String {
     let encoder = JSONEncoder()
-    encoder.outputFormatting = .prettyPrinted
     do {
         let jsonData = try encoder.encode(value)
         return String(data: jsonData, encoding: .utf8) ?? prepareMAJavascriptError(MiniAppErrorType.unknownError)
@@ -18,6 +17,9 @@ func getMiniAppErrorMessage<T: MiniAppErrorProtocol>(_ error: T) -> String {
 func prepareMAJavascriptError<T: MiniAppErrorProtocol>(_ error: T) -> String {
     guard !error.name.isEmpty else {
         return prepareJSONString(MAJavascriptErrorModel(type: nil, message: error.description))
+    }
+    guard !error.description.isEmpty else {
+        return prepareJSONString(MAJavascriptErrorModel(type: error.name, message: nil))
     }
     return prepareJSONString(MAJavascriptErrorModel(type: error.name, message: error.description))
 }
