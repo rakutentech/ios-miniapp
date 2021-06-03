@@ -78,8 +78,8 @@
 		38F73B4723D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */; };
 		38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC4652244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift */; };
 		750191FB804B88456CA24CA7 /* MiniAppAdDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */; };
-		A1971CAE261C1F7800FB0B1D /* MiniAppViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1971CAD261C1F7800FB0B1D /* MiniAppViewControllerTests.swift */; };
 		75019B5861C50A30C1BE4C59 /* ViewController+ChatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501986FB5D52F78E841069D /* ViewController+ChatDelegate.swift */; };
+		A1971CAE261C1F7800FB0B1D /* MiniAppViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1971CAD261C1F7800FB0B1D /* MiniAppViewControllerTests.swift */; };
 		D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07452302567B72A00B6E842 /* MASDKErrorTests.swift */; };
 /* End PBXBuildFile section */
 

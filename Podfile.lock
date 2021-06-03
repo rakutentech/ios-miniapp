@@ -34,7 +34,7 @@ PODS:
     - MiniApp/Core
   - MiniApp/Core (3.3.0):
     - ZIPFoundation (= 0.9.12)
-  - MiniApp/UI (3.2.0):
+  - MiniApp/UI (3.3.0):
     - MiniApp/Core
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -80,8 +80,8 @@ SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 2f288748a42920d1c744946a460896a95b0e9110
   GoogleAppMeasurement: 1c863b1161fc3c8cf614a7460d1be6a7c262aab3
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
-  GoogleUtilities: f8a43108b38a68eebe8b3540e1f4f2d28843ce20
-  MiniApp: dd8527870971e051bd4b5bb8854c8c55071096e7
+  GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
+  MiniApp: adfa067d6848f00f6a3f66f27f7f7991d6a3b99f
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97

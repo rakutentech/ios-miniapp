@@ -397,7 +397,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         name: "", body: "{\"action\": \"getAccessToken\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.response).toEventually(beNil(), timeout: .seconds(2))
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("audienceError"), timeout: .seconds(2))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKAccessTokenError.audienceNotSupportedError.name), timeout: .seconds(2))
                 }
             }
             context("when MiniAppScriptMessageHandler receives getAccessToken command with bad audience") {
@@ -416,7 +416,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"bad_audience\", \"scopes\":[\"test\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.response).toEventually(beNil(), timeout: .seconds(2))
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("audienceError"), timeout: .seconds(2))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKAccessTokenError.audienceNotSupportedError.name), timeout: .seconds(2))
                 }
             }
             context("when MiniAppScriptMessageHandler receives getAccessToken command with bad scopes") {
@@ -435,7 +435,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"bad_scope\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.response).toEventually(beNil(), timeout: .seconds(2))
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("scopeError"), timeout: .seconds(2))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKAccessTokenError.scopesNotSupportedError.name), timeout: .seconds(2))
                 }
             }
             context("when MiniAppScriptMessageHandler receives valid getAccessToken command") {
@@ -470,7 +470,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"scope_test\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("Error"), timeout: .seconds(2))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("Unable to return Access Token"), timeout: .seconds(2))
                 }
             }
             context("when MiniApp manifest contained no scopes") {
@@ -488,7 +488,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"scope_test\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.response).toEventually(beNil(), timeout: .seconds(2))
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("audienceError"), timeout: .seconds(2))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKAccessTokenError.audienceNotSupportedError.name), timeout: .seconds(2))
                 }
             }
             context("when MiniAppScriptMessageHandler receives invalid orientation lock command") {
