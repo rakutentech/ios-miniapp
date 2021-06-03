@@ -411,6 +411,36 @@ miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
 
 ## Advanced Usage
 
+### Errors management
+
+#### Access Token error
+
+When an access token is requested, different `Error` subtypes can be thrown to the MiniApp:
+
+Here is a complete example of you can manage Access Token errors:
+```javascript
+miniApp.user.getAccessToken("TOKEN_AUDIENCE", ["TOKEN_SCOPE1","TOKEN_SCOPE2"])
+  .then(data => {
+      ...
+  })
+  .catch(error => {                            //Example of values :
+      console.error(error.name);              // AudienceNotSupportedError
+      console.error(error.message);          //  The value passed for 'audience' is not supported.
+
+      if (error instanceof AuthorizationFailureError) {
+          // handle error
+      } else if (error instanceof AudienceNotSupportedError) {
+          // handle error
+      } else if (error instanceof ScopesNotSupportedError) {
+          // handle error
+      } else if (error instanceof MiniAppError) {
+          // handle error
+      } else {
+          // unexepected error caused by SDK
+      }
+  })
+```
+
 ### Check Android/iOS device
 
 **API:** [Platform.getPlatform](api/interfaces/platform.html#getplatform)

@@ -19,6 +19,15 @@ import { ScreenOrientation } from './types/screen';
 import { AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
+import {
+  MiniAppError,
+  AudienceNotSupportedError,
+  AuthorizationFailureError,
+  ScopesNotSupportedError,
+  parseMiniAppError,
+  errorTypesDescriptions,
+  MiniAppErrorType,
+} from './types/error-types';
 
 export {
   MiniAppBridge,
@@ -34,4 +43,11 @@ export {
   AccessTokenData,
   Contact,
   MessageToContact,
+  MiniAppError,
+  AudienceNotSupportedError,
+  AuthorizationFailureError,
+  ScopesNotSupportedError,
+  parseMiniAppError,
+  errorTypesDescriptions,
+  MiniAppErrorType,
 };

@@ -71,6 +71,7 @@ const initialState = {
   isLoading: false,
   isError: false,
   hasRequestedPermissions: false,
+  error: null,
 };
 
 const dataFetchReducer = (state, action) => {
@@ -81,6 +82,7 @@ const dataFetchReducer = (state, action) => {
         isLoading: true,
         isError: false,
         hasRequestedPermissions: false,
+        error: null,
       };
     case 'FETCH_SUCCESS':
       return {
@@ -88,12 +90,14 @@ const dataFetchReducer = (state, action) => {
         isLoading: false,
         isError: false,
         hasRequestedPermissions: true,
+        error: null,
       };
     case 'FETCH_FAILURE':
       return {
         ...state,
         isLoading: false,
         isError: true,
+        error: action.miniAppError.message,
       };
     default:
       throw new Error();
@@ -153,9 +157,9 @@ function AuthToken(props: AuthTokenProps) {
         ])
       )
       .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
-      .catch((e) => {
-        console.error(e);
-        dispatch({ type: 'FETCH_FAILURE' });
+      .catch((miniAppError) => {
+        console.error(miniAppError);
+        dispatch({ type: 'FETCH_FAILURE', miniAppError });
       });
   }
 
@@ -242,7 +246,7 @@ function AuthToken(props: AuthTokenProps) {
           )}
           {!state.isLoading && state.isError && (
             <Typography variant="body1" className={classes.red}>
-              Acces token permission scopes error
+              {state.error}
             </Typography>
           )}
           <div>{AccessToken()}</div>
@@ -256,6 +260,7 @@ const mapStateToProps = (state) => {
   return {
     permissions: state.permissions,
     accessToken: state.user.accessToken,
+    error: state.error,
   };
 };
 

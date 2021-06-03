@@ -5,7 +5,7 @@
  */
 
 import { AdTypes } from './types/ad-types';
-import { Reward } from './types/response-types/rewarded';
+import { Reward } from './types/response-types';
 import { DevicePermission } from './types/device-permission';
 import {
   CustomPermission,
@@ -16,6 +16,14 @@ import { ScreenOrientation } from './types/screen';
 import { NativeTokenData, AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
+import { MiniAppErrorType } from './types/error-types';
+import {
+  AudienceNotSupportedError,
+  AuthorizationFailureError,
+  MiniAppError,
+  parseMiniAppError,
+  ScopesNotSupportedError,
+} from './types/error-types';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -300,7 +308,28 @@ export class MiniAppBridge {
           const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
           resolve(new AccessTokenData(nativeTokenData));
         },
-        error => reject(error)
+        error => {
+          try {
+            const miniAppError = parseMiniAppError(error);
+            const errorType: MiniAppErrorType =
+              MiniAppErrorType[
+                miniAppError.type as keyof typeof MiniAppErrorType
+              ];
+            switch (errorType) {
+              case MiniAppErrorType.AuthorizationFailureError:
+                return reject(new AuthorizationFailureError(miniAppError));
+              case MiniAppErrorType.AudienceNotSupportedError:
+                return reject(new AudienceNotSupportedError(miniAppError));
+              case MiniAppErrorType.ScopesNotSupportedError:
+                return reject(new ScopesNotSupportedError(miniAppError));
+              default:
+                return reject(new MiniAppError(miniAppError));
+            }
+          } catch (e) {
+            console.error(e);
+            return reject(error);
+          }
+        }
       );
     });
   }

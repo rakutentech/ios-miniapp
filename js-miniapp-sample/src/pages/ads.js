@@ -194,7 +194,7 @@ function Ads() {
   );
 
   return (
-    <div class={classes.scrollable}>
+    <div className={classes.scrollable}>
       <GreyCard className={classes.content}>
         <Paper className={classes.paper}>
           {interstitialState.isLoading && renderLoading()}

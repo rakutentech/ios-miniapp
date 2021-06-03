@@ -1,4 +1,5 @@
 import MiniApp, { AccessTokenData } from 'js-miniapp-sdk';
+import { Contact } from 'js-miniapp-sdk';
 
 import {
   REQUEST_USER_NAME_SUCCESS,
@@ -10,8 +11,6 @@ import {
   REQUEST_ACCESS_TOKEN_SUCCESS,
   REQUEST_ACCESS_TOKEN_FAILURE,
 } from './types';
-
-import { Contact } from 'js-miniapp-sdk';
 
 type UserNameSuccessAction = { type: String, userName: string };
 type ProfilePhotoSuccessAction = { type: String, url: string };

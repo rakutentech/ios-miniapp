@@ -1,4 +1,8 @@
-import { Contact, AccessTokenData } from '../../../js-miniapp-bridge/src';
+import {
+  AccessTokenData,
+  Contact,
+  MiniAppError,
+} from '../../../js-miniapp-bridge/src';
 import { getBridge } from '../utils';
 
 /**
@@ -32,7 +36,10 @@ export interface UserInfoProvider {
    * @param scopes scopes array associated to the audience
    * @returns Access token from native host app.
    */
-  getAccessToken(audience: string, scopes: string[]): Promise<AccessTokenData>;
+  getAccessToken(
+    audience: string,
+    scopes: string[]
+  ): Promise<AccessTokenData | MiniAppError>;
 }
 
 /** @internal */
