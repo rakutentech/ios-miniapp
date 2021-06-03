@@ -13,6 +13,7 @@
 		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
+		2A54C85C26676377002B204F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C85B26676377002B204F /* UITextField.swift */; };
 		317FED2525E5EB4300774919 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317FED2725E5EB4300774919 /* Settings.storyboard */; };
 		31CFFA50261B7E7300CDD537 /* ChatContactsSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CFFA4F261B7E7300CDD537 /* ChatContactsSelectorViewController.swift */; };
 		31D1BBC3262041920040235C /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31D1BBC2262041920040235C /* Colors.xcassets */; };
@@ -78,8 +79,8 @@
 		38F73B4723D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */; };
 		38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC4652244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift */; };
 		750191FB804B88456CA24CA7 /* MiniAppAdDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */; };
-		A1971CAE261C1F7800FB0B1D /* MiniAppViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1971CAD261C1F7800FB0B1D /* MiniAppViewControllerTests.swift */; };
 		75019B5861C50A30C1BE4C59 /* ViewController+ChatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501986FB5D52F78E841069D /* ViewController+ChatDelegate.swift */; };
+		A1971CAE261C1F7800FB0B1D /* MiniAppViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1971CAD261C1F7800FB0B1D /* MiniAppViewControllerTests.swift */; };
 		D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07452302567B72A00B6E842 /* MASDKErrorTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,7 @@
 		185DBD6124B2A06300CD2094 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
+		2A54C85B26676377002B204F /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "MiniApp-Secrets.xcconfig"; path = "../../../MiniApp-Secrets.xcconfig"; sourceTree = "<group>"; };
 		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
 		31070C63258C554500BED77C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 				38920AD3251D9C57004C5DDD /* MiniApp+UIImage.swift */,
 				38CEFA5025C0A3CA00EE250A /* UIView+MiniApp.swift */,
 				3857ED7D25DEE0690083F3E1 /* Bundle+MiniApp.swift */,
+				2A54C85B26676377002B204F /* UITextField.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				38920B03251D9C57004C5DDD /* ViewController.swift in Sources */,
 				38920B0A251D9C57004C5DDD /* ViewController+MiniAppMessageProtocol.swift in Sources */,
 				38CEFA4B25C0A3B300EE250A /* MAFirstLaunchController.swift in Sources */,
+				2A54C85C26676377002B204F /* UITextField.swift in Sources */,
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
 				38920B05251D9C57004C5DDD /* SettingsTableViewController.swift in Sources */,
 				38920AF4251D9C57004C5DDD /* String+MiniApp.swift in Sources */,
