@@ -121,18 +121,9 @@ class ContactsListSettingsTableViewController: UITableViewController {
     }
 
     func addCustomContactId(title: String, message: String) {
+        let contactName = Self.randomFakeName()
         DispatchQueue.main.async {
-            self.getInputFromAlertWithTextField(title: title, message: message, textFieldDefaultValue: UUID().uuidString) { (_, textField, name, email) in
-                if let textField = textField, let contactId = textField.text, contactId.count > 0, !contactId.trimTrailingWhitespaces().isEmpty {
-                    self.userContactList?.append(MAContact(id: contactId,
-                                                           name: name,
-                                                           email: email))
-                    updateContactList(list: self.userContactList)
-                    self.tableView.reloadData()
-                } else {
-                    self.addCustomContactId(title: "Invalid Contact ID, please try again", message: "Enter valid contact and select Ok")
-                }
-            }
+            self.editContact(title: title, index: 0, message: message, contactId: UUID().uuidString, contactName: contactName, contactEmail: Self.fakeMail(with: contactName), isNewContact: true)
         }
     }
 
@@ -190,19 +181,47 @@ class ContactsListSettingsTableViewController: UITableViewController {
         }
     }
 
-    func editContact(title: String, index: Int, contactId: String? = "", contactName: String? = "", contactEmail: String? = "") {
+    func editContact(title: String, index: Int, message: String? = "", contactId: String? = "", contactName: String? = "", contactEmail: String? = "", isNewContact: Bool? = false) {
         DispatchQueue.main.async {
-            self.getInputFromAlertWithTextField(title: title, message: "", textFieldDefaultValue: contactId, name: contactName, email: contactEmail) { (_, textField, name, email) in
-                if let textField = textField, let contactId = textField.text, contactId.count > 0, !contactId.trimTrailingWhitespaces().isEmpty {
-                    self.userContactList?[index] = MAContact(id: contactId, name: name, email: email)
-                    updateContactList(list: self.userContactList)
-                    self.tableView.reloadData()
-                } else {
-                    self.editContact(title: "Invalid Contact ID, please try again",
-                                     index: index,
-                                     contactId: contactId,
-                                     contactName: name,
-                                     contactEmail: email)
+            self.getInputFromAlertWithTextField(title: title, message: message, textFieldDefaultValue: contactId, name: contactName, email: contactEmail) { (_, textField, name, email) in
+                self.validateAllValues(index: index, contactId: contactId, textField: textField, name: name, email: email, isNewContact: isNewContact)
+            }
+        }
+    }
+
+    func validateAllValues(index: Int, contactId: String?, textField: UITextField?, name: String, email: String, isNewContact: Bool? = false) {
+        if let contactIdTextField = textField {
+            if contactIdTextField.isTextFieldEmpty() {
+                self.editContact(title: "Invalid Contact ID, please try again",
+                                 index: index,
+                                 contactId: contactIdTextField.text,
+                                 contactName: name,
+                                 contactEmail: email, isNewContact: isNewContact)
+            } else if name.isValueEmpty() {
+                self.editContact(title: "Invalid Name, please try again",
+                                 index: index,
+                                 contactId: contactIdTextField.text,
+                                 contactName: name,
+                                 contactEmail: email, isNewContact: isNewContact)
+            } else if email.isValueEmpty() || !email.isValidEmail() {
+                self.editContact(title: "Invalid Email ID, please try again",
+                                 index: index,
+                                 contactId: contactIdTextField.text,
+                                 contactName: name,
+                                 contactEmail: email, isNewContact: isNewContact)
+            } else {
+                if let contactID =  textField?.text {
+                    if isNewContact ?? false {
+                        self.userContactList?.append(MAContact(id: contactID,
+                                                               name: name,
+                                                               email: email))
+                        updateContactList(list: self.userContactList)
+                        self.tableView.reloadData()
+                    } else {
+                        self.userContactList?[index] = MAContact(id: contactID, name: name, email: email)
+                        updateContactList(list: self.userContactList)
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }

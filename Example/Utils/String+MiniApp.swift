@@ -28,6 +28,23 @@ extension String {
         }
         return nil
     }
+
+    func isValueEmpty() -> Bool {
+        if self.isEmpty || self.trimTrailingWhitespaces().isEmpty {
+            return true
+        }
+        return false
+    }
+
+    func isValidEmail() -> Bool {
+        return NSPredicate(format: "SELF MATCHES %@", "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                            "\\@" +
+                            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                            "(" +
+                                "\\." +
+                                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                            ")+").evaluate(with: self)
+    }
 }
 
 extension NSMutableAttributedString {
