@@ -30,9 +30,9 @@ extension ViewController: MiniAppUserInfoDelegate {
             let message = QASettingsTableViewController.accessTokenErrorMessage()
             switch errorMode {
             case .AUTHORIZATION:
-                return completionHandler(.failure(.authorizationFailureError(description: "authorizationFailureError" + ( message ? ": " + message : "" ))))
+                return completionHandler(.failure(.authorizationFailureError(description: "authorizationFailureError" + ( (message != nil) ? ": " + message! : "" ))))
             default:
-                return completionHandler(.failure(.error(description: "Other error" + ( message ? ": " + message : "" ))))
+                return completionHandler(.failure(.error(description: "Other error" + ( (message != nil) ? ": " + message! : "" ))))
             }
         }
         var resultToken = "ACCESS_TOKEN"
