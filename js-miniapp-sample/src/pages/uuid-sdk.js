@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 18,
     color: theme.color.primary,
     fontWeight: 'bold',
+    wordBreak: 'break-word',
   },
   actions: {
     justifyContent: 'center',
