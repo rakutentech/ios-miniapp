@@ -3,7 +3,7 @@ internal extension NotificationCenter {
         sendAnalytics(event: event, type: type, parameters: customData)
     }
 
-    func sendAnalytics(event: MiniAppRATEvent, type: MiniAppRATEventType? = nil, parameters customData: [(String, String)]? = nil) {
+    func sendAnalytics(event: MiniAppRATEvent, type: MiniAppRATEventType? = nil, parameters customData: [(String, String)]? = nil, miniAppSDKConfig: MiniAppSdkConfig? = nil) {
         var parameters = [String: Codable]()
         var topLevel = [String: String]()
 

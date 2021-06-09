@@ -16,6 +16,7 @@ internal class RealMiniAppView: UIView {
     internal var isNavBarCustom = false
     internal var supportedMiniAppOrientation: UIInterfaceOrientationMask
     internal var initialLoadCallback: ((Bool) -> Void)?
+    internal var miniAppSDKConfig: MiniAppSdkConfig?
 
     internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
@@ -31,7 +32,8 @@ internal class RealMiniAppView: UIView {
         adsDisplayer: MiniAppAdDisplayer? = nil,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
-        navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+        navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
+        miniAppSDKConfig: MiniAppSdkConfig? = nil) {
 
         self.miniAppTitle = miniAppTitle
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId, queryParams: queryParams)
@@ -40,7 +42,7 @@ internal class RealMiniAppView: UIView {
         supportedMiniAppOrientation = []
         self.miniAppVersion = versionId
         self.projectId = projectId
-
+        self.miniAppSDKConfig = miniAppSDKConfig
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -58,7 +60,8 @@ internal class RealMiniAppView: UIView {
         initialLoadCallback: ((Bool) -> Void)? = nil,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
-        navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+        navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
+        miniAppSDKConfig: MiniAppSdkConfig? = nil) {
 
         self.miniAppTitle = miniAppTitle
         self.miniAppURL = miniAppURL
@@ -67,6 +70,7 @@ internal class RealMiniAppView: UIView {
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
+        self.miniAppSDKConfig = miniAppSDKConfig
 
         super.init(frame: .zero)
         commonInit(miniAppId: "custom\(Int32.random(in: 0...Int32.max))", // some id is needed to handle permissions

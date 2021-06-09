@@ -68,7 +68,7 @@ public class MiniAppAnalytics {
         return result
     }
 
-    internal class func sendAnalytics(event: MiniAppRATEvent, miniAppId: String? = nil, miniAppVersion: String? = nil, projectId: String? = nil, customParameters: (String, String)...) {
+    internal class func sendAnalytics(event: MiniAppRATEvent, miniAppId: String? = nil, miniAppVersion: String? = nil, projectId: String? = nil, customParameters: (String, String)..., miniAppSDKConfig: MiniAppSdkConfig? = nil) {
         let params = getAnalyticsInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId) + customParameters
         MiniAppLogger.d("posting \(event.name()) analytic \(event.eType()) event with params:\n\(params)", "📡")
         NotificationCenter.default.sendAnalytics(event: event, parameters: params)
