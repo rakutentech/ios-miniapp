@@ -26,6 +26,15 @@ extension ViewController: MiniAppUserInfoDelegate {
     func getAccessToken(miniAppId: String,
                         scopes: MASDKAccessTokenScopes,
                         completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
+        if let errorMode = QASettingsTableViewController.accessTokenErrorType() {
+            let message = QASettingsTableViewController.accessTokenErrorMessage() ?? "An error has occurred"
+            switch errorMode {
+            case .AUTHORIZATION:
+                return completionHandler(.failure(.authorizationFailureError(description: message)))
+            default:
+                return completionHandler(.failure(.error(description: message)))
+            }
+        }
         var resultToken = "ACCESS_TOKEN"
         var resultDate = Date()
         let resultScopes = scopes
