@@ -520,7 +520,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 1240;
-				ORGANIZATIONNAME = "Rakuten inc.";
+				ORGANIZATIONNAME = "Rakuten Group, Inc.";
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
