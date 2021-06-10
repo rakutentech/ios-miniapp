@@ -5,6 +5,7 @@
 **SDK**
 
 - **Feature:** Mini App SDK now supports code updates in preview mode
+- **Feature:** Updated `MiniAppSdkConfig` class to add additional parameter `MAAnalyticsConfig` which will be used by Host app to send analytics for multiple accounts.
 - **Updated:** Updated `getAccessToken` result with new Error type i.e `MASDKAccessTokenError` to support more errors
 
 ---
