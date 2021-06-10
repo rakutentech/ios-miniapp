@@ -49,6 +49,7 @@ public class MiniAppAnalyticsLoader: NSObject {
 
 public class MiniAppAnalytics {
     public static let notificationName = Notification.Name("com.rakuten.esd.sdk.events.custom")
+    internal static let defaultRATAcc = MAAnalyticsConfig(acc: "1553", aid: "1")
 
     internal class func getAnalyticsInfo(miniAppId: String? = nil, miniAppVersion: String? = nil, projectId: String? = nil) -> [(String, String)] {
         var result = [(String, String)]()
@@ -69,7 +70,7 @@ public class MiniAppAnalytics {
 
     internal class func getAnalyticsConfigList(analyticsConfig: [MAAnalyticsConfig]? = []) -> [MAAnalyticsConfig] {
         var analyticsConfigList: [MAAnalyticsConfig] = []
-        analyticsConfigList.append(MAAnalyticsConfig(acc: "1553", aid: "1"))
+        analyticsConfigList.append(defaultRATAcc)
         guard let configList = analyticsConfig else {
             return analyticsConfigList
         }

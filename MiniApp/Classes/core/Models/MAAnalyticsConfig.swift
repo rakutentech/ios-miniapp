@@ -1,5 +1,5 @@
 /// Host app configurable analytics details
-public struct MAAnalyticsConfig: Codable {
+public struct MAAnalyticsConfig: Codable, Equatable {
     let acc: String
     let aid: String
 
