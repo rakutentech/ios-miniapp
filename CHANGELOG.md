@@ -7,6 +7,10 @@
 - **Feature:** Mini App SDK now supports code updates in preview mode
 - **Updated:** Updated `getAccessToken` result with new Error type i.e `MASDKAccessTokenError` to support more errors
 
+**Sample App**
+
+- **Feature:** Added QA tests setteings screen containing options to test all `getAccessToken` error types
+
 ---
 ### 3.3.0 (2021-05-27)
 
