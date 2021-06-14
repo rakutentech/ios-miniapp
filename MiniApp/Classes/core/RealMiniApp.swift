@@ -8,6 +8,7 @@ internal class RealMiniApp {
     var miniAppStatus: MiniAppStatus
     var miniAppPermissionStorage: MiniAppPermissionsStorage
     var miniAppManifestStorage: MAManifestStorage
+    var miniAppAnalyticsConfig: [MAAnalyticsConfig]
 
     convenience init() {
         self.init(with: nil)
@@ -27,11 +28,13 @@ internal class RealMiniApp {
         self.miniAppManifestStorage = MAManifestStorage()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer(navigationSettings)
+        self.miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
     }
 
     func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
         self.miniAppClient.updateEnvironment(with: settings)
         self.displayer.navConfig = navigationSettings
+        self.miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
@@ -103,15 +106,15 @@ internal class RealMiniApp {
 
     func createMiniApp(url: URL, queryParams: String? = nil, errorHandler: @escaping (Error) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
         displayer.getMiniAppView(miniAppURL: url,
-                                        miniAppTitle: "Mini app",
-                                        queryParams: queryParams,
-                                        hostAppMessageDelegate: messageInterface ?? self,
-                                        adsDisplayer: adsDisplayer,
-                                        initialLoadCallback: { success in
-            if !success {
-                errorHandler(NSError.invalidURLError())
-            }
-        })
+                                 miniAppTitle: "Mini app",
+                                 queryParams: queryParams,
+                                 hostAppMessageDelegate: messageInterface ?? self,
+                                 adsDisplayer: adsDisplayer,
+                                 initialLoadCallback: { success in
+                                    if !success {
+                                        errorHandler(NSError.invalidURLError())
+                                    }
+                                 }, analyticsConfig: self.miniAppAnalyticsConfig)
     }
 
     /// Download Mini app for a given Mini app info object
@@ -162,7 +165,8 @@ internal class RealMiniApp {
                                                                                miniAppTitle: appInfo.displayName ?? "Mini app",
                                                                                queryParams: queryParams,
                                                                                hostAppMessageDelegate: messageInterface ?? self,
-                                                                               adsDisplayer: adsDisplayer)
+                                                                               adsDisplayer: adsDisplayer,
+                                                                               analyticsConfig: self.miniAppAnalyticsConfig)
                     completionHandler(.success(miniAppDisplayProtocol))
                 }
             case .failure(let error):
