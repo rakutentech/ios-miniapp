@@ -92,9 +92,9 @@ class MiniAppDownloaderTests: QuickSpec {
              }
          }
 
-        describe("old mini app folder won't be deleted in preview mode") {
+        describe("old mini app folder will always be deleted in preview mode") {
             context("when manifest returns list of valid URLs") {
-                it("will download all files and keep previous mini app path") {
+                it("will download all files and not keep previous mini app path") {
                     let mockAPIClient = MockAPIClient(previewMode: true)
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
@@ -103,17 +103,23 @@ class MiniAppDownloaderTests: QuickSpec {
                          "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                        }
                      """
+                    var referenceDate: Date? = Date(), dateOld = referenceDate, dateNew = referenceDate
+                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: "\(versionId).1")
                     mockAPIClient.data = responseString.data(using: .utf8)
                     downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).1") { (_) in
-                        downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).2") { (_) in }
+                        dateOld = try? FileManager.default.attributesOfItem(atPath: miniAppDirectory.path)[.creationDate] as? Date
+                        downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).1") { (_) in
+                            dateNew = try? FileManager.default.attributesOfItem(atPath: miniAppDirectory.path)[.creationDate] as? Date
+                        }
                     }
-
-                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: "\(versionId).2")
-                    let oldMiniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: "\(versionId).1")
                     var isDir: ObjCBool = true
 
                     expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: .seconds(30))
-                    expect(FileManager.default.fileExists(atPath: oldMiniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: .seconds(30))
+                    expect(dateOld).toEventuallyNot(equal(referenceDate),timeout: .seconds(30))
+                    expect(dateNew).toEventuallyNot(equal(referenceDate),timeout: .seconds(30))
+                    expect(dateNew).toEventuallyNot(equal(dateOld),timeout: .seconds(30))
+                    expect(dateNew).toEventuallyNot(beNil())
+                    expect(dateOld).toEventuallyNot(beNil())
                 }
             }
         }
