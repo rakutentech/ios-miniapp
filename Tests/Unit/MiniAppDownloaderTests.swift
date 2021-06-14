@@ -104,22 +104,27 @@ class MiniAppDownloaderTests: QuickSpec {
                        }
                      """
                     var referenceDate: Date? = Date(), dateOld = referenceDate, dateNew = referenceDate
-                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: "\(versionId).1")
+                    let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).1") { (_) in
-                        dateOld = try? FileManager.default.attributesOfItem(atPath: miniAppDirectory.path)[.creationDate] as? Date
-                        downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).1") { (_) in
-                            dateNew = try? FileManager.default.attributesOfItem(atPath: miniAppDirectory.path)[.creationDate] as? Date
+                    downloader.verifyAndDownload(appId: appId, versionId: versionId) { (_) in
+                        miniAppStatus.setDownloadStatus(true, for: "\(appId)/\(versionId)")
+                        do {
+                            try "".write(to: miniAppDirectory.appendingPathComponent("temp.txt"), atomically: true, encoding: .utf8)
+                            dateOld = Date()
+                        } catch {
+                            dateOld = nil
+                        }
+                        downloader.verifyAndDownload(appId: appId, versionId: versionId) { (_) in
+                            dateNew = try? FileManager.default.attributesOfItem(atPath: miniAppDirectory.appendingPathComponent("temp.txt").path)[.creationDate] as? Date
                         }
                     }
                     var isDir: ObjCBool = true
 
                     expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: .seconds(30))
-                    expect(dateOld).toEventuallyNot(equal(referenceDate), timeout: .seconds(30))
-                    expect(dateNew).toEventuallyNot(equal(referenceDate), timeout: .seconds(30))
-                    expect(dateNew).toEventuallyNot(equal(dateOld), timeout: .seconds(30))
-                    expect(dateNew).toEventuallyNot(beNil())
-                    expect(dateOld).toEventuallyNot(beNil())
+                    expect(dateOld).toEventuallyNot(equal(referenceDate), timeout: .seconds(10))
+                    expect(dateOld).toEventuallyNot(beNil(), timeout: .seconds(10))
+                    expect(dateNew).toEventually(beNil(), timeout: .seconds(10))
+                    deleteStatusPreferences()
                 }
             }
         }
