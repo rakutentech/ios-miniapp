@@ -29,9 +29,7 @@ class MiniAppDownloader {
     }
 
     fileprivate func cleanApp(_ appId: String, for version: String) {
-        if self.miniAppClient.environment.isPreviewMode == false {
-            self.miniAppStorage.cleanVersions(for: appId, differentFrom: version, status: self.miniAppStatus)
-        }
+        miniAppStorage.cleanVersions(for: appId, differentFrom: version, status: miniAppStatus)
     }
 
     func verifyAndDownload(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
