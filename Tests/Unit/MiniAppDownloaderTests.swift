@@ -115,9 +115,9 @@ class MiniAppDownloaderTests: QuickSpec {
                     var isDir: ObjCBool = true
 
                     expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: .seconds(30))
-                    expect(dateOld).toEventuallyNot(equal(referenceDate),timeout: .seconds(30))
-                    expect(dateNew).toEventuallyNot(equal(referenceDate),timeout: .seconds(30))
-                    expect(dateNew).toEventuallyNot(equal(dateOld),timeout: .seconds(30))
+                    expect(dateOld).toEventuallyNot(equal(referenceDate), timeout: .seconds(30))
+                    expect(dateNew).toEventuallyNot(equal(referenceDate), timeout: .seconds(30))
+                    expect(dateNew).toEventuallyNot(equal(dateOld), timeout: .seconds(30))
                     expect(dateNew).toEventuallyNot(beNil())
                     expect(dateOld).toEventuallyNot(beNil())
                 }
