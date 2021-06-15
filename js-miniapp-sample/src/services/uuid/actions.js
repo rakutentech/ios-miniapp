@@ -2,7 +2,7 @@ import MiniApp from 'js-miniapp-sdk';
 
 import { SET_UUID, UUID_FETCH_ERROR } from './types';
 
-type GetUUIDAction = { type: String, payload: string };
+type GetUUIDAction = { type: String, payload: ?string, error: ?string };
 
 type UUIDAction = GetUUIDAction;
 
@@ -15,9 +15,10 @@ const setUUID = (): Function => {
           payload: uuidFromSDK,
         });
       })
-      .catch((_) => {
+      .catch((error) => {
         dispatch({
           type: UUID_FETCH_ERROR,
+          error,
         });
       });
   };

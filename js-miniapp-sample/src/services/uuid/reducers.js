@@ -7,6 +7,7 @@ type UUIDState = {
 
 const defaultState: UUIDState = {
   uuid: undefined,
+  uuidError: undefined,
 };
 
 const UUIDReducer = (
@@ -14,9 +15,15 @@ const UUIDReducer = (
   action: UUIDAction = {}
 ): UUIDState => {
   if (action.type === SET_UUID) {
-    return { ...defaultState, uuid: action.payload };
+    return {
+      ...defaultState,
+      uuid: action.payload,
+    };
   } else if (action.type === UUID_FETCH_ERROR) {
-    return { uuid: undefined };
+    return {
+      ...defaultState,
+      uuidError: action.error,
+    };
   }
   return state;
 };

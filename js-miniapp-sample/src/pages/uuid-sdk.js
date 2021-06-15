@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 type UUIDProps = {
   uuid: string,
+  uuidError: string,
   getSdkId: Function,
 };
 
@@ -41,7 +42,7 @@ const UuidFetcher = (props: UUIDProps) => {
   return (
     <GreyCard>
       <CardContent className={classes.content}>
-        {props.uuid ?? 'Not Available'}
+        {props.uuid ?? props.uuidError ?? 'Not Available'}
       </CardContent>
       <CardActions className={classes.actions}>
         <Button
@@ -62,6 +63,7 @@ const mapStateToProps = (state, props) => {
   return {
     ...props,
     uuid: state.uuid.uuid,
+    uuidError: state.uuid.uuidError,
   };
 };
 
