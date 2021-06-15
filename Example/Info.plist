@@ -50,9 +50,9 @@
 	<key>RASProjectSubscriptionKey</key>
 	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY)</string>
 	<key>RATAccountIdentifier</key>
-	<integer>0</integer>
+	<integer>1553</integer>
 	<key>RATAppIdentifier</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>RATEndpoint</key>
 	<string>$(RAT_ENDPOINT)</string>
 	<key>RMAAPIEndpoint</key>
