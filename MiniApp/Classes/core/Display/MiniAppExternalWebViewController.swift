@@ -66,7 +66,7 @@ extension MiniAppExternalWebViewController: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.navigationType == .linkActivated {
+        if navigationAction.navigationType == .linkActivated || navigationAction.navigationType == .formSubmitted {
             if !(navigationAction.targetFrame?.isMainFrame ?? false) {
                 decisionHandler(.cancel)
                 self.webView.load(navigationAction.request)
