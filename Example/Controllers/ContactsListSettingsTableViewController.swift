@@ -228,7 +228,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
     }
 
     class func fakeMail(with name: String?) -> String {
-        name != nil ? name!.replacingOccurrences(of: " ", with: ".", options: .literal, range: nil) + "@example.com" : ""
+        name != nil ? name!.replacingOccurrences(of: " ", with: ".", options: .literal, range: nil).lowercased() + "@example.com" : "".lowercased()
     }
 
     class func randomFakeName() -> String {
@@ -236,12 +236,12 @@ class ContactsListSettingsTableViewController: UITableViewController {
     }
 
     class func randomFakeFirstName() -> String {
-        let firstNameList = ["哲也", "太郎", "ピエール", "レオ", "Yvonne", "Jamie", "Leticia", "Priscilla", "Sidney", "Nancy", "Edmund", "Bill", "Megan"]
+        let firstNameList = ["Yvonne", "Jamie", "Leticia", "Priscilla", "Sidney", "Nancy", "Edmund", "Bill", "Megan"]
         return firstNameList.randomElement()!
     }
 
     class func randomFakeLastName() -> String {
-        let lastNameList = ["古室", "楽天", "ビラ", "ジョゼフ", "Andrews", "Casey", "Gross", "Lane", "Thomas", "Patrick", "Strickland", "Nicolas", "Freeman"]
+        let lastNameList = ["Andrews", "Casey", "Gross", "Lane", "Thomas", "Patrick", "Strickland", "Nicolas", "Freeman"]
         return lastNameList.randomElement()!
     }
 }
