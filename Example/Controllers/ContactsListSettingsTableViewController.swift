@@ -228,7 +228,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
     }
 
     class func fakeMail(with name: String?) -> String {
-        name != nil ? name!.replacingOccurrences(of: " ", with: ".", options: .literal, range: nil).lowercased() + "@example.com" : "".lowercased()
+        name != nil ? name!.replacingOccurrences(of: " ", with: ".", options: .literal, range: nil).lowercased() + "@example.com" : ""
     }
 
     class func randomFakeName() -> String {
