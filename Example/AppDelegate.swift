@@ -28,14 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return MiniApp.MAOrientationLock
         }
     }
-
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true), let host = components.host else {
-            return false
-        }
-        print("Host: ", host)
-        return true
-    }
 }
 
 extension AVPlayerViewController {
