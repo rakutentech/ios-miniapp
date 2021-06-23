@@ -252,10 +252,22 @@ internal class RealMiniApp {
                                               apiClient: self.miniAppClient) { (result) in
             switch result {
             case .success(let metaData):
+                self.miniAppManifestStorage.saveManifestInfo(forMiniApp: appId,
+                                                             manifest: CachedMetaData(version: version,
+                                                                                      miniAppManifest: metaData))
+                self.cleanUpCustomPermissions(appId: appId, latestManifest: metaData)
                 completionHandler(.success(metaData))
             case .failure(let error):
                 completionHandler(.failure(error))
             }
+        }
+    }
+
+    /// In Preview mode, when Codebase is updated, & if there is a change in Manifest, it is good to delete the old Custom Permissions from the Keychain.
+    /// Because the user has to agree to the new MiniAppManifest, also this will help to compare the latest manifest.
+    func cleanUpCustomPermissions(appId: String, latestManifest: MiniAppManifest) {
+        if self.getCachedManifestData(appId: appId) != latestManifest {
+            miniAppPermissionStorage.removeKey(for: appId)
         }
     }
 
@@ -275,9 +287,6 @@ internal class RealMiniApp {
             retrieveMiniAppMetaData(appId: appId, version: versionId) { (result) in
                 switch result {
                 case .success(let manifest):
-                    self.miniAppManifestStorage.saveManifestInfo(forMiniApp: appId,
-                                                                 manifest: CachedMetaData(version: versionId,
-                                                                                          miniAppManifest: manifest))
                     self.verifyRequiredPermissions(appId: appId,
                                                    miniAppManifest: manifest,
                                                    completionHandler: completionHandler)
