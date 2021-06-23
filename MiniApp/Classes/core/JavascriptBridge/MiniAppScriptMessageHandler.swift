@@ -82,6 +82,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             sendMessageToContactId(with: callbackId, parameters: requestParam)
         case .sendMessageToMultipleContacts:
             sendMessageToMultipleContacts(with: callbackId, parameters: requestParam)
+        case .getPoints:
+            fetchPoints(callbackId: callbackId)
         }
     }
 
@@ -459,6 +461,20 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: jsonResponse)
                 case .failure(let error):
                     self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
+                }
+            }
+        }
+    }
+
+    func fetchPoints(callbackId: String) {
+         if isUserAllowedPermission(customPermissionType: .points, callbackId: callbackId) {
+            hostAppMessageDelegate?.getPoints { (result) in
+                switch result {
+                case .success(let response):
+                    guard let encodedPoints = ResponseEncoder.encode(data: response) else { return }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: encodedPoints)
+                case .failure(let error):
+                    self.handleMASDKError(error: error, callbackId: callbackId)
                 }
             }
         }
