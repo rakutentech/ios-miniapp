@@ -69,7 +69,7 @@ public extension MiniAppUserInfoDelegate {
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
-    
+
     func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
@@ -124,7 +124,7 @@ public class MAPoints: Codable {
     let pointsStandard: Int
     let pointsTerm: Int
     let pointsCash: Int
-    
+
     public init(pointsStandard: Int, pointsTerm: Int, pointsCash: Int) {
         self.pointsStandard = pointsStandard
         self.pointsTerm = pointsTerm
