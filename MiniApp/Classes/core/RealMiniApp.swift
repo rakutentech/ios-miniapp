@@ -240,6 +240,7 @@ internal class RealMiniApp {
 
     func retrieveMiniAppMetaData(appId: String,
                                  version: String,
+                                 clearPermissions: Bool = true,
                                  completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if appId.isEmpty {
             return completionHandler(.failure(.invalidAppId))
@@ -252,10 +253,9 @@ internal class RealMiniApp {
                                               apiClient: self.miniAppClient) { (result) in
             switch result {
             case .success(let metaData):
-                self.miniAppManifestStorage.saveManifestInfo(forMiniApp: appId,
-                                                             manifest: CachedMetaData(version: version,
-                                                                                      miniAppManifest: metaData))
-                self.cleanUpCustomPermissions(appId: appId, latestManifest: metaData)
+                if clearPermissions {
+                    self.cleanUpCustomPermissions(appId: appId, latestManifest: metaData)
+                }
                 completionHandler(.success(metaData))
             case .failure(let error):
                 completionHandler(.failure(error))
@@ -283,10 +283,13 @@ internal class RealMiniApp {
     ///   - completionHandler: Handler that returns whether user agreed to required permissions or not.
     func isRequiredPermissionsAllowed(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
         let cachedMetaData = self.miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
-        if cachedMetaData?.version != versionId {
-            retrieveMiniAppMetaData(appId: appId, version: versionId) { (result) in
+        if cachedMetaData?.version != versionId || miniAppClient.environment.isPreviewMode {
+            retrieveMiniAppMetaData(appId: appId, version: versionId, clearPermissions: false) { (result) in
                 switch result {
                 case .success(let manifest):
+                    self.miniAppManifestStorage.saveManifestInfo(forMiniApp: appId,
+                                                                 manifest: CachedMetaData(version: versionId,
+                                                                                          miniAppManifest: manifest))
                     self.verifyRequiredPermissions(appId: appId,
                                                    miniAppManifest: manifest,
                                                    completionHandler: completionHandler)
