@@ -83,7 +83,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .sendMessageToMultipleContacts:
             sendMessageToMultipleContacts(with: callbackId, parameters: requestParam)
         case .getPoints:
-            fetchPoints(callbackId: callbackId)
+            fetchPoints(with: callbackId)
         }
     }
 
@@ -466,7 +466,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func fetchPoints(callbackId: String) {
+    func fetchPoints(with callbackId: String) {
          if isUserAllowedPermission(customPermissionType: .points, callbackId: callbackId) {
             hostAppMessageDelegate?.getPoints { (result) in
                 switch result {
