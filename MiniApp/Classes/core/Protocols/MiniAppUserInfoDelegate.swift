@@ -121,13 +121,13 @@ extension Date {
 }
 
 public class MAPoints: Codable {
-    let pointsStandard: Int
-    let pointsTerm: Int
-    let pointsCash: Int
+    let standard: Int
+    let term: Int
+    let cash: Int
 
-    public init(pointsStandard: Int, pointsTerm: Int, pointsCash: Int) {
-        self.pointsStandard = pointsStandard
-        self.pointsTerm = pointsTerm
-        self.pointsCash = pointsCash
+    public init(standard: Int, term: Int, cash: Int) {
+        self.standard = standard
+        self.term = term
+        self.cash = cash
     }
 }
