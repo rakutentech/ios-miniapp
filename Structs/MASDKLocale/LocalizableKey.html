@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../../index.html">
-          MiniApp 3.3.0 Docs
+          MiniApp 3.4.0 Docs
         </a>
-         (68% documented)
+         (67% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -100,11 +100,20 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../../Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MiniAppUI.html">MiniAppUI</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Classes/MiniAppViewController.html">MiniAppViewController</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="../../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Enums/MASDKAccessTokenError.html">MASDKAccessTokenError</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../../Enums/MASDKAdsDisplayError.html">MASDKAdsDisplayError</a>
               </li>
@@ -153,6 +162,9 @@
                 <a class="nav-group-task-link" href="../../Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Protocols/MiniAppFallbackViewable.html">MiniAppFallbackViewable</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../../Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -165,6 +177,9 @@
                 <a class="nav-group-task-link" href="../../Protocols/MiniAppShareContentDelegate.html">MiniAppShareContentDelegate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Protocols/MiniAppUIDelegate.html">MiniAppUIDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../../Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a>
               </li>
             </ul>
@@ -172,6 +187,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="../../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Structs/MAAnalyticsConfig.html">MAAnalyticsConfig</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../../Structs/MASDKAccessTokenScopes.html">MASDKAccessTokenScopes</a>
               </li>
@@ -192,6 +210,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../../Structs/MiniAppShareContent.html">MiniAppShareContent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../../Structs/MiniAppUIParams.html">MiniAppUIParams</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../../Structs/Version.html">Version</a>
@@ -334,33 +355,6 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="k">case</span> <span class="n">save</span> <span class="o">=</span> <span class="s">"miniapp.sdk.all.ui.save"</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO20customSettingsFooteryA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/customSettingsFooter" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO20customSettingsFooteryA2EmF">customSettingsFooter</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">customSettingsFooter</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.customsettingsfooter"</span></code></pre>
 
                         </div>
                       </div>
@@ -853,6 +847,87 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO16uiNavButtonCloseyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/uiNavButtonClose" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO16uiNavButtonCloseyA2EmF">uiNavButtonClose</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">uiNavButtonClose</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.ui.nav.button.close"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO15uiFallbackTitleyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/uiFallbackTitle" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO15uiFallbackTitleyA2EmF">uiFallbackTitle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">uiFallbackTitle</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.ui.fallback.title"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp11MASDKLocaleV14LocalizableKeyO21uiFallbackButtonRetryyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/uiFallbackButtonRetry" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp11MASDKLocaleV14LocalizableKeyO21uiFallbackButtonRetryyA2EmF">uiFallbackButtonRetry</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">uiFallbackButtonRetry</span> <span class="o">=</span> <span class="s">"miniapp.sdk.ios.ui.fallback.button.retry"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -861,7 +936,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-05-27)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-06-25)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
