@@ -8,6 +8,7 @@ internal class RealMiniApp {
     var miniAppStatus: MiniAppStatus
     var miniAppPermissionStorage: MiniAppPermissionsStorage
     var miniAppManifestStorage: MAManifestStorage
+    var miniAppAnalyticsConfig: [MAAnalyticsConfig]
 
     convenience init() {
         self.init(with: nil)
@@ -27,11 +28,13 @@ internal class RealMiniApp {
         self.miniAppManifestStorage = MAManifestStorage()
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer(navigationSettings)
+        self.miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
     }
 
     func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
         self.miniAppClient.updateEnvironment(with: settings)
         self.displayer.navConfig = navigationSettings
+        self.miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
@@ -103,15 +106,15 @@ internal class RealMiniApp {
 
     func createMiniApp(url: URL, queryParams: String? = nil, errorHandler: @escaping (Error) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
         displayer.getMiniAppView(miniAppURL: url,
-                                        miniAppTitle: "Mini app",
-                                        queryParams: queryParams,
-                                        hostAppMessageDelegate: messageInterface ?? self,
-                                        adsDisplayer: adsDisplayer,
-                                        initialLoadCallback: { success in
-            if !success {
-                errorHandler(NSError.invalidURLError())
-            }
-        })
+                                 miniAppTitle: "Mini app",
+                                 queryParams: queryParams,
+                                 hostAppMessageDelegate: messageInterface ?? self,
+                                 adsDisplayer: adsDisplayer,
+                                 initialLoadCallback: { success in
+                                    if !success {
+                                        errorHandler(NSError.invalidURLError())
+                                    }
+                                 }, analyticsConfig: self.miniAppAnalyticsConfig)
     }
 
     /// Download Mini app for a given Mini app info object
@@ -162,7 +165,8 @@ internal class RealMiniApp {
                                                                                miniAppTitle: appInfo.displayName ?? "Mini app",
                                                                                queryParams: queryParams,
                                                                                hostAppMessageDelegate: messageInterface ?? self,
-                                                                               adsDisplayer: adsDisplayer)
+                                                                               adsDisplayer: adsDisplayer,
+                                                                               analyticsConfig: self.miniAppAnalyticsConfig)
                     completionHandler(.success(miniAppDisplayProtocol))
                 }
             case .failure(let error):
@@ -236,6 +240,7 @@ internal class RealMiniApp {
 
     func retrieveMiniAppMetaData(appId: String,
                                  version: String,
+                                 clearPermissions: Bool = true,
                                  completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if appId.isEmpty {
             return completionHandler(.failure(.invalidAppId))
@@ -248,10 +253,21 @@ internal class RealMiniApp {
                                               apiClient: self.miniAppClient) { (result) in
             switch result {
             case .success(let metaData):
+                if clearPermissions {
+                    self.cleanUpCustomPermissions(appId: appId, latestManifest: metaData)
+                }
                 completionHandler(.success(metaData))
             case .failure(let error):
                 completionHandler(.failure(error))
             }
+        }
+    }
+
+    /// In Preview mode, when Codebase is updated, & if there is a change in Manifest, it is good to delete the old Custom Permissions from the Keychain.
+    /// Because the user has to agree to the new MiniAppManifest, also this will help to compare the latest manifest.
+    func cleanUpCustomPermissions(appId: String, latestManifest: MiniAppManifest) {
+        if self.getCachedManifestData(appId: appId) != latestManifest {
+            miniAppPermissionStorage.removeKey(for: appId)
         }
     }
 
@@ -267,8 +283,8 @@ internal class RealMiniApp {
     ///   - completionHandler: Handler that returns whether user agreed to required permissions or not.
     func isRequiredPermissionsAllowed(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
         let cachedMetaData = self.miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
-        if cachedMetaData?.version != versionId {
-            retrieveMiniAppMetaData(appId: appId, version: versionId) { (result) in
+        if cachedMetaData?.version != versionId || miniAppClient.environment.isPreviewMode {
+            retrieveMiniAppMetaData(appId: appId, version: versionId, clearPermissions: false) { (result) in
                 switch result {
                 case .success(let manifest):
                     self.miniAppManifestStorage.saveManifestInfo(forMiniApp: appId,

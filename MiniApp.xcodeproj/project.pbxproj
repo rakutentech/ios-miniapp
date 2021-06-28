@@ -15,6 +15,7 @@
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
 		2A54C85C26676377002B204F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C85B26676377002B204F /* UITextField.swift */; };
 		317FED2525E5EB4300774919 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317FED2725E5EB4300774919 /* Settings.storyboard */; };
+		317FFF21267095040066E455 /* QASettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317FFF20267095040066E455 /* QASettingsTableViewController.swift */; };
 		31CFFA50261B7E7300CDD537 /* ChatContactsSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CFFA4F261B7E7300CDD537 /* ChatContactsSelectorViewController.swift */; };
 		31D1BBC3262041920040235C /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31D1BBC2262041920040235C /* Colors.xcassets */; };
 		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
@@ -80,7 +81,6 @@
 		38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC4652244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift */; };
 		750191FB804B88456CA24CA7 /* MiniAppAdDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */; };
 		75019B5861C50A30C1BE4C59 /* ViewController+ChatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501986FB5D52F78E841069D /* ViewController+ChatDelegate.swift */; };
-		A1971CAE261C1F7800FB0B1D /* MiniAppViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1971CAD261C1F7800FB0B1D /* MiniAppViewControllerTests.swift */; };
 		D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07452302567B72A00B6E842 /* MASDKErrorTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +112,7 @@
 		31462839260DE24E0015AD98 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		31553D3525B6C6800091EE50 /* Config-common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
 		317FED2625E5EB4300774919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		317FFF20267095040066E455 /* QASettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsTableViewController.swift; sourceTree = "<group>"; };
 		319D66D525D65C37005688F4 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
 		31AB8EE125CA43A30046F694 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = SOURCE_ROOT; };
 		31AB8EE225CA43E40046F694 /* Dangerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dangerfile; sourceTree = SOURCE_ROOT; };
@@ -190,7 +191,6 @@
 		75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppAdDisplayerTests.swift; sourceTree = "<group>"; };
 		7501986FB5D52F78E841069D /* ViewController+ChatDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+ChatDelegate.swift"; sourceTree = "<group>"; };
 		7FB3A4D3F3350D35AED2F43D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		A1971CAD261C1F7800FB0B1D /* MiniAppViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewControllerTests.swift; sourceTree = "<group>"; };
 		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D07452302567B72A00B6E842 /* MASDKErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKErrorTests.swift; sourceTree = "<group>"; };
 		D85784C7998D04CE64578236 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -323,6 +323,7 @@
 				38CEFA4A25C0A3B300EE250A /* MAFirstLaunchController.swift */,
 				31CFFA4F261B7E7300CDD537 /* ChatContactsSelectorViewController.swift */,
 				38920AED251D9C57004C5DDD /* Extensions */,
+				317FFF20267095040066E455 /* QASettingsTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -385,7 +386,6 @@
 				D07452302567B72A00B6E842 /* MASDKErrorTests.swift */,
 				387AD4702590F0130025033F /* MessageInterfaceExtensionTests.swift */,
 				75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */,
-				A1971CAD261C1F7800FB0B1D /* MiniAppViewControllerTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -623,6 +623,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				38920AFA251D9C57004C5DDD /* MiniApp+UIImage.swift in Sources */,
+				317FFF21267095040066E455 /* QASettingsTableViewController.swift in Sources */,
 				38920AF3251D9C57004C5DDD /* UIImageView+Extensions.swift in Sources */,
 				38920AFC251D9C57004C5DDD /* MiniAppCell.swift in Sources */,
 				31CFFA50261B7E7300CDD537 /* ChatContactsSelectorViewController.swift in Sources */,
@@ -680,7 +681,6 @@
 				3871A8E124C54AD600BEC6CF /* MiniApp+StringTests.swift in Sources */,
 				38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */,
 				189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */,
-				A1971CAE261C1F7800FB0B1D /* MiniAppViewControllerTests.swift in Sources */,
 				D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */,
 				3879499824FCFB0900DB099B /* MiniAppKeyChainTests.swift in Sources */,
 				38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */,
