@@ -1,16 +1,18 @@
 ## CHANGELOG
 
-### 3.4.0 (2021-06-DD)
+### 3.4.0 (2021-06-25)
 
 **SDK**
 
 - **Feature:** Mini App SDK now supports code updates in preview mode
+- **Feature:** Added possibility to send analytics to multiple accounts at the same time
 - **Feature:** Updated `MiniAppSdkConfig` class to add additional parameter `MAAnalyticsConfig` which will be used by Host app to send analytics for multiple accounts.
 - **Updated:** Updated `getAccessToken` result with new Error type i.e `MASDKAccessTokenError` to support more errors
+- **Fixed:** Added support for form submission redirections
 
 **Sample App**
 
-- **Feature:** Added QA tests setteings screen containing options to test all `getAccessToken` error types
+- **Feature:** Added QA tests settings screen containing options to test all `getAccessToken` error types
 
 ---
 ### 3.3.0 (2021-05-27)
