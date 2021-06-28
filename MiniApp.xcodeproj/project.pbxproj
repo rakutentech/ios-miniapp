@@ -290,6 +290,12 @@
 				38CEFA5025C0A3CA00EE250A /* UIView+MiniApp.swift */,
 				3857ED7D25DEE0690083F3E1 /* Bundle+MiniApp.swift */,
 				2A54C85B26676377002B204F /* UITextField.swift */,
+<<<<<<< HEAD
+=======
+				75019277BB58C348A54737C5 /* Encodable+MiniApp.swift */,
+				75019621ED83F8F69140095E /* Print+MiniApp.swift */,
+				2A54C85B26676377002B204F /* UITextField.swift */,
+>>>>>>> 3dd7fdf (Squashed commit of the following:)
 			);
 			path = Utils;
 			sourceTree = "<group>";
