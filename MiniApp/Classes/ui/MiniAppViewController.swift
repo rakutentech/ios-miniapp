@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-public protocol MiniAppUIDelegate: class {
+public protocol MiniAppUIDelegate: AnyObject {
     func miniApp(_ viewController: MiniAppViewController, didLaunchWith config: MiniAppSdkConfig?)
     func miniApp(_ viewController: MiniAppViewController, shouldExecute action: MiniAppNavigationAction)
     func miniApp(_ viewController: MiniAppViewController, didLoadWith error: Error?)

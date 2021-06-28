@@ -1,7 +1,7 @@
 import UIKit
 import MiniApp
 
-protocol ContactsListDelegate: class {
+protocol ContactsListDelegate: AnyObject {
     func contactsController(_ contactsController: ContactsListSettingsTableViewController?, didSelect contact: [MAContact]?)
 }
 

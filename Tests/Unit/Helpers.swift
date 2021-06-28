@@ -441,9 +441,9 @@ var mockMiniAppManifest: MiniAppManifest {
 
 @discardableResult func saveMockManifestInCache(miniAppId: String, version: String = "ver-id-test") -> Bool {
     do {
-       try MAManifestStorage().saveManifestInfo(
-                forMiniApp: miniAppId,
-            manifest: CachedMetaData(version: version, miniAppManifest: getMockManifestInfo(miniAppId: miniAppId)!)
+        try MAManifestStorage().saveManifestInfo(
+            forMiniApp: miniAppId,
+            manifest: getMockManifestInfo(miniAppId: miniAppId)!
         )
         return true
     } catch {

@@ -1,5 +1,5 @@
 /// Mini App Meta data information
-internal struct MetaDataResponse: Decodable {
+internal struct MetaDataResponse: Codable {
     var bundleManifest: MetaDataCustomPermissionModel
 
     private enum CodingKeys: String, CodingKey {
@@ -8,7 +8,7 @@ internal struct MetaDataResponse: Decodable {
 }
 
 /// Mini App Meta data information
-internal struct MetaDataCustomPermissionModel: Decodable {
+internal struct MetaDataCustomPermissionModel: Codable, Hashable {
     var reqPermissions: [MACustomPermissionsResponse]?
     var optPermissions: [MACustomPermissionsResponse]?
     var customMetaData: [String: String]?
@@ -20,9 +20,20 @@ internal struct MetaDataCustomPermissionModel: Decodable {
              customMetaData,
              accessTokenPermissions
     }
+
+    static func == (lhs: MetaDataCustomPermissionModel, rhs: MetaDataCustomPermissionModel) -> Bool {
+        lhs.hashValue == rhs.hashValue
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(reqPermissions)
+        hasher.combine(optPermissions)
+        hasher.combine(customMetaData)
+        hasher.combine(accessTokenPermissions)
+    }
 }
 
-internal struct MACustomPermissionsResponse: Decodable {
+internal struct MACustomPermissionsResponse: Codable, Hashable {
     var name: String?
     var reason: String?
 
@@ -30,10 +41,19 @@ internal struct MACustomPermissionsResponse: Decodable {
         case name,
              reason
     }
+
+    static func == (lhs: MACustomPermissionsResponse, rhs: MACustomPermissionsResponse) -> Bool {
+        lhs.hashValue == rhs.hashValue
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(reason)
+    }
 }
 
 /// Mini App access token permissions containing audience and scopes, usually taken from manifest.json
-public struct MASDKAccessTokenScopes: Codable, Equatable, Hashable {
+public struct MASDKAccessTokenScopes: Codable, Hashable, Comparable {
     public var audience: String
     public var scopes: [String]
 
@@ -69,10 +89,15 @@ public struct MASDKAccessTokenScopes: Codable, Equatable, Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(audience)
+        hasher.combine(scopes.sorted().joined())
     }
 
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.audience == rhs.audience && rhs.scopes.sorted() == lhs.scopes.sorted()
+    }
+
+    public static func < (lhs: MASDKAccessTokenScopes, rhs: MASDKAccessTokenScopes) -> Bool {
+        lhs.audience < rhs.audience
     }
 
     /// This method checks if this Access Token permission is contained in an array of permissions by checking audience and scopes.
@@ -110,7 +135,7 @@ public struct MASDKAccessTokenScopes: Codable, Equatable, Hashable {
 }
 
 /// Mini-app meta data information
-public struct MiniAppManifest: Codable, Equatable, Hashable {
+public struct MiniAppManifest: Codable, Hashable {
 
     /// List of required permissions for a mini-app
     public let requiredPermissions: [MASDKCustomPermissionModel]?
@@ -150,11 +175,10 @@ public struct MiniAppManifest: Codable, Equatable, Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(requiredPermissions)
-        hasher.combine(optionalPermissions)
+        hasher.combine(requiredPermissions?.sorted())
+        hasher.combine(optionalPermissions?.sorted())
         hasher.combine(customMetaData)
-        hasher.combine(accessTokenPermissions)
-        hasher.combine(versionId)
+        hasher.combine(accessTokenPermissions?.sorted())
     }
 }
 
@@ -169,7 +193,7 @@ internal struct CachedMetaData: Codable, Equatable {
         self.hash = hash
     }
 
-    static func ==(lhs: CachedMetaData, rhs: CachedMetaData) -> Bool {
+    static func == (lhs: CachedMetaData, rhs: CachedMetaData) -> Bool {
         lhs.hash == rhs.hash
                 && lhs.miniAppManifest.hashValue == rhs.miniAppManifest.hashValue
                 && lhs.version == rhs.version

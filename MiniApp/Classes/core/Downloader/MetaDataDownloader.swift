@@ -1,9 +1,9 @@
 internal class MetaDataDownloader {
 
-    var manifestCache: MAManifestCache
+    var manifestManager: MAManifestStorage
 
     init() {
-        manifestCache = MAManifestCache()
+        manifestManager = MAManifestStorage()
     }
 
     func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
@@ -15,11 +15,11 @@ internal class MetaDataDownloader {
                         data: responseData.data) else {
                         return completionHandler(.failure(.invalidResponseData))
                     }
-                    let manifest = self.prepareMiniAppManifest(metaDataResponse: decodeResponse.bundleManifest, versionId: miniAppVersion)
-                    self.manifestCache.saveManifestInfo(forMiniApp: miniAppId,
-                        versionId: miniAppVersion,
-                        manifest: CachedMetaData(version: miniAppVersion, miniAppManifest: manifest, hash: manifest.hashValue)
+					let manifest = self.manifestManager.prepareMiniAppManifest(metaDataResponse: decodeResponse.bundleManifest, versionId: miniAppVersion)
+					self.manifestManager.saveManifestInfo(forMiniApp: miniAppId,
+                        manifest: manifest
                     )
+
                     return completionHandler(.success(manifest))
                 case .failure(let error):
                     return completionHandler(.failure(.fromError(error: error)))
@@ -30,8 +30,8 @@ internal class MetaDataDownloader {
         completionHandler(.success(manifest))
     }
 
-    func getCachedManifest(miniAppId: String, miniAppVersion: String) -> MiniAppManifest? {
-        manifestCache.getManifestInfo(forMiniApp: miniAppId, versionId: miniAppVersion)?.miniAppManifest
+    func getCachedManifest(miniAppId: String) -> MiniAppManifest? {
+        manifestManager.getManifestInfo(forMiniApp: miniAppId)
     }
 
     func prepareMiniAppManifest(metaDataResponse: MetaDataCustomPermissionModel, versionId: String) -> MiniAppManifest {
@@ -51,5 +51,6 @@ internal class MetaDataDownloader {
             }
             return MASDKCustomPermissionModel(permissionName: permissionType, isPermissionGranted: .allowed, permissionRequestDescription: $0.reason)
         }
+
     }
 }

@@ -69,7 +69,11 @@ public class MiniApp: NSObject {
     /// - Parameters:
     ///   - appId: Mini AppId String value
     ///   - permissionList: List of MASDKCustomPermissionModel class that contains the MiniAppCustomPermissionType and MiniAppCustomPermissionGrantedStatus
-    public func setCustomPermissions(forMiniApp appId: String, permissionList: [MASDKCustomPermissionModel]) {
+    ///   - manifest: Mini App manifest of the current version you want to cache permissions
+    public func setCustomPermissions(forMiniApp appId: String, permissionList: [MASDKCustomPermissionModel], caching manifest: MiniAppManifest? = nil) {
+        if let miniAppManifest = manifest {
+           MAManifestStorage().saveManifestInfo(forMiniApp: appId, manifest: miniAppManifest)
+        }
         return realMiniApp.storeCustomPermissions(forMiniApp: appId, permissionList: permissionList)
     }
 
