@@ -16,6 +16,8 @@
 		2A54C85C26676377002B204F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C85B26676377002B204F /* UITextField.swift */; };
 		317FED2525E5EB4300774919 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317FED2725E5EB4300774919 /* Settings.storyboard */; };
 		317FFF21267095040066E455 /* QASettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317FFF20267095040066E455 /* QASettingsTableViewController.swift */; };
+		3180E6BF2689A20900B6B590 /* Encodable+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3180E6BE2689A20900B6B590 /* Encodable+MiniApp.swift */; };
+		3180E6C12689A21000B6B590 /* Print+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3180E6C02689A21000B6B590 /* Print+MiniApp.swift */; };
 		31CFFA50261B7E7300CDD537 /* ChatContactsSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CFFA4F261B7E7300CDD537 /* ChatContactsSelectorViewController.swift */; };
 		31D1BBC3262041920040235C /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31D1BBC2262041920040235C /* Colors.xcassets */; };
 		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
@@ -118,6 +120,8 @@
 		31553D3525B6C6800091EE50 /* Config-common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
 		317FED2625E5EB4300774919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		317FFF20267095040066E455 /* QASettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsTableViewController.swift; sourceTree = "<group>"; };
+		3180E6BE2689A20900B6B590 /* Encodable+MiniApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Encodable+MiniApp.swift"; sourceTree = "<group>"; };
+		3180E6C02689A21000B6B590 /* Print+MiniApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Print+MiniApp.swift"; sourceTree = "<group>"; };
 		319D66D525D65C37005688F4 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
 		31AB8EE125CA43A30046F694 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = SOURCE_ROOT; };
 		31AB8EE225CA43E40046F694 /* Dangerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dangerfile; sourceTree = SOURCE_ROOT; };
@@ -279,6 +283,8 @@
 			isa = PBXGroup;
 			children = (
 				38920ACB251D9C57004C5DDD /* ImageCache.swift */,
+				3180E6BE2689A20900B6B590 /* Encodable+MiniApp.swift */,
+				3180E6C02689A21000B6B590 /* Print+MiniApp.swift */,
 				38920ACC251D9C57004C5DDD /* UIImageView+Extensions.swift */,
 				38920ACD251D9C57004C5DDD /* String+MiniApp.swift */,
 				38920ACE251D9C57004C5DDD /* Number+MiniApp.swift */,
@@ -290,12 +296,6 @@
 				38CEFA5025C0A3CA00EE250A /* UIView+MiniApp.swift */,
 				3857ED7D25DEE0690083F3E1 /* Bundle+MiniApp.swift */,
 				2A54C85B26676377002B204F /* UITextField.swift */,
-<<<<<<< HEAD
-=======
-				75019277BB58C348A54737C5 /* Encodable+MiniApp.swift */,
-				75019621ED83F8F69140095E /* Print+MiniApp.swift */,
-				2A54C85B26676377002B204F /* UITextField.swift */,
->>>>>>> 3dd7fdf (Squashed commit of the following:)
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -770,9 +770,11 @@
 				38920AFA251D9C57004C5DDD /* MiniApp+UIImage.swift in Sources */,
 				317FFF21267095040066E455 /* QASettingsTableViewController.swift in Sources */,
 				38920AF3251D9C57004C5DDD /* UIImageView+Extensions.swift in Sources */,
+				3180E6C12689A21000B6B590 /* Print+MiniApp.swift in Sources */,
 				38920AFC251D9C57004C5DDD /* MiniAppCell.swift in Sources */,
 				31CFFA50261B7E7300CDD537 /* ChatContactsSelectorViewController.swift in Sources */,
 				38920AF5251D9C57004C5DDD /* Number+MiniApp.swift in Sources */,
+				3180E6BF2689A20900B6B590 /* Encodable+MiniApp.swift in Sources */,
 				389C7A9C2592593C00F2D5FE /* QueryParamViewController.swift in Sources */,
 				38920AF9251D9C57004C5DDD /* UIViewController+MiniApp.swift in Sources */,
 				38480100251DB4E00079D6EB /* CustomPermissionsListViewController.swift in Sources */,
