@@ -50,10 +50,10 @@ public struct MASDKAccessTokenScopes: Codable, Equatable, Hashable {
     /// - Returns: self
     mutating func with(audience newAudience: String? = nil, scopes newScopes: [String]? = nil) -> MASDKAccessTokenScopes {
         if let aud = newAudience {
-            self.audience = aud
+            audience = aud
         }
         if let sco = newScopes {
-            self.scopes = sco
+            scopes = sco
         }
         return  self
     }
@@ -110,7 +110,7 @@ public struct MASDKAccessTokenScopes: Codable, Equatable, Hashable {
 }
 
 /// Mini-app meta data information
-public struct MiniAppManifest: Codable, Equatable {
+public struct MiniAppManifest: Codable, Equatable, Hashable {
 
     /// List of required permissions for a mini-app
     public let requiredPermissions: [MASDKCustomPermissionModel]?
@@ -148,14 +148,30 @@ public struct MiniAppManifest: Codable, Equatable {
             lhs.optionalPermissions?.sorted() == rhs.optionalPermissions?.sorted() &&
             lhs.customMetaData == rhs.customMetaData
     }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(requiredPermissions)
+        hasher.combine(optionalPermissions)
+        hasher.combine(customMetaData)
+        hasher.combine(accessTokenPermissions)
+        hasher.combine(versionId)
+    }
 }
 
-internal struct CachedMetaData: Codable {
+internal struct CachedMetaData: Codable, Equatable {
+    let hash: Int
     let version: String
     let miniAppManifest: MiniAppManifest?
 
-    init(version: String, miniAppManifest: MiniAppManifest) {
+    init(version: String, miniAppManifest: MiniAppManifest, hash: Int) {
         self.version = version
         self.miniAppManifest = miniAppManifest
+        self.hash = hash
+    }
+
+    static func ==(lhs: CachedMetaData, rhs: CachedMetaData) -> Bool {
+        lhs.hash == rhs.hash
+                && lhs.miniAppManifest.hashValue == rhs.miniAppManifest.hashValue
+                && lhs.version == rhs.version
     }
 }

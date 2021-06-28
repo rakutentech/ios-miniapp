@@ -3,11 +3,10 @@ internal class MetaDataDownloader {
     var manifestCache: MAManifestCache
 
     init() {
-        self.manifestCache = MAManifestCache()
+        manifestCache = MAManifestCache()
     }
 
     func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
-
         guard let manifest = getCachedManifest(miniAppId: miniAppId, miniAppVersion: miniAppVersion), !apiClient.environment.isPreviewMode else {
             apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion) { (result) in
                 switch result {
@@ -19,7 +18,7 @@ internal class MetaDataDownloader {
                     let manifest = self.prepareMiniAppManifest(metaDataResponse: decodeResponse.bundleManifest, versionId: miniAppVersion)
                     self.manifestCache.saveManifestInfo(forMiniApp: miniAppId,
                         versionId: miniAppVersion,
-                        manifest: CachedMetaData(version: miniAppVersion, miniAppManifest: manifest)
+                        manifest: CachedMetaData(version: miniAppVersion, miniAppManifest: manifest, hash: manifest.hashValue)
                     )
                     return completionHandler(.success(manifest))
                 case .failure(let error):
@@ -32,20 +31,21 @@ internal class MetaDataDownloader {
     }
 
     func getCachedManifest(miniAppId: String, miniAppVersion: String) -> MiniAppManifest? {
-        return self.manifestCache.getManifestInfo(forMiniApp: miniAppId, versionId: miniAppVersion)?.miniAppManifest
+        manifestCache.getManifestInfo(forMiniApp: miniAppId, versionId: miniAppVersion)?.miniAppManifest
     }
 
     func prepareMiniAppManifest(metaDataResponse: MetaDataCustomPermissionModel, versionId: String) -> MiniAppManifest {
-        return MiniAppManifest(requiredPermissions: getCustomPermissionModel(metaDataCustomPermissionResponse: metaDataResponse.reqPermissions),
-            optionalPermissions: getCustomPermissionModel(
-                metaDataCustomPermissionResponse: metaDataResponse.optPermissions),
-            customMetaData: metaDataResponse.customMetaData,
-            accessTokenPermissions: metaDataResponse.accessTokenPermissions,
-            versionId: versionId)
+        MiniAppManifest(
+                requiredPermissions: getCustomPermissionModel(metaDataCustomPermissionResponse: metaDataResponse.reqPermissions),
+                optionalPermissions: getCustomPermissionModel(
+                        metaDataCustomPermissionResponse: metaDataResponse.optPermissions),
+                customMetaData: metaDataResponse.customMetaData,
+                accessTokenPermissions: metaDataResponse.accessTokenPermissions,
+                versionId: versionId)
     }
 
     private func getCustomPermissionModel(metaDataCustomPermissionResponse: [MACustomPermissionsResponse]?) -> [MASDKCustomPermissionModel]? {
-        return metaDataCustomPermissionResponse?.compactMap {
+        metaDataCustomPermissionResponse?.compactMap {
             guard let name = $0.name, let permissionType = MiniAppCustomPermissionType(rawValue: name) else {
                 return nil
             }

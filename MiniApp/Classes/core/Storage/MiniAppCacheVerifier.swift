@@ -16,6 +16,14 @@ internal class MiniAppCacheVerifier {
         return cachedFilesHash == storedHash
     }
 
+    func verifyManifest() -> Bool {
+        return false
+    }
+
+    func storeManifestHash(for appId: String, version: String) {
+        let appKey = generateKeyId(for: appId, version: version)
+    }
+
     func storeHash(for appId: String, version: String) {
         miniAppVerificationStore.removeCacheInfo(for: appId) // v2.5 legacy cleaning
         let appKey = generateKeyId(for: appId, version: version)
