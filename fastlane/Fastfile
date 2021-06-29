@@ -30,7 +30,6 @@ platform :ios do
       output_types: 'json-compilation-database,html,junit',
       output_files: 'compile_commands.json,report.html,report.junit')
 
-    end
   end
 
   lane :build_simulator do |options|
