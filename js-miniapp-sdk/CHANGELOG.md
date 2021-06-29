@@ -1,15 +1,21 @@
 ## CHANGELOG
 
-### 1.10.0 (WIP)
+### 1.10.0 (2021-06-29)
 - **Feature:** Added `MiniAppError` class for a better bridge errors management [See here](README.md#Errors-management).
+
+---
 
 ### 1.9.0 (2021-05-27)
 - **Feature:** Added `Send Messsage` custom permission for sending message to specific contact. [See here](README.md#Request-Permissions).
 - **Feature:** Added `MiniAppError` class for a better bridge errors management [See here](README.md#Errors-management).
 
+---
+
 ### 1.8.0 (2021-04-22)
 
 - **Feature:** Support send message to specific and multiple contacts. [See here](README.md#Send-message).
+
+---
 
 ### 1.7.0 (2021-04-02)
 
