@@ -241,6 +241,22 @@ describe('requestCustomPermissions', () => {
   });
 });
 
+describe('getPoints', () => {
+  it('will parse the Points JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      2,
+      '{ "standard": 10, "term": 20, "cash": 30 }'
+    );
+
+    return expect(bridge.getPoints()).to.eventually.deep.equal({
+      standard: 10,
+      term: 20,
+      cash: 30,
+    });
+  });
+});
+
 interface CreateCallbackParams {
   onSuccess?: (success: any) => any;
   onError?: (error: string) => any;

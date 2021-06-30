@@ -25,6 +25,7 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
   Contact,
+  Points,
 } from 'js-miniapp-sdk';
 import { connect } from 'react-redux';
 
@@ -34,6 +35,7 @@ import {
   requestContactList,
   requestProfilePhoto,
   requestUserName,
+  requestPoints,
 } from '../services/user/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -129,12 +131,18 @@ export const initialState = {
   isLoading: false,
   isError: false,
   hasRequestedPermissions: false,
+  isPointsLoading: false,
+  isPointsError: false,
+  hasRequestedPointPermissions: false,
 };
 
 type State = {
   isLoading: ?boolean,
   isError: ?boolean,
   hasRequestedPermissions: boolean,
+  isPointsLoading: ?boolean,
+  isPointsError: ?boolean,
+  hasRequestedPointPermissions: boolean,
 };
 
 type Action = {
@@ -163,6 +171,28 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: true,
       };
+
+    case 'POINTS_FETCH_INIT':
+      return {
+        ...state,
+        isPointsLoading: true,
+        isPointsError: false,
+        hasRequestedPointPermissions: false,
+      };
+    case 'POINTS_FETCH_SUCCESS':
+      return {
+        ...state,
+        isPointsLoading: false,
+        isPointsError: false,
+        hasRequestedPointPermissions: true,
+      };
+    case 'POINTS_FETCH_FAILURE':
+      return {
+        ...initialState,
+        isPointsLoading: false,
+        isError: true,
+      };
+
     default:
       throw Error('Unknown action type');
   }
@@ -173,9 +203,11 @@ type UserDetailsProps = {
   userName: string,
   profilePhoto: string,
   contactList: Contact[],
+  points: Points,
   getUserName: () => Promise<string>,
   getProfilePhoto: () => Promise<string>,
   getContacts: () => Promise<Contact[]>,
+  getPoints: () => Promise<Points>,
   requestPermissions: (
     permissions: CustomPermission[]
   ) => Promise<CustomPermissionResult[]>,
@@ -210,13 +242,7 @@ function UserDetails(props: UserDetailsProps) {
 
     props
       .requestPermissions(permissionsList)
-      .then((permissions) =>
-        permissions
-          .filter(
-            (permission) => permission.status === CustomPermissionStatus.ALLOWED
-          )
-          .map((permission) => permission.name)
-      )
+      .then((permissions) => filterAllowedPermissions(permissions))
       .then((permissions) =>
         Promise.all([
           hasPermission(CustomPermissionName.USER_NAME, permissions)
@@ -235,11 +261,53 @@ function UserDetails(props: UserDetailsProps) {
       });
   }
 
+  function requestPoints() {
+    const permissionsList = [
+      {
+        name: CustomPermissionName.POINTS,
+        description:
+          'We would like to display your Points on your profile page.',
+      },
+    ];
+
+    props
+      .requestPermissions(permissionsList)
+      .then((permissions) => filterAllowedPermissions(permissions))
+      .then((permissions) =>
+        Promise.all([
+          hasPermission(CustomPermissionName.POINTS, permissions)
+            ? props.getPoints()
+            : null,
+        ])
+      )
+      .then(() => dispatch({ type: 'POINTS_FETCH_SUCCESS' }))
+      .catch((e) => {
+        console.error(e);
+        dispatch({ type: 'POINTS_FETCH_FAILURE' });
+      });
+  }
+
+  function filterAllowedPermissions(permissions) {
+    return permissions
+      .filter(
+        (permission) => permission.status === CustomPermissionStatus.ALLOWED
+      )
+      .map((permission) => permission.name);
+  }
+
   function handleClick(e) {
     if (!state.isLoading) {
       e.preventDefault();
       dispatch({ type: 'FETCH_INIT' });
       requestUserDetails();
+    }
+  }
+
+  function handlePointsClick(e) {
+    if (!state.isLoading) {
+      e.preventDefault();
+      dispatch({ type: 'POINTS_FETCH_INIT' });
+      requestPoints();
     }
   }
 
@@ -336,6 +404,64 @@ function UserDetails(props: UserDetailsProps) {
     );
   }
 
+  function PointBalance() {
+    const hasDeniedPermission =
+      state.hasRequestedPointPermissions &&
+      !hasPermission(CustomPermissionName.POINTS);
+
+    return (
+      <Paper className={classes.paper}>
+        <CardHeader subheader="Points" />
+        <TextField
+          variant="outlined"
+          disabled={true}
+          className={classes.formInput}
+          id="input-points-standard"
+          error={state.isError || hasDeniedPermission}
+          label={'Points (Standard)'}
+          value={
+            hasDeniedPermission
+              ? '"Points" permission not granted.'
+              : props.points !== undefined &&
+                props.points.standard !== undefined
+              ? props.points.standard.toString()
+              : '-'
+          }
+        />
+        <TextField
+          variant="outlined"
+          disabled={true}
+          className={classes.formInput}
+          id="input-points-term"
+          error={state.isError || hasDeniedPermission}
+          label={'Points (Time-Limited)'}
+          value={
+            hasDeniedPermission
+              ? '"Points" permission not granted.'
+              : props.points !== undefined && props.points.term !== undefined
+              ? props.points.term.toString()
+              : '-'
+          }
+        />
+        <TextField
+          variant="outlined"
+          disabled={true}
+          className={classes.formInput}
+          id="input-points-cash"
+          error={state.isError || hasDeniedPermission}
+          label={'Points (Rakuten Cash)'}
+          value={
+            hasDeniedPermission
+              ? '"Points" permission not granted.'
+              : props.points !== undefined && props.points.cash !== undefined
+              ? props.points.cash.toString()
+              : '-'
+          }
+        />
+      </Paper>
+    );
+  }
+
   function CardActionsForm() {
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
@@ -364,6 +490,34 @@ function UserDetails(props: UserDetailsProps) {
     );
   }
 
+  function CardPointActionsForm() {
+    return (
+      <FormGroup column="true" className={classes.rootUserGroup}>
+        <div className={classes.wrapper}>
+          <Button
+            onClick={handlePointsClick}
+            variant="contained"
+            color="primary"
+            classes={{ root: classes.button }}
+            className={buttonClassname}
+            disabled={state.isPointsLoading}
+            data-testid="fetchPointsButton"
+          >
+            Fetch Points
+          </Button>
+          {state.isPointsLoading && (
+            <CircularProgress size={20} className={classes.buttonProgress} />
+          )}
+        </div>
+        {state.isPointsError && (
+          <Typography variant="body1" className={classes.error}>
+            Error fetching the points
+          </Typography>
+        )}
+      </FormGroup>
+    );
+  }
+
   function hasPermission(permission, permissionList: ?(string[])) {
     permissionList = permissionList || props.permissions || [];
     return permissionList.indexOf(permission) > -1;
@@ -385,6 +539,18 @@ function UserDetails(props: UserDetailsProps) {
         <CardActions classes={{ root: classes.rootCardActions }}>
           {CardActionsForm()}
         </CardActions>
+
+        <CardContent>
+          <div
+            className={classes.dataFormsWrapper}
+            data-testid="pointDataFormsWrapper"
+          >
+            {PointBalance()}
+          </div>
+        </CardContent>
+        <CardActions classes={{ root: classes.rootCardActions }}>
+          {CardPointActionsForm()}
+        </CardActions>
       </GreyCard>
     </div>
   );
@@ -396,6 +562,7 @@ const mapStateToProps = (state) => {
     userName: state.user.userName,
     profilePhoto: state.user.profilePhoto,
     contactList: state.user.contactList,
+    points: state.user.points,
   };
 };
 
@@ -404,6 +571,7 @@ const mapDispatchToProps = (dispatch) => {
     getUserName: () => dispatch(requestUserName()),
     getProfilePhoto: () => dispatch(requestProfilePhoto()),
     getContacts: () => dispatch(requestContactList()),
+    getPoints: () => dispatch(requestPoints()),
     requestPermissions: (permissions) =>
       dispatch(requestCustomPermissions(permissions)),
   };

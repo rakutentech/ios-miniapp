@@ -14,6 +14,8 @@ test('renders the elements', () => {
   const { getByTestId } = render(wrapTheme(<UserDetails />));
   expect(getByTestId('dataFormsWrapper')).toBeInTheDocument();
   expect(getByTestId('fetchUserButton')).toBeInTheDocument();
+  expect(getByTestId('pointDataFormsWrapper')).toBeInTheDocument();
+  expect(getByTestId('fetchPointsButton')).toBeInTheDocument();
 });
 
 describe('Test Reducer', () => {

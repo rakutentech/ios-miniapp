@@ -42,6 +42,7 @@ window.MiniAppBridge = {
   getProfilePhoto: sandbox.stub(),
   getContacts: sandbox.stub(),
   getAccessToken: sandbox.stub(),
+  getPoints: sandbox.stub(),
   setScreenOrientation: sandbox.stub(),
   sendMessageToContact: sandbox.stub(),
   sendMessageToContactId: sandbox.stub(),
@@ -337,6 +338,20 @@ describe('getAccessToken', () => {
     return expect(
       miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
     ).to.eventually.equal(response);
+  });
+
+  describe('getPoints', () => {
+    it('should retrieve Points from the MiniAppBridge when request is successful', () => {
+      const response = [
+        {
+          standard: 10,
+          term: 20,
+          cash: 30,
+        },
+      ];
+      window.MiniAppBridge.getPoints.resolves(response);
+      return expect(miniApp.user.getPoints()).to.eventually.equal(response);
+    });
   });
 
   it('should retrieve AudienceNotSupportedError response from the MiniAppBridge once there is an audience error', () => {

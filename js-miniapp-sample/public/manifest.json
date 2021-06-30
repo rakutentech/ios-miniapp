@@ -40,6 +40,10 @@
     {
       "name": "rakuten.miniapp.user.action.SEND_MESSAGE",
       "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.user.POINTS",
+      "reason": "Describe your reason here (optional)."
     }
   ],
 

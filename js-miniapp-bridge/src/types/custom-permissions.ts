@@ -5,6 +5,7 @@ export enum CustomPermissionName {
   ACCESS_TOKEN = 'rakuten.miniapp.user.ACCESS_TOKEN',
   LOCATION = 'rakuten.miniapp.device.LOCATION',
   SEND_MESSAGE = 'rakuten.miniapp.user.action.SEND_MESSAGE',
+  POINTS = 'rakuten.miniapp.user.POINTS',
 }
 
 export enum CustomPermissionStatus {

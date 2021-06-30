@@ -18,6 +18,7 @@ import { ShareInfoType } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
 import { AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
+import { Points } from './types/points';
 import { MessageToContact } from './types/message-to-contact';
 import {
   MiniAppError,
@@ -42,6 +43,7 @@ export {
   ScreenOrientation,
   AccessTokenData,
   Contact,
+  Points,
   MessageToContact,
   MiniAppError,
   AudienceNotSupportedError,

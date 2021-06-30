@@ -2,6 +2,7 @@ import {
   AccessTokenData,
   Contact,
   MiniAppError,
+  Points,
 } from '../../../js-miniapp-bridge/src';
 import { getBridge } from '../utils';
 
@@ -40,6 +41,12 @@ export interface UserInfoProvider {
     audience: string,
     scopes: string[]
   ): Promise<AccessTokenData | MiniAppError>;
+
+  /**
+   * Fetches the points from host app.
+   * @returns Points from native host app.
+   */
+  getPoints(): Promise<Points>;
 }
 
 /** @internal */
@@ -58,5 +65,9 @@ export class UserInfo implements UserInfoProvider {
 
   getAccessToken(audience: string, scopes: string[]): Promise<AccessTokenData> {
     return getBridge().getAccessToken(audience, scopes);
+  }
+
+  getPoints() {
+    return getBridge().getPoints();
   }
 }

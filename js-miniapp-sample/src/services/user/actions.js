@@ -1,5 +1,5 @@
 import MiniApp, { AccessTokenData } from 'js-miniapp-sdk';
-import { Contact } from 'js-miniapp-sdk';
+import { Contact, Points } from 'js-miniapp-sdk';
 
 import {
   REQUEST_USER_NAME_SUCCESS,
@@ -10,12 +10,15 @@ import {
   REQUEST_CONTACT_LIST_FAILURE,
   REQUEST_ACCESS_TOKEN_SUCCESS,
   REQUEST_ACCESS_TOKEN_FAILURE,
+  REQUEST_POINTS_SUCCESS,
+  REQUEST_POINTS_FAILURE,
 } from './types';
 
 type UserNameSuccessAction = { type: String, userName: string };
 type ProfilePhotoSuccessAction = { type: String, url: string };
 type ContactListSuccessAction = { type: String, contacts: Contact[] };
 type AccessTokenSuccessAction = { type: String, token: AccessTokenData };
+type PointsSuccessAction = { type: String, points: Points };
 
 const requestUserName = (): Function => {
   return (dispatch) => {
@@ -93,15 +96,37 @@ const requestAccessToken = (audience: string, scopes: string[]): Function => {
   };
 };
 
+const requestPoints = (): Function => {
+  return (dispatch) => {
+    return MiniApp.user
+      .getPoints()
+      .then((points) => {
+        dispatch({
+          type: REQUEST_POINTS_SUCCESS,
+          points: points,
+        });
+        return Promise.resolve(points);
+      })
+      .catch((e) => {
+        dispatch({
+          type: REQUEST_POINTS_FAILURE,
+        });
+        throw e;
+      });
+  };
+};
+
 export {
   requestUserName,
   requestProfilePhoto,
   requestContactList,
   requestAccessToken,
+  requestPoints,
 };
 export type {
   UserNameSuccessAction,
   ProfilePhotoSuccessAction,
   ContactListSuccessAction,
   AccessTokenSuccessAction,
+  PointsSuccessAction,
 };

@@ -1,16 +1,19 @@
 import { combineReducers } from 'redux';
+import { Points } from 'js-miniapp-sdk';
 
 import type {
   UserNameSuccessAction,
   ProfilePhotoSuccessAction,
   ContactListSuccessAction,
   AccessTokenSuccessAction,
+  PointsSuccessAction,
 } from './actions';
 import {
   REQUEST_CONTACT_LIST_SUCCESS,
   REQUEST_USER_NAME_SUCCESS,
   REQUEST_PROFILE_PHOTO_SUCCESS,
   REQUEST_ACCESS_TOKEN_SUCCESS,
+  REQUEST_POINTS_SUCCESS,
 } from './types';
 
 const defaultUserName = null;
@@ -65,9 +68,23 @@ const accessTokenReducer = (
   }
 };
 
+const defaultPoints = {};
+const pointsReducer = (
+  state: ?Points = defaultPoints,
+  action: PointsSuccessAction
+): ?Points => {
+  switch (action.type) {
+    case REQUEST_POINTS_SUCCESS:
+      return action.points;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   userName: userNameReducer,
   profilePhoto: profilePhotoReducer,
   contactList: contactListReducer,
   accessToken: accessTokenReducer,
+  points: pointsReducer,
 });

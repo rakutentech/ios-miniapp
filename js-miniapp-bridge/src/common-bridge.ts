@@ -16,6 +16,7 @@ import { ScreenOrientation } from './types/screen';
 import { NativeTokenData, AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
+import { Points } from './types/points';
 import { MiniAppErrorType } from './types/error-types';
 import {
   AudienceNotSupportedError,
@@ -416,6 +417,36 @@ export class MiniAppBridge {
           }
         },
         error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating get point balance function to MiniAppBridge object.
+   * (provided rakuten.miniapp.user.POINTS is allowed by the user)
+   */
+  getPoints() {
+    return new Promise<Points>((resolve, reject) => {
+      return this.executor.exec(
+        'getPoints',
+        null,
+        points => resolve(JSON.parse(points) as Points),
+        error => {
+          try {
+            const miniAppError = parseMiniAppError(error);
+            const errorType: MiniAppErrorType =
+              MiniAppErrorType[
+                miniAppError.type as keyof typeof MiniAppErrorType
+              ];
+            switch (errorType) {
+              default:
+                return reject(new MiniAppError(miniAppError));
+            }
+          } catch (e) {
+            console.error(e);
+            return reject(error);
+          }
+        }
       );
     });
   }
