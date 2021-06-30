@@ -12,7 +12,7 @@ echo "version_base: $DIR_VERSIONS"
 FILE_VERSION_MD="$DIR_VERSIONS/${PACKAGE_VERSION}.md"
 mkdir -p "${FILE_VERSION_MD%/*}" && touch "$FILE_VERSION_MD"
 contents="---
-version: "$PACKAGE_VERSION"
+version: \"$PACKAGE_VERSION\"
 ---"
 cat <<< "$contents" > "$FILE_VERSION_MD"
 
