@@ -4,8 +4,14 @@ import Nimble
 
 class MiniAppTests: QuickSpec {
 
+    // swiftlint:disable function_body_length
     override func spec() {
+        let miniAppKeyStore = MiniAppPermissionsStorage()
+
         describe("MiniApp tests") {
+            beforeEach {
+                miniAppKeyStore.removeKey(for: mockMiniAppInfo.id)
+            }
             context("when getPermissions is called with empty mini app id") {
                 it("will return nil") {
                     let miniAppCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: "")
@@ -55,6 +61,28 @@ class MiniAppTests: QuickSpec {
                         }
                     })
                     expect(testError?.localizedDescription).to(equal(MASDKError.invalidVersionId.localizedDescription))
+                }
+            }
+            context("when setCustomPermissions is called with valid miniapp Id") {
+                it("will not store the permission") {
+                    MiniApp.shared().setCustomPermissions(forMiniApp: mockMiniAppInfo.id,
+                                                          permissionList: [MASDKCustomPermissionModel(
+                                                                            permissionName: .userName,
+                                                                            isPermissionGranted: .allowed,
+                                                                            permissionRequestDescription: "")])
+                    let customPermissionList = MiniApp.shared().getCustomPermissions(forMiniApp: mockMiniAppInfo.id)
+                    expect(customPermissionList.count).to(equal(1))
+                }
+            }
+            context("when setCustomPermissions is called with invalid miniapp Id") {
+                it("will not store the permission") {
+                    MiniApp.shared().setCustomPermissions(forMiniApp: "",
+                                                          permissionList: [MASDKCustomPermissionModel(
+                                                                            permissionName: .userName,
+                                                                            isPermissionGranted: .allowed,
+                                                                            permissionRequestDescription: "")])
+                    let customPermissionList = MiniApp.shared().getCustomPermissions(forMiniApp: mockMiniAppInfo.id)
+                    expect(customPermissionList.count).to(equal(0))
                 }
             }
         }
