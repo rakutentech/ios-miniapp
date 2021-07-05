@@ -53,6 +53,16 @@
                ReferencedContainer = "container:MiniApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2A3BA96F269373B0007C410D"
+               BuildableName = "MiniApp_UITests.xctest"
+               BlueprintName = "MiniApp_UITests"
+               ReferencedContainer = "container:MiniApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -72,6 +82,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "607FACE41AFB9204008FA782"
+            BuildableName = "MiniApp_Tests.xctest"
+            BlueprintName = "MiniApp_Tests"
+            ReferencedContainer = "container:MiniApp.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

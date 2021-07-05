@@ -34,6 +34,20 @@
                ReferencedContainer = "container:MiniApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2A3BA96F269373B0007C410D"
+               BuildableName = "MiniApp_UITests.xctest"
+               BlueprintName = "MiniApp_UITests"
+               ReferencedContainer = "container:MiniApp.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -59,6 +73,16 @@
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
                BuildableName = "MiniApp_Tests.xctest"
                BlueprintName = "MiniApp_Tests"
+               ReferencedContainer = "container:MiniApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2A3BA96F269373B0007C410D"
+               BuildableName = "MiniApp_UITests.xctest"
+               BlueprintName = "MiniApp_UITests"
                ReferencedContainer = "container:MiniApp.xcodeproj">
             </BuildableReference>
          </TestableReference>

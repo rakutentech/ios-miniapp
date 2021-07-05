@@ -14,10 +14,16 @@ target sdk_name + '_Example' do
   pod 'AppCenter/Crashes'
   pod 'RAnalytics', :source => 'https://github.com/rakutentech/ios-analytics-framework.git'
 
-  target sdk_name + '_Tests' do
+  def test_pods
     inherit! :search_paths
     pod 'Nimble', '~>9.0.0'
     pod 'Quick', '~>3.1.2'
+  end
+  target sdk_name + '_Tests' do
+    test_pods
+  end
+  target sdk_name + '_UITests' do
+    test_pods
   end
 end
 
