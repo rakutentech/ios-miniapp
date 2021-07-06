@@ -84,16 +84,9 @@
         </div>
 
         <script>
-            function getParam(name) {
-                const params = window.location.search;
-                if (params) {
-                    const param = params.substr(1).split("&")
-                        .map(param => param.split("="))
-                        .find(pair => pair[0] === name);
-                    return param && param[1];
-                } else {
-                    return null;
-                }
+            function getParam(name, url) {
+                const params = new URL(url).searchParams;
+                return params.get(name)
             }
 
             function validateParams(params) {
@@ -104,10 +97,16 @@
             }
 
             (function() {
+                // parse the main url by removing https://htmlpreview.github.io/?
+                var mainUrl = window.location.href.replace(/^(.*?)[?]/, '');
+                //checks mainUrl is a valid one incase url is without github preview
+                if (!mainUrl.startsWith('http')) {
+                    mainUrl = window.location.href;
+                }
                 // Set Params field
-                const passedParams = window.location.search
+                const passedParams = mainUrl
                     // This page is loaded via a query parameter so we must remove the section which isn't relevant
-                    .replace(/^[?](.*?)[?]/, '?'); 
+                    .replace(/^(.*?)[?]/, '?');
                 const text = document.createElement('span');
                 text.innerText = passedParams || 'None';
                 document.getElementById('PassedParams').appendChild(text);
@@ -115,7 +114,7 @@
                 // Set return URL and params
                 const returnInput = document.getElementById('ReturnInput');
                 const returnButton = document.getElementById('ReturnButton');
-                const callbackUrl = decodeURIComponent( getParam('callbackUrl') );
+                const callbackUrl = decodeURIComponent( getParam('callbackUrl', mainUrl) );
                 const setReturnHref = () => returnButton.href = callbackUrl + returnInput.value;
                 setReturnHref();
                 returnInput.onchange = setReturnHref;
