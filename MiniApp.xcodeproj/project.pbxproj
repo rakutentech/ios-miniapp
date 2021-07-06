@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,7 +13,6 @@
 		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
-		2A3BA97F269374E1007C410D /* RealMiniAppViewAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3BA97E269374E1007C410D /* RealMiniAppViewAlertTests.swift */; };
 		2A54C85C26676377002B204F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C85B26676377002B204F /* UITextField.swift */; };
 		317FED2525E5EB4300774919 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317FED2725E5EB4300774919 /* Settings.storyboard */; };
 		317FFF21267095040066E455 /* QASettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317FFF20267095040066E455 /* QASettingsTableViewController.swift */; };
@@ -112,7 +111,6 @@
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
 		2A3BA970269373B0007C410D /* MiniApp_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2A3BA97E269374E1007C410D /* RealMiniAppViewAlertTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewAlertTests.swift; sourceTree = "<group>"; };
 		2A54C85B26676377002B204F /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "MiniApp-Secrets.xcconfig"; path = "../../../MiniApp-Secrets.xcconfig"; sourceTree = "<group>"; };
 		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
@@ -251,14 +249,6 @@
 			);
 			name = Config;
 			path = Example/Config;
-			sourceTree = "<group>";
-		};
-		2A3BA97D269374E1007C410D /* MiniApp_UITests */ = {
-			isa = PBXGroup;
-			children = (
-				2A3BA97E269374E1007C410D /* RealMiniAppViewAlertTests.swift */,
-			);
-			path = MiniApp_UITests;
 			sourceTree = "<group>";
 		};
 		31070C65258C557D00BED77C /* Documentation */ = {
@@ -474,7 +464,6 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				2A3BA97D269374E1007C410D /* MiniApp_UITests */,
 				389FA22E23D01A3900BC3120 /* Unit */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -680,7 +669,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A3BA97F269374E1007C410D /* RealMiniAppViewAlertTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,6 +758,7 @@
 /* Begin PBXTargetDependency section */
 		2A3BA976269373B0007C410D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 607FACCF1AFB9204008FA782 /* MiniApp_Example */;
 			targetProxy = 2A3BA975269373B0007C410D /* PBXContainerItemProxy */;
 		};
@@ -827,18 +816,22 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/MiniApp_UITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rakuten.tech.mobile.miniapp.MiniAppUITests.MiniApp-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = MiniApp_Example;
 			};
 			name = Debug;
@@ -853,15 +846,20 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/MiniApp_UITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rakuten.tech.mobile.miniapp.MiniAppUITests.MiniApp-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = MiniApp_Example;
 			};
 			name = Release;
@@ -972,7 +970,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				RMA_USER_AGENT = "MiniApp Demo App/$(MARKETING_VERSION)";
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -984,7 +983,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.miniapp.MiniAppDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -999,7 +1001,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.miniapp.MiniAppDemo;
@@ -1023,7 +1028,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1043,7 +1052,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
