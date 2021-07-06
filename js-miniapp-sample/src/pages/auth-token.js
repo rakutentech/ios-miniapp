@@ -97,7 +97,10 @@ const dataFetchReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        error: action.miniAppError.message || action.miniAppError,
+        error:
+          (typeof action.miniAppError == 'string'
+            ? action.miniAppError
+            : action.miniAppError.message) || '',
       };
     default:
       throw new Error();
