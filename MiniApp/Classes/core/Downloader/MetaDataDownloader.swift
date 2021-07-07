@@ -16,10 +16,9 @@ internal class MetaDataDownloader {
                         return completionHandler(.failure(.invalidResponseData))
                     }
 					let manifest = self.manifestManager.prepareMiniAppManifest(metaDataResponse: decodeResponse.bundleManifest, versionId: miniAppVersion)
-					self.manifestManager.saveManifestInfo(forMiniApp: miniAppId,
-                        manifest: manifest
-                    )
-
+                    if !apiClient.environment.isPreviewMode {
+                        self.manifestManager.saveManifestInfo(forMiniApp: miniAppId, manifest: manifest)
+                    }
                     return completionHandler(.success(manifest))
                 case .failure(let error):
                     return completionHandler(.failure(.fromError(error: error)))

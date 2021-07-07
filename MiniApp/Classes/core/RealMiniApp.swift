@@ -253,7 +253,6 @@ internal class RealMiniApp {
 
     func retrieveMiniAppMetaData(appId: String,
                                  version: String,
-                                 clearPermissions: Bool = true,
                                  completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if appId.isEmpty {
             return completionHandler(.failure(.invalidAppId))
@@ -266,21 +265,10 @@ internal class RealMiniApp {
                                               apiClient: self.miniAppClient) { (result) in
             switch result {
             case .success(let metaData):
-                if clearPermissions {
-                    self.cleanUpCustomPermissions(appId: appId, latestManifest: metaData)
-                }
                 completionHandler(.success(metaData))
             case .failure(let error):
                 completionHandler(.failure(error))
             }
-        }
-    }
-
-    /// In Preview mode, when Codebase is updated, & if there is a change in Manifest, it is good to delete the old Custom Permissions from the Keychain.
-    /// Because the user has to agree to the new MiniAppManifest, also this will help to compare the latest manifest.
-    func cleanUpCustomPermissions(appId: String, latestManifest: MiniAppManifest) {
-        if self.getCachedManifestData(appId: appId) != latestManifest {
-            miniAppPermissionStorage.removeKey(for: appId)
         }
     }
 
@@ -301,7 +289,7 @@ internal class RealMiniApp {
     func isRequiredPermissionsAllowed(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
         let cachedMetaData = miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
         if cachedMetaData?.versionId != versionId || miniAppClient.environment.isPreviewMode {
-            retrieveMiniAppMetaData(appId: appId, version: versionId, clearPermissions: false) { (result) in
+            retrieveMiniAppMetaData(appId: appId, version: versionId) { (result) in
                 switch result {
                 case .success(let manifest):
                     self.miniAppManifestStorage.saveManifestInfo(forMiniApp: appId,
