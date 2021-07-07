@@ -26,7 +26,7 @@ public protocol MiniAppUserInfoDelegate: class {
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
 
     /// Interface that is used to retrieve rakuten points
-    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKError>) -> Void)
+    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void)
 }
 
 public extension MiniAppUserInfoDelegate {
@@ -70,7 +70,7 @@ public extension MiniAppUserInfoDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKError>) -> Void) {
+    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }

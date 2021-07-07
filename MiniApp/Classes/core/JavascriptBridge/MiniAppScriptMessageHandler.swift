@@ -471,10 +471,13 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             hostAppMessageDelegate?.getPoints { (result) in
                 switch result {
                 case .success(let response):
-                    guard let encodedPoints = ResponseEncoder.encode(data: response) else { return }
+                    guard let encodedPoints = ResponseEncoder.encode(data: response) else {
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                        return
+                    }
                     self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: encodedPoints)
                 case .failure(let error):
-                    self.handleMASDKError(error: error, callbackId: callbackId)
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
                 }
             }
         }
