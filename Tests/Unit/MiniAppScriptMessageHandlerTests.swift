@@ -14,7 +14,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             let callbackProtocol = MockMiniAppCallbackProtocol()
             let mockMessageInterface = MockMessageInterface()
             let mockAdsDelegate =  MockAdsDisplayer()
-//            let mockMiniAppInfo.id = "Test"
             let mockMiniAppTitle = "Mini App"
 
             let scriptMessageHandler = MiniAppScriptMessageHandler(
