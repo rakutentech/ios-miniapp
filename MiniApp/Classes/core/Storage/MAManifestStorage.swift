@@ -77,7 +77,7 @@ extension MAManifestStorage {
         return nil
     }
 
-private func save(miniAppManifest: MiniAppManifest, appId: String) {
+    private func save(miniAppManifest: MiniAppManifest, appId: String) {
         let directory = FileManager.getMiniAppDirectory(with: appId)
         if !FileManager.default.fileExists(atPath: directory.path) {
             do {

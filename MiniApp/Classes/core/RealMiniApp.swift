@@ -35,19 +35,6 @@ internal class RealMiniApp {
         miniAppClient.updateEnvironment(with: settings)
         displayer.navConfig = navigationSettings
         miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
-        miniAppInfoFetcher = MiniAppInfoFetcher()
-        metaDataDownloader = MetaDataDownloader()
-        miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl,
-                                      rasProjectId: settings?.rasProjectId,
-                                      subscriptionKey: settings?.subscriptionKey,
-                                      hostAppVersion: settings?.hostAppVersion,
-                                      isPreviewMode: settings?.isPreviewMode)
-        manifestDownloader = ManifestDownloader()
-        miniAppStatus = MiniAppStatus()
-        miniAppPermissionStorage = MiniAppPermissionsStorage()
-        miniAppManifestStorage = MAManifestStorage()
-        miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
-        displayer = Displayer(navigationSettings)
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
@@ -276,9 +263,12 @@ internal class RealMiniApp {
     func cleanUpKeychain() {
         miniAppStatus.removeUnusedCustomPermissions()
         miniAppStatus.removeManifestsFromKeychain()
-        let defaults = UserDefaults(suiteName: MiniAppStatus.userDefaultsKey)
-        defaults?.set(miniAppClient.environment.appVersion, forKey: MiniAppStatus.lastVersionKey)
-        defaults?.synchronize()
+        if let currentVersion = MiniAppAnalytics.sdkVersion {
+            let defaults = UserDefaults(suiteName: MiniAppStatus.userDefaultsKey)
+            defaults?.set(currentVersion, forKey: MiniAppStatus.lastVersionKey)
+            defaults?.synchronize()
+        }
+        
     }
 
     /// Method to check if all the required permissions mentioned in the manifest.json is agreed by the user.

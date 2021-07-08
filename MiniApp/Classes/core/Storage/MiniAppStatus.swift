@@ -119,7 +119,7 @@ class MiniAppStatus {
 
     func removeManifestsFromKeychain() {
         let previousVersion = self.previousVersion
-        if previousVersion == nil || previousVersion! <= MiniAppVersion(string: "3.2.0")! {
+        if previousVersion == nil || previousVersion! <= MiniAppVersion(string: "3.5.0")! {
             MiniAppPermissionsStorage().purgePermissions()
             MAManifestStorage().purgeManifestInfos()
             MiniAppKeyChain(serviceName: .miniAppManifestCache).purge()
