@@ -331,7 +331,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockAccessToken: String? = ""
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.success("contact_id"))
+        completionHandler(.success("SUCCESS"))
     }
 
     func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
@@ -650,6 +650,10 @@ func updateCustomPermissionStatus(miniAppId: String, permissionType: MiniAppCust
                                                                     isPermissionGranted: status,
                                                                     permissionRequestDescription: "")],
                                                      forMiniApp: miniAppId)
+}
+func clearCustomPermissionsFromStorage(miniAppId: String) {
+    let miniAppPermissionsStorage = MiniAppPermissionsStorage()
+    miniAppPermissionsStorage.removeKey(for: miniAppId)
 }
 
 func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {
