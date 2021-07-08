@@ -5,7 +5,6 @@ import Nimble
 // swiftlint:disable function_body_length
 class MiniAppTests: QuickSpec {
 
-    // swiftlint:disable function_body_length
     override func spec() {
         let miniAppKeyStore = MiniAppPermissionsStorage()
 
