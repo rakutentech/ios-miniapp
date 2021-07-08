@@ -2,7 +2,7 @@
  Public Protocol that will be used by the Mini App to communicate
  with the Native implementation for User profile related retrieval
 */
-public protocol MiniAppUserInfoDelegate: class {
+public protocol MiniAppUserInfoDelegate: AnyObject {
 
     /// Interface that is used to retrieve the user name from the User Profile
     func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)

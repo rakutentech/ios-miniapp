@@ -45,7 +45,7 @@ internal class Environment {
     }
     
     var sdkVersion: MiniAppVersion? {
-        MiniAppVersion(MiniAppAnalytics.sdkVersion)
+        MiniAppVersion(string: MiniAppAnalytics.sdkVersion)
     }
 
     var subscriptionKey: String {

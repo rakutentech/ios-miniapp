@@ -64,7 +64,7 @@ class MAFirstLaunchController: UIViewController {
 
     @IBAction func acceptButtonPressed(_ sender: UIButton) {
         if let miniAppId = miniAppInfo?.id {
-            MiniApp.shared().setCustomPermissions(forMiniApp: miniAppId, permissionList: permissionsCollections ?? [], caching: miniAppManifest)
+            MiniApp.shared().setCustomPermissions(forMiniApp: miniAppId, permissionList: permissionsCollections ?? [])
             launchScreenDelegate?.didUserResponded(agreed: true, miniAppInfo: miniAppInfo)
             dismiss(animated: true, completion: nil)
         } else {
