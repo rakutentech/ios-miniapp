@@ -32,7 +32,7 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case invalidPermissionType
     case valueIsEmpty
     case scopeError
-    case audienceError = "AudienceNotSupportedError"
+    case audienceError
 
     var name: String {
         self.rawValue

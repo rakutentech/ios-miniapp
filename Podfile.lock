@@ -51,7 +51,7 @@ PODS:
   - Nimble (9.0.1)
   - PromisesObjC (1.2.12)
   - Quick (3.1.2)
-  - RAnalytics (8.1.0)
+  - RAnalytics (8.1.1)
   - ZIPFoundation (0.9.12)
 
 DEPENDENCIES:
@@ -93,7 +93,7 @@ SPEC CHECKSUMS:
   Nimble: 7bed62ffabd6dbfe05f5925cbc43722533248990
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Quick: 60f0ea3b8e0cfc0df3259a5c06a238ad8b3c46e0
-  RAnalytics: 9650eceb88a2c38f7037658098e4bfa267f024ac
+  RAnalytics: e5856a17418a7b2be3e7c135b7de3c8be8be288c
   ZIPFoundation: e27423c004a5a1410c15933407747374e7c6cb6e
 
 PODFILE CHECKSUM: c82e76be7abd39a11d81a83ea9673255569c93f8
