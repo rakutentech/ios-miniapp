@@ -125,7 +125,7 @@ class MiniAppTests: QuickSpec {
                             testError = error
                         }
                     }, messageInterface: mockMessageInterface, adsDisplayer: nil)
-                    expect(testError?.localizedDescription).toEventually(contain("Server returned an error"), timeout: .seconds(5))
+                    expect(testError?.localizedDescription).toEventuallyNot(beNil(), timeout: .seconds(5))
                 }
             }
         }
