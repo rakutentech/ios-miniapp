@@ -9,7 +9,6 @@ import LaptopWindowsIcon from '@material-ui/icons/LaptopWindows';
 import LinkIcon from '@material-ui/icons/Link';
 import AdsIcon from '@material-ui/icons/LocalPlay';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
 import MediaIcon from '@material-ui/icons/MusicVideo';
 import PersonIcon from '@material-ui/icons/Person';
 import ShareIcon from '@material-ui/icons/Share';
@@ -18,13 +17,12 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
-import TalkToChatBot from './pages/message';
-import FetchCredentials from './pages/fetch-credentials';
 import FileUploader from './pages/file-upload';
 import GifPage from './pages/gifs';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
 import Media from './pages/media';
+import TalkToChatBot from './pages/message';
 import Share from './pages/share';
 import UriSchemes from './pages/uri-schemes';
 import UserDetails from './pages/user-details';
@@ -77,12 +75,6 @@ const appItems = [
     label: 'Message',
     navLink: '/chatbot',
     component: TalkToChatBot,
-  },
-  {
-    icon: <LockOpenIcon />,
-    label: 'Fetch Credentials',
-    navLink: '/fetch_credentials',
-    component: FetchCredentials,
   },
   {
     icon: <LaptopWindowsIcon />,
