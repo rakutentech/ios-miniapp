@@ -1,0 +1,13 @@
+name: Swiftlint Check
+
+on: 
+  pull_request
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - name: Repository checkout
+      uses: actions/checkout@v2
+    - name: Run SwiftLint
+      run: swiftlint
