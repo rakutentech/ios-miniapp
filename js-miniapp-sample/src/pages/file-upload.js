@@ -12,12 +12,19 @@ import {
   TableHead,
   TableRow,
   TableContainer,
+  Grid,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '90%',
     width: '100%',
+  },
+  grid: {
+    display: 'flex',
+    height: '20%',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   table: {
     minWidth: '80%',
@@ -33,7 +40,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   uploader: {
-    height: '25%',
+    height: '30%',
+  },
+  label: {
+    fontSize: 12,
+    width: '100%',
+    color: theme.color.primary,
   },
 }));
 
@@ -62,14 +74,43 @@ const FileUploader = () => {
 
   return (
     <Card className={classes.root}>
-      <CardContent className={(classes.content, classes.uploader)}>
-        <input
-          type="file"
-          onChange={setFiles}
-          data-testid="file-input"
-          multiple
-        />
-      </CardContent>
+      <Grid className={classes.grid} align="center" justify="center">
+        <div className={classes.uploader}>
+          <label className={classes.label} for="files">
+            (general)
+          </label>
+          <input
+            type="file"
+            onChange={setFiles}
+            data-testid="file-input-general"
+            multiple
+          />
+        </div>
+        <div className={classes.uploader}>
+          <label className={classes.label} for="files">
+            (images)
+          </label>
+          <input
+            type="file"
+            accept=".jpg,.jpeg,.png,.svg,.gif"
+            onChange={setFiles}
+            data-testid="file-input-image"
+            multiple
+          />
+        </div>
+        <div className={classes.uploader}>
+          <label className={classes.label} for="files">
+            (pdf)
+          </label>
+          <input
+            type="file"
+            accept=".pdf"
+            onChange={setFiles}
+            data-testid="file-input-pdf"
+            multiple
+          />
+        </div>
+      </Grid>
       <CardContent className={classes.content}>
         <TableContainer component={Paper} data-testid="file-table">
           <Table className={classes.table} aria-label="simple table">
