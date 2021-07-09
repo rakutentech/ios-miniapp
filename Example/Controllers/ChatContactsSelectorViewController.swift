@@ -19,6 +19,11 @@ class ChatContactsSelectorViewController: UIViewController {
     var contactsHandlerJob: ((Result<[String]?, MASDKError>) -> Void)?
     var contactHandlerJob: ((Result<String?, MASDKError>) -> Void)?
 
+    @IBOutlet weak var bannerView: UIView?
+    @IBOutlet weak var bannerBackgroundView: UIView?
+    @IBOutlet weak var bannerText: UILabel?
+    @IBOutlet weak var bannerIcon: UIImageView?
+
     @IBOutlet weak var labelTitle: UILabel?
     @IBOutlet weak var labelMessage: UITextView?
     @IBOutlet weak var imageView: UIImageView?
@@ -63,11 +68,18 @@ class ChatContactsSelectorViewController: UIViewController {
 
     fileprivate func changeButtonState() {
         if let button = buttonSend {
-            button.backgroundColor = canSend() ? UIColor(named: "Crimson") : .lightGray
+            button.backgroundColor = canSend() ? .accent : .lightGray
         }
     }
 
     func refreshUI() {
+        if let bannerMessage = message?.bannerMessage, bannerMessage.count > 0 {
+            bannerBackgroundView?.backgroundColor = .accent
+            bannerText?.text = bannerMessage
+        } else {
+            bannerView?.isHidden = true
+        }
+
         if message?.action != nil {
             buttonAction?.setTitle(message?.caption ?? " ", for: .normal)
         } else {
@@ -134,6 +146,7 @@ class ChatContactsSelectorViewController: UIViewController {
             contactsController = dest
             contactsController?.delegate = self
             contactsController?.allowMultipleSelection = multipleSelection
+            contactsController?.bannerMessage = message?.bannerMessage?.count ?? 0 > 0 ? self.bannerView?.frame.height ?? 0 : 0
         }
     }
 }
