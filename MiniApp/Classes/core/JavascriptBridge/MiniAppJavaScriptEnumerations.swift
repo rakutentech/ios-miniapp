@@ -14,6 +14,7 @@ enum MiniAppJSActionCommand: String {
     case sendMessageToContact
     case sendMessageToContactId
     case sendMessageToMultipleContacts
+    case getPoints
 }
 
 enum JavaScriptExecResult: String {
@@ -47,6 +48,8 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
     case sendMessage = "rakuten.miniapp.user.action.SEND_MESSAGE"
     /// Custom permission for retrieving device location details from the host app
     case deviceLocation = "rakuten.miniapp.device.LOCATION"
+    /// Custom permission for retrieving points from the host app
+    case points = "rakuten.miniapp.user.POINTS"
 
     public var title: String {
         switch self {
@@ -62,6 +65,8 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
             return "Device Location"
         case .sendMessage:
             return "Send Message"
+        case .points:
+            return "Rakuten Points"
         }
     }
 }
