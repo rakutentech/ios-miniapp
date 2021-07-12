@@ -8,4 +8,6 @@ export interface MessageToContact {
   caption: string;
   // Action which the call-to-action button will perform, i.e. a URI with parameters.
   action: string;
+  // Optional 128 characters message which can be used on contacts picker list for example
+  bannerMessage?: string;
 }

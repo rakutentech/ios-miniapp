@@ -16,6 +16,8 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
+
+import { pandaLogo } from '../assets/images/base64';
 import {
   sendMessageToContact,
   sendMessageToContactId,
@@ -23,7 +25,6 @@ import {
 } from '../services/message/actions';
 import { getMessageTypeList } from '../services/message/actions';
 import type { MessageType } from '../services/message/types';
-import { pandaLogo } from '../assets/images/base64';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -51,20 +52,23 @@ type MessageTypeProps = {
     image: string,
     text: string,
     caption: string,
-    action: string
+    action: string,
+    bannerMessage: string
   ) => Promise<string>,
   sendMessageToContactId: (
     contactId: string,
     image: string,
     text: string,
     caption: string,
-    action: string
+    action: string,
+    bannerMessage: string
   ) => Promise<string>,
   sendMessageToMultipleContacts: (
     image: string,
     text: string,
     caption: string,
-    action: string
+    action: string,
+    bannerMessage: string
   ) => Promise<string>,
 };
 
@@ -78,6 +82,7 @@ const Message = (props: MessageTypeProps) => {
     text: 'Sample text',
     caption: 'Sample caption',
     action: 'https://www.example.com/',
+    bannerMessage: 'Win 30 coins from every friends who joins from your invite',
   });
   const [validation, setValidationState] = useState({
     error: false,
@@ -122,7 +127,8 @@ const Message = (props: MessageTypeProps) => {
             message.image.trim() ?? '',
             message.text.trim(),
             message.caption.trim() ?? '',
-            message.action.trim() ?? ''
+            message.action.trim() ?? '',
+            message.bannerMessage.trim() ?? ''
           )
           .then((contactId) => {
             let respMsg = 'Message not sent';
@@ -146,7 +152,8 @@ const Message = (props: MessageTypeProps) => {
             message.image.trim() ?? '',
             message.text.trim(),
             message.caption.trim() ?? '',
-            message.action.trim() ?? ''
+            message.action.trim() ?? '',
+            message.bannerMessage.trim() ?? ''
           )
           .then((contactId) => {
             let respMsg = 'Message not sent';
@@ -169,7 +176,8 @@ const Message = (props: MessageTypeProps) => {
             message.image.trim() ?? '',
             message.text.trim(),
             message.caption.trim() ?? '',
-            message.action.trim() ?? ''
+            message.action.trim() ?? '',
+            message.bannerMessage.trim() ?? ''
           )
           .then((contactIds) => {
             let respMsg = 'Message not sent';
@@ -198,6 +206,9 @@ const Message = (props: MessageTypeProps) => {
   };
   const onTextChange = (event) => {
     setMessage({ ...message, text: event.target.value });
+  };
+  const onBannerMessageChange = (event) => {
+    setMessage({ ...message, bannerMessage: event.target.value });
   };
   const onCaptionChange = (event) => {
     setMessage({ ...message, caption: event.target.value });
@@ -265,6 +276,15 @@ const Message = (props: MessageTypeProps) => {
       </FormControl>
       <FormControl className={classes.formControl}>
         <TextField
+          id="bannerMessage"
+          label="Banner message"
+          className={classes.fields}
+          onChange={onBannerMessageChange}
+          value={message.bannerMessage}
+        />
+      </FormControl>
+      <FormControl className={classes.formControl}>
+        <TextField
           id="caption"
           label="Caption"
           className={classes.fields}
@@ -326,12 +346,44 @@ const mapStatetoProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getBots: () => dispatch(getMessageTypeList()),
-    sendMessageToContact: (image, text, caption, action) =>
-      dispatch(sendMessageToContact(image, text, caption, action)),
-    sendMessageToContactId: (contactId, image, text, caption, action) =>
-      dispatch(sendMessageToContactId(contactId, image, text, caption, action)),
-    sendMessageToMultipleContacts: (image, text, caption, action) =>
-      dispatch(sendMessageToMultipleContacts(image, text, caption, action)),
+    sendMessageToContact: (image, text, caption, action, bannerMessage) =>
+      dispatch(
+        sendMessageToContact(image, text, caption, action, bannerMessage)
+      ),
+    sendMessageToContactId: (
+      contactId,
+      image,
+      text,
+      caption,
+      action,
+      bannerMessage
+    ) =>
+      dispatch(
+        sendMessageToContactId(
+          contactId,
+          image,
+          text,
+          caption,
+          action,
+          bannerMessage
+        )
+      ),
+    sendMessageToMultipleContacts: (
+      image,
+      text,
+      caption,
+      action,
+      bannerMessage
+    ) =>
+      dispatch(
+        sendMessageToMultipleContacts(
+          image,
+          text,
+          caption,
+          action,
+          bannerMessage
+        )
+      ),
   };
 };
 

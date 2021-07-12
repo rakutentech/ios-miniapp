@@ -54,6 +54,7 @@ const messageToContact: MessageToContact = {
   image: 'test',
   caption: 'test',
   action: 'test',
+  bannerMessage: 'test',
 };
 
 describe('getUniqueId', () => {

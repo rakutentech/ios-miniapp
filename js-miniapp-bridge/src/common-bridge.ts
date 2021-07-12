@@ -13,15 +13,15 @@ import {
 } from './types/custom-permissions';
 import { ShareInfoType } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
-import { NativeTokenData, AccessTokenData } from './types/token-data';
+import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
-import { MiniAppErrorType } from './types/error-types';
 import {
   AudienceNotSupportedError,
   AuthorizationFailureError,
   MiniAppError,
+  MiniAppErrorType,
   parseMiniAppError,
   ScopesNotSupportedError,
 } from './types/error-types';
@@ -361,7 +361,12 @@ export class MiniAppBridge {
     return new Promise<string | null>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToContact',
-        { messageToContact: message },
+        {
+          messageToContact: {
+            ...message,
+            bannerMessage: trimBannerText(message.bannerMessage),
+          },
+        },
         contactId => {
           if (contactId !== 'null' && contactId !== null) {
             resolve(contactId);
@@ -384,7 +389,13 @@ export class MiniAppBridge {
     return new Promise<string | null>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToContactId',
-        { contactId: id, messageToContact: message },
+        {
+          contactId: id,
+          messageToContact: {
+            ...message,
+            bannerMessage: trimBannerText(message.bannerMessage),
+          },
+        },
         contactId => {
           if (contactId !== 'null' && contactId !== null) {
             resolve(contactId);
@@ -408,7 +419,12 @@ export class MiniAppBridge {
     return new Promise<string[] | null>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToMultipleContacts',
-        { messageToContact: message },
+        {
+          messageToContact: {
+            ...message,
+            bannerMessage: trimBannerText(message.bannerMessage),
+          },
+        },
         contactIds => {
           if (contactIds !== 'null' && contactIds !== null) {
             resolve(JSON.parse(contactIds) as string[]);
@@ -463,4 +479,10 @@ function removeFromMessageQueue(queueObj) {
   if (messageObjIndex !== -1) {
     mabMessageQueue.splice(messageObjIndex, 1);
   }
+}
+
+function trimBannerText(message: string = null, maxLength = 128) {
+  return message?.length > maxLength
+    ? message?.substring(0, maxLength - 1) + '…'
+    : message;
 }

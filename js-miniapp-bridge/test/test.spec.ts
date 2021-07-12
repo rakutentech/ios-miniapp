@@ -14,6 +14,7 @@ import {
   ScopesNotSupportedError,
   AuthorizationFailureError,
   MiniAppError,
+  MessageToContact,
 } from '../src';
 
 /* tslint:disable:no-any */
@@ -170,6 +171,53 @@ describe('getToken', () => {
     return expect(
       bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
     ).to.eventually.be.rejected.and.to.equal('an error occurred');
+  });
+});
+
+describe('sendMessage', () => {
+  it('will parse the message JSON response for sendMessageToContact', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'id_contact');
+    const messageToContact: MessageToContact = {
+      text: 'text',
+      image: 'image',
+      caption: 'caption',
+      action: 'action',
+      bannerMessage: null,
+    };
+    return expect(
+      bridge.sendMessageToContact(messageToContact)
+    ).to.eventually.deep.equal('id_contact');
+  });
+
+  it('will parse the message JSON response for sendMessageToContactId', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'id_contact');
+    const messageToContact: MessageToContact = {
+      text: 'text',
+      image: 'image',
+      caption: 'caption',
+      action: 'action',
+      bannerMessage: null,
+    };
+    return expect(
+      bridge.sendMessageToContactId('id_contact', messageToContact)
+    ).to.eventually.deep.equal('id_contact');
+  });
+
+  it('will parse the message JSON response for sendMessageToMultipleContacts', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, '["id_contact","id_contact2"]');
+    const messageToContact: MessageToContact = {
+      text: 'text',
+      image: 'image',
+      caption: 'caption',
+      action: 'action',
+      bannerMessage: null,
+    };
+    return expect(
+      bridge.sendMessageToMultipleContacts(messageToContact)
+    ).to.eventually.deep.equal(['id_contact', 'id_contact2']);
   });
 });
 

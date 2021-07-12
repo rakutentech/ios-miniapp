@@ -37,7 +37,8 @@ const sendMessageToContact = (
   image: String,
   text: String,
   caption: String,
-  action: String
+  action: String,
+  bannerMessage: String
 ): Function => {
   return (dispatch) => {
     const messageToContact: MessageToContact = {
@@ -45,6 +46,7 @@ const sendMessageToContact = (
       image: image,
       caption: caption,
       action: action,
+      bannerMessage: bannerMessage,
     };
     return MiniApp.chatService.sendMessageToContact(messageToContact);
   };
@@ -55,7 +57,8 @@ const sendMessageToContactId = (
   image: String,
   text: String,
   caption: String,
-  action: String
+  action: String,
+  bannerMessage: String
 ): Function => {
   return async (dispatch) => {
     const promise = MiniApp.requestCustomPermissions(permissionsList).then(
@@ -71,6 +74,7 @@ const sendMessageToContactId = (
         image: image,
         caption: caption,
         action: action,
+        bannerMessage: bannerMessage,
       };
       return MiniApp.chatService.sendMessageToContactId(
         contactId,
@@ -84,7 +88,8 @@ const sendMessageToMultipleContacts = (
   image: String,
   text: String,
   caption: String,
-  action: String
+  action: String,
+  bannerMessage: String
 ): Function => {
   return (dispatch) => {
     const messageToContact: MessageToContact = {
@@ -92,6 +97,7 @@ const sendMessageToMultipleContacts = (
       image: image,
       caption: caption,
       action: action,
+      bannerMessage: bannerMessage,
     };
     return MiniApp.chatService.sendMessageToMultipleContacts(messageToContact);
   };
