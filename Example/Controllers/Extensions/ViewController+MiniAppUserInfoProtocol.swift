@@ -45,4 +45,8 @@ extension ViewController: MiniAppUserInfoDelegate {
         }
         completionHandler(.success(.init(accessToken: resultToken, expirationDate: resultDate, scopes: resultScopes)))
     }
+
+    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
+        completionHandler(.success(MAPoints(standard: 100, term: 200, cash: 300)))
+    }
 }

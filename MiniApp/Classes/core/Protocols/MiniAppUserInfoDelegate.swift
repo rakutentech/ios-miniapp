@@ -24,6 +24,9 @@ public protocol MiniAppUserInfoDelegate: class {
     /// Old interface that was used to retrieve the Token Info. Use of a MASDKAccessTokenScopes is now mandatory. Will be removed in v4.0+
     @available(*, deprecated, renamed:"getAccessToken(miniAppId:scopes:completionHandler:)")
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
+
+    /// Interface that is used to retrieve rakuten points
+    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void)
 }
 
 public extension MiniAppUserInfoDelegate {
@@ -64,6 +67,10 @@ public extension MiniAppUserInfoDelegate {
 
     /// Old interface that was used to retrieve the Token Info. Use of a MASDKAccessTokenScopes is now mandatory. Will be removed in v4.0+
     func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
+
+    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }
@@ -110,5 +117,17 @@ extension Date {
     func dateToNumber() -> Int {
         let timeSince1970 = self.timeIntervalSince1970
         return Int(timeSince1970 * 1000)
+    }
+}
+
+public class MAPoints: Codable {
+    let standard: Int
+    let term: Int
+    let cash: Int
+
+    public init(standard: Int, term: Int, cash: Int) {
+        self.standard = standard
+        self.term = term
+        self.cash = cash
     }
 }
