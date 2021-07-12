@@ -1,5 +1,15 @@
 ## CHANGELOG
 
+### 3.5.0 (2021-07-22)
+
+**SDK**
+
+- **Feature:** Mini App SDK now supports an optional banner text in message to send to contacts received from MiniApp
+
+**Sample app**
+
+- **Feature:** Display of a banner on message contact picker when required
+
 ### 3.4.0 (2021-06-25)
 
 **SDK**

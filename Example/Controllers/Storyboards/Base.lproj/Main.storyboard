@@ -312,6 +312,41 @@
                                     <segue destination="LNw-TD-ZfT" kind="embed" id="y0e-Rs-4bv"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fEM-nG-vly">
+                                <rect key="frame" x="0.0" y="243.5" width="375" height="80"/>
+                                <subviews>
+                                    <view alpha="0.20000000298023224" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tHE-tu-TjG">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="megaphone" translatesAutoresizingMaskIntoConstraints="NO" id="GQu-WF-crc">
+                                        <rect key="frame" x="16" y="16" width="48" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="GQu-WF-crc" secondAttribute="height" multiplier="1:1" id="PaF-nx-ka4"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hGG-Bq-s3w">
+                                        <rect key="frame" x="80" y="29.5" width="279" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="80percentsBg"/>
+                                <constraints>
+                                    <constraint firstItem="hGG-Bq-s3w" firstAttribute="leading" secondItem="GQu-WF-crc" secondAttribute="trailing" constant="16" id="Ds9-9Q-cEl"/>
+                                    <constraint firstItem="tHE-tu-TjG" firstAttribute="top" secondItem="fEM-nG-vly" secondAttribute="top" id="IiI-YT-gsp"/>
+                                    <constraint firstItem="hGG-Bq-s3w" firstAttribute="centerY" secondItem="fEM-nG-vly" secondAttribute="centerY" id="Jfg-Yi-ztB"/>
+                                    <constraint firstAttribute="bottom" secondItem="GQu-WF-crc" secondAttribute="bottom" constant="16" id="RpO-QG-Ifd"/>
+                                    <constraint firstAttribute="trailing" secondItem="hGG-Bq-s3w" secondAttribute="trailing" constant="16" id="XpW-4C-3Sf"/>
+                                    <constraint firstAttribute="trailing" secondItem="tHE-tu-TjG" secondAttribute="trailing" id="ayI-P0-GRU"/>
+                                    <constraint firstAttribute="height" constant="80" id="dEN-bp-6Hw"/>
+                                    <constraint firstAttribute="bottom" secondItem="tHE-tu-TjG" secondAttribute="bottom" id="fcG-jP-Ud9"/>
+                                    <constraint firstItem="GQu-WF-crc" firstAttribute="top" secondItem="fEM-nG-vly" secondAttribute="top" constant="16" id="pPJ-ny-rJS"/>
+                                    <constraint firstItem="GQu-WF-crc" firstAttribute="leading" secondItem="fEM-nG-vly" secondAttribute="leading" constant="16" id="qub-69-DDB"/>
+                                    <constraint firstItem="tHE-tu-TjG" firstAttribute="leading" secondItem="fEM-nG-vly" secondAttribute="leading" id="z5a-54-x15"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ds0-0E-Bhw">
                                 <rect key="frame" x="0.0" y="306.66666666666669" width="428" height="585.33333333333326"/>
                                 <subviews>
@@ -436,11 +471,13 @@
                         <constraints>
                             <constraint firstItem="kre-n5-5f9" firstAttribute="top" secondItem="Sv3-PC-lwp" secondAttribute="bottom" id="0eJ-C7-DjG"/>
                             <constraint firstItem="oAe-Qz-kFO" firstAttribute="leading" secondItem="mt0-4f-VXZ" secondAttribute="leadingMargin" id="2cx-fx-1Ur"/>
+                            <constraint firstItem="fEM-nG-vly" firstAttribute="top" secondItem="Sv3-PC-lwp" secondAttribute="top" id="2vf-EH-TJI"/>
                             <constraint firstItem="slF-qx-yVy" firstAttribute="width" secondItem="mt0-4f-VXZ" secondAttribute="width" multiplier="1/2" constant="-24" id="J1H-X4-m21"/>
                             <constraint firstItem="2bz-1p-OcD" firstAttribute="width" secondItem="slF-qx-yVy" secondAttribute="width" id="LiB-41-cLd"/>
                             <constraint firstItem="oAe-Qz-kFO" firstAttribute="top" secondItem="HnH-ht-JTD" secondAttribute="bottom" constant="20" id="OLP-o3-S5C"/>
                             <constraint firstItem="Sv3-PC-lwp" firstAttribute="top" secondItem="oAe-Qz-kFO" secondAttribute="bottom" constant="15" id="OfU-bJ-hOo"/>
                             <constraint firstAttribute="trailing" secondItem="slF-qx-yVy" secondAttribute="trailing" constant="20" id="R0j-32-oTD"/>
+                            <constraint firstItem="fEM-nG-vly" firstAttribute="leading" secondItem="Sv3-PC-lwp" secondAttribute="leading" id="UYT-SE-rzU"/>
                             <constraint firstItem="2bz-1p-OcD" firstAttribute="height" secondItem="slF-qx-yVy" secondAttribute="height" id="V8X-Q4-GCc"/>
                             <constraint firstItem="oAe-Qz-kFO" firstAttribute="trailing" secondItem="mt0-4f-VXZ" secondAttribute="trailingMargin" id="Vbf-cq-o0M"/>
                             <constraint firstAttribute="trailing" secondItem="Sv3-PC-lwp" secondAttribute="trailing" id="Wjh-Ls-4yy"/>
@@ -453,10 +490,15 @@
                             <constraint firstItem="ds0-0E-Bhw" firstAttribute="top" secondItem="oAe-Qz-kFO" secondAttribute="bottom" constant="15" id="ki5-rg-Q4j"/>
                             <constraint firstItem="kre-n5-5f9" firstAttribute="top" secondItem="slF-qx-yVy" secondAttribute="bottom" constant="20" id="rQ7-Fu-Wt9"/>
                             <constraint firstItem="oAe-Qz-kFO" firstAttribute="leading" secondItem="mt0-4f-VXZ" secondAttribute="leadingMargin" id="wYR-4n-AEi"/>
+                            <constraint firstItem="fEM-nG-vly" firstAttribute="trailing" secondItem="Sv3-PC-lwp" secondAttribute="trailing" id="yb1-CE-OKa"/>
                             <constraint firstItem="2bz-1p-OcD" firstAttribute="top" secondItem="slF-qx-yVy" secondAttribute="top" id="zGp-dr-oL2"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bannerBackgroundView" destination="tHE-tu-TjG" id="Oet-Ke-V4o"/>
+                        <outlet property="bannerIcon" destination="GQu-WF-crc" id="Z92-IQ-1AF"/>
+                        <outlet property="bannerText" destination="hGG-Bq-s3w" id="Rcy-3J-sJK"/>
+                        <outlet property="bannerView" destination="fEM-nG-vly" id="vhv-zt-Coz"/>
                         <outlet property="buttonAction" destination="Tji-Lm-Zi8" id="xY2-al-uGu"/>
                         <outlet property="buttonSend" destination="slF-qx-yVy" id="hix-op-xn5"/>
                         <outlet property="imageView" destination="r3W-pi-0qm" id="mzR-Oi-Ilr"/>
@@ -915,6 +957,7 @@
         <image name="arrow_left" width="24" height="24"/>
         <image name="arrow_right" width="24" height="24"/>
         <image name="curved-arrow" width="155.13900756835938" height="155.13900756835938"/>
+        <image name="megaphone" width="512" height="512"/>
         <namedColor name="80percentsBg">
             <color red="1" green="1" blue="1" alpha="0.89999997615814209" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

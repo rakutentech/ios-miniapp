@@ -178,3 +178,31 @@ public enum MASDKAccessTokenError: Error, MiniAppErrorProtocol {
         }
     }
 }
+
+/// Enumeration that is used to return Points error
+public enum MASDKPointError: Error, MiniAppErrorProtocol {
+
+    /// Host app failed to implement required interface
+    case failedToConformToProtocol
+    case error(description: String)
+
+    /// Detailed Description
+    public var description: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return MASDKLocale.localize(.failedToConformToProtocol)
+        case .error(let description):
+            return description
+        }
+    }
+
+    /// Title of the error
+    public var name: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return "FailedToConformToProtocol"
+        case .error:
+            return ""
+        }
+    }
+}

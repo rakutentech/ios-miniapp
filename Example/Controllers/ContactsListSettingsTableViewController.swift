@@ -7,6 +7,7 @@ protocol ContactsListDelegate: AnyObject {
 
 class ContactsListSettingsTableViewController: UITableViewController {
 
+    var bannerMessage: CGFloat = 0
     var userContactList: [MAContact]? = []
     weak var delegate: ContactsListDelegate?
     var selectedContacts = [MAContact]()
@@ -15,7 +16,8 @@ class ContactsListSettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareRandomContactList()
-        self.tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .singleLine
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: bannerMessage))
     }
 
     func prepareRandomContactList() {
