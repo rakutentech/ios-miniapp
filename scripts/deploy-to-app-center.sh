@@ -23,17 +23,17 @@ zip -r ./artifacts/miniapp.app.zip ./artifacts/MiniApp_Example.app/*
 
 echo "Deploying Simulator App build to $APP_CENTER_GROUP group on App Center."
 appcenter distribute release \
---token $APP_CENTER_TOKEN \
---app $APP_CENTER_APP_NAME \
---group $APP_CENTER_GROUP \
---build-version $APP_CENTER_BUILD_VERSION \
+--token "$APP_CENTER_TOKEN" \
+--app "$APP_CENTER_APP_NAME" \
+--group "$APP_CENTER_GROUP" \
+--build-version "$APP_CENTER_BUILD_VERSION" \
 --file ./artifacts/miniapp.app.zip \
 --quiet
 
 appcenter crashes upload-symbols \
 --symbol ./artifacts/MiniApp_Example.app.dSYM \
---token $APP_CENTER_TOKEN \
---app $APP_CENTER_DSYM_NAME \
+--token "$APP_CENTER_TOKEN" \
+--app "$APP_CENTER_DSYM_NAME" \
 --quiet
 
 ##############################
@@ -95,15 +95,15 @@ cd -
 
 echo "Deploying Device App build to $APP_CENTER_GROUP group on App Center."
 appcenter distribute release \
---token $APP_CENTER_TOKEN_DEVICE \
---app $APP_CENTER_APP_NAME_DEVICE \
---group $APP_CENTER_GROUP \
---build-version $APP_CENTER_BUILD_VERSION \
+--token "$APP_CENTER_TOKEN_DEVICE" \
+--app "$APP_CENTER_APP_NAME_DEVICE" \
+--group "$APP_CENTER_GROUP" \
+--build-version "$APP_CENTER_BUILD_VERSION" \
 --file ./tmp/MiniApp-Example.ipa \
 --quiet
 
 appcenter crashes upload-symbols \
 --symbol ./tmp/dsym.zip \
---token $APP_CENTER_TOKEN_DEVICE \
---app $APP_CENTER_DSYM_NAME \
+--token "$APP_CENTER_TOKEN_DEVICE" \
+--app "$APP_CENTER_DSYM_NAME" \
 --quiet
