@@ -30,7 +30,7 @@ class PointsSettingsViewController: UITableViewController {
             if let termPoints = pointsModel.termPoints {
                 termPointsTextField.text = String(termPoints)
             }
-            if let timeLimitedPoints = pointsModel.timeLimitedPoints {
+            if let timeLimitedPoints = pointsModel.cashPoints {
                 timeLimitedPointsTextField.text = String(timeLimitedPoints)
             }
         }
@@ -49,7 +49,7 @@ class PointsSettingsViewController: UITableViewController {
         let pointsModel = UserPointsModel(
             standardPoints: Int(standardPointsTextField.text ?? ""),
             termPoints: Int(termPointsTextField.text ?? ""),
-            timeLimitedPoints: Int(timeLimitedPointsTextField.text ?? "")
+            cashPoints: Int(timeLimitedPointsTextField.text ?? "")
         )
         if saveUserPoints(pointsModel: pointsModel) {
             print("user points saved")

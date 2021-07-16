@@ -51,7 +51,7 @@ extension ViewController: MiniAppUserInfoDelegate {
             let maPointsModel = MAPoints(
                 standard: pointsModel.standardPoints ?? 0,
                 term: pointsModel.termPoints ?? 0,
-                cash: pointsModel.timeLimitedPoints ?? 0
+                cash: pointsModel.cashPoints ?? 0
             )
             completionHandler(.success(maPointsModel)
             )
