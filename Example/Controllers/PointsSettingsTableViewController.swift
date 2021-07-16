@@ -1,11 +1,3 @@
-//
-//  PointsSettingsTableViewController.swift
-//  MiniApp_Example
-//
-//  Created by Laubengaier, Timotheus | MTSD on 2021/07/16.
-//  Copyright © 2021 Rakuten Group, Inc. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
