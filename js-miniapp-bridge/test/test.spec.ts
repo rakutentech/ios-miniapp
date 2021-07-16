@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import sinon, { mock } from 'sinon';
+import sinon from 'sinon';
 
 import * as Bridge from '../src/common-bridge';
 import {
@@ -7,14 +7,15 @@ import {
   CustomPermissionStatus,
 } from '../src/types/custom-permissions';
 import {
-  errorTypesDescriptions,
-  MiniAppErrorType,
-  parseMiniAppError,
   AudienceNotSupportedError,
-  ScopesNotSupportedError,
   AuthorizationFailureError,
-  MiniAppError,
+  DevicePermission,
+  errorTypesDescriptions,
   MessageToContact,
+  MiniAppError,
+  MiniAppErrorType,
+  ScopesNotSupportedError,
+  ScreenOrientation,
 } from '../src';
 
 /* tslint:disable:no-any */
@@ -28,6 +29,14 @@ const mockExecutor = {
 };
 
 const handleError = error => {};
+
+const messageToContact: MessageToContact = {
+  text: 'text',
+  image: 'image',
+  caption: 'caption',
+  action: 'action',
+  bannerMessage: null,
+};
 
 beforeEach(() => {
   sandbox.restore();
@@ -81,6 +90,51 @@ describe('execErrorCallback', () => {
       Bridge.mabMessageQueue.unshift(callback);
       Bridge.MiniAppBridge.prototype.execErrorCallback(callback.id, '');
     });
+  });
+});
+
+describe('getUniqueId', () => {
+  it('will parse the Unique ID response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'unique_id');
+
+    return expect(bridge.getUniqueId()).to.eventually.deep.equal('unique_id');
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, 'hostAppError: an error has occured');
+
+    return expect(
+      bridge.getUniqueId()
+    ).to.eventually.be.rejected.and.deep.equal(
+      'hostAppError: an error has occured'
+    );
+  });
+});
+
+describe('requestPermission', () => {
+  it('will parse the Unique ID response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'ALLOWED');
+
+    return expect(
+      bridge.requestPermission(DevicePermission.LOCATION)
+    ).to.eventually.deep.equal('ALLOWED');
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.requestPermission(DevicePermission.LOCATION)
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
   });
 });
 
@@ -178,46 +232,97 @@ describe('sendMessage', () => {
   it('will parse the message JSON response for sendMessageToContact', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, 'id_contact');
-    const messageToContact: MessageToContact = {
-      text: 'text',
-      image: 'image',
-      caption: 'caption',
-      action: 'action',
-      bannerMessage: null,
-    };
+
     return expect(
       bridge.sendMessageToContact(messageToContact)
     ).to.eventually.deep.equal('id_contact');
   });
 
+  it('will parse the response for sendMessageToContact if no contact has been selected', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, null);
+
+    return expect(
+      bridge.sendMessageToContact(messageToContact)
+    ).to.eventually.deep.equal(null);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.sendMessageToContact(messageToContact)
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
+
   it('will parse the message JSON response for sendMessageToContactId', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, 'id_contact');
-    const messageToContact: MessageToContact = {
-      text: 'text',
-      image: 'image',
-      caption: 'caption',
-      action: 'action',
-      bannerMessage: null,
-    };
+
     return expect(
       bridge.sendMessageToContactId('id_contact', messageToContact)
     ).to.eventually.deep.equal('id_contact');
   });
 
+  it('will parse the response for sendMessageToContactId if no contact has been selected', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, null);
+
+    return expect(
+      bridge.sendMessageToContactId('contact', messageToContact)
+    ).to.eventually.deep.equal(null);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.sendMessageToContactId('id_contact', messageToContact)
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
+
   it('will parse the message JSON response for sendMessageToMultipleContacts', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, '["id_contact","id_contact2"]');
-    const messageToContact: MessageToContact = {
-      text: 'text',
-      image: 'image',
-      caption: 'caption',
-      action: 'action',
-      bannerMessage: null,
-    };
+
     return expect(
       bridge.sendMessageToMultipleContacts(messageToContact)
     ).to.eventually.deep.equal(['id_contact', 'id_contact2']);
+  });
+
+  it('will parse the response for sendMessageToMultipleContacts if no contacts have been selected', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, null);
+
+    return expect(
+      bridge.sendMessageToMultipleContacts(messageToContact)
+    ).to.eventually.deep.equal(null);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.sendMessageToMultipleContacts(messageToContact)
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
   });
 });
 
@@ -234,6 +339,46 @@ describe('showRewardedAd', () => {
       type: 'game bonus',
     });
   });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.showRewardedAd('test_id')
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
+});
+
+describe('loadRewardedAd', () => {
+  it('will return the close status string response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(bridge.loadRewardedAd('test_id')).to.eventually.deep.equal(
+      response
+    );
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.loadRewardedAd('test_id')
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
 });
 
 describe('showInterstitialAd', () => {
@@ -245,6 +390,186 @@ describe('showInterstitialAd', () => {
     return expect(
       bridge.showInterstitialAd('test_id')
     ).to.eventually.deep.equal(response);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.showInterstitialAd('test_id')
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
+});
+
+describe('loadInterstitial', () => {
+  it('will return the close status string response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.loadInterstitialAd('test_id')
+    ).to.eventually.deep.equal(response);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.loadInterstitialAd('test_id')
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
+});
+
+describe('shareInfo', () => {
+  it('will return the close status string response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.shareInfo({ content: 'test' })
+    ).to.eventually.deep.equal(response);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.shareInfo({ content: 'test' })
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
+});
+
+describe('getUserName', () => {
+  it('will return the close status string response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response = 'leo';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(bridge.getUserName()).to.eventually.deep.equal(response);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.getUserName()
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
+});
+
+describe('getProfilePhoto', () => {
+  it('will return the close status string response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response = 'profile photo response';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(bridge.getProfilePhoto()).to.eventually.deep.equal(response);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.getProfilePhoto()
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
+});
+
+describe('getContacts', () => {
+  it('will return the close status string response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response =
+      '[{"id":"id_contact","name":"Cory","email":"cory@miniapp.com"},{"id":"id_contact2","name":"Alam"},{"id":"id_contact3"}]';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    const expected = [
+      {
+        id: 'id_contact',
+        name: 'Cory',
+        email: 'cory@miniapp.com',
+      },
+      {
+        id: 'id_contact2',
+        name: 'Alam',
+      },
+      {
+        id: 'id_contact3',
+      },
+    ];
+
+    return expect(bridge.getContacts()).to.eventually.deep.equal(expected);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.getContacts()
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
+});
+
+describe('setScreenOrientation', () => {
+  it('will return the close status string response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.setScreenOrientation(ScreenOrientation.LOCK_PORTRAIT)
+    ).to.eventually.deep.equal(response);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.setScreenOrientation(ScreenOrientation.LOCK_PORTRAIT)
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
   });
 });
 
@@ -302,6 +627,13 @@ describe('getPoints', () => {
       term: 20,
       cash: 30,
     });
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
+
+    return expect(bridge.getPoints()).to.eventually.be.rejected;
   });
 });
 
