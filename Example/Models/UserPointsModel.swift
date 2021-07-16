@@ -4,7 +4,7 @@ struct UserPointsModel: Codable {
     var standardPoints: Int?
     var termPoints: Int?
     var cashPoints: Int?
-    
+
     static let LocalCacheKey = "UserPoints"
 }
 
