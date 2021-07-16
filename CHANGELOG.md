@@ -11,7 +11,7 @@
 - **Feature:** Display of a banner on message contact picker when required
 - **Feature:** Added Points Interface `getPoints` to retrieve Rakuten Points
 - **Feature:** Added `rakuten.miniapp.user.POINTS` custom permission
-- **Feature:** Added Points to the example app settings screen to change  `getPoints` response values 
+- **Feature:** Added Points to the example app settings screen to change `getPoints` response values 
 
 ### 3.4.0 (2021-06-25)
 
