@@ -9,6 +9,7 @@
 **Sample app**
 
 - **Feature:** Display of a banner on message contact picker when required
+- **Feature:** Added Points to settings screen to change  `getPoints` response values 
 
 ### 3.4.0 (2021-06-25)
 
