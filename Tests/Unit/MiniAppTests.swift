@@ -2,10 +2,16 @@ import Quick
 import Nimble
 @testable import MiniApp
 
+// swiftlint:disable function_body_length
 class MiniAppTests: QuickSpec {
 
     override func spec() {
+        let miniAppKeyStore = MiniAppPermissionsStorage()
+
         describe("MiniApp tests") {
+            beforeEach {
+                miniAppKeyStore.removeKey(for: mockMiniAppInfo.id)
+            }
             context("when getPermissions is called with empty mini app id") {
                 it("will return nil") {
                     let miniAppCustomPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: "")
@@ -55,6 +61,71 @@ class MiniAppTests: QuickSpec {
                         }
                     })
                     expect(testError?.localizedDescription).to(equal(MASDKError.invalidVersionId.localizedDescription))
+                }
+            }
+            context("when setCustomPermissions is called with valid miniapp Id") {
+                it("will not store the permission") {
+                    MiniApp.shared().setCustomPermissions(forMiniApp: mockMiniAppInfo.id,
+                                                          permissionList: [MASDKCustomPermissionModel(
+                                                                            permissionName: .userName,
+                                                                            isPermissionGranted: .allowed,
+                                                                            permissionRequestDescription: "")])
+                    let customPermissionList = MiniApp.shared().getCustomPermissions(forMiniApp: mockMiniAppInfo.id)
+                    expect(customPermissionList.count).to(equal(1))
+                }
+            }
+            context("when setCustomPermissions is called with invalid miniapp Id") {
+                it("will not store the permission") {
+                    MiniApp.shared().setCustomPermissions(forMiniApp: "",
+                                                          permissionList: [MASDKCustomPermissionModel(
+                                                                            permissionName: .userName,
+                                                                            isPermissionGranted: .allowed,
+                                                                            permissionRequestDescription: "")])
+                    let customPermissionList = MiniApp.shared().getCustomPermissions(forMiniApp: mockMiniAppInfo.id)
+                    expect(customPermissionList.count).to(equal(0))
+                }
+            }
+            context("when createMiniapp is called with invalid miniapp appId") {
+                it("will return invalidAppId error") {
+                    var testError: MASDKError?
+                    let mockMessageInterface = MockMessageInterface()
+                    MiniApp.shared().create(appId: "", completionHandler: { (result) in
+                        switch result {
+                        case .success: break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    }, messageInterface: mockMessageInterface)
+                    expect(testError?.localizedDescription).toEventually(equal(MASDKError.invalidAppId.localizedDescription), timeout: .seconds(5))
+                }
+            }
+            context("when createMiniapp is called with invalid miniapp version") {
+                it("will return invalidAppId error") {
+                    var testError: MASDKError?
+                    let mockMessageInterface = MockMessageInterface()
+                    MiniApp.shared().create(appId: "1", version: "", queryParams: nil, completionHandler: { (result) in
+                        switch result {
+                        case .success: break
+                        case .failure(let error):
+                            testError = error
+                            print("")
+                        }
+                    }, messageInterface: mockMessageInterface, adsDisplayer: nil)
+                    expect(testError?.localizedDescription).toEventuallyNot(beNil(), timeout: .seconds(5))
+                }
+            }
+            context("when createMiniapp is called with invalid miniapp version") {
+                it("will return invalidAppId error") {
+                    var testError: MASDKError?
+                    let mockMessageInterface = MockMessageInterface()
+                    MiniApp.shared().create(appId: "1", version: "1", queryParams: nil, completionHandler: { (result) in
+                        switch result {
+                        case .success: break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    }, messageInterface: mockMessageInterface, adsDisplayer: nil)
+                    expect(testError?.localizedDescription).toEventuallyNot(beNil(), timeout: .seconds(5))
                 }
             }
         }

@@ -14,17 +14,17 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             let callbackProtocol = MockMiniAppCallbackProtocol()
             let mockMessageInterface = MockMessageInterface()
             let mockAdsDelegate =  MockAdsDisplayer()
-            let mockMiniAppID = "Test"
             let mockMiniAppTitle = "Mini App"
 
             let scriptMessageHandler = MiniAppScriptMessageHandler(
                 delegate: callbackProtocol,
                 hostAppMessageDelegate: mockMessageInterface,
                 adsDisplayer: mockAdsDelegate,
-                miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
             )
-            afterEach {
+            beforeEach {
                 deleteStatusPreferences()
+                clearCustomPermissionsFromStorage(miniAppId: mockMiniAppInfo.id)
             }
             context("when user controller receive valid action and id") {
                 it("will return unique id") {
@@ -40,7 +40,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: callbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     let requestParam = RequestParameters(
                         action: "",
@@ -102,7 +102,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: callbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.locationAllowed = false
                     mockMessageInterface.permissionError = .notDetermined
@@ -117,7 +117,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: callbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.locationAllowed = false
                     mockMessageInterface.permissionError = .notDetermined
@@ -132,7 +132,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: callbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.locationAllowed = false
                     mockMessageInterface.permissionError = .notDetermined
@@ -147,9 +147,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: callbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .deviceLocation, status: .allowed)
                     mockMessageInterface.locationAllowed = false
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -159,13 +159,34 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     } else {
                         expect(callbackProtocol.errorMessage).toEventually(contain("application does not have sufficient geolocation permissions"))
                     }
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .deviceLocation, status: .denied)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .deviceLocation, status: .denied)
                 }
             }
 
-            context("when MiniAppScriptMessageHandler receives valid custom permissions command") {
-                it("will return response with name and status for all permission that is requested") {
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .userName, status: .allowed)
+            context("when MiniAppScriptMessageHandler receives valid custom permissions command and the permissions is allowed already") {
+                it("will return response from cache with permission name and status for all permission that is requested") {
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
+                    mockMessageInterface.customPermissions = true
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
+                            "\"description\":\"Description for the requesting permission\"}]},\"id\":\"1.0343410245054572\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: .seconds(10))
+                    guard let responseData: Data = callbackProtocol.response?.data(using: .utf8) else {
+                        return
+                    }
+                    let decodedObj = try JSONDecoder().decode(MiniAppCustomPermissionsResponse.self, from: responseData)
+                    if decodedObj.permissions.count > 0 {
+                        expect(decodedObj.permissions[0].name).toEventually(equal("rakuten.miniapp.user.USER_NAME"), timeout: .seconds(10))
+                        expect(decodedObj.permissions[0].status).toEventually(equal("ALLOWED"), timeout: .seconds(10))
+                    } else {
+                        fail("create MiniApp failure")
+                    }
+                }
+            }
+            context("when MiniAppScriptMessageHandler receives valid custom permissions command and if the permission is not allowed already") {
+                it("will request host app to request those permissions and return the permission response with name and status for all permission that is requested") {
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .denied)
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"requestCustomPermissions\",\"param\":{\"permissions\":" + "[{\"name\":\"rakuten.miniapp.user.USER_NAME\"," +
@@ -212,7 +233,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: callbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.customPermissions = true
                     let mockMessage = MockWKScriptMessage(
@@ -229,7 +250,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: callbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID,
+                        miniAppId: mockMiniAppInfo.id,
                         miniAppTitle: mockMiniAppTitle
                     )
                     let mockMessage = MockWKScriptMessage(
@@ -246,7 +267,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: callbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID,
+                        miniAppId: mockMiniAppInfo.id,
                         miniAppTitle: mockMiniAppTitle
                     )
                     let mockMessage = MockWKScriptMessage(
@@ -264,8 +285,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
                     mockMessageInterface.messageContentAllowed = false
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
@@ -280,9 +302,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .userName, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -296,9 +318,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .userName, status: .denied)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .denied)
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -313,9 +335,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .profilePhoto, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -328,9 +350,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .profilePhoto, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -342,9 +364,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .profilePhoto, status: .denied)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .denied)
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -358,9 +380,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: "Mini App"
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: "Mini App"
                     )
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .contactsList, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getContacts\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -372,9 +394,9 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                        delegate: mockCallbackProtocol,
                        hostAppMessageDelegate: mockMessageInterface,
                        adsDisplayer: mockAdsDelegate,
-                       miniAppId: mockMiniAppID, miniAppTitle: "Mini App"
+                       miniAppId: mockMiniAppInfo.id, miniAppTitle: "Mini App"
                     )
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .contactsList, status: .denied)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .denied)
                    let mockMessage = MockWKScriptMessage(
                        name: "", body: "{\"action\": \"getContacts\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -383,16 +405,16 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when MiniAppScriptMessageHandler receives getAccessToken command without scopes") {
                 it("will return an error") {
-                    saveMockManifestInCache(miniAppId: mockMiniAppID)
+                    saveMockManifestInCache(miniAppId: mockMiniAppInfo.id)
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
                     let scriptMessageHandler = MiniAppScriptMessageHandler(
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = "MOCK_ACCESS_TOKEN"
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .accessToken, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .accessToken, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getAccessToken\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -402,16 +424,16 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when MiniAppScriptMessageHandler receives getAccessToken command with bad audience") {
                 it("will return an error") {
-                    saveMockManifestInCache(miniAppId: mockMiniAppID)
+                    saveMockManifestInCache(miniAppId: mockMiniAppInfo.id)
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
                     let scriptMessageHandler = MiniAppScriptMessageHandler(
                             delegate: mockCallbackProtocol,
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
-                            miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = "MOCK_ACCESS_TOKEN"
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .accessToken, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .accessToken, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                             name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"bad_audience\", \"scopes\":[\"test\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -421,16 +443,16 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when MiniAppScriptMessageHandler receives getAccessToken command with bad scopes") {
                 it("will return an error") {
-                    saveMockManifestInCache(miniAppId: mockMiniAppID)
+                    saveMockManifestInCache(miniAppId: mockMiniAppInfo.id)
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
                     let scriptMessageHandler = MiniAppScriptMessageHandler(
                             delegate: mockCallbackProtocol,
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
-                            miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = "MOCK_ACCESS_TOKEN"
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .accessToken, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .accessToken, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                             name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"bad_scope\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -440,16 +462,16 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when MiniAppScriptMessageHandler receives valid getAccessToken command") {
                 it("will return Access Token data info such as Token string and expiry date") {
-                    saveMockManifestInCache(miniAppId: mockMiniAppID)
+                    saveMockManifestInCache(miniAppId: mockMiniAppInfo.id)
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
                     let scriptMessageHandler = MiniAppScriptMessageHandler(
                             delegate: mockCallbackProtocol,
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
-                            miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = "MOCK_ACCESS_TOKEN"
-                    updateCustomPermissionStatus(miniAppId: mockMiniAppID, permissionType: .accessToken, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .accessToken, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                             name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"scope_test\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -458,15 +480,16 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when MiniAppScriptMessageHandler receives valid getAccessToken command but host app returns error") {
                 it("will return error") {
-                    saveMockManifestInCache(miniAppId: mockMiniAppID)
+                    saveMockManifestInCache(miniAppId: mockMiniAppInfo.id)
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
                     let scriptMessageHandler = MiniAppScriptMessageHandler(
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = ""
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .accessToken, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"scope_test\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -475,15 +498,16 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             }
             context("when MiniApp manifest contained no scopes") {
                 it("will return error") {
-                    removeMockManifestInCache(miniAppId: mockMiniAppID)
+                    removeMockManifestInCache(miniAppId: mockMiniAppInfo.id)
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
                     let scriptMessageHandler = MiniAppScriptMessageHandler(
                             delegate: mockCallbackProtocol,
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
-                            miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = ""
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .accessToken, status: .allowed)
                     let mockMessage = MockWKScriptMessage(
                             name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"scope_test\"]}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -498,7 +522,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.messageContentAllowed = false
                     let mockMessage = MockWKScriptMessage(
@@ -514,13 +538,169 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         delegate: mockCallbackProtocol,
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppID, miniAppTitle: mockMiniAppTitle
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.messageContentAllowed = false
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"setScreenOrientation\",\"param\":{\"action\":\"rakuten.miniapp.screen.LOCK_LANDSCAPE_RIGHT\"},\"id\":\"5.733550049709592\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(10))
+                }
+            }
+            context("when MiniAppScriptMessageHandler receives sendMessageToContact command") {
+                it("will return valid success message") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    mockMessageInterface.messageContentAllowed = false
+                    let command = """
+                    {
+                      "action" : "sendMessageToContact",
+                      "id" : "1.9034416849400426",
+                      "param" : {
+                        "messageToContact" : {
+                          "action" : "https://www.example.com\",
+                          "caption" : "Sample caption",
+                          "image" : "data:image/png;base64,Test==",
+                          "text" : "Sample text"
+                        }
+                      }
+                    }
+                    """
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(contain("SUCCESS"), timeout: .seconds(5))
+                }
+            }
+            context("when MiniAppScriptMessageHandler receives sendMessageToContactId command") {
+                it("will return contact Id") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    mockMessageInterface.messageContentAllowed = false
+                    let command = """
+                    {
+                        "action" : "sendMessageToContactId",
+                        "id" : "4.1141101534045745",
+                        "param" : {
+                            "contactId" : "\(mockMiniAppInfo.id)",
+                            "messageToContact" : {
+                                "action" : "https://www.example.com/",
+                                "caption" : "Sample caption",
+                                "image" : "data:image/png;base64,Test==",
+                                "text" : "Sample text"
+                            }
+                        }
+                    }
+                    """
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .sendMessage, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(contain(mockMiniAppInfo.id), timeout: .seconds(5))
+                }
+            }
+            context("when MiniAppScriptMessageHandler receives sendMessageToMultipleContacts command") {
+                it("will return list of contact Ids") {
+                    mockMessageInterface.messageContentAllowed = false
+                    let command = """
+                    {
+                        "action" : "sendMessageToMultipleContacts",
+                        "id" : "5.1141101534045745",
+                        "param" : {
+                            "messageToContact" : {
+                                "action" : "https://www.example.com/",
+                                "caption" : "Sample caption",
+                                "image" : "data:image/png;base64,Test==",
+                                "text" : "Sample text"
+                            }
+                        }
+                    }
+                    """
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .sendMessage, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
+
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.response).toEventually(contain(["contact_id1", "contact_id2"]), timeout: .seconds(5))
+                }
+            }
+            context("when MiniAppScriptMessageHandler receives sendMessageToContact command") {
+                it("will return valid success message") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    mockMessageInterface.messageContentAllowed = false
+                    let command = """
+                    {
+                      "action" : "sendMessageToContact",
+                      "id" : "1.9034416849400426",
+                      "param" : {
+                        "messageToContact" : null
+                      }
+                    }
+                    """
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(5))
+                }
+                context("when MiniAppScriptMessageHandler receives sendMessageToContactId command") {
+                    it("will return contact Id") {
+                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                        let scriptMessageHandler = MiniAppScriptMessageHandler(
+                            delegate: mockCallbackProtocol,
+                            hostAppMessageDelegate: mockMessageInterface,
+                            adsDisplayer: mockAdsDelegate,
+                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                        )
+                        mockMessageInterface.messageContentAllowed = false
+                        let command = """
+                        {
+                            "action" : "sendMessageToContactId",
+                            "id" : "4.1141101534045745",
+                            "param" : {
+                                "contactId" : "\(mockMiniAppInfo.id)",
+                                "messageToContact" : null
+                            }
+                        }
+                        """
+                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .sendMessage, status: .allowed)
+                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
+
+                        let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                        scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                        expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(5))
+                    }
+                }
+                context("when MiniAppScriptMessageHandler receives sendMessageToMultipleContacts command") {
+                    it("will return list of contact Ids") {
+                        mockMessageInterface.messageContentAllowed = false
+                        let command = """
+                        {
+                            "action" : "sendMessageToMultipleContacts",
+                            "id" : "5.1141101534045745",
+                            "param" : {
+                                "messageToContact" : null
+                        }
+                        """
+                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .sendMessage, status: .allowed)
+                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
+                        let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                        scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                        expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(5))
+                    }
                 }
             }
         }
