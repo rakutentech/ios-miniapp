@@ -6,8 +6,12 @@ import Nimble
 class MiniAppStatusTests: QuickSpec {
 
     override func spec() {
+        let miniAppKeyStore = MiniAppPermissionsStorage()
+
         afterEach {
             deleteStatusPreferences()
+            miniAppKeyStore.removeKey(for: mockMiniAppInfo.id)
+            UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
         }
         describe("mini app preferences") {
             context("when setDownloadStatus is called") {
@@ -102,6 +106,31 @@ class MiniAppStatusTests: QuickSpec {
                     expect(customPermissionsList.keys).notTo(contain(miniAppInfo.id))
                     expect(customPermissionsList.keys).notTo(contain(mockMiniAppInfo.id))
                     UserDefaults().removePersistentDomain(forName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
+                }
+            }
+            context("when checkStoredPermissionList is called with downloaded mini apps list") {
+                it("will return list of custom permissions if it is stored already") {
+                    let miniAppStatus = MiniAppStatus()
+                    miniAppStatus.saveMiniAppInfo(appInfo: mockMiniAppInfo, key: mockMiniAppInfo.id)
+                    miniAppStatus.setDownloadStatus(true, appId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId)
+                    let customPermissionsList = [MASDKCustomPermissionModel(
+                                                    permissionName: .userName,
+                                                    isPermissionGranted: .allowed,
+                                                    permissionRequestDescription: ""),
+                                                 MASDKCustomPermissionModel(
+                                                    permissionName: .profilePhoto,
+                                                    isPermissionGranted: .allowed,
+                                                    permissionRequestDescription: "")]
+                    miniAppKeyStore.storeCustomPermissions(permissions: customPermissionsList, forMiniApp: mockMiniAppInfo.id)
+                    guard let downloadedMiniApps = miniAppStatus.getMiniAppsListWithCustomPermissionsInfo() else {
+                        fail("No downloaded Mini apps found")
+                        return
+                    }
+                    expect(downloadedMiniApps.count).notTo(equal(0))
+                    if downloadedMiniApps.indices.contains(0) {
+                        let miniAppInfoPair = downloadedMiniApps[0]
+                        expect(miniAppInfoPair.1.count).to(equal(2))
+                    }
                 }
             }
         }

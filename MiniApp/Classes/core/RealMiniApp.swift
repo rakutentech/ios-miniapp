@@ -85,6 +85,9 @@ internal class RealMiniApp {
     }
 
     func createMiniApp(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+        if appId.isEmpty {
+            return completionHandler(.failure(.invalidAppId))
+        }
         getMiniApp(miniAppId: appId, miniAppVersion: version) { (result) in
             switch result {
             case .success(let responseData):
