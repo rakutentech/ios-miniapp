@@ -94,6 +94,34 @@ The following describes the steps that CI performs when a branch is merged to ma
 4. App Center builds the Sample App for iOS Devices (Staging).
     - Publishes build to App Center "Testers" group.
 
+### Release candidate
+
+In order to launch CI job for regression tests, a candidate branch is observed.
+As candidate check steps are always the same, a script is available to guide you trough the process:
+
+```bash
+./scripts/release-candidate.sh
+```
+
+The script can be launched with no parameters, but you can also provide it a version number and branch name:
+
+    Usage: [-v Version] [-b Branch] [-d]
+
+        -v Version      Version to deploy.
+        -b Branch       Branch to release. By default 'candidate'
+        -d Debug        displays useful data to debug this script
+        -a              automatic mode. Requires -v parameter to be 100% without prompt
+        -s              silent mode
+
+    For Example: ./release-candidate.sh -v 3.5.0 -b candidate -a
+
+        -h              Help
+
+During the process a branch will be created and your work in progress will be stored in a git stash.
+Once the candidate created and pushed, your branch will be checked out again and the stash will be popped.
+
+If the release candidate process is aborted, please switch manually to your working branch and execute a `git stash pop` to retrieve all your uncommitted changes.
+
 ### Release
 
 The following describes the steps that CI performs when releasing a new version of the SDK.
