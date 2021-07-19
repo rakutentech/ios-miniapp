@@ -10,7 +10,7 @@ echo "
         -b Branch       Branch to release. By default 'candidate'
         -d              displays useful data to debug this script
         -a              automatic mode. Requires -v parameter to be 100% without prompt
-        -s              silent mode
+        -s              same as -a but in silent mode
 
         For Example: ./release-candidate.sh -v 3.5.0 -b candidate -a
 
@@ -18,7 +18,6 @@ echo "
 "
 }
 NO_PROMPT=0
-SILENT=0
 
 while getopts ":v:b:dhas" opt; do
   case $opt in
@@ -32,7 +31,7 @@ while getopts ":v:b:dhas" opt; do
     ;;
     a) NO_PROMPT=1
     ;;
-    s) SILENT=1; echo off
+    s) NO_PROMPT=1; exec &>/dev/null
     ;;
     \?) echo "Invalid option -$OPTARG" >&2; exit 1
     ;;
@@ -93,11 +92,8 @@ REPLACE_STRING="  s.version      = '$VERSION'"
 echo "Updating MiniApp.podspec file s.version variable with v$VERSION version number"
 sed -i "" -e "s/$SEARCH_STRING/$REPLACE_STRING/" MiniApp.podspec
 
-if [ $SILENT == 0 ]
-then
-  echo "Changelog:"
-  awk -v version="$VERSION" '/### / {printit = $2 == version}; printit;' CHANGELOG.md
-fi
+echo "Changelog:"
+awk -v version="$VERSION" '/### / {printit = $2 == version}; printit;' CHANGELOG.md
 
 if [ $NO_PROMPT == 0 ]
 then
@@ -116,5 +112,4 @@ git push "$UPSTREAM" "$CANDIDATE_BRANCH":"$UPSTREAM_BRANCH" --force
 echo "pop stashing your WIP"
 git checkout "$WORK_BRANCH"
 git stash pop
-echo on
 echo "Candidate branch pushed to https://github.com/rakutentech/ios-miniapp/tree/$UPSTREAM_BRANCH. Check CI jobs have been started"
