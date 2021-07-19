@@ -73,6 +73,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Ads integration](#ads-integration)
     * [Retrieve User Profile details](#retrieve-user-profile-details)
     * [Send message to contacts](#send-message-to-contacts)
+    * [Retrieve points](#retrieve-points)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Mini App meta-data](#mini-meta-data)
@@ -461,6 +462,20 @@ extension ViewController: MiniAppMessageDelegate {
 }
 ```
 
+<a id="retrieve-points"></a>
+
+###### Retrieve Points
+
+Retrieve Rakuten points (standard, term, cash) of the User. It's necessary to allow the `Rakuten Points` custom permission for retrieving the points.
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
+        // Implementation to return points
+        completionHandler(.success(MAPoints(standard: 500, term: 400, cash: 300)))
+    }
+}
+```
 <a id="load-miniapp-list"></a>
 
 ### Load the `MiniApp` list:
