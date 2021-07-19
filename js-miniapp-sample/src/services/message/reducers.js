@@ -1,5 +1,5 @@
 import type { MessageType, SetMessageTypeAction } from './types';
-import { SET_MESSAGE_TYPES } from './types';
+import { MessageTypeId, SET_MESSAGE_TYPES } from './types';
 
 type MessageTypeState = {
   messageTypes: Array<MessageType>,
@@ -8,15 +8,15 @@ type MessageTypeState = {
 const messageTypeState = {
   messageTypes: [
     {
-      id: 1,
+      id: MessageTypeId.SINGLE_CONTACT,
       name: 'Send a message to a single contact',
     },
     {
-      id: 2,
+      id: MessageTypeId.SINGLE_CONTACT_ID,
       name: 'Send a message to a specific contact',
     },
     {
-      id: 3,
+      id: MessageTypeId.MULTIPLE_CONTACTS,
       name: 'Send a message to multiple contacts',
     },
   ],

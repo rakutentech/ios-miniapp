@@ -25,6 +25,7 @@ import {
 } from '../services/message/actions';
 import { getMessageTypeList } from '../services/message/actions';
 import type { MessageType } from '../services/message/types';
+import { MessageTypeId } from '../services/message/types';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -60,8 +61,7 @@ type MessageTypeProps = {
     image: string,
     text: string,
     caption: string,
-    action: string,
-    bannerMessage: string
+    action: string
   ) => Promise<string>,
   sendMessageToMultipleContacts: (
     image: string,
@@ -121,7 +121,7 @@ const Message = (props: MessageTypeProps) => {
   };
   const talkToChatbot = () => {
     if (validate()) {
-      if (message.id === 1) {
+      if (message.id === MessageTypeId.SINGLE_CONTACT) {
         props
           .sendMessageToContact(
             message.image.trim() ?? '',
@@ -145,15 +145,14 @@ const Message = (props: MessageTypeProps) => {
               response: e,
             });
           });
-      } else if (message.id === 2) {
+      } else if (message.id === MessageTypeId.SINGLE_CONTACT_ID) {
         props
           .sendMessageToContactId(
             message.contactId.trim(),
             message.image.trim() ?? '',
             message.text.trim(),
             message.caption.trim() ?? '',
-            message.action.trim() ?? '',
-            message.bannerMessage.trim() ?? ''
+            message.action.trim() ?? ''
           )
           .then((contactId) => {
             let respMsg = 'Message not sent';
@@ -170,7 +169,7 @@ const Message = (props: MessageTypeProps) => {
               response: e,
             });
           });
-      } else if (message.id === 3) {
+      } else if (message.id === MessageTypeId.MULTIPLE_CONTACTS) {
         props
           .sendMessageToMultipleContacts(
             message.image.trim() ?? '',
@@ -220,6 +219,7 @@ const Message = (props: MessageTypeProps) => {
   const onChatbotClose = () => {
     setMessageResponse({ show: false, response: '' });
   };
+
   return (
     <Fragment>
       <FormControl className={classes.formControl}>
@@ -240,7 +240,7 @@ const Message = (props: MessageTypeProps) => {
         </Select>
       </FormControl>
 
-      {message.id === 2 && (
+      {message.id === MessageTypeId.SINGLE_CONTACT_ID && (
         <FormControl className={classes.formControl}>
           <TextField
             id="contactId"
@@ -274,15 +274,17 @@ const Message = (props: MessageTypeProps) => {
           rowsMax="4"
         />
       </FormControl>
-      <FormControl className={classes.formControl}>
-        <TextField
-          id="bannerMessage"
-          label="Banner message"
-          className={classes.fields}
-          onChange={onBannerMessageChange}
-          value={message.bannerMessage}
-        />
-      </FormControl>
+      {message.id !== MessageTypeId.SINGLE_CONTACT_ID && (
+        <FormControl className={classes.formControl}>
+          <TextField
+            id="bannerMessage"
+            label="Banner message"
+            className={classes.fields}
+            onChange={onBannerMessageChange}
+            value={message.bannerMessage}
+          />
+        </FormControl>
+      )}
       <FormControl className={classes.formControl}>
         <TextField
           id="caption"
@@ -350,24 +352,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         sendMessageToContact(image, text, caption, action, bannerMessage)
       ),
-    sendMessageToContactId: (
-      contactId,
-      image,
-      text,
-      caption,
-      action,
-      bannerMessage
-    ) =>
-      dispatch(
-        sendMessageToContactId(
-          contactId,
-          image,
-          text,
-          caption,
-          action,
-          bannerMessage
-        )
-      ),
+    sendMessageToContactId: (contactId, image, text, caption, action) =>
+      dispatch(sendMessageToContactId(contactId, image, text, caption, action)),
     sendMessageToMultipleContacts: (
       image,
       text,

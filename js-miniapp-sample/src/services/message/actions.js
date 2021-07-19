@@ -57,8 +57,7 @@ const sendMessageToContactId = (
   image: String,
   text: String,
   caption: String,
-  action: String,
-  bannerMessage: String
+  action: String
 ): Function => {
   return async (dispatch) => {
     const promise = MiniApp.requestCustomPermissions(permissionsList).then(
@@ -74,7 +73,6 @@ const sendMessageToContactId = (
         image: image,
         caption: caption,
         action: action,
-        bannerMessage: bannerMessage,
       };
       return MiniApp.chatService.sendMessageToContactId(
         contactId,
