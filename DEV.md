@@ -79,9 +79,9 @@ Before any deployment, be sure the project will build and run unit tests by runn
 
 [BitRise](https://app.bitrise.io/app/bddaf16e1f0fc0d6) is used for building and testing the project for every pull request. It is also used for publishing the SDK and Sample App.
 
-Note that two Sample App builds are created on merge to master or during a release: 
-- One build for the iOS Simulator (built on CI and then uploaded to App Center - App Center does not support building for the Simulator target)
-- One build for iOS Devices (built directly on App Center in order to keep the certificate and provisioning profile secret)
+Note that two Sample App are built on CI and then uploaded with symbols to App Center on merge to master or during a release: 
+- One build for the iOS Simulator
+- One build for iOS Devices (can be triggered manually directly on App Center if needed)
 
 ### Merge to Master
 
@@ -91,8 +91,7 @@ The following describes the steps that CI performs when a branch is merged to ma
 2. CI builds SDK and Sample App, run tests, linting, etc.
 3. CI creates a ZIP file for the iOS Simulator (Staging) build of the Sample App.
     - Publishes build to App Center "Testers" group.
-4. App Center builds the Sample App for iOS Devices (Staging).
-    - Publishes build to App Center "Testers" group.
+4. CI builds a Sample App (Staging) IPA and publishes build to App Center "Testers" group.
 
 ### Release candidate
 
@@ -109,7 +108,7 @@ The script can be launched with no parameters, but you can also provide it a ver
 
         -v Version      Version to deploy.
         -b Branch       Branch to release. By default 'candidate'
-        -d Debug        displays useful data to debug this script
+        -d              displays useful data to debug this script
         -a              automatic mode. Requires -v parameter to be 100% without prompt
         -s              silent mode
 
@@ -122,6 +121,14 @@ Once the candidate created and pushed, your branch will be checked out again and
 
 If the release candidate process is aborted, please switch manually to your working branch and execute a `git stash pop` to retrieve all your uncommitted changes.
 
+The following describes the steps that CI performs when a branch is merged to candidate.
+
+1. We trigger a build on CI by merging a branch to candidate.
+2. CI builds SDK and Sample App, run tests, linting, etc.
+3. CI creates a ZIP file for the iOS Simulator (Production) build of the Sample App.
+    - Publishes build to App Center "Testers" group.
+4. CI builds a Sample App (Production) IPA and publishes build to App Center "Testers" group.
+
 ### Release
 
 The following describes the steps that CI performs when releasing a new version of the SDK.
@@ -129,9 +136,8 @@ The following describes the steps that CI performs when releasing a new version 
 1. We trigger a build on CI by pushing a Git tag to the repo in the format `vX.X.X`.
 2. CI builds SDK and Sample App, run tests, linting, etc.
 3. CI publishes the SDK to [Cocoapods](https://cocoapods.org/pods/MiniApp).
-4. CI creates ZIP file for the iOS Simulator (Production) build of the Sample App.
+4. CI creates ZIP and IPA files for the iOS Simulator and device (Production) builds of the Sample App.
     - Publishes build to App Center "Production" group.
-5. CI merges the `master` branch into the `prod` branch.
-    - This triggers a build on App Center for the iOS Device (Production) build of the Sample App.
-    - Publishes build to App Center "Production" group.
-6. CI publishes documentation to [Github Pages site](https://rakutentech.github.io/ios-miniapp).
+5. CI creates a pull request to merge `candidate` branch to `master` branch.
+6. CI merges the `master` branch into the `prod` branch.
+7. CI publishes documentation to [Github Pages site](https://rakutentech.github.io/ios-miniapp).
