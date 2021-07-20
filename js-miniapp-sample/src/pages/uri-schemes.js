@@ -12,12 +12,19 @@ import {
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
+  scrollable: {
+    overflowY: 'auto',
+    width: '100%',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  card: {
+    width: '100%',
+    height: 'auto',
+  },
   actions: {
     justifyContent: 'center',
     paddingBottom: 16,
-  },
-  card: {
-    height: 'auto',
   },
   content: {
     justifyContent: 'center',
@@ -39,6 +46,9 @@ const UriSchemes = () => {
     'https://htmlpreview.github.io/?https://raw.githubusercontent.com/rakutentech/js-miniapp/master/js-miniapp-sample/external-webview/index.html';
   const classes = useStyles();
   const [params, setParams] = useState('?testSendParam=someValue&test2=test2');
+  const [callbackUrl, setCallbackUrl] = useState(
+    `${window.location.protocol}//${window.location.host}/index.html`
+  );
 
   function validateParams(params) {
     if (!params.startsWith('?') || params.indexOf('=') <= -1) {
@@ -56,7 +66,6 @@ const UriSchemes = () => {
       return;
     }
 
-    const callbackUrl = `${window.location.protocol}//${window.location.host}/index.html`;
     const paramsWithCallback = params
       .concat(params ? '&' : '?')
       .concat(`callbackUrl=${encodeURIComponent(callbackUrl)}`);
@@ -65,60 +74,79 @@ const UriSchemes = () => {
   }
 
   return (
-    <GreyCard className={classes.card}>
-      <CardContent className={classes.content}>tel: scheme</CardContent>
-      <CardActions className={classes.actions}>
-        <Button variant="contained" color="primary" href="tel:+1-123-456-7890">
-          +1-123-456-7890
-        </Button>
-      </CardActions>
+    <div className={classes.scrollable}>
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>tel: scheme</CardContent>
+        <CardActions className={classes.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            href="tel:+1-123-456-7890"
+          >
+            +1-123-456-7890
+          </Button>
+        </CardActions>
 
-      <CardContent className={classes.content}>tel:// scheme</CardContent>
-      <CardActions className={classes.actions}>
-        <Button
-          variant="contained"
-          color="primary"
-          href="tel://+1-123-456-7890"
-        >
-          +1-123-456-7890
-        </Button>
-      </CardActions>
+        <CardContent className={classes.content}>tel:// scheme</CardContent>
+        <CardActions className={classes.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            href="tel://+1-123-456-7890"
+          >
+            +1-123-456-7890
+          </Button>
+        </CardActions>
 
-      <CardContent className={classes.content}>mailto:</CardContent>
-      <CardActions className={classes.actions}>
-        <Button
-          variant="contained"
-          color="primary"
-          href="mailto:mail@example.com?cc=ccmail@example.com, ccmail2@example.com, &bcc=bccmail@example.com&subject=Sample subject&body=Sample body."
-        >
-          Address / cc / bcc / subject / body
-        </Button>
-      </CardActions>
+        <CardContent className={classes.content}>mailto:</CardContent>
+        <CardActions className={classes.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            href="mailto:mail@example.com?cc=ccmail@example.com, ccmail2@example.com, &bcc=bccmail@example.com&subject=Sample subject&body=Sample body."
+          >
+            Address / cc / bcc / subject / body
+          </Button>
+        </CardActions>
 
-      <CardContent className={classes.content}>External Webview</CardContent>
-      <CardContent className={classes.content}>
-        <TextField
-          className={classes.textfield}
-          onChange={(e) => setParams(e.currentTarget.value)}
-          value={params}
-          label="Params to pass"
-          variant="outlined"
-          color="primary"
-          inputProps={{
-            'data-testid': 'input-field',
-          }}
-        />
-      </CardContent>
-      <CardActions className={classes.actions}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={onOpenExternalWebview}
-        >
-          Open
-        </Button>
-      </CardActions>
-    </GreyCard>
+        <CardContent className={classes.content}>External Webview</CardContent>
+        <CardContent className={classes.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setParams(e.currentTarget.value)}
+            value={params}
+            label="Params to pass"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'input-field',
+            }}
+          />
+        </CardContent>
+        <CardContent className={classes.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setCallbackUrl(e.currentTarget.value)}
+            value={callbackUrl}
+            label="Mini App Return URL"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'callback-input-field',
+            }}
+          />
+        </CardContent>
+        <CardActions className={classes.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onOpenExternalWebview}
+          >
+            Open
+          </Button>
+        </CardActions>
+      </GreyCard>
+    </div>
   );
 };
 
