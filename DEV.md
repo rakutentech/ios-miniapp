@@ -133,11 +133,11 @@ The following describes the steps that CI performs when a branch is merged to ca
 
 The following describes the steps that CI performs when releasing a new version of the SDK.
 
-1. We trigger a build on CI by pushing a Git tag to the repo in the format `vX.X.X`.
+1. We trigger a build on CI by pushing a Git tag on `candidate` branch to the repo in the format `vX.X.X`.
 2. CI builds SDK and Sample App, run tests, linting, etc.
 3. CI publishes the SDK to [Cocoapods](https://cocoapods.org/pods/MiniApp).
 4. CI creates ZIP and IPA files for the iOS Simulator and device (Production) builds of the Sample App.
     - Publishes build to App Center "Production" group.
-5. CI creates a pull request to merge `candidate` branch to `master` branch.
-6. CI merges the `master` branch into the `prod` branch.
+5. CI merges the `candidate` branch into the `prod` branch.
+6. CI creates a pull request to merge `candidate` branch to `master` branch.
 7. CI publishes documentation to [Github Pages site](https://rakutentech.github.io/ios-miniapp).
