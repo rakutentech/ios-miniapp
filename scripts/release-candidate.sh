@@ -105,8 +105,9 @@ then
   fi
 fi
 
-echo "Committing candidate version number changes"
-git commit -a -m "v$VERSION candidate"
+echo "build: Update podspec to v$VERSION"
+git add MiniApp.podspec
+git commit -m "v$VERSION candidate"
 git push "$UPSTREAM" "$CANDIDATE_BRANCH":"$UPSTREAM_BRANCH" --force
 
 echo "pop stashing your WIP"
