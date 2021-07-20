@@ -2,7 +2,7 @@
 
 # Get SDK version as X.X (remove fix version)
 PACKAGE_VERSION=$(node -p "require('./package.json').version" | sed -e 's/\.[0-9]*$//')
-echo "version: $PACKAGE_VERSION"
+DATE=$(date +%Y-%m-%d)
 
 DIR_DOCS="publishableDocs/docs/$PACKAGE_VERSION"
 DIR_VERSIONS="publishableDocs/_versions/$PACKAGE_VERSION"
@@ -13,8 +13,13 @@ FILE_VERSION_MD="$DIR_VERSIONS/${PACKAGE_VERSION}.md"
 mkdir -p "${FILE_VERSION_MD%/*}" && touch "$FILE_VERSION_MD"
 contents="---
 version: \"$PACKAGE_VERSION\"
+date: $DATE
 ---"
 cat <<< "$contents" > "$FILE_VERSION_MD"
+
+echo "Created version file: $FILE_VERSION_MD
+$contents
+"
 
 # Generate docs
 npx typedoc --out $DIR_DOCS/api src --options typedoc.json
