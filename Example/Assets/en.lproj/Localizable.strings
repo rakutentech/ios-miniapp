@@ -14,6 +14,7 @@
 "deeplink.ui.miniapp.error.desc"                        = "You can generate a valid QR code on Mini App Platform. See our Help Center for more details.";
 "deeplink.ui.miniapp.permissionerror.desc"              = "The Host App does not have permission to a Mini App with this ID. See our Help Center for more details.";
 "deeplink.ui.qr.error.desc"                             = "You can generate a new one on Mini App Platform. See our Help Center for more details.";
+"deeplink.ui.version.cannotBePreviewed.error.desc"      = "Please check with the project administrator. See our Help Center for more details.";
 "deeplink.ui.version.notvalid.error.desc"               = "Please check with the project administrator. See our Help Center for more details.";
 
 "deeplink.ui.miniapp.error.help.center"                 = "Help Center";
