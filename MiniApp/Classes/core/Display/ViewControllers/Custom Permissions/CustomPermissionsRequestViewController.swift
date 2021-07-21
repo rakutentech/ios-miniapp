@@ -48,14 +48,9 @@ class CustomPermissionsRequestViewController: UIViewController {
                 permissionModel?.isPermissionGranted = .denied
             }
         }
-        let allPermissionsDenied = permissionsRequestList?.allSatisfy {
+        return permissionsRequestList?.allSatisfy {
             $0.isPermissionGranted == MiniAppCustomPermissionGrantedStatus.denied
             } ?? false
-        if allPermissionsDenied {
-            return true
-        } else {
-            return false
-        }
     }
 
     func addFooterInfo() {
