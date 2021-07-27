@@ -122,6 +122,9 @@ internal class RealMiniAppView: UIView {
             webViewBottomConstraintStandalone?.isActive = false
         }
         MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
+        _ = webView.observe(\.url, options: .new) { webview, change in
+            print("URL: \(String(describing: change.newValue))")
+        }
     }
 
     func refreshNavBar() {
@@ -159,6 +162,7 @@ internal class RealMiniAppView: UIView {
             }
         }
     }
+    
 
     deinit {
         MiniAppAnalytics.sendAnalytics(event: .close, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
@@ -228,6 +232,15 @@ extension RealMiniAppView: MiniAppCallbackDelegate {
 }
 
 extension RealMiniAppView: MiniAppNavigationBarDelegate {
+//    func canMiniAppNavigateTo(action: MiniAppNavigationAction) -> Bool {
+//        switch action {
+//        case .back:
+//            return self.webView.canGoBack
+//        case .forward:
+//            return self.webView.canGoForward
+//        }
+//    }
+
     func miniAppNavigationBar(didTriggerAction action: MiniAppNavigationAction) -> Bool {
         let canDo: Bool
         switch action {
