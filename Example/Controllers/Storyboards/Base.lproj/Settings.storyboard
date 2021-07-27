@@ -712,6 +712,9 @@
                                                     <rect key="frame" x="20" y="26" width="374" height="38"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <textInputTraits key="textInputTraits" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done" textContentType="tel"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="7ap-jg-cep" id="lWx-a2-iyA"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points (Cash)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bim-Ui-9JX">
                                                     <rect key="frame" x="20" y="7" width="93" height="18"/>
