@@ -20,29 +20,27 @@ class DisplayController: UIViewController {
         miniAppView.frame = view.bounds
         navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
         view.addSubview(miniAppView)
-        refreshNavigationBarButtons()
+        backButton.isEnabled = false
+        forwardButton.isEnabled = false
     }
 
     @IBAction func done(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
 
-    func refreshNavigationBarButtons() {
-//        backButton.isEnabled = self.navBarDelegate?.canMiniAppNavigateTo(action: .back) ?? false
-//        forwardButton.isEnabled = self.navBarDelegate?.canMiniAppNavigateTo(action: .forward) ?? false
+    func refreshNavigationBarButtons(backButtonEnabled: Bool, forwardButtonEnabled: Bool) {
+        backButton.isEnabled = backButtonEnabled
+        forwardButton.isEnabled = forwardButtonEnabled
     }
 
     @IBAction func navigate(_ sender: UIBarButtonItem) {
         switch sender {
         case backButton:
-            if !(self.navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back) ?? false) {
-                self.dismiss(animated: true, completion: nil)
-            }
+            self.navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back)
         case forwardButton:
             self.navBarDelegate?.miniAppNavigationBar(didTriggerAction: .forward)
         default:
             break
         }
-        refreshNavigationBarButtons()
     }
 }

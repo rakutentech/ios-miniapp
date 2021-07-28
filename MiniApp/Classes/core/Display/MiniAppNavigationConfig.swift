@@ -55,7 +55,7 @@ public protocol MiniAppNavigationDelegate: class {
     ///   - delegate: a`MiniAppNavigationBarDelegate` the can be used to call `MiniAppNavigationAction` on the Mini App view
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate)
 
-    func canMiniAppNavigateTo(action: MiniAppNavigationAction) -> Bool
+    func canMiniAppNavigateTo(back: Bool, forward: Bool)
 }
 
 public extension MiniAppNavigationDelegate {
@@ -74,6 +74,8 @@ public extension MiniAppNavigationDelegate {
     func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
     }
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
+    }
+    func canMiniAppNavigateTo(back: Bool, forward: Bool) {
     }
 }
 

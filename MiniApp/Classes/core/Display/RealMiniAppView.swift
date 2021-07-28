@@ -21,6 +21,7 @@ internal class RealMiniAppView: UIView {
     internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
     internal weak var currentDialogController: UIAlertController?
+    var urlObservation: NSKeyValueObservation?
 
     init(
         miniAppId: String,
@@ -122,9 +123,19 @@ internal class RealMiniAppView: UIView {
             webViewBottomConstraintStandalone?.isActive = false
         }
         MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
-        _ = webView.observe(\.url, options: .new) { webview, change in
-            print("URL: \(String(describing: change.newValue))")
-        }
+        observeWebView()
+    }
+
+    func observeWebView() {
+        urlObservation = webView.observe(\.url, changeHandler: { (webView, _) in
+            if webView.url?.absoluteString == self.getMiniAppBaseURL(miniAppId: self.miniAppId ?? "") {
+                self.navigationDelegate?.canMiniAppNavigateTo(back: false, forward: true)
+                return
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.navigationDelegate?.canMiniAppNavigateTo(back: webView.canGoBack, forward: webView.canGoForward)
+            }
+        })
     }
 
     func refreshNavBar() {
@@ -162,7 +173,10 @@ internal class RealMiniAppView: UIView {
             }
         }
     }
-    
+
+    private func getMiniAppBaseURL(miniAppId: String) -> String {
+        Constants.miniAppSchemePrefix + miniAppId + "://miniapp/" + Constants.rootFileName
+    }
 
     deinit {
         MiniAppAnalytics.sendAnalytics(event: .close, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
@@ -232,15 +246,6 @@ extension RealMiniAppView: MiniAppCallbackDelegate {
 }
 
 extension RealMiniAppView: MiniAppNavigationBarDelegate {
-//    func canMiniAppNavigateTo(action: MiniAppNavigationAction) -> Bool {
-//        switch action {
-//        case .back:
-//            return self.webView.canGoBack
-//        case .forward:
-//            return self.webView.canGoForward
-//        }
-//    }
-
     func miniAppNavigationBar(didTriggerAction action: MiniAppNavigationAction) -> Bool {
         let canDo: Bool
         switch action {
