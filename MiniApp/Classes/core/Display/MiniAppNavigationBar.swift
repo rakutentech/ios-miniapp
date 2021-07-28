@@ -40,7 +40,6 @@ internal class MiniAppNavigationBar: UIView {
 }
 
 extension MiniAppNavigationBar: MiniAppNavigationDelegate {
-
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
         self.delegate = delegate
     }

@@ -210,6 +210,7 @@ public class MiniAppViewController: UIViewController {
 
 // MARK: - MiniAppNavigationDelegate
 extension MiniAppViewController: MiniAppNavigationDelegate {
+
     /// will be used soon when knowing the cases to react to
     public func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
 //        MiniAppExternalWebViewController.presentModally(url: url, externalLinkResponseHandler: { url in

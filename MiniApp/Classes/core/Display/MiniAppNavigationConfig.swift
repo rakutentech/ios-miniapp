@@ -54,7 +54,11 @@ public protocol MiniAppNavigationDelegate: class {
     /// - Parameters:
     ///   - delegate: a`MiniAppNavigationBarDelegate` the can be used to call `MiniAppNavigationAction` on the Mini App view
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate)
-
+    
+    /// This delegate is called whenever any page is routed and it tells whether the webview canGoBack or canGoForward
+    /// - Parameters:
+    ///   - back: True if WebView can go back
+    ///   - forward: True if WebView can go forward
     func canMiniAppNavigateTo(back: Bool, forward: Bool)
 }
 
