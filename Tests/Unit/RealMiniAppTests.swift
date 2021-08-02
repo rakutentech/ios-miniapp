@@ -246,6 +246,50 @@ class RealMiniAppTests: QuickSpec {
                 }
             }
 
+            context("when createMiniApp is called with appInfo helper") {
+                it("will return valid Mini App View instance with a default hostAppMessageDelegate and getUniqueId() will return an error message") {
+                    let responseString = """
+                    [{
+                        "id": "\(mockMiniAppInfo.id)",
+                        "displayName": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "ver-id-test"
+                        }
+                      }]
+                    """
+                    let manifestResponse = """
+                      {
+                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                      }
+                    """
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
+                    mockAPIClient.metaData = mockMetaDataString.data(using: .utf8)
+                    waitUntil { done in
+                        realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                            switch result {
+                            case .success(let responseData):
+                                expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
+                                if let rmap = responseData as? RealMiniAppView {
+                                    expect(rmap.hostAppMessageDelegate).notTo(beNil())
+                                    let uniqueID = rmap.hostAppMessageDelegate?.getUniqueId()
+                                    expect(uniqueID).to(beNil())
+                                } else {
+                                    fail("create RealMiniAppView failure")
+                                }
+                                done()
+                            case .failure:
+                                fail("create MiniApp failure")
+                            }
+                        })
+                    }
+                }
+            }
+
             context("when createMiniApp is called with valid Mini App id and real mini app validates with platform for the latest version and if the versions are same") {
                 it("will download mini app with the mini app info that is passed on") {
                     let responseString = """

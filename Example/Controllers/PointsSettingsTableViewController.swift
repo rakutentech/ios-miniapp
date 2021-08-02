@@ -50,4 +50,14 @@ class PointsSettingsViewController: UITableViewController {
             print("user point failed to save")
         }
     }
+
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let textFieldText = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
+        if textFieldText.isEmpty {
+            return true
+        } else if let integerValue = Int(textFieldText), integerValue <= INT_MAX {
+            return true
+        }
+        return false
+    }
 }

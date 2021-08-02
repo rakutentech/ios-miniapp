@@ -10,6 +10,15 @@ set -ex
 # APPLE_ENTERPRISE_P12
 # APPLE_ENTERPRISE_PROVISION
 
+WORK_DIR=$(pwd)
+TMP_DIR=$WORK_DIR/tmp
+
+mkdir -p "$TMP_DIR"
+
+echo "Retrieving changelog"
+VERSION=$(grep -o -m 1 -E "([0-9]{1,}\.)+([0-9]{1,}\.)+[0-9]{1,}" CHANGELOG.md)
+awk -v version="$VERSION" '/### / {printit = $2 == version}; printit;' CHANGELOG.md > "$TMP_DIR"/CHANGELOG.md
+
 echo "Installing App Center CLI."
 npm install -g appcenter-cli
 
@@ -25,6 +34,7 @@ echo "Deploying Simulator App build to $APP_CENTER_GROUP group on App Center."
 appcenter distribute release \
 --token "$APP_CENTER_TOKEN" \
 --app "$APP_CENTER_APP_NAME" \
+--release-notes-file "$TMP_DIR"/CHANGELOG.md \
 --group "$APP_CENTER_GROUP" \
 --build-version "$APP_CENTER_BUILD_VERSION" \
 --file ./artifacts/miniapp.app.zip \
@@ -43,8 +53,6 @@ appcenter crashes upload-symbols \
 KEYCHAIN=miniapp-signing.keychain-db
 PROVISION=miniapp.mobileprovision
 P12=miniapp.p12
-WORK_DIR=$(pwd)
-TMP_DIR=$WORK_DIR/tmp
 PROFILES_DIR=~/Library/MobileDevice/Provisioning\ Profiles
 DSYM_FILE=$TMP_DIR/dsym.zip
 EXPORT_PLIST=$TMP_DIR/miniapp.plist
@@ -70,7 +78,6 @@ UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< "$(/usr/bin/securi
 CODE_SIGN_IDENTITY=$(security find-identity -v -p codesigning | grep  -o '"[^"]\+"' | head -1 | tr -d '"')
 
 echo "Creating the options plist used to sign IPA"
-mkdir -p "$TMP_DIR"
 PLIST="{\"compileBitcode\":false,\"method\":\"enterprise\",\"provisioningProfiles\":{\"com.rakuten.tech.mobile.miniapp.MiniAppDemo\":\"$UUID\"}}"
 echo "$PLIST" | plutil -convert xml1 -o $EXPORT_PLIST -
 
@@ -105,6 +112,7 @@ appcenter distribute release \
 --app "$APP_CENTER_APP_NAME_DEVICE" \
 --group "$APP_CENTER_GROUP" \
 --build-version "$APP_CENTER_BUILD_VERSION" \
+--release-notes-file "$TMP_DIR"/CHANGELOG.md \
 --file "$TMP_DIR"/MiniApp_Example.ipa \
 --quiet
 

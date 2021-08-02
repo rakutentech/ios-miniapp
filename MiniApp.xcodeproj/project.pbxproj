@@ -14,6 +14,10 @@
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
 		2A54C85C26676377002B204F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C85B26676377002B204F /* UITextField.swift */; };
+		2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */; };
+		2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */; };
+		2AB1B0E926A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */; };
+		2AB1B0F026A6DB77004CAC1B /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */; };
 		317FED2525E5EB4300774919 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317FED2725E5EB4300774919 /* Settings.storyboard */; };
 		317FFF21267095040066E455 /* QASettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317FFF20267095040066E455 /* QASettingsTableViewController.swift */; };
 		31850BC1269837F300CFE422 /* UIColor+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31850BC0269837F300CFE422 /* UIColor+MiniApp.swift */; };
@@ -107,6 +111,10 @@
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
 		2A54C85B26676377002B204F /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKLocaleTests.swift; sourceTree = "<group>"; };
+		2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalWebViewControllerTests.swift; sourceTree = "<group>"; };
+		2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPermissionsViewControllerTests.swift; sourceTree = "<group>"; };
+		2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
 		31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "MiniApp-Secrets.xcconfig"; path = "../../../MiniApp-Secrets.xcconfig"; sourceTree = "<group>"; };
 		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
 		31070C63258C554500BED77C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
@@ -242,6 +250,31 @@
 			path = Example/Config;
 			sourceTree = "<group>";
 		};
+		2AB1B0D126A6D625004CAC1B /* core */ = {
+			isa = PBXGroup;
+			children = (
+				2AB1B0D826A6D79E004CAC1B /* Display */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		2AB1B0D826A6D79E004CAC1B /* Display */ = {
+			isa = PBXGroup;
+			children = (
+				2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */,
+				2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */,
+			);
+			path = Display;
+			sourceTree = "<group>";
+		};
+		2AB1B0EE26A6DB62004CAC1B /* UIModule */ = {
+			isa = PBXGroup;
+			children = (
+				2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */,
+			);
+			path = UIModule;
+			sourceTree = "<group>";
+		};
 		31070C65258C557D00BED77C /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +394,8 @@
 		389FA22E23D01A3900BC3120 /* Unit */ = {
 			isa = PBXGroup;
 			children = (
+				2AB1B0EE26A6DB62004CAC1B /* UIModule */,
+				2AB1B0D126A6D625004CAC1B /* core */,
 				389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */,
 				38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */,
 				38AC730926234835000B9D0E /* MetaDataDownloaderTests.swift */,
@@ -395,6 +430,7 @@
 				D07452302567B72A00B6E842 /* MASDKErrorTests.swift */,
 				387AD4702590F0130025033F /* MessageInterfaceExtensionTests.swift */,
 				75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */,
+				2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -680,6 +716,7 @@
 				38F3B7F024192E7300914E37 /* UrlParserTests.swift in Sources */,
 				183AF08324CFCF37000ABCBF /* MiniAppStorageTests.swift in Sources */,
 				38F07E0C2535CC3600E32B32 /* MiniAppExternalUrlLoaderTests.swift in Sources */,
+				2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */,
 				389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */,
 				38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */,
 				382B95FF24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift in Sources */,
@@ -687,6 +724,7 @@
 				38696B5225D27EF400CEC998 /* MetaDataAPITests.swift in Sources */,
 				382B960124F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift in Sources */,
 				3899C2C0242331900087A619 /* URLSchemeHandlerTests.swift in Sources */,
+				2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */,
 				3850AE722434E02D0046978C /* RealMiniAppTests.swift in Sources */,
 				38AC730A26234835000B9D0E /* MetaDataDownloaderTests.swift in Sources */,
 				38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */,
@@ -696,6 +734,7 @@
 				189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */,
 				D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */,
 				3879499824FCFB0900DB099B /* MiniAppKeyChainTests.swift in Sources */,
+				2AB1B0E926A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift in Sources */,
 				38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */,
 				385C25CA23F2E8BA00D61206 /* DisplayerTests.swift in Sources */,
 				385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */,
@@ -705,6 +744,7 @@
 				387AD4712590F0130025033F /* MessageInterfaceExtensionTests.swift in Sources */,
 				38A2E93A24A2E3E600E58233 /* MimeTypesTests.swift in Sources */,
 				3862EFB523EAF6B8004D518C /* MiniApp+NSErrorTests.swift in Sources */,
+				2AB1B0F026A6DB77004CAC1B /* AdMobDisplayerTests.swift in Sources */,
 				183E680E2499D49A00BAADB2 /* MiniAppLoggerTests.swift in Sources */,
 				3862EFB123EABC15004D518C /* MiniAppDownloaderTests.swift in Sources */,
 				3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */,
@@ -875,9 +915,9 @@
 			baseConfigurationReference = 183AF07C24CE642F000ABCBF /* Config-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -892,9 +932,9 @@
 			baseConfigurationReference = 183AF07824CE640F000ABCBF /* Config-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
