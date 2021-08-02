@@ -318,6 +318,7 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         mockMessageInterface.sendMessageToMultipleContacts(message, completionHandler: completionHandler)
     }
 }
+
 class MockMessageInterface: MiniAppMessageDelegate {
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
@@ -409,6 +410,10 @@ class MockMessageInterface: MiniAppMessageDelegate {
             return completionHandler(.failure(.error(description: "Unable to return Access Token")))
         }
         return completionHandler(.success(MATokenInfo(accessToken: accessToken, expirationDate: Date(), scopes: scopes)))
+    }
+
+    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
+        completionHandler(.success(MAPoints(standard: 10, term: 10, cash: 10)))
     }
 }
 
