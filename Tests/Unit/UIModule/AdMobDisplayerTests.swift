@@ -4,6 +4,7 @@ import GoogleMobileAds
 
 @testable import MiniApp
 
+// swiftlint:disable function_body_length
 class AdMobDisplayerTests: QuickSpec {
 #if RMA_SDK_ADMOB
     override func spec() {
