@@ -248,7 +248,7 @@ extension ViewController: MiniAppMessageDelegate {
 Mini App SDK gives you the possibility to display ads triggered by your Mini App from your host app.
 There are 2 ways to achieve this: 
 - by implementing [MiniAppAdDisplayDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppAdDisplayDelegate.html) by yourself 
-- if you rely on Google ads to display your ads you can simply implement `pod MiniApp/Admob` into your pod dependencies (see [settings section](#setting-admob)).
+- if you rely on Google ads to display your ads you can simply implement `pod MiniApp/Admob` (Admob 7.+) or `pod MiniApp/Admob8` (Admob 8.+) into your pod dependencies (see [settings section](#setting-admob)).
 ###### Google ads displayer
 
 When you chose to implement Google Ads support for your Mini Apps (see [configuration section](#setting-admob)), you must provide an [`AdMobDisplayer`](https://rakutentech.github.io/ios-miniapp/Classes/AdMobDisplayer.html) as adsDelegate parameter when creating your Mini App display:
