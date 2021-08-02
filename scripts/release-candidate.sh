@@ -55,8 +55,8 @@ WORK_BRANCH=$(git branch --show-current)
 if [ $NO_PROMPT == 0 ]
 then
   while true; do
-      echo "Before validating check every features and bug fixes are present on upstream master branch"
-      read -r -p "Is the next release v$VERSION version number correct? [Y/n] " yn
+      echo -e "\nBefore validating check every features and bug fixes are present on upstream master branch"
+      read -r -p "Is the next release v$VERSION version number correct? [Y/n]: " yn
       case $yn in
           [Yy]* ) break;;
           [Nn]* ) read -r -p "Please input the version number again (ex: for v3.5.0 please input 3.5.0): " VERSION;;
@@ -73,12 +73,12 @@ git checkout "$CANDIDATE_BRANCH"
 echo "Retrieving current version number..."
 CURRENT_VERSION=$(grep -o -m 1 -E "([0-9]{1,}\.)+([0-9]{1,}\.)+[0-9]{1,}" MiniApp.podspec)
 SEARCH_STRING=$(grep "s.version   " MiniApp.podspec)
-echo "MiniApp.podspec mentions this at version line: $SEARCH_STRING"
+echo -e "\nMiniApp.podspec mentions this at version line: $SEARCH_STRING"
 
 if [ $NO_PROMPT == 0 ]
 then
   while true; do
-      read -r -p "Is v$CURRENT_VERSION the current version to upgrade. Input n to change it. [Y/n] " answer
+      read -r -p "Is v$CURRENT_VERSION the current version to upgrade. Input n to change it. [Y/n]: " answer
       case $answer in
           [Yy]* ) break;;
           [Nn]* ) read -r -p "Please input the s.version value currently in MiniApp.podspec (ex: for v3.5.0 please input 3.5.0): " CURRENT_VERSION;;
@@ -92,17 +92,17 @@ REPLACE_STRING="  s.version      = '$VERSION'"
 echo "Updating MiniApp.podspec file s.version variable with v$VERSION version number"
 sed -i "" -e "s/$SEARCH_STRING/$REPLACE_STRING/" MiniApp.podspec
 
-echo "Changelog:"
+echo -e "\nChangelog:"
 awk -v version="$VERSION" '/### / {printit = $2 == version}; printit;' CHANGELOG.md
 
 if [ $NO_PROMPT == 0 ]
 then
   read -r -p "Is CHANGELOG.md up to date? Input Y after you think it is, or N to abort release[Y/n]: " answer
-
-  if [ "$answer" != "" ] && [ "$answer" == "${answer#[Nn]}" ] ;then
+  case $answer in
+    [nN])
       echo "Can't continue execution. Proceed manually"
       exit 1
-  fi
+  esac
 fi
 
 echo "build: Update podspec to v$VERSION"
