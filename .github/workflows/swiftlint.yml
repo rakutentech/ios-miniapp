@@ -11,4 +11,4 @@ jobs:
     - name: Repository checkout
       uses: actions/checkout@v2
     - name: Run SwiftLint
-      run: swiftlint
+      run: swiftlint --strict
