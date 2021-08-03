@@ -262,6 +262,8 @@
 				2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */,
 			);
 			path = Deeplink;
+			sourceTree = "<group>";
+		};
 		2AB1B0D126A6D625004CAC1B /* core */ = {
 			isa = PBXGroup;
 			children = (
