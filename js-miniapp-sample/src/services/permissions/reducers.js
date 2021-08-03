@@ -11,11 +11,13 @@ const grantedPermissionsReducer = (
 ): CustomPermissionName[] => {
   switch (action.type) {
     case REQUEST_PERMISSIONS_SUCCESS:
-      return action.permissions
+      const array = action.permissions
         .filter(
           (permission) => permission.status === CustomPermissionStatus.ALLOWED
         )
-        .map((permission) => permission.name);
+        .map((permission) => permission.name)
+        .concat(state);
+      return Array.from(new Set(array))
     default:
       return state;
   }

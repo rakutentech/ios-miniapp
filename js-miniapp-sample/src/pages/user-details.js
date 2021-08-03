@@ -190,7 +190,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
       return {
         ...initialState,
         isPointsLoading: false,
-        isError: true,
+        isPointsError: true,
       };
 
     default:
@@ -417,7 +417,7 @@ function UserDetails(props: UserDetailsProps) {
           disabled={true}
           className={classes.formInput}
           id="input-points-standard"
-          error={state.isError || hasDeniedPermission}
+          error={state.isPointsError || hasDeniedPermission}
           label={'Points (Standard)'}
           value={
             hasDeniedPermission
@@ -433,7 +433,7 @@ function UserDetails(props: UserDetailsProps) {
           disabled={true}
           className={classes.formInput}
           id="input-points-term"
-          error={state.isError || hasDeniedPermission}
+          error={state.isPointsError || hasDeniedPermission}
           label={'Points (Time-Limited)'}
           value={
             hasDeniedPermission
@@ -448,7 +448,7 @@ function UserDetails(props: UserDetailsProps) {
           disabled={true}
           className={classes.formInput}
           id="input-points-cash"
-          error={state.isError || hasDeniedPermission}
+          error={state.isPointsError || hasDeniedPermission}
           label={'Points (Rakuten Cash)'}
           value={
             hasDeniedPermission
