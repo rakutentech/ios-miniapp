@@ -14,13 +14,13 @@
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
 		2A54C85C26676377002B204F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C85B26676377002B204F /* UITextField.swift */; };
-		2AE218D3269C9E6100F9D1E7 /* Deeplink.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */; };
-		2AE218D7269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */; };
-		2AE218F0269D46DA00F9D1E7 /* UITextView+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */; };
 		2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */; };
 		2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */; };
 		2AB1B0E926A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */; };
 		2AB1B0F026A6DB77004CAC1B /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */; };
+		2AE218D3269C9E6100F9D1E7 /* Deeplink.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */; };
+		2AE218D7269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */; };
+		2AE218F0269D46DA00F9D1E7 /* UITextView+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */; };
 		317FED2525E5EB4300774919 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317FED2725E5EB4300774919 /* Settings.storyboard */; };
 		317FFF21267095040066E455 /* QASettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317FFF20267095040066E455 /* QASettingsTableViewController.swift */; };
 		31850BC1269837F300CFE422 /* UIColor+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31850BC0269837F300CFE422 /* UIColor+MiniApp.swift */; };
@@ -114,13 +114,13 @@
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
 		2A54C85B26676377002B204F /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
-		2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Deeplink.storyboard; sourceTree = "<group>"; };
-		2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkErrorViewController.swift; sourceTree = "<group>"; };
-		2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+MiniApp.swift"; sourceTree = "<group>"; };
 		2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKLocaleTests.swift; sourceTree = "<group>"; };
 		2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalWebViewControllerTests.swift; sourceTree = "<group>"; };
 		2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPermissionsViewControllerTests.swift; sourceTree = "<group>"; };
 		2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
+		2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Deeplink.storyboard; sourceTree = "<group>"; };
+		2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkErrorViewController.swift; sourceTree = "<group>"; };
+		2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+MiniApp.swift"; sourceTree = "<group>"; };
 		31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "MiniApp-Secrets.xcconfig"; path = "../../../MiniApp-Secrets.xcconfig"; sourceTree = "<group>"; };
 		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
 		31070C63258C554500BED77C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
@@ -256,14 +256,6 @@
 			path = Example/Config;
 			sourceTree = "<group>";
 		};
-		2AE218EC269D2AAC00F9D1E7 /* Deeplink */ = {
-			isa = PBXGroup;
-			children = (
-				2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */,
-			);
-			path = Deeplink;
-			sourceTree = "<group>";
-		};
 		2AB1B0D126A6D625004CAC1B /* core */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,6 +279,14 @@
 				2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */,
 			);
 			path = UIModule;
+			sourceTree = "<group>";
+		};
+		2AE218EC269D2AAC00F9D1E7 /* Deeplink */ = {
+			isa = PBXGroup;
+			children = (
+				2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */,
+			);
+			path = Deeplink;
 			sourceTree = "<group>";
 		};
 		31070C65258C557D00BED77C /* Documentation */ = {
