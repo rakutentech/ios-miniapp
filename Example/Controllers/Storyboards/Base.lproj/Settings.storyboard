@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IMi-vO-mPy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IMi-vO-mPy">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -642,10 +642,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="67"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter points here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZIy-Wm-MAq">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter points here" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZIy-Wm-MAq">
                                                     <rect key="frame" x="20" y="26" width="374" height="38"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" returnKeyType="done" textContentType="name"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done" textContentType="name"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="7ap-jg-cep" id="FsN-kV-xnd"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points (Standard)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SYe-sk-a6j">
                                                     <rect key="frame" x="20" y="7" width="120" height="18"/>
@@ -672,10 +675,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="67"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter points here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ulg-i3-soT">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter points here" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ulg-i3-soT">
                                                     <rect key="frame" x="20" y="26" width="374" height="38"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done" textContentType="name"/>
+                                                    <textInputTraits key="textInputTraits" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done" textContentType="name"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="7ap-jg-cep" id="KUg-id-Pgw"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points (Term)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GoR-oN-Lsm">
                                                     <rect key="frame" x="20" y="7" width="92" height="18"/>
@@ -702,10 +708,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="67"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter points here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sQg-ft-hBG">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter points here" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sQg-ft-hBG">
                                                     <rect key="frame" x="20" y="26" width="374" height="38"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done" textContentType="name"/>
+                                                    <textInputTraits key="textInputTraits" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done" textContentType="tel"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="7ap-jg-cep" id="lWx-a2-iyA"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points (Cash)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bim-Ui-9JX">
                                                     <rect key="frame" x="20" y="7" width="93" height="18"/>
@@ -1162,7 +1171,6 @@
     <resources>
         <image name="Rakuten" width="120" height="120"/>
         <image name="Security" width="229.5" height="229.5"/>
-        <image name="Security" width="128" height="128"/>
         <image name="Settings" width="24" height="24"/>
         <image name="Switch" width="512" height="512"/>
         <image name="UserContacts" width="512" height="512"/>
@@ -1170,9 +1178,6 @@
         <image name="p.circle" catalog="system" width="128" height="121"/>
         <image name="profile" width="45.532001495361328" height="45.532001495361328"/>
         <image name="questionmark" width="512" height="512"/>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

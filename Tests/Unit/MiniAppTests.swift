@@ -128,6 +128,20 @@ class MiniAppTests: QuickSpec {
                     expect(testError?.localizedDescription).toEventuallyNot(beNil(), timeout: .seconds(5))
                 }
             }
+            context("when createMiniapp is called with invalid miniapp Info") {
+                it("will return invalidAppId error") {
+                    var testError: Error?
+                    let mockMessageInterface = MockMessageInterface()
+                    MiniApp.shared().create(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        switch result {
+                        case .success: break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    }, messageInterface: mockMessageInterface, adsDisplayer: nil)
+                    expect(testError?.localizedDescription).toEventuallyNot(beNil(), timeout: .seconds(5))
+                }
+            }
         }
     }
 }
