@@ -59,7 +59,7 @@ public protocol MiniAppNavigationDelegate: class {
     /// - Parameters:
     ///   - back: True if WebView can go back
     ///   - forward: True if WebView can go forward
-    func canMiniAppNavigateTo(back: Bool, forward: Bool)
+    func miniAppNavigationCanGo(back: Bool, forward: Bool)
 }
 
 public extension MiniAppNavigationDelegate {
