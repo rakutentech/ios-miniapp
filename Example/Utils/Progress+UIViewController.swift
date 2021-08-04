@@ -23,8 +23,11 @@ extension UIViewController: UITextFieldDelegate {
 
     func dismissProgressIndicator(completion: (() -> Void)? = nil) {
         DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+            if self.presentedViewController as? UIAlertController != nil {
                 self.dismiss(animated: true, completion: completion)
-            })
+            }
+            completion?()
+        })
     }
 
     func displayAlert(title: String, message: String, dismissController: Bool, autoDismiss: Bool? = true, okHandler: ((UIAlertAction) -> Void)? = nil) {

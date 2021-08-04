@@ -99,19 +99,19 @@ extension ViewController: MiniAppNavigationDelegate {
     }
 
     func checkSDKErrorAndDisplay(error: MASDKError) {
-            var errorMessage: String = ""
-            switch error {
-            case .metaDataFailure:
-                guard let miniAppInfo = currentMiniAppInfo else {
-                    errorMessage =  String(format: MASDKLocale.localize("miniapp.sdk.ios.error.message.metadata"), MASDKLocale.localize(.downloadFailed))
-                    return
+        switch error {
+        case .metaDataFailure:
+            guard let miniAppInfo = currentMiniAppInfo else {
+                return self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
+                                         message: String(format: MASDKLocale.localize("miniapp.sdk.ios.error.message.metadata"), MASDKLocale.localize(.downloadFailed)), dismissController: true) { _ in
+                    self.fetchAppList(inBackground: true)
                 }
-                self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)
-            default:
-                errorMessage = MASDKLocale.localize(.downloadFailed)
             }
-            self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: errorMessage, dismissController: true) { _ in
+            self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)
+        default:
+            self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize(.downloadFailed), dismissController: true) { _ in
                 self.fetchAppList(inBackground: true)
             }
         }
+    }
 }

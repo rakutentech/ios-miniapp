@@ -92,6 +92,13 @@ extension NSError {
                 code: code,
                 message: message)
     }
+
+    func isDeviceOfflineError() -> Bool {
+        if self.domain == MASDKErrorDomain, let maSDKError = self as? MASDKError {
+            return maSDKError.isDeviceOfflineDownloadError()
+        }
+        return offlineErrorCodeList.contains(self.code)
+    }
 }
 // swiftlint:disable identifier_name
 var MiniAppSDKErrorDomain = "MiniAppSDKErrorDomain"
