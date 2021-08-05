@@ -37,9 +37,13 @@ internal struct MiniAppVersion {
 
         guard let fixNumber = Int(version[2]), version.count > 3 else {
             let hotfixExtractionAttempt = version[2].components(separatedBy: CharacterSet(charactersIn: "- "))
-            if hotfixExtractionAttempt.count > 1 {
+            if hotfixExtractionAttempt.count > 0 {
                 hotfix = Int(hotfixExtractionAttempt[0])
-                environment = version[2].replacingOccurrences(of: hotfixExtractionAttempt[0], with: "")
+                if hotfixExtractionAttempt.count > 1 {
+                    environment = version[2].replacingOccurrences(of: hotfixExtractionAttempt[0], with: "")
+                } else {
+                    environment = nil
+                }
             } else {
                 hotfix = nil
                 environment = nil

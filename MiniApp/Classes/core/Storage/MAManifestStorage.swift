@@ -4,7 +4,7 @@ import CommonCrypto
 internal class MAManifestStorage {
     typealias KeysDictionary = [String: Int]
     let keychainStore = MiniAppKeyChain(serviceName: .miniAppManifest)
-    let fileName = "manifest.json"
+    static let fileName = "manifest.json"
 
     func prepareMiniAppManifest(metaDataResponse: MetaDataCustomPermissionModel, versionId: String) -> MiniAppManifest {
         MiniAppManifest(requiredPermissions: getCustomPermissionModel(metaDataCustomPermissionResponse: metaDataResponse.reqPermissions),
@@ -44,7 +44,7 @@ internal class MAManifestStorage {
     /// Remove Key from the KeyChain
     /// - Parameter keyId: Mini app ID
     internal func removeKey(forMiniApp appId: String) {
-        FileManager.default.remove(fileName, from: FileManager.getMiniAppDirectory(with: appId))
+        FileManager.default.remove(Self.fileName, from: FileManager.getMiniAppDirectory(with: appId))
         removeManifestHash(for: appId)
     }
 
@@ -55,23 +55,9 @@ internal class MAManifestStorage {
 
 // MARK: - ManifestStorage file storage
 extension MAManifestStorage {
-    private func documentDirectory() -> String {
-        let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                .userDomainMask,
-                true)
-        return documentDirectory[0]
-    }
-
-    private func append(toPath path: URL,
-                        withPathComponent pathComponent: String) -> String? {
-        var pathURL = path
-        pathURL.appendPathComponent(pathComponent)
-        return pathURL.absoluteString
-    }
-
     private func read(appId: String) -> MiniAppManifest? {
-        if let manifest = FileManager.default.retrieve(fileName, from: FileManager.getMiniAppDirectory(with: appId), as: MiniAppManifest.self) {
-            MiniAppLogger.d("Manifest \(manifest.hashValue) retrieved", "📂 [MANIFEST]")
+        if let manifest = FileManager.default.retrieve(Self.fileName, from: FileManager.getMiniAppDirectory(with: appId), as: MiniAppManifest.self) {
+            MiniAppLogger.d("Manifest \(manifest.versionId ?? "without version ID") retrieved", "📂 [MANIFEST]")
             return manifest
         }
         return nil
@@ -87,11 +73,11 @@ extension MAManifestStorage {
                 return
             }
         }
-        if FileManager.default.store(miniAppManifest, to: directory.path, as: fileName) {
+        if FileManager.default.store(miniAppManifest, to: directory.path, as: Self.fileName) {
             saveManifestHash(forMiniApp: appId, manifest: miniAppManifest)
-            MiniAppLogger.d("Save successful for \(directory.appendingPathComponent(fileName).path)", "📂 [MANIFEST]")
+            MiniAppLogger.d("Save successful for \(directory.appendingPathComponent(Self.fileName).path)", "📂 [MANIFEST]")
         } else {
-            MiniAppLogger.d("Save failed for \(directory.appendingPathComponent(fileName).path)", "📂 [MANIFEST]")
+            MiniAppLogger.d("Save failed for \(directory.appendingPathComponent(Self.fileName).path)", "📂 [MANIFEST]")
         }
 
     }
@@ -104,7 +90,7 @@ extension MAManifestStorage {
             return
         }
         var keys = retrieveAllManifestHashes()
-        keys[appId] = manifest.hashValue
+        keys[appId] = manifest.permissionsHash
         MiniAppLogger.d("Saving keys[\(appId)] == \(keys[appId] ?? 0)", "🔐 [MANIFEST]")
 
         keychainStore.setInfoInKeyChain(keys: keys)
@@ -116,8 +102,9 @@ extension MAManifestStorage {
               let manifestHash = allKeys[appId] else {
             return false
         }
-        MiniAppLogger.d("Checking hash \(manifestHash) == \(manifest.hashValue)", "🔐 [MANIFEST]")
-        return manifestHash == manifest.hashValue
+        let hash = manifest.permissionsHash
+        MiniAppLogger.d("Checking hash \(manifestHash) == \(hash)", "🔐 [MANIFEST]")
+        return manifestHash == hash
     }
 
     private func retrieveAllManifestHashes() -> KeysDictionary {

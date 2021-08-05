@@ -89,11 +89,11 @@ public struct MASDKAccessTokenScopes: Codable, Hashable, Comparable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(audience)
-        hasher.combine(scopes.sorted().joined())
+        scopes.sorted().forEach { scope in hasher.combine(scope) }
     }
 
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.audience == rhs.audience && rhs.scopes.sorted() == lhs.scopes.sorted()
+        lhs.hashValue == rhs.hashValue
     }
 
     public static func < (lhs: MASDKAccessTokenScopes, rhs: MASDKAccessTokenScopes) -> Bool {
@@ -135,7 +135,7 @@ public struct MASDKAccessTokenScopes: Codable, Hashable, Comparable {
 }
 
 /// Mini-app meta data information
-public struct MiniAppManifest: Codable, Hashable {
+public struct MiniAppManifest: Codable, Equatable {
 
     /// List of required permissions for a mini-app
     public let requiredPermissions: [MASDKCustomPermissionModel]?
@@ -147,6 +147,24 @@ public struct MiniAppManifest: Codable, Hashable {
     public let accessTokenPermissions: [MASDKAccessTokenScopes]?
     /// VersionId of the Mini-App
     public let versionId: String?
+
+    internal var permissionsHash: Int {
+        var hashString = ""
+        requiredPermissions?.sorted().forEach { permission in
+            hashString += permission.permissionName.title + (permission.permissionDescription ?? "")
+        }
+        optionalPermissions?.sorted().forEach { permission in
+            hashString += permission.permissionName.title + (permission.permissionDescription ?? "")
+        }
+        customMetaData?.sorted { tuple, tuple2 in  tuple.key > tuple2.key }.forEach { key, value in
+            hashString += key+value
+        }
+        accessTokenPermissions?.sorted().forEach { scope in
+            hashString += scope.audience
+            scope.scopes.forEach { scope in hashString += scope }
+        }
+        return hashString.djb2hash
+    }
 
     private enum CodingKeys: String, CodingKey {
         case requiredPermissions,
@@ -169,16 +187,7 @@ public struct MiniAppManifest: Codable, Hashable {
     }
 
     public static func == (lhs: MiniAppManifest, rhs: MiniAppManifest) -> Bool {
-        lhs.requiredPermissions?.sorted() == rhs.requiredPermissions?.sorted() &&
-            lhs.optionalPermissions?.sorted() == rhs.optionalPermissions?.sorted() &&
-            lhs.customMetaData == rhs.customMetaData
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(requiredPermissions?.sorted())
-        hasher.combine(optionalPermissions?.sorted())
-        hasher.combine(customMetaData)
-        hasher.combine(accessTokenPermissions?.sorted())
+        lhs.permissionsHash == rhs.permissionsHash
     }
 }
 
@@ -195,7 +204,7 @@ internal struct CachedMetaData: Codable, Equatable {
 
     static func == (lhs: CachedMetaData, rhs: CachedMetaData) -> Bool {
         lhs.hash == rhs.hash
-                && lhs.miniAppManifest.hashValue == rhs.miniAppManifest.hashValue
+                && lhs.miniAppManifest == rhs.miniAppManifest
                 && lhs.version == rhs.version
     }
 }

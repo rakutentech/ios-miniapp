@@ -271,7 +271,6 @@ internal class RealMiniApp {
             defaults?.set(currentVersion, forKey: MiniAppStatus.lastVersionKey)
             defaults?.synchronize()
         }
-        
     }
 
     /// Method to check if all the required permissions mentioned in the manifest.json is agreed by the user.

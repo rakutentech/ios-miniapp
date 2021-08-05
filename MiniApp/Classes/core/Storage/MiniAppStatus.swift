@@ -98,7 +98,7 @@ class MiniAppStatus {
     /// - Parameter downloadedMiniAppsList: List of mini app info that is downloaded
     /// - Returns:List of Mini app ID and respective stored custom permissions info
     @discardableResult func checkStoredPermissionList(downloadedMiniAppsList: [MiniAppInfo]?) -> [String: [MASDKCustomPermissionModel]] {
-        guard previousVersion != nil, let downloadedList = downloadedMiniAppsList, downloadedList.count > 0 else {
+        guard let downloadedList = downloadedMiniAppsList, downloadedList.count > 0 else {
             miniAppKeyStore.purgePermissions()
             return [:]
         }
