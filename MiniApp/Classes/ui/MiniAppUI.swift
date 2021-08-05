@@ -5,24 +5,31 @@ public struct MiniAppUIParams {
 
     var title: String
     var miniAppId: String
+    var miniAppVersion: String?
     var config: MiniAppSdkConfig?
     var messageInterface: MiniAppMessageDelegate
     var navigationInterface: MiniAppNavigationDelegate?
     var queryParams: String?
+    var adsDisplayer: MiniAppAdDisplayer?
 
     public init(
         title: String = "",
         miniAppId: String,
+        miniAppVersion: String?,
         config: MiniAppSdkConfig? = nil,
         messageInterface: MiniAppMessageDelegate,
         navigationInterface: MiniAppNavigationDelegate? = nil,
-        queryParams: String? = nil
+        queryParams: String? = nil,
+        adsDisplayer: MiniAppAdDisplayer? = nil
     ) {
         self.title = title
         self.miniAppId = miniAppId
+        self.miniAppVersion = miniAppVersion
         self.config = config
         self.messageInterface = messageInterface
+        self.navigationInterface = navigationInterface
         self.queryParams = queryParams
+        self.adsDisplayer = adsDisplayer
     }
 }
 
@@ -62,10 +69,12 @@ internal class RealMiniAppUI {
         let miniAppVC = MiniAppViewController(
             title: params.title,
             appId: params.miniAppId,
+            version: params.miniAppVersion,
             config: params.config,
             messageDelegate: params.messageInterface,
             navDelegate: params.navigationInterface,
-            queryParams: params.queryParams
+            queryParams: params.queryParams,
+            adsDisplayer: params.adsDisplayer
         )
         return miniAppVC
     }
