@@ -37,6 +37,7 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
+    var displayController: DisplayNavigationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +59,7 @@ class ViewController: UIViewController {
                 displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.miniapp"), dismissController: true)
                 return
             }
-
-            let displayController = segue.destination as? DisplayNavigationController
+            displayController = segue.destination as? DisplayNavigationController
             displayController?.miniAppInfo = currentMiniAppInfo
             displayController?.miniAppDisplay = miniAppDisplay
             currentMiniAppInfo = nil
