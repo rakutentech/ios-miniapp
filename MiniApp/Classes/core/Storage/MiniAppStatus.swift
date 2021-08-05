@@ -83,7 +83,10 @@ class MiniAppStatus {
         var returnList: MASDKDownloadedListPermissionsPair = []
         _ = downloadedMiniAppsList.map { (miniAppInfo: MiniAppInfo) in
             if let permMod = finalList[miniAppInfo.id] {
-                returnList.append((miniAppInfo, permMod))
+                /// This will make sure that we return the Mini Apps list that has atleast 1 permission.
+                if permMod.count != 0 {
+                    returnList.append((miniAppInfo, permMod))
+                }
             } else {
                 returnList.append((miniAppInfo, []))
             }

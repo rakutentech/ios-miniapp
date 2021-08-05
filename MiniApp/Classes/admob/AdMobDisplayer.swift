@@ -42,15 +42,15 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
     }
 
     func createNotLoadingReqError(adUnitId: String) -> String {
-        MiniAppLocalizable.localize(.adNotLoadedError, adUnitId)
+        String(format: MASDKLocale.localize(.adNotLoadedError), adUnitId)
     }
 
     func createLoadReqError(adUnitId: String) -> String {
-        MiniAppLocalizable.localize(.adLoadingError, adUnitId)
+        String(format: MASDKLocale.localize(.adLoadingError), adUnitId)
     }
 
     func createLoadTwiceError(adUnitId: String) -> String {
-        MiniAppLocalizable.localize(.adLoadedError, adUnitId)
+        String(format: MASDKLocale.localize(.adLoadedError), adUnitId)
     }
 
     public override func loadInterstitial(for adId: String, onLoaded: @escaping (Result<Void, Error>) -> Void) {
@@ -62,7 +62,7 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
             GADInterstitialAd.load(withAdUnitID: adId, request: request) { [weak self]  (interstitialAd, error) in
                 if let error = error {
                     self?.onInterstitialLoaded[adId]?(.failure(error))
-                    cleanInterstitial(adId)
+                    self?.cleanInterstitial(adId)
                 } else {
                     interstitialAd?.fullScreenContentDelegate = self
                     self?.interstitialAds[adId] = interstitialAd
@@ -81,7 +81,7 @@ public class AdMobDisplayer: MiniAppAdDisplayer {
                     request: request, completionHandler: { [weak self] (rewardedAd, error) in
                 if let err = error {
                     onLoaded(.failure(err))
-                    cleanReward(adId)
+                    self?.cleanReward(adId)
                 } else {
                     rewardedAd?.fullScreenContentDelegate = self
                     self?.rewardedAds[adId] = rewardedAd

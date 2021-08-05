@@ -37,6 +37,7 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
+    var displayController: DisplayNavigationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +59,7 @@ class ViewController: UIViewController {
                 displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.miniapp"), dismissController: true)
                 return
             }
-
-            let displayController = segue.destination as? DisplayNavigationController
+            displayController = segue.destination as? DisplayNavigationController
             displayController?.miniAppInfo = currentMiniAppInfo
             displayController?.miniAppDisplay = miniAppDisplay
             currentMiniAppInfo = nil
@@ -118,13 +118,8 @@ class ViewController: UIViewController {
     }
 
     func checkIfManifestChanged(latestManifest: MiniAppManifest, oldManifest: MiniAppManifest, miniAppInfo: MiniAppInfo) {
-        let cachedPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo.id)
-        let cachedAllowedPermissions = cachedPermissions.filter { $0.isPermissionGranted.boolValue == true }
-
-        let requiredPermissions = filterPermissions(permsArray: latestManifest.requiredPermissions ?? [],
-                                                    cachedPermissions: cachedAllowedPermissions)
-        if oldManifest == latestManifest && requiredPermissions.count == 0 {
-            displayMiniApp(miniAppInfo: miniAppInfo)
+        if oldManifest == latestManifest {
+            self.displayMiniApp(miniAppInfo: miniAppInfo)
         } else {
                 displayFirstTimeLaunchScreen(
                         manifest: latestManifest,

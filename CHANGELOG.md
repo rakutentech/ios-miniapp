@@ -1,12 +1,13 @@
 ## CHANGELOG
 
-### 3.5.0 (2021-07-22)
+### 3.5.0 (2021-08-05)
 
 **SDK**
 
 - **Feature:** Mini App SDK now supports an optional banner text in message to send to contacts received from MiniApp
 - **Feature:** Added Points Interface `getPoints` to retrieve Rakuten Points
 - **Feature:** Added `rakuten.miniapp.user.POINTS` custom permission
+- **Feature:** Added support for Admob v8.+ in submodule `MiniApp/Admob8`
 
 **Sample app**
 

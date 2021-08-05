@@ -1,6 +1,11 @@
 import MiniApp
 
 extension ViewController: MiniAppNavigationDelegate {
+    func canMiniAppNavigateTo(back: Bool, forward: Bool) {
+        let testing = displayController?.topViewController as? DisplayController
+        testing?.refreshNavigationBarButtons(backButtonEnabled: back, forwardButtonEnabled: forward)
+    }
+
     func fetchAppList(inBackground: Bool) {
         showProgressIndicator(silently: inBackground) {
             MiniApp.shared(with: Config.current(), navigationSettings: Config.getNavConfig(delegate: self)).list { (result) in
