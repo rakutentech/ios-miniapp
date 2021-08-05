@@ -1,4 +1,9 @@
 ## CHANGELOG
+### 1.11.0 (2021-08-05)
+- **Feature:** Added interface to get user points
+- **Feature:** Added an optional banner message field in messaging feature
+
+---
 
 ### 1.10.0 (2021-06-29)
 - **Feature:** Added `MiniAppError` class for a better bridge errors management [See here](README.md#Errors-management).
