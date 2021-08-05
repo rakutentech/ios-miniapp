@@ -4,9 +4,10 @@ import UIKit
 public protocol MiniAppUIDelegate: AnyObject {
     func miniApp(_ viewController: MiniAppViewController, didLaunchWith config: MiniAppSdkConfig?)
     func miniApp(_ viewController: MiniAppViewController, shouldExecute action: MiniAppNavigationAction)
-    func miniApp(_ viewController: MiniAppViewController, didLoadWith error: Error?)
+    func miniApp(_ viewController: MiniAppViewController, didLoadWith error: MASDKError?)
     func onClose()
 }
+
 public extension MiniAppUIDelegate {
     func miniApp(_ viewController: MiniAppViewController, didLaunchWith config: MiniAppSdkConfig?) {
         /* This is the default conformance to the MiniAppUIDelegate. */
@@ -14,7 +15,7 @@ public extension MiniAppUIDelegate {
     func miniApp(_ viewController: MiniAppViewController, shouldExecute action: MiniAppNavigationAction) {
         /* This is the default conformance to the MiniAppUIDelegate. */
     }
-    func miniApp(_ viewController: MiniAppViewController, didLoadWith error: Error?) {
+    func miniApp(_ viewController: MiniAppViewController, didLoadWith error: MASDKError?) {
         /* This is the default conformance to the MiniAppUIDelegate. */
     }
 }
@@ -22,8 +23,11 @@ public extension MiniAppUIDelegate {
 public class MiniAppViewController: UIViewController {
 
     let appId: String
+    let version: String?
     var config: MiniAppSdkConfig?
     var queryParams: String?
+    var adsDisplayer: MiniAppAdDisplayer?
+
     var state: ViewState = .loading {
         didSet { update() }
     }
@@ -66,16 +70,20 @@ public class MiniAppViewController: UIViewController {
     init(
         title: String,
         appId: String,
+        version: String? = nil,
         config: MiniAppSdkConfig? = nil,
         messageDelegate: MiniAppMessageDelegate,
         navDelegate: MiniAppNavigationDelegate? = nil,
-        queryParams: String? = nil
+        queryParams: String? = nil,
+        adsDisplayer: MiniAppAdDisplayer? = nil
     ) {
         self.appId = appId
+        self.version = version
         self.config = config
-        self.queryParams = queryParams
         self.messageDelegate = messageDelegate
         self.navDelegate = navDelegate
+        self.queryParams = queryParams
+        self.adsDisplayer = adsDisplayer
         super.init(nibName: nil, bundle: nil)
         self.title = title
         if navDelegate == nil {
@@ -136,6 +144,7 @@ public class MiniAppViewController: UIViewController {
             .shared(with: config, navigationSettings: navSettings)
             .create(
                 appId: appId,
+                version: version,
                 queryParams: queryParams,
                 completionHandler: { [weak self] (result) in
                     guard let self = self else { return }
@@ -152,7 +161,8 @@ public class MiniAppViewController: UIViewController {
                         self.state = .error
                     }
                 },
-                messageInterface: messageDelegate
+                messageInterface: messageDelegate,
+                adsDisplayer: adsDisplayer
             )
     }
 

@@ -40,7 +40,7 @@ extension ViewController: MiniAppNavigationDelegate {
                 switch result {
                 case .success(let responseData):
                     self.currentMiniAppInfo = responseData
-                    self.fetchMiniApp(for: responseData)
+                    self.showMiniApp(for: responseData)
                 case .failure(let error):
                     var message: String
                     switch error {
@@ -60,24 +60,24 @@ extension ViewController: MiniAppNavigationDelegate {
         }
     }
 
-    func fetchMiniApp(for appInfo: MiniAppInfo) {
-        MiniApp.shared(with: Config.current(),
-                       navigationSettings: Config.getNavConfig(delegate: self))
-            .create(appId: appInfo.id,
-                    version: appInfo.version.versionId,
-                    queryParams: getQueryParam(),
-                    completionHandler: { (result) in
-            switch result {
-            case .success(let miniAppDisplay):
-                self.dismissProgressIndicator {
-                    self.currentMiniAppView = miniAppDisplay
-                    self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
-                }
-            case .failure(let error):
-                self.checkSDKErrorAndDisplay(error: error)
-                log("fetchMiniApp(for appInfo: \(appInfo)) Errored: " + error.localizedDescription)
-            }
-        }, messageInterface: self, adsDisplayer: adsDisplayer)
+    func showMiniApp(for appInfo: MiniAppInfo) {
+        // replacing the manifest fails
+        self.dismissProgressIndicator { [weak self] in
+            guard let self = self else { return }
+            let uiparams = MiniAppUIParams(
+                title: appInfo.displayName ?? "MiniApp",
+                miniAppId: appInfo.id,
+                miniAppVersion: appInfo.version.versionId,
+                config: Config.current(),
+                messageInterface: self,
+                navigationInterface: self,
+                queryParams: getQueryParam(),
+                adsDisplayer: self.adsDisplayer
+            )
+            MiniAppUI
+                .shared()
+                .launch(base: self, params: uiparams, delegate: self)
+        }
     }
 
     func loadMiniAppUsingURL(_ url: URL) {
@@ -119,4 +119,16 @@ extension ViewController: MiniAppNavigationDelegate {
                 self.fetchAppList(inBackground: true)
             }
         }
+}
+
+extension ViewController: MiniAppUIDelegate {
+    func onClose() {
+        dismiss(animated: true, completion: nil)
+    }
+
+    func miniApp(_ viewController: MiniAppViewController, didLoadWith error: MASDKError?) {
+        guard let error = error else { return }
+        print("Errored: ", error.localizedDescription)
+        checkSDKErrorAndDisplay(error: error)
+    }
 }
