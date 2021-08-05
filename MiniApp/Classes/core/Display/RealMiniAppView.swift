@@ -21,6 +21,8 @@ internal class RealMiniAppView: UIView {
     internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
     internal weak var currentDialogController: UIAlertController?
+    var canGoBackObservation: NSKeyValueObservation?
+    var canGoForwardObservation: NSKeyValueObservation?
 
     init(
         miniAppId: String,
@@ -122,6 +124,16 @@ internal class RealMiniAppView: UIView {
             webViewBottomConstraintStandalone?.isActive = false
         }
         MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
+        observeWebView()
+    }
+
+    func observeWebView() {
+        canGoBackObservation = webView.observe(\.canGoBack, options: .initial) { (webView, _) in
+            self.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
+        }
+        canGoForwardObservation = webView.observe(\.canGoForward) { (webView, _) in
+            self.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
+        }
     }
 
     func refreshNavBar() {
@@ -160,7 +172,13 @@ internal class RealMiniAppView: UIView {
         }
     }
 
+    private func getMiniAppBaseURL(miniAppId: String) -> String {
+        Constants.miniAppSchemePrefix + miniAppId + "://miniapp/" + Constants.rootFileName
+    }
+
     deinit {
+        canGoBackObservation?.invalidate()
+        canGoForwardObservation?.invalidate()
         MiniAppAnalytics.sendAnalytics(event: .close, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
         MiniApp.MAOrientationLock = []
         UIViewController.attemptRotationToDeviceOrientation()
