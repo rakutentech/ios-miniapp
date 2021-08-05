@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppShareContentDelegate Protocol Reference</title>
+    <title>MASDKPointError Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Protocol/MiniAppShareContentDelegate" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Enum/MASDKPointError" class="dashAnchor"></a>
 
-    <a title="MiniAppShareContentDelegate Protocol Reference"></a>
+    <a title="MASDKPointError Enumeration Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -38,7 +38,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">MiniApp Reference</a>
       <img class="carat" src="../img/carat.png" />
-      MiniAppShareContentDelegate Protocol Reference
+      MASDKPointError Enumeration Reference
     </p>
 
     <div class="content-wrapper">
@@ -242,16 +242,15 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>MiniAppShareContentDelegate</h1>
+            <h1>MASDKPointError</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppShareContentDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MASDKPointError</span> <span class="p">:</span> <span class="kt">Error</span><span class="p">,</span> <span class="kt">MiniAppErrorProtocol</span></code></pre>
 
                 </div>
               </div>
-            <p>Public Protocol that will be used by the Mini App to communicate
-with the Native implementation for content sharing mechanism</p>
+            <p>Enumeration that is used to return Points error</p>
 
           </div>
         </section>
@@ -263,31 +262,105 @@ with the Native implementation for content sharing mechanism</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB20ShareContentDelegateP05shareD04info17completionHandleryAA0abcD0V_ys6ResultOyAA21MASDKProtocolResponseOs5Error_pGctF"></a>
-                    <a name="//apple_ref/swift/Method/shareContent(info:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB20ShareContentDelegateP05shareD04info17completionHandleryAA0abcD0V_ys6ResultOyAA21MASDKProtocolResponseOs5Error_pGctF">shareContent(info:<wbr>completionHandler:<wbr>)</a>
+                    <a name="/s:7MiniApp15MASDKPointErrorO015failedToConformF8ProtocolyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/failedToConformToProtocol" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp15MASDKPointErrorO015failedToConformF8ProtocolyA2CmF">failedToConformToProtocol</a>
                     </code>
-                      <span class="declaration-note">
-                        Default implementation
-                      </span>
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Interface that is used to share the content from the Mini app</p>
+                        <p>Host app failed to implement required interface</p>
 
-                      </div>
-                      <h4>Default Implementation</h4>
-                      <div class="default_impl abstract">
-                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">shareContent</span><span class="p">(</span><span class="nv">info</span><span class="p">:</span> <span class="kt"><a href="../Structs/MiniAppShareContent.html">MiniAppShareContent</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a></span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">failedToConformToProtocol</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp15MASDKPointErrorO5erroryACSS_tcACmF"></a>
+                    <a name="//apple_ref/swift/Element/error(description:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp15MASDKPointErrorO5erroryACSS_tcACmF">error(description:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">error</span><span class="p">(</span><span class="nv">description</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp15MASDKPointErrorO11descriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp15MASDKPointErrorO11descriptionSSvp">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Detailed Description</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp15MASDKPointErrorO4nameSSvp"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp15MASDKPointErrorO4nameSSvp">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Title of the error</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>

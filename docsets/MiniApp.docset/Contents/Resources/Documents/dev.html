@@ -20,7 +20,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 3.4.0 Docs
+          MiniApp 3.5.0 Docs
         </a>
          (67% documented)
       </p>
@@ -68,6 +68,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MAContact.html">MAContact</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MAPoints.html">MAPoints</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
@@ -127,6 +130,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MASDKPermissionResponse.html">MASDKPermissionResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MASDKPointError.html">MASDKPointError</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a>
@@ -311,11 +317,11 @@ We use <a href="https://github.com/realm/jazzy">Jazzy</a> for this, so you can r
 
 <p><a href="https://app.bitrise.io/app/bddaf16e1f0fc0d6">BitRise</a> is used for building and testing the project for every pull request. It is also used for publishing the SDK and Sample App.</p>
 
-<p>Note that two Sample App builds are created on merge to master or during a release: </p>
+<p>Note that two Sample App are built on CI and then uploaded with symbols to App Center on merge to master or during a release: </p>
 
 <ul>
-<li>One build for the iOS Simulator (built on CI and then uploaded to App Center - App Center does not support building for the Simulator target)</li>
-<li>One build for iOS Devices (built directly on App Center in order to keep the certificate and provisioning profile secret)</li>
+<li>One build for the iOS Simulator</li>
+<li>One build for iOS Devices (can be triggered manually directly on App Center if needed)</li>
 </ul>
 <h3 id='merge-to-master' class='heading'>Merge to Master</h3>
 
@@ -329,31 +335,61 @@ We use <a href="https://github.com/realm/jazzy">Jazzy</a> for this, so you can r
 <ul>
 <li>Publishes build to App Center &ldquo;Testers&rdquo; group.</li>
 </ul></li>
-<li>App Center builds the Sample App for iOS Devices (Staging).
+<li>CI builds a Sample App (Staging) IPA and publishes build to App Center &ldquo;Testers&rdquo; group.</li>
+</ol>
+<h3 id='release-candidate' class='heading'>Release candidate</h3>
+
+<p>In order to launch CI job for regression tests, a candidate branch is observed.
+As candidate check steps are always the same, a script is available to guide you trough the process:</p>
+<pre class="highlight shell"><code>./scripts/release-candidate.sh
+</code></pre>
+
+<p>The script can be launched with no parameters, but you can also provide it a version number and branch name:</p>
+<pre class="highlight plaintext"><code>Usage: [-v Version] [-b Branch] [-d]
+
+    -v Version      Version to deploy.
+    -b Branch       Branch to release. By default 'candidate'
+    -d              displays useful data to debug this script
+    -a              automatic mode. Requires -v parameter to be 100% without prompt
+    -s              silent mode
+
+For Example: ./release-candidate.sh -v 3.5.0 -b candidate -a
+
+    -h              Help
+</code></pre>
+
+<p>During the process a branch will be created and your work in progress will be stored in a git stash.
+Once the candidate created and pushed, your branch will be checked out again and the stash will be popped.</p>
+
+<p>If the release candidate process is aborted, please switch manually to your working branch and execute a <code>git stash pop</code> to retrieve all your uncommitted changes.</p>
+
+<p>The following describes the steps that CI performs when a branch is merged to candidate.</p>
+
+<ol>
+<li>We trigger a build on CI by merging a branch to candidate.</li>
+<li>CI builds SDK and Sample App, run tests, linting, etc.</li>
+<li>CI creates a ZIP file for the iOS Simulator (Production) build of the Sample App.
 
 <ul>
 <li>Publishes build to App Center &ldquo;Testers&rdquo; group.</li>
 </ul></li>
+<li>CI builds a Sample App (Production) IPA and publishes build to App Center &ldquo;Testers&rdquo; group.</li>
 </ol>
 <h3 id='release' class='heading'>Release</h3>
 
 <p>The following describes the steps that CI performs when releasing a new version of the SDK.</p>
 
 <ol>
-<li>We trigger a build on CI by pushing a Git tag to the repo in the format <code>vX.X.X</code>.</li>
+<li>We trigger a build on CI by pushing a Git tag on <code>candidate</code> branch to the repo in the format <code>vX.X.X</code>.</li>
 <li>CI builds SDK and Sample App, run tests, linting, etc.</li>
 <li>CI publishes the SDK to <a href="https://cocoapods.org/pods/MiniApp">Cocoapods</a>.</li>
-<li>CI creates ZIP file for the iOS Simulator (Production) build of the Sample App.
+<li>CI creates ZIP and IPA files for the iOS Simulator and device (Production) builds of the Sample App.
 
 <ul>
 <li>Publishes build to App Center &ldquo;Production&rdquo; group.</li>
 </ul></li>
-<li>CI merges the <code>master</code> branch into the <code>prod</code> branch.
-
-<ul>
-<li>This triggers a build on App Center for the iOS Device (Production) build of the Sample App.</li>
-<li>Publishes build to App Center &ldquo;Production&rdquo; group.</li>
-</ul></li>
+<li>CI merges the <code>candidate</code> branch into the <code>prod</code> branch.</li>
+<li>CI creates a pull request to merge <code>candidate</code> branch to <code>master</code> branch.</li>
 <li>CI publishes documentation to <a href="https://rakutentech.github.io/ios-miniapp">Github Pages site</a>.</li>
 </ol>
 
@@ -364,7 +400,7 @@ We use <a href="https://github.com/realm/jazzy">Jazzy</a> for this, so you can r
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-06-25)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-08-05)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

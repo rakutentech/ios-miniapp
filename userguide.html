@@ -20,7 +20,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 3.4.0 Docs
+          MiniApp 3.5.0 Docs
         </a>
          (67% documented)
       </p>
@@ -68,6 +68,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MAContact.html">MAContact</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MAPoints.html">MAPoints</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MASDKCustomPermissionModel.html">MASDKCustomPermissionModel</a>
@@ -127,6 +130,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MASDKPermissionResponse.html">MASDKPermissionResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MASDKPointError.html">MASDKPointError</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a>
@@ -338,6 +344,7 @@ Mini App SDK also facilitates communication between a Mini App and the host app 
 <li><a href="#ads-integration">Ads integration</a></li>
 <li><a href="#retrieve-user-profile-details">Retrieve User Profile details</a></li>
 <li><a href="#send-message-to-contacts">Send message to contacts</a></li>
+<li><a href="#retrieve-points">Retrieve points</a></li>
 </ul></li>
 <li><a href="#load-miniapp-list">Load the Mini App list</a></li>
 <li><a href="#get-mini-appinfo">Get a MiniAppInfo</a></li>
@@ -546,7 +553,7 @@ There are 2 ways to achieve this: </p>
 
 <ul>
 <li>by implementing <a href="https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppAdDisplayDelegate.html">MiniAppAdDisplayDelegate</a> by yourself</li>
-<li>if you rely on Google ads to display your ads you can simply implement <code>pod MiniApp/Admob</code> into your pod dependencies (see <a href="#setting-admob">settings section</a>).
+<li>if you rely on Google ads to display your ads you can simply implement <code>pod MiniApp/Admob</code> (Admob 7.+) or <code>pod MiniApp/Admob8</code> (Admob 8.+) into your pod dependencies (see <a href="#setting-admob">settings section</a>).
 ###### Google ads displayer</li>
 </ul>
 
@@ -778,6 +785,18 @@ Three methods can be triggered by the Mini App, and here are the recommended beh
       <span class="kt">UINavigationController</span><span class="o">.</span><span class="nf">topViewController</span><span class="p">()?</span><span class="o">.</span><span class="nf">present</span><span class="p">(</span><span class="kt">UINavigationController</span><span class="p">(</span><span class="nv">rootViewController</span><span class="p">:</span> <span class="n">viewController</span><span class="p">),</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="n">controllerPresented</span><span class="p">)</span>
     <span class="p">}</span>
   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><a id="retrieve-points"></a></p>
+<h6 id='retrieve-points' class='heading'>Retrieve Points</h6>
+
+<p>Retrieve Rakuten points (standard, term, cash) of the User. It&rsquo;s necessary to allow the <code>Rakuten Points</code> custom permission for retrieving the points.</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">getPoints</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">MAPoints</span><span class="p">,</span> <span class="kt">MASDKPointError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Implementation to return points</span>
+        <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="kt">MAPoints</span><span class="p">(</span><span class="nv">standard</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="nv">term</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span> <span class="nv">cash</span><span class="p">:</span> <span class="mi">300</span><span class="p">)))</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -1355,7 +1374,7 @@ Mini App SDK will look in the host app <code>Localizable.strings</code> for thes
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-06-25)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-08-05)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
