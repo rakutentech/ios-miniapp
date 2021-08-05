@@ -129,10 +129,10 @@ internal class RealMiniAppView: UIView {
 
     func observeWebView() {
         canGoBackObservation = webView.observe(\.canGoBack, options: .initial) { (webView, _) in
-            self.navigationDelegate?.canMiniAppNavigateTo(back: webView.canGoBack, forward: webView.canGoForward)
+            self.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
         }
         canGoForwardObservation = webView.observe(\.canGoForward) { (webView, _) in
-            self.navigationDelegate?.canMiniAppNavigateTo(back: webView.canGoBack, forward: webView.canGoForward)
+            self.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
         }
     }
 
