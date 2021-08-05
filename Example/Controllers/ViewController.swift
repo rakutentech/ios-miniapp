@@ -121,12 +121,7 @@ class ViewController: UIViewController {
     }
 
     func checkIfManifestChanged(latestManifest: MiniAppManifest, oldManifest: MiniAppManifest, miniAppInfo: MiniAppInfo) {
-        let cachedPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo.id)
-        let cachedAllowedPermissions = cachedPermissions.filter { $0.isPermissionGranted.boolValue == true }
-
-        let requiredPermissions = filterPermissions(permsArray: latestManifest.requiredPermissions ?? [],
-                                                    cachedPermissions: cachedAllowedPermissions)
-        if oldManifest == latestManifest && requiredPermissions.count == 0 {
+        if oldManifest == latestManifest {
             self.displayMiniApp(miniAppInfo: miniAppInfo)
         } else {
                 self.displayFirstTimeLaunchScreen(reqPermissions: latestManifest.requiredPermissions ?? [],
