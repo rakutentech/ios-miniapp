@@ -79,7 +79,7 @@ public extension MiniAppNavigationDelegate {
     }
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
     }
-    func canMiniAppNavigateTo(back: Bool, forward: Bool) {
+    func miniAppNavigationCanGo(back: Bool, forward: Bool) {
     }
 }
 
