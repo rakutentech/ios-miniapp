@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'MiniApp'
-  s.version      = '3.4.0'
+  s.version      = '3.5.0'
   s.authors      = "Rakuten Ecosystem Mobile"
   s.summary      = "Rakuten's Mini App SDK"
   s.description  = "This open-source library allows you to integrate Mini App ecosystem into your iOS applications. Mini App SDK also facilitates communication between a mini app and the host app via a message bridge."
@@ -42,7 +42,16 @@ Pod::Spec.new do |s|
     admob.source_files = 'MiniApp/Classes/admob7/**/*.{swift,h,m}'
     admob.dependency 'MiniApp/Core'
     admob.dependency 'Google-Mobile-Ads-SDK', '~> 7.0'
-    admob.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADMOB' }
+    admob.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADMOB -D RMA_SDK_ADMOB7' }
+    admob.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+    admob.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  end
+
+  s.subspec 'Admob8' do |admob|
+    admob.source_files = 'MiniApp/Classes/admob/**/*.{swift,h,m}'
+    admob.dependency 'MiniApp/Core'
+    admob.dependency 'Google-Mobile-Ads-SDK', '~> 8.0'
+    admob.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADMOB -D RMA_SDK_ADMOB8'}
     admob.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
     admob.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   end
