@@ -2,23 +2,23 @@ PODS:
   - AppCenter/Core (4.2.0)
   - AppCenter/Crashes (4.2.0):
     - AppCenter/Core
-  - Google-Mobile-Ads-SDK (7.69.0):
-    - GoogleAppMeasurement (~> 7.0)
-    - GoogleUserMessagingPlatform (~> 1.1)
-  - GoogleAppMeasurement (7.11.0):
-    - GoogleAppMeasurement/AdIdSupport (= 7.11.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
-    - GoogleUtilities/MethodSwizzler (~> 7.0)
-    - GoogleUtilities/Network (~> 7.0)
-    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+  - Google-Mobile-Ads-SDK (8.8.0):
+    - GoogleAppMeasurement (< 9.0, >= 7.0)
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleAppMeasurement (8.4.0):
+    - GoogleAppMeasurement/AdIdSupport (= 8.4.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
+    - GoogleUtilities/MethodSwizzler (~> 7.4)
+    - GoogleUtilities/Network (~> 7.4)
+    - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (7.11.0):
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
-    - GoogleUtilities/MethodSwizzler (~> 7.0)
-    - GoogleUtilities/Network (~> 7.0)
-    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+  - GoogleAppMeasurement/AdIdSupport (8.4.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
+    - GoogleUtilities/MethodSwizzler (~> 7.4)
+    - GoogleUtilities/Network (~> 7.4)
+    - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - GoogleUserMessagingPlatform (1.4.0)
+  - GoogleUserMessagingPlatform (2.0.0)
   - GoogleUtilities/AppDelegateSwizzler (7.5.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -36,12 +36,12 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.5.0)"
   - GoogleUtilities/Reachability (7.5.0):
     - GoogleUtilities/Logger
-  - MiniApp/Admob (3.4.0):
-    - Google-Mobile-Ads-SDK (~> 7.0)
+  - MiniApp/Admob8 (3.5.0):
+    - Google-Mobile-Ads-SDK (~> 8.0)
     - MiniApp/Core
-  - MiniApp/Core (3.4.0):
+  - MiniApp/Core (3.5.0):
     - ZIPFoundation (= 0.9.12)
-  - MiniApp/UI (3.4.0):
+  - MiniApp/UI (3.5.0):
     - MiniApp/Core
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -51,13 +51,12 @@ PODS:
   - Nimble (9.0.1)
   - PromisesObjC (2.0.0)
   - Quick (3.1.2)
-  - RAnalytics (8.1.1)
+  - RAnalytics (8.2.1)
   - ZIPFoundation (0.9.12)
 
 DEPENDENCIES:
   - AppCenter/Crashes
-  - Google-Mobile-Ads-SDK
-  - MiniApp/Admob (from `./`)
+  - MiniApp/Admob8 (from `./`)
   - MiniApp/UI (from `./`)
   - Nimble (~> 9.0.0)
   - Quick (~> 3.1.2)
@@ -84,18 +83,18 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppCenter: 87ef6eefd8ade4df59e88951288587429f3dd2a5
-  Google-Mobile-Ads-SDK: 2f288748a42920d1c744946a460896a95b0e9110
-  GoogleAppMeasurement: fd19169c3034975cb934e865e5667bfdce59df7f
-  GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
+  Google-Mobile-Ads-SDK: 1fccd8fd76aca1cef9bfe0711124c9731dad9307
+  GoogleAppMeasurement: 6b6a08fd9c71f4dbc89e0e812acca81d797aa342
+  GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
-  MiniApp: 36b6d8194a13da3fea6196965ce4f61759073d2d
+  MiniApp: 596cd95529ca9da38124eb0b1892424426347c15
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   Nimble: 7bed62ffabd6dbfe05f5925cbc43722533248990
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Quick: 60f0ea3b8e0cfc0df3259a5c06a238ad8b3c46e0
-  RAnalytics: e5856a17418a7b2be3e7c135b7de3c8be8be288c
+  RAnalytics: ab09bc6648a4804e10a9524f8156e9a393b426fb
   ZIPFoundation: e27423c004a5a1410c15933407747374e7c6cb6e
 
-PODFILE CHECKSUM: f993d8669e23079ea5a4e10ccfa00cd585938f09
+PODFILE CHECKSUM: db7b06cb4ed8788872d7584732de601a15eb17d7
 
 COCOAPODS: 1.10.1
