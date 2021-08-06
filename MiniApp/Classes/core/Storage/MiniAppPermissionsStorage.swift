@@ -67,4 +67,8 @@ internal class MiniAppPermissionsStorage {
 
         return keys
     }
+
+    internal func purgePermissions() {
+        keychainStore.purge()
+    }
 }

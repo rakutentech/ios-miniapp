@@ -1,3 +1,13 @@
+extension Bundle {
+    open class var miniAppBundle: Bundle? {
+        let bundle = Bundle(for: MiniApp.self)
+        guard let resourcesBundleUrl = bundle.resourceURL?.appendingPathComponent("MiniApp.bundle") else {
+            return nil
+        }
+        return Bundle(url: resourcesBundleUrl)
+    }
+}
+
 extension Bundle: EnvironmentProtocol {
 
     var valueNotFound: String {

@@ -49,6 +49,9 @@ public class MiniAppAnalyticsLoader: NSObject {
 
 public class MiniAppAnalytics {
     public static let notificationName = Notification.Name("com.rakuten.esd.sdk.events.custom")
+    open class var sdkVersion: String? {
+        Bundle.miniAppBundle?.infoDictionary?["CFBundleShortVersionString"] as? String
+    }
     internal static let defaultRATAcc = MAAnalyticsConfig(acc: "1553", aid: "1")
 
     internal class func getAnalyticsInfo(miniAppId: String? = nil, miniAppVersion: String? = nil, projectId: String? = nil) -> [(String, String)] {
@@ -62,7 +65,7 @@ public class MiniAppAnalytics {
         if let projectId = projectId ?? Bundle.main.value(for: Environment.Key.projectId.rawValue) {
             result.append((MiniAppAnalyticsParameter.projectId.name(), projectId))
         }
-        if let version = Bundle(identifier: "org.cocoapods.MiniApp")?.infoDictionary?["CFBundleShortVersionString"] as? String {
+        if let version = sdkVersion {
             result.append((MiniAppAnalyticsParameter.sdkVersion.name(), version))
         }
         return result

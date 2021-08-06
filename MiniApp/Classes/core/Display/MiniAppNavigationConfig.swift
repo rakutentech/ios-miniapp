@@ -27,7 +27,7 @@ public class MiniAppNavigationConfig {
 public typealias MiniAppNavigationResponseHandler = (URL) -> Void
 
 /// A delegate used by Mini App view to communicate about available actions based on current user interactions on the Mini App
-public protocol MiniAppNavigationDelegate: class {
+public protocol MiniAppNavigationDelegate: AnyObject {
     /// This delegate method is called when an external URL is tapped into a Mini App
     /// so you can display your own webview to load the url parameter, for example.
     /// A `MiniAppNavigationResponseHandler` is also provided so you can give a proper
@@ -84,7 +84,7 @@ public extension MiniAppNavigationDelegate {
 }
 
 /// A delegate implemented by the Mini App view to get the actions triggered by UI
-public protocol MiniAppNavigationBarDelegate: class {
+public protocol MiniAppNavigationBarDelegate: AnyObject {
     /// Method to call when a user want to interact with Mini App navigation history
     /// - Parameters:
     ///    - action: the action requested (go back or go forward)

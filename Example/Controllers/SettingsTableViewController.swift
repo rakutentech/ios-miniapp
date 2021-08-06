@@ -300,7 +300,7 @@ class SettingsTableViewController: UITableViewController {
     }
 }
 
-protocol SettingsDelegate: class {
+protocol SettingsDelegate: AnyObject {
     func didSettingsUpdated(controller: SettingsTableViewController, updated miniAppList: [MiniAppInfo]?)
 }
 
