@@ -85,6 +85,7 @@ class MessageInterfaceExtensionTests: QuickSpec {
                 it("it will return the Points value") {
                     var points: MAPoints?
                     let mockMessageInterface = MockMessageInterface()
+                    mockMessageInterface.mockPointsInterface = true
                     mockMessageInterface.getPoints { result in
                         switch result {
                         case .success(let pointsInfo):
