@@ -72,7 +72,7 @@ git checkout "$CANDIDATE_BRANCH"
 
 echo "Retrieving current version number..."
 CURRENT_VERSION=$(grep -o -m 1 -E "([0-9]{1,}\.)+([0-9]{1,}\.)+[0-9]{1,}" MiniApp.podspec)
-SEARCH_STRING=$(grep "s.version   " MiniApp.podspec)
+SEARCH_STRING=$(grep "miniapp.version   " MiniApp.podspec)
 echo -e "\nMiniApp.podspec mentions this at version line: $SEARCH_STRING"
 
 if [ $NO_PROMPT == 0 ]
@@ -81,15 +81,15 @@ then
       read -r -p "Is v$CURRENT_VERSION the current version to upgrade. Input n to change it. [Y/n]: " answer
       case $answer in
           [Yy]* ) break;;
-          [Nn]* ) read -r -p "Please input the s.version value currently in MiniApp.podspec (ex: for v3.5.0 please input 3.5.0): " CURRENT_VERSION;;
+          [Nn]* ) read -r -p "Please input the miniapp.version value currently in MiniApp.podspec (ex: for v3.5.0 please input 3.5.0): " CURRENT_VERSION;;
           * ) break;;
       esac
   done
 fi
 
-REPLACE_STRING="  s.version      = '$VERSION'"
+REPLACE_STRING="  miniapp.version      = '$VERSION'"
 
-echo "Updating MiniApp.podspec file s.version variable with v$VERSION version number"
+echo "Updating MiniApp.podspec file miniapp.version variable with v$VERSION version number"
 sed -i "" -e "s/$SEARCH_STRING/$REPLACE_STRING/" MiniApp.podspec
 
 echo -e "\nChangelog:"
