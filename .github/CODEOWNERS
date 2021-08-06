@@ -1,5 +1,3 @@
 # See https://help.github.com/en/articles/about-code-owners
 
-@Climbatize @corycaywood @khairul-alam-licon @munir-rakuten @rleojoseph
-
-js-miniapp-sample/* @suprj @rajesh-sundaram @mohanadwalo @nathan-rakuten
+@rakutentech/miniapp-sdk
