@@ -1,7 +1,7 @@
 import MiniApp
 
 extension ViewController: MiniAppNavigationDelegate {
-    func canMiniAppNavigateTo(back: Bool, forward: Bool) {
+    func miniAppNavigationCanGo(back: Bool, forward: Bool) {
         let testing = displayController?.topViewController as? DisplayController
         testing?.refreshNavigationBarButtons(backButtonEnabled: back, forwardButtonEnabled: forward)
     }
@@ -86,7 +86,7 @@ extension ViewController: MiniAppNavigationDelegate {
             queryParams: getQueryParam(),
             errorHandler: { error in
                 self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.miniapp"), dismissController: true)
-                print("Errored: ", error.localizedDescription)
+                log("loadMiniAppUsingURL(_ url: \(url.absoluteString)) Errored: " + error.localizedDescription)
             }, messageInterface: self, adsDisplayer: adsDisplayer)
 
         currentMiniAppView = miniAppDisplay

@@ -142,6 +142,20 @@ class MiniAppTests: QuickSpec {
                     expect(testError?.localizedDescription).toEventuallyNot(beNil(), timeout: .seconds(5))
                 }
             }
+            context("when MiniAppInfo model object is created") {
+                it("is comparable using their respective IDs") {
+                    let miniAppInfo  = MiniAppInfo(id: "Rakuten",
+                                                   displayName: "Test",
+                                                   icon: URL(string: "https://www.rakuten.co.jp/")!,
+                                                   version: Version(versionTag: "", versionId: ""))
+                    let miniAppInfoType2  = MiniAppInfo(id: "Rakuten",
+                                                        displayName: "Test",
+                                                        icon: URL(string: "https://www.rakuten.co.jp/")!,
+                                                        version: Version(versionTag: "", versionId: ""))
+                    expect(miniAppInfo).to(equal(miniAppInfoType2))
+                    expect(miniAppInfo).toEventuallyNot(equal(mockMiniAppInfo))
+                }
+            }
         }
     }
 }

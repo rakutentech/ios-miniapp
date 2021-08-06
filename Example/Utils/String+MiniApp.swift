@@ -1,6 +1,21 @@
 import Foundation
 import UIKit
 
+extension NSMutableAttributedString {
+    func highlight(_ value: String, color: UIColor) -> NSMutableAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: color
+        ]
+        append(NSAttributedString(string: value, attributes: attributes))
+        return self
+    }
+
+    func normalText(_ value: String) -> NSMutableAttributedString {
+        append(NSAttributedString(string: value, attributes: nil))
+        return self
+    }
+}
+
 extension String {
 
     var hasHTTPPrefix: Bool {

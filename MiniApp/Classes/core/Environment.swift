@@ -44,6 +44,10 @@ internal class Environment {
         return value(for: customAppVersion, fallback: .version)
     }
 
+    var sdkVersion: MiniAppVersion? {
+        MiniAppVersion(string: MiniAppAnalytics.sdkVersion)
+    }
+
     var subscriptionKey: String {
         return value(for: customSubscriptionKey, fallback: .subscriptionKey)
     }

@@ -329,18 +329,31 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockProfilePhoto: String? = ""
     var mockContactList: [MAContact]? = [MAContact(id: "contact_id")]
     var messageContentAllowed: Bool = false
+    var mockPointsInterface: Bool = false
     var mockAccessToken: String? = ""
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.success("SUCCESS"))
+        if messageContentAllowed {
+            completionHandler(.success("SUCCESS"))
+        } else {
+            completionHandler(.failure(.invalidContactId))
+        }
     }
 
     func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.success(contactId))
+        if messageContentAllowed {
+            completionHandler(.success(contactId))
+        } else {
+            completionHandler(.failure(.invalidContactId))
+        }
     }
 
     func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
-        completionHandler(.success(["contact_id1", "contact_id2"]))
+        if messageContentAllowed {
+            completionHandler(.success(["contact_id1", "contact_id2"]))
+        } else {
+            completionHandler(.failure(.invalidContactId))
+        }
     }
 
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
@@ -413,7 +426,11 @@ class MockMessageInterface: MiniAppMessageDelegate {
     }
 
     func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
-        completionHandler(.success(MAPoints(standard: 10, term: 10, cash: 10)))
+        if mockPointsInterface {
+            completionHandler(.success(MAPoints(standard: 10, term: 10, cash: 10)))
+        } else {
+            completionHandler(.failure(.error(description: "Failed to retrieve Points details")))
+        }
     }
 }
 
@@ -446,9 +463,9 @@ var mockMiniAppManifest: MiniAppManifest {
 
 @discardableResult func saveMockManifestInCache(miniAppId: String, version: String = "ver-id-test") -> Bool {
     do {
-       try MAManifestStorage().saveManifestInfo(
-                forMiniApp: miniAppId,
-            manifest: CachedMetaData(version: version, miniAppManifest: getMockManifestInfo(miniAppId: miniAppId)!)
+        try MAManifestStorage().saveManifestInfo(
+            forMiniApp: miniAppId,
+            manifest: getMockManifestInfo(miniAppId: miniAppId)!
         )
         return true
     } catch {
