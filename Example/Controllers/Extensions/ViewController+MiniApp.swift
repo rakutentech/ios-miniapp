@@ -1,7 +1,7 @@
 import MiniApp
 
 extension ViewController: MiniAppNavigationDelegate {
-    func canMiniAppNavigateTo(back: Bool, forward: Bool) {
+    func miniAppNavigationCanGo(back: Bool, forward: Bool) {
         let testing = displayController?.topViewController as? DisplayController
         testing?.refreshNavigationBarButtons(backButtonEnabled: back, forwardButtonEnabled: forward)
     }
