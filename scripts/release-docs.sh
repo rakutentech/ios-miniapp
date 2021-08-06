@@ -13,6 +13,8 @@ awk '!/Admob'\''/' RS=miniapp.subspec ORS=miniapp.subspec MiniApp.podspec > Mini
 sed -i '' -e '$ d' MiniApp.jazzy.podspec # clean the last line which contains an awk artifact
 sed -i '' -e '$ d' MiniApp.podspec # remove the last line we added before
 
+bundle exec jazzy
+
 git fetch $RELEASE_GIT_REMOTE gh-pages:gh-pages --force
 git checkout -f gh-pages
 
