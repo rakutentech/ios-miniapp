@@ -32,9 +32,9 @@ internal class RealMiniApp {
     }
 
     func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
-        self.miniAppClient.updateEnvironment(with: settings)
-        self.displayer.navConfig = navigationSettings
-        self.miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
+        miniAppClient.updateEnvironment(with: settings)
+        displayer.navConfig = navigationSettings
+        miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
@@ -235,7 +235,7 @@ internal class RealMiniApp {
     }
 
     func filterCustomPermissions(forMiniApp id: String, cachedPermissions: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {
-        guard let manifestData = self.miniAppManifestStorage.getManifestInfo(forMiniApp: id)?.miniAppManifest else {
+        guard let manifestData = getCachedManifestData(appId: id) else {
             return cachedPermissions
         }
         let manifestCustomPermissions = (manifestData.requiredPermissions ?? []) + (manifestData.optionalPermissions ?? [])
@@ -282,7 +282,13 @@ internal class RealMiniApp {
 
     /// Method to remove the unused/deleted items from the Keychain
     func cleanUpKeychain() {
-        self.miniAppStatus.removeUnusedCustomPermissions()
+        miniAppStatus.removeUnusedCustomPermissions()
+        miniAppStatus.removeManifestsFromKeychain()
+        if let currentVersion = MiniAppAnalytics.sdkVersion {
+            let defaults = UserDefaults(suiteName: MiniAppStatus.userDefaultsKey)
+            defaults?.set(currentVersion, forKey: MiniAppStatus.lastVersionKey)
+            defaults?.synchronize()
+        }
     }
 
     /// Method to check if all the required permissions mentioned in the manifest.json is agreed by the user.
@@ -291,14 +297,13 @@ internal class RealMiniApp {
     ///   - versionId: Specific VersionID of a MiniApp
     ///   - completionHandler: Handler that returns whether user agreed to required permissions or not.
     func isRequiredPermissionsAllowed(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
-        let cachedMetaData = self.miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
-        if cachedMetaData?.version != versionId || miniAppClient.environment.isPreviewMode {
+        let cachedMetaData = miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
+        if cachedMetaData?.versionId != versionId || miniAppClient.environment.isPreviewMode {
             retrieveMiniAppMetaData(appId: appId, version: versionId) { (result) in
                 switch result {
                 case .success(let manifest):
                     self.miniAppManifestStorage.saveManifestInfo(forMiniApp: appId,
-                                                                 manifest: CachedMetaData(version: versionId,
-                                                                                          miniAppManifest: manifest))
+                                                                 manifest: manifest)
                     self.verifyRequiredPermissions(appId: appId,
                                                    miniAppManifest: manifest,
                                                    completionHandler: completionHandler)
@@ -308,7 +313,7 @@ internal class RealMiniApp {
             }
         } else {
             self.verifyRequiredPermissions(appId: appId,
-                                           miniAppManifest: cachedMetaData?.miniAppManifest,
+                                           miniAppManifest: cachedMetaData,
                                            completionHandler: completionHandler)
         }
     }
@@ -347,7 +352,7 @@ internal class RealMiniApp {
     /// - Parameter appId: MiniApp ID
     /// - Returns: MiniAppManifest object
     func getCachedManifestData(appId: String) -> MiniAppManifest? {
-        return self.miniAppManifestStorage.getManifestInfo(forMiniApp: appId)?.miniAppManifest
+        miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
     }
 }
 

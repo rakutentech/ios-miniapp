@@ -35,14 +35,6 @@ struct QueryParamInfo: Codable {
     }
 }
 
-struct MiniAppLaunchInfo: Codable {
-    var isLaunchedAlready: Bool
-
-    init(isLaunchedAlready: Bool = false) {
-        self.isLaunchedAlready = isLaunchedAlready
-    }
-}
-
 func setProfileSettings(forKey key: String = "UserProfileDetail", userDisplayName: String?, profileImageURI: String?, contactList: [MAContact]? = getContactList()) -> Bool {
     if let data = try? PropertyListEncoder().encode(UserProfileModel(displayName: userDisplayName ?? "", profileImageURI: profileImageURI, contactList: contactList)) {
         UserDefaults.standard.set(data, forKey: key)
@@ -105,20 +97,4 @@ func getQueryParam(key: String = "QueryParam") -> String {
         return queryParam?.queryString ?? ""
     }
     return ""
-}
-
-func saveMiniAppLaunchInfo(isMiniAppLaunched: Bool, forKey key: String = "MAFirstTimeLaunch") -> Bool {
-    if let data = try? PropertyListEncoder().encode(MiniAppLaunchInfo(isLaunchedAlready: isMiniAppLaunched)) {
-        UserDefaults.standard.set(data, forKey: key)
-        return UserDefaults.standard.synchronize()
-    }
-    return false
-}
-
-func isMiniAppLaunchedAlready(key: String = "MAFirstTimeLaunch") -> Bool {
-    if let data = UserDefaults.standard.data(forKey: key) {
-        let launchInfo = try? PropertyListDecoder().decode(MiniAppLaunchInfo.self, from: data)
-        return launchInfo?.isLaunchedAlready ?? false
-    }
-    return false
 }

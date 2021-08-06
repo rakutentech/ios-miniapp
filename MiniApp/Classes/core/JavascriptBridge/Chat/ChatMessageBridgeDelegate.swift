@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol ChatMessageBridgeDelegate: class {
+public protocol ChatMessageBridgeDelegate: AnyObject {
     /// Triggered when Mini App wants to send a message to a contact.
     /// Should open a contact chooser which allows the user to choose a single contact,
     /// and should then send the message to the chosen contact.

@@ -2,7 +2,7 @@
  Public Protocol that will be used by the Mini App to communicate
  with the Native implementation for content sharing mechanism
  */
-public protocol MiniAppShareContentDelegate: class {
+public protocol MiniAppShareContentDelegate: AnyObject {
     /// Interface that is used to share the content from the Mini app
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void)
 }

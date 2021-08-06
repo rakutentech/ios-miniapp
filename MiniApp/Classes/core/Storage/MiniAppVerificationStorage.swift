@@ -49,4 +49,7 @@ internal class MiniAppVerificationStorage {
         }
     }
 
+    internal func purgeVerifications() {
+        keychainStore.purge()
+    }
 }

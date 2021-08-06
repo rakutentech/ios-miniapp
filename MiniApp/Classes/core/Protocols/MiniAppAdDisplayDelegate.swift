@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol MiniAppAdDisplayDelegate: class {
+public protocol MiniAppAdDisplayDelegate: AnyObject {
 
 	/// Load Interstitial ad
 	/// This function preloads Interstitial ad before they are requested for display.
