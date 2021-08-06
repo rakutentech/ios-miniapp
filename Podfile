@@ -8,9 +8,8 @@ platform :ios, '13.0'
 target sdk_name + '_Example' do
   project sdk_name + '.xcodeproj'
   workspace sdk_name + '.xcworkspace'
-  pod 'MiniApp/Admob', :path => './'
+  pod 'MiniApp/Admob8', :path => './'
   pod 'MiniApp/UI', :path => './'
-  pod 'Google-Mobile-Ads-SDK'
   pod 'AppCenter/Crashes'
   pod 'RAnalytics', :source => 'https://github.com/rakutentech/ios-analytics-framework.git'
 
