@@ -21,7 +21,12 @@ internal class MetaDataDownloader {
                     }
                     return completionHandler(.success(manifest))
                 case .failure(let error):
-                    return completionHandler(.failure(.fromError(error: error)))
+                    /// In Preview mode & when the internet connection is offline, the following code will try to return the cached manifest for that particular version.
+                    let manifestError  = error as NSError
+                    guard let manifest = self.getCachedManifest(miniAppId: miniAppId), manifestError.isDeviceOfflineError() else {
+                        return completionHandler(.failure(.fromError(error: error)))
+                    }
+                    return completionHandler(.success(manifest))
                 }
             }
             return

@@ -92,7 +92,9 @@ class ViewController: UIViewController {
         MiniApp.shared(with: Config.current()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                self.displayFirstTimeLaunchScreen(manifest: manifestData, miniAppInfo: miniAppInfo)
+                self.dismissProgressIndicator {
+                    self.displayFirstTimeLaunchScreen(manifest: manifestData, miniAppInfo: miniAppInfo)
+                }
             case .failure:
                 self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.single"), dismissController: true)
             }
@@ -106,7 +108,9 @@ class ViewController: UIViewController {
         MiniApp.shared(with: Config.current()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
+                self.dismissProgressIndicator {
+                    self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
+                }
             case .failure(let error):
                 if error.isDeviceOfflineDownloadError() {
                     self.displayMiniApp(miniAppInfo: miniAppInfo)
@@ -121,11 +125,10 @@ class ViewController: UIViewController {
         if oldManifest == latestManifest {
             self.displayMiniApp(miniAppInfo: miniAppInfo)
         } else {
-                displayFirstTimeLaunchScreen(
+            displayFirstTimeLaunchScreen(
                         manifest: latestManifest,
                         miniAppInfo: miniAppInfo,
-                        manifestUpdated: true
-                )
+                        manifestUpdated: true)
         }
     }
 
