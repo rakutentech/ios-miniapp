@@ -161,7 +161,7 @@ class ViewController: UIViewController {
     func displayMiniApp(miniAppInfo: MiniAppInfo) {
         self.showProgressIndicator {
             self.currentMiniAppInfo = miniAppInfo
-            self.fetchMiniApp(for: miniAppInfo)
+            self.showMiniApp(for: miniAppInfo)
             self.currentMiniAppTitle = miniAppInfo.displayName
         }
     }
@@ -228,7 +228,7 @@ extension ViewController: MALaunchScreenDelegate {
                 return
             }
             self.showProgressIndicator {
-                self.fetchMiniApp(for: info)
+                self.showMiniApp(for: info)
                 self.currentMiniAppTitle = info.displayName
             }
         }

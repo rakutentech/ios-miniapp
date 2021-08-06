@@ -6,6 +6,21 @@
 "contact.name"                                          = "Name";
 "contact.email"                                         = "E-Mail address";
 
+"deeplink.ui.miniapp.error.title"                       = "This mini app is not valid";
+"deeplink.ui.qr.error.title"                            = "The QR code is expired";
+"deeplink.ui.preview.unavailable.error.title"           = "%@ v%@ cannot be previewed now";
+"deeplink.ui.version.notvalid.error.title"              = "Version %@ is not valid";
+
+"deeplink.ui.miniapp.error.desc"                        = "You can generate a valid QR code on Mini App Platform. See our Help Center for more details.";
+"deeplink.ui.miniapp.permissionerror.desc"              = "The Host App does not have permission to a Mini App with this ID. See our Help Center for more details.";
+"deeplink.ui.qr.error.desc"                             = "You can generate a new one on Mini App Platform. See our Help Center for more details.";
+"deeplink.ui.version.cannotBePreviewed.error.desc"      = "Please check with the project administrator. See our Help Center for more details.";
+"deeplink.ui.version.notvalid.error.desc"               = "Please check with the project administrator. See our Help Center for more details.";
+
+"deeplink.ui.miniapp.error.help.center"                 = "Help Center";
+"deeplink.ui.miniapp.error.help.center.hyperlink"       = "https://www.rakuten.co.jp/";
+
+
 "miniapp.sdk.ios.message.wait"                          = "Please wait...";
 "miniapp.sdk.ios.mode.publishing"                       = "Published apps";
 "miniapp.sdk.ios.mode.previewing"                       = "Previewable apps";
