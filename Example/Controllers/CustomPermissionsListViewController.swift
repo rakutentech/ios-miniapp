@@ -19,7 +19,7 @@ class CustomPermissionsListViewController: UITableViewController {
                 permissionList[sender.tag].isPermissionGranted = .denied
             }
         }
-        MiniApp.shared().setCustomPermissions(forMiniApp: self.miniAppId, permissionList: permissionList)
+        MiniApp.shared().setCustomPermissions(forMiniApp: miniAppId, permissionList: permissionList)
     }
 }
 

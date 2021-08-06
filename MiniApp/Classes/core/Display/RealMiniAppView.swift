@@ -172,10 +172,6 @@ internal class RealMiniAppView: UIView {
         }
     }
 
-    private func getMiniAppBaseURL(miniAppId: String) -> String {
-        Constants.miniAppSchemePrefix + miniAppId + "://miniapp/" + Constants.rootFileName
-    }
-
     deinit {
         canGoBackObservation?.invalidate()
         canGoForwardObservation?.invalidate()
