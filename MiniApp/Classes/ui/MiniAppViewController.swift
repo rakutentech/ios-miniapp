@@ -36,7 +36,7 @@ public class MiniAppViewController: UIViewController {
     weak var navDelegate: MiniAppNavigationDelegate?
     weak var navBarDelegate: MiniAppNavigationBarDelegate?
 
-    weak var delegate: MiniAppUIDelegate?
+    weak var miniAppUiDelegate: MiniAppUIDelegate?
 
     // MARK: UI - Navigation
     private lazy var backButton: UIBarButtonItem = {
@@ -154,10 +154,10 @@ public class MiniAppViewController: UIViewController {
                         view.frame = self.view.bounds
                         self.view.addSubview(view)
                         self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
-                        self.delegate?.miniApp(self, didLoadWith: nil)
+                        self.miniAppUiDelegate?.miniApp(self, didLoadWith: nil)
                         self.state = .success
                     case .failure(let error):
-                        self.delegate?.miniApp(self, didLoadWith: error)
+                        self.miniAppUiDelegate?.miniApp(self, didLoadWith: error)
                         self.state = .error
                     }
                 },
@@ -191,31 +191,27 @@ public class MiniAppViewController: UIViewController {
 
     @objc
     public func backPressed() {
-        if delegate == nil {
-            navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back)
-        } else {
-            delegate?.miniApp(self, shouldExecute: .back)
-        }
+        navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back)
     }
 
     @objc
     public func forwardPressed() {
-        if delegate == nil {
-            navBarDelegate?.miniAppNavigationBar(didTriggerAction: .forward)
-        } else {
-            delegate?.miniApp(self, shouldExecute: .forward)
-        }
+        navBarDelegate?.miniAppNavigationBar(didTriggerAction: .forward)
     }
 
     @objc
     public func closePressed() {
-        if delegate == nil {
+        if miniAppUiDelegate == nil {
             dismiss(animated: true, completion: nil)
         } else {
-            delegate?.onClose()
+            miniAppUiDelegate?.onClose()
         }
     }
 
+    public func refreshNavigationBarButtons(backButtonEnabled: Bool, forwardButtonEnabled: Bool) {
+        backButton.isEnabled = backButtonEnabled
+        forwardButton.isEnabled = forwardButtonEnabled
+    }
 }
 
 // MARK: - MiniAppNavigationDelegate
