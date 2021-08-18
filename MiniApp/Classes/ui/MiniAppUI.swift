@@ -81,7 +81,7 @@ internal class RealMiniAppUI {
 
     func launch(base: UIViewController, params: MiniAppUIParams, delegate: MiniAppUIDelegate) {
         let miniAppVC = create(params: params)
-        miniAppVC.delegate = delegate
+        miniAppVC.miniAppUiDelegate = delegate
         let nvc = UINavigationController(rootViewController: miniAppVC)
         nvc.modalPresentationStyle = .fullScreen
         base.present(nvc, animated: true, completion: nil)
