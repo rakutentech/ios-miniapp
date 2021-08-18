@@ -106,8 +106,8 @@ extension ViewController: MiniAppNavigationDelegate {
     func checkSDKErrorAndDisplay(error: MASDKError) {
         switch error {
         case .metaDataFailure:
-            /// We need to dismiss current Mini App controller to show First time screen.
-            /// This is due to the recent change on how we display Miniapp, MiniAppUI.shared().launch()
+            // We need to dismiss current Mini App controller to show First time screen.
+            // This is due to the recent change on how we display Miniapp, MiniAppUI.shared().launch()
             DispatchQueue.main.async {
                 self.dismiss(animated: true) {
                     guard let miniAppInfo = self.currentMiniAppInfo else {
