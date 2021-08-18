@@ -23,3 +23,8 @@ func prepareMAJavascriptError<T: MiniAppErrorProtocol>(_ error: T) -> String {
     }
     return prepareJSONString(MAJavascriptErrorModel(type: error.name, message: error.description))
 }
+
+/// Method to send in navigator.geolocation error in proper format i.e {code: 1, message: "message"}
+func prepareMAJSGeolocationError(error: MAJSNaviGeolocationError) -> String {
+    return prepareJSONString(MAJSLocationErrorResponseModel(code: error.code, message: error.message))
+}
