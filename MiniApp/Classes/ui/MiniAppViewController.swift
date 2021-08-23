@@ -128,6 +128,8 @@ public class MiniAppViewController: UIViewController {
             fallbackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             fallbackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        backButton.isEnabled = false
+        forwardButton.isEnabled = false
     }
 
     func setupMiniApp() {
