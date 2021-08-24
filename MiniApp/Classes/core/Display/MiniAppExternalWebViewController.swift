@@ -9,6 +9,17 @@ class MiniAppExternalWebViewController: UIViewController {
     private var customMiniAppURL: URL?
     private var miniAppExternalUrlLoader: MiniAppExternalUrlLoader?
 
+    lazy var backBarButton: UIBarButtonItem = {
+        let view = UIBarButtonItem(image: UIImage(named: "arrow_left-24", in: Bundle.miniAppSDKBundle(), with: .none), style: .plain, target: self, action: #selector(navigateBack))
+        view.isEnabled = false
+        return view
+    }()
+    lazy var forwardBarButton: UIBarButtonItem = {
+        let view = UIBarButtonItem(image: UIImage(named: "arrow_right-24", in: Bundle.miniAppSDKBundle(), with: .none), style: .plain, target: self, action: #selector(navigateForward))
+        view.isEnabled = false
+        return view
+    }()
+
     ///
     /// Presents a webview modally to handle external URLs.
     ///
@@ -57,12 +68,27 @@ class MiniAppExternalWebViewController: UIViewController {
         if let url = currentURL {
             self.webView.load(URLRequest(url: url))
         }
+
+        // back/forward navigation buttons
+        navigationItem.setLeftBarButtonItems([backBarButton, forwardBarButton], animated: true)
+    }
+
+    @objc
+    func navigateBack() {
+        webView.goBack()
+    }
+
+    @objc
+    func navigateForward() {
+        webView.goForward()
     }
 }
 
 extension MiniAppExternalWebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.currentURL = self.webView.url
+        self.backBarButton.isEnabled = webView.canGoBack
+        self.forwardBarButton.isEnabled = webView.canGoForward
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
