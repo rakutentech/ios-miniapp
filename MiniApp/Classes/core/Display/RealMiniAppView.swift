@@ -16,10 +16,13 @@ internal class RealMiniAppView: UIView {
     internal var isNavBarCustom = false
     internal var supportedMiniAppOrientation: UIInterfaceOrientationMask
     internal var initialLoadCallback: ((Bool) -> Void)?
+    internal var analyticsConfig: [MAAnalyticsConfig]?
 
     internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
     internal weak var currentDialogController: UIAlertController?
+    var canGoBackObservation: NSKeyValueObservation?
+    var canGoForwardObservation: NSKeyValueObservation?
 
     init(
         miniAppId: String,
@@ -31,7 +34,8 @@ internal class RealMiniAppView: UIView {
         adsDisplayer: MiniAppAdDisplayer? = nil,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
-        navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+        navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
+        analyticsConfig: [MAAnalyticsConfig]? = []) {
 
         self.miniAppTitle = miniAppTitle
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId, queryParams: queryParams)
@@ -40,7 +44,7 @@ internal class RealMiniAppView: UIView {
         supportedMiniAppOrientation = []
         self.miniAppVersion = versionId
         self.projectId = projectId
-
+        self.analyticsConfig = analyticsConfig
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -58,7 +62,8 @@ internal class RealMiniAppView: UIView {
         initialLoadCallback: ((Bool) -> Void)? = nil,
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
-        navigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+        navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
+        analyticsConfig: [MAAnalyticsConfig]? = []) {
 
         self.miniAppTitle = miniAppTitle
         self.miniAppURL = miniAppURL
@@ -67,6 +72,7 @@ internal class RealMiniAppView: UIView {
         self.hostAppMessageDelegate = hostAppMessageDelegate
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
+        self.analyticsConfig = analyticsConfig
 
         super.init(frame: .zero)
         commonInit(miniAppId: "custom\(Int32.random(in: 0...Int32.max))", // some id is needed to handle permissions
@@ -117,7 +123,17 @@ internal class RealMiniAppView: UIView {
             webViewBottomConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
             webViewBottomConstraintStandalone?.isActive = false
         }
-        MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId)
+        MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
+        observeWebView()
+    }
+
+    func observeWebView() {
+        canGoBackObservation = webView.observe(\.canGoBack, options: .initial) { (webView, _) in
+            self.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
+        }
+        canGoForwardObservation = webView.observe(\.canGoForward) { (webView, _) in
+            self.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
+        }
     }
 
     func refreshNavBar() {
@@ -157,7 +173,9 @@ internal class RealMiniAppView: UIView {
     }
 
     deinit {
-        MiniAppAnalytics.sendAnalytics(event: .close, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId)
+        canGoBackObservation?.invalidate()
+        canGoForwardObservation?.invalidate()
+        MiniAppAnalytics.sendAnalytics(event: .close, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
         MiniApp.MAOrientationLock = []
         UIViewController.attemptRotationToDeviceOrientation()
         webView.configuration.userContentController.removeMessageHandler()
@@ -169,7 +187,7 @@ internal class RealMiniAppView: UIView {
             switch schemeType {
             case .about: // mainly implemented to manage built-in alert dialogs
                 return decisionHandler(.allow)
-            case .tel:
+            case .tel, .mailto:
                 UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
             default:
                 if requestURL.isMiniAppURL(customMiniAppURL: miniAppURL) {
@@ -207,11 +225,15 @@ extension RealMiniAppView: MiniAppDisplayDelegate {
 
 extension RealMiniAppView: MiniAppCallbackDelegate {
     func didReceiveScriptMessageResponse(messageId: String, response: String) {
-        self.webView.evaluateJavaScript(Constants.javascriptSuccessCallback + "('\(messageId)'," + "'\(response)')")
+        let messageBody = Constants.javascriptSuccessCallback + "('\(messageId)'," + "'\(response)')"
+        MiniAppLogger.d(messageBody, "♨️️")
+        webView.evaluateJavaScript(messageBody)
     }
 
     func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
-        self.webView.evaluateJavaScript(Constants.javascriptErrorCallback + "('\(messageId)'," + "'\(errorMessage)')")
+        let messageBody = Constants.javascriptErrorCallback + "('\(messageId)'," + "'\(errorMessage)')"
+        MiniAppLogger.d(messageBody, "♨️️")
+        webView.evaluateJavaScript(messageBody)
     }
 
     func didOrientationChanged(orientation: UIInterfaceOrientationMask) {

@@ -8,22 +8,51 @@ extension UIView {
         mask.path = path.cgPath
         layer.mask = mask
     }
-    func addBorderAndColor(color: UIColor,
-                           width: CGFloat,
-                           cornerRadius: CGFloat = 6,
-                           clipsToBounds: Bool = true) {
-            self.layer.borderWidth  = width
-            self.layer.borderColor  = color.cgColor
-            self.layer.cornerRadius = cornerRadius
-            self.clipsToBounds      = clipsToBounds
+    func setBorder(width: CGFloat = 0,
+                   cornerRadius: CGFloat = 6,
+                   color: UIColor? = nil,
+                   clipsToBounds: Bool = true) {
+            layer.borderWidth  = width
+            layer.borderColor  = color?.cgColor
+            layer.cornerRadius = cornerRadius
+            self.clipsToBounds = clipsToBounds
     }
 }
 
 extension UIButton {
-    func roundedCornerButton() {
-       self.clipsToBounds = true
-       self.layer.cornerRadius = 20
-       self.layer.borderWidth = 2
-       self.layer.borderColor = UIColor.white.cgColor
+    func roundedCornerButton(color: UIColor = UIColor.white) {
+        setBorder(width: 2, cornerRadius: frame.height/2, color: color)
+    }
+}
+
+@IBDesignable extension UIView {
+    @IBInspectable var borderColor: UIColor? {
+        get {
+            if let color = layer.borderColor {
+                return UIColor(cgColor: color)
+            } else {
+                return nil
+            }
+        }
+        set {
+            layer.borderColor = newValue!.cgColor
+        }
+    }
+    @IBInspectable var borderWidth: CGFloat {
+        get {
+            return layer.borderWidth
+        }
+        set {
+            layer.borderWidth = newValue
+        }
+    }
+    @IBInspectable var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+            clipsToBounds = newValue > 0
+        }
     }
 }

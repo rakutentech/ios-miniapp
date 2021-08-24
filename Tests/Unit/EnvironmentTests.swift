@@ -11,6 +11,7 @@ class EnvironmentTests: QuickSpec {
                 let bundle = environment.bundle as? Bundle ?? Bundle(for: EnvironmentTests.self)
 
                 expect(bundle).to(equal(Bundle.main))
+                expect(bundle.valueNotFound).to(equal("NONE"))
             }
             it("has the expected project id") {
                 let mockBundle = MockBundle()

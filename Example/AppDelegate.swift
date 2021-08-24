@@ -4,6 +4,7 @@ import AVKit
 import GoogleMobileAds
 import AppCenter
 import AppCenterCrashes
+import RAnalytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -12,8 +13,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppCenter.start(withAppSecret: Bundle.main.value(for: "AppCenterSecret"), services: [Crashes.self])
-        self.window?.tintColor = #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
+        self.window?.tintColor = UIColor.accent
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        AnalyticsManager.shared().set(loggingLevel: .debug)
         return true
     }
 
@@ -25,6 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             return MiniApp.MAOrientationLock
         }
+    }
+
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true), let host = components.host else {
+            return false
+        }
+        print("Host: ", host)
+        return true
     }
 }
 

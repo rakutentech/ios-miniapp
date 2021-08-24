@@ -28,3 +28,4 @@ docs/
 # Use latest gem versions
 Gemfile.lock
 DerivedData
+vendor/bundle

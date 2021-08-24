@@ -65,7 +65,7 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
         picker.dismiss(animated: true)
 
         guard let image = info[.editedImage] as? UIImage else {
-            print("User cancelled the operation")
+            log("User cancelled the operation")
             return
         }
         setProfileImage(image: image)

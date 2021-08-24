@@ -37,6 +37,7 @@ class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
+    var displayController: DisplayNavigationController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,11 +56,10 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DisplayMiniApp" {
             guard let miniAppDisplay = currentMiniAppView else {
-                displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
+                displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.miniapp"), dismissController: true)
                 return
             }
-
-            let displayController = segue.destination as? DisplayNavigationController
+            displayController = segue.destination as? DisplayNavigationController
             displayController?.miniAppInfo = currentMiniAppInfo
             displayController?.miniAppDisplay = miniAppDisplay
             currentMiniAppInfo = nil
@@ -73,13 +73,14 @@ class ViewController: UIViewController {
     }
 
     func showFirstTimeLaunchScreen(miniAppInfo: MiniAppInfo) {
-        if isMiniAppLaunchedAlready(key: miniAppInfo.id) {
-            compareMiniAppMetaData(miniAppInfo: miniAppInfo) { (result) in
+
+        if let cachedManifest = MiniApp.shared(with: Config.current()).getDownloadedManifest(miniAppId: miniAppInfo.id) {
+            compareMiniAppMetaData(miniAppInfo: miniAppInfo, manifest: cachedManifest) { (result) in
                 switch result {
                 case .success:
                     self.displayMiniApp(miniAppInfo: miniAppInfo)
                 case .failure(let error):
-                    self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: error.localizedDescription, dismissController: true)
+                    self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: error.localizedDescription, dismissController: true)
                 }
             }
         } else {
@@ -91,67 +92,61 @@ class ViewController: UIViewController {
         MiniApp.shared(with: Config.current()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                self.displayFirstTimeLaunchScreen(
-                    reqPermissions: manifestData.requiredPermissions ?? [],
-                    optPermissions: manifestData.optionalPermissions ?? [],
-                    miniAppInfo: miniAppInfo,
-                    customMetaData: manifestData.customMetaData ?? [:])
+                self.dismissProgressIndicator {
+                    self.displayFirstTimeLaunchScreen(manifest: manifestData, miniAppInfo: miniAppInfo)
+                }
             case .failure:
-                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_single_message", comment: ""), dismissController: true)
+                self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.single"), dismissController: true)
             }
         }
     }
 
-    func compareMiniAppMetaData(miniAppInfo: MiniAppInfo, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
-        guard let downloadedManifest = MiniApp.shared(with: Config.current()).getDownloadedManifest(miniAppId: miniAppInfo.id) else {
+    func compareMiniAppMetaData(miniAppInfo: MiniAppInfo, manifest: MiniAppManifest?, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        guard let downloadedManifest = manifest else {
             return completionHandler(.success(true))
         }
         MiniApp.shared(with: Config.current()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
-                self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
+                self.dismissProgressIndicator {
+                    self.checkIfManifestChanged(latestManifest: manifestData, oldManifest: downloadedManifest, miniAppInfo: miniAppInfo)
+                }
             case .failure(let error):
-                completionHandler(.failure(error))
+                if error.isDeviceOfflineDownloadError() {
+                    self.displayMiniApp(miniAppInfo: miniAppInfo)
+                } else {
+                    completionHandler(.failure(error))
+                }
             }
         }
     }
 
     func checkIfManifestChanged(latestManifest: MiniAppManifest, oldManifest: MiniAppManifest, miniAppInfo: MiniAppInfo) {
-        let cachedPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppInfo.id)
-        let cachedAllowedPermissions = cachedPermissions.filter { $0.isPermissionGranted.boolValue == true }
-
-        let requiredPermissions = filterPermissions(permsArray: latestManifest.requiredPermissions ?? [],
-                                                    cachedPermissions: cachedAllowedPermissions)
-        if oldManifest == latestManifest && requiredPermissions.count == 0 {
+        if oldManifest == latestManifest {
             self.displayMiniApp(miniAppInfo: miniAppInfo)
         } else {
-                self.displayFirstTimeLaunchScreen(reqPermissions: latestManifest.requiredPermissions ?? [],
-                                                  optPermissions: latestManifest.optionalPermissions ?? [],
-                                                  miniAppInfo: miniAppInfo,
-                                                  manifestUpdated: true,
-                                                  customMetaData: latestManifest.customMetaData ?? [:])
+            displayFirstTimeLaunchScreen(
+                        manifest: latestManifest,
+                        miniAppInfo: miniAppInfo,
+                        manifestUpdated: true)
         }
     }
 
     func filterPermissions(permsArray: [MASDKCustomPermissionModel], cachedPermissions: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {
-        return permsArray.filter {
+         permsArray.filter {
             !cachedPermissions.contains($0)
         }
     }
 
-    func displayFirstTimeLaunchScreen(reqPermissions: [MASDKCustomPermissionModel],
-                                      optPermissions: [MASDKCustomPermissionModel],
+    func displayFirstTimeLaunchScreen(manifest: MiniAppManifest,
                                       miniAppInfo: MiniAppInfo,
-                                      manifestUpdated: Bool? = false,
-                                      customMetaData: [String: String]) {
+                                      manifestUpdated: Bool? = false) {
         DispatchQueue.main.async {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MAFirstTimeLaunch") as? MAFirstLaunchController {
                 self.currentMiniAppInfo = miniAppInfo
                 viewController.miniAppInfo = miniAppInfo
-                viewController.requiredPermissions = reqPermissions
-                viewController.optionalPermissions = optPermissions
+                viewController.miniAppManifest = manifest
                 viewController.isManifestUpdated = manifestUpdated ?? false
-                viewController.customMetaData = customMetaData
                 viewController.launchScreenDelegate = self
                 viewController.modalPresentationStyle = .fullScreen
                 self.present(viewController, animated: true)
@@ -162,7 +157,7 @@ class ViewController: UIViewController {
     func displayMiniApp(miniAppInfo: MiniAppInfo) {
         self.showProgressIndicator {
             self.currentMiniAppInfo = miniAppInfo
-            self.fetchMiniApp(for: miniAppInfo)
+            self.showMiniApp(for: miniAppInfo)
             self.currentMiniAppTitle = miniAppInfo.displayName
         }
     }
@@ -229,7 +224,7 @@ extension ViewController: MALaunchScreenDelegate {
                 return
             }
             self.showProgressIndicator {
-                self.fetchMiniApp(for: info)
+                self.showMiniApp(for: info)
                 self.currentMiniAppTitle = info.displayName
             }
         }

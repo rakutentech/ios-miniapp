@@ -1,6 +1,16 @@
 import MiniApp
 
 extension ViewController: MiniAppNavigationDelegate {
+    func miniAppNavigationCanGo(back: Bool, forward: Bool) {
+        guard let miniAppDisplayController = UINavigationController.topViewController() as? MiniAppViewController else {
+            guard let miniAppDisplayController = UINavigationController.topViewController() as? DisplayController else {
+                return
+            }
+            return miniAppDisplayController.refreshNavigationBarButtons(backButtonEnabled: back, forwardButtonEnabled: forward)
+        }
+        miniAppDisplayController.refreshNavigationBarButtons(backButtonEnabled: back, forwardButtonEnabled: forward)
+    }
+
     func fetchAppList(inBackground: Bool) {
         showProgressIndicator(silently: inBackground) {
             MiniApp.shared(with: Config.current(), navigationSettings: Config.getNavConfig(delegate: self)).list { (result) in
@@ -16,7 +26,10 @@ extension ViewController: MiniAppNavigationDelegate {
                 case .failure(let error):
                     print(error.localizedDescription)
                     if !inBackground {
-                        self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_list_message", comment: ""), dismissController: true)
+                        self.displayAlert(
+                            title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
+                            message: MASDKLocale.localize("miniapp.sdk.ios.error.message.list"),
+                            dismissController: true)
                     }
                 }
                 if !inBackground {
@@ -32,44 +45,44 @@ extension ViewController: MiniAppNavigationDelegate {
                 switch result {
                 case .success(let responseData):
                     self.currentMiniAppInfo = responseData
-                    self.fetchMiniApp(for: responseData)
+                    self.showMiniApp(for: responseData)
                 case .failure(let error):
                     var message: String
                     switch error {
                     case .noPublishedVersion:
-                        message = NSLocalizedString("error_no_published_version", comment: "")
+                        message = MASDKLocale.localize(.noPublishedVersion)
                     case .miniAppNotFound:
-                        message = NSLocalizedString("error_miniapp_id_not_found", comment: "")
+                        message = MASDKLocale.localize(.miniappIdNotFound)
                     default:
-                        message = NSLocalizedString("error_single_message", comment: "")
+                        message = MASDKLocale.localize("miniapp.sdk.ios.error.message.single")
                     }
                     print(error.localizedDescription)
                     self.dismissProgressIndicator {
-                        self.fetchMiniAppUsingId(title: NSLocalizedString("error_title", comment: ""), message: message)
+                        self.fetchMiniAppUsingId(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: message)
                     }
                 }
             }
         }
     }
 
-    func fetchMiniApp(for appInfo: MiniAppInfo) {
-        MiniApp.shared(with: Config.current(),
-                       navigationSettings: Config.getNavConfig(delegate: self))
-            .create(appId: appInfo.id,
-                    version: appInfo.version.versionId,
-                    queryParams: getQueryParam(),
-                    completionHandler: { (result) in
-            switch result {
-            case .success(let miniAppDisplay):
-                self.dismissProgressIndicator {
-                    self.currentMiniAppView = miniAppDisplay
-                    self.performSegue(withIdentifier: "DisplayMiniApp", sender: nil)
-                }
-            case .failure(let error):
-                self.checkSDKErrorAndDisplay(error: error)
-                print("Errored: ", error.localizedDescription)
-            }
-        }, messageInterface: self, adsDisplayer: adsDisplayer)
+    func showMiniApp(for appInfo: MiniAppInfo) {
+        // replacing the manifest fails
+        self.dismissProgressIndicator { [weak self] in
+            guard let self = self else { return }
+            let uiparams = MiniAppUIParams(
+                title: appInfo.displayName ?? "MiniApp",
+                miniAppId: appInfo.id,
+                miniAppVersion: appInfo.version.versionId,
+                config: Config.current(),
+                messageInterface: self,
+                navigationInterface: self,
+                queryParams: getQueryParam(),
+                adsDisplayer: self.adsDisplayer
+            )
+            MiniAppUI
+                .shared()
+                .launch(base: self, params: uiparams, delegate: self)
+        }
     }
 
     func loadMiniAppUsingURL(_ url: URL) {
@@ -77,8 +90,8 @@ extension ViewController: MiniAppNavigationDelegate {
             url: url,
             queryParams: getQueryParam(),
             errorHandler: { error in
-                self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: NSLocalizedString("error_miniapp_message", comment: ""), dismissController: true)
-                print("Errored: ", error.localizedDescription)
+                self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.miniapp"), dismissController: true)
+                log("loadMiniAppUsingURL(_ url: \(url.absoluteString)) Errored: " + error.localizedDescription)
             }, messageInterface: self, adsDisplayer: adsDisplayer)
 
         currentMiniAppView = miniAppDisplay
@@ -90,25 +103,37 @@ extension ViewController: MiniAppNavigationDelegate {
             if let textField = textField, let miniAppID = textField.text, miniAppID.count > 0 {
                 self.fetchAppInfo(for: miniAppID)
             } else {
-                self.fetchMiniAppUsingId(title: NSLocalizedString("error_invalid_miniapp_id", comment: ""), message: NSLocalizedString("input_valid_miniapp_title", comment: ""))
+                self.fetchMiniAppUsingId(title: MASDKLocale.localize("input_valid_miniapp_title"), message: NSLocalizedString("miniapp.sdk.ios.error.message.invalid_miniapp_id", comment: ""))
             }
         }
     }
 
     func checkSDKErrorAndDisplay(error: MASDKError) {
-            var errorMessage: String = ""
-            switch error {
-            case .metaDataFailure:
-                guard let miniAppInfo = currentMiniAppInfo else {
-                    errorMessage = NSLocalizedString("error_miniapp_download_message", comment: "") + ". \nPlease make sure user agreed to all required permissions from Meta-data"
-                    return
+        switch error {
+        case .metaDataFailure:
+            guard let miniAppInfo = currentMiniAppInfo else {
+                return self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
+                                         message: String(format: MASDKLocale.localize("miniapp.sdk.ios.error.message.metadata"), MASDKLocale.localize(.downloadFailed)), dismissController: true) { _ in
+                    self.fetchAppList(inBackground: true)
                 }
-                self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)
-            default:
-                errorMessage = NSLocalizedString("error_miniapp_download_message", comment: "")
             }
-            self.displayAlert(title: NSLocalizedString("error_title", comment: ""), message: errorMessage, dismissController: true) { _ in
+            self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)
+        default:
+            self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize(.downloadFailed), dismissController: true) { _ in
                 self.fetchAppList(inBackground: true)
             }
         }
+    }
+}
+
+extension ViewController: MiniAppUIDelegate {
+    func onClose() {
+        dismiss(animated: true, completion: nil)
+    }
+
+    func miniApp(_ viewController: MiniAppViewController, didLoadWith error: MASDKError?) {
+        guard let error = error else { return }
+        print("Errored: ", error.localizedDescription)
+        checkSDKErrorAndDisplay(error: error)
+    }
 }

@@ -1,2 +1,21 @@
-"Ok_title" = "OK";
-"Cancel_title" = "キャンセル";
+"miniapp.sdk.ios.alert.title.ok"                                = "OK";
+"miniapp.sdk.ios.alert.title.cancel"                            = "キャンセル";
+"miniapp.sdk.ios.ui.allow"                                      = "許可する";
+"miniapp.sdk.all.ui.save"                                       = "保存";
+
+"miniapp.sdk.ios.firstlaunch.footer"                            = "%@はそれらの許可を要求しています。許可を許可しますか？";
+
+/* MASDKError messages */
+"miniapp.sdk.ios.error.message.server"                          = "Server returned an error. %@: %@";
+"miniapp.sdk.ios.error.message.invalid_url"                     = "URL is invalid.";
+"miniapp.sdk.ios.error.message.invalid_app_id"                  = "Provided Mini App ID is invalid.";
+"miniapp.sdk.ios.error.message.invalid_version_id"              = "Provided Mini App Version ID is invalid.";
+"miniapp.sdk.ios.error.message.invalid_contact_id"              = "Provided contact ID is invalid.";
+"miniapp.sdk.ios.error.message.invalid_response"                = "Invalid response received from server.";
+"miniapp.sdk.ios.error.message.download_failed"                 = "Failed to download the mini app.";
+"miniapp.sdk.ios.error.message.miniapp_meta_data_required_permissions_failure" = "Mini App has not been granted all of the required permissions.";
+"miniapp.sdk.ios.error.message.unknown"                         = "Unknown error occurred in %@ domain with error code %@: %@";
+"miniapp.sdk.ios.error.message.host_app"                        = "Host app Error";
+"miniapp.sdk.ios.error.message.failed_to_conform_to_protocol"   = "Host app failed to implement required interface";
+"miniapp.sdk.ios.error.message.no_published_version"            = "Server returned no published versions for the provided Mini App ID.";
+"miniapp.sdk.ios.error.message.miniapp_id_not_found"            = "Server could not find the provided Mini App ID.";

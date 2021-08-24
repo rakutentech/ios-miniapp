@@ -1,6 +1,21 @@
 import Foundation
 import UIKit
 
+extension NSMutableAttributedString {
+    func highlight(_ value: String, color: UIColor) -> NSMutableAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: color
+        ]
+        append(NSAttributedString(string: value, attributes: attributes))
+        return self
+    }
+
+    func normalText(_ value: String) -> NSMutableAttributedString {
+        append(NSAttributedString(string: value, attributes: nil))
+        return self
+    }
+}
+
 extension String {
 
     var hasHTTPPrefix: Bool {
@@ -27,5 +42,39 @@ extension String {
             return profileImage
         }
         return nil
+    }
+
+    func isValueEmpty() -> Bool {
+        if self.isEmpty || self.trimTrailingWhitespaces().isEmpty {
+            return true
+        }
+        return false
+    }
+
+    func isValidEmail() -> Bool {
+        return NSPredicate(format: "SELF MATCHES %@",
+                           "(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
+                           + "~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
+                           + "x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
+                           + "z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
+                           + "]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
+                           + "9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
+                           + "-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])").evaluate(with: self)
+    }
+}
+
+extension NSMutableAttributedString {
+    func bold(_ value: String, fontSize: CGFloat = 14) -> NSMutableAttributedString {
+        let font: UIFont = UIFont.boldSystemFont(ofSize: fontSize)
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
+        append(NSAttributedString(string: value, attributes: attributes))
+        return self
+    }
+
+    func normal(_ value: String, fontSize: CGFloat = 14) -> NSMutableAttributedString {
+        let font: UIFont = UIFont.systemFont(ofSize: fontSize)
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
+        append(NSAttributedString(string: value, attributes: attributes))
+        return self
     }
 }

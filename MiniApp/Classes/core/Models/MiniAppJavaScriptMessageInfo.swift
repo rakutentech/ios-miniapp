@@ -12,6 +12,10 @@ struct RequestParameters: Decodable {
     let shareInfo: ShareInfoParameters?
     let adType: Int?
     let adUnitId: String?
+    let audience: String?
+    let scopes: [String]?
+    let messageToContact: MessageToContact?
+    let contactId: String?
 }
 
 struct LocationOptions: Decodable {

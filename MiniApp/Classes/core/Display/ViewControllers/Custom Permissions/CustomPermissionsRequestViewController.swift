@@ -26,11 +26,20 @@ class CustomPermissionsRequestViewController: UIViewController {
         guard let permissionRequest = permissionsRequestList else {
             return
         }
-        customPermissionHandlerObj?(.success(permissionRequest))
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            self.customPermissionHandlerObj?(.success(permissionRequest))
+        })
     }
 
     @objc func permissionValueChanged(_ sender: UISwitch) {
+        if isAllPermissionsDenied(sender) {
+            self.saveButton.title = MASDKLocale.localize(.save)
+        } else {
+            self.saveButton.title = MASDKLocale.localize(.allow)
+        }
+    }
+
+    func isAllPermissionsDenied(_ sender: UISwitch) -> Bool {
         if permissionsRequestList?.indices.contains(sender.tag) ?? false {
             let permissionModel = permissionsRequestList?[sender.tag]
             if sender.isOn {
@@ -39,18 +48,13 @@ class CustomPermissionsRequestViewController: UIViewController {
                 permissionModel?.isPermissionGranted = .denied
             }
         }
-        let allPermissionsDenied = permissionsRequestList?.allSatisfy {
+        return permissionsRequestList?.allSatisfy {
             $0.isPermissionGranted == MiniAppCustomPermissionGrantedStatus.denied
             } ?? false
-        if allPermissionsDenied {
-            self.saveButton.title = "Save"
-        } else {
-            self.saveButton.title = "Allow"
-        }
     }
 
     func addFooterInfo() {
-        self.footerLabel.text = " \(miniAppTitle) wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings"
+        footerLabel.text = String(format: MASDKLocale.localize(.firstLaunchFooter), miniAppTitle)
     }
 }
 

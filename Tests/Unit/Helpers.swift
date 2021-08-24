@@ -2,6 +2,50 @@
 import WebKit
 import Foundation
 
+let jSONManifest = """
+{
+      "reqPermissions": [
+        {
+          "name": "rakuten.miniapp.user.USER_NAME",
+          "reason": "Describe your reason here (optional)."
+        },
+        {
+          "name": "rakuten.miniapp.user.PROFILE_PHOTO",
+          "reason": "Describe your reason here (optional)."
+        }
+      ],
+      "optPermissions": [
+        {
+          "name": "rakuten.miniapp.user.CONTACT_LIST",
+          "reason": "Describe your reason here (optional)."
+        },
+        {
+          "name": "rakuten.miniapp.device.LOCATION",
+          "reason": "Describe your reason here (optional)."
+        }
+      ],
+      "customMetaData": {
+        "exampleKey": "test"
+      },
+      "accessTokenPermissions": [
+      {
+        "audience": "AUDIENCE_TEST",
+        "scopes": ["scope_test"]
+      }
+   ]
+}
+"""
+
+let mockMetaDataString = """
+    {
+        "bundleManifest":
+              \(jSONManifest)
+    }
+"""
+
+let mockRATAcc = "123"
+let mockRATAid = "1"
+
 // swiftlint:disable file_length
 class MockAPIClient: MiniAppClient {
     var data: Data?
@@ -11,19 +55,20 @@ class MockAPIClient: MiniAppClient {
     var request: URLRequest?
     var zipFile: String?
     var headers: [String: String]?
+    var mockSDKConfig: MiniAppSdkConfig?
 
     init(previewMode: Bool? = false) {
         let bundle = MockBundle()
         bundle.mockPreviewMode = previewMode
-        super.init(with:
-                MiniAppSdkConfig(
-                    baseUrl: bundle.mockEndpoint,
-                    rasProjectId: bundle.mockProjectId,
-                    subscriptionKey: bundle.mockSubscriptionKey,
-                    hostAppVersion: bundle.mockHostAppUserAgentInfo,
-                    isPreviewMode: bundle.mockPreviewMode
-                )
+        mockSDKConfig = MiniAppSdkConfig(
+            baseUrl: bundle.mockEndpoint,
+            rasProjectId: bundle.mockProjectId,
+            subscriptionKey: bundle.mockSubscriptionKey,
+            hostAppVersion: bundle.mockHostAppUserAgentInfo,
+            isPreviewMode: bundle.mockPreviewMode,
+            analyticsConfigList: [MAAnalyticsConfig(acc: mockRATAcc, aid: mockRATAid)]
         )
+        super.init(with: mockSDKConfig!)
     }
 
     override func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
@@ -149,6 +194,11 @@ class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
             }
         }
     }
+}
+
+class MockMetaDataDownloader: MetaDataDownloader {
+    var data: Data?
+    var error: Error?
 
     override func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if error != nil {
@@ -251,17 +301,25 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
-    func getUniqueId() -> String {
-        let mockMessageInterface = MockMessageInterface()
-        return mockMessageInterface.getUniqueId()
-    }
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
     }
+    func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.sendMessageToContact(message, completionHandler: completionHandler)
+    }
+    func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.sendMessageToContactId(contactId, message: message, completionHandler: completionHandler)
+    }
+    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.sendMessageToMultipleContacts(message, completionHandler: completionHandler)
+    }
 }
+
 class MockMessageInterface: MiniAppMessageDelegate {
-    var mockUniqueId: Bool = false
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
     var permissionError: MASDKPermissionError?
@@ -271,7 +329,32 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockProfilePhoto: String? = ""
     var mockContactList: [MAContact]? = [MAContact(id: "contact_id")]
     var messageContentAllowed: Bool = false
+    var mockPointsInterface: Bool = false
     var mockAccessToken: String? = ""
+
+    func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        if messageContentAllowed {
+            completionHandler(.success("SUCCESS"))
+        } else {
+            completionHandler(.failure(.invalidContactId))
+        }
+    }
+
+    func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        if messageContentAllowed {
+            completionHandler(.success(contactId))
+        } else {
+            completionHandler(.failure(.invalidContactId))
+        }
+    }
+
+    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
+        if messageContentAllowed {
+            completionHandler(.success(["contact_id1", "contact_id2"]))
+        } else {
+            completionHandler(.failure(.invalidContactId))
+        }
+    }
 
     func shareContent(info: MiniAppShareContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
         if messageContentAllowed {
@@ -281,15 +364,11 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func getUniqueId() -> String {
-        if mockUniqueId {
-            return ""
-        } else {
-            guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
-                return ""
-            }
-            return deviceId
+    func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+            return completionHandler(.failure(.unknownError(domain: "MASDKError", code: 1, description: "Unable to retrieve Unique ID")))
         }
+        completionHandler(.success(deviceId))
     }
 
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
@@ -328,22 +407,30 @@ class MockMessageInterface: MiniAppMessageDelegate {
     }
 
     func getUserName() -> String? {
-        return mockUserName
+        mockUserName
     }
 
     func getProfilePhoto() -> String? {
-        return mockProfilePhoto
+        mockProfilePhoto
     }
 
-    func getContacts() -> [MAContact]? {
-        return mockContactList
+    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
+        completionHandler(.success(mockContactList))
     }
 
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
         guard let accessToken =  mockAccessToken, !accessToken.isEmpty else {
-            return completionHandler(.failure(.unknownError))
+            return completionHandler(.failure(.error(description: "Unable to return Access Token")))
         }
-        return completionHandler(.success(MATokenInfo(accessToken: accessToken, expirationDate: Date())))
+        return completionHandler(.success(MATokenInfo(accessToken: accessToken, expirationDate: Date(), scopes: scopes)))
+    }
+
+    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
+        if mockPointsInterface {
+            completionHandler(.success(MAPoints(standard: 10, term: 10, cash: 10)))
+        } else {
+            completionHandler(.failure(.error(description: "Failed to retrieve Points details")))
+        }
     }
 }
 
@@ -366,39 +453,34 @@ var mockMiniAppManifest: MiniAppManifest {
                                                                                         permissionRequestDescription: "Contact List custom permission")
                                                             ]
     let customMetaData: [String: String] = ["exampleKey": "exampleValue"]
-    let manifest = MiniAppManifest.init(requiredPermissions: requiredPermissions, optionalPermissions: optionalPermissions, customMetaData: customMetaData, versionId: "ver-id-test")
-    return manifest
+    let customScopes: MASDKAccessTokenScopes = MASDKAccessTokenScopes(audience: "AUDIENCE_TEST", scopes: ["scope_test"])!
+    return MiniAppManifest.init(
+            requiredPermissions: requiredPermissions,
+            optionalPermissions: optionalPermissions,
+            customMetaData: customMetaData,
+            accessTokenPermissions: [customScopes], versionId: "ver-id-test")
 }
 
-let mockMetaDataString = """
-    {
-        "bundleManifest": {
-              "reqPermissions": [
-                {
-                  "name": "rakuten.miniapp.user.USER_NAME",
-                  "reason": "Describe your reason here (optional)."
-                },
-                {
-                  "name": "rakuten.miniapp.user.PROFILE_PHOTO",
-                  "reason": "Describe your reason here (optional)."
-                }
-              ],
-              "optPermissions": [
-                {
-                  "name": "rakuten.miniapp.user.CONTACT_LIST",
-                  "reason": "Describe your reason here (optional)."
-                },
-                {
-                  "name": "rakuten.miniapp.device.LOCATION",
-                  "reason": "Describe your reason here (optional)."
-                }
-              ],
-              "customMetaData": {
-                "exampleKey": "test"
-              }
-        }
+@discardableResult func saveMockManifestInCache(miniAppId: String, version: String = "ver-id-test") -> Bool {
+    do {
+        try MAManifestStorage().saveManifestInfo(
+            forMiniApp: miniAppId,
+            manifest: getMockManifestInfo(miniAppId: miniAppId)!
+        )
+        return true
+    } catch {
+        return false
     }
-"""
+}
+
+func removeMockManifestInCache(miniAppId: String) {
+    MAManifestStorage().removeKey(forMiniApp: miniAppId)
+}
+
+func getMockManifestInfo(miniAppId: String) throws -> MiniAppManifest? {
+    let manifestData = jSONManifest.data(using: .utf8)!
+    return try JSONDecoder().decode(MiniAppManifest.self, from: manifestData)
+}
 
 func getDefaultSupportedPermissions() -> [MASDKCustomPermissionModel] {
     var supportedPermissionList = [MASDKCustomPermissionModel]()
@@ -559,7 +641,7 @@ class MockDisplayer: Displayer {
                                  queryParams: String? = nil,
                                  hostAppMessageDelegate: MiniAppMessageDelegate,
                                  adsDisplayer: MiniAppAdDisplayer?,
-                                 initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayDelegate {
+                                 initialLoadCallback: @escaping (Bool) -> Void, analyticsConfig: [MAAnalyticsConfig]? = []) -> MiniAppDisplayDelegate {
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
             DispatchQueue.main.async {
                 initialLoadCallback(self.mockedInitialLoadCallbackResponse)
@@ -590,6 +672,10 @@ func updateCustomPermissionStatus(miniAppId: String, permissionType: MiniAppCust
                                                                     isPermissionGranted: status,
                                                                     permissionRequestDescription: "")],
                                                      forMiniApp: miniAppId)
+}
+func clearCustomPermissionsFromStorage(miniAppId: String) {
+    let miniAppPermissionsStorage = MiniAppPermissionsStorage()
+    miniAppPermissionsStorage.removeKey(for: miniAppId)
 }
 
 func decodeMiniAppError(message: String?) -> MiniAppErrorDetail? {

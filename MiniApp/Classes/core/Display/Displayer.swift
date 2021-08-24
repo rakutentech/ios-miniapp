@@ -4,14 +4,14 @@ internal class Displayer {
     init(_ config: MiniAppNavigationConfig? = nil) {
         self.navConfig = config
     }
-
     func getMiniAppView(miniAppId: String,
                         versionId: String,
                         projectId: String,
                         miniAppTitle: String,
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
-                        adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
+                        adsDisplayer: MiniAppAdDisplayer? = nil,
+                        analyticsConfig: [MAAnalyticsConfig]? = []) -> MiniAppDisplayDelegate {
         RealMiniAppView(
           miniAppId: miniAppId,
           versionId: versionId,
@@ -22,7 +22,8 @@ internal class Displayer {
           adsDisplayer: adsDisplayer,
           displayNavBar: navConfig?.navigationBarVisibility ?? .never,
           navigationDelegate: navConfig?.navigationDelegate,
-          navigationView: navConfig?.navigationView)
+          navigationView: navConfig?.navigationView,
+            analyticsConfig: analyticsConfig)
     }
 
     func getMiniAppView(miniAppURL: URL,
@@ -30,7 +31,8 @@ internal class Displayer {
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
                         adsDisplayer: MiniAppAdDisplayer? = nil,
-                        initialLoadCallback: @escaping (Bool) -> Void) -> MiniAppDisplayDelegate {
+                        initialLoadCallback: @escaping (Bool) -> Void,
+                        analyticsConfig: [MAAnalyticsConfig]? = []) -> MiniAppDisplayDelegate {
         RealMiniAppView(
             miniAppURL: miniAppURL,
             miniAppTitle: miniAppTitle,
@@ -40,6 +42,7 @@ internal class Displayer {
             initialLoadCallback: initialLoadCallback,
             displayNavBar: navConfig?.navigationBarVisibility ?? .never,
             navigationDelegate: navConfig?.navigationDelegate,
-            navigationView: navConfig?.navigationView)
+            navigationView: navConfig?.navigationView,
+            analyticsConfig: analyticsConfig)
     }
 }

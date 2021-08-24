@@ -1,10 +1,75 @@
 ## CHANGELOG
 
-### 3.x.x (2021-MM-DD)
+### 3.6.0 (release date TBD)
+
+**SDK**
+
+- **Feature:** Store Manifest as a json file
+- **Feature:** A secure check is performed on manifest permissions before launching the Mini App
+
+### 3.5.0 (2021-08-05)
+
+**SDK**
+
+- **Feature:** Mini App SDK now supports an optional banner text in message to send to contacts received from MiniApp
+- **Feature:** Added Points Interface `getPoints` to retrieve Rakuten Points
+- **Feature:** Added `rakuten.miniapp.user.POINTS` custom permission
+- **Feature:** Added support for Admob v8.+ in submodule `MiniApp/Admob8`
+
+**Sample app**
+
+- **Feature:** Display of a banner on message contact picker when required
+- **Feature:** Added Points to the settings screen to change `getPoints` response values 
+
+### 3.4.0 (2021-06-25)
+
+**SDK**
+
+- **Feature:** Mini App SDK now supports code updates in preview mode
+- **Feature:** Added possibility to send analytics to multiple accounts at the same time
+- **Feature:** Updated `MiniAppSdkConfig` class to add additional parameter `MAAnalyticsConfig` which will be used by Host app to send analytics for multiple accounts.
+- **Updated:** Updated `getAccessToken` result with new Error type i.e `MASDKAccessTokenError` to support more errors
+- **Fixed:** Added support for form submission redirections
+
+**Sample App**
+
+- **Feature:** Added QA tests settings screen containing options to test all `getAccessToken` error types
+
+---
+### 3.3.0 (2021-05-27)
+
+**SDK**
+
+- **Feature:** Added `rakuten.miniapp.user.action.SEND_MESSAGE` custom permission
+- **Feature:** Support Email addresses (`mailto:`) hyperlinks from a mini app. See [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a).
+- **Deprecated:** `getUniqueId()` in `MiniAppMessageDelegate` protocol is deprecated. You should use `getUniqueId(completionHandler:)` instead
+- **Deprecated:** `getContacts()` in `MiniAppUserInfoDelegate` protocol is deprecated. You should use `getContacts(completionHandler:)` instead
+- **Deprecated:** `localize(bundle:_:params:)` in `MASDKLocale` class is deprecated. You should use `localize(bundle:_:)` instead
+- **Fixed:** Long messages were truncated in sample app
+
+**Sample App**
+- **Feature:** Custom contact name and email can be added now from the settings
+
+---
+### 3.2.0 (2021-04-22)
+
+**SDK**
+
+- **Feature:** Added chat messages capabilities
+- **Feature:** Standardized texts localization
+
+**Sample App**
+
+- **Feature:** Added chat messages screens with contact picker
+- **Fixed:** First launch screen metadata text was hidden
+
+---
+### 3.1.0 (2021-04-02)
 
 **SDK**
 
 - **Feature:** Added `rakuten.miniapp.user.ACCESS_TOKEN` custom permission
+- **Feature:** Added `rakuten.miniapp.user.ACCESS_TOKEN` audiences and scopes
 
 ---
 ### 3.0.0 (2021-03-19)
@@ -48,7 +113,7 @@
 - **Feature** Added analytics for Mini App usage tracking
 - **Feature** Updated `getUserName` and `getProfilePhoto` interfaces to be asynchronous. Old methods are deprecated
 - **Feature** Updated `MiniApp().shared.create` interface to accept another optional query string parameter.
-- **Deprecated:** `requestPermission(permissionType:completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `requestDevicePermission(permissionType:completionHandler:))` instead
+- **Deprecated:** `requestPermission(permissionType:completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `requestDevicePermission(permissionType:completionHandler:)` instead
 - **Fixed** Geolocation was not updated after the first GPS fix
 
 **Sample App**
@@ -100,7 +165,7 @@
 - **Feature:** Added support for Orientation lock, that enables the mini app to lock `portrait` or `landscape` orientation for the mini-app. [Please check here](USERGUIDE.md#orientation-lock)
 - **Feature:** Added support to retrieve Access token and expiry date
 - **Feature:** Added default implementation in SDK for `requestCustomPermissions(permissions:miniAppTitle:completionHandler:)` [Please check here](USERGUIDE.md#request-custom-permission)
-- **Deprecated:** `requestCustomPermissions(permissions:completionHandler:)` in `MiniAppCallbackProtocol` protocol is deprecated. You should use `requestCustomPermissions(permissions:miniAppTitle:completionHandler:))` instead
+- **Deprecated:** `requestCustomPermissions(permissions:completionHandler:)` in `MiniAppCallbackProtocol` protocol is deprecated. You should use `requestCustomPermissions(permissions:miniAppTitle:completionHandler:)` instead
 
 **Sample App**
 

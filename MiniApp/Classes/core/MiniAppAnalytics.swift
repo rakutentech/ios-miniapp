@@ -49,7 +49,10 @@ public class MiniAppAnalyticsLoader: NSObject {
 
 public class MiniAppAnalytics {
     public static let notificationName = Notification.Name("com.rakuten.esd.sdk.events.custom")
-    internal static let acc = "1553", aid = "1"
+    open class var sdkVersion: String? {
+        Bundle.miniAppBundle?.infoDictionary?["CFBundleShortVersionString"] as? String
+    }
+    internal static let defaultRATAcc = MAAnalyticsConfig(acc: "1553", aid: "1")
 
     internal class func getAnalyticsInfo(miniAppId: String? = nil, miniAppVersion: String? = nil, projectId: String? = nil) -> [(String, String)] {
         var result = [(String, String)]()
@@ -62,15 +65,25 @@ public class MiniAppAnalytics {
         if let projectId = projectId ?? Bundle.main.value(for: Environment.Key.projectId.rawValue) {
             result.append((MiniAppAnalyticsParameter.projectId.name(), projectId))
         }
-        if let version = Bundle(identifier: "org.cocoapods.MiniApp")?.infoDictionary?["CFBundleShortVersionString"] as? String {
+        if let version = sdkVersion {
             result.append((MiniAppAnalyticsParameter.sdkVersion.name(), version))
         }
         return result
     }
 
-    internal class func sendAnalytics(event: MiniAppRATEvent, miniAppId: String? = nil, miniAppVersion: String? = nil, projectId: String? = nil, customParameters: (String, String)...) {
+    internal class func getAnalyticsConfigList(analyticsConfig: [MAAnalyticsConfig]? = []) -> [MAAnalyticsConfig] {
+        var analyticsConfigList: [MAAnalyticsConfig] = []
+        analyticsConfigList.append(defaultRATAcc)
+        guard let configList = analyticsConfig else {
+            return analyticsConfigList
+        }
+        analyticsConfigList.append(contentsOf: configList)
+        return analyticsConfigList
+    }
+
+    internal class func sendAnalytics(event: MiniAppRATEvent, miniAppId: String? = nil, miniAppVersion: String? = nil, projectId: String? = nil, customParameters: (String, String)..., analyticsConfig: [MAAnalyticsConfig]? = []) {
         let params = getAnalyticsInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId) + customParameters
         MiniAppLogger.d("posting \(event.name()) analytic \(event.eType()) event with params:\n\(params)", "📡")
-        NotificationCenter.default.sendAnalytics(event: event, parameters: params)
+        NotificationCenter.default.sendAnalytics(event: event, parameters: params, analyticsConfig: getAnalyticsConfigList(analyticsConfig: analyticsConfig))
     }
 }

@@ -2,6 +2,9 @@ ignore:
    - "Pods"
    - "Tests"
    - "Example"
+   - "MiniApp/Classes/ui"
+   - "MiniApp/Extensions/RealMiniAppView+WKUIDelegate.swift"
+
 coverage:
   status:
     patch:

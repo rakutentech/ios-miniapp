@@ -72,6 +72,8 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Share Mini app content](#share-mini-app-content)
     * [Ads integration](#ads-integration)
     * [Retrieve User Profile details](#retrieve-user-profile-details)
+    * [Send message to contacts](#send-message-to-contacts)
+    * [Retrieve points](#retrieve-points)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Mini App meta-data](#mini-meta-data)
@@ -81,11 +83,13 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [List Downloaded Mini apps](#list-downloaded-mini-apps)
 * [Advanced Features](#advanced-features)
     * [Overriding configuration on runtime](#runtime-conf)
+    * [Overriding localizations](#localization)
     * [Customize history navigation](#custom-navigation)
     * [Opening external links](#Opening-external-links)
     * [Orientation Lock](#orientation-lock)
     * [Catching analytics events](#analytics-events)
     * [Passing Query parameters while creating Mini App](#query-param-mini-app)
+    * [Permissions required from the Host app](#permissions-from-host-app)
 
 <a id="create-mini-app"></a>
 
@@ -149,11 +153,9 @@ Mini App SDK provides default implementation for few interfaces in `MiniAppMessa
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getUniqueId() -> String {
-        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
-            return ""
-        }
-        return deviceId
+    func getUniqueId(completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+        // Implementation to return the Unique ID
+        completionHandler(.success(""))
     }
 }
 ```
@@ -246,7 +248,7 @@ extension ViewController: MiniAppMessageDelegate {
 Mini App SDK gives you the possibility to display ads triggered by your Mini App from your host app.
 There are 2 ways to achieve this: 
 - by implementing [MiniAppAdDisplayDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppAdDisplayDelegate.html) by yourself 
-- if you rely on Google ads to display your ads you can simply implement `pod MiniApp/Admob` into your pod dependencies (see [settings section](#setting-admob)).
+- if you rely on Google ads to display your ads you can simply implement `pod MiniApp/Admob` (Admob 7.+) or `pod MiniApp/Admob8` (Admob 8.+) into your pod dependencies (see [settings section](#setting-admob)).
 ###### Google ads displayer
 
 When you chose to implement Google Ads support for your Mini Apps (see [configuration section](#setting-admob)), you must provide an [`AdMobDisplayer`](https://rakutentech.github.io/ios-miniapp/Classes/AdMobDisplayer.html) as adsDelegate parameter when creating your Mini App display:
@@ -327,9 +329,9 @@ MiniApp.shared(with: Config.current())
             // Some code to manage Mini App view creation callbacks
         }, messageInterface: self, adsDelegate: self)
 ```
-<a id="user-profile-details"></a>
+<a id="retrieve-user-profile-details"></a>
 
-##### Retrieve User Profile details
+#### Retrieve User Profile details
 ---
 **API Docs:** [MiniAppUserInfoDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppUserInfoDelegate.html)
 
@@ -374,9 +376,9 @@ Retrieve the Contact list of the User
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getContacts() -> [MAContact]? {
+    func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
         // Implementation to return the contact list
-        return []
+        completionHandler(.success([]))
     }
 }
 ```
@@ -389,13 +391,91 @@ Retrieve access token and expiry date
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
+    func getAccessToken(miniAppId: String,
+                        scopes: MASDKAccessTokenPermission?,
+                        completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void) {
 
         completionHandler(.success(.init(accessToken: "ACCESS_TOKEN", expirationDate: Date())))
     }
 }
 ```
+<a id="send-message-to-contacts"></a>
 
+#### Send message to contacts
+---
+**API Docs:** [ChatMessageBridgeDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/ChatMessageBridgeDelegate.html)
+
+Send a message to a contact from the [user profile contacts list](#user-profile-details-contactlist) using 'MiniAppMessageDelegate' methods.
+Three methods can be triggered by the Mini App, and here are the recommended behaviors for each one:
+
+| |`sendMessageToContact(_:completionHandler:)`|`sendMessageToContactId(_:message:completionHandler:)`|`sendMessageToMultipleContacts(_:completionHandler:)`|
+|---|---|---|---|
+|**Triggered when**|Mini App wants to send a message to a contact.|Triggered when Mini App wants to send a message to a specific contact.|Triggered when Mini App wants to send a message to multiple contacts. |
+| **Contact chooser needed** | single contact | None | multiple contacts |
+| **Action** | send the message to the chosen contact | send a message to the specified contactId without any prompt to the User | send the message to all chosen contacts |
+| **On success** | invoke completionHandler success with the ID of the contact which was sent the message. | invoke completionHandler success with the ID of the contact which was sent the message. | invoke completionHandler success with a list of IDs of the contacts which were successfully sent the message. |
+| **On cancellation** | invoke completionHandler success with nil value. | invoke completionHandler success with nil value. | invoke completionHandler success with nil value. |
+| **On error** | invoke completionHandler error when there was an error. | invoke completionHandler error when there was an error. | invoke completionHandler error when there was an error. |
+
+Here is an example of integration:
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+  public func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+    presentContactsPicker { controller in
+      controller.message = message
+      controller.title = NSLocalizedString("Pick a contact", comment: "")
+    }
+  }
+
+  public func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+    getContacts { result in
+      switch result {
+      case success(let contacts):
+        if let contact = contacts.first(where: { $0.id == contactId }) {
+          // insert here code to send the message
+          completionHandler(.success(contact.id))
+        } else {
+          fallthrough
+        }
+      default:
+        completionHandler(.failure(.invalidContactId))
+      }
+    }
+  }
+
+  public func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
+    presentContactsPicker { chatContactsSelectorViewController in
+      chatContactsSelectorViewController.contactsHandlerJob = completionHandler
+      chatContactsSelectorViewController.message = message
+      chatContactsSelectorViewController.multipleSelection = true
+      chatContactsSelectorViewController.title = NSLocalizedString("Select contacts", comment: "")
+    }
+  }
+
+  func presentContactsPicker(controllerPresented: (() -> Void)? = nil, contactsPickerCreated: (ChatContactsSelectorViewController) -> Void) {
+    if let viewController = UIStoryboard(name: "Main", bundle: nil)
+            .instantiateViewController(withIdentifier: "ChatContactsSelectorViewController") as? ChatContactsSelectorViewController {
+      UINavigationController.topViewController()?.present(UINavigationController(rootViewController: viewController), animated: true, completion: controllerPresented)
+    }
+  }
+}
+```
+
+<a id="retrieve-points"></a>
+
+###### Retrieve Points
+
+Retrieve Rakuten points (standard, term, cash) of the User. It's necessary to allow the `Rakuten Points` custom permission for retrieving the points.
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
+        // Implementation to return points
+        completionHandler(.success(MAPoints(standard: 500, term: 400, cash: 300)))
+    }
+}
+```
 <a id="load-miniapp-list"></a>
 
 ### Load the `MiniApp` list:
@@ -446,7 +526,11 @@ MiniApp.shared(with: Config.current()).info(miniAppId: miniAppID) { (result) in
 #### Getting a `MiniApp meta-data` :
 ---
 
-MiniApp developers can define the `required` & `optional` permissions in the `manifest.json` file like below. Also, they can add any custom variables/items inside `customMetaData`.
+MiniApp developers can define several metadata into the `manifest.json`:
+- `required` & `optional` permissions
+- access token audience/scope permissions
+- custom variables/items inside `customMetaData`.
+
 
 Host app will use the defined interfaces to retrieve these details from manifest.json
 
@@ -472,6 +556,16 @@ Host app will use the defined interfaces to retrieve these details from manifest
          "reason":"Describe your reason here."
       }
    ],
+   "accessTokenPermissions":[
+      {
+          "audience":"rae",
+          "scopes":["idinfo_read_openid", "memberinfo_read_point"]
+      },
+      {
+          "audience":"api-c",
+          "scopes":["your_service_scope_here"]
+      }
+   ],
    "customMetaData":{
       "hostAppRandomTestKey":"metadata value"
    }
@@ -486,7 +580,8 @@ MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAp
         case .success(let manifestData):
             // Retrieve the custom key/value pair like the following.
             let randomTestKeyValue = manifestData.customMetaData?["hostAppRandomTestKey"]
-        case .failure
+        case .failure:
+          break
     }
 	...
 }
@@ -558,6 +653,41 @@ class Config: NSObject {
 }
 ```
 *NOTE:* `RMAHostAppUserAgentInfo` cannot be configured at run time.
+
+<a id="localization"></a>
+
+#### Overriding localizations
+
+Mini App SDK localization is based on [iOS framework localizable strings system](https://help.apple.com/xcode/mac/current/#/dev3255e0273).
+In the following table, you can find all the keys that the SDK is using to translate its texts to your UI language.
+Mini App SDK will look in the host app `Localizable.strings` for these keys to find local texts. If these keys are not present, a default text is provided.
+
+|                     Localization key                      | Usage | Default text | Parameters |
+|-----------------------------------------------------------|-------|:------------:|------------|
+| `miniapp.sdk.ios.alert.title.ok`                              | alert dialogs validation button | OK | - |
+| `miniapp.sdk.ios.alert.title.cancel`                          | alert dialogs cancellation button | Cancel | - |
+| `miniapp.sdk.ios.ui.allow`                                    | permission screen authorization validation | Allow | - |
+| `miniapp.sdk.all.ui.save`                                     | permission screen denial validation | Save | - |
+| `miniapp.sdk.ios.firstlaunch.footer`                          | used at the bottom of the permissions validation screen | %@<sup>[1]</sup> wants to access the above permissions. Choose your preference accordingly.\n\n  You can also manage these permissions later in the Miniapp settings | <sup>[1]</sup> Mini App name |
+| `miniapp.sdk.ios.error.message.server`                        | error reporting (decription) | Server returned an error. %@<sup>[1]</sup>: %@<sup>[2]</sup> | <sup>[1]</sup> Error code<br/><sup>[2]</sup> Error message|
+| `miniapp.sdk.ios.error.message.invalid_url`                   | error reporting (decription) | URL is invalid. | - |
+| `miniapp.sdk.ios.error.message.invalid_app_id`                | error reporting (decription) | Provided Mini App ID is invalid. | - |
+| `miniapp.sdk.ios.error.message.invalid_version_id`            | error reporting (decription) | Provided Mini App Version ID is invalid. | - |
+| `miniapp.sdk.ios.error.message.invalid_contact_id`            | error reporting (decription) | Provided contact ID is invalid. | - |
+| `miniapp.sdk.ios.error.message.invalid_response`              | error reporting (decription) | Invalid response received from server. | - |
+| `miniapp.sdk.ios.error.message.download_failed`               | error reporting (decription) | Failed to download the mini app. | - |
+| `miniapp.sdk.ios.error.message.miniapp_meta_data_required_permisions_failure` | error reporting (decription) | Mini App has not been granted all of the required permissions. | - |
+| `miniapp.sdk.ios.error.message.unknown`                       | error reporting (decription) | Unknown error occurred in %@<sup>[1]</sup> domain with error code %@<sup>[2]</sup>: %@<sup>[3]</sup> | <sup>[1]</sup> Error domain<br/><sup>[2]</sup> Error code<br/><sup>[3]</sup> Error message |
+| `miniapp.sdk.ios.error.message.host_app`                      | error reporting (domain) | Host app Error | - |
+| `miniapp.sdk.ios.error.message.failed_to_conform_to_protocol` | error reporting (decription) | Host app failed to implement required interface | - |
+| `miniapp.sdk.ios.error.message.no_published_version`          | error reporting (decription) | Server returned no published versions for the provided Mini App ID. | - |
+| `miniapp.sdk.ios.error.message.miniapp_id_not_found`          | error reporting (decription) | Server could not find the provided Mini App ID. | - |
+| `miniapp.sdk.ios.error.message.unknown_server_error`          | error reporting (decription) | Unknown server error occurred | - |
+| `miniapp.sdk.ios.error.message.ad_not_loaded`                 | error reporting (decription) | Ad %@<sup>[1]</sup> is not loaded yet | <sup>[1]</sup>Ad id |
+| `miniapp.sdk.ios.error.message.ad_loading`                    | error reporting (decription) | Previous %@<sup>[1]</sup> is still in progress | <sup>[1]</sup>Ad id |
+| `miniapp.sdk.ios.error.message.ad_loaded`                     | error reporting (decription) | Ad %@<sup>[1]</sup> is already loaded | <sup>[1]</sup>Ad id |
+
+If you need to use one of this strings in your host application, you can use the convenience method `MASDKLocale.localize(_:_:)`
 
 <a id="custom-navigation"></a>
 
@@ -716,12 +846,98 @@ MiniApp.shared().create(appId: String, queryParams: "param1=value1&param2=value2
                 print("Error: ", error.localizedDescription)
             }
 }, messageInterface: self)
-
 ```
 
 And the Mini App will be loaded like the following scheme,
 
-```mscheme.rakuten//miniapp/index.html?param1=value1&param2=value2```
+```
+mscheme.rakuten//miniapp/index.html?param1=value1&param2=value2
+```
+
+<a id="permissions-from-host-app"></a>
+
+### Permissions required from the Host app
+
+Mini App SDK requires the host app to include the following set of device permissions into its Info.plist file:
+
+| Plist key | Permission | Reason |
+|-----------|:----------:|--------|
+| [NSLocationAlwaysAndWhenInUseUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nslocationalwaysandwheninuseusagedescription) |  Location  | Mini app to track/get the current location of the user |
+| [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nscamerausagedescription)                                         |   Camera   | Camera permission required by Mini app to take pictures                              |
+| [NSMicrophoneUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsmicrophoneusagedescription)                                 | Microphone | Microphone permission required by Mini app to record a video.                             |
+
+<a id="faqs-and-troubleshooting"></a>
+
+## FAQs and Troubleshooting
+
+### How do I deep link to mini apps?
+
+If you want to have deep links directly to your mini apps, then you must implement deep link handling within your App. This can be done using either a custom deep link scheme (such as `myAppName://miniapp`) or a [Universal Link](https://developer.apple.com/ios/universal-links/) (such as `https://www.example.com/miniapp`). See the following resources for more information on how to implement deep linking capabilities:
+
+- [Allowing Apps and Websites to Link to Your Content](https://developer.apple.com/documentation/xcode/allowing_apps_and_websites_to_link_to_your_content)
+- [Supporting Associated Domains](https://developer.apple.com/documentation/safariservices/supporting_associated_domains)
+
+After you have implemented deep linking capabilities in your App, then you can configure your deep link to open and launch a Mini App. Note that your deep link should contain information about which mini app ID to open. Also, you can pass query parameters and a URL fragment to the mini app. The recommended deep link format is similar to `https://www.example.com/miniapp/MINI_APP_ID?myParam=myValue#myFragment` where the `myParam=myValue#myFragment` portion is optional and will be passed directly to the mini app. 
+
+The following is an example which will parse the mini app ID and query string from a deep link:
+
+```swift
+// In your AppDelegate
+func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+        let incomingURL = userActivity.webpageURL,
+        let components = URLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
+        return false
+    }
+
+    return handleDeepLink(components: components)
+}
+
+func handleDeepLink(components: URLComponents) -> Bool
+{
+    guard let host = components.host, host == "example.com" {
+        return false
+    }
+
+    let pathComponents = components.path.split("/")
+    guard
+        let rootPath = pathComponents.first
+    else { return false }
+
+    if (rootPath == "miniapp") {
+        guard
+            let id = pathComponents[1]
+        else { return false }
+        
+        let query = components.query ?? ""
+        let fragment = components.fragment ?? ""
+        let queryString = query + "#" + fragment
+        
+        // Note that `myMiniAppCoordinator` is just a placeholder example for your own class
+        // Inside this class you should call `MiniApp.create` in order to create and display the mini app
+        myMiniAppCoordinator.goToMiniApp(miniAppId: id, query: queryString)
+
+        return true
+    }
+
+    return false
+}
+```
+
+### How do I clear the session data for Mini Apps?
+
+In the case that a user logs out of your App, you should clear the session data for all of your Mini Apps. This will ensure that the next user does not have access to the stored sensitive information about the previous user such as Local Storage, IndexedDB, and Web SQL.
+
+The session data can be cleared by using the following:
+
+```swift
+WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), 
+    modifiedSince: Date.distantPast, completionHandler: {
+    // Data removal complete
+})
+```
+
+**Note:** This will also clear the storage, cookies, and authentication data for ALL `WkWebViews` used by your App.
 
 <a id="change-log"></a>
 
