@@ -111,16 +111,27 @@ extension ViewController: MiniAppNavigationDelegate {
     func checkSDKErrorAndDisplay(error: MASDKError) {
         switch error {
         case .metaDataFailure:
-            guard let miniAppInfo = currentMiniAppInfo else {
-                return self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
-                                         message: String(format: MASDKLocale.localize("miniapp.sdk.ios.error.message.metadata"), MASDKLocale.localize(.downloadFailed)), dismissController: true) { _ in
-                    self.fetchAppList(inBackground: true)
-                }
-            }
-            self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)
+            metaDataFailure()
         default:
             self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize(.downloadFailed), dismissController: true) { _ in
                 self.fetchAppList(inBackground: true)
+            }
+        }
+    }
+
+    // We need to dismiss current Mini App controller to show First time screen.
+    // This is due to the recent change on how we display Miniapp, MiniAppUI.shared().launch()
+    func metaDataFailure() {
+        DispatchQueue.main.async {
+            self.dismiss(animated: true) {
+                guard let miniAppInfo = self.currentMiniAppInfo else {
+                    return self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
+                                             message: String(format: MASDKLocale.localize("miniapp.sdk.ios.error.message.metadata"), MASDKLocale.localize(.downloadFailed)),
+                                             dismissController: true) { _ in
+                        self.fetchAppList(inBackground: true)
+                    }
+                }
+                self.fetchMiniAppMetaData(miniAppInfo: miniAppInfo)
             }
         }
     }
