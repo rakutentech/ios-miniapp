@@ -6,6 +6,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet weak var errorLabel: UILabel!
     let refreshControl = UIRefreshControl()
     let adsDisplayer = AdMobDisplayer()
     var unfilteredResults: [MiniAppInfo]? {
@@ -257,6 +258,7 @@ extension ViewController: UISearchBarDelegate {
         defer {
             tableView.reloadData()
             searchBar.reloadInputViews()
+            errorLabel.isHidden = tableView.numberOfSections > 0
         }
         searchBar.returnKeyType = .done
 
