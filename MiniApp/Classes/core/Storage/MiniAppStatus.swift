@@ -1,12 +1,19 @@
 class MiniAppStatus {
+
     private let defaults: UserDefaults?
     private let miniAppInfoDefaults: UserDefaults?
     private let miniAppKeyStore: MiniAppPermissionsStorage
+    internal static let lastVersionKey = "lastLaunchedVersion"
+    internal static let userDefaultsKey = "com.rakuten.tech.mobile.miniapp"
+    internal static let miniAppInfosKey = "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo"
+    private var previousVersion: MiniAppVersion? {
+        MiniAppVersion(string: defaults?.string(forKey: MiniAppStatus.lastVersionKey))
+    }
 
     init() {
-        self.defaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp")
-        self.miniAppInfoDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.MiniAppInfo")
-        self.miniAppKeyStore = MiniAppPermissionsStorage()
+        defaults = UserDefaults(suiteName: MiniAppStatus.userDefaultsKey)
+        miniAppInfoDefaults = UserDefaults(suiteName: MiniAppStatus.miniAppInfosKey)
+        miniAppKeyStore = MiniAppPermissionsStorage()
     }
 
     func setDownloadStatus(_ value: Bool, appId: String, versionId: String) {
@@ -76,7 +83,10 @@ class MiniAppStatus {
         var returnList: MASDKDownloadedListPermissionsPair = []
         _ = downloadedMiniAppsList.map { (miniAppInfo: MiniAppInfo) in
             if let permMod = finalList[miniAppInfo.id] {
-                returnList.append((miniAppInfo, permMod))
+                /// This will make sure that we return the Mini Apps list that has atleast 1 permission.
+                if permMod.count != 0 {
+                    returnList.append((miniAppInfo, permMod))
+                }
             } else {
                 returnList.append((miniAppInfo, []))
             }
@@ -87,18 +97,16 @@ class MiniAppStatus {
     /// Method to compare the downloaded mini apps list and stored permissions list. If any discrepancy found then we remove the value from the keychain
     /// - Parameter downloadedMiniAppsList: List of mini app info that is downloaded
     /// - Returns:List of Mini app ID and respective stored custom permissions info
-    func checkStoredPermissionList(downloadedMiniAppsList: [MiniAppInfo]?) -> [String: [MASDKCustomPermissionModel]] {
-        var storedPermissionsList = self.miniAppKeyStore.getAllStoredCustomPermissionsList()
+    @discardableResult func checkStoredPermissionList(downloadedMiniAppsList: [MiniAppInfo]?) -> [String: [MASDKCustomPermissionModel]] {
         guard let downloadedList = downloadedMiniAppsList, downloadedList.count > 0 else {
-            _ = storedPermissionsList?.map { (miniAppId: String, _: [MASDKCustomPermissionModel]) in
-                self.miniAppKeyStore.removeKey(for: miniAppId)
-            }
+            miniAppKeyStore.purgePermissions()
             return [:]
         }
-        _ = storedPermissionsList?.map { (miniAppId: String, _: [MASDKCustomPermissionModel]) in
+        var storedPermissionsList = miniAppKeyStore.getAllStoredCustomPermissionsList()
+        storedPermissionsList?.forEach {  miniAppId, _ in
             if !downloadedList.contains(where: { $0.id == miniAppId }) {
                 storedPermissionsList?.removeValue(forKey: miniAppId)
-                self.miniAppKeyStore.removeKey(for: miniAppId)
+                miniAppKeyStore.removeKey(for: miniAppId)
             }
         }
         return storedPermissionsList ?? [:]
@@ -109,6 +117,15 @@ class MiniAppStatus {
         guard let downloadedList = getDownloadedMiniAppsList(), downloadedList.count != 0 else {
             return
         }
-        _ = checkStoredPermissionList(downloadedMiniAppsList: downloadedList)
+        checkStoredPermissionList(downloadedMiniAppsList: downloadedList)
+    }
+
+    func removeManifestsFromKeychain() {
+        let previousVersion = self.previousVersion
+        if previousVersion == nil || previousVersion! <= MiniAppVersion(string: "3.5.0")! {
+            MiniAppPermissionsStorage().purgePermissions()
+            MAManifestStorage().purgeManifestInfos()
+            MiniAppKeyChain(serviceName: .miniAppManifestCache).purge()
+        }
     }
 }

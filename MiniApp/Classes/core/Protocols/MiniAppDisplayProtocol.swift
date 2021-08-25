@@ -3,7 +3,7 @@
  to communicate with the Mini App display module
  */
 
-public protocol MiniAppDisplayDelegate: class {
+public protocol MiniAppDisplayDelegate: AnyObject {
 
     /// Get the view of the Mini app
     func getMiniAppView() -> UIView

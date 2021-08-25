@@ -12,16 +12,16 @@ extension OSLog {
 internal class MiniAppLogger {
     static let encoder = JSONEncoder()
     /// Debug
-    class func d(_ message: String, _ customBullet: String? = nil) {
+    class func d(_ message: String, _ customBullet: String? = nil, _ showDate: Bool = false) {
         #if DEBUG
-
-        print("\(customBullet ?? "🔍") \(Date().timeIntervalSince1970) \(message)")
+        print("\(customBullet ?? "🔍")\(showDate ? "\(Date().timeIntervalSince1970) " : "") \(message)")
         #endif
     }
 
     /// Debug
-    class func d<T: Codable>(codable: T) {
+    class func d<T: Codable>(codable: T, _ customBullet: String? = nil, _ showDate: Bool = false, outputFormatting: JSONEncoder.OutputFormatting = .prettyPrinted) {
         #if DEBUG
+        encoder.outputFormatting = outputFormatting
         if let jsonData = try? Self.encoder.encode(codable), let jsonString = String(data: jsonData, encoding: . utf8) {
             d(jsonString)
         }

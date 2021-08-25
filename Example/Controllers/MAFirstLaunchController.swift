@@ -11,22 +11,25 @@ class MAFirstLaunchController: UIViewController {
     @IBOutlet weak var miniAppVersion: UILabel!
     @IBOutlet weak var miniAppImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var buttonsContainer: UIView!
 
     weak var launchScreenDelegate: MALaunchScreenDelegate?
     var miniAppInfo: MiniAppInfo?
-    var permissionsCollections: [MASDKCustomPermissionModel]?
-    var requiredPermissions: [MASDKCustomPermissionModel] = []
-    var optionalPermissions: [MASDKCustomPermissionModel] = []
-    var customMetaData: [String: String] = [:]
+    var miniAppManifest: MiniAppManifest? {
+        didSet {
+            requiredPermissions = miniAppManifest?.requiredPermissions ?? []
+            optionalPermissions = miniAppManifest?.optionalPermissions ?? []
+            customMetaData = miniAppManifest?.customMetaData ?? [:]
+        }
+    }
+    private var permissionsCollections: [MASDKCustomPermissionModel]?
+    private var requiredPermissions: [MASDKCustomPermissionModel] = []
+    private var optionalPermissions: [MASDKCustomPermissionModel] = []
+    private var customMetaData: [String: String] = [:]
     var isManifestUpdated: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let podBundle: Bundle = Bundle.main
-        let nib = UINib(nibName: "CustomPermissionCell", bundle: podBundle)
-        self.tableView.register(nib, forCellReuseIdentifier: "FirstLaunchCustomPermissionCell")
         setupUI()
     }
 
@@ -38,25 +41,35 @@ class MAFirstLaunchController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tableViewHeightConstraint.constant = tableView.contentSize.height
+        guard let footerView = tableView.tableFooterView else {
+            return
+        }
+
+        let width = tableView.bounds.size.width
+        let size = footerView.systemLayoutSizeFitting(CGSize(width: width, height: UIView.layoutFittingCompressedSize.height))
+
+        footerView.frame.size.height = size.height + buttonsContainer.frame.height
+        tableView.tableFooterView = footerView
     }
 
     func setupUI() {
         miniAppMetaInfoContainer.roundCorners(radius: 10)
         acceptButton.roundedCornerButton()
-        self.tableView.layer.cornerRadius = 10.0
-        closeButton.addBorderAndColor(color: #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1), width: 1, cornerRadius: 20, clipsToBounds: true)
-        self.miniAppName.text = self.miniAppInfo?.displayName
-        self.miniAppVersion.text = "Version: " + (self.miniAppInfo?.version.versionTag)!
-        self.miniAppImageView.loadImage(self.miniAppInfo!.icon, placeholder: "image_placeholder", cache: nil)
-        self.metaDataLabel.text = "Custom MetaData: {" + customMetaData.dictToString + "}"
+        closeButton.roundedCornerButton(color: tintColor)
+        miniAppName.text = miniAppInfo?.displayName
+        miniAppVersion.text = "Version: " + (miniAppInfo?.version.versionTag)!
+        miniAppImageView.loadImage(miniAppInfo!.icon, placeholder: "image_placeholder", cache: nil)
+        metaDataLabel.text = "Custom MetaData: " + customMetaData.JSONString
     }
 
     @IBAction func acceptButtonPressed(_ sender: UIButton) {
-        MiniApp.shared().setCustomPermissions(forMiniApp: miniAppInfo?.id ?? "", permissionList: permissionsCollections ?? [])
-        _ = saveMiniAppLaunchInfo(isMiniAppLaunched: true, forKey: miniAppInfo!.id)
-        launchScreenDelegate?.didUserResponded(agreed: true, miniAppInfo: miniAppInfo)
-        self.dismiss(animated: true, completion: nil)
+        if let miniAppId = miniAppInfo?.id {
+            MiniApp.shared().setCustomPermissions(forMiniApp: miniAppId, permissionList: permissionsCollections ?? [])
+            launchScreenDelegate?.didUserResponded(agreed: true, miniAppInfo: miniAppInfo)
+            dismiss(animated: true, completion: nil)
+        } else {
+            displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.miniapp"))
+        }
     }
 
     @IBAction func closeButtonPressed(_ sender: UIButton) {
@@ -69,7 +82,7 @@ class MAFirstLaunchController: UIViewController {
 extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return permissionsCollections?.count ?? 0
+        permissionsCollections?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -80,7 +93,7 @@ extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
                 permissionModel = requiredPermissions[indexPath.row]
                 cell.permissionTitle?.attributedText = NSMutableAttributedString()
                     .normalText(permissionModel?.permissionName.title ?? "")
-                    .highlightRedColor(" (Required)")
+                    .highlight(" (Required)", color: tintColor)
                 cell.permissionDescription?.text = permissionModel?.permissionDescription
                 cell.toggle.isHidden = true
             } else {
@@ -111,7 +124,7 @@ extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-protocol MALaunchScreenDelegate: class {
+protocol MALaunchScreenDelegate: AnyObject {
     func didUserResponded(agreed: Bool, miniAppInfo: MiniAppInfo?)
 }
 
@@ -126,31 +139,5 @@ class FirstLaunchCustomPermissionCell: UITableViewCell {
         toggle.isOn = true
         permissionTitle.text = ""
         permissionDescription.text = ""
-    }
-}
-
-extension NSMutableAttributedString {
-    func highlightRedColor(_ value: String) -> NSMutableAttributedString {
-        let attributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: #colorLiteral(red: 0.7472071648, green: 0, blue: 0, alpha: 1)
-        ]
-        self.append(NSAttributedString(string: value, attributes: attributes))
-        return self
-    }
-
-    func normalText(_ value: String) -> NSMutableAttributedString {
-        self.append(NSAttributedString(string: value, attributes: nil))
-        return self
-    }
-}
-
-extension Dictionary {
-    var dictToString: String {
-        var output: String = ""
-        for (key, value) in self {
-            output +=  "\"\(key)\" : \"\(value)\","
-        }
-        output = String(output.dropLast())
-        return output
     }
 }

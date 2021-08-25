@@ -8,7 +8,7 @@ extension NSError {
             return NSError(
                     domain: MiniAppSDKServerErrorDomain,
                     code: code,
-                    userInfo: [NSLocalizedDescriptionKey: message]
+                    userInfo: [NSLocalizedDescriptionKey: message.localizedString()]
             )
         }
     }
@@ -16,7 +16,7 @@ extension NSError {
     class func unknownServerError(httpResponse: HTTPURLResponse?) -> NSError {
         return NSError.serverError(
                 code: (httpResponse)?.statusCode ?? 0,
-                message: "Unknown server error occurred"
+                message: MASDKLocale.LocalizableKey.unknownServerError.rawValue
         )
     }
 
@@ -92,6 +92,13 @@ extension NSError {
                 code: code,
                 message: message)
     }
+
+    func isDeviceOfflineError() -> Bool {
+        if self.domain == MASDKErrorDomain, let maSDKError = self as? MASDKError {
+            return maSDKError.isDeviceOfflineDownloadError()
+        }
+        return offlineErrorCodeList.contains(self.code)
+    }
 }
 // swiftlint:disable identifier_name
 var MiniAppSDKErrorDomain = "MiniAppSDKErrorDomain"
@@ -107,5 +114,6 @@ enum MiniAppSDKErrorCode: Int {
          adNotLoaded,
          adNotDisplayed,
          miniAppNotFound,
-         metaDataFailure
+         metaDataFailure,
+         failedToConformToProtocol
 }

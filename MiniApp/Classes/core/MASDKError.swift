@@ -34,6 +34,12 @@ public enum MASDKError: Error {
     /// All required custom permissions is not allowed by the user
     case metaDataFailure
 
+    /// The provided contact ID was invalid. For example, a contact with this ID could not be found in the contact list
+    case invalidContactId
+
+    /// Host app failed to implement required interface
+    case failedToConformToProtocol
+
     /// An unexpected error occurred.
     ///
     /// - Parameters:
@@ -41,31 +47,47 @@ public enum MASDKError: Error {
     ///     - message: The code from the original NSError.
     ///     - description: The description from the original NSError
     case unknownError(domain: String, code: Int, description: String)
+
+    /// Checks if the error is due to the Internet availability, returns true if yes
+    /// - Returns: Bool value - returns true if there is there error contains code from offlineErrorCodeList
+    public func isDeviceOfflineDownloadError() -> Bool {
+        switch self {
+        case .unknownError(_, let code, _):
+            return offlineErrorCodeList.contains(code)
+        default:
+            return false
+        }
+    }
 }
 
 extension MASDKError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .serverError(let code, let message):
-            return String(format: NSLocalizedString("error_server", comment: ""), code, message)
+            return String(format: MASDKLocale.localize(.serverError), "\(code)", message)
         case .invalidURLError:
-            return "error_invalid_url".localizedString()
+            return MASDKLocale.localize(.invalidUrl)
         case .invalidAppId:
-            return "error_invalid_app_id".localizedString()
+            return MASDKLocale.localize(.invalidAppId)
         case .invalidVersionId:
-            return "error_invalid_version_id".localizedString()
+            return MASDKLocale.localize(.invalidVersionId)
         case .invalidResponseData:
-            return "error_invalid_response".localizedString()
+            return MASDKLocale.localize(.invalidResponse)
         case .downloadingFailed:
-            return "error_invalid_response".localizedString()
+            return MASDKLocale.localize(.downloadFailed)
         case .noPublishedVersion:
-            return "error_no_published_version".localizedString()
+            return MASDKLocale.localize(.noPublishedVersion)
         case .miniAppNotFound:
-            return "error_miniapp_id_not_found".localizedString()
+            return MASDKLocale.localize(.miniappIdNotFound)
         case .metaDataFailure:
-            return "error_miniapp_meta_data_required_permissions_failure".localizedString()
+            return MASDKLocale.localize(.metaDataRequiredPermissionsFailure)
+        case .failedToConformToProtocol:
+            return MASDKLocale.localize(.failedToConformToProtocol)
+        case .invalidContactId:
+            return MASDKLocale.localize(.invalidContactId)
+
         case .unknownError(let domain, let code, let description):
-            return String(format: NSLocalizedString("error_unknown", comment: ""), domain, code, description)
+            return String(format: MASDKLocale.localize(.unknownError), domain, "\(code)", description)
         }
     }
 }
@@ -74,7 +96,7 @@ extension MASDKError {
     static func fromError(error: Error) -> MASDKError {
         let error = error as NSError
         if error.domain == MiniAppSDKServerErrorDomain {
-            return MASDKError.serverError(code: error.code, message: error.userInfo.description)
+            return MASDKError.serverError(code: error.code, message: error.localizedDescription)
         }
         if error.domain == MiniAppSDKErrorDomain {
             switch MiniAppSDKErrorCode(rawValue: error.code) {
@@ -90,6 +112,8 @@ extension MASDKError {
                 return MASDKError.noPublishedVersion
             case .miniAppNotFound:
                 return MASDKError.miniAppNotFound
+            case .metaDataFailure:
+                return MASDKError.metaDataFailure
             default:
                 break
             }

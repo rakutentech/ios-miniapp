@@ -20,6 +20,19 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.rakuten.tech.mobile.miniapp</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>miniappdemo</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>GADApplicationIdentifier</key>
@@ -39,12 +52,22 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This will let you to take Photos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Demo app helps you find more information near you</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Needs Microphone while recording video</string>
 	<key>RASProjectId</key>
 	<string>$(RAS_PROJECT_IDENTIFIER)</string>
 	<key>RASProjectSubscriptionKey</key>
 	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY)</string>
+	<key>RATAccountIdentifier</key>
+	<integer>1553</integer>
+	<key>RATAppIdentifier</key>
+	<integer>1</integer>
+	<key>RATEndpoint</key>
+	<string>$(RAT_ENDPOINT)</string>
 	<key>RMAAPIEndpoint</key>
 	<string>$(RMA_API_ENDPOINT)</string>
 	<key>RMAHostAppUserAgentInfo</key>

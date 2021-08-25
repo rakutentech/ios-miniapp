@@ -1,4 +1,4 @@
-podspec: MiniApp.podspec
+podspec: MiniApp.jazzy.podspec
 documentation: "*.md"
 xcodebuild_arguments: -scheme,Tests
 module: MiniApp

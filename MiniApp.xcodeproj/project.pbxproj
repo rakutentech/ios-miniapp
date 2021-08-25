@@ -13,8 +13,21 @@
 		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
-		317FED2025E5EB1A00774919 /* CustomPermissionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317FED1E25E5EB1A00774919 /* CustomPermissionCell.xib */; };
+		2A54C85C26676377002B204F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C85B26676377002B204F /* UITextField.swift */; };
+		2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */; };
+		2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */; };
+		2AB1B0E926A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */; };
+		2AB1B0F026A6DB77004CAC1B /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */; };
+		2AE218D3269C9E6100F9D1E7 /* Deeplink.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */; };
+		2AE218D7269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */; };
+		2AE218F0269D46DA00F9D1E7 /* UITextView+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */; };
 		317FED2525E5EB4300774919 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317FED2725E5EB4300774919 /* Settings.storyboard */; };
+		317FFF21267095040066E455 /* QASettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317FFF20267095040066E455 /* QASettingsTableViewController.swift */; };
+		3180E6BF2689A20900B6B590 /* Encodable+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3180E6BE2689A20900B6B590 /* Encodable+MiniApp.swift */; };
+		3180E6C12689A21000B6B590 /* Print+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3180E6C02689A21000B6B590 /* Print+MiniApp.swift */; };
+		31850BC1269837F300CFE422 /* UIColor+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31850BC0269837F300CFE422 /* UIColor+MiniApp.swift */; };
+		31CFFA50261B7E7300CDD537 /* ChatContactsSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CFFA4F261B7E7300CDD537 /* ChatContactsSelectorViewController.swift */; };
+		31D1BBC3262041920040235C /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31D1BBC2262041920040235C /* Colors.xcassets */; };
 		3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */; };
 		38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */; };
 		38252B9B23DFFBBE008A4E93 /* ManifestAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */; };
@@ -65,6 +78,7 @@
 		389C7A9C2592593C00F2D5FE /* QueryParamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389C7A9B2592593C00F2D5FE /* QueryParamViewController.swift */; };
 		389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */; };
 		38A2E93A24A2E3E600E58233 /* MimeTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */; };
+		38AC730A26234835000B9D0E /* MetaDataDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AC730926234835000B9D0E /* MetaDataDownloaderTests.swift */; };
 		38CEFA4B25C0A3B300EE250A /* MAFirstLaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CEFA4A25C0A3B300EE250A /* MAFirstLaunchController.swift */; };
 		38CEFA5125C0A3CA00EE250A /* UIView+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CEFA5025C0A3CA00EE250A /* UIView+MiniApp.swift */; };
 		38D04804252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */; };
@@ -76,6 +90,9 @@
 		38F73B4723D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */; };
 		38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC4652244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift */; };
 		750191FB804B88456CA24CA7 /* MiniAppAdDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */; };
+		75019B5861C50A30C1BE4C59 /* ViewController+ChatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501986FB5D52F78E841069D /* ViewController+ChatDelegate.swift */; };
+		A13C249826A15048003ADC6D /* UserPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13C249726A15048003ADC6D /* UserPointsModel.swift */; };
+		A1FDEAC026A141CC00E48831 /* PointsSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FDEABF26A141CC00E48831 /* PointsSettingsTableViewController.swift */; };
 		D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07452302567B72A00B6E842 /* MASDKErrorTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -98,18 +115,33 @@
 		185DBD6124B2A06300CD2094 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
+		2A54C85B26676377002B204F /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKLocaleTests.swift; sourceTree = "<group>"; };
+		2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalWebViewControllerTests.swift; sourceTree = "<group>"; };
+		2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPermissionsViewControllerTests.swift; sourceTree = "<group>"; };
+		2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
+		2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Deeplink.storyboard; sourceTree = "<group>"; };
+		2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkErrorViewController.swift; sourceTree = "<group>"; };
+		2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+MiniApp.swift"; sourceTree = "<group>"; };
 		31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "MiniApp-Secrets.xcconfig"; path = "../../../MiniApp-Secrets.xcconfig"; sourceTree = "<group>"; };
 		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
 		31070C63258C554500BED77C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		31070C64258C554500BED77C /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEV.md; sourceTree = "<group>"; };
+		31462834260DE15B0015AD98 /* .codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .codecov.yml; sourceTree = SOURCE_ROOT; };
+		31462839260DE24E0015AD98 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		31553D3525B6C6800091EE50 /* Config-common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
-		317FED1F25E5EB1A00774919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CustomPermissionCell.xib; sourceTree = "<group>"; };
 		317FED2625E5EB4300774919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		317FFF20267095040066E455 /* QASettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsTableViewController.swift; sourceTree = "<group>"; };
+		3180E6BE2689A20900B6B590 /* Encodable+MiniApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Encodable+MiniApp.swift"; sourceTree = "<group>"; };
+		3180E6C02689A21000B6B590 /* Print+MiniApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Print+MiniApp.swift"; sourceTree = "<group>"; };
+		31850BC0269837F300CFE422 /* UIColor+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+MiniApp.swift"; sourceTree = "<group>"; };
 		319D66D525D65C37005688F4 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
 		31AB8EE125CA43A30046F694 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = SOURCE_ROOT; };
 		31AB8EE225CA43E40046F694 /* Dangerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dangerfile; sourceTree = SOURCE_ROOT; };
 		31AB8EE325CA43FC0046F694 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; };
 		31BE315B25CB00B70022C948 /* .jazzy.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .jazzy.yaml; sourceTree = SOURCE_ROOT; };
+		31CFFA4F261B7E7300CDD537 /* ChatContactsSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContactsSelectorViewController.swift; sourceTree = "<group>"; };
+		31D1BBC2262041920040235C /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		3813F32224051E1D002703D7 /* MiniAppStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStatusTests.swift; sourceTree = "<group>"; };
 		38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingAPITests.swift; sourceTree = "<group>"; };
 		38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManifestAPITests.swift; sourceTree = "<group>"; };
@@ -162,6 +194,7 @@
 		389C7A9B2592593C00F2D5FE /* QueryParamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamViewController.swift; sourceTree = "<group>"; };
 		389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppClientTests.swift; sourceTree = "<group>"; };
 		38A2E93924A2E3E600E58233 /* MimeTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypesTests.swift; sourceTree = "<group>"; };
+		38AC730926234835000B9D0E /* MetaDataDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataDownloaderTests.swift; sourceTree = "<group>"; };
 		38CEFA4A25C0A3B300EE250A /* MAFirstLaunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAFirstLaunchController.swift; sourceTree = "<group>"; };
 		38CEFA5025C0A3CA00EE250A /* UIView+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+MiniApp.swift"; sourceTree = "<group>"; };
 		38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+MiniAppUserInfoProtocol.swift"; sourceTree = "<group>"; };
@@ -178,7 +211,10 @@
 		7501901BB0FC97CC8680E785 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		7501924AE42A5A88FF5CFB12 /* Config-test-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-release.xcconfig"; sourceTree = "<group>"; };
 		75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppAdDisplayerTests.swift; sourceTree = "<group>"; };
+		7501986FB5D52F78E841069D /* ViewController+ChatDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+ChatDelegate.swift"; sourceTree = "<group>"; };
 		7FB3A4D3F3350D35AED2F43D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		A13C249726A15048003ADC6D /* UserPointsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointsModel.swift; sourceTree = "<group>"; };
+		A1FDEABF26A141CC00E48831 /* PointsSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSettingsTableViewController.swift; sourceTree = "<group>"; };
 		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D07452302567B72A00B6E842 /* MASDKErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKErrorTests.swift; sourceTree = "<group>"; };
 		D85784C7998D04CE64578236 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -224,6 +260,39 @@
 			path = Example/Config;
 			sourceTree = "<group>";
 		};
+		2AB1B0D126A6D625004CAC1B /* core */ = {
+			isa = PBXGroup;
+			children = (
+				2AB1B0D826A6D79E004CAC1B /* Display */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		2AB1B0D826A6D79E004CAC1B /* Display */ = {
+			isa = PBXGroup;
+			children = (
+				2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */,
+				2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */,
+			);
+			path = Display;
+			sourceTree = "<group>";
+		};
+		2AB1B0EE26A6DB62004CAC1B /* UIModule */ = {
+			isa = PBXGroup;
+			children = (
+				2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */,
+			);
+			path = UIModule;
+			sourceTree = "<group>";
+		};
+		2AE218EC269D2AAC00F9D1E7 /* Deeplink */ = {
+			isa = PBXGroup;
+			children = (
+				2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */,
+			);
+			path = Deeplink;
+			sourceTree = "<group>";
+		};
 		31070C65258C557D00BED77C /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,7 +308,9 @@
 		31AB8EE025CA438D0046F694 /* Fastlane */ = {
 			isa = PBXGroup;
 			children = (
+				31462834260DE15B0015AD98 /* .codecov.yml */,
 				31BE315B25CB00B70022C948 /* .jazzy.yaml */,
+				31462839260DE24E0015AD98 /* .swiftlint.yml */,
 				31AB8EE225CA43E40046F694 /* Dangerfile */,
 				31AB8EE325CA43FC0046F694 /* Fastfile */,
 				31AB8EE125CA43A30046F694 /* Gemfile */,
@@ -251,6 +322,8 @@
 			isa = PBXGroup;
 			children = (
 				38920ACB251D9C57004C5DDD /* ImageCache.swift */,
+				3180E6BE2689A20900B6B590 /* Encodable+MiniApp.swift */,
+				3180E6C02689A21000B6B590 /* Print+MiniApp.swift */,
 				38920ACC251D9C57004C5DDD /* UIImageView+Extensions.swift */,
 				38920ACD251D9C57004C5DDD /* String+MiniApp.swift */,
 				38920ACE251D9C57004C5DDD /* Number+MiniApp.swift */,
@@ -261,6 +334,9 @@
 				38920AD3251D9C57004C5DDD /* MiniApp+UIImage.swift */,
 				38CEFA5025C0A3CA00EE250A /* UIView+MiniApp.swift */,
 				3857ED7D25DEE0690083F3E1 /* Bundle+MiniApp.swift */,
+				2A54C85B26676377002B204F /* UITextField.swift */,
+				31850BC0269837F300CFE422 /* UIColor+MiniApp.swift */,
+				2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -269,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				38920AD5251D9C57004C5DDD /* UserProfileModel.swift */,
+				A13C249726A15048003ADC6D /* UserPointsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -286,6 +363,7 @@
 			children = (
 				38920AD9251D9C57004C5DDD /* Localizable.strings */,
 				38920ADC251D9C57004C5DDD /* Images.xcassets */,
+				31D1BBC2262041920040235C /* Colors.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -293,6 +371,7 @@
 		38920AE0251D9C57004C5DDD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2AE218EC269D2AAC00F9D1E7 /* Deeplink */,
 				38D4C7AC255BCBD800CD5CE6 /* Settings */,
 				38920AE1251D9C57004C5DDD /* Storyboards */,
 				38920AEC251D9C57004C5DDD /* FirstLaunchViewController.swift */,
@@ -305,7 +384,10 @@
 				384800FE251DB4E00079D6EB /* CustomPermissionsListViewController.swift */,
 				384800FF251DB4E00079D6EB /* ManageCustomPermissionsViewController.swift */,
 				38CEFA4A25C0A3B300EE250A /* MAFirstLaunchController.swift */,
+				31CFFA4F261B7E7300CDD537 /* ChatContactsSelectorViewController.swift */,
 				38920AED251D9C57004C5DDD /* Extensions */,
+				317FFF20267095040066E455 /* QASettingsTableViewController.swift */,
+				A1FDEABF26A141CC00E48831 /* PointsSettingsTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -313,10 +395,10 @@
 		38920AE1251D9C57004C5DDD /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				317FED1E25E5EB1A00774919 /* CustomPermissionCell.xib */,
 				38920AE2251D9C57004C5DDD /* LaunchScreen.xib */,
 				38920AE4251D9C57004C5DDD /* Main.storyboard */,
 				317FED2725E5EB4300774919 /* Settings.storyboard */,
+				2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -327,6 +409,7 @@
 				38920AEF251D9C57004C5DDD /* ViewController+MiniApp.swift */,
 				38920AEE251D9C57004C5DDD /* ViewController+MiniAppMessageProtocol.swift */,
 				38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */,
+				7501986FB5D52F78E841069D /* ViewController+ChatDelegate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -334,8 +417,11 @@
 		389FA22E23D01A3900BC3120 /* Unit */ = {
 			isa = PBXGroup;
 			children = (
+				2AB1B0EE26A6DB62004CAC1B /* UIModule */,
+				2AB1B0D126A6D625004CAC1B /* core */,
 				389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */,
 				38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */,
+				38AC730926234835000B9D0E /* MetaDataDownloaderTests.swift */,
 				38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */,
 				388FEEE523DEABCF0062382F /* EnvironmentTests.swift */,
 				38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */,
@@ -367,6 +453,7 @@
 				D07452302567B72A00B6E842 /* MASDKErrorTests.swift */,
 				387AD4702590F0130025033F /* MessageInterfaceExtensionTests.swift */,
 				75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */,
+				2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -501,11 +588,12 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 1240;
-				ORGANIZATIONNAME = "Rakuten inc.";
+				ORGANIZATIONNAME = "Rakuten Group, Inc.";
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 1030;
+						ProvisioningStyle = Manual;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -539,12 +627,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AE218D3269C9E6100F9D1E7 /* Deeplink.storyboard in Resources */,
 				38920AFE251D9C57004C5DDD /* Images.xcassets in Resources */,
 				38920B02251D9C57004C5DDD /* Main.storyboard in Resources */,
 				38920B01251D9C57004C5DDD /* LaunchScreen.xib in Resources */,
 				38920AFD251D9C57004C5DDD /* Localizable.strings in Resources */,
-				317FED2025E5EB1A00774919 /* CustomPermissionCell.xib in Resources */,
 				317FED2525E5EB4300774919 /* Settings.storyboard in Resources */,
+				31D1BBC3262041920040235C /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,15 +693,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				38920AFA251D9C57004C5DDD /* MiniApp+UIImage.swift in Sources */,
+				317FFF21267095040066E455 /* QASettingsTableViewController.swift in Sources */,
 				38920AF3251D9C57004C5DDD /* UIImageView+Extensions.swift in Sources */,
+				3180E6C12689A21000B6B590 /* Print+MiniApp.swift in Sources */,
 				38920AFC251D9C57004C5DDD /* MiniAppCell.swift in Sources */,
+				31CFFA50261B7E7300CDD537 /* ChatContactsSelectorViewController.swift in Sources */,
 				38920AF5251D9C57004C5DDD /* Number+MiniApp.swift in Sources */,
+				3180E6BF2689A20900B6B590 /* Encodable+MiniApp.swift in Sources */,
 				389C7A9C2592593C00F2D5FE /* QueryParamViewController.swift in Sources */,
 				38920AF9251D9C57004C5DDD /* UIViewController+MiniApp.swift in Sources */,
+				2AE218D7269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift in Sources */,
 				38480100251DB4E00079D6EB /* CustomPermissionsListViewController.swift in Sources */,
 				38920B07251D9C57004C5DDD /* DisplayController.swift in Sources */,
 				38480101251DB4E00079D6EB /* ManageCustomPermissionsViewController.swift in Sources */,
 				38920B09251D9C57004C5DDD /* FirstLaunchViewController.swift in Sources */,
+				2AE218F0269D46DA00F9D1E7 /* UITextView+MiniApp.swift in Sources */,
 				38920AF6251D9C57004C5DDD /* Array+MiniApp.swift in Sources */,
 				38920AF7251D9C57004C5DDD /* Config.swift in Sources */,
 				38920B06251D9C57004C5DDD /* UserSettingsTableViewController.swift in Sources */,
@@ -620,7 +715,10 @@
 				38920AF2251D9C57004C5DDD /* ImageCache.swift in Sources */,
 				38920B03251D9C57004C5DDD /* ViewController.swift in Sources */,
 				38920B0A251D9C57004C5DDD /* ViewController+MiniAppMessageProtocol.swift in Sources */,
+				A1FDEAC026A141CC00E48831 /* PointsSettingsTableViewController.swift in Sources */,
+				A13C249826A15048003ADC6D /* UserPointsModel.swift in Sources */,
 				38CEFA4B25C0A3B300EE250A /* MAFirstLaunchController.swift in Sources */,
+				2A54C85C26676377002B204F /* UITextField.swift in Sources */,
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
 				38920B05251D9C57004C5DDD /* SettingsTableViewController.swift in Sources */,
 				38920AF4251D9C57004C5DDD /* String+MiniApp.swift in Sources */,
@@ -628,10 +726,12 @@
 				38920B08251D9C57004C5DDD /* ContactsListSettingsTableViewController.swift in Sources */,
 				38920B0C251D9C57004C5DDD /* DisplayNavigationController.swift in Sources */,
 				38920AFB251D9C57004C5DDD /* UserProfileModel.swift in Sources */,
+				31850BC1269837F300CFE422 /* UIColor+MiniApp.swift in Sources */,
 				38920B0B251D9C57004C5DDD /* ViewController+MiniApp.swift in Sources */,
 				38CEFA5125C0A3CA00EE250A /* UIView+MiniApp.swift in Sources */,
 				38D04804252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift in Sources */,
 				38920AF8251D9C57004C5DDD /* Progress+UIViewController.swift in Sources */,
+				75019B5861C50A30C1BE4C59 /* ViewController+ChatDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +744,7 @@
 				38F3B7F024192E7300914E37 /* UrlParserTests.swift in Sources */,
 				183AF08324CFCF37000ABCBF /* MiniAppStorageTests.swift in Sources */,
 				38F07E0C2535CC3600E32B32 /* MiniAppExternalUrlLoaderTests.swift in Sources */,
+				2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */,
 				389FA23023D01FA800BC3120 /* MiniAppClientTests.swift in Sources */,
 				38252B9D23E029FA008A4E93 /* ManifestDownloaderTests.swift in Sources */,
 				382B95FF24F6A4C000DA8B7D /* MiniAppJavascriptErrorInfoTests.swift in Sources */,
@@ -651,7 +752,9 @@
 				38696B5225D27EF400CEC998 /* MetaDataAPITests.swift in Sources */,
 				382B960124F6D3A400DA8B7D /* MiniAppJavascriptEnumerationTests.swift in Sources */,
 				3899C2C0242331900087A619 /* URLSchemeHandlerTests.swift in Sources */,
+				2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */,
 				3850AE722434E02D0046978C /* RealMiniAppTests.swift in Sources */,
+				38AC730A26234835000B9D0E /* MetaDataDownloaderTests.swift in Sources */,
 				38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */,
 				188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */,
 				3871A8E124C54AD600BEC6CF /* MiniApp+StringTests.swift in Sources */,
@@ -659,6 +762,7 @@
 				189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */,
 				D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */,
 				3879499824FCFB0900DB099B /* MiniAppKeyChainTests.swift in Sources */,
+				2AB1B0E926A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift in Sources */,
 				38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */,
 				385C25CA23F2E8BA00D61206 /* DisplayerTests.swift in Sources */,
 				385C25D023F3991C00D61206 /* RealMiniAppViewTests.swift in Sources */,
@@ -668,6 +772,7 @@
 				387AD4712590F0130025033F /* MessageInterfaceExtensionTests.swift in Sources */,
 				38A2E93A24A2E3E600E58233 /* MimeTypesTests.swift in Sources */,
 				3862EFB523EAF6B8004D518C /* MiniApp+NSErrorTests.swift in Sources */,
+				2AB1B0F026A6DB77004CAC1B /* AdMobDisplayerTests.swift in Sources */,
 				183E680E2499D49A00BAADB2 /* MiniAppLoggerTests.swift in Sources */,
 				3862EFB123EABC15004D518C /* MiniAppDownloaderTests.swift in Sources */,
 				3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */,
@@ -686,14 +791,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		317FED1E25E5EB1A00774919 /* CustomPermissionCell.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				317FED1F25E5EB1A00774919 /* Base */,
-			);
-			name = CustomPermissionCell.xib;
-			sourceTree = "<group>";
-		};
 		317FED2725E5EB4300774919 /* Settings.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -846,6 +943,8 @@
 			baseConfigurationReference = 183AF07C24CE642F000ABCBF /* Config-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -861,6 +960,8 @@
 			baseConfigurationReference = 183AF07824CE640F000ABCBF /* Config-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

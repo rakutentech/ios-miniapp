@@ -35,19 +35,21 @@ class MiniAppExternalWebViewController: UIViewController {
     override func loadView() {
         view = UIView()
         view.backgroundColor = .lightGray
-
-        let config = WKWebViewConfiguration()
-        config.preferences.javaScriptEnabled = true
-        config.allowsInlineMediaPlayback = true
-        config.allowsPictureInPictureMediaPlayback = true
-        config.mediaTypesRequiringUserActionForPlayback = []
-
-        self.webView = WKWebView(frame: self.view.frame, configuration: config)
+        self.webView = WKWebView(frame: self.view.frame, configuration: getWebViewConfig())
         self.webView.allowsBackForwardNavigationGestures = true
         self.view.addSubview(self.webView)
         self.webView.translatesAutoresizingMaskIntoConstraints = true
         self.webView.frame = view.bounds
         self.webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+
+    func getWebViewConfig() -> WKWebViewConfiguration {
+        let config = WKWebViewConfiguration()
+        config.preferences.javaScriptEnabled = true
+        config.allowsInlineMediaPlayback = true
+        config.allowsPictureInPictureMediaPlayback = true
+        config.mediaTypesRequiringUserActionForPlayback = []
+        return config
     }
 
     override func viewDidLoad() {
@@ -66,7 +68,8 @@ extension MiniAppExternalWebViewController: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.navigationType == .linkActivated {
+        let navigationTypes: [WKNavigationType] = [.linkActivated, .formSubmitted]
+        if navigationTypes.contains(navigationAction.navigationType) {
             if !(navigationAction.targetFrame?.isMainFrame ?? false) {
                 decisionHandler(.cancel)
                 self.webView.load(navigationAction.request)

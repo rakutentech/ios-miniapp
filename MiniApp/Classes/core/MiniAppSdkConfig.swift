@@ -34,6 +34,14 @@ public class MiniAppSdkConfig {
         }
     }
 
+    var analyticsConfigList: [MAAnalyticsConfig]? {
+        didSet {
+            if analyticsConfigList?.count == 0 {
+                analyticsConfigList = []
+            }
+        }
+    }
+
     /// Initialize a MiniAppSdkConfig object that can be used to configure a MiniApp client. All the parameters are optional.
     /// If a parameter is omitted the client will fallback its value to the configuration values provided into the project configuration .plist
     ///
@@ -47,11 +55,13 @@ public class MiniAppSdkConfig {
                 rasProjectId: String? = nil,
                 subscriptionKey: String? = nil,
                 hostAppVersion: String? = nil,
-                isPreviewMode: Bool? = true) {
-        self.isPreviewMode = isPreviewMode ?? true
+                isPreviewMode: Bool? = false,
+                analyticsConfigList: [MAAnalyticsConfig]? = []) {
+        self.isPreviewMode = isPreviewMode ?? false
         self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
         self.rasProjectId = rasProjectId?.count ?? 0 > 0 ? rasProjectId  : nil
         self.subscriptionKey = subscriptionKey?.count ?? 0 > 0 ? subscriptionKey : nil
         self.hostAppVersion = hostAppVersion?.count ?? 0 > 0 ? hostAppVersion : nil
+        self.analyticsConfigList = analyticsConfigList
     }
 }

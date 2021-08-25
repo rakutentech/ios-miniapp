@@ -8,12 +8,16 @@ class MiniAppSdkConfigTests: QuickSpec {
             context("when MiniAppSdkConfig is initialized with valid parameters") {
                 it("will return all values") {
                     let config = MiniAppSdkConfig(baseUrl: "http://example.com", rasProjectId: "mini-app-project-id",
-                                                  subscriptionKey: "mini-app-sub-key", hostAppVersion: "1.0", isPreviewMode: false)
+                                                  subscriptionKey: "mini-app-sub-key", hostAppVersion: "1.0", isPreviewMode: false,
+                                                  analyticsConfigList: [MAAnalyticsConfig(acc: mockRATAcc, aid: mockRATAid)])
                     expect(config.baseUrl).to(equal("http://example.com"))
                     expect(config.rasProjectId).to(equal("mini-app-project-id"))
                     expect(config.subscriptionKey).to(equal("mini-app-sub-key"))
                     expect(config.hostAppVersion).to(equal("1.0"))
                     expect(config.isPreviewMode).to(be(false))
+                    expect(config.analyticsConfigList).notTo(be(nil))
+                    expect(config.analyticsConfigList?[0].acc).to(be(mockRATAcc))
+                    expect(config.analyticsConfigList?[0].aid).to(be(mockRATAid))
                 }
             }
             context("when MiniAppSdkConfig is initialized with default constructor") {
@@ -23,10 +27,11 @@ class MiniAppSdkConfigTests: QuickSpec {
                     expect(config.rasProjectId).to(beNil())
                     expect(config.subscriptionKey).to(beNil())
                     expect(config.hostAppVersion).to(beNil())
-                    expect(config.isPreviewMode).to(be(true))
+                    expect(config.isPreviewMode).to(be(false))
+                    expect(config.analyticsConfigList?.count).to(be(0))
                 }
             }
-            context("when MiniAppSdkConfig is initialized with default constructor and value is set") {
+            context("when MiniAppSdkConfig is initialized with default constructor and value is set later") {
                 it("will return all values") {
                     let config = MiniAppSdkConfig()
                     config.baseUrl = "http://example.com"
@@ -34,11 +39,15 @@ class MiniAppSdkConfigTests: QuickSpec {
                     config.subscriptionKey = "mini-app-sub-key"
                     config.hostAppVersion = "1.0"
                     config.isPreviewMode = false
+                    config.analyticsConfigList = [MAAnalyticsConfig(acc: mockRATAcc, aid: mockRATAid)]
                     expect(config.baseUrl).to(equal("http://example.com"))
                     expect(config.rasProjectId).to(equal("mini-app-host-id"))
                     expect(config.subscriptionKey).to(equal("mini-app-sub-key"))
                     expect(config.hostAppVersion).to(equal("1.0"))
                     expect(config.isPreviewMode).to(be(false))
+                    expect(config.analyticsConfigList).notTo(be(nil))
+                    expect(config.analyticsConfigList?[0].acc).to(be(mockRATAcc))
+                    expect(config.analyticsConfigList?[0].aid).to(be(mockRATAid))
                 }
             }
         }

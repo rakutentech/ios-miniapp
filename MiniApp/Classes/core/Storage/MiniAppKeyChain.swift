@@ -17,61 +17,74 @@ import Foundation
     }
 
     internal func getAllKeys() -> Data? {
-        return retrieve()
+        retrieve()
     }
 
     // MARK: - Methods used to set & get values from Keychain
     private func write(data: Data) {
-        let queryFind: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: account
+        let queryFind: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: account
         ]
 
-        let update: [String: Any] = [
-            kSecValueData as String: data
+        let update: [CFString: Any] = [
+            kSecValueData: data
         ]
 
         var status = SecItemUpdate(queryFind as CFDictionary, update as CFDictionary)
 
         if status == errSecItemNotFound {
-            let queryAdd: [String: Any] = [
-                kSecClass as String: kSecClassGenericPassword,
-                kSecAttrService as String: service,
-                kSecAttrAccount as String: account,
-                kSecValueData as String: data,
-                kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+            let queryAdd: [CFString: Any] = [
+                kSecClass: kSecClassGenericPassword,
+                kSecAttrService: service,
+                kSecAttrAccount: account,
+                kSecValueData: data,
+                kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
             ]
             status = SecItemAdd(queryAdd as CFDictionary, nil)
         }
 
-        if status != errSecSuccess {
-            let error = SecCopyErrorMessageString(status, nil) as String?
-            print("KeyStore write error \(String(describing: error))")
+        if let error = SecCopyErrorMessageString(status, nil) as String? {
+            MiniAppLogger.d("KeyStore write status: \(error) [\(account)]", "🔐\(status == errSecSuccess ? "" : "⚠️")")
         }
     }
 
     private func retrieve() -> Data? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: account,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: account,
+            kSecReturnData: true,
+            kSecMatchLimit: kSecMatchLimitOne
         ]
 
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
 
+        if let error = SecCopyErrorMessageString(status, nil) as String? {
+            MiniAppLogger.d("KeyStore retrieve status: \(error) [\(account)]", "🔐\(status == errSecSuccess ? "" : "⚠️")")
+        }
         guard status == errSecSuccess, let objectData = result as? Data else {
             return nil
         }
         return objectData
+    }
+
+    func purge() {
+        let spec: NSDictionary = [kSecClass: kSecClassGenericPassword,
+                                      kSecAttrService: service,
+                                      kSecAttrAccount: account]
+        let status = SecItemDelete(spec)
+        if status != errSecSuccess, let error = SecCopyErrorMessageString(status, nil) as String? {
+            MiniAppLogger.d("KeyStore purge status: \(error) [\(account)]", "🔐\(status == errSecSuccess ? "" : "⚠️")")
+        }
     }
 }
 
 internal enum ServiceName: String {
     case customPermission = "rakuten.tech.permission.keys"
     case miniAppManifest = "rakuten.tech.manifest.keys"
+    case miniAppManifestCache = "rakuten.tech.manifest.cache.keys"
     case cacheVerifier = "rakuten.tech.keys"
 }
