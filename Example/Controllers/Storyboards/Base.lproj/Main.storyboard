@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hzK-gd-cH8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hzK-gd-cH8">
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -119,12 +120,6 @@
                                     <outlet property="delegate" destination="BQV-uy-8GQ" id="e13-6d-ANN"/>
                                 </connections>
                             </searchBar>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No MiniApps found!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ftu-LL-nnp">
-                                <rect key="frame" x="117" y="372" width="141" height="18"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -134,9 +129,7 @@
                             <constraint firstItem="wM9-1o-Y4m" firstAttribute="top" secondItem="XCF-cL-5kF" secondAttribute="bottom" id="SAo-og-ICC"/>
                             <constraint firstAttribute="trailing" secondItem="sJz-Kx-mqo" secondAttribute="trailing" id="T3B-ou-l6f"/>
                             <constraint firstItem="tdn-rl-TH3" firstAttribute="top" secondItem="sJz-Kx-mqo" secondAttribute="bottom" id="XQ6-cY-gVJ"/>
-                            <constraint firstItem="Ftu-LL-nnp" firstAttribute="centerY" secondItem="sJz-Kx-mqo" secondAttribute="centerY" id="Yzp-5p-xba"/>
                             <constraint firstAttribute="trailing" secondItem="wM9-1o-Y4m" secondAttribute="trailing" id="mPr-fO-ysX"/>
-                            <constraint firstItem="Ftu-LL-nnp" firstAttribute="centerX" secondItem="sJz-Kx-mqo" secondAttribute="centerX" id="yMQ-Wy-YOn"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Mini App Sample" id="hBN-sq-KdF">
@@ -147,7 +140,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="errorLabel" destination="Ftu-LL-nnp" id="WBb-oc-SfP"/>
                         <outlet property="searchBar" destination="wM9-1o-Y4m" id="WV8-H0-XCQ"/>
                         <outlet property="tableView" destination="sJz-Kx-mqo" id="rMe-wu-j5y"/>
                         <segue destination="eW9-Vs-PTN" kind="presentation" identifier="DisplayMiniApp" modalPresentationStyle="fullScreen" id="Ynv-ER-hz3"/>
