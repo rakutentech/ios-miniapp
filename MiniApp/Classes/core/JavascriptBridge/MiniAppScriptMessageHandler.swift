@@ -160,12 +160,20 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     private func updateLocation(callbackId: String) {
-        locationManager?.updateLocation {[weak self] result in
-            switch result {
-            case .success(let location):
-                self?.getCurrentPosition(callbackId: callbackId, location: location)
-            case .failure(let error): self?.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+        if isPermissionAllowedAlready(customPermissionType: .deviceLocation) {
+            locationManager?.updateLocation {[weak self] result in
+                switch result {
+                case .success(let location):
+                    self?.getCurrentPosition(callbackId: callbackId, location: location)
+                case .failure(let error): self?.executeJavaScriptCallback(responseStatus: .onError,
+                                                                          messageId: callbackId,
+                                                                          response: prepareMAJSGeolocationError(error: error))
+                }
             }
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError,
+                                      messageId: callbackId,
+                                      response: prepareMAJSGeolocationError(error: .userDenied))
         }
     }
 
@@ -498,7 +506,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
 class LocationManager: NSObject {
     let manager: CLLocationManager
-    var locationListener: ((Result<CLLocation?, Error>) -> Void)?
+    var locationListener: ((Result<CLLocation?, MAJSNaviGeolocationError>) -> Void)?
 
     init(enableHighAccuracy: Bool) {
         manager = CLLocationManager()
@@ -507,12 +515,12 @@ class LocationManager: NSObject {
         manager.delegate = self
     }
 
-    func updateLocation(result: @escaping (Result<CLLocation?, Error>) -> Void) {
+    func updateLocation(result: @escaping (Result<CLLocation?, MAJSNaviGeolocationError>) -> Void) {
         if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             self.locationListener = result
             manager.startUpdatingLocation()
         } else {
-            result(.failure(NSError.genericError(message: "application does not have sufficient geolocation permissions")))
+            result(.failure(.devicePermissionDenied))
         }
     }
 }
