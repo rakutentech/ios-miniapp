@@ -9,7 +9,9 @@ target sdk_name + '_Example' do
   project sdk_name + '.xcodeproj'
   workspace sdk_name + '.xcworkspace'
   pod 'MiniApp/Admob8', :path => './'
+  pod 'RSignatureVerifier', :git => 'https://github.com/rakutentech/ios-signatureverifier', :commit => '15774e2029c2ac51131c53713f768e5a88d8daa6'
   pod 'MiniApp/UI', :path => './'
+  pod 'MiniApp/Signature', :path => './'
   pod 'AppCenter/Crashes'
   pod 'RAnalytics', :source => 'https://github.com/rakutentech/ios-analytics-framework.git'
 
