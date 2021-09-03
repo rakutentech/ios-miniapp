@@ -41,7 +41,6 @@ Pod::Spec.new do |miniapp|
     signature.source_files = 'MiniApp/Classes/signature/**/*.{swift,h,m}'
     signature.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_SIGNATURE' }
     signature.dependency 'MiniApp/Core'
-    signature.dependency 'RSignatureVerifier'
   end
 
   miniapp.subspec 'Admob' do |admob|

@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     }
     var decodeResponse: [MiniAppInfo]? {
         didSet {
-            if let list = self.decodeResponse, !(Config.userDefaults?.bool(forKey: Config.Key.isPreviewMode.rawValue) ?? false) {
+            if let list = self.decodeResponse, !(Config.userDefaults?.value(forKey: Config.Key.isPreviewMode.rawValue) as? Bool ?? false) {
                 self.miniAppsSection = nil
                 self.miniApps = ["": list]
             } else {

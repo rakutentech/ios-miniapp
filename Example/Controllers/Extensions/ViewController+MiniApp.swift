@@ -112,6 +112,10 @@ extension ViewController: MiniAppNavigationDelegate {
         switch error {
         case .metaDataFailure:
             metaDataFailure()
+        case .invalidSignature:
+            self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize(.signatureFailed), dismissController: true) { _ in
+                self.fetchAppList(inBackground: true)
+            }
         default:
             self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize(.downloadFailed), dismissController: true) { _ in
                 self.fetchAppList(inBackground: true)

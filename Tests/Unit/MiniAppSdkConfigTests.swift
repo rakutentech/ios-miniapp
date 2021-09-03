@@ -2,6 +2,7 @@ import Quick
 import Nimble
 @testable import MiniApp
 
+// swiftlint:disable function_body_length
 class MiniAppSdkConfigTests: QuickSpec {
     override func spec() {
         describe("MiniAppSdkConfig") {
@@ -9,7 +10,9 @@ class MiniAppSdkConfigTests: QuickSpec {
                 it("will return all values") {
                     let config = MiniAppSdkConfig(baseUrl: "http://example.com", rasProjectId: "mini-app-project-id",
                                                   subscriptionKey: "mini-app-sub-key", hostAppVersion: "1.0", isPreviewMode: false,
-                                                  analyticsConfigList: [MAAnalyticsConfig(acc: mockRATAcc, aid: mockRATAid)])
+                                                  analyticsConfigList: [MAAnalyticsConfig(acc: mockRATAcc, aid: mockRATAid)],
+                                                  requireMiniAppSignatureVerification: true)
+                    let env = Environment(with: config)
                     expect(config.baseUrl).to(equal("http://example.com"))
                     expect(config.rasProjectId).to(equal("mini-app-project-id"))
                     expect(config.subscriptionKey).to(equal("mini-app-sub-key"))
@@ -18,17 +21,30 @@ class MiniAppSdkConfigTests: QuickSpec {
                     expect(config.analyticsConfigList).notTo(be(nil))
                     expect(config.analyticsConfigList?[0].acc).to(be(mockRATAcc))
                     expect(config.analyticsConfigList?[0].aid).to(be(mockRATAid))
+                    expect(config.requireMiniAppSignatureVerification).to(be(true))
+                    expect(env.baseUrl?.absoluteString).to(equal(config.baseUrl))
+                    expect(env.projectId).to(equal(config.rasProjectId))
+                    expect(env.subscriptionKey).to(equal(config.subscriptionKey))
+                    expect(env.appVersion).to(equal(config.hostAppVersion))
+                    expect(env.isPreviewMode).to(be(config.isPreviewMode))
+                    expect(env.requireMiniAppSignatureVerification).to(be(config.requireMiniAppSignatureVerification))
                 }
             }
             context("when MiniAppSdkConfig is initialized with default constructor") {
-                it("will return nil values") {
-                    let config = MiniAppSdkConfig()
-                    expect(config.baseUrl).to(beNil())
-                    expect(config.rasProjectId).to(beNil())
-                    expect(config.subscriptionKey).to(beNil())
-                    expect(config.hostAppVersion).to(beNil())
-                    expect(config.isPreviewMode).to(be(false))
-                    expect(config.analyticsConfigList?.count).to(be(0))
+                it("environment will return default values") {
+                    let config = Environment(with: MiniAppSdkConfig())
+                    expect(config.customUrl).to(beNil())
+                    expect(config.customProjectId).to(beNil())
+                    expect(config.customAppVersion).to(beNil())
+                    expect(config.customSubscriptionKey).to(beNil())
+                    expect(config.customIsPreviewMode).to(beNil())
+                    expect(config.customSignatureVerification).to(beNil())
+                    expect(config.baseUrl).toNot(beNil())
+                    expect(config.projectId).toNot(beNil())
+                    expect(config.subscriptionKey).toNot(beNil())
+                    expect(config.appVersion).toNot(beNil())
+                    expect(config.isPreviewMode).to(be(true))
+                    expect(config.requireMiniAppSignatureVerification).to(be(false))
                 }
             }
             context("when MiniAppSdkConfig is initialized with default constructor and value is set later") {
@@ -39,7 +55,10 @@ class MiniAppSdkConfigTests: QuickSpec {
                     config.subscriptionKey = "mini-app-sub-key"
                     config.hostAppVersion = "1.0"
                     config.isPreviewMode = false
+                    config.requireMiniAppSignatureVerification = true
                     config.analyticsConfigList = [MAAnalyticsConfig(acc: mockRATAcc, aid: mockRATAid)]
+                    let env = Environment(with: config)
+
                     expect(config.baseUrl).to(equal("http://example.com"))
                     expect(config.rasProjectId).to(equal("mini-app-host-id"))
                     expect(config.subscriptionKey).to(equal("mini-app-sub-key"))
@@ -48,6 +67,13 @@ class MiniAppSdkConfigTests: QuickSpec {
                     expect(config.analyticsConfigList).notTo(be(nil))
                     expect(config.analyticsConfigList?[0].acc).to(be(mockRATAcc))
                     expect(config.analyticsConfigList?[0].aid).to(be(mockRATAid))
+                    expect(config.requireMiniAppSignatureVerification).to(be(true))
+                    expect(env.baseUrl?.absoluteString).to(equal(config.baseUrl))
+                    expect(env.projectId).to(equal(config.rasProjectId))
+                    expect(env.subscriptionKey).to(equal(config.subscriptionKey))
+                    expect(env.appVersion).to(equal(config.hostAppVersion))
+                    expect(env.isPreviewMode).to(be(config.isPreviewMode))
+                    expect(env.requireMiniAppSignatureVerification).to(be(config.requireMiniAppSignatureVerification))
                 }
             }
         }

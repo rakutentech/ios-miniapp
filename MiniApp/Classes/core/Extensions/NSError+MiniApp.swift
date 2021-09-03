@@ -34,6 +34,13 @@ extension NSError {
         )
     }
 
+    class func invalidSignature() -> NSError {
+        return NSError(
+                domain: MiniAppSDKErrorDomain,
+                code: MiniAppSDKErrorCode.invalidSignature.rawValue
+        )
+    }
+
     class func invalidResponseData() -> NSError {
         return NSError(
                 domain: MiniAppSDKErrorDomain,
@@ -115,5 +122,6 @@ enum MiniAppSDKErrorCode: Int {
          adNotDisplayed,
          miniAppNotFound,
          metaDataFailure,
-         failedToConformToProtocol
+         failedToConformToProtocol,
+         invalidSignature
 }

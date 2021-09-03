@@ -145,16 +145,39 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
     ///     - tempFilePath: Temporary file path where the downloaded file is stored
     ///     - downloadedURL: URL of the file which was downloaded
     func fileDownloaded(at sourcePath: URL, downloadedURL destinationPath: String) {
-        guard let filePath = urlToDirectoryMap[destinationPath]?.fileStoragePath else {
+        #if RMA_SDK_SIGNATURE
+            fileDownloaded(at: sourcePath, downloadedURL: destinationPath, signatureChecked: !miniAppClient.environment.requireMiniAppSignatureVerification)
+        #else
+            fileDownloaded(at: sourcePath, downloadedURL: destinationPath, signatureChecked: true)
+        #endif
+    }
+
+    /// Delegate called only when file is downloaded successfully
+    /// Downloaded file should be taken care by moving them to any directory before returning the function.
+    ///
+    /// - Parameters:
+    ///     - tempFilePath: Temporary file path where the downloaded file is stored
+    ///     - downloadedURL: URL of the file which was downloaded
+    ///     - signatureChecked: Boolean to determine if the file signature check went as expected
+    func fileDownloaded(at sourcePath: URL, downloadedURL destinationPath: String, signatureChecked: Bool) {
+        if signatureChecked {
+            guard let filePath = urlToDirectoryMap[destinationPath]?.fileStoragePath
+            else {
+                return
+            }
+            MiniAppLogger.d("MiniApp dl time: \(Date().timeIntervalSince(time))")
+            time = Date()
+            guard let error = miniAppStorage.save(sourcePath: sourcePath, destinationPath: filePath)
+            else {
+                MiniAppLogger.d("MiniApp save time: \(Date().timeIntervalSince(time))")
+                time = Date()
+                unzipFile(fromURL: destinationPath, to: filePath)
+                return
+            }
+            urlToDirectoryMap[destinationPath]?.completionHandler(.failure(error))
             return
         }
-        MiniAppLogger.d("MiniApp dl time: \(Date().timeIntervalSince(time))")
-        guard let error = miniAppStorage.save(sourcePath: sourcePath, destinationPath: filePath) else {
-            MiniAppLogger.d("MiniApp save time: \(Date().timeIntervalSince(time))")
-            unzipFile(fromURL: destinationPath, to: filePath)
-            return
-        }
-        urlToDirectoryMap[destinationPath]?.completionHandler(.failure(error))
+        urlToDirectoryMap[destinationPath]?.completionHandler(.failure(NSError.invalidSignature()))
     }
 
     /// Delegate called whenever download task is completed/failed.

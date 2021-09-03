@@ -6,6 +6,8 @@
 
 - **Feature:** Store Manifest as a json file
 - **Feature:** A secure check is performed on manifest permissions before launching the Mini App
+- **Feature:** A new subspec `MiniApp/Signature` is now available. If the dependency is added to the host, the MiniApp zip file signature is now checked to prevent file corruption or man in the middle attack
+- **Feature:** A `RMAForceSignatureCheck` boolean setting can be set in '.plist' file. It is considered false by default and is only used by `MiniApp/Signature`
 
 ### 3.5.0 (2021-08-05)
 
