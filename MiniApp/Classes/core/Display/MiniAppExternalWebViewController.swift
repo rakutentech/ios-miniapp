@@ -93,6 +93,10 @@ extension MiniAppExternalWebViewController: WKNavigationDelegate {
         self.forwardBarButton.isEnabled = webView.canGoForward
     }
 
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        MiniAppLogger.e(String(describing: navigation), error)
+    }
+
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         let navigationTypes: [WKNavigationType] = [.linkActivated, .formSubmitted]
         if navigationTypes.contains(navigationAction.navigationType) {
