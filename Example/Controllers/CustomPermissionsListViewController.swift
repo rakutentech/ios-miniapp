@@ -1,7 +1,7 @@
 import UIKit
 import MiniApp
 
-class CustomPermissionsListViewController: UITableViewController {
+class CustomPermissionsListViewController: RATTableViewController {
 
     var permissionList = [MASDKCustomPermissionModel]()
     var miniAppId = String()
@@ -9,6 +9,7 @@ class CustomPermissionsListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView(frame: .zero)
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.custom.permission.list")
     }
 
     @IBAction func permissionValueChanged(_ sender: UISwitch) {

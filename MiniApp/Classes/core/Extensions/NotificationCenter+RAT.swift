@@ -21,7 +21,7 @@ internal extension NotificationCenter {
                 mutableEventData.updateValue(param.1, forKey: param.0)
                 return mutableEventData
             }
-            self.post(name: MiniAppAnalytics.notificationName, object: parameters)
+//            self.post(name: MiniAppAnalytics.notificationName, object: parameters)
         }
     }
 }

@@ -1170,7 +1170,7 @@
     </scenes>
     <resources>
         <image name="Rakuten" width="120" height="120"/>
-        <image name="Security" width="229.5" height="229.5"/>
+        <image name="Security" width="128" height="128"/>
         <image name="Settings" width="24" height="24"/>
         <image name="Switch" width="512" height="512"/>
         <image name="UserContacts" width="512" height="512"/>

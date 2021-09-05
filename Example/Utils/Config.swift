@@ -8,7 +8,11 @@ class Config: NSObject {
         version = "CFBundleShortVersionString",
         subscriptionKey = "RASProjectSubscriptionKey",
         endpoint = "RMAAPIEndpoint",
-        isPreviewMode = "RMAIsPreviewMode"
+        isPreviewMode = "RMAIsPreviewMode",
+        analyticsACC = "AnalyticsAID",
+        analyticsAID = "AnalyticsACC",
+        additionalAnalyticsACC = "AdditionalAnalyticsAID",
+        additionalAnalyticsAID = "AdditionalAnalyticsACC"
     }
 
     static let userDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings")
@@ -21,7 +25,8 @@ class Config: NSObject {
             subscriptionKey: Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue),
             hostAppVersion: Config.userDefaults?.string(forKey: Config.Key.version.rawValue),
             isPreviewMode: Config.userDefaults?.bool(forKey: Config.Key.isPreviewMode.rawValue),
-            analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")])
+            analyticsConfigList: [MAAnalyticsConfig(acc: Config.userDefaults?.string(forKey: Config.Key.additionalAnalyticsACC.rawValue) ?? "",
+                                                    aid: Config.userDefaults?.string(forKey: Config.Key.additionalAnalyticsAID.rawValue) ?? "")])
     }
 
     /// Returns a `MiniAppNavigationConfig` with default values

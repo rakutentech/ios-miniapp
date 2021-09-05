@@ -1,12 +1,17 @@
 import UIKit
 import MiniApp
 
-class DeeplinkErrorViewController: UIViewController, UITextViewDelegate {
+class DeeplinkErrorViewController: RATViewController, UITextViewDelegate {
     @IBOutlet weak var errorDescTextview: UITextView!
     @IBOutlet weak var errorTitleLabel: UILabel!
     var errorType: DeeplinkErrorDescriptionType? = .miniAppNoLongerExists
     var errorTitle: DeeplinkErrorTitleType?
     var miniAppInfo: MiniAppInfo?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.deeplink")
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         errorDescTextview.createHyperLinkAttributedText(

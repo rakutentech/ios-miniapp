@@ -1,7 +1,7 @@
 import UIKit
 import MiniApp
 
-class UserSettingsTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class UserSettingsTableViewController: RATTableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var editPhotoButton: UIButton!
@@ -16,6 +16,7 @@ class UserSettingsTableViewController: UITableViewController, UIImagePickerContr
         super.viewDidLoad()
         self.imageView.roundedCornerImageView()
         setProfileImage(image: retrieveProfileSettings())
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.usersettings")
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

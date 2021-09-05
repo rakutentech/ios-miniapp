@@ -36,6 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Host: ", host)
         return true
     }
+    override init() {
+        super.init()
+        UIControl.swizzleSendAction()
+    }
 }
 
 extension AVPlayerViewController {

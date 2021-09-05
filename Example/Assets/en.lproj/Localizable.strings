@@ -41,3 +41,17 @@
 "miniapp.sdk.ios.error.message.ad_not_loaded"           = "Ad %@ is not loaded yet";
 "miniapp.sdk.ios.error.message.ad_loading"              = "Previous %@ is still in progress";
 "miniapp.sdk.ios.error.message.ad_loaded"               = "Ad %@ is already loaded";
+
+
+
+"demo.app.rat.page.name.first_launch"                   =   "First Launch";
+"demo.app.rat.page.name.home"                           =   "Home";
+"demo.app.rat.page.name.settings"                       =   "Settings";
+"demo.app.rat.page.name.general"                        =   "General";
+"demo.app.rat.page.name.query_parameters"               =   "Query Parameters";
+"demo.app.rat.page.name.qa"                             =   "QA";
+"demo.app.rat.page.name.profile"                        =   "Profile";
+"demo.app.rat.page.name.contacts"                       =   "Contacts";
+"demo.app.rat.page.name.permissions"                    =   "Permissions";
+"demo.app.rat.page.name.access_token"                    =   "Access Token";
+

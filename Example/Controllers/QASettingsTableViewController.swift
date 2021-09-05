@@ -1,11 +1,12 @@
 import UIKit
+import MiniApp
 
 enum AccessTokenCustomErrorType: String {
     case AUTHORIZATION,
          OTHER
 }
 
-class QASettingsTableViewController: UITableViewController {
+class QASettingsTableViewController: RATTableViewController {
     public static let preferenceAccessTokenBehavior = "QA_CUSTOM_ACCESS_TOKEN_ERROR_TYPE"
     public static let preferenceAccessTokenMessage = "QA_CUSTOM_ACCESS_TOKEN_ERROR_MESSAGE"
     @IBOutlet weak var accessTokenErrorControl: UISegmentedControl!
@@ -22,6 +23,7 @@ class QASettingsTableViewController: UITableViewController {
             accessTokenErrorControl.selectedSegmentIndex = 0
         }
         accessTokenErrorCustomMessage.text = Self.accessTokenErrorMessage()
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.qa")
     }
 
     public class func accessTokenErrorType() -> AccessTokenCustomErrorType? {

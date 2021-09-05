@@ -2,7 +2,7 @@ import UIKit
 import MiniApp
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: RATViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
@@ -46,6 +46,7 @@ class ViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
         locationManager.delegate = self
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
     }
 
     override func viewDidAppear(_ animated: Bool) {

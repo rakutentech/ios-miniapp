@@ -1,7 +1,7 @@
 import UIKit
 import MiniApp
 
-class ManageCustomPermissionsViewController: UITableViewController {
+class ManageCustomPermissionsViewController: RATTableViewController {
 
     var downloadedMiniApps: MASDKDownloadedListPermissionsPair = []
     let imageCache = ImageCache()
@@ -10,6 +10,7 @@ class ManageCustomPermissionsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView(frame: .zero)
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.custom.permissions.manage")
     }
 
     override func viewWillAppear(_ animated: Bool) {

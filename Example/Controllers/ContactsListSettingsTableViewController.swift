@@ -5,7 +5,7 @@ protocol ContactsListDelegate: AnyObject {
     func contactsController(_ contactsController: ContactsListSettingsTableViewController?, didSelect contact: [MAContact]?)
 }
 
-class ContactsListSettingsTableViewController: UITableViewController {
+class ContactsListSettingsTableViewController: RATTableViewController {
 
     var bannerMessage: CGFloat = 0
     var userContactList: [MAContact]? = []
@@ -18,6 +18,7 @@ class ContactsListSettingsTableViewController: UITableViewController {
         prepareRandomContactList()
         tableView.separatorStyle = .singleLine
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: bannerMessage))
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.contactslist")
     }
 
     func prepareRandomContactList() {

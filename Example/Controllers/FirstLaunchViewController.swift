@@ -1,11 +1,17 @@
 import UIKit
 import MiniApp
-class FirstLaunchViewController: UIViewController {
+class FirstLaunchViewController: RATViewController {
     @IBOutlet weak var imageViewArrow: UIImageView!
     @IBOutlet weak var labelHint: UILabel!
     @IBOutlet weak var labelMiniApp: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.first_launch")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     override func viewDidAppear(_ animated: Bool) {
