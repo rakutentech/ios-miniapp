@@ -48,10 +48,16 @@
 "demo.app.rat.page.name.home"                           =   "Home";
 "demo.app.rat.page.name.settings"                       =   "Settings";
 "demo.app.rat.page.name.general"                        =   "General";
-"demo.app.rat.page.name.query_parameters"               =   "Query Parameters";
+"demo.app.rat.page.name.queryparam"                     =   "Query Parameters";
 "demo.app.rat.page.name.qa"                             =   "QA";
+"demo.app.rat.page.name.points"                         =   "Points";
 "demo.app.rat.page.name.profile"                        =   "Profile";
-"demo.app.rat.page.name.contacts"                       =   "Contacts";
+"demo.app.rat.page.name.contactslist"                   =   "Contacts List";
 "demo.app.rat.page.name.permissions"                    =   "Permissions";
-"demo.app.rat.page.name.access_token"                    =   "Access Token";
-
+"demo.app.rat.page.name.access_token"                   =   "Access Token";
+"demo.app.rat.page.name.deeplink"                       =   "Deeplink";
+"demo.app.rat.page.name.display.miniapp"                =   "Mini App Display";
+"demo.app.rat.page.name.usersettings"                   =   "User Settings";
+"demo.app.rat.page.name.custom.permissions.list"        =   "Custom Permissions list";
+"demo.app.rat.page.name.custom.permissions.manage"      =   "Custom Permissions manage";
+"demo.app.rat.page.name.chatselector"                   =   "Chat Selector";
