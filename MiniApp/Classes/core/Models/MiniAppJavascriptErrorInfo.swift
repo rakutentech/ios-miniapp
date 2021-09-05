@@ -3,6 +3,11 @@ struct MiniAppErrorDetail: Codable, Error {
     let description: String
 }
 
+internal struct MAJSLocationErrorResponseModel: Codable {
+    var code: Int
+    var message: String?
+}
+
 enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
     case hostAppError
     case unknownError
@@ -203,6 +208,29 @@ public enum MASDKPointError: Error, MiniAppErrorProtocol {
             return "FailedToConformToProtocol"
         case .error:
             return ""
+        }
+    }
+}
+
+enum MAJSNaviGeolocationError: Error {
+    case userDenied
+    case devicePermissionDenied
+
+    var code: Int {
+        switch self {
+        case .userDenied:
+        return 1
+        case .devicePermissionDenied:
+        return 2
+        }
+    }
+
+    var message: String {
+        switch self {
+        case .userDenied:
+        return "User denied Geolocation"
+        case .devicePermissionDenied:
+        return "application does not have sufficient geolocation permissions."
         }
     }
 }

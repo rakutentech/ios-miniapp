@@ -7,6 +7,7 @@ class UserSettingsTableViewController: RATTableViewController, UIImagePickerCont
     @IBOutlet weak var editPhotoButton: UIButton!
     @IBOutlet weak var displayNameTextField: UITextField!
     @IBOutlet weak var modifyProfileSettingsButton: UIBarButtonItem!
+    @IBOutlet weak var deletePhotoButton: UIButton!
     private var saveTitleText = "Save"
     private var editTitleText = "Edit"
 
@@ -25,7 +26,12 @@ class UserSettingsTableViewController: RATTableViewController, UIImagePickerCont
 
     func setProfileImage(image: UIImage?) {
         guard let profileImage = image else {
+            let imageConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 12, weight: .semibold))
+            editPhotoButton.setImage(UIImage(systemName: "plus", withConfiguration: imageConfig), for: .normal)
             editPhotoButton.setTitle("Add Photo", for: .normal)
+
+            deletePhotoButton.setImage(UIImage(systemName: "trash", withConfiguration: imageConfig), for: .normal)
+            deletePhotoButton.setTitle("Remove Photo", for: .normal)
             return
         }
         editPhotoButton.setTitle(editTitleText, for: .normal)
@@ -59,6 +65,8 @@ class UserSettingsTableViewController: RATTableViewController, UIImagePickerCont
         displayNameTextField.isEnabled = !displayNameTextField.isEnabled
         editPhotoButton.isEnabled = !editPhotoButton.isEnabled
         editPhotoButton.isHidden  = !editPhotoButton.isHidden
+        deletePhotoButton.isEnabled = !deletePhotoButton.isEnabled
+        deletePhotoButton.isHidden  = !deletePhotoButton.isHidden
         self.displayNameTextField.becomeFirstResponder()
     }
 
@@ -83,6 +91,10 @@ class UserSettingsTableViewController: RATTableViewController, UIImagePickerCont
         }
         self.displayNameTextField.text = userProfile.displayName
         return userProfile.profileImageURI?.convertBase64ToImage()
+    }
+
+    @IBAction func deletePhotoPressed(_ sender: Any) {
+        self.imageView.image = UIImage(named: "Rakuten")
     }
 }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IMi-vO-mPy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IMi-vO-mPy">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -784,23 +784,37 @@
                                         <outletCollection property="gestureRecognizers" destination="tl7-uP-GCk" appends="YES" id="RSv-e5-PQx"/>
                                     </connections>
                                 </imageView>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pnL-iE-c2U">
-                                    <rect key="frame" x="192" y="172" width="30" height="30"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="vlg-PW-4cD">
+                                    <rect key="frame" x="207" y="172" width="0.0" height="30"/>
+                                    <subviews>
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pnL-iE-c2U">
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="29"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                            <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="-4" maxY="0.0"/>
+                                            <connections>
+                                                <action selector="showPhotoLibrary" destination="uyv-le-C26" eventType="touchDown" id="JIr-7S-R3N"/>
+                                            </connections>
+                                        </button>
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sgy-De-P96">
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="29"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                            <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="-4" maxY="0.0"/>
+                                            <connections>
+                                                <action selector="deletePhotoPressed:" destination="uyv-le-C26" eventType="touchUpInside" id="7h0-lF-Qph"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="H0N-hb-iBQ"/>
+                                        <constraint firstAttribute="height" constant="30" id="CaD-Ae-HVv"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                                    <connections>
-                                        <action selector="showPhotoLibrary" destination="uyv-le-C26" eventType="touchDown" id="JIr-7S-R3N"/>
-                                    </connections>
-                                </button>
+                                </stackView>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="pnL-iE-c2U" firstAttribute="top" secondItem="hgZ-y6-I6S" secondAttribute="bottom" constant="7" id="5xW-UP-Yf1"/>
                                 <constraint firstItem="hgZ-y6-I6S" firstAttribute="top" secondItem="eNy-wl-N3R" secondAttribute="top" constant="15" id="Zgd-YN-0Vb"/>
-                                <constraint firstItem="pnL-iE-c2U" firstAttribute="centerX" secondItem="hgZ-y6-I6S" secondAttribute="centerX" id="gxc-yv-cdC"/>
+                                <constraint firstItem="vlg-PW-4cD" firstAttribute="centerX" secondItem="eNy-wl-N3R" secondAttribute="centerX" id="Zk1-Km-fbt"/>
+                                <constraint firstAttribute="bottom" secondItem="vlg-PW-4cD" secondAttribute="bottom" constant="14" id="o9X-2f-itu"/>
                                 <constraint firstItem="hgZ-y6-I6S" firstAttribute="centerX" secondItem="eNy-wl-N3R" secondAttribute="centerX" id="o9v-Fv-aL4"/>
-                                <constraint firstItem="pnL-iE-c2U" firstAttribute="bottom" secondItem="eNy-wl-N3R" secondAttribute="bottomMargin" constant="-6" id="xJD-tI-aB0"/>
+                                <constraint firstItem="vlg-PW-4cD" firstAttribute="top" secondItem="hgZ-y6-I6S" secondAttribute="bottom" constant="7" id="xaj-9O-LjD"/>
                             </constraints>
                         </view>
                         <sections>
@@ -852,6 +866,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deletePhotoButton" destination="Sgy-De-P96" id="zOW-lQ-cGQ"/>
                         <outlet property="displayNameTextField" destination="hEI-Ij-3mn" id="SHM-I9-R9R"/>
                         <outlet property="editPhotoButton" destination="pnL-iE-c2U" id="mEF-em-si7"/>
                         <outlet property="imageView" destination="hgZ-y6-I6S" id="9MU-EE-Tcf"/>
@@ -865,7 +880,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1412" y="1181"/>
+            <point key="canvasLocation" x="1410.144927536232" y="1180.5803571428571"/>
         </scene>
         <!--Mini Apps List-->
         <scene sceneID="m4X-ZG-gOn">
@@ -1171,6 +1186,7 @@
     <resources>
         <image name="Rakuten" width="120" height="120"/>
         <image name="Security" width="128" height="128"/>
+        <image name="Security" width="229.5" height="229.5"/>
         <image name="Settings" width="24" height="24"/>
         <image name="Switch" width="512" height="512"/>
         <image name="UserContacts" width="512" height="512"/>
@@ -1178,6 +1194,9 @@
         <image name="p.circle" catalog="system" width="128" height="121"/>
         <image name="profile" width="45.532001495361328" height="45.532001495361328"/>
         <image name="questionmark" width="512" height="512"/>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
