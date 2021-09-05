@@ -9,10 +9,10 @@ class Config: NSObject {
         subscriptionKey = "RASProjectSubscriptionKey",
         endpoint = "RMAAPIEndpoint",
         isPreviewMode = "RMAIsPreviewMode",
-        analyticsACC = "AnalyticsAID",
-        analyticsAID = "AnalyticsACC",
-        additionalAnalyticsACC = "AdditionalAnalyticsAID",
-        additionalAnalyticsAID = "AdditionalAnalyticsACC"
+        analyticsACC = "RATAccountIdentifier",
+        analyticsAID = "RATAppIdentifier",
+        additionalAnalyticsACC = "RATAdditionalAccountIdentifier",
+        additionalAnalyticsAID = "RATAdditionalAppIdentifier"
     }
 
     static let userDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings")
