@@ -30,8 +30,8 @@ public class DemoAppAnalytics {
     open class var sdkVersion: String? {
         Bundle.miniAppBundle?.infoDictionary?["CFBundleShortVersionString"] as? String
     }
-    internal static let defaultRATAcc = MAAnalyticsConfig(acc: Config.userDefaults?.string(forKey: Config.Key.analyticsACC.rawValue) ?? "",
-                                                          aid: Config.userDefaults?.string(forKey: Config.Key.analyticsAID.rawValue) ?? "")
+    internal static let defaultRATAcc = MAAnalyticsConfig(acc: String(Bundle.main.infoDictionary?["RATAccountIdentifier"] as? Int ?? 0) ,
+                                                          aid: String(Bundle.main.infoDictionary?["RATAppIdentifier"] as? Int ?? 0) )
 
     internal class func getAnalyticsInfo() -> [(String, String)] {
         var result = [(String, String)]()

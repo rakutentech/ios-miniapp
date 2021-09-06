@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IMi-vO-mPy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IMi-vO-mPy">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -602,12 +602,12 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Custom runtime settings" image="Settings" id="VtT-o6-1JW"/>
                     <navigationItem key="navigationItem" title="Settings" prompt="version" id="kDZ-gH-afY">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Cju-iP-W6n">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Cju-iP-W6n">
                             <connections>
                                 <action selector="actionResetConfig:" destination="OKP-QI-epG" id="7dM-b8-Lmq"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ueG-dC-Z10">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="ueG-dC-Z10">
                             <connections>
                                 <action selector="actionSaveConfig" destination="OKP-QI-epG" id="aHt-cm-Ize"/>
                             </connections>
@@ -1185,7 +1185,6 @@
     </scenes>
     <resources>
         <image name="Rakuten" width="120" height="120"/>
-        <image name="Security" width="128" height="128"/>
         <image name="Security" width="229.5" height="229.5"/>
         <image name="Settings" width="24" height="24"/>
         <image name="Switch" width="512" height="512"/>
@@ -1194,9 +1193,6 @@
         <image name="p.circle" catalog="system" width="128" height="121"/>
         <image name="profile" width="45.532001495361328" height="45.532001495361328"/>
         <image name="questionmark" width="512" height="512"/>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
