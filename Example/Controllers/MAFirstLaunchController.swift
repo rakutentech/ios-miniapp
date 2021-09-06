@@ -27,6 +27,7 @@ class MAFirstLaunchController: UIViewController {
     private var optionalPermissions: [MASDKCustomPermissionModel] = []
     private var customMetaData: [String: String] = [:]
     var isManifestUpdated: Bool = false
+    var showScopes: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,11 +82,36 @@ class MAFirstLaunchController: UIViewController {
 // MARK: - UITableViewControllerDelegate
 extension MAFirstLaunchController: UITableViewDelegate, UITableViewDataSource {
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        permissionsCollections?.count ?? 0
+        if section == 0 {
+            return permissionsCollections?.count ?? 0
+        }
+        return showScopes ? 1 : 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if
+            showScopes,
+            indexPath.section == 1,
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FirstLaunchScopesCell", for: indexPath) as? FirstLaunchScopesCell
+        {
+                cell.scopesTitleLabel.text = "Requested Scopes"
+                if let manifest = miniAppManifest {
+                    guard let permissions = manifest.accessTokenPermissions
+                    else {
+                        cell.scopesDescriptionLabel.text = "No requested scopes found"
+                        return cell
+                    }
+                    cell.scopesDescriptionLabel.text = permissions.filter({ $0.audience == "rae" }).first?.scopes.joined(separator: ", ")
+                } else {
+                    cell.scopesDescriptionLabel.text = "Manifest is not available"
+                }
+                return cell
+        }
         if let cell = tableView.dequeueReusableCell(
             withIdentifier: "FirstLaunchCustomPermissionCell", for: indexPath) as? FirstLaunchCustomPermissionCell {
             let permissionModel: MASDKCustomPermissionModel?
@@ -139,5 +165,15 @@ class FirstLaunchCustomPermissionCell: UITableViewCell {
         toggle.isOn = true
         permissionTitle.text = ""
         permissionDescription.text = ""
+    }
+}
+
+class FirstLaunchScopesCell: UITableViewCell {
+
+    @IBOutlet weak var scopesTitleLabel: UILabel!
+    @IBOutlet weak var scopesDescriptionLabel: UILabel!
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
 }
