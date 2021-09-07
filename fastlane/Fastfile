@@ -44,9 +44,7 @@ platform :ios do
     # configure Analytics SDK
     set_info_plist_value(path: "./Example/Info.plist", key: "RATAccountIdentifier", value: ENV['RAT_ACCOUNT_IDENTIFIER'].to_i)
     set_info_plist_value(path: "./Example/Info.plist", key: "RATAppIdentifier", value: ENV['RAT_APP_IDENTIFIER'].to_i)
-    set_info_plist_value(path: "./Example/Info.plist", key: "RATAdditionalAccountIdentifier", value: ENV['ADDITION_RAT_APP_IDENTIFIER'].to_i)
-    set_info_plist_value(path: "./Example/Info.plist", key: "RATAdditionalAppIdentifier", value: ENV['ADDITIONAL_RAT_ACCOUNT_IDENTIFIER'].to_i)
-  
+
     xcodebuild(
       archive: true,
       archive_path: "artifacts/MiniApp-Example.xcarchive",
