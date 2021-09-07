@@ -60,6 +60,30 @@ public class DemoAppAnalytics {
                                                  parameters: params)
     }
 
+    internal class func sendAnalyticsForCell(eventType: DemoAppRATEventType,
+                                             actionType: DemoAppRATActionType,
+                                             cell: UITableViewCell) {
+        let controller = UINavigationController.topViewController() as? RATViewController
+        DemoAppAnalytics.sendAnalytics(eventType: eventType,
+                                       actionType: actionType,
+                                       pageName: controller?.pageName,
+                                       siteSection: controller?.siteSection,
+                                       componentName: getComponentName(cell: cell), elementType: "TableViewCell")
+    }
+
+    internal class func getComponentName(cell: UITableViewCell) -> String? {
+        guard let miniAppCell = cell as? MiniAppCell else {
+            guard let customPermissionCell = cell as? CustomPermissionCell else {
+                guard let customPermissionCell = cell as? FirstLaunchCustomPermissionCell else {
+                    return cell.textLabel?.text
+                }
+                return customPermissionCell.permissionTitle.text
+            }
+            return customPermissionCell.titleLabel?.text
+        }
+        return miniAppCell.titleLabel?.text
+    }
+
     internal class func getTargetElementString(component: String, element: String, action: DemoAppRATActionType) -> String {
         return component + "-" + element + "." + action.rawValue
     }

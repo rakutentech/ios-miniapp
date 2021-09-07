@@ -62,6 +62,7 @@ class ContactsListSettingsTableViewController: RATTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
         if let contact = userContactList?[indexPath.row] {
             if delegate == nil {
                 editContact(title: "Edit Contact info",

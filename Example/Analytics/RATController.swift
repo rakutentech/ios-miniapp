@@ -13,6 +13,30 @@ class RATViewController: UIViewController {
     }
 }
 
+class RATViewControllerWithTableView: RATViewController, UITableViewDelegate, UITableViewDataSource {
+
+    @IBOutlet weak var tableView: UITableView!
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        DemoAppAnalytics.sendAnalyticsForCell(eventType: .appear, actionType: .initial, cell: cell)
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else {
+            return
+        }
+        DemoAppAnalytics.sendAnalyticsForCell(eventType: .click, actionType: .open, cell: cell)
+    }
+}
+
 class RATTableViewController: UITableViewController {
     var pageName: String?
     var siteSection: String?
