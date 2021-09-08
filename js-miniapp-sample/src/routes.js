@@ -2,6 +2,7 @@ import React from 'react';
 
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import ChatIcon from '@material-ui/icons/Chat';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import GifIcon from '@material-ui/icons/Gif';
 import HomeIcon from '@material-ui/icons/Home';
@@ -17,6 +18,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
+import FileDownload from './pages/file-download';
 import FileUploader from './pages/file-upload';
 import GifPage from './pages/gifs';
 import Landing from './pages/landing';
@@ -105,6 +107,12 @@ const appItems = [
     label: 'Ads',
     navLink: '/ads',
     component: Ads,
+  },
+  {
+    icon: <CloudDownloadIcon />,
+    label: 'File Download',
+    navLink: '/file_download',
+    component: FileDownload,
   },
   {
     icon: <AttachFileIcon />,

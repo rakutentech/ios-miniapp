@@ -17,7 +17,7 @@ const grantedPermissionsReducer = (
         )
         .map((permission) => permission.name)
         .concat(state);
-      return Array.from(new Set(array))
+      return Array.from(new Set(array));
     default:
       return state;
   }
