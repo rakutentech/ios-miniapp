@@ -72,7 +72,7 @@ class FetcherSpec: QuickSpec {
                         switch result {
                         case .success(let res):
                             testResult = res
-                        case .failure(_):
+                        case .failure:
                             testResult = nil
                         }
                     })
