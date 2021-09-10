@@ -46,7 +46,7 @@ import Foundation
         }
 
         if let error = SecCopyErrorMessageString(status, nil) as String? {
-            MiniAppLogger.d("KeyStore write status: \(error) [\(account)]", "🔐\(status == errSecSuccess ? "" : "⚠️")")
+            MiniAppLogger.d("SignatureKeyStore write status: \(error) [\(account)]", "🔐\(status == errSecSuccess ? "" : "⚠️")")
         }
     }
 
@@ -63,7 +63,7 @@ import Foundation
         let status = SecItemCopyMatching(query as CFDictionary, &result)
 
         if let error = SecCopyErrorMessageString(status, nil) as String? {
-            MiniAppLogger.d("KeyStore retrieve status: \(error) [\(account)]", "🔐\(status == errSecSuccess ? "" : "⚠️")")
+            MiniAppLogger.d("SignatureKeyStore retrieve status: \(error) [\(account)]", "🔐\(status == errSecSuccess ? "" : "⚠️")")
         }
         guard status == errSecSuccess, let objectData = result as? Data else {
             return nil
@@ -77,7 +77,7 @@ import Foundation
                                       kSecAttrAccount: account]
         let status = SecItemDelete(spec)
         if status != errSecSuccess, let error = SecCopyErrorMessageString(status, nil) as String? {
-            MiniAppLogger.d("KeyStore purge status: \(error) [\(account)]", "🔐\(status == errSecSuccess ? "" : "⚠️")")
+            MiniAppLogger.d("SignatureKeyStore purge status: \(error) [\(account)]", "🔐\(status == errSecSuccess ? "" : "⚠️")")
         }
     }
 }

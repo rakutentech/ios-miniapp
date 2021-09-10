@@ -35,10 +35,30 @@ Mini App SDK is available through [CocoaPods](https://cocoapods.org). To install
 pod 'MiniApp'
 ```
 
-If you need to support display of Google ads triggered from your Mini App, you need to add the following subspec instead:
+The SDK can provide you some useful UI elements to help you displaying Mini Apps in your host app thanks to this subspec:
+
+```ruby
+pod 'MiniApp/UI'
+```
+
+If you need to support display of Google ads (up to version 8) triggered from your Mini App, you need to add the following subspec instead:
 
 ```ruby
 pod 'MiniApp/Admob'
+```
+
+or if you need version 8 or above
+
+```ruby
+pod 'MiniApp/Admob8'
+```
+
+If you want to check the Mini App zip file integrity to prevent file corruption during download, adding `MiniApp/Signature` subspec will automatically enable it. 
+
+By default if the verification fails, it will trigger an [analytic event](#analytics-events) but won't prevent the Mini App to load. [There is a runtime configuration](#runtime-conf) to avoid a corrupted Mini App to be opened.
+You can also provide a new default behavior by using a `RMARequireMiniAppSignatureVerification` boolean parameter in the application plist file (see the configuration matrix below to know more about the `RMARequireMiniAppSignatureVerification` parameter)
+```ruby
+pod 'MiniApp/Signature'
 ```
 
 ### Configuration
@@ -51,7 +71,7 @@ In your project configuration .plist you should add below Key/Value :
 | RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
 | RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
 | RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent. The value specified in the plist is retrieved only at the build time.` |YES      |`none`   |
-
+| RMARequireMiniAppSignatureVerification     | Bool  | `This setting allows you to make the Mini App zip file signature validation mandatory. It is set to false by default, which means if a signature is not valid the mini app will still be launched` |YES      |`false`   |
 <a id="setting-admob"></a>Additionally, if you support Google ads with `MiniApp/Admob` subspec, you need to configure Google ads framework as advised into this [documentation](https://developers.google.com/admob/ios/quick-start)
 
 If you don't want to use project settings, you have to pass this information one by one to the `Config.userDefaults` using a `Config.Key` as key:
@@ -607,7 +627,7 @@ How to get downloaded `Mini App meta-data`
 ---
 In Host App, we can get the downloaded manifest information as following:
 
-```kotlin
+```swift
   let downloadedManifest = MiniApp.shared().getDownloadedManifest(miniAppId:)
 ```
 
@@ -626,7 +646,7 @@ Gets the list of downloaded Mini apps info and associated custom permissions sta
  MiniApp.shared().listDownloadedWithCustomPermissions()
 ```
 
-<a id="navigation"></a>
+<a id="advanced-features"></a>
 
 ### Advanced Features
 ---
@@ -643,12 +663,16 @@ Every call to the API can be done with default parameters retrieved from the pro
 
 ```swift
 class Config: NSObject {
-    class func getCurrent() -> MiniAppSdkConfig {
-        return MiniAppSdkConfig(baseUrl: "https://your.custom.url"
-                                rasAppId: "your_RAS_App_id",
-                                subscriptionKey: "your_subscription_key",
-                                hostAppVersion: "your_custom_version",
-                                isTestMode: true")
+    class func current() -> MiniAppSdkConfig {
+        MiniAppSdkConfig(
+            baseUrl: "https://your.custom.url",
+            rasProjectId: "your_RAS_Project_id",
+            subscriptionKey: "your_subscription_key",
+            hostAppVersion: "your_custom_version",
+            isPreviewMode: true,
+            analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")],
+            requireMiniAppSignatureVerification: true
+        )
     }
 }
 ```

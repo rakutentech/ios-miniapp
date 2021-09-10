@@ -19,6 +19,9 @@ public enum MASDKError: Error {
     /// The provided mini app version ID was invalid. For example, the value cannot be an empty string.
     case invalidVersionId
 
+    /// ZIP archive signature has changed during download phase
+    case invalidSignature
+
     /// The server provided an invalid response body.
     case invalidResponseData
 
@@ -69,6 +72,8 @@ extension MASDKError: LocalizedError {
             return MASDKLocale.localize(.invalidUrl)
         case .invalidAppId:
             return MASDKLocale.localize(.invalidAppId)
+        case .invalidSignature:
+            return MASDKLocale.localize(.signatureFailed)
         case .invalidVersionId:
             return MASDKLocale.localize(.invalidVersionId)
         case .invalidResponseData:
@@ -104,6 +109,8 @@ extension MASDKError {
                 return MASDKError.invalidURLError
             case .invalidAppId:
                 return MASDKError.invalidAppId
+            case .invalidSignature:
+                return MASDKError.invalidSignature
             case .invalidResponseData:
                 return MASDKError.invalidResponseData
             case .downloadingFailed:

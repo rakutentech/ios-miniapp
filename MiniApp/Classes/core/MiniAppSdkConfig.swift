@@ -3,30 +3,31 @@ import Foundation
 /// MiniAppSdkConfig class helps you to configure the endpoints at runtime.
 public class MiniAppSdkConfig {
 
-    var isPreviewMode: Bool?
+    public var isPreviewMode: Bool?
+    public var requireMiniAppSignatureVerification: Bool?
 
-    var baseUrl: String? {
+    public var baseUrl: String? {
         didSet {
             if baseUrl?.count ?? 0 == 0 {
                 baseUrl = nil
             }
         }
     }
-    var rasProjectId: String? {
+    public var rasProjectId: String? {
         didSet {
             if rasProjectId?.count ?? 0 == 0 {
                 rasProjectId = nil
             }
         }
     }
-    var subscriptionKey: String? {
+    public var subscriptionKey: String? {
         didSet {
             if subscriptionKey?.count ?? 0 == 0 {
                 subscriptionKey = nil
             }
         }
     }
-    var hostAppVersion: String? {
+    public var hostAppVersion: String? {
         didSet {
             if hostAppVersion?.count ?? 0 == 0 {
                 hostAppVersion = nil
@@ -34,7 +35,7 @@ public class MiniAppSdkConfig {
         }
     }
 
-    var analyticsConfigList: [MAAnalyticsConfig]? {
+    public var analyticsConfigList: [MAAnalyticsConfig]? {
         didSet {
             if analyticsConfigList?.count == 0 {
                 analyticsConfigList = []
@@ -51,17 +52,20 @@ public class MiniAppSdkConfig {
     ///   - subscriptionKey: The Rakuten Studio Subscription Key
     ///   - hostAppVersion: The Rakuten Studio Host App version
     ///   - isPreviewMode: A boolean used by MiniApp SDK to determine which endpoint to use. Default is true
+    ///   - requireMiniAppSignatureVerification: A boolean used by MiniApp SDK to determine if you prevent man in the middle attack during MiniApp launch. Default is false
     public init(baseUrl: String? = nil,
                 rasProjectId: String? = nil,
                 subscriptionKey: String? = nil,
                 hostAppVersion: String? = nil,
-                isPreviewMode: Bool? = false,
-                analyticsConfigList: [MAAnalyticsConfig]? = []) {
-        self.isPreviewMode = isPreviewMode ?? false
+                isPreviewMode: Bool? = nil,
+                analyticsConfigList: [MAAnalyticsConfig]? = [],
+                requireMiniAppSignatureVerification: Bool? = nil) {
+        self.isPreviewMode = isPreviewMode
         self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
         self.rasProjectId = rasProjectId?.count ?? 0 > 0 ? rasProjectId  : nil
         self.subscriptionKey = subscriptionKey?.count ?? 0 > 0 ? subscriptionKey : nil
         self.hostAppVersion = hostAppVersion?.count ?? 0 > 0 ? hostAppVersion : nil
         self.analyticsConfigList = analyticsConfigList
+        self.requireMiniAppSignatureVerification = requireMiniAppSignatureVerification
     }
 }

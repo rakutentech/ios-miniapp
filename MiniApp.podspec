@@ -31,10 +31,16 @@ Pod::Spec.new do |miniapp|
     }
     core.dependency 'ZIPFoundation', '0.9.12'
   end
-  
+
   miniapp.subspec 'UI' do |ui|
     ui.source_files = 'MiniApp/Classes/ui/**/*.{swift,h,m}'
     ui.dependency 'MiniApp/Core'
+  end
+
+  miniapp.subspec 'Signature' do |signature|
+    signature.source_files = 'MiniApp/Classes/signature/**/*.{swift,h,m}'
+    signature.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_SIGNATURE' }
+    signature.dependency 'MiniApp/Core'
   end
 
   miniapp.subspec 'Admob' do |admob|

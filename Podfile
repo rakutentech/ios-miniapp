@@ -4,12 +4,18 @@ use_frameworks!
 sdk_name = "MiniApp"
 secrets = ["RMA_API_ENDPOINT", "RAS_PROJECT_SUBSCRIPTION_KEY", "RAS_PROJECT_IDENTIFIER", "RMA_DEMO_APP_BUILD_TYPE", "RMA_GAD_APPLICATION_IDENTIFIER", "RMA_APP_CENTER_SECRET", "RAT_ENDPOINT"]
 
+def miniapp_pods
+  pod 'MiniApp/Admob8', :path => './'
+  pod 'MiniApp/UI', :path => './'
+  pod 'MiniApp/Signature', :path => './'
+end
+
 platform :ios, '13.0'
 target sdk_name + '_Example' do
   project sdk_name + '.xcodeproj'
   workspace sdk_name + '.xcworkspace'
-  pod 'MiniApp/Admob8', :path => './'
-  pod 'MiniApp/UI', :path => './'
+
+  miniapp_pods
   pod 'AppCenter/Crashes'
   pod 'RAnalytics', :source => 'https://github.com/rakutentech/ios-analytics-framework.git'
 

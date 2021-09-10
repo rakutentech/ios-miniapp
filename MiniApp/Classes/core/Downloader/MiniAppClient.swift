@@ -15,6 +15,8 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let downloadApi: DownloadApi
     let metaDataApi: MetaDataAPI
     var environment: Environment
+    internal var signatures: [String: (String, String)] = [:]
+    internal var idsForUrls: [String: (String, String)] = [:]
     private var previewPath: String {
         self.environment.isPreviewMode ? "preview" : ""
     }
@@ -33,11 +35,12 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     func updateEnvironment(with config: MiniAppSdkConfig?) {
-        self.environment.customUrl = config?.baseUrl
-        self.environment.customProjectId = config?.rasProjectId
-        self.environment.customSubscriptionKey = config?.subscriptionKey
-        self.environment.customAppVersion = config?.hostAppVersion
-        self.environment.customIsPreviewMode = config?.isPreviewMode
+        environment.customUrl = config?.baseUrl
+        environment.customProjectId = config?.rasProjectId
+        environment.customSubscriptionKey = config?.subscriptionKey
+        environment.customAppVersion = config?.hostAppVersion
+        environment.customIsPreviewMode = config?.isPreviewMode
+        environment.customSignatureVerification = config?.requireMiniAppSignatureVerification
     }
 
     lazy var session: SessionProtocol = {
@@ -67,7 +70,20 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         guard let urlRequest = self.manifestApi.createURLRequest(appId: appId, versionId: versionId, testPath: self.previewPath) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
-        return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
+        return requestFromServer(urlRequest: urlRequest) { [weak self] result in
+            switch result {
+            case .success(let data) :
+                if let signature = data.httpResponse.value(forHTTPHeaderField: "Signature"), let signatureId = ResponseDecoder.decode(decodeType: ManifestResponse.self, data: data.data)?.publicKeyId {
+                    MiniAppLogger.d(signature, "🖊️")
+                    self?.signatures[versionId] = (signatureId, signature)
+                } else {
+                    fallthrough
+                }
+            case .failure :
+                self?.signatures.removeValue(forKey: versionId)
+            }
+            completionHandler(result)
+        }
     }
 
     func getMiniAppMetaData(appId: String,
@@ -79,11 +95,12 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
 
-    func download(url: String) {
-        guard let url = self.downloadApi.createURLFromString(urlString: url) else {
+    func download(url: String, miniAppId: String, miniAppVersion: String) {
+        guard let downLoadURL = downloadApi.createURLFromString(urlString: url) else {
             return
         }
-        self.session.startDownloadTask(downloadUrl: url)
+        idsForUrls[url] = (miniAppId, miniAppVersion)
+        session.startDownloadTask(downloadUrl: downLoadURL)
     }
 
     func requestFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
@@ -93,6 +110,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                 let statusCode = responseData.httpResponse.statusCode
                 let logIcon = statusCode < 300 ? "🟢" : "🟠"
                 MiniAppLogger.d("[\(statusCode)] urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n\(String(data: responseData.data, encoding: .utf8) ?? "Empty response")", logIcon)
+                responseData.httpResponse.allHeaderFields.forEach { key, value in  MiniAppLogger.d("[\(key)]\t \(value)", "\t🎩")}
 
                 if !(200...299).contains(statusCode) {
                     let failure = self.handleHttpResponse(responseData: responseData.data, httpResponse: responseData.httpResponse)
@@ -145,7 +163,27 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
-        delegate?.fileDownloaded(at: location, downloadedURL: destinationURL)
+        checkFileSignature(destinationURL: destinationURL, location: location)
+    }
+
+    private func checkFileSignature(destinationURL: String, location: URL) {
+        let ids = idsForUrls[destinationURL]
+        #if RMA_SDK_SIGNATURE
+            let requireMiniAppSignatureVerification = environment.requireMiniAppSignatureVerification
+            if let versionId = ids?.1, let data = try? Data(contentsOf: location) {
+                verifySignature(version: versionId, signature: signatures[versionId]?.1 ?? "", keyId: signatures[versionId]?.0 ?? "", data: data) { [weak self] isVerified in
+                    if !isVerified { MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: versionId) }
+                    let shouldPassTest =  isVerified || !requireMiniAppSignatureVerification // if verification is not required, the test should pass even is the signature is not verified
+                    self?.delegate?.fileDownloaded(at: location, downloadedURL: destinationURL, signatureChecked: shouldPassTest)
+                }
+            } else {
+                MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: ids?.1)
+                delegate?.fileDownloaded(at: location, downloadedURL: destinationURL, signatureChecked: !requireMiniAppSignatureVerification)
+            }
+        #else
+            MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids.0, miniAppVersion: ids.1)
+            delegate?.fileDownloaded(at: location, downloadedURL: destinationURL)
+        #endif
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
