@@ -163,6 +163,10 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
+        checkFileSignature(destinationURL: destinationURL, location: location)
+    }
+
+    private func checkFileSignature(destinationURL: String, location: URL) {
         let ids = idsForUrls[destinationURL]
         #if RMA_SDK_SIGNATURE
             let requireMiniAppSignatureVerification = environment.requireMiniAppSignatureVerification

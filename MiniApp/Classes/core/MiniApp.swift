@@ -1,7 +1,7 @@
 /// Mini App Public API methods
 public class MiniApp: NSObject {
     private static let shared = MiniApp()
-    let realMiniApp = RealMiniApp()
+    private let realMiniApp = RealMiniApp()
     public static var MAOrientationLock: UIInterfaceOrientationMask = []
 
     private override init() {
