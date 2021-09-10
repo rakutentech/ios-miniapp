@@ -55,7 +55,7 @@ class MiniAppDownloader {
         self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
             switch result {
             case .success(let responseData):
-                self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath) { downloadResult in
+                self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath, miniAppId: appId, miniAppVersion: versionId) { downloadResult in
                     switch downloadResult {
                     case .success:
                         DispatchQueue.main.async {
@@ -109,7 +109,7 @@ class MiniAppDownloader {
         return nil
     }
 
-    private func startDownloadingFiles(urls: [String], to miniAppPath: URL, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+    private func startDownloadingFiles(urls: [String], to miniAppPath: URL, miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
         self.miniAppClient.delegate = self
         time = Date()
         MiniAppLogger.d("MiniApp dl start")
@@ -125,7 +125,7 @@ class MiniAppDownloader {
             if !FileManager.default.fileExists(atPath: filePath.path) {
                 urlToDirectoryMap[urlString] = DownloadOperation(fileStoragePath: filePath, miniAppDirectoryPath: miniAppPath, completionHandler: completionHandler)
                 queue.addOperation {
-                    self.miniAppClient.download(url: urlString)
+                    self.miniAppClient.download(url: urlString, miniAppId: miniAppId, miniAppVersion: miniAppVersion)
                 }
             }
         }

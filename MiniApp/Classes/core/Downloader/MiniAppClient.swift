@@ -16,6 +16,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let metaDataApi: MetaDataAPI
     var environment: Environment
     internal var signatures: [String: (String, String)] = [:]
+    internal var idsForUrls: [String: (String, String)] = [:]
     private var previewPath: String {
         self.environment.isPreviewMode ? "preview" : ""
     }
@@ -94,11 +95,12 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
 
-    func download(url: String) {
-        guard let url = self.downloadApi.createURLFromString(urlString: url) else {
+    func download(url: String, miniAppId: String, miniAppVersion: String) {
+        guard let downLoadURL = downloadApi.createURLFromString(urlString: url) else {
             return
         }
-        self.session.startDownloadTask(downloadUrl: url)
+        idsForUrls[url] = (miniAppId, miniAppVersion)
+        session.startDownloadTask(downloadUrl: downLoadURL)
     }
 
     func requestFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
@@ -161,16 +163,17 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
-        let ids = Self.miniAppVersionIdFromZipUrl(url: destinationURL)
+        let ids = idsForUrls[destinationURL]
         #if RMA_SDK_SIGNATURE
             let requireMiniAppSignatureVerification = environment.requireMiniAppSignatureVerification
-            if let versionId = ids.1, let data = try? Data(contentsOf: location) {
+            if let versionId = ids?.1, let data = try? Data(contentsOf: location) {
                 verifySignature(version: versionId, signature: signatures[versionId]?.1 ?? "", keyId: signatures[versionId]?.0 ?? "", data: data) { [weak self] isVerified in
-                    if !isVerified { MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids.0, miniAppVersion: versionId) }
-                    self?.delegate?.fileDownloaded(at: location, downloadedURL: destinationURL, signatureChecked: isVerified || !requireMiniAppSignatureVerification)
+                    if !isVerified { MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: versionId) }
+                    let shouldPassTest =  isVerified || !requireMiniAppSignatureVerification // if verification is not required, the test should pass even is the signature is not verified
+                    self?.delegate?.fileDownloaded(at: location, downloadedURL: destinationURL, signatureChecked: shouldPassTest)
                 }
             } else {
-                MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids.0, miniAppVersion: ids.1)
+                MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: ids?.1)
                 delegate?.fileDownloaded(at: location, downloadedURL: destinationURL, signatureChecked: !requireMiniAppSignatureVerification)
             }
         #else
@@ -185,39 +188,5 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
             return
         }
         delegate?.downloadFileTaskCompleted(url: url, error: error)
-    }
-
-    class func miniAppVersionIdFromZipUrl(url: String) -> (String?, String?) {
-        let text = url.absoluteString
-        let capturePattern = #"(min-.[^\/]+){1}\/(ver-.[^\/]+){1}"#
-        do {
-            let captureRegex = try NSRegularExpression(pattern: capturePattern, options: [])
-            let textRange = NSRange(text.startIndex..<text.endIndex, in: text)
-            if let match = captureRegex.firstMatch(in: text, options: [], range: textRange)
-            {
-                guard match.numberOfRanges == 3 else { throw RegexError.unknown }
-
-                let firstGroupRange = match.range(at: 1)
-                guard
-                    let firstGroupSubstringRange = Range(firstGroupRange, in: text)
-                else { throw RegexError.unknown }
-                let min = String(text[firstGroupSubstringRange])
-
-                let secondGroupRange = match.range(at: 2)
-                guard let secondGroupSubstringRange = Range(secondGroupRange, in: text)
-                else { throw RegexError.unknown }
-                let ver = String(text[secondGroupSubstringRange])
-                
-                return (min, ver)
-            }
-            else
-            {
-                throw RegexError.unknown
-            }
-        }
-        catch let error {
-            print(error)
-            return (nil, nil)
-        }
     }
 }

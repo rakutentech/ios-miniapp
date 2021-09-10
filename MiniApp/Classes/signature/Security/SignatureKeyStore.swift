@@ -54,11 +54,7 @@ internal final class SignatureKeyStore {
 
         if status != errSecSuccess {
             let error: String?
-            if #available(iOS 11.3, *) {
-                error = SecCopyErrorMessageString(status, nil) as String?
-            } else {
-                error = "OSStatus \(status)"
-            }
+            error = SecCopyErrorMessageString(status, nil) as String?
             MiniAppLogger.e("SignatureKeyStore write error \(String(describing: error))")
         }
     }
