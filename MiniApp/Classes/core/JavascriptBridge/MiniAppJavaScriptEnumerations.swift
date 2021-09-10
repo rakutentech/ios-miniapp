@@ -25,7 +25,8 @@ enum JavaScriptExecResult: String {
 enum MiniAppSupportedSchemes: String {
     case tel // used for phone calls
     case about // used to reveal internal state and built-in functions (e.g.: alert dialog)
-    case mailto
+    case mailto // used for e-mails
+    case itmsapps = "itms-apps" // used for app-store links
 }
 
 /// List of Device Permissions supported by the SDK that can be requested by a Mini app

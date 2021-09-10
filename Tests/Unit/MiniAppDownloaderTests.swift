@@ -167,7 +167,8 @@ class MiniAppDownloaderTests: QuickSpec {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                    let responseString = self.manifest(urls: "http://example.com/map-published-v2/min-abc/ver-abc/Mac/Testing.txt")
+                    let responseString = self.manifest(urls: "test://example.com/map-published-v2/min-abc/ver-abc/Mac/Testing.txt")
+
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var testError: NSError?
                     downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).fail") { (result) in
@@ -178,7 +179,7 @@ class MiniAppDownloaderTests: QuickSpec {
                             testError = error as NSError
                         }
                     }
-                    expect(testError?.code).toEventually(equal(-1022), timeout: .seconds(20))
+                    expect(testError).toEventuallyNot(beNil())
                 }
             }
         }
