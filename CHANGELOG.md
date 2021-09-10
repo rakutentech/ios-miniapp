@@ -6,10 +6,12 @@
 
 - **Feature:** Store Manifest as a json file
 - **Feature:** A secure check is performed on manifest permissions before launching the Mini App
+- **Feature:** Added support for App Store URL schemes
 
 **Sample app**
 
 - **Feature:** First time permissions screen now displays requested scopes
+- **Feature:** ATS deactivated to match production needs
 
 ### 3.5.0 (2021-08-05)
 
