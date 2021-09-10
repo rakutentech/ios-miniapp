@@ -188,16 +188,36 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     class func miniAppVersionIdFromZipUrl(url: String) -> (String?, String?) {
-        var min, ver: String?
-        let components = url.split(separator: "/")
-        let versionSequence = components.last { pathComponent in pathComponent.starts(with: "ver-") }
-        let idSequence = components.last { pathComponent in pathComponent.starts(with: "min-") }
-        if let versionId = versionSequence?.dropFirst(4) {
-            ver = String(versionId)
+        let text = url.absoluteString
+        let capturePattern = #"(min-.[^\/]+){1}\/(ver-.[^\/]+){1}"#
+        do {
+            let captureRegex = try NSRegularExpression(pattern: capturePattern, options: [])
+            let textRange = NSRange(text.startIndex..<text.endIndex, in: text)
+            if let match = captureRegex.firstMatch(in: text, options: [], range: textRange)
+            {
+                guard match.numberOfRanges == 3 else { throw RegexError.unknown }
+
+                let firstGroupRange = match.range(at: 1)
+                guard
+                    let firstGroupSubstringRange = Range(firstGroupRange, in: text)
+                else { throw RegexError.unknown }
+                let min = String(text[firstGroupSubstringRange])
+
+                let secondGroupRange = match.range(at: 2)
+                guard let secondGroupSubstringRange = Range(secondGroupRange, in: text)
+                else { throw RegexError.unknown }
+                let ver = String(text[secondGroupSubstringRange])
+                
+                return (min, ver)
+            }
+            else
+            {
+                throw RegexError.unknown
+            }
         }
-        if let miniAppId = idSequence?.dropFirst(4) {
-            min = String(miniAppId)
+        catch let error {
+            print(error)
+            return (nil, nil)
         }
-        return (min, ver)
     }
 }
