@@ -9,6 +9,7 @@ internal class RealMiniApp {
     var miniAppPermissionStorage: MiniAppPermissionsStorage
     var miniAppManifestStorage: MAManifestStorage
     var miniAppAnalyticsConfig: [MAAnalyticsConfig]
+    var previewMiniAppInfoFetcher: PreivewMiniAppFetcher
 
     convenience init() {
         self.init(with: nil)
@@ -29,6 +30,7 @@ internal class RealMiniApp {
         self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
         self.displayer = Displayer(navigationSettings)
         self.miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
+        self.previewMiniAppInfoFetcher = PreivewMiniAppFetcher()
     }
 
     func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
@@ -353,6 +355,10 @@ internal class RealMiniApp {
     /// - Returns: MiniAppManifest object
     func getCachedManifestData(appId: String) -> MiniAppManifest? {
         miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
+    }
+
+    func getMiniAppPreviewInfo(using token: String, completionHandler: @escaping (Result<PreviewMiniAppInfo, MASDKError>) -> Void) {
+        previewMiniAppInfoFetcher.fetchPreviewMiniAppInfo(apiClient: miniAppClient, using: token, completionHandler: completionHandler)
     }
 }
 

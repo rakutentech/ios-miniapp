@@ -14,6 +14,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     let manifestApi: ManifestApi
     let downloadApi: DownloadApi
     let metaDataApi: MetaDataAPI
+    let previewMiniappApi: PreviewMiniappAPI
     var environment: Environment
     internal var signatures: [String: (String, String)] = [:]
     internal var idsForUrls: [String: (String, String)] = [:]
@@ -32,6 +33,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         self.manifestApi = ManifestApi(environment: self.environment)
         self.downloadApi = DownloadApi(environment: self.environment)
         self.metaDataApi = MetaDataAPI(with: self.environment)
+        self.previewMiniappApi = PreviewMiniappAPI(with: self.environment)
     }
 
     func updateEnvironment(with config: MiniAppSdkConfig?) {
@@ -103,6 +105,14 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         session.startDownloadTask(downloadUrl: downLoadURL)
     }
 
+    func getPreviewMiniAppInfo(using token: String,
+                               completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
+        guard let urlRequest = self.previewMiniappApi.createURLRequest(previewToken: token) else {
+            return completionHandler(.failure(.invalidURLError))
+        }
+        return requestDataFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
+    }
+
     func requestFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
         return session.startDataTask(with: urlRequest) { (result) in
             switch result {
@@ -134,6 +144,61 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                 return completionHandler(.failure(error))
             }
         }
+    }
+
+    func requestDataFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
+        return session.startDataTask(with: urlRequest) { (result) in
+            switch result {
+            case .success(let responseData):
+                let statusCode = responseData.httpResponse.statusCode
+                let logIcon = statusCode < 300 ? "🟢" : "🟠"
+                MiniAppLogger.d("[\(statusCode)] urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n\(String(data: responseData.data, encoding: .utf8) ?? "Empty response")", logIcon)
+                responseData.httpResponse.allHeaderFields.forEach { key, value in  MiniAppLogger.d("[\(key)]\t \(value)", "\t🎩")}
+
+                if !(200...299).contains(statusCode) {
+                    let failure = self.handleHttpErrorResponse(responseData: responseData.data, httpResponse: responseData.httpResponse)
+                    if statusCode >= 500, retry500 < 5 {
+                        let backOff = 2.0
+                        let retry = retry500 + 1
+                        let waitTime = 0.5*pow(backOff, Double(retry500))
+                        let failureMessage = "\(failure.localizedDescription) : Attempt [\(retry)]."
+                        MiniAppLogger.d("\(failureMessage) \nRetry in \(waitTime)s", "🟠")
+                        return DispatchQueue.main.asyncAfter(deadline: .now() + waitTime) {
+                            self.requestDataFromServer(urlRequest: urlRequest, retry500: retry, completionHandler: completionHandler)
+                        }
+                    }
+                    MiniAppLogger.d("\(failure.localizedDescription)", "🔴")
+                    return completionHandler(.failure(failure))
+                }
+                return completionHandler(.success(ResponseData(responseData.data,
+                                                               responseData.httpResponse)))
+            case .failure(let error):
+                MiniAppLogger.d("urlRequest \(urlRequest.url?.absoluteString ?? "-") : Failure", "🔴")
+                return completionHandler(.failure(.fromError(error: error)))
+            }
+        }
+    }
+
+    func handleHttpErrorResponse(responseData: Data, httpResponse: HTTPURLResponse) -> MASDKError {
+        let code = httpResponse.statusCode
+        var message: String
+
+        switch code {
+        case 401, 403:
+            guard let errorModel = ResponseDecoder.decode(decodeType: UnauthorizedData.self, data: responseData) else {
+                let error = NSError.unknownServerError(httpResponse: httpResponse)
+                return MASDKError.unknownError(domain: error.domain, code: error.code, description: error.description)
+            }
+            message = "\(errorModel.error): \(errorModel.errorDescription)"
+        default:
+            guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self, data: responseData) else {
+                let error = NSError.unknownServerError(httpResponse: httpResponse)
+                return MASDKError.unknownError(domain: error.domain, code: error.code, description: error.description)
+            }
+            message = errorModel.message
+        }
+
+        return MASDKError.serverError(code: code, message: message)
     }
 
     func handleHttpResponse(responseData: Data, httpResponse: HTTPURLResponse) -> NSError {
