@@ -381,4 +381,8 @@ extension RealMiniApp: MiniAppMessageDelegate {
         let error: NSError = NSError.init(domain: "MiniAppMessageBridge has not been implemented by the host app", code: 0, userInfo: nil)
         completionHandler(.failure(error as Error))
     }
+
+    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
 }

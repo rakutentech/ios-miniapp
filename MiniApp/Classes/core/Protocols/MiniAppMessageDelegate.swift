@@ -21,6 +21,7 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
                                   miniAppTitle: String,
                                   completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 
+    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void)
 }
 
 public extension MiniAppMessageDelegate {
@@ -65,6 +66,10 @@ public extension MiniAppMessageDelegate {
         semaphore.wait()
         return uniqueId
     }
+
+    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
+        completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
+    }
 }
 
 public enum MASDKProtocolResponse: String {
@@ -75,4 +80,18 @@ public enum MASDKProtocolResponse: String {
 public enum MASDKPermissionResponse: String {
     /// User allowed the Device Permission
     case allowed = "ALLOWED"
+}
+
+public class MAHostEnvironmentInfo: Codable {
+    let platform: String
+    let platformVersion: String
+    let hostVersion: String
+    let sdkVersion: String
+
+    public init(platform: String, platformVersion: String, hostVersion: String, sdkVersion: String) {
+        self.platform = platform
+        self.platformVersion = platformVersion
+        self.hostVersion = hostVersion
+        self.sdkVersion = sdkVersion
+    }
 }

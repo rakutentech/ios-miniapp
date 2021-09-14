@@ -84,6 +84,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             sendMessageToMultipleContacts(with: callbackId, parameters: requestParam)
         case .getPoints:
             fetchPoints(with: callbackId)
+        case .getHostEnvironmentInfo:
+            getHostEnvironmentInfo(with: callbackId)
         }
     }
 
@@ -489,6 +491,21 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 }
             }
         }
+    }
+
+    func getHostEnvironmentInfo(with callbackId: String) {
+        hostAppMessageDelegate?.getHostEnvironmentInfo(completionHandler: { (result) in
+            switch result {
+            case .success(let response):
+                guard let encodedResult = ResponseEncoder.encode(data: response) else {
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                    return
+                }
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: encodedResult)
+            case .failure(let error):
+                self.handleMASDKError(error: error, callbackId: callbackId)
+            }
+        })
     }
 
     private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {
