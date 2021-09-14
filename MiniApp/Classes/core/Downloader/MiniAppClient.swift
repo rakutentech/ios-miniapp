@@ -145,7 +145,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
             }
         }
     }
-    
+
     /// Method added to return MASDKError and which could be easy to handle in the Host app side.
     func requestDataFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
         return session.startDataTask(with: urlRequest) { (result) in
