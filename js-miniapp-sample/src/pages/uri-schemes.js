@@ -66,11 +66,13 @@ const UriSchemes = () => {
       return;
     }
 
-    const paramsWithCallback = params
-      .concat(params ? '&' : '?')
+    var url = new URL(EXTERNAL_WEBVIEW_URL + params);
+
+    url.search = url.search
+      .concat(url.search ? '&' : '?')
       .concat(`callbackUrl=${encodeURIComponent(callbackUrl)}`);
 
-    window.location.href = EXTERNAL_WEBVIEW_URL + paramsWithCallback;
+    window.location.href = url;
   }
 
   return (
