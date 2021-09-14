@@ -16,10 +16,11 @@ class Config: NSObject {
 
     // swiftlint:disable:next todo
     // TODO: Make it as CI Configurable
-    class func current(rasProjectId: String? = Config.userDefaults?.string(forKey: Config.Key.projectId.rawValue)) -> MiniAppSdkConfig {
+    class func current(rasProjectId: String? = Config.userDefaults?.string(forKey: Config.Key.projectId.rawValue),
+                       subscriptionKey: String? = Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue)) -> MiniAppSdkConfig {
         MiniAppSdkConfig(baseUrl: Config.userDefaults?.string(forKey: Config.Key.endpoint.rawValue),
             rasProjectId: rasProjectId,
-            subscriptionKey: Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue),
+            subscriptionKey: subscriptionKey,
             hostAppVersion: Config.userDefaults?.string(forKey: Config.Key.version.rawValue),
             isPreviewMode: Config.userDefaults?.value(forKey: Config.Key.isPreviewMode.rawValue) as? Bool,
             analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")],
@@ -31,4 +32,4 @@ class Config: NSObject {
     class func getNavConfig(delegate: MiniAppNavigationDelegate) -> MiniAppNavigationConfig {
         return MiniAppNavigationConfig(navigationBarVisibility: .never, navigationDelegate: delegate, customNavigationView: nil)
     }
-}   
+}

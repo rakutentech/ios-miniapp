@@ -170,7 +170,12 @@ class ViewController: UIViewController {
                 switch result {
                 case .success(let previewInfo):
                     self.dismissProgressIndicator {
-                        self.showFirstTimeLaunchScreen(miniAppInfo: previewInfo.miniapp, config: Config.current(rasProjectId: previewInfo.host?.id))
+                        if previewInfo.host != nil {
+                            self.showFirstTimeLaunchScreen(miniAppInfo: previewInfo.miniapp,
+                                                           config: Config.current(rasProjectId: previewInfo.host?.id, subscriptionKey: previewInfo.host?.subscriptionkey))
+                        } else {
+                            self.showFirstTimeLaunchScreen(miniAppInfo: previewInfo.miniapp, config: Config.current())
+                        }
                     }
                 case .failure(let error):
                     self.dismissProgressIndicator {
