@@ -58,7 +58,6 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
     func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
         completionHandler(
             .success(MAHostEnvironmentInfo(
-                platform: "iOS",
                 platformVersion: "5.0.0",
                 hostVersion: "2.7.0",
                 sdkVersion: "3.6.0"

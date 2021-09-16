@@ -83,13 +83,11 @@ public enum MASDKPermissionResponse: String {
 }
 
 public class MAHostEnvironmentInfo: Codable {
-    let platform: String
     let platformVersion: String
     let hostVersion: String
     let sdkVersion: String
 
-    public init(platform: String, platformVersion: String, hostVersion: String, sdkVersion: String) {
-        self.platform = platform
+    public init(platformVersion: String, hostVersion: String, sdkVersion: String) {
         self.platformVersion = platformVersion
         self.hostVersion = hostVersion
         self.sdkVersion = sdkVersion
