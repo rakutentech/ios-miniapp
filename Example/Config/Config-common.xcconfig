@@ -1,2 +1,3 @@
+#include "../../SSL-pinning.xcconfig"
 // IMPORTANT: MiniApp sample host app version is linked to the SDK version defined in the MiniApp.podspec file
 MARKETING_VERSION = $(RMA_SDK_VERSION)$(RMA_DEMO_APP_BUILD_TYPE)

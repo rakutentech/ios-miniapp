@@ -9,7 +9,8 @@ class Config: NSObject {
         subscriptionKey = "RASProjectSubscriptionKey",
         endpoint = "RMAAPIEndpoint",
         isPreviewMode = "RMAIsPreviewMode",
-        requireMiniAppSignatureVerification = "RMARequireMiniAppSignatureVerification"
+        requireMiniAppSignatureVerification = "RMARequireMiniAppSignatureVerification",
+        sslKeyHash = "RMASSLKeyHash"
     }
 
     static let userDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings")

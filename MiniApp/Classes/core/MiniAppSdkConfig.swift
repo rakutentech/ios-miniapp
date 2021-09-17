@@ -13,6 +13,19 @@ public class MiniAppSdkConfig {
             }
         }
     }
+    public var host: String? {
+        if let url = baseUrl {
+            return URLComponents(string: url)?.host
+        }
+        return nil
+    }
+    public var sslKeyHash: String? {
+        didSet {
+            if sslKeyHash?.count ?? 0 == 0 {
+                sslKeyHash = nil
+            }
+        }
+    }
     public var rasProjectId: String? {
         didSet {
             if rasProjectId?.count ?? 0 == 0 {
@@ -59,7 +72,8 @@ public class MiniAppSdkConfig {
                 hostAppVersion: String? = nil,
                 isPreviewMode: Bool? = nil,
                 analyticsConfigList: [MAAnalyticsConfig]? = [],
-                requireMiniAppSignatureVerification: Bool? = nil) {
+                requireMiniAppSignatureVerification: Bool? = nil,
+                sslKeyHash: String? = nil) {
         self.isPreviewMode = isPreviewMode
         self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
         self.rasProjectId = rasProjectId?.count ?? 0 > 0 ? rasProjectId  : nil
@@ -67,5 +81,6 @@ public class MiniAppSdkConfig {
         self.hostAppVersion = hostAppVersion?.count ?? 0 > 0 ? hostAppVersion : nil
         self.analyticsConfigList = analyticsConfigList
         self.requireMiniAppSignatureVerification = requireMiniAppSignatureVerification
+        self.sslKeyHash = sslKeyHash
     }
 }

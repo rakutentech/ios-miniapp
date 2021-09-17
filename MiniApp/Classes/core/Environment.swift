@@ -14,11 +14,14 @@ internal class Environment {
         case isPreviewMode = "RMAIsPreviewMode"
         case hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
         case requireMiniAppSignatureVerification = "RMARequireMiniAppSignatureVerification"
+        case sslKeyHash = "RMASSLKeyHash"
+        case host = "RMAAPIHost"
     }
 
     let bundle: EnvironmentProtocol
 
     var customUrl: String?
+    var customSSLKeyHash: String?
     var customProjectId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
@@ -32,6 +35,7 @@ internal class Environment {
     convenience init(with config: MiniAppSdkConfig, bundle: EnvironmentProtocol = Bundle.main) {
         self.init(bundle: bundle)
         customUrl = config.baseUrl
+        customSSLKeyHash = config.sslKeyHash
         customProjectId = config.rasProjectId
         customSubscriptionKey = config.subscriptionKey
         customAppVersion = config.hostAppVersion
@@ -74,6 +78,21 @@ internal class Environment {
             return nil
         }
         return URL(string: "\(endpointUrlString)")
+    }
+
+    var host: String {
+        guard let bundleHost = bundle.value(for: Key.host.rawValue) else {
+            if let url = baseUrl, let comp = URLComponents(url: url, resolvingAgainstBaseURL: false), let host = comp.host {
+                return host
+            }
+            return bundle.valueNotFound
+        }
+        return bundleHost
+    }
+
+    var sslKeyHash: String? {
+        let defaultSSLKeyHash = bundle.value(for: Key.sslKeyHash.rawValue)
+        return customSSLKeyHash ?? defaultSSLKeyHash
     }
 
     func value(for field: String?, fallback key: Key) -> String {

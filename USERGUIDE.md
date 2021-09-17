@@ -70,6 +70,7 @@ In your project configuration .plist you should add below Key/Value :
 | RASProjectId     | String  | `Set your MiniApp host application project identifier`                  |NO       |`none`   |
 | RASProjectSubscriptionKey    | String  | `Set your MiniApp subscription key`                             |NO       |`none`   |
 | RMAAPIEndpoint               | String  | `Provide your own Base URL for API requests`                    |NO       |`none`   |
+| RMASSLKeyHash               | String  | `This is the certificate key hash used for SSL pinning`                    |NO       |`none`   |
 | RMAHostAppUserAgentInfo      | String  | `Host app name and version info that is appended in User agent. The value specified in the plist is retrieved only at the build time.` |YES      |`none`   |
 | RMARequireMiniAppSignatureVerification     | Bool  | `This setting allows you to make the Mini App zip file signature validation mandatory. It is set to false by default, which means if a signature is not valid the mini app will still be launched` |YES      |`false`   |
 <a id="setting-admob"></a>Additionally, if you support Google ads with `MiniApp/Admob` subspec, you need to configure Google ads framework as advised into this [documentation](https://developers.google.com/admob/ios/quick-start)
