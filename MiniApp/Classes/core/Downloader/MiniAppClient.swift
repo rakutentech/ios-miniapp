@@ -26,7 +26,13 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     weak var delegate: MiniAppDownloaderProtocol?
 
     convenience init(baseUrl: String? = nil, sslKeyHash: String? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = false) {
-        self.init(with: MiniAppSdkConfig(baseUrl: baseUrl, rasProjectId: rasProjectId, subscriptionKey: subscriptionKey, hostAppVersion: hostAppVersion, isPreviewMode: isPreviewMode, sslKeyHash: sslKeyHash))
+        self.init(with: MiniAppSdkConfig(
+                baseUrl: baseUrl,
+                rasProjectId: rasProjectId,
+                subscriptionKey: subscriptionKey,
+                hostAppVersion: hostAppVersion,
+                isPreviewMode: isPreviewMode,
+                sslKeyHash: sslKeyHash))
     }
 
     init(with config: MiniAppSdkConfig) {
