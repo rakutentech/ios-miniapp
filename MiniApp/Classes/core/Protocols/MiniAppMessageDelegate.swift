@@ -68,14 +68,15 @@ public extension MiniAppMessageDelegate {
     }
 
     func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
+        let environment = Environment(bundle: Bundle.main)
         guard
-            let sdkVersion = Environment(bundle: Bundle.main).sdkVersion?.description
+            let sdkVersion = environment.sdkVersion?.description
         else {
             completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.invalidSDKId))))
             return
         }
         let platformVersion = "iOS " + UIDevice.current.systemVersion
-        let appVersion = Environment(bundle: Bundle.main).appVersion
+        let appVersion = environment.appVersion
         completionHandler(.success(MAHostEnvironmentInfo(platformVersion: platformVersion, hostVersion: appVersion, sdkVersion: sdkVersion)))
     }
 }
