@@ -13,4 +13,5 @@ else
   HASHKEY=$(openssl s_client -servername $RMA_API_HOST -connect $RMA_API_HOST:443 < /dev/null | openssl x509 -pubkey -noout | openssl rsa -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64 | tail -1)
   echo "➜ ${BOLD}SSL pin generated: ${YELLOW}$HASHKEY${NOCOLOR}"
   echo "RMA_SSL_KEY_HASH = $HASHKEY" > SSL-pinning.xcconfig
+  echo "RMA_SSL_KEY_HASH_BACKUP = $RMA_SSL_KEY_HASH_BACKUP" >> SSL-pinning.xcconfig
 fi

@@ -64,12 +64,17 @@
 	<string>$(RMA_API_ENDPOINT)</string>
 	<key>RMAHostAppUserAgentInfo</key>
 	<string>$(RMA_USER_AGENT)</string>
-	<key>RMASSLKeyHash</key>
-	<string>$(RMA_SSL_KEY_HASH)</string>
 	<key>RMAIsPreviewMode</key>
 	<true/>
 	<key>RMARequireMiniAppSignatureVerification</key>
 	<false/>
+	<key>RMASSLKeyHash</key>
+	<dict>
+		<key>backup</key>
+		<string>$(RMA_SSL_KEY_HASH_BACKUP)</string>
+		<key>main</key>
+		<string>$(RMA_SSL_KEY_HASH)</string>
+	</dict>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

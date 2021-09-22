@@ -25,7 +25,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
     weak var delegate: MiniAppDownloaderProtocol?
 
-    convenience init(baseUrl: String? = nil, sslKeyHash: String? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = false) {
+    convenience init(baseUrl: String? = nil, sslKeyHash: MiniAppConfigSSLKeyHash? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = false) {
         self.init(with: MiniAppSdkConfig(
                 baseUrl: baseUrl,
                 rasProjectId: rasProjectId,
@@ -43,14 +43,15 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         metaDataApi = MetaDataAPI(with: environment)
         previewMiniappApi = PreviewMiniappAPI(with: environment)
         super.init()
-        updateSSLPinConfig()
     }
 
     func updateSSLPinConfig() {
-        if let sslPin = environment.sslKeyHash {
+        if let sslPin = environment.sslKeyHash, sslPinningConfig == nil {
             // TrustKit wants a backup pin as a fallback in case the provided pin is failing challenge
             // https://github.com/datatheorem/TrustKit/issues/123
-            sslPinningConfig = MiniAppSSLConfig(with: environment.host, keyHashes: sslPin, "aaaaiBzfv0PHmMNKgels98qxdeEc/bCTVpOBejp2s9w=")
+            let backupPin = environment.sslKeyHashBackup != sslPin && environment.sslKeyHashBackup != nil ? environment.sslKeyHashBackup! : "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB="
+
+            sslPinningConfig = MiniAppSSLConfig(with: environment.host, keyHashes: sslPin, backupPin)
             if let sslPinningConfig = sslPinningConfig?.dictionary() {
                 TrustKit.initSharedInstance(withConfiguration: sslPinningConfig)
             }
@@ -63,11 +64,14 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         environment.customAppVersion = config?.hostAppVersion
         environment.customIsPreviewMode = config?.isPreviewMode
         environment.customSignatureVerification = config?.requireMiniAppSignatureVerification
-        let pins = sslPinningConfig?.domains[environment.host]?[kTSKPublicKeyHashes] as? [String]
         if sslPinningConfig == nil {
-            environment.customSSLKeyHash = config?.sslKeyHash
+            environment.customSSLKeyHash = config?.sslKeyHash?.pin
+            environment.customSSLKeyHashBackup = config?.sslKeyHash?.backupPin
             updateSSLPinConfig()
-        } else if let sslKey = config?.sslKeyHash, !(pins?.contains(sslKey) ?? false) {
+        } else if
+                let pins = sslPinningConfig?.domains[environment.host]?[kTSKPublicKeyHashes] as? [String],
+                let sslKey = config?.sslKeyHash,
+                sslKey.matches(pins) != nil {
             preconditionFailure("You already set the SSL pinning configuration. iOS TLS cache would make pinning unstable.")
         }
     }
@@ -288,6 +292,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        updateSSLPinConfig()
         if sslPinningConfig == nil {
             completionHandler(.performDefaultHandling, nil)
         } else if !TrustKit.sharedInstance().pinningValidator.handle(challenge, completionHandler: completionHandler) {

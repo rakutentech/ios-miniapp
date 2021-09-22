@@ -2,6 +2,7 @@ internal protocol EnvironmentProtocol {
     var valueNotFound: String { get }
     func value(for key: String) -> String?
     func bool(for key: String) -> Bool?
+    func object(forInfoDictionaryKey: String) -> Any?
 }
 
 internal class Environment {
@@ -22,6 +23,7 @@ internal class Environment {
 
     var customUrl: String?
     var customSSLKeyHash: String?
+    var customSSLKeyHashBackup: String?
     var customProjectId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
@@ -35,7 +37,8 @@ internal class Environment {
     convenience init(with config: MiniAppSdkConfig, bundle: EnvironmentProtocol = Bundle.main) {
         self.init(bundle: bundle)
         customUrl = config.baseUrl
-        customSSLKeyHash = config.sslKeyHash
+        customSSLKeyHash = config.sslKeyHash?.pin
+        customSSLKeyHashBackup = config.sslKeyHash?.backupPin
         customProjectId = config.rasProjectId
         customSubscriptionKey = config.subscriptionKey
         customAppVersion = config.hostAppVersion
@@ -91,8 +94,11 @@ internal class Environment {
     }
 
     var sslKeyHash: String? {
-        let defaultSSLKeyHash = bundle.value(for: Key.sslKeyHash.rawValue)
-        return customSSLKeyHash ?? defaultSSLKeyHash
+        customSSLKeyHash ?? dictionary(for: Key.sslKeyHash)?[MiniAppConfigSSLKeyHash.KeyType.main.rawValue] as? String
+    }
+
+    var sslKeyHashBackup: String? {
+        customSSLKeyHashBackup ?? dictionary(for: Key.sslKeyHash)?[MiniAppConfigSSLKeyHash.KeyType.backup.rawValue] as? String
     }
 
     func value(for field: String?, fallback key: Key) -> String {
@@ -105,5 +111,9 @@ internal class Environment {
 
     func bool(for field: Bool?, fallback key: Key) -> Bool {
         field ?? bundle.bool(for: key.rawValue) ?? false
+    }
+
+    func dictionary(for key: Key) -> [String: Any?]? {
+        bundle.object(forInfoDictionaryKey: key.rawValue) as? [String: Any?]
     }
 }
