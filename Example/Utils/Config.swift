@@ -24,12 +24,7 @@ class Config: NSObject {
             subscriptionKey: subscriptionKey,
             hostAppVersion: Config.userDefaults?.string(forKey: Config.Key.version.rawValue),
             isPreviewMode: Config.userDefaults?.value(forKey: Config.Key.isPreviewMode.rawValue) as? Bool,
-            analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")],
-            requireMiniAppSignatureVerification: Config.userDefaults?.value(forKey: Config.Key.requireMiniAppSignatureVerification.rawValue) as? Bool,
-                         sslKeyHash: MiniAppConfigSSLKeyHash(
-                                 pin: "AABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=",
-                                 backup: "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB="
-                         )
+            analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")]
         )
     }
 

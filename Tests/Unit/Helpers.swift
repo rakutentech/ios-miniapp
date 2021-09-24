@@ -271,7 +271,7 @@ class MockManifestDownloader: ManifestDownloader {
 
 class MockBundle: EnvironmentProtocol {
     var valueNotFound: String {
-        return mockValueNotFound ?? ""
+        mockValueNotFound ?? ""
     }
 
     var mockValueNotFound: String?
@@ -281,6 +281,7 @@ class MockBundle: EnvironmentProtocol {
     var mockEndpoint: String? = "https://www.example.com/"
     var mockPreviewMode: Bool?
     var mockHostAppUserAgentInfo: String?
+    var mockSSLPins: [String: String]?
 
     func bool(for key: String) -> Bool? {
         switch key {
@@ -303,6 +304,15 @@ class MockBundle: EnvironmentProtocol {
             return mockEndpoint
         case "RMAHostAppUserAgentInfo":
             return mockHostAppUserAgentInfo
+        default:
+            return nil
+        }
+    }
+
+    func object(forInfoDictionaryKey: String) -> Any? {
+        switch forInfoDictionaryKey {
+        case "RMASSLKeyHash":
+            return mockSSLPins
         default:
             return nil
         }

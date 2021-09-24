@@ -19,12 +19,9 @@ if [ "$RMA_API_HOST" = "$RMA_API_PORT" ]
     fi
 fi
 
-echo "host: $RMA_API_HOST"
-echo "port: $RMA_API_PORT"
-
 if [ -z "$RMA_API_HOST" ]
   then
-    echo "${NOCOLOR}➜ ${RED}Can't generate SSL pin! please define ${YELLOW}RMA_API_HOST${RED} environment variable${NOCOLOR}"
+    echo "${NOCOLOR}➜ ${RED}Can't generate SSL pin! please define ${YELLOW}RMA_API_ENDPOINT${RED} environment variable${NOCOLOR}"
     echo "" > SSL-pinning.xcconfig
 else
   echo "➜ ${BOLD}Generating SSL pin for ${YELLOW}$RMA_API_HOST${GREY}"
