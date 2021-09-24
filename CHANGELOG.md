@@ -10,6 +10,7 @@
 - **Feature:** A `RMAForceSignatureCheck` boolean setting can be set in '.plist' file. It is considered false by default and is only used by `MiniApp/Signature`
 - **Feature:** Added support for App Store URL schemes
 - **Feature:** Added new public interface `getMiniAppPreviewInfo` to get Mini app info using preview token
+- **Feature:** Added SSL pinning check for API calls
 
 **Sample app**
 

@@ -6,6 +6,7 @@ This guide targets Developers of this SDK. It explains how to build the project 
 ---
 
 * [How to Build the Sample App](#build-sample-app)
+  * [How to configure sample app at build time](#configure-sample-app) 
 * [How to Test with the Sample App](#test-sample-app)
 * [How to test your SDK integration with Cocoapods](#integrate-sdk-cocoapod)
 * [How to generate SDK documentation locally](#generate-sdk-doc)
@@ -16,7 +17,7 @@ This guide targets Developers of this SDK. It explains how to build the project 
 ## How to Build the Sample App
 ---
 
-First, it is highly recommended to setup some environment variables which are required by the project.
+First, it is highly recommended to setup some [environment variables](#configure-sample-app) which are required by the project.
 
 ```bash
 RMAAPIEndpoint=https://www.example.com
@@ -37,6 +38,22 @@ RAT_APP_IDENTIFIER=your-rat-app-id
 Next, run `fastlane updatePods` from the root directory that will trigger a `pod install` and fetch git submodules, then open `MiniApp.xcworkspace`, and you should be able to successfully build the Sample App.
 
 *Note:* You need to define the environment variables before installing the pods because there is a post install script which sets up the project with your environment variables. If you don't want to use environment variables, you can edit the `MiniApp-Secrets.xcconfig` created after a `pod install` in the parent folder of the project,but be aware you will have to update this file after every `pod install`
+
+<a id="build-sample-app"></a>
+
+### How to configure sample app at build time
+---
+Here are the different environment variables you can set before running `fastlane updatePods`
+
+| Name | Description | Required |
+|:-----|:------------|:---------|
+|`RAT_ENDPOINT` |[See usage here](#build-sample-app) |no |
+|`RMA_API_ENDPOINT` |Used by every SDK calls to the API. It will also be used to generate the `SSL-pinning.xcconfig` file containing the SSL certificate key hash of your host |yes |
+|`RAS_PROJECT_SUBSCRIPTION_KEY` |Project subscription key you can find in your Rakuten App Studio project |yes |
+|`RAS_PROJECT_IDENTIFIER` |Project subscription key you can find in your Rakuten App Studio project |yes |
+|`RMA_DEMO_APP_BUILD_TYPE` |This is used as a suffix for your demo app version name (for example if demo app is 3.7.0 and you provide `DEV` as value for this variable, your version will be named `3.7.0-DEV`) |no |
+|`RMA_GAD_APPLICATION_IDENTIFIER` |Only required if you intend to work with the Google Ads subspec `MiniApp/Admob` or `MiniApp/Admob8` |no |
+|`RMA_APP_CENTER_SECRET` |This variable is used to send crash reports to an AppCenter project (the token can be generated in your AppCenter project page). |no |
 
 <a id="test-sample-app"></a>
 
