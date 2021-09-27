@@ -147,6 +147,7 @@
 		31AB8EE225CA43E40046F694 /* Dangerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dangerfile; sourceTree = SOURCE_ROOT; };
 		31AB8EE325CA43FC0046F694 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; };
 		31B2FDDF26F242140032A6DA /* SSL-pinning.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SSL-pinning.xcconfig"; sourceTree = SOURCE_ROOT; };
+		31B2FDE02701B9450032A6DA /* workflows */ = {isa = PBXFileReference; lastKnownFileType = folder; name = workflows; path = .github/workflows; sourceTree = "<group>"; };
 		31BE315B25CB00B70022C948 /* .jazzy.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .jazzy.yaml; sourceTree = SOURCE_ROOT; };
 		31CC3B4526DF97F200441154 /* SignatureSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureSettingsTableViewController.swift; sourceTree = "<group>"; };
 		31CFFA4F261B7E7300CDD537 /* ChatContactsSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContactsSelectorViewController.swift; sourceTree = "<group>"; };
@@ -501,6 +502,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				31B2FDE02701B9450032A6DA /* workflows */,
 				319D66D525D65C37005688F4 /* scripts */,
 				31070C65258C557D00BED77C /* Documentation */,
 				607FACD21AFB9204008FA782 /* Example for MiniApp */,
