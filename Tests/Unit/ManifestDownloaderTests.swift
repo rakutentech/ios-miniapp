@@ -54,7 +54,7 @@ class ManifestDownloaderTests: QuickSpec {
                             testError = error as NSError
                         }
                     })
-                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidResponseData.rawValue))
+                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidResponseData.rawValue), timeout: .seconds(30))
                 }
             }
             context("when request from server returns error") {
