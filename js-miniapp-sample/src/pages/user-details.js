@@ -251,7 +251,9 @@ function UserDetails(props: UserDetailsProps) {
           hasPermission(CustomPermissionName.PROFILE_PHOTO, permissions)
             ? props.getProfilePhoto()
             : null,
-          props.getContacts(),
+          hasPermission(CustomPermissionName.CONTACT_LIST, permissions)
+            ? props.getContacts()
+            : null,
         ])
       )
       .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
@@ -374,7 +376,8 @@ function UserDetails(props: UserDetailsProps) {
               />
             </ListItem>
           )}
-          {props.contactList &&
+          {!hasDeniedPermision &&
+            props.contactList &&
             props.contactList.map((contact) => (
               <ListItem divider>
                 <ListItemAvatar>
