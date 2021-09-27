@@ -72,7 +72,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                 let pins = sslPinningConfig?.domains[environment.host]?[kTSKPublicKeyHashes] as? [String],
                 let sslKey = config?.sslKeyHash,
                 sslKey.matches(pins) != nil {
-            preconditionFailure("You already set the SSL pinning configuration. iOS TLS cache would make pinning unstable.")
+            MiniAppLogger.e("You already set the SSL pinning configuration. iOS TLS cache would make pinning unstable.")
         }
     }
 
