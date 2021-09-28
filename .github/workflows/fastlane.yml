@@ -15,7 +15,10 @@ jobs:
       uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest-stable
-    
+
+    - name: Create iPhone X iOS 14.4 simulator
+      run: xcrun simctl create "iPhone X" com.apple.CoreSimulator.SimDeviceType.iPhone-X com.apple.CoreSimulator.SimRuntime.iOS-14-4
+
     - name: Setup ruby
       uses: ruby/setup-ruby@v1
       with:
