@@ -1,7 +1,17 @@
-import React from 'react';
-import MiniApp from 'js-miniapp-sdk';
+import React, { useEffect } from 'react';
 import { CardContent, makeStyles } from '@material-ui/core';
 import GreyCard from '../components/GreyCard';
+import { setHostEnvironmentInfo } from '../services/landing/actions';
+import { connect } from 'react-redux';
+
+type LandingProps = {
+  platform: ?string,
+  platformVersion: ?string,
+  hostVersion: ?string,
+  sdkVersion: ?string,
+  infoError: string,
+  getHostInfo: Function,
+};
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -29,15 +39,36 @@ const useStyles = makeStyles((theme) => ({
     wordBreak: 'break-all',
     marginTop: 0,
   },
+  button: {
+    minHeight: 40,
+    margin: 0,
+  },
 }));
 
-const Landing = () => {
+const Landing = (props: LandingProps) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    try {
+      props.getHostInfo();
+    } catch (e) {
+      console.log(e);
+    }
+  }, [props]);
+
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
         <p>Demo Mini App JS SDK</p>
-        <p className={classes.info}>Platform: {MiniApp.getPlatform()}</p>
+        <p className={classes.info}>
+          Platform: {props.platform ?? props.infoError ?? 'Unknown'}
+          <br />
+          Platform Version: {props.platformVersion ?? '-'}
+          <br />
+          Host Version: {props.hostVersion ?? '-'}
+          <br />
+          SDK Version: {props.sdkVersion ?? '-'}
+        </p>
         <p className={classes.info}>
           Query Parameters: {window.location.search || 'None'}
         </p>
@@ -49,4 +80,21 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+const mapStateToProps = (state, props) => {
+  return {
+    ...props,
+    platform: state.info.platform,
+    platformVersion: state.info.platformVersion,
+    hostVersion: state.info.hostVersion,
+    sdkVersion: state.info.sdkVersion,
+    infoError: state.info.infoError,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getHostInfo: () => dispatch(setHostEnvironmentInfo()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

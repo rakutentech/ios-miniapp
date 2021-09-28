@@ -8,6 +8,8 @@ import {
   ShareInfoType,
   ScreenOrientation,
   Points,
+  HostEnvironmentInfo,
+  Platform as HostPlatform,
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
@@ -67,6 +69,12 @@ interface MiniAppFeatures {
    * @returns Promise of the provided point balance from mini app.
    */
   getPoints(): Promise<Points>;
+
+  /**
+   * Request the host environment information.
+   * @returns Promise of the provided environment info from mini app.
+   */
+  getHostEnvironmentInfo(): Promise<HostEnvironmentInfo>;
 }
 
 /**
@@ -202,5 +210,14 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
 
   getPoints(): Promise<Points> {
     return getBridge().getPoints();
+  }
+
+  getHostEnvironmentInfo(): Promise<HostEnvironmentInfo> {
+    return getBridge()
+      .getHostEnvironmentInfo()
+      .then(info => {
+        info.platform = getBridge().platform as HostPlatform;
+        return info;
+      });
   }
 }

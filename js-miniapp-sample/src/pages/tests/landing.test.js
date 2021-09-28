@@ -1,12 +1,17 @@
 import React from 'react';
 
-import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+
+import {
+  renderWithRedux,
+  wrapRouter,
+  screen,
+  wrapTheme,
+} from '../../tests/test-utils';
 
 import Landing from '../landing';
-import { wrapTheme } from '../../tests/test-utils';
 
 test('Landing text is rendered', () => {
-  render(wrapTheme(<Landing />));
+  renderWithRedux(wrapRouter(wrapTheme(<Landing />)));
   expect(screen.getByText('Demo Mini App JS SDK')).toBeInTheDocument();
-  expect(screen.getByText('Platform: Unknown')).toBeInTheDocument();
 });

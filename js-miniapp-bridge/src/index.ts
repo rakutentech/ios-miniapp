@@ -19,6 +19,8 @@ import { ScreenOrientation } from './types/screen';
 import { AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
 import { Points } from './types/points';
+import { HostEnvironmentInfo } from './types/host-environment-info';
+import { Platform } from './types/platform';
 import { MessageToContact } from './types/message-to-contact';
 import {
   MiniAppError,
@@ -44,6 +46,8 @@ export {
   AccessTokenData,
   Contact,
   Points,
+  HostEnvironmentInfo,
+  Platform,
   MessageToContact,
   MiniAppError,
   AudienceNotSupportedError,

@@ -17,6 +17,7 @@ import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
+import { HostEnvironmentInfo } from './types/host-environment-info';
 import {
   AudienceNotSupportedError,
   AuthorizationFailureError,
@@ -463,6 +464,21 @@ export class MiniAppBridge {
             return reject(error);
           }
         }
+      );
+    });
+  }
+
+  getHostEnvironmentInfo(): Promise<HostEnvironmentInfo> {
+    return new Promise<HostEnvironmentInfo>((resolve, reject) => {
+      return this.executor.exec(
+        'getHostEnvironmentInfo',
+        null,
+        info =>
+          resolve({
+            ...JSON.parse(info),
+            platform: this.platform,
+          } as HostEnvironmentInfo),
+        error => reject(error)
       );
     });
   }
