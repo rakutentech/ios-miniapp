@@ -1,4 +1,4 @@
-name: Swiftlint Check
+name: Fastlane CI
 
 on:
   pull_request:

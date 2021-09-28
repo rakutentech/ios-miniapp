@@ -14,7 +14,7 @@ extension URL {
     /// ex. https://endpoint.com/v2/keys/ -> https.endpoint.com.v2.keys
     var identifier: String {
         absoluteString
-                .components(separatedBy: .alphanumerics.inverted)
+                .components(separatedBy: CharacterSet.alphanumerics.inverted)
                 .filter({ !$0.isEmpty })
                 .joined(separator: ".")
                 .trimmingCharacters(in: CharacterSet(charactersIn: "."))
