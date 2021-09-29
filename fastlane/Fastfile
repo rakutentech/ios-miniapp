@@ -21,14 +21,14 @@ platform :ios do
 
     updatePods
 
-    scan(
-      clean: true,
-      output_directory: './artifacts/unit-tests',
-      scheme: 'MiniApp_Tests',
-      device: 'iPhone X',
-      code_coverage: true,
-      output_types: 'json-compilation-database,html,junit',
-      output_files: 'compile_commands.json,report.html,report.junit')
+#     scan(
+#       clean: true,
+#       output_directory: './artifacts/unit-tests',
+#       scheme: 'MiniApp_Tests',
+#       device: 'iPhone X',
+#       code_coverage: true,
+#       output_types: 'json-compilation-database,html,junit',
+#       output_files: 'compile_commands.json,report.html,report.junit')
 
   end
 
