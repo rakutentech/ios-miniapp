@@ -1,14 +1,39 @@
 name: Fastlane CI
 
 on:
-  pull_request:
-    branches: [ master ]
+  workflow_run:
+    workflows: ["Swiftlint Check"]
+    types:
+      - completed
+
 
 jobs:
   build:
     runs-on: macos-latest
     environment: STG
+    env:
+      RAS_PROJECT_IDENTIFIER: ${{ secrets.RAS_PROJECT_IDENTIFIER }}
+      RAS_PROJECT_SUBSCRIPTION_KEY: ${{ secrets.RAS_PROJECT_SUBSCRIPTION_KEY }}
+      RAT_ACCOUNT_IDENTIFIER: ${{ secrets.RAT_ACCOUNT_IDENTIFIER }}
+      RAT_ENDPOINT: ${{ secrets.RAT_ENDPOINT }}
+      RMA_API_ENDPOINT: ${{ secrets.RMA_API_ENDPOINT }}
+      RMA_APP_CENTER_SECRET: ${{ secrets.RMA_APP_CENTER_SECRET }}
+      RMA_DEMO_APP_BUILD_TYPE: ${{ secrets.RMA_DEMO_APP_BUILD_TYPE }}
+      RMA_GAD_APPLICATION_IDENTIFIER: ${{ secrets.RMA_GAD_APPLICATION_IDENTIFIER }}
     steps:
+    - name: 'Comment on PR'
+      uses: actions/github-script@v3
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          var fs = require('fs');
+          var issue_number = Number(fs.readFileSync('./NR'));
+          await github.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: issue_number,
+            body: 'Security check'
+          });
     - name: Repository checkout
       uses: actions/checkout@v2
       
@@ -27,15 +52,6 @@ jobs:
         bundler-cache: true
         
     - name: Install Pods
-      env:
-        RAS_PROJECT_IDENTIFIER: ${{ secrets.RAS_PROJECT_IDENTIFIER }}
-        RAS_PROJECT_SUBSCRIPTION_KEY: ${{ secrets.RAS_PROJECT_SUBSCRIPTION_KEY }}
-        RAT_ACCOUNT_IDENTIFIER: ${{ secrets.RAT_ACCOUNT_IDENTIFIER }}
-        RAT_ENDPOINT: ${{ secrets.RAT_ENDPOINT }}
-        RMA_API_ENDPOINT: ${{ secrets.RMA_API_ENDPOINT }}
-        RMA_APP_CENTER_SECRET: ${{ secrets.RMA_APP_CENTER_SECRET }}
-        RMA_DEMO_APP_BUILD_TYPE: ${{ secrets.RMA_DEMO_APP_BUILD_TYPE }}
-        RMA_GAD_APPLICATION_IDENTIFIER: ${{ secrets.RMA_GAD_APPLICATION_IDENTIFIER }}
       run: |
         pod install
             
