@@ -12,7 +12,7 @@ platform :ios do
 
   desc "Build All"
   lane :ci do |options|
-    xcversion(version: "~> 12")
+    xcversion(version: "~> 13.0")
 
     swiftlint(
       strict: true,
@@ -33,7 +33,7 @@ platform :ios do
   end
 
   lane :build_simulator do |options|
-    xcversion(version: "~> 12")
+    xcversion(version: "~> 13.0")
 
     updatePods
 
