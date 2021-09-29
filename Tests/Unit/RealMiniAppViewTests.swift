@@ -43,7 +43,7 @@ class RealMiniAppViewTests: QuickSpec {
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface)
-                    expect(miniAppView.webView.customUserAgent).toEventually(contain("MiniApp Demo App"), timeout: .seconds(6))
+                    expect(miniAppView.webView.customUserAgent).toEventually(contain("MiniApp Demo App"), timeout: .seconds(30))
                 }
             }
         }

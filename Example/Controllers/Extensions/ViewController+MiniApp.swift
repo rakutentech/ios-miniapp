@@ -135,7 +135,7 @@ extension ViewController: MiniAppNavigationDelegate {
                         self.fetchAppList(inBackground: true)
                     }
                 }
-                self.fetchMiniAppMetaData(miniAppInfo: miniAppInfo)
+                self.fetchMiniAppMetaData(miniAppInfo: miniAppInfo, config: Config.current())
             }
         }
     }

@@ -9,21 +9,23 @@ class Config: NSObject {
         subscriptionKey = "RASProjectSubscriptionKey",
         endpoint = "RMAAPIEndpoint",
         isPreviewMode = "RMAIsPreviewMode",
-        requireMiniAppSignatureVerification = "RMARequireMiniAppSignatureVerification"
+        requireMiniAppSignatureVerification = "RMARequireMiniAppSignatureVerification",
+        sslKeyHash = "RMASSLKeyHash"
     }
 
     static let userDefaults = UserDefaults(suiteName: "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings")
 
     // swiftlint:disable:next todo
     // TODO: Make it as CI Configurable
-    class func current() -> MiniAppSdkConfig {
+    class func current(rasProjectId: String? = Config.userDefaults?.string(forKey: Config.Key.projectId.rawValue),
+                       subscriptionKey: String? = Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue)) -> MiniAppSdkConfig {
         MiniAppSdkConfig(baseUrl: Config.userDefaults?.string(forKey: Config.Key.endpoint.rawValue),
-            rasProjectId: Config.userDefaults?.string(forKey: Config.Key.projectId.rawValue),
-            subscriptionKey: Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue),
+            rasProjectId: rasProjectId,
+            subscriptionKey: subscriptionKey,
             hostAppVersion: Config.userDefaults?.string(forKey: Config.Key.version.rawValue),
             isPreviewMode: Config.userDefaults?.value(forKey: Config.Key.isPreviewMode.rawValue) as? Bool,
-            analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")],
-            requireMiniAppSignatureVerification: Config.userDefaults?.value(forKey: Config.Key.requireMiniAppSignatureVerification.rawValue) as? Bool)
+            analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")]
+        )
     }
 
     /// Returns a `MiniAppNavigationConfig` with default values

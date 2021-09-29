@@ -36,4 +36,5 @@ post_install do |installer|
     end
   end
   system("./scripts/configure-secrets.sh #{sdk_name} #{secrets.join(" ")}")
+  system("./scripts/generate-ssh-pin.sh")
 end

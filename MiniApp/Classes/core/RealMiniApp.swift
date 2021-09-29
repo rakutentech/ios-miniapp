@@ -9,26 +9,28 @@ internal class RealMiniApp {
     var miniAppPermissionStorage: MiniAppPermissionsStorage
     var miniAppManifestStorage: MAManifestStorage
     var miniAppAnalyticsConfig: [MAAnalyticsConfig]
+    var previewMiniAppInfoFetcher: PreivewMiniAppFetcher
 
     convenience init() {
         self.init(with: nil)
     }
 
-    init(with settings: MiniAppSdkConfig?, and navigationSettings: MiniAppNavigationConfig? = nil) {
-        self.miniAppInfoFetcher = MiniAppInfoFetcher()
-        self.metaDataDownloader = MetaDataDownloader()
-        self.miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl,
-                                           rasProjectId: settings?.rasProjectId,
-                                           subscriptionKey: settings?.subscriptionKey,
-                                           hostAppVersion: settings?.hostAppVersion,
-                                           isPreviewMode: settings?.isPreviewMode)
-        self.manifestDownloader = ManifestDownloader()
-        self.miniAppStatus = MiniAppStatus()
-        self.miniAppPermissionStorage = MiniAppPermissionsStorage()
-        self.miniAppManifestStorage = MAManifestStorage()
-        self.miniAppDownloader = MiniAppDownloader(apiClient: self.miniAppClient, manifestDownloader: self.manifestDownloader, status: self.miniAppStatus)
-        self.displayer = Displayer(navigationSettings)
-        self.miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
+    init(with settings: MiniAppSdkConfig?, and navigationSettings: MiniAppNavigationConfig? = nil, sslPinningSettings: MiniAppSSLConfig? = nil) {
+        miniAppInfoFetcher = MiniAppInfoFetcher()
+        metaDataDownloader = MetaDataDownloader()
+        miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl,
+                                      rasProjectId: settings?.rasProjectId,
+                                      subscriptionKey: settings?.subscriptionKey,
+                                      hostAppVersion: settings?.hostAppVersion,
+                                      isPreviewMode: settings?.isPreviewMode)
+        manifestDownloader = ManifestDownloader()
+        miniAppStatus = MiniAppStatus()
+        miniAppPermissionStorage = MiniAppPermissionsStorage()
+        miniAppManifestStorage = MAManifestStorage()
+        miniAppDownloader = MiniAppDownloader(apiClient: miniAppClient, manifestDownloader: manifestDownloader, status: miniAppStatus)
+        displayer = Displayer(navigationSettings)
+        miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
+        previewMiniAppInfoFetcher = PreivewMiniAppFetcher()
     }
 
     func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
@@ -353,6 +355,10 @@ internal class RealMiniApp {
     /// - Returns: MiniAppManifest object
     func getCachedManifestData(appId: String) -> MiniAppManifest? {
         miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
+    }
+
+    func getMiniAppPreviewInfo(using token: String, completionHandler: @escaping (Result<PreviewMiniAppInfo, MASDKError>) -> Void) {
+        previewMiniAppInfoFetcher.fetchPreviewMiniAppInfo(apiClient: miniAppClient, using: token, completionHandler: completionHandler)
     }
 }
 

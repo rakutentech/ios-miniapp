@@ -12,3 +12,11 @@ jobs:
       uses: actions/checkout@v2
     - name: Run SwiftLint
       run: swiftlint --strict
+    - name: Save PR number
+      run: |
+        mkdir -p ./pr
+        echo ${{ github.event.number }} > ./pr/NR
+    - uses: actions/upload-artifact@v2.2.4
+      with:
+        name: pr
+        path: pr/
