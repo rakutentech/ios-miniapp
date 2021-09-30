@@ -498,12 +498,20 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             switch result {
             case .success(let response):
                 guard let encodedResult = ResponseEncoder.encode(data: response) else {
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onError,
+                        messageId: callbackId,
+                        response: prepareMAJavascriptError(MiniAppJavaScriptError.internalError)
+                    )
                     return
                 }
-                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: encodedResult)
+                self.executeJavaScriptCallback(
+                    responseStatus: .onSuccess,
+                    messageId: callbackId,
+                    response: encodedResult
+                )
             case .failure(let error):
-                self.handleMASDKError(error: error, callbackId: callbackId)
+                self.handleMASDKErrorWithJson(error: error, callbackId: callbackId)
             }
         })
     }
@@ -518,6 +526,22 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             return
         }
         self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
+    }
+
+    func handleMASDKErrorWithJson(error: MASDKError, callbackId: String) {
+        if !error.localizedDescription.isEmpty {
+            self.executeJavaScriptCallback(
+                responseStatus: .onError,
+                messageId: callbackId,
+                response: error.localizedDescription
+            )
+            return
+        }
+        self.executeJavaScriptCallback(
+            responseStatus: .onError,
+            messageId: callbackId,
+            response: prepareMAJavascriptError(MiniAppErrorType.unknownError)
+        )
     }
 }
 

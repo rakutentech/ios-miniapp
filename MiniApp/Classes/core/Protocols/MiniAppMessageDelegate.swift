@@ -75,7 +75,7 @@ public extension MiniAppMessageDelegate {
             completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.invalidSDKId))))
             return
         }
-        let platformVersion = "iOS " + UIDevice.current.systemVersion
+        let platformVersion = UIDevice.current.systemVersion
         let appVersion = environment.appVersion
         completionHandler(.success(MAHostEnvironmentInfo(platformVersion: platformVersion, hostVersion: appVersion, sdkVersion: sdkVersion)))
     }
