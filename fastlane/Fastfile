@@ -25,7 +25,7 @@ platform :ios do
 
   desc "Unit tests"
   lane :tests do |options|
-      xcversion(version: "~> 13.0")
+      xcversion(version: "~> 12.4")
       updatePods
       fetched_sim = sh("xcrun simctl list | grep 'Fastlane' | cat")
       if !fetched_sim.empty?
@@ -43,7 +43,7 @@ platform :ios do
   end
 
   lane :build_simulator do |options|
-    xcversion(version: "~> 13.0")
+    xcversion(version: "~> 12.4")
 
     updatePods
 
