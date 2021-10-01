@@ -16,9 +16,10 @@ platform :ios do
       strict: true,
       ignore_exit_status: false
     )
-    if !is_ci
-      tests
-    end
+# Uncomment this to disable Unit tests on Bitrise
+#     if !is_ci
+       tests
+#     end
 
   end
 
