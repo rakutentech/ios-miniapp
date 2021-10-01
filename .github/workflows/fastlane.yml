@@ -1,0 +1,33 @@
+name: Fastlane CI
+
+on:
+  pull_request_target:
+    types: [labeled]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    environment: STG
+    env:
+      RAS_PROJECT_IDENTIFIER: ${{ secrets.RAS_PROJECT_IDENTIFIER }}
+      RAS_PROJECT_SUBSCRIPTION_KEY: ${{ secrets.RAS_PROJECT_SUBSCRIPTION_KEY }}
+      RAT_ACCOUNT_IDENTIFIER: ${{ secrets.RAT_ACCOUNT_IDENTIFIER }}
+      RAT_ENDPOINT: ${{ secrets.RAT_ENDPOINT }}
+      RMA_API_ENDPOINT: ${{ secrets.RMA_API_ENDPOINT }}
+      RMA_APP_CENTER_SECRET: ${{ secrets.RMA_APP_CENTER_SECRET }}
+      RMA_DEMO_APP_BUILD_TYPE: ${{ secrets.RMA_DEMO_APP_BUILD_TYPE }}
+      RMA_GAD_APPLICATION_IDENTIFIER: ${{ secrets.RMA_GAD_APPLICATION_IDENTIFIER }}
+    steps:
+    - name: Repository checkout
+      if: contains(github.event.pull_request.labels.*.name, '✓')
+      uses: actions/checkout@v2
+      
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.2
+        bundler-cache: true
+        
+    - name: Run tests
+      run: |
+        bundle exec fastlane ci

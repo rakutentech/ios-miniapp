@@ -21,7 +21,7 @@ class MiniAppNSErrorTests: QuickSpec {
                 }
             }
             context("throws unknown error") {
-                let urlResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: 400, httpVersion: "1", headerFields: nil)
+                let urlResponse = HTTPURLResponse(url: URL(string: mockHost)!, statusCode: 400, httpVersion: "1", headerFields: nil)
                 let error = NSError.unknownServerError(httpResponse: urlResponse)
                 it("will return server with NSError type") {
                     expect(error).to(beAnInstanceOf(NSError.self))

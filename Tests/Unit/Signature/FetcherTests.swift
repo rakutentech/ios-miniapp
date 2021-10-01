@@ -9,7 +9,7 @@ class FetcherSpec: QuickSpec {
         describe("key fetch function") {
             var apiClientMock: APIClientMock!
             var fetcher: SignatureFetcher!
-            let config = SignatureFetcher.Config(baseURL: URL(string: "https://www.endpoint.com")!, subscriptionKey: "my-subkey")
+            let config = SignatureFetcher.Config(baseURL: URL(string: mockHost)!, subscriptionKey: "my-subkey")
 
             beforeEach {
                 apiClientMock = APIClientMock()
@@ -50,7 +50,7 @@ class FetcherSpec: QuickSpec {
 
             it("will not add (another) ras- prefix to the subscription key, if it already exists") {
                 fetcher = SignatureFetcher(apiClient: apiClientMock,
-                                  config: .init(baseURL: URL(string: "https://www.endpoint.com")!, subscriptionKey: "ras-my-subkey"))
+                                  config: .init(baseURL: URL(string: mockHost)!, subscriptionKey: "ras-my-subkey"))
 
                 fetcher.fetchKey(with: "key", completionHandler: { (_) in
                 })

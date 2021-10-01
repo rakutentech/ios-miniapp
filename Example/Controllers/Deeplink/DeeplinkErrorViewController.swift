@@ -21,7 +21,9 @@ class DeeplinkErrorViewController: UIViewController, UITextViewDelegate {
     }
 
     func setErrorTitle(title: DeeplinkErrorTitleType? = DeeplinkErrorTitleType.qrCodeExpiredTitle) {
-        guard let title = errorTitle else { return }
+        guard let title = title else { return }
+        if errorTitleLabel == nil { return }
+
         switch title {
         case .versionNotValidTitle:
             errorTitleLabel.text = String(format: MASDKLocale.localize(title.rawValue), miniAppInfo?.version.versionTag ?? "")
@@ -43,7 +45,8 @@ enum DeeplinkErrorDescriptionType: String {
 }
 
 enum DeeplinkErrorTitleType: String {
+    case versionNotValidTitle = "deeplink.ui.version.notvalid.error.title"
+
     case qrCodeExpiredTitle = "deeplink.ui.qr.error.title"
     case cannotBePreviewedTitle = "deeplink.ui.preview.unavailable.error.title"
-    case versionNotValidTitle = "deeplink.ui.version.notvalid.error.title"
 }

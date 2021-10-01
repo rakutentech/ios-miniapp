@@ -114,7 +114,7 @@ public class MiniApp: NSObject {
     /// - Parameters:
     ///   - miniAppId:  Mini AppId String value
     ///   - miniAppVersion:  Mini VersionId String value
-    ///   - completionHandler: A block to be called on successful retrieval of mini-app meta data [MiniAppManifest] or throws errors if any
+    ///   - completionHandler: A block to be called on successful retrieval of mini-app meta data MiniAppManifest or throws errors if any
     public func getMiniAppManifest(miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         return realMiniApp.retrieveMiniAppMetaData(appId: miniAppId, version: miniAppVersion, completionHandler: completionHandler)
     }
@@ -125,6 +125,14 @@ public class MiniApp: NSObject {
     /// - Returns: MiniAppManifest object info from the cache, Returns nil, if the mini-app is not downloaded already.
     public func getDownloadedManifest(miniAppId: String) -> MiniAppManifest? {
         return realMiniApp.getCachedManifestData(appId: miniAppId)
+    }
+
+    /// Method to return the Preview MiniAppInfo
+    /// - Parameters:
+    ///   - token: Preview Token that is received after scanning QR code
+    ///   - completionHandler: Completion handler that returns PreviewMiniAppInfo on successful retrieval or Error
+    public func getMiniAppPreviewInfo(using token: String, completionHandler: @escaping (Result<PreviewMiniAppInfo, MASDKError>) -> Void) {
+        realMiniApp.getMiniAppPreviewInfo(using: token, completionHandler: completionHandler)
     }
 }
 

@@ -72,10 +72,9 @@ class ViewController: UIViewController {
         }
     }
 
-    func showFirstTimeLaunchScreen(miniAppInfo: MiniAppInfo) {
-
-        if let cachedManifest = MiniApp.shared(with: Config.current()).getDownloadedManifest(miniAppId: miniAppInfo.id) {
-            compareMiniAppMetaData(miniAppInfo: miniAppInfo, manifest: cachedManifest) { (result) in
+    func showFirstTimeLaunchScreen(miniAppInfo: MiniAppInfo, config: MiniAppSdkConfig) {
+        if let cachedManifest = MiniApp.shared(with: config).getDownloadedManifest(miniAppId: miniAppInfo.id) {
+            compareMiniAppMetaData(miniAppInfo: miniAppInfo, manifest: cachedManifest, config: config) { (result) in
                 switch result {
                 case .success:
                     self.displayMiniApp(miniAppInfo: miniAppInfo)
@@ -84,12 +83,12 @@ class ViewController: UIViewController {
                 }
             }
         } else {
-            fetchMiniAppMetaData(miniAppInfo: miniAppInfo)
+            fetchMiniAppMetaData(miniAppInfo: miniAppInfo, config: config)
         }
     }
 
-    func fetchMiniAppMetaData(miniAppInfo: MiniAppInfo) {
-        MiniApp.shared(with: Config.current()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
+    func fetchMiniAppMetaData(miniAppInfo: MiniAppInfo, config: MiniAppSdkConfig) {
+        MiniApp.shared(with: config).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
                 self.dismissProgressIndicator {
@@ -101,11 +100,14 @@ class ViewController: UIViewController {
         }
     }
 
-    func compareMiniAppMetaData(miniAppInfo: MiniAppInfo, manifest: MiniAppManifest?, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+    func compareMiniAppMetaData(miniAppInfo: MiniAppInfo,
+                                manifest: MiniAppManifest?,
+                                config: MiniAppSdkConfig,
+                                completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         guard let downloadedManifest = manifest else {
             return completionHandler(.success(true))
         }
-        MiniApp.shared(with: Config.current()).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
+        MiniApp.shared(with: config).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
             switch result {
             case .success(let manifestData):
                 self.dismissProgressIndicator {
@@ -161,6 +163,69 @@ class ViewController: UIViewController {
             self.currentMiniAppTitle = miniAppInfo.displayName
         }
     }
+
+    func getMiniAppPreviewInfo(previewToken: String, config: MiniAppSdkConfig) {
+        self.showProgressIndicator {
+            MiniApp.shared(with: config).getMiniAppPreviewInfo(using: previewToken) { (result) in
+                switch result {
+                case .success(let previewInfo):
+                    self.dismissProgressIndicator {
+                        if previewInfo.host != nil {
+                            self.showFirstTimeLaunchScreen(miniAppInfo: previewInfo.miniapp,
+                                                           config: Config.current(rasProjectId: previewInfo.host?.id, subscriptionKey: previewInfo.host?.subscriptionkey))
+                        } else {
+                            self.showFirstTimeLaunchScreen(miniAppInfo: previewInfo.miniapp, config: Config.current())
+                        }
+                    }
+                case .failure(let error):
+                    self.dismissProgressIndicator {
+                        self.checkPreviewMiniAppError(error: error as MASDKError)
+                    }
+                }
+            }
+        }
+    }
+
+    func checkPreviewMiniAppError(error: MASDKError) {
+        switch error {
+        case .serverError(let code, _):
+            if code == 404 {
+                validateDeepLinkError(miniAppInfo: nil, errorType: .qrCodeExpired)
+            } else if code == 400 {
+                validateDeepLinkError(miniAppInfo: nil, errorType: .miniAppPermissionError)
+            }
+        default:
+            validateDeepLinkError(miniAppInfo: nil, errorType: .miniAppNoLongerExists)
+        }
+    }
+
+    /// Method to display Mini App Error Screen
+    /// - Parameters:
+    ///   - miniAppInfo: miniAppInfo details that will be displayed in the error screen
+    ///   - errorType: DeeplinkErrorDescriptionType
+    func validateDeepLinkError(miniAppInfo: MiniAppInfo?, errorType: DeeplinkErrorDescriptionType) {
+        if errorType == .miniAppNoLongerExists || errorType == .miniAppPermissionError {
+            displayDeepLinkError(storyboardId: "DeepLinkMiniAppError", miniAppInfo: miniAppInfo, errorType: errorType)
+        } else {
+            displayDeepLinkError(storyboardId: "DeepLinkMiniAppVersionError", miniAppInfo: miniAppInfo, errorType: errorType)
+        }
+    }
+
+    func displayDeepLinkError(storyboardId: String, miniAppInfo: MiniAppInfo?, errorType: DeeplinkErrorDescriptionType) {
+        DispatchQueue.main.async {
+            if let viewController = UIStoryboard(name: "Deeplink",
+                                                 bundle: nil).instantiateViewController(withIdentifier: storyboardId) as? DeeplinkErrorViewController {
+                viewController.errorType = errorType
+                viewController.miniAppInfo = miniAppInfo
+                if errorType == .qrCodeExpired {
+                    viewController.errorTitle = .qrCodeExpiredTitle
+                } else if errorType == .cannotBePreviewed {
+                    viewController.errorTitle = .cannotBePreviewedTitle
+                }
+                UINavigationController.topViewController()?.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
+            }
+        }
+    }
 }
 
 // MARK: - Actions
@@ -203,7 +268,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
-            self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo)
+            self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo, config: Config.current())
         }
     }
 }

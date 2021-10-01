@@ -29,3 +29,5 @@ docs/
 Gemfile.lock
 DerivedData
 vendor/bundle
+/certificate.pem
+/SSL-pinning.xcconfig

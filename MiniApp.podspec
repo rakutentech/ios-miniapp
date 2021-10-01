@@ -30,6 +30,7 @@ Pod::Spec.new do |miniapp|
         "MiniApp" => ['MiniApp/Classes/core/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
     }
     core.dependency 'ZIPFoundation', '0.9.12'
+    core.dependency 'TrustKit', '~>2.0'
   end
 
   miniapp.subspec 'UI' do |ui|

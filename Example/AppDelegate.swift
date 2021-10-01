@@ -30,11 +30,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true), let host = components.host else {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             return false
         }
-        print("Host: ", host)
+        deepLinkToMiniApp(using: components.path.replacingOccurrences(of: "/preview/", with: ""))
         return true
+    }
+
+    func deepLinkToMiniApp(using token: String) {
+        let rootController = window?.rootViewController as? UINavigationController
+        guard let controllersStack = rootController?.viewControllers else { return }
+        if let homeViewController = controllersStack.first(where: { $0 is ViewController }) as? ViewController {
+            homeViewController.getMiniAppPreviewInfo(previewToken: token, config: Config.current(pinningEnabled: true))
+        }
     }
 }
 
