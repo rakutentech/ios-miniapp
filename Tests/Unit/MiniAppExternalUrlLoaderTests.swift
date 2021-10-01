@@ -27,7 +27,7 @@ class MiniAppExternalUrlLoaderTests: QuickSpec {
             context("when shouldOverrideURLLoading method is called with https URL") {
                 it("will return WKNavigationActionPolicy as allow") {
                     let externalURLLoader = MiniAppExternalUrlLoader()
-                    let str = URLComponents(string: "https://www.google.com")
+                    let str = URLComponents(string: "\(mockHost)")
                     let navigationPolicy = externalURLLoader.shouldOverrideURLLoading(str?.url)
                     expect(navigationPolicy.rawValue).to(equal(WKNavigationActionPolicy.allow.rawValue))
                 }

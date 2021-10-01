@@ -6,7 +6,7 @@ class MiniAppURLRequestTests: QuickSpec {
 
     override func spec() {
         describe("create url request") {
-            guard let url = URL(string: "http://example.com") else {
+            guard let url = URL(string: mockHost) else {
                 return
             }
             let mockBundle = MockBundle()

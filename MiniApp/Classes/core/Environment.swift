@@ -94,11 +94,11 @@ internal class Environment {
     }
 
     var sslKeyHash: String? {
-        customSSLKeyHash ?? dictionary(for: Key.sslKeyHash)?[MiniAppConfigSSLKeyHash.KeyType.main.rawValue] as? String
+        customSSLKeyHash
     }
 
     var sslKeyHashBackup: String? {
-        customSSLKeyHashBackup ?? dictionary(for: Key.sslKeyHash)?[MiniAppConfigSSLKeyHash.KeyType.backup.rawValue] as? String
+        customSSLKeyHashBackup
     }
 
     func value(for field: String?, fallback key: Key) -> String {

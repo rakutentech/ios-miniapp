@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootController = window?.rootViewController as? UINavigationController
         guard let controllersStack = rootController?.viewControllers else { return }
         if let homeViewController = controllersStack.first(where: { $0 is ViewController }) as? ViewController {
-            homeViewController.getMiniAppPreviewInfo(previewToken: token)
+            homeViewController.getMiniAppPreviewInfo(previewToken: token, config: Config.current(pinningEnabled: true))
         }
     }
 }

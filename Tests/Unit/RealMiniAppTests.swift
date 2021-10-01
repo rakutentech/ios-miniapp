@@ -161,7 +161,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
@@ -212,7 +212,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
@@ -261,7 +261,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
@@ -305,7 +305,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -339,7 +339,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -372,7 +372,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     realMiniApp.miniAppInfoFetcher = mockMiniAppInfoFetcher
@@ -408,7 +408,7 @@ class RealMiniAppTests: QuickSpec {
                     """
                     let manifestResponse = """
                       {
-                        "manifest": ["https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                        "manifest": ["\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
                       }
                     """
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -430,7 +430,7 @@ class RealMiniAppTests: QuickSpec {
                 it("will return error") {
                     let responseString = """
                       {
-                        "manifest": ["https://example.com/app-id-test/ver-id-test/HelloWorld.txt"]
+                        "manifest": ["\(mockHost)/app-id-test/ver-id-test/HelloWorld.txt"]
                       }
                     """
                     var testError: NSError?

@@ -51,9 +51,9 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
-  - Nimble (9.0.1)
+  - Nimble (9.2.1)
   - PromisesObjC (2.0.0)
-  - Quick (3.1.2)
+  - Quick (4.0.0)
   - RAnalytics (8.2.1)
   - TrustKit (2.0.0)
   - ZIPFoundation (0.9.12)
@@ -63,8 +63,8 @@ DEPENDENCIES:
   - MiniApp/Admob8 (from `./`)
   - MiniApp/Signature (from `./`)
   - MiniApp/UI (from `./`)
-  - Nimble (~> 9.0.0)
-  - Quick (~> 3.1.2)
+  - Nimble (~> 9.2.1)
+  - Quick (~> 4.0.0)
   - RAnalytics
 
 SPEC REPOS:
@@ -95,13 +95,13 @@ SPEC CHECKSUMS:
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
   MiniApp: a6b5b474d2bf8f9182afb079a98ba668e74108d8
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  Nimble: 7bed62ffabd6dbfe05f5925cbc43722533248990
+  Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
-  Quick: 60f0ea3b8e0cfc0df3259a5c06a238ad8b3c46e0
+  Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   RAnalytics: ab09bc6648a4804e10a9524f8156e9a393b426fb
   TrustKit: 610b8c71c07914756dd74c380040a3408a747798
   ZIPFoundation: e27423c004a5a1410c15933407747374e7c6cb6e
 
-PODFILE CHECKSUM: 13bc7439e7c5891907138b5f4a86d360d4ec03a8
+PODFILE CHECKSUM: 67f58014a29f748678ec3b6870d6e4bda2a1a013
 
 COCOAPODS: 1.11.2

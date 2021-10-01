@@ -64,9 +64,9 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         environment.customAppVersion = config?.hostAppVersion
         environment.customIsPreviewMode = config?.isPreviewMode
         environment.customSignatureVerification = config?.requireMiniAppSignatureVerification
+        environment.customSSLKeyHash = config?.sslKeyHash?.pin
+        environment.customSSLKeyHashBackup = config?.sslKeyHash?.backupPin
         if sslPinningConfig == nil {
-            environment.customSSLKeyHash = config?.sslKeyHash?.pin
-            environment.customSSLKeyHashBackup = config?.sslKeyHash?.backupPin
             updateSSLPinConfig()
         } else if
                 let pins = sslPinningConfig?.domains[environment.host]?[kTSKPublicKeyHashes] as? [String],
@@ -293,7 +293,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         updateSSLPinConfig()
-        if sslPinningConfig == nil {
+        if sslPinningConfig == nil || environment.sslKeyHash == nil {
             completionHandler(.performDefaultHandling, nil)
         } else if !TrustKit.sharedInstance().pinningValidator.handle(challenge, completionHandler: completionHandler) {
             MiniAppLogger.w("TrustKit did not handle this challenge: perhaps it was not for server trust or the domain was not pinned. Fall back to the default behavior")

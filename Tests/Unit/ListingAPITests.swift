@@ -13,12 +13,12 @@ class ListingAPITests: QuickSpec {
 
             context("when endpoint is properly configured") {
                 it("will return valid URL Request for app listing") {
-                    mockBundle.mockEndpoint = "http://example.com"
+                    mockBundle.mockEndpoint = mockHost
                     expect(listingAPI.createURLRequest()).to(beAnInstanceOf(URLRequest.self))
                 }
 
                 it("will return valid URL Request for app info") {
-                    mockBundle.mockEndpoint = "http://example.com"
+                    mockBundle.mockEndpoint = mockHost
                     expect(listingAPI.createURLRequest(for: "123")).to(beAnInstanceOf(URLRequest.self))
                 }
             }
