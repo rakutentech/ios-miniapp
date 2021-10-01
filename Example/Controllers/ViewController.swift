@@ -164,9 +164,9 @@ class ViewController: UIViewController {
         }
     }
 
-    func getMiniAppPreviewInfo(previewToken: String) {
+    func getMiniAppPreviewInfo(previewToken: String, config: MiniAppSdkConfig) {
         self.showProgressIndicator {
-            MiniApp.shared().getMiniAppPreviewInfo(using: previewToken) { (result) in
+            MiniApp.shared(with: config).getMiniAppPreviewInfo(using: previewToken) { (result) in
                 switch result {
                 case .success(let previewInfo):
                     self.dismissProgressIndicator {
