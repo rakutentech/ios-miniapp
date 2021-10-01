@@ -13,7 +13,7 @@ class MetaDataAPITests: QuickSpec {
 
             context("when endpoint is properly configured") {
                 it("will return valid URL Request") {
-                    mockBundle.mockEndpoint = "http://example.com"
+                    mockBundle.mockEndpoint = mockHost
                     let urlRequest = manifestAPI.createURLRequest(appId: "1", versionId: "test")
                     expect(urlRequest).to(beAnInstanceOf(URLRequest.self))
                 }

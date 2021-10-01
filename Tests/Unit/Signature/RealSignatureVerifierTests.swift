@@ -9,7 +9,7 @@ class RealSignatureVerifierSpec: QuickSpec {
 
         describe("RealSignatureVerifier") {
 
-            let config = SignatureFetcher.Config(baseURL: URL(string: "https://www.endpoint.com")!, subscriptionKey: "my-subkey")
+            let config = SignatureFetcher.Config(baseURL: URL(string: mockHost)!, subscriptionKey: "my-subkey")
             let keyStore = SignatureKeyStore(account: config.baseURL.identifier, service: "unit-tests")
             let mockData = "data".data(using: .utf8)!
 
