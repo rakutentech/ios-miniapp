@@ -1,4 +1,4 @@
-source 'https://github.com/CocoaPods/Specs.git'
+#source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 sdk_name = "MiniApp"
@@ -21,8 +21,8 @@ target sdk_name + '_Example' do
 
   target sdk_name + '_Tests' do
     inherit! :search_paths
-    pod 'Nimble', '~>9.0.0'
-    pod 'Quick', '~>3.1.2'
+    pod 'Nimble', '~>9.2.1'
+    pod 'Quick', '~>4.0.0'
   end
 end
 

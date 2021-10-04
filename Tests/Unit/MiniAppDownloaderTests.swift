@@ -3,6 +3,7 @@ import Nimble
 @testable import MiniApp
 
 // swiftlint:disable function_body_length
+// swiftlint:disable cyclomatic_complexity
 class MiniAppDownloaderTests: QuickSpec {
     func manifest(with signatureId: String = "publicKeyId", urls: String...) -> String {
         return  "{\"manifest\": [\"\(urls.joined(separator: "\",\""))\"], \"publicKeyId\": \"\(signatureId)\"}"
@@ -26,9 +27,16 @@ class MiniAppDownloaderTests: QuickSpec {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                    let responseString = self.manifest(urls: "https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
+                    let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    downloader.verifyAndDownload(appId: appId, versionId: versionId) { (_) in }
+                    downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
+                        switch result {
+                        case .success(let url):
+                            MiniAppLogger.d(url.absoluteString)
+                        case .failure(let error):
+                            MiniAppLogger.e("error", error)
+                        }
+                    }
                     let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                     var isDir: ObjCBool = true
                     expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: .seconds(10))
@@ -40,7 +48,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     mockAPIClient.corrupted = true
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                    let responseString = self.manifest(urls: "https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
+                    let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var downloadFailed = false
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
@@ -60,7 +68,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                    let responseString = self.manifest(urls: "https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
+                    let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
                     mockAPIClient.data = responseString.data(using: .utf8)
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (_) in }
                     mockManifestDownloader.error = NSError(domain: "URLErrorDomain", code: -1009, userInfo: nil)
@@ -86,7 +94,7 @@ class MiniAppDownloaderTests: QuickSpec {
                      let mockAPIClient = MockAPIClient()
                      let mockManifestDownloader = MockManifestDownloader()
                      let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                     let responseString = self.manifest(urls: "https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
+                     let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
                      mockAPIClient.data = responseString.data(using: .utf8)
                      downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).1") { (_) in
                          DispatchQueue.main.asyncAfter(deadline: .now() + 3) { () -> Void in
@@ -110,7 +118,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let mockAPIClient = MockAPIClient(previewMode: true)
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                    let responseString = self.manifest(urls: "https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
+                    let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
                     var referenceDate: Date? = Date(), dateOld = referenceDate, dateNew = referenceDate
                     let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                     mockAPIClient.data = responseString.data(using: .utf8)
@@ -156,7 +164,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     }
                     let miniAppPath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
                     let expectedPath = miniAppPath.appendingPathComponent("HelloWorld.txt")
-                    expect(FileManager.default.fileExists(atPath: expectedPath.path)).toEventually(equal(true), timeout: .seconds(10))
+                    expect(FileManager.default.fileExists(atPath: expectedPath.path)).toEventually(equal(true), timeout: .seconds(30))
                 }
             }
         }
@@ -219,7 +227,7 @@ class MiniAppDownloaderTests: QuickSpec {
             }
             context("when isMiniAppAlreadyDownloaded is called with valid appId and versionId - which is  downloaded") {
                 it("will return true") {
-                    let responseString = self.manifest(urls: "https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
+                    let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var isDownloaded: Bool = false
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
@@ -244,7 +252,7 @@ class MiniAppDownloaderTests: QuickSpec {
             }
             context("when getCachedMiniAppVersion is called with valid mini app id and version id") {
                 it("will return version that is already downloaded") {
-                    let responseString = self.manifest(urls: "https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
+                    let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var version: String?
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
@@ -263,7 +271,7 @@ class MiniAppDownloaderTests: QuickSpec {
             context("when getCachedMiniAppVersion is called with valid mini app id and empty version id") {
                 it("will return version that is already downloaded") {
 
-                    let responseString = self.manifest(urls: "https://google.com/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
+                    let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
                     mockAPIClient.data = responseString.data(using: .utf8)
                     var version: String?
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
@@ -286,7 +294,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                    let responseString = self.manifest(urls: "https://google.com/map-published-v2/min-abc/ver-abc/SmallMA.zip")
+                    let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/SmallMA.zip")
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.zipFile = Bundle(for: type(of: self)).path(forResource: "SmallMA", ofType: "zip") ?? ""
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (_) in }
@@ -301,7 +309,7 @@ class MiniAppDownloaderTests: QuickSpec {
                     let mockAPIClient = MockAPIClient()
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
-                    let responseString = self.manifest(urls: "https://google.com/map-published-v2/min-abc/ver-abc/SmallMAerror.zip")
+                    let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/SmallMAerror.zip")
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.zipFile = Bundle(for: type(of: self)).path(forResource: "SmallMAerror", ofType: "zip") ?? ""
                     var error: Error?

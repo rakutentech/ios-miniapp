@@ -101,7 +101,7 @@ class MiniAppStatusTests: QuickSpec {
                     miniAppKeyStore.storeCustomPermissions(permissions: getDefaultSupportedPermissions(), forMiniApp: mockMiniAppInfo.id)
                     let miniAppCustomPermissionList = miniAppStatus.checkStoredPermissionList(downloadedMiniAppsList: [mockMiniAppInfo])
                     expect(miniAppCustomPermissionList.keys).to(contain(mockMiniAppInfo.id))
-                    let miniAppInfo = MiniAppInfo(id: "123", displayName: "Test", icon: URL(string: "https://www.example.com/icon.png")!, version: mockMiniAppInfo.version)
+                    let miniAppInfo = MiniAppInfo(id: "123", displayName: "Test", icon: URL(string: "\(mockHost)/icon.png")!, version: mockMiniAppInfo.version)
                     let customPermissionsList = miniAppStatus.checkStoredPermissionList(downloadedMiniAppsList: [miniAppInfo])
                     expect(customPermissionsList.keys).notTo(contain(miniAppInfo.id))
                     expect(customPermissionsList.keys).notTo(contain(mockMiniAppInfo.id))

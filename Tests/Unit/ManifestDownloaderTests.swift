@@ -16,7 +16,7 @@ class ManifestDownloaderTests: QuickSpec {
                       {
                         "manifest": [
                             "https://test.com",
-                            "https://example.com"
+                            "\(mockHost)"
                         ]
                       }
                     """
@@ -41,7 +41,7 @@ class ManifestDownloaderTests: QuickSpec {
                       {
                         "files": [
                             "https://test.com",
-                            "https://example.com"
+                            "\(mockHost)"
                         ]
                       }
                     """

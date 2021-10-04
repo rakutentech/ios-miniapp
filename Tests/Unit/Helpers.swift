@@ -1,6 +1,7 @@
 @testable import MiniApp
 import WebKit
 import Foundation
+let mockHost = "https://example.com"
 
 let jSONManifest = """
 {
@@ -278,10 +279,9 @@ class MockBundle: EnvironmentProtocol {
     var mockProjectId: String?
     var mockSubscriptionKey: String?
     var mockAppVersion: String?
-    var mockEndpoint: String? = "https://www.example.com/"
+    var mockEndpoint: String? = "\(mockHost)/"
     var mockPreviewMode: Bool?
     var mockHostAppUserAgentInfo: String?
-    var mockSSLPins: [String: String]?
 
     func bool(for key: String) -> Bool? {
         switch key {
@@ -311,8 +311,6 @@ class MockBundle: EnvironmentProtocol {
 
     func object(forInfoDictionaryKey: String) -> Any? {
         switch forInfoDictionaryKey {
-        case "RMASSLKeyHash":
-            return mockSSLPins
         default:
             return nil
         }
@@ -468,7 +466,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
 
 var mockMiniAppInfo: MiniAppInfo {
     let mockVersion = Version(versionTag: "Dev", versionId: "ver-id-test")
-    let info = MiniAppInfo.init(id: "app-id-test", displayName: "Mini App Title", icon: URL(string: "https://www.example.com/icon.png")!, version: mockVersion)
+    let info = MiniAppInfo.init(id: "app-id-test", displayName: "Mini App Title", icon: URL(string: "\(mockHost)/icon.png")!, version: mockVersion)
     return info
 }
 
@@ -753,7 +751,7 @@ extension UIImage {
         var fetchKeyCalledNumTimes = 0
         var fetchedKey: KeyModel? = KeyModel(identifier: "", key: "", pem: "")
 
-        init() { super.init(apiClient: SignatureAPI(), config: Config(baseURL: URL(string: "http://test.com")!, subscriptionKey: "")) }
+        init() { super.init(apiClient: SignatureAPI(), config: Config(baseURL: URL(string: mockHost)!, subscriptionKey: "")) }
 
         override func fetchKey(with keyId: String, completionHandler: @escaping (Result<KeyModel, Error>) -> Void) {
             fetchKeyCalledNumTimes += 1
