@@ -16,6 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.tintColor = UIColor.accent
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         AnalyticsManager.shared().set(loggingLevel: .debug)
+        if let url = launchOptions?[.url] as? URL {
+            guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+                return true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
+                self.deepLinkToMiniApp(using: components.path.replacingOccurrences(of: "/preview/", with: ""))
+            })
+        }
         return true
     }
 

@@ -11,6 +11,7 @@
 - **Feature:** Added support for App Store URL schemes
 - **Feature:** Added new public interface `getMiniAppPreviewInfo` to get Mini app info using preview token
 - **Feature:** Added SSL pinning check for API calls
+- **Feature:** Added `getHostEnvironmentInfo(completionHandler:)` interface to return `MAHostEnvironmentInfo` details to miniapp
 
 **Sample app**
 
@@ -18,6 +19,7 @@
 - **Feature:** ATS deactivated to match production needs
 - **Feature:** Added support for previewing mini app using QR Code
 
+---
 ### 3.5.0 (2021-08-05)
 
 **SDK**
@@ -32,6 +34,7 @@
 - **Feature:** Display of a banner on message contact picker when required
 - **Feature:** Added Points to the settings screen to change `getPoints` response values 
 
+---
 ### 3.4.0 (2021-06-25)
 
 **SDK**
