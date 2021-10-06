@@ -4,6 +4,8 @@ class FirstLaunchViewController: UIViewController {
     @IBOutlet weak var imageViewArrow: UIImageView!
     @IBOutlet weak var labelHint: UILabel!
     @IBOutlet weak var labelMiniApp: UILabel!
+    var previewUsingQRToken: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -40,6 +42,11 @@ class FirstLaunchViewController: UIViewController {
         } else if segue.identifier == "ShowList" {
             if let viewController = segue.destination as? ViewController {
                 viewController.decodeResponse = sender as? [MiniAppInfo]
+                guard let token = previewUsingQRToken else {
+                    return
+                }
+                viewController.getMiniAppPreviewInfo(previewToken: token,
+                                                     config: Config.current(pinningEnabled: true))
             }
         }
     }
