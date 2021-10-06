@@ -30,7 +30,8 @@ class Config: NSObject {
                 hostAppVersion: Config.userDefaults?.string(forKey: Config.Key.version.rawValue),
                 isPreviewMode: Config.userDefaults?.value(forKey: Config.Key.isPreviewMode.rawValue) as? Bool,
                 analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")],
-                sslKeyHash: pinConf
+                sslKeyHash: pinConf,
+                dynamicDeepLinksList: []
         )
     }
 

@@ -9,6 +9,7 @@ internal class RealMiniApp {
     var miniAppPermissionStorage: MiniAppPermissionsStorage
     var miniAppManifestStorage: MAManifestStorage
     var miniAppAnalyticsConfig: [MAAnalyticsConfig]
+    var dynamicDeepLinksList: [String]
     var previewMiniAppInfoFetcher: PreivewMiniAppFetcher
 
     convenience init() {
@@ -30,6 +31,7 @@ internal class RealMiniApp {
         miniAppDownloader = MiniAppDownloader(apiClient: miniAppClient, manifestDownloader: manifestDownloader, status: miniAppStatus)
         displayer = Displayer(navigationSettings)
         miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
+        dynamicDeepLinksList = settings?.dynamicDeepLinksList ?? []
         previewMiniAppInfoFetcher = PreivewMiniAppFetcher()
     }
 
@@ -119,7 +121,7 @@ internal class RealMiniApp {
                                     if !success {
                                         errorHandler(NSError.invalidURLError())
                                     }
-                                 }, analyticsConfig: self.miniAppAnalyticsConfig)
+                                 }, analyticsConfig: self.miniAppAnalyticsConfig, dynamicDeepLinks: dynamicDeepLinksList)
     }
 
     /// Download Mini app for a given Mini app info object
@@ -218,7 +220,7 @@ internal class RealMiniApp {
                                                                                miniAppTitle: miniAppTitle,
                                                                                queryParams: queryParams,
                                                                                hostAppMessageDelegate: hostAppMessageDelegate,
-                                                                               adsDisplayer: adsDisplayer, analyticsConfig: analyticsConfig)
+                                                                               adsDisplayer: adsDisplayer, analyticsConfig: analyticsConfig, dynamicDeepLinks: self.dynamicDeepLinksList)
                     completionHandler(.success(miniAppDisplayProtocol))
                 }
             case .failure(let error):
