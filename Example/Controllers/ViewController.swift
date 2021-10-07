@@ -222,7 +222,8 @@ class ViewController: UIViewController {
                 } else if errorType == .cannotBePreviewed {
                     viewController.errorTitle = .cannotBePreviewedTitle
                 }
-                UINavigationController.topViewController()?.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
+                viewController.modalPresentationStyle = .fullScreen
+                self.present(viewController, animated: true, completion: nil)
             }
         }
     }
