@@ -50,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let controllersStack = rootController?.viewControllers else { return }
         if let homeViewController = controllersStack.first(where: { $0 is ViewController }) as? ViewController {
             homeViewController.getMiniAppPreviewInfo(previewToken: token, config: Config.current(pinningEnabled: true))
+        } else if let firstLaunchController = controllersStack.first(where: { $0 is FirstLaunchViewController }) as? FirstLaunchViewController {
+            firstLaunchController.previewUsingQRToken = token
         }
     }
 }
