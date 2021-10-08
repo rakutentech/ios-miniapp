@@ -20,23 +20,23 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 3.5.0 Docs
+          MiniApp 3.7.0 Docs
         </a>
-         (67% documented)
+         (62% documented)
       </p>
     
-      <p class="header-col--secondary">
+      <div class="header-col--secondary">
         <form role="search" action="search.json">
           <input type="text" placeholder="Search documentation" data-typeahead>
         </form>
-      </p>
+      </div>
     
     
     </header>
 
     <p class="breadcrumbs">
       <a class="breadcrumb" href="index.html">MiniApp Reference</a>
-      <img class="carat" src="img/carat.png" />
+      <img class="carat" src="img/carat.png" alt=""/>
       MiniApp  Reference
     </p>
 
@@ -68,6 +68,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MAContact.html">MAContact</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MAHostEnvironmentInfo.html">MAHostEnvironmentInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MAPoints.html">MAPoints</a>
@@ -155,6 +158,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/Bundle.html">Bundle</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -193,6 +204,9 @@
             <a class="nav-group-name-link" href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/Host.html">Host</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MAAnalyticsConfig.html">MAAnalyticsConfig</a>
               </li>
               <li class="nav-group-task">
@@ -205,6 +219,9 @@
                 <a class="nav-group-task-link" href="Structs/MASDKLocale/LocalizableKey.html">– LocalizableKey</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppConfigSSLKeyHash.html">MiniAppConfigSSLKeyHash</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MiniAppInfo.html">MiniAppInfo</a>
               </li>
               <li class="nav-group-task">
@@ -214,10 +231,16 @@
                 <a class="nav-group-task-link" href="Structs/MiniAppReward.html">MiniAppReward</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs.html#/s:7MiniApp0aB9SSLConfigV">MiniAppSSLConfig</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MiniAppShareContent.html">MiniAppShareContent</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MiniAppUIParams.html">MiniAppUIParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/PreviewMiniAppInfo.html">PreviewMiniAppInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/Version.html">Version</a>
@@ -277,8 +300,23 @@ Mini App SDK also facilitates communication between a Mini App and the host app 
 <pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'MiniApp'</span>
 </code></pre>
 
-<p>If you need to support display of Google ads triggered from your Mini App, you need to add the following subspec instead:</p>
+<p>The SDK can provide you some useful UI elements to help you displaying Mini Apps in your host app thanks to this subspec:</p>
+<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'MiniApp/UI'</span>
+</code></pre>
+
+<p>If you need to support display of Google ads (up to version 8) triggered from your Mini App, you need to add the following subspec instead:</p>
 <pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'MiniApp/Admob'</span>
+</code></pre>
+
+<p>or if you need version 8 or above</p>
+<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'MiniApp/Admob8'</span>
+</code></pre>
+
+<p>If you want to check the Mini App zip file integrity to prevent file corruption during download, adding <code>MiniApp/Signature</code> subspec will automatically enable it. </p>
+
+<p>By default if the verification fails, it will trigger an <a href="#analytics-events">analytic event</a> but won&rsquo;t prevent the Mini App to load. <a href="#runtime-conf">There is a runtime configuration</a> to avoid a corrupted Mini App to be opened.
+You can also provide a new default behavior by using a <code>RMARequireMiniAppSignatureVerification</code> boolean parameter in the application plist file (see the configuration matrix below to know more about the <code>RMARequireMiniAppSignatureVerification</code> parameter)</p>
+<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'MiniApp/Signature'</span>
 </code></pre>
 <h3 id='configuration' class='heading'>Configuration</h3>
 
@@ -315,11 +353,25 @@ Mini App SDK also facilitates communication between a Mini App and the host app 
 <td style="text-align: center"><code>none</code></td>
 </tr>
 <tr>
+<td style="text-align: left">RMASSLKeyHash</td>
+<td style="text-align: center">Dictionary</td>
+<td style="text-align: left"><code>This is the certificate keys hashes used for SSL pinning. The dictionary contains 2 keys: [main] with the main pin, and [backup] for the backup pin</code> .</td>
+<td style="text-align: center">NO</td>
+<td style="text-align: center"><code>none</code></td>
+</tr>
+<tr>
 <td style="text-align: left">RMAHostAppUserAgentInfo</td>
 <td style="text-align: center">String</td>
 <td style="text-align: left"><code>Host app name and version info that is appended in User agent. The value specified in the plist is retrieved only at the build time.</code></td>
 <td style="text-align: center">YES</td>
 <td style="text-align: center"><code>none</code></td>
+</tr>
+<tr>
+<td style="text-align: left">RMARequireMiniAppSignatureVerification</td>
+<td style="text-align: center">Bool</td>
+<td style="text-align: left"><code>This setting allows you to make the Mini App zip file signature validation mandatory. It is set to false by default, which means if a signature is not valid the mini app will still be launched</code></td>
+<td style="text-align: center">YES</td>
+<td style="text-align: center"><code>false</code></td>
 </tr>
 </tbody></table>
 
@@ -924,7 +976,7 @@ How to get downloaded <code>Mini App meta-data</code></p>
 <hr>
 
 <p>In Host App, we can get the downloaded manifest information as following:</p>
-<pre class="highlight kotlin"><code>  <span class="n">let</span> <span class="n">downloadedManifest</span> <span class="p">=</span> <span class="n">MiniApp</span><span class="p">.</span><span class="n">shared</span><span class="p">().</span><span class="n">getDownloadedManifest</span><span class="p">(</span><span class="n">miniAppId</span><span class="p">:)</span>
+<pre class="highlight swift"><code>  <span class="k">let</span> <span class="nv">downloadedManifest</span> <span class="o">=</span> <span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">getDownloadedManifest</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:)</span>
 </code></pre>
 
 <p>HostApp can compare the old <code>downloadedManifest</code> and the latest manifest by calling <a href="#get-mini-meta-data">MiniApp.shared().getMiniAppManifest</a> to detect any new changes.</p>
@@ -940,7 +992,7 @@ How to get downloaded <code>Mini App meta-data</code></p>
 <pre class="highlight swift"><code> <span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">listDownloadedWithCustomPermissions</span><span class="p">()</span>
 </code></pre>
 
-<p><a id="navigation"></a></p>
+<p><a id="advanced-features"></a></p>
 <h3 id='advanced-features' class='heading'>Advanced Features</h3>
 
 <hr>
@@ -954,15 +1006,23 @@ How to get downloaded <code>Mini App meta-data</code></p>
 
 <p>Every call to the API can be done with default parameters retrieved from the project .plist configuration file, or by providing a <code><a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a></code> object during the call. Here is a simple example class we use to create the configuration in samples below:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Config</span><span class="p">:</span> <span class="kt">NSObject</span> <span class="p">{</span>
-    <span class="kd">class</span> <span class="kd">func</span> <span class="nf">getCurrent</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">MiniAppSdkConfig</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="kt">MiniAppSdkConfig</span><span class="p">(</span><span class="nv">baseUrl</span><span class="p">:</span> <span class="s">"https://your.custom.url"</span>
-                                <span class="nv">rasAppId</span><span class="p">:</span> <span class="s">"your_RAS_App_id"</span><span class="p">,</span>
-                                <span class="nv">subscriptionKey</span><span class="p">:</span> <span class="s">"your_subscription_key"</span><span class="p">,</span>
-                                <span class="nv">hostAppVersion</span><span class="p">:</span> <span class="s">"your_custom_version"</span><span class="p">,</span>
-                                <span class="nv">isTestMode</span><span class="p">:</span> <span class="kc">true</span><span class="s">")
-    }
-}
-</span></code></pre>
+    <span class="kd">class</span> <span class="kd">func</span> <span class="nf">current</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">MiniAppSdkConfig</span> <span class="p">{</span>
+        <span class="kt">MiniAppSdkConfig</span><span class="p">(</span>
+            <span class="nv">baseUrl</span><span class="p">:</span> <span class="s">"https://your.custom.url"</span><span class="p">,</span>
+            <span class="nv">rasProjectId</span><span class="p">:</span> <span class="s">"your_RAS_Project_id"</span><span class="p">,</span>
+            <span class="nv">subscriptionKey</span><span class="p">:</span> <span class="s">"your_subscription_key"</span><span class="p">,</span>
+            <span class="nv">hostAppVersion</span><span class="p">:</span> <span class="s">"your_custom_version"</span><span class="p">,</span>
+            <span class="nv">isPreviewMode</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nv">analyticsConfigList</span><span class="p">:</span> <span class="p">[</span><span class="kt">MAAnalyticsConfig</span><span class="p">(</span><span class="nv">acc</span><span class="p">:</span> <span class="s">"477"</span><span class="p">,</span> <span class="nv">aid</span><span class="p">:</span> <span class="s">"998"</span><span class="p">)],</span>
+            <span class="nv">requireMiniAppSignatureVerification</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nv">sslKeyHash</span><span class="p">:</span> <span class="kt">MiniAppConfigSSLKeyHash</span><span class="p">(</span>
+                <span class="nv">pin</span><span class="p">:</span> <span class="s">"AABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB="</span><span class="p">,</span>
+                <span class="nv">backup</span><span class="p">:</span> <span class="s">"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB="</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 
 <p><em>NOTE:</em> <code>RMAHostAppUserAgentInfo</code> cannot be configured at run time.</p>
 
@@ -1374,9 +1434,8 @@ Mini App SDK will look in the host app <code>Localizable.strings</code> for thes
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-08-05)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-10-08)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
-</div>
 </html>
