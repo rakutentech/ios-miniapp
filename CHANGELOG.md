@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 3.7.0 (release date TBD)
+### 3.7.0 (2021-10-08)
 
 **SDK**
 
