@@ -16,6 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.tintColor = UIColor.accent
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         AnalyticsManager.shared().set(loggingLevel: .debug)
+        if let url = launchOptions?[.url] as? URL {
+            guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+                return true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
+                self.deepLinkToMiniApp(using: components.path.replacingOccurrences(of: "/preview/", with: ""))
+            })
+        }
         return true
     }
 
@@ -42,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let controllersStack = rootController?.viewControllers else { return }
         if let homeViewController = controllersStack.first(where: { $0 is ViewController }) as? ViewController {
             homeViewController.getMiniAppPreviewInfo(previewToken: token, config: Config.current(pinningEnabled: true))
+        } else if let firstLaunchController = controllersStack.first(where: { $0 is FirstLaunchViewController }) as? FirstLaunchViewController {
+            firstLaunchController.previewUsingQRToken = token
         }
     }
 }

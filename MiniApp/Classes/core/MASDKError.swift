@@ -19,9 +19,6 @@ public enum MASDKError: Error {
     /// The provided mini app version ID was invalid. For example, the value cannot be an empty string.
     case invalidVersionId
 
-    /// ZIP archive signature has changed during download phase
-    case invalidSignature
-
     /// The server provided an invalid response body.
     case invalidResponseData
 
@@ -42,6 +39,9 @@ public enum MASDKError: Error {
 
     /// Host app failed to implement required interface
     case failedToConformToProtocol
+
+    /// ZIP archive signature has changed during download phase
+    case invalidSignature
 
     /// An unexpected error occurred.
     ///

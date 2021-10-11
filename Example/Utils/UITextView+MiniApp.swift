@@ -10,6 +10,7 @@ extension UITextView {
         attributedFullText.addAttribute(.link, value: urlString, range: linkTextRange)
         attributedFullText.addAttribute(.font, value: UIFont.systemFont(ofSize: 16), range: fullTextRange)
         attributedFullText.addAttribute(.paragraphStyle, value: paragStyle, range: fullTextRange)
+        attributedFullText.addAttribute(.foregroundColor, value: UIColor.label, range: fullTextRange)
         self.linkTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.actionBlue
         ]

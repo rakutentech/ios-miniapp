@@ -278,7 +278,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                 delegate?.fileDownloaded(at: location, downloadedURL: destinationURL, signatureChecked: !requireMiniAppSignatureVerification)
             }
         #else
-            MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids.0, miniAppVersion: ids.1)
+            MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: ids?.1)
             delegate?.fileDownloaded(at: location, downloadedURL: destinationURL)
         #endif
     }
