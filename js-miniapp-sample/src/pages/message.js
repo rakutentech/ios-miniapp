@@ -28,6 +28,12 @@ import type { MessageType } from '../services/message/types';
 import { MessageTypeId } from '../services/message/types';
 
 const useStyles = makeStyles((theme) => ({
+  scrollable: {
+    overflowY: 'auto',
+    width: '100%',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: '100%',
@@ -221,121 +227,123 @@ const Message = (props: MessageTypeProps) => {
   };
 
   return (
-    <Fragment>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="chatbotLabel">Send Message Type</InputLabel>
-        <Select
-          labelId="chatbotLabel"
-          id="message"
-          placeholder="Select Chatbot"
-          value={message.id}
-          className={classes.fields}
-          onChange={handleChange}
-        >
-          {messageTypes.map((c) => (
-            <MenuItem key={c.id} value={c.id}>
-              {c.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+    <div className={classes.scrollable}>
+      <Fragment>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="chatbotLabel">Send Message Type</InputLabel>
+          <Select
+            labelId="chatbotLabel"
+            id="message"
+            placeholder="Select Chatbot"
+            value={message.id}
+            className={classes.fields}
+            onChange={handleChange}
+          >
+            {messageTypes.map((c) => (
+              <MenuItem key={c.id} value={c.id}>
+                {c.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-      {message.id === MessageTypeId.SINGLE_CONTACT_ID && (
+        {message.id === MessageTypeId.SINGLE_CONTACT_ID && (
+          <FormControl className={classes.formControl}>
+            <TextField
+              id="contactId"
+              label="Contact ID"
+              className={classes.fields}
+              onChange={onContactIdChange}
+              placeholder="Input contact id receiving a message"
+              value={message.contactId}
+            />
+          </FormControl>
+        )}
+
         <FormControl className={classes.formControl}>
           <TextField
-            id="contactId"
-            label="Contact ID"
+            id="image"
+            label="Image"
             className={classes.fields}
-            onChange={onContactIdChange}
-            placeholder="Input contact id receiving a message"
-            value={message.contactId}
+            onChange={onImageChange}
+            placeholder="Image url or Base64 string"
+            value={message.image}
           />
         </FormControl>
-      )}
-
-      <FormControl className={classes.formControl}>
-        <TextField
-          id="image"
-          label="Image"
-          className={classes.fields}
-          onChange={onImageChange}
-          placeholder="Image url or Base64 string"
-          value={message.image}
-        />
-      </FormControl>
-      <FormControl className={classes.formControl}>
-        <TextField
-          id="text"
-          label="Text"
-          className={classes.fields}
-          onChange={onTextChange}
-          value={message.text}
-          multiline
-          rowsMax="4"
-        />
-      </FormControl>
-      {message.id !== MessageTypeId.SINGLE_CONTACT_ID && (
         <FormControl className={classes.formControl}>
           <TextField
-            id="bannerMessage"
-            label="Banner message"
+            id="text"
+            label="Text"
             className={classes.fields}
-            onChange={onBannerMessageChange}
-            value={message.bannerMessage}
+            onChange={onTextChange}
+            value={message.text}
+            multiline
+            rowsMax="4"
           />
         </FormControl>
-      )}
-      <FormControl className={classes.formControl}>
-        <TextField
-          id="caption"
-          label="Caption"
-          className={classes.fields}
-          onChange={onCaptionChange}
-          value={message.caption}
-        />
-      </FormControl>
-      <FormControl className={classes.formControl}>
-        <TextField
-          id="action"
-          label="Action"
-          className={classes.fields}
-          onChange={onActionChange}
-          value={message.action}
-        />
-      </FormControl>
-      {validation.error && (
-        <div data-testid="validation-error" className={classes.errorMessage}>
-          {validation.message}
-        </div>
-      )}
-      <CardActions className={classes.actions}>
-        <Button
-          data-testid="send-message"
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={talkToChatbot}
-        >
-          SEND MESSAGE
-        </Button>
-      </CardActions>
-      <Dialog
-        data-testid="message-response-dialog"
-        open={messageResponse.show}
-        onClose={onChatbotClose}
-        aria-labelledby="max-width-dialog-title"
-      >
-        <DialogTitle id="max-width-dialog-title">Response</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{messageResponse.response}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onChatbotClose} color="primary">
-            Close
+        {message.id !== MessageTypeId.SINGLE_CONTACT_ID && (
+          <FormControl className={classes.formControl}>
+            <TextField
+              id="bannerMessage"
+              label="Banner message"
+              className={classes.fields}
+              onChange={onBannerMessageChange}
+              value={message.bannerMessage}
+            />
+          </FormControl>
+        )}
+        <FormControl className={classes.formControl}>
+          <TextField
+            id="caption"
+            label="Caption"
+            className={classes.fields}
+            onChange={onCaptionChange}
+            value={message.caption}
+          />
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <TextField
+            id="action"
+            label="Action"
+            className={classes.fields}
+            onChange={onActionChange}
+            value={message.action}
+          />
+        </FormControl>
+        {validation.error && (
+          <div data-testid="validation-error" className={classes.errorMessage}>
+            {validation.message}
+          </div>
+        )}
+        <CardActions className={classes.actions}>
+          <Button
+            data-testid="send-message"
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={talkToChatbot}
+          >
+            SEND MESSAGE
           </Button>
-        </DialogActions>
-      </Dialog>
-    </Fragment>
+        </CardActions>
+        <Dialog
+          data-testid="message-response-dialog"
+          open={messageResponse.show}
+          onClose={onChatbotClose}
+          aria-labelledby="max-width-dialog-title"
+        >
+          <DialogTitle id="max-width-dialog-title">Response</DialogTitle>
+          <DialogContent>
+            <DialogContentText>{messageResponse.response}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={onChatbotClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Fragment>
+    </div>
   );
 };
 
