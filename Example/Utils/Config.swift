@@ -32,7 +32,7 @@ class Config: NSObject {
                 analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")],
                 requireMiniAppSignatureVerification: Config.userDefaults?.value(forKey: Config.Key.requireMiniAppSignatureVerification.rawValue) as? Bool,
                 sslKeyHash: pinConf,
-                dynamicDeepLinksList: []
+                dynamicDeepLinksList: getDeepLinksList()
         )
     }
 

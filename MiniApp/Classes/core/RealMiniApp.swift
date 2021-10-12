@@ -39,6 +39,7 @@ internal class RealMiniApp {
         miniAppClient.updateEnvironment(with: settings)
         displayer.navConfig = navigationSettings
         miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
+        dynamicDeepLinksList = settings?.dynamicDeepLinksList ?? []
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {

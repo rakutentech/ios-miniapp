@@ -5,11 +5,10 @@ class DeeplinkListViewController: UITableViewController {
 
     var bannerMessage: CGFloat = 0
     var deepLinkList: [String]? = []
-    var selectedContacts = [MAContact]()
-    var allowMultipleSelection = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        deepLinkList = getDeepLinksList()
         tableView.separatorStyle = .singleLine
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: bannerMessage))
     }
@@ -17,24 +16,18 @@ class DeeplinkListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell? ?? UITableViewCell()
         if let deepLinkList = deepLinkList, deepLinkList.indices.contains(indexPath.row) {
-            cell.detailTextLabel?.numberOfLines = 3
-            let titleSize = cell.textLabel?.font.pointSize ?? 12
             cell.textLabel?.text = deepLinkList[indexPath.row]
         }
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let deeplinkDomain = deepLinkList?[indexPath.row] {
+            editDeeplinkDomain(title: "Edit Deeplink",
+                               index: indexPath.row, message: "", deeplinkDomain: deeplinkDomain)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
-
-//    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-//        if let selectedContact = deepLinkList?[indexPath.row] {
-//            selectedContacts.removeAll(where: { contact in
-//                contact == selectedContact
-//            })
-//            tableView.reloadRows(at: [indexPath], with: .automatic)
-//        }
-//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         deepLinkList?.count ?? 0
@@ -44,19 +37,19 @@ class DeeplinkListViewController: UITableViewController {
         if editingStyle == .delete {
             if deepLinkList?.indices.contains(indexPath.row) ?? false {
                 deepLinkList?.remove(at: indexPath.row)
-//                updateContactList(list: self.deepLinkList)
+                updateDeeplinkList(list: deepLinkList)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         }
     }
 
     @IBAction func addDeepLink() {
-        self.addDeepLinkDomain(title: "Please enter custom deep link", message: "")
+        self.addDeepLinkDomain(title: "Please enter valid deep link domain", message: "For eg., to enable deeplink for miniappdemo:// enter just miniappdemo")
     }
 
     func addDeepLinkDomain(title: String, message: String) {
         DispatchQueue.main.async {
-            self.editContact(title: title, index: 0, message: message, deeplinkDomain: "miniappdemo", isNewDomain: true)
+            self.editDeeplinkDomain(title: title, index: 0, message: message, deeplinkDomain: "miniappdemo", isNewDomain: true)
         }
     }
 
@@ -89,7 +82,6 @@ class DeeplinkListViewController: UITableViewController {
                 if let type = keyboardType {
                     textField.keyboardType = type
                 }
-                textField.placeholder = NSLocalizedString("contact.id", comment: "")
                 textField.clearButtonMode = .whileEditing
             }
             okAction.isEnabled = !(textFieldDefaultValue?.isEmpty ?? true)
@@ -99,34 +91,32 @@ class DeeplinkListViewController: UITableViewController {
         }
     }
 
-    func editContact(title: String, index: Int, message: String? = "", deeplinkDomain: String? = "", isNewDomain: Bool? = false) {
+    func editDeeplinkDomain(title: String, index: Int, message: String? = "", deeplinkDomain: String? = "", isNewDomain: Bool? = false) {
         DispatchQueue.main.async {
             self.getInputFromAlertWithTextField(title: title, message: message, textFieldDefaultValue: deeplinkDomain) { (_, textField)  in
-//                self.validateAllValues(index: index, deeplinkDomain: deeplinkDomain, textField: textField, isNewDomain: isNewDomain)
+                self.validateAllValues(index: index, deeplinkDomain: deeplinkDomain, textField: textField, isNewDomain: isNewDomain)
             }
         }
     }
 
-//    func validateAllValues(index: Int, deeplinkDomain: String?, textField: UITextField?, isNewDomain: Bool? = false) {
-//        if let contactIdTextField = textField {
-//            if contactIdTextField.isTextFieldEmpty() {
-//                self.editContact(title: "Invalid Contact ID, please try again",
-//                                 index: index,
-//                                 deeplinkDomain: contactIdTextField.text,
-//                                 isNewDomain: isNewDomain)
-//            } else {
-//                if let deeplinkDomain =  textField?.text {
-//                    if isNewDomain ?? false {
-//                        self.deepLinkList?.append(MAContact(id: deeplinkDomain))
-//                        updateContactList(list: self.deepLinkList)
-//                        self.tableView.reloadData()
-//                    } else {
-//                        self.deepLinkList?[index] = MAContact(id: deeplinkDomain)
-//                        updateContactList(list: self.deepLinkList)
-//                        self.tableView.reloadData()
-//                    }
-//                }
-//            }
-//        }
-//    }
+    func validateAllValues(index: Int, deeplinkDomain: String?, textField: UITextField?, isNewDomain: Bool? = false) {
+        if let deeplinkTextfield = textField {
+            guard let deeplinkDomainText =  textField?.text, !deeplinkTextfield.isTextFieldEmpty() else {
+                self.editDeeplinkDomain(title: "Invalid Deeplink domain, please try again",
+                                 index: index,
+                                 deeplinkDomain: deeplinkTextfield.text,
+                                 isNewDomain: isNewDomain)
+                return
+            }
+            if isNewDomain ?? false {
+                self.deepLinkList?.append(deeplinkDomainText)
+                updateDeeplinkList(list: deepLinkList)
+                self.tableView.reloadData()
+            } else {
+                self.deepLinkList?[index] = deeplinkDomainText
+                updateDeeplinkList(list: deepLinkList)
+                self.tableView.reloadData()
+            }
+        }
+    }
 }

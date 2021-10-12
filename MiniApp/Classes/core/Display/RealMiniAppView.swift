@@ -17,7 +17,7 @@ internal class RealMiniAppView: UIView {
     internal var supportedMiniAppOrientation: UIInterfaceOrientationMask
     internal var initialLoadCallback: ((Bool) -> Void)?
     internal var analyticsConfig: [MAAnalyticsConfig]?
-    internal var dynamicDeeplinkSupportList: [String]?
+    internal var dynamicDeeplinkSupportList = [String]()
 
     internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
@@ -47,7 +47,7 @@ internal class RealMiniAppView: UIView {
         self.miniAppVersion = versionId
         self.projectId = projectId
         self.analyticsConfig = analyticsConfig
-        self.dynamicDeeplinkSupportList = dynamicDeepLinks
+        self.dynamicDeeplinkSupportList = dynamicDeepLinks ?? []
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -77,7 +77,7 @@ internal class RealMiniAppView: UIView {
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
         self.analyticsConfig = analyticsConfig
-        self.dynamicDeeplinkSupportList = dynamicDeepLinks
+        self.dynamicDeeplinkSupportList = dynamicDeepLinks ?? []
 
         super.init(frame: .zero)
         commonInit(miniAppId: "custom\(Int32.random(in: 0...Int32.max))", // some id is needed to handle permissions
@@ -188,7 +188,7 @@ internal class RealMiniAppView: UIView {
 
     func validateScheme(requestURL: URL, navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let scheme = requestURL.scheme {
-            if !isDynamicDeeplink(scheme: scheme) {
+            if !isDynamicDeeplink(url: requestURL.absoluteString) {
                 let schemeType = MiniAppSupportedSchemes(rawValue: scheme)
                 switch schemeType {
                 case .about: // mainly implemented to manage built-in alert dialogs
@@ -214,13 +214,19 @@ internal class RealMiniAppView: UIView {
                         }
                     }
                 }
+            } else {
+                UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
             }
         }
         decisionHandler(.cancel)
     }
-    
-    internal func isDynamicDeeplink(scheme: String?) -> Bool {
-        return true
+
+    internal func isDynamicDeeplink(url: String?) -> Bool {
+        guard let urlString = url else {
+            return false
+        }
+        dynamicDeeplinkSupportList = dynamicDeeplinkSupportList.map { $0.lowercased() }
+        return dynamicDeeplinkSupportList.contains(where: urlString.lowercased().hasPrefix)
     }
 
     internal func presentAlert(alertController: UIAlertController) {
