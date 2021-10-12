@@ -44,7 +44,7 @@ class DeeplinkListViewController: UITableViewController {
     }
 
     @IBAction func addDeepLink() {
-        self.addDeepLinkDomain(title: "Please enter valid deep link domain", message: "For eg., to enable deeplink for miniappdemo:// enter just miniappdemo")
+        self.addDeepLinkDomain(title: "Please enter valid deep link", message: "")
     }
 
     func addDeepLinkDomain(title: String, message: String) {
@@ -102,7 +102,7 @@ class DeeplinkListViewController: UITableViewController {
     func validateAllValues(index: Int, deeplinkDomain: String?, textField: UITextField?, isNewDomain: Bool? = false) {
         if let deeplinkTextfield = textField {
             guard let deeplinkDomainText =  textField?.text, !deeplinkTextfield.isTextFieldEmpty() else {
-                self.editDeeplinkDomain(title: "Invalid Deeplink domain, please try again",
+                self.editDeeplinkDomain(title: "Invalid Deeplink, please try again",
                                  index: index,
                                  deeplinkDomain: deeplinkTextfield.text,
                                  isNewDomain: isNewDomain)
