@@ -29,7 +29,9 @@ import {
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
+const mabCustomEventQueue: CustomEvent[] = [];
 export { mabMessageQueue };
+export { mabCustomEventQueue };
 
 /** @internal */
 export interface Callback {
@@ -55,6 +57,8 @@ export interface PlatformExecutor {
     onSuccess: (value: string) => void,
     onError: (error: string) => void
   ): void;
+
+  execEvents(event: CustomEvent): void;
 
   /**
    * Get the platform which injects this bridge.
@@ -108,6 +112,23 @@ export class MiniAppBridge {
     }
     queueObj.onError(errorMessage);
     removeFromMessageQueue(queueObj);
+  }
+  /**
+   * Event Callback method that will be called from native side
+   * to this bridge. This method will send back the value to the
+   * mini app that listen to this eventType.
+   * @param  {[String]} eventType EventType which will be used to listen for the event
+   * @param  {[String]} value Additional message sent from the native on invoking for the eventType
+   */
+  execCustomEventsCallback(eventType: string, value: string) {
+    let queueObj = mabCustomEventQueue.filter(
+      customEvent => customEvent.type === eventType
+    )[0];
+    if (!queueObj) {
+      queueObj = new CustomEvent(eventType, { detail: value });
+      mabCustomEventQueue.unshift(queueObj);
+    }
+    this.executor.execEvents(queueObj);
   }
 
   /**

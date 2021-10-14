@@ -25,6 +25,7 @@ import {
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
+import { MiniAppEvents } from './event-types';
 
 /** @internal */
 const miniAppInstance = new MiniApp();
@@ -48,4 +49,5 @@ export {
   AudienceNotSupportedError,
   AuthorizationFailureError,
   ScopesNotSupportedError,
+  MiniAppEvents,
 };

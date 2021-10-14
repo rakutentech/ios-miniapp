@@ -25,6 +25,7 @@ const window: any = {};
 const sandbox = sinon.createSandbox();
 const mockExecutor = {
   exec: sinon.stub(),
+  execEvents: sinon.stub(),
   getPlatform: sinon.stub(),
 };
 

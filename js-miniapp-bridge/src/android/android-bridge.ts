@@ -10,6 +10,9 @@ import { Platform } from '../types/platform';
 let uniqueId = Math.random();
 
 class AndroidExecutor implements PlatformExecutor {
+  execEvents(event) {
+    (window as any).dispatchEvent(event);
+  }
   exec(action, param, onSuccess, onError) {
     const callback = {} as Callback;
     callback.onSuccess = onSuccess;

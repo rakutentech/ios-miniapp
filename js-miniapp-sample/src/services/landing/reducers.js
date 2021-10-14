@@ -15,4 +15,4 @@ const HostEnvironmentInfoReducer = (
   }
 };
 
-export { HostEnvironmentInfoReducer }
+export { HostEnvironmentInfoReducer };

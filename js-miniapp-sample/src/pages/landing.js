@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Landing = (props: LandingProps) => {
   const classes = useStyles();
-
   useEffect(() => {
     try {
       props.getHostInfo();

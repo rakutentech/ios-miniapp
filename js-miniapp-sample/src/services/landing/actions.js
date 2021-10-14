@@ -1,4 +1,7 @@
-import { REQUEST_HOST_ENVIRONMENT_INFO_SUCCESS, REQUEST_HOST_ENVIRONMENT_INFO_ERROR } from './types';
+import {
+  REQUEST_HOST_ENVIRONMENT_INFO_SUCCESS,
+  REQUEST_HOST_ENVIRONMENT_INFO_ERROR,
+} from './types';
 import MiniApp from 'js-miniapp-sdk';
 import { HostEnvironmentInfo } from 'js-miniapp-sdk';
 

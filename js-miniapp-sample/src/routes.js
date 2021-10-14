@@ -15,6 +15,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import ShareIcon from '@material-ui/icons/Share';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import EventIcon from '@material-ui/icons/CompareArrows';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
@@ -27,6 +28,7 @@ import Media from './pages/media';
 import TalkToChatBot from './pages/message';
 import Share from './pages/share';
 import UriSchemes from './pages/uri-schemes';
+import EventListener from './pages/event-listener';
 import UserDetails from './pages/user-details';
 import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
@@ -89,6 +91,12 @@ const appItems = [
     label: 'URI Schemes',
     navLink: '/uri_schemes',
     component: UriSchemes,
+  },
+  {
+    icon: <EventIcon />,
+    label: 'Event Listener',
+    navLink: '/event_listener',
+    component: EventListener,
   },
   {
     icon: <MediaIcon />,
