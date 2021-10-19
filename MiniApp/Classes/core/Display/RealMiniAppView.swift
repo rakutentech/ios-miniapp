@@ -198,12 +198,13 @@ internal class RealMiniAppView: UIView {
                         let _ = MiniApp.shared()
                             .getCustomPermissions(forMiniApp: miniAppId)
                             .filter({ $0.permissionName == .attachments && $0.isPermissionGranted == .allowed })
-                            .first {
-                        return decisionHandler(.allow)
+                            .first
+                    {
+                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
+                            self.webView.load(URLRequest(url: url))
+                        })
                     }
-                    else {
-                        return decisionHandler(.cancel)
-                    }
+                    return decisionHandler(.cancel)
                 } else {
                     // Allow navigation for requests loading external web content resources. E.G: iFrames
                     guard navigationAction.targetFrame?.isMainFrame != false else {
