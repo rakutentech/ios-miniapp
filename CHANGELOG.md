@@ -4,6 +4,8 @@
 
 **SDK**
 
+- **Feature:** MiniApp custom events (pause, resume, external webview closed)
+
 ### 3.7.0 (2021-10-08)
 
 **SDK**

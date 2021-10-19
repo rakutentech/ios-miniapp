@@ -134,6 +134,35 @@ internal class RealMiniAppView: UIView {
         canGoForwardObservation = webView.observe(\.canGoForward) { (webView, _) in
             self.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
         }
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendCustomEvent(notification:)),
+                                               name: MiniAppEvent.notificationName,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendCustomEvent(notification:)),
+                                               name: UIApplication.willResignActiveNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendCustomEvent(notification:)),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+    }
+
+    @objc
+    func sendCustomEvent(notification: NSNotification) {
+        switch notification.name {
+        case UIApplication.willResignActiveNotification:
+            didReceiveEvent(.pause, message: "Host app will resign active")
+        case UIApplication.didBecomeActiveNotification:
+            didReceiveEvent(.resume, message: "Host app did become active")
+        default:
+            if let event = notification.object as? MiniAppEvent.Event {
+                didReceiveEvent(event.type, message: event.comment)
+            } else {
+                MiniAppLogger.w("MiniAppEvent not present in notification")
+            }
+        }
+
     }
 
     func refreshNavBar() {
@@ -179,6 +208,7 @@ internal class RealMiniAppView: UIView {
         MiniApp.MAOrientationLock = []
         UIViewController.attemptRotationToDeviceOrientation()
         webView.configuration.userContentController.removeMessageHandler()
+        NotificationCenter.default.removeObserver(self)
     }
 
     func validateScheme(requestURL: URL, navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -197,14 +227,21 @@ internal class RealMiniAppView: UIView {
                     guard navigationAction.targetFrame?.isMainFrame != false else {
                         return decisionHandler(.allow)
                     }
+
+                    let onResponse: (URL) -> Void = { (url) in
+                        self.webView.load(URLRequest(url: url))
+                    }
+                    let onClose: (URL) -> Void = { (url) in
+                        self.didReceiveEvent(.externalWebViewClosed, message: url.absoluteString)
+                        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp close external webview"))
+                    }
+
                     if let miniAppURL = miniAppURL {
-                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
-                            self.webView.load(URLRequest(url: url))
-                        }, customMiniAppURL: miniAppURL)
+                        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp opened external webview"))
+                        navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose, customMiniAppURL: miniAppURL)
                     } else {
-                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
-                            self.webView.load(URLRequest(url: url))
-                        })
+                        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp opened external webview"))
+                        navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose)
                     }
                 }
             }
@@ -225,19 +262,25 @@ extension RealMiniAppView: MiniAppDisplayDelegate {
 
 extension RealMiniAppView: MiniAppCallbackDelegate {
     func didReceiveScriptMessageResponse(messageId: String, response: String) {
-        let messageBody = Constants.javascriptSuccessCallback + "('\(messageId)'," + "'\(response)')"
+        let messageBody = Constants.JavaScript.successCallback + "('\(messageId)'," + "'\(response)')"
         MiniAppLogger.d(messageBody, "♨️️")
         webView.evaluateJavaScript(messageBody)
     }
 
     func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
-        let messageBody = Constants.javascriptErrorCallback + "('\(messageId)'," + "'\(errorMessage)')"
+        let messageBody = Constants.JavaScript.errorCallback + "('\(messageId)'," + "'\(errorMessage)')"
         MiniAppLogger.d(messageBody, "♨️️")
         webView.evaluateJavaScript(messageBody)
     }
 
     func didOrientationChanged(orientation: UIInterfaceOrientationMask) {
         self.supportedMiniAppOrientation = orientation
+    }
+
+    func didReceiveEvent(_ event: MiniAppEvent, message: String) {
+        let messageBody = Constants.JavaScript.eventCallback + "('\(event.rawValue)'," + "'\(message)')"
+        MiniAppLogger.d(messageBody, "♨️️")
+        webView.evaluateJavaScript(messageBody)
     }
 }
 

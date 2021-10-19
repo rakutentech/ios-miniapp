@@ -32,6 +32,16 @@ public class MiniAppViewController: UIViewController {
         didSet { update() }
     }
 
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp view did appear"))
+    }
+
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp view will disappear"))
+    }
+
     weak var messageDelegate: MiniAppMessageDelegate?
     weak var navDelegate: MiniAppNavigationDelegate?
     weak var navBarDelegate: MiniAppNavigationBarDelegate?

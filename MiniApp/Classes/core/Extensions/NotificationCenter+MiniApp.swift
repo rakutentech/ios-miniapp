@@ -24,4 +24,8 @@ internal extension NotificationCenter {
             self.post(name: MiniAppAnalytics.notificationName, object: parameters)
         }
     }
+
+    func sendCustomEvent(_ event: MiniAppEvent.Event) {
+        post(name: MiniAppEvent.notificationName, object: event)
+    }
 }

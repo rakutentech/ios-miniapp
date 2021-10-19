@@ -2,17 +2,24 @@ PODS:
   - AppCenter/Core (4.3.0)
   - AppCenter/Crashes (4.3.0):
     - AppCenter/Core
-  - Google-Mobile-Ads-SDK (8.10.0):
+  - Google-Mobile-Ads-SDK (8.12.0):
     - GoogleAppMeasurement (< 9.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
-  - GoogleAppMeasurement (8.7.0):
-    - GoogleAppMeasurement/AdIdSupport (= 8.7.0)
+  - GoogleAppMeasurement (8.8.0):
+    - GoogleAppMeasurement/AdIdSupport (= 8.8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
     - GoogleUtilities/MethodSwizzler (~> 7.4)
     - GoogleUtilities/Network (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (8.7.0):
+  - GoogleAppMeasurement/AdIdSupport (8.8.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 8.8.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
+    - GoogleUtilities/MethodSwizzler (~> 7.4)
+    - GoogleUtilities/Network (~> 7.4)
+    - "GoogleUtilities/NSData+zlib (~> 7.4)"
+    - nanopb (~> 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (8.8.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
     - GoogleUtilities/MethodSwizzler (~> 7.4)
     - GoogleUtilities/Network (~> 7.4)
@@ -36,15 +43,15 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.5.2)"
   - GoogleUtilities/Reachability (7.5.2):
     - GoogleUtilities/Logger
-  - MiniApp/Admob8 (3.6.0):
+  - MiniApp/Admob8 (3.8.0):
     - Google-Mobile-Ads-SDK (~> 8.0)
     - MiniApp/Core
-  - MiniApp/Core (3.6.0):
+  - MiniApp/Core (3.8.0):
     - TrustKit (~> 2.0)
     - ZIPFoundation (= 0.9.12)
-  - MiniApp/Signature (3.6.0):
+  - MiniApp/Signature (3.8.0):
     - MiniApp/Core
-  - MiniApp/UI (3.6.0):
+  - MiniApp/UI (3.8.0):
     - MiniApp/Core
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -54,7 +61,7 @@ PODS:
   - Nimble (9.2.1)
   - PromisesObjC (2.0.0)
   - Quick (4.0.0)
-  - RAnalytics (8.2.1)
+  - RAnalytics (8.2.2)
   - TrustKit (2.0.0)
   - ZIPFoundation (0.9.12)
 
@@ -68,7 +75,9 @@ DEPENDENCIES:
   - RAnalytics
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/rakutentech/ios-analytics-framework.git:
+    - RAnalytics
+  trunk:
     - AppCenter
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
@@ -80,8 +89,6 @@ SPEC REPOS:
     - Quick
     - TrustKit
     - ZIPFoundation
-  https://github.com/rakutentech/ios-analytics-framework.git:
-    - RAnalytics
 
 EXTERNAL SOURCES:
   MiniApp:
@@ -89,16 +96,16 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppCenter: 883369ab78427b0561c688158d689dfe1f993ea9
-  Google-Mobile-Ads-SDK: 9c78323a7069cd42ddf1ad2fddbaec889b085091
-  GoogleAppMeasurement: 2be61ce546ad074dbe4dd545f222ac6033bb1d9e
+  Google-Mobile-Ads-SDK: fb31b6ef68ef352b551ee29585cd9ceb07230cd0
+  GoogleAppMeasurement: 5ba1164e3c844ba84272555e916d0a6d3d977e91
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
-  MiniApp: a6b5b474d2bf8f9182afb079a98ba668e74108d8
+  MiniApp: 1920b9dee3b089628feff514a6bdc67cf5704cac
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
-  RAnalytics: ab09bc6648a4804e10a9524f8156e9a393b426fb
+  RAnalytics: babd40dd92d09d3a33ea031dd8ceeda57c5be471
   TrustKit: 610b8c71c07914756dd74c380040a3408a747798
   ZIPFoundation: e27423c004a5a1410c15933407747374e7c6cb6e
 
