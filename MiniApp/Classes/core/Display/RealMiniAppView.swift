@@ -192,6 +192,18 @@ internal class RealMiniAppView: UIView {
             default:
                 if requestURL.isMiniAppURL(customMiniAppURL: miniAppURL) {
                     return decisionHandler(.allow)
+                } else if requestURL.isBase64 {
+                    if
+                        let miniAppId = miniAppId,
+                        let _ = MiniApp.shared()
+                            .getCustomPermissions(forMiniApp: miniAppId)
+                            .filter({ $0.permissionName == .attachments && $0.isPermissionGranted == .allowed })
+                            .first {
+                        return decisionHandler(.allow)
+                    }
+                    else {
+                        return decisionHandler(.cancel)
+                    }
                 } else {
                     // Allow navigation for requests loading external web content resources. E.G: iFrames
                     guard navigationAction.targetFrame?.isMainFrame != false else {
