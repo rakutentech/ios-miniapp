@@ -17,6 +17,9 @@ internal class RealMiniAppView: UIView {
     internal var supportedMiniAppOrientation: UIInterfaceOrientationMask
     internal var initialLoadCallback: ((Bool) -> Void)?
     internal var analyticsConfig: [MAAnalyticsConfig]?
+    internal var messageBodies: [String] = []
+    internal var onExternalWebviewResponse: ((URL) -> Void)?
+    internal var onExternalWebviewClose: ((URL) -> Void)?
 
     internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
@@ -73,7 +76,6 @@ internal class RealMiniAppView: UIView {
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
         self.analyticsConfig = analyticsConfig
-
         super.init(frame: .zero)
         commonInit(miniAppId: "custom\(Int32.random(in: 0...Int32.max))", // some id is needed to handle permissions
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -86,6 +88,16 @@ internal class RealMiniAppView: UIView {
         nil
     }
 
+    fileprivate func initExternalWebViewClosures() {
+        onExternalWebviewResponse = { (url) in
+            self.webView.load(URLRequest(url: url))
+        }
+        onExternalWebviewClose = { (url) in
+            self.didReceiveEvent(.externalWebViewClosed, message: url.absoluteString)
+            NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp close external webview"))
+        }
+    }
+    
     private func commonInit(
         miniAppId: String,
         hostAppMessageDelegate: MiniAppMessageDelegate,
@@ -124,6 +136,7 @@ internal class RealMiniAppView: UIView {
             webViewBottomConstraintStandalone?.isActive = false
         }
         MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
+        initExternalWebViewClosures()
         observeWebView()
     }
 
@@ -228,20 +241,14 @@ internal class RealMiniAppView: UIView {
                         return decisionHandler(.allow)
                     }
 
-                    let onResponse: (URL) -> Void = { (url) in
-                        self.webView.load(URLRequest(url: url))
-                    }
-                    let onClose: (URL) -> Void = { (url) in
-                        self.didReceiveEvent(.externalWebViewClosed, message: url.absoluteString)
-                        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp close external webview"))
-                    }
-
-                    if let miniAppURL = miniAppURL {
-                        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp opened external webview"))
-                        navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose, customMiniAppURL: miniAppURL)
-                    } else {
-                        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp opened external webview"))
-                        navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose)
+                    if let onResponse = onExternalWebviewResponse, let onClose = onExternalWebviewClose {
+                        if let miniAppURL = miniAppURL {
+                            NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp opened external webview"))
+                            navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose, customMiniAppURL: miniAppURL)
+                        } else {
+                            NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp opened external webview"))
+                            navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose)
+                        }
                     }
                 }
             }
@@ -263,12 +270,14 @@ extension RealMiniAppView: MiniAppDisplayDelegate {
 extension RealMiniAppView: MiniAppCallbackDelegate {
     func didReceiveScriptMessageResponse(messageId: String, response: String) {
         let messageBody = Constants.JavaScript.successCallback + "('\(messageId)'," + "'\(response)')"
+        messageBodies.append(messageBody)
         MiniAppLogger.d(messageBody, "♨️️")
         webView.evaluateJavaScript(messageBody)
     }
 
     func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
         let messageBody = Constants.JavaScript.errorCallback + "('\(messageId)'," + "'\(errorMessage)')"
+        messageBodies.append(messageBody)
         MiniAppLogger.d(messageBody, "♨️️")
         webView.evaluateJavaScript(messageBody)
     }
@@ -279,6 +288,7 @@ extension RealMiniAppView: MiniAppCallbackDelegate {
 
     func didReceiveEvent(_ event: MiniAppEvent, message: String) {
         let messageBody = Constants.JavaScript.eventCallback + "('\(event.rawValue)'," + "'\(message)')"
+        messageBodies.append(messageBody)
         MiniAppLogger.d(messageBody, "♨️️")
         webView.evaluateJavaScript(messageBody)
     }

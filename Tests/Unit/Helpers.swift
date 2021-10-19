@@ -598,6 +598,8 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     var messageId: String?
     var response: String?
     var errorMessage: String?
+    var eventMessage: String?
+    var customEvent: MiniAppEvent?
 
     func didReceiveScriptMessageResponse(messageId: String, response: String) {
         self.messageId = messageId
@@ -607,6 +609,11 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
         self.messageId = messageId
         self.errorMessage = errorMessage
+    }
+
+    func didReceiveEvent(_ event: MiniAppEvent, message: String) {
+        customEvent = event
+        eventMessage = message
     }
 
     func didOrientationChanged(orientation: UIInterfaceOrientationMask) {
