@@ -221,11 +221,7 @@ extension MiniAppViewController: MiniAppNavigationDelegate {
 
     /// will be used soon when knowing the cases to react to
     public func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
-//        MiniAppExternalWebViewController.presentModally(url: url, externalLinkResponseHandler: { url in
-//            if url.absoluteString == "miniapp://close" {
-//                // dismiss
-//            }
-//        })
+        // TODO: Implement Navigation Handling when necessary
     }
 
 }
