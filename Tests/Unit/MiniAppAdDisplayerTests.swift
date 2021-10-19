@@ -144,7 +144,7 @@ extension MiniAppAdDisplayerTests: MiniAppCallbackDelegate {
     func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
         response = errorMessage
     }
-    
+
     func didReceiveEvent(_ event: MiniAppEvent, message: String) {
         customEvent = event
         customEventComment = message

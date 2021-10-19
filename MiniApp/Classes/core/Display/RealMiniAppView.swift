@@ -97,7 +97,7 @@ internal class RealMiniAppView: UIView {
             NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp close external webview"))
         }
     }
-    
+
     private func commonInit(
         miniAppId: String,
         hostAppMessageDelegate: MiniAppMessageDelegate,
