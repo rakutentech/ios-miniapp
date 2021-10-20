@@ -4,7 +4,11 @@ ignore:
    - "Example"
    - "MiniApp/Classes/ui"
    - "MiniApp/Extensions/RealMiniAppView+WKUIDelegate.swift"
-
+   - "MiniApp/Classes/core/Display/MiniAppExternalWebViewController.swift"
+   - "MiniApp/Classes/core/Display/ViewControllers/Custom\ Permissions/CustomPermissionsRequestViewController.swift"
+   - "MiniApp/Classes/core/Extensions/RealMiniAppView+WKUIDelegate.swift"
+  -  "MiniApp/Classes/admob/AdMobDisplayer.swift"
+  
 coverage:
   status:
     patch:
