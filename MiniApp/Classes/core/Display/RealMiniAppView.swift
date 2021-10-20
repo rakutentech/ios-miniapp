@@ -195,10 +195,10 @@ internal class RealMiniAppView: UIView {
                 } else if requestURL.isBase64 {
                     if
                         let miniAppId = miniAppId,
-                        let _ = MiniApp.shared()
+                        MiniApp.shared()
                             .getCustomPermissions(forMiniApp: miniAppId)
                             .filter({ $0.permissionName == .fileDownload && $0.isPermissionGranted == .allowed })
-                            .first {
+                            .first != nil {
                         self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
                             self.webView.load(URLRequest(url: url))
                         })

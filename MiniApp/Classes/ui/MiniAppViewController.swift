@@ -221,7 +221,7 @@ extension MiniAppViewController: MiniAppNavigationDelegate {
 
     /// will be used soon when knowing the cases to react to
     public func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
-        // TODO: Implement Navigation Handling when necessary
+        // Implement navigation handling when necessary (todo raises a swiftlint error)
     }
 
 }

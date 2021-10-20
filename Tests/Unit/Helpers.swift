@@ -614,9 +614,9 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
 }
 
 class MockNavigationView: UIView, MiniAppNavigationDelegate {
-    
+
     var onNavigateToUrl: ((URL?) -> Void)?
-    
+
     func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping MiniAppNavigationResponseHandler) {
         onNavigateToUrl?(url)
         externalLinkResponseHandler(url)
@@ -798,5 +798,5 @@ extension UIImage {
 #endif
 
 func getExampleBase64String() -> String {
-    return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAm0lEQVRIicVVyxKAIAiExv//3052wgqBlRp1TyIDLC8lmgxWcg10CKbtkWWURQl0wghlUiPltgyYbmYhQ8emYXoGUQBWZySbkBJ5ZTiTsqANCKsLyAig86Ob/NWxtm+BUJOrwSqj37vJRLhksKTLM4jen5FJW7/JFoM/U9PpvSZnPp69Y6o378l29JnWvl7+ljdZomfZu3bTM7gAaCAlF5lsby4AAAAASUVORK5CYII="
+    return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAADUlEQVQIHWNgYGD4DwABBAEAHnOcQAAAAABJRU5ErkJggg=="
 }

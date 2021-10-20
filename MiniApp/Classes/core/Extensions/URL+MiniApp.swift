@@ -19,7 +19,7 @@ extension URL {
                 .joined(separator: ".")
                 .trimmingCharacters(in: CharacterSet(charactersIn: "."))
     }
-    
+
     var isBase64: Bool {
         let text = self.absoluteString
         let capturePattern = #"^data:([a-z]+)\/([a-z]+);([\S]*;)?base64,"#

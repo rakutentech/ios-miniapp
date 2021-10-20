@@ -278,7 +278,6 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
                 }
             }
             context("when trying to request a base64 url") {
-                
                 let miniAppView = RealMiniAppView(
                     miniAppId: mockMiniAppInfo.id,
                     versionId: mockMiniAppInfo.version.versionId,
@@ -289,24 +288,24 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
                     navigationDelegate: customNav,
                     navigationView: customNav
                 )
-                
+
                 let base64Url = URL(string: getExampleBase64String())!
-                
+
                 it("should return base64 url when permission is allowed") {
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .fileDownload, status: .allowed)
 
                     var resultUrl: URL?
                     customNav.onNavigateToUrl = { resultUrl = $0 }
-                    
+
                     miniAppView.webView.load(URLRequest(url: base64Url))
                     expect(resultUrl).toEventuallyNot(beNil())
                 }
-                
+
                 it("should not return base64 url when permission is denied") {
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .fileDownload, status: .denied)
 
                     waitUntil(timeout: .seconds(3), action: { done in
-                        customNav.onNavigateToUrl = { url in
+                        customNav.onNavigateToUrl = { _ in
                             fail("should not navigate")
                         }
                         miniAppView.webView.load(URLRequest(url: base64Url))
