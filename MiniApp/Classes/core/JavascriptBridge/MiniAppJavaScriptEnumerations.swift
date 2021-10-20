@@ -53,7 +53,7 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
     /// Custom permission for retrieving points from the host app
     case points = "rakuten.miniapp.user.POINTS"
     /// Custom permission for downloading attachmens
-    case attachments = "rakuten.miniapp.user.ATTACHMENTS"
+    case attachments = "rakuten.miniapp.device.FILE_DOWNLOAD"
 
     public var title: String {
         switch self {
