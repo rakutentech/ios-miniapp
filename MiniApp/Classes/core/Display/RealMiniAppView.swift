@@ -197,9 +197,8 @@ internal class RealMiniAppView: UIView {
                         let miniAppId = miniAppId,
                         let _ = MiniApp.shared()
                             .getCustomPermissions(forMiniApp: miniAppId)
-                            .filter({ $0.permissionName == .attachments && $0.isPermissionGranted == .allowed })
-                            .first
-                    {
+                            .filter({ $0.permissionName == .fileDownload && $0.isPermissionGranted == .allowed })
+                            .first {
                         self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
                             self.webView.load(URLRequest(url: url))
                         })
