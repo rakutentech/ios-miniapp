@@ -121,11 +121,15 @@ export class MiniAppBridge {
    * @param  {[String]} value Additional message sent from the native on invoking for the eventType
    */
   execCustomEventsCallback(eventType: string, value: string) {
+    const event = new CustomEvent(eventType, { detail: value });
     let queueObj = mabCustomEventQueue.filter(
-      customEvent => customEvent.type === eventType
+      customEvent => customEvent === event
     )[0];
     if (!queueObj) {
-      queueObj = new CustomEvent(eventType, { detail: value });
+      if (eventType === event.type) {
+        removeFromEventQueue(event);
+      }
+      queueObj = event;
       mabCustomEventQueue.unshift(queueObj);
     }
     this.executor.execEvents(queueObj);
@@ -515,6 +519,17 @@ function removeFromMessageQueue(queueObj) {
   const messageObjIndex = mabMessageQueue.indexOf(queueObj);
   if (messageObjIndex !== -1) {
     mabMessageQueue.splice(messageObjIndex, 1);
+  }
+}
+
+function removeFromEventQueue(queueObj) {
+  const eventObjIndex = mabCustomEventQueue.indexOf(
+    mabCustomEventQueue.filter(
+      customEvent => customEvent.type === queueObj.type
+    )[0]
+  );
+  if (eventObjIndex !== -1) {
+    mabCustomEventQueue.splice(eventObjIndex, 1);
   }
 }
 
