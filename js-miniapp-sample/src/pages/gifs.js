@@ -5,9 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import GreyCard from '../components/GreyCard';
 const useStyles = makeStyles((theme) => ({
+  scrollable: {
+    overflowY: 'auto',
+    width: '100%',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
   grid: {
     position: 'relative',
-    top: '28%',
     paddingBottom: 15,
   },
   greyCard: {
@@ -39,31 +44,33 @@ function GIFComponent() {
     },
   ];
   return (
-    <Grid
-      container
-      direction="column"
-      justify="flex-start"
-      alignItems="center"
-      className={classes.grid}
-    >
-      {images.map((it, i) => (
-        <React.Fragment item key={i}>
-          <GreyCard height="auto" className={`${classes.greyCard}`}>
-            <Typography className={`app-typography ${classes.typography}`}>
-              {it.label}
-            </Typography>
-            <CardContent>
-              <CardMedia
-                component="img"
-                className={classes.gif}
-                src={it.iconSrc}
-                alt={it.altLabel}
-              />
-            </CardContent>
-          </GreyCard>
-        </React.Fragment>
-      ))}
-    </Grid>
+    <div className={classes.scrollable}>
+      <Grid
+        container
+        direction="column"
+        justify="flex-start"
+        alignItems="center"
+        className={classes.grid}
+      >
+        {images.map((it, i) => (
+          <React.Fragment item key={i}>
+            <GreyCard height="auto" className={`${classes.greyCard}`}>
+              <Typography className={`app-typography ${classes.typography}`}>
+                {it.label}
+              </Typography>
+              <CardContent>
+                <CardMedia
+                  component="img"
+                  className={classes.gif}
+                  src={it.iconSrc}
+                  alt={it.altLabel}
+                />
+              </CardContent>
+            </GreyCard>
+          </React.Fragment>
+        ))}
+      </Grid>
+    </div>
   );
 }
 
