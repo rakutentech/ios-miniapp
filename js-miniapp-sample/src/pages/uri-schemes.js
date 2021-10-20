@@ -41,14 +41,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const deepLinkStyle = makeStyles((theme) => ({
+  content: {
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    fontSize: 18,
+    color: theme.color.primary,
+    fontWeight: 'bold',
+    paddingBottom: 0,
+    height: '50px',
+  },
+  card: {
+    width: '100%',
+    height: '100px',
+  },
+  actions: {
+    justifyContent: 'center',
+    paddingBottom: 16,
+  },
+}));
+
 const UriSchemes = () => {
   const EXTERNAL_WEBVIEW_URL =
     'https://htmlpreview.github.io/?https://raw.githubusercontent.com/rakutentech/js-miniapp/master/js-miniapp-sample/external-webview/index.html';
   const classes = useStyles();
+  const deeplinkClass = deepLinkStyle();
+
   const [params, setParams] = useState('?testSendParam=someValue&test2=test2');
   const [callbackUrl, setCallbackUrl] = useState(
     `${window.location.protocol}//${window.location.host}/index.html`
   );
+  let deeplinkUrl = '';
 
   function validateParams(params) {
     if (!params.startsWith('?') || params.indexOf('=') <= -1) {
@@ -74,6 +99,15 @@ const UriSchemes = () => {
 
     window.location.href = url;
   }
+
+  function openDeeplinkURL() {
+    window.location.href = deeplinkUrl;
+  }
+
+  const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    deeplinkUrl = e.currentTarget.value;
+  };
 
   return (
     <div className={classes.scrollable}>
@@ -144,6 +178,27 @@ const UriSchemes = () => {
             color="primary"
             onClick={onOpenExternalWebview}
           >
+            Open
+          </Button>
+        </CardActions>
+      </GreyCard>
+      <br />
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>Deep Link</CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={handleInput}
+            label="Deep Link URL"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'deeplink-input-field',
+            }}
+          />
+        </CardContent>
+        <CardActions className={deeplinkClass.actions}>
+          <Button variant="contained" color="primary" onClick={openDeeplinkURL}>
             Open
           </Button>
         </CardActions>
