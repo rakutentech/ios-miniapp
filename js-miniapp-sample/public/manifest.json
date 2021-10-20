@@ -44,6 +44,10 @@
     {
       "name": "rakuten.miniapp.user.POINTS",
       "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.device.FILE_DOWNLOAD",
+      "reason": "Describe your reason here (optional)."
     }
   ],
 

@@ -156,6 +156,8 @@ These permissions are requested using the [MiniAppFeatures.requestCustomPermissi
 | `CustomPermissionName.ACCESS_TOKEN` | Grant access to the a user's access token. |
 | `CustomPermissionName.LOCATION` | Grant access to the device's location (custom permission only). |
 | `CustomPermissionName.SEND_MESSAGE` | Allow miniapp to send message to specific contact via hostapp. |
+| `CustomPermissionName.POINTS` | Allow miniapp to retrieve points. |
+| `CustomPermissionName.FILE_DOWNLOAD` | Allow miniapp to download files. |
 
 ##### Usage example
 
@@ -167,7 +169,9 @@ miniApp.requestCustomPermissions([
     {name: CustomPermissionName.CONTACT_LIST, description: 'This text will be shown to the user.'},
     {name: CustomPermissionName.ACCESS_TOKEN, description: 'This text will be shown to the user.'},
     {name: CustomPermissionName.LOCATION, description: 'This text will be shown to the user.'},
-    {name: CustomPermissionName.SEND_MESSAGE, description: 'This text will be shown to the user.'}
+    {name: CustomPermissionName.SEND_MESSAGE, description: 'This text will be shown to the user.'},
+    {name: CustomPermissionName.POINTS, description: 'This text will be shown to the user.'},
+    {name: CustomPermissionName.FILE_DOWNLOAD, description: 'This text will be shown to the user.'},
 ]).then((result) => {
     const allowed = result
         .filter(permission => permission.status === CustomPermissionResult.ALLOWED)
