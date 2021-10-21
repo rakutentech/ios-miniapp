@@ -298,7 +298,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
                     customNav.onNavigateToUrl = { resultUrl = $0 }
 
                     miniAppView.webView.load(URLRequest(url: base64Url))
-                    expect(resultUrl).toEventuallyNot(beNil())
+                    expect(resultUrl).toEventuallyNot(beNil(), timeout: 3)
                 }
 
                 it("should not return base64 url when permission is denied") {
