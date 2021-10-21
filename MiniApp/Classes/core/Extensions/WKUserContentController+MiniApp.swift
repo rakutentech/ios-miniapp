@@ -25,6 +25,7 @@ extension WKUserContentController {
     /// Method to remove the custom WKScriptMessageHandler. Removing the message handler will help to avoid memory leaks
     func removeMessageHandler() {
         removeScriptMessageHandler(forName: Constants.JavaScript.interfaceName)
+        removeScriptMessageHandler(forName: Constants.JavaScript.logHandler)
     }
 
     /// Method to add the Bridging Javascript to the WebView User Controller
@@ -35,7 +36,7 @@ extension WKUserContentController {
 
         #if DEBUG
         // copy logs from javascript console
-        injectScript(from: "console", in: podBundle)
+        injectScript(from: "log", in: podBundle)
         #endif
     }
 

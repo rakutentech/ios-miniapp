@@ -27,7 +27,7 @@ Pod::Spec.new do |miniapp|
     core.source_files = 'MiniApp/Classes/core/**/*.{swift,h,m}'
     core.resource_bundle = {
         "Localization" => ["MiniApp/*.lproj/*.strings"],
-        "MiniApp" => ['MiniApp/Classes/core/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
+        "MiniApp" => ['MiniApp/Classes/core/**/*.{xcassets,pdf,xib}','js-miniapp/*.js']
     }
     core.dependency 'ZIPFoundation', '0.9.12'
     core.dependency 'TrustKit', '~>2.0'

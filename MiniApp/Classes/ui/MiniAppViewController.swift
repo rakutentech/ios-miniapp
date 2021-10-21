@@ -39,7 +39,7 @@ public class MiniAppViewController: UIViewController {
 
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp view will disappear"))
+        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp view will disappear"))
     }
 
     weak var messageDelegate: MiniAppMessageDelegate?

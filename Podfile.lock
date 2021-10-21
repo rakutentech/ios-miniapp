@@ -100,7 +100,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 5ba1164e3c844ba84272555e916d0a6d3d977e91
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
-  MiniApp: 1920b9dee3b089628feff514a6bdc67cf5704cac
+  MiniApp: 8f8eafd64b93c175fe1d46c2f6a495962e30b641
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58

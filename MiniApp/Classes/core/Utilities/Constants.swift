@@ -3,7 +3,7 @@ enum Constants {
     static let rootFileName = "index.html"
     enum JavaScript {
         static let interfaceName = "MiniAppiOS"
-        static let logHandler = "logging"
+        static let logHandler = "MiniAppLogging"
         static let successCallback = "MiniAppBridge.execSuccessCallback"
         static let errorCallback = "MiniAppBridge.execErrorCallback"
         static let eventCallback = "MiniAppBridge.execCustomEventsCallback"
