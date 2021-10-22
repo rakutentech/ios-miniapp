@@ -11,6 +11,13 @@ extension ViewController: MiniAppNavigationDelegate {
         miniAppDisplayController.refreshNavigationBarButtons(backButtonEnabled: back, forwardButtonEnabled: forward)
     }
 
+    func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
+        if url.absoluteString.starts(with: "data:") {
+            let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            presentedViewController?.present(activityViewController, animated: true, completion: nil)
+        }
+    }
+
     func fetchAppList(inBackground: Bool) {
         showProgressIndicator(silently: inBackground) {
             MiniApp.shared(with: Config.current(), navigationSettings: Config.getNavConfig(delegate: self)).list { (result) in

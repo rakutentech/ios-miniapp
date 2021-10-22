@@ -97,6 +97,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Retrieve User Profile details](#retrieve-user-profile-details)
     * [Send message to contacts](#send-message-to-contacts)
     * [Retrieve points](#retrieve-points)
+    * [File Download](#file-download)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Mini App meta-data](#mini-meta-data)
@@ -499,6 +500,14 @@ extension ViewController: MiniAppMessageDelegate {
     }
 }
 ```
+
+<a id="file-download"></a>
+
+###### File Download
+
+Support to download files of base64 urls.  
+It's necessary to allow the `File Download` custom permission to make file downloads available.
+
 <a id="load-miniapp-list"></a>
 
 ### Load the `MiniApp` list:

@@ -4,6 +4,8 @@
 
 **SDK**
 
+- **Feature:** Added `rakuten.miniapp.device.FILE_DOWNLOAD` custom permission
+
 ### 3.7.0 (2021-10-08)
 
 **SDK**
