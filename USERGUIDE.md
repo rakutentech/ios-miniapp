@@ -16,9 +16,11 @@ All the MiniApp files downloaded by the MiniApp iOS library are cached locally
 
 ## Requirements
 
-This module supports **iOS 13.0 and above**. It has been tested on iOS 13.0 and above.
+This module supports **iOS 14.0 and above**. It has been tested on iOS 14.0 and above.
 
 It is written in Swift 5.0 and can be used in compatible Xcode versions.
+
+*Note:* This module is currently set to `deployment_target = '13.0'`, however support for iOS 13.0 has been deprecated and could be removed in a later release.
 
 ## Getting started
 
@@ -95,6 +97,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Retrieve User Profile details](#retrieve-user-profile-details)
     * [Send message to contacts](#send-message-to-contacts)
     * [Retrieve points](#retrieve-points)
+    * [File Download](#file-download)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Mini App meta-data](#mini-meta-data)
@@ -497,6 +500,14 @@ extension ViewController: MiniAppMessageDelegate {
     }
 }
 ```
+
+<a id="file-download"></a>
+
+###### File Download
+
+Support to download files of base64 urls.  
+It's necessary to allow the `File Download` custom permission to make file downloads available.
+
 <a id="load-miniapp-list"></a>
 
 ### Load the `MiniApp` list:
