@@ -242,9 +242,9 @@ internal class RealMiniAppView: UIView {
                             .getCustomPermissions(forMiniApp: miniAppId)
                             .filter({ $0.permissionName == .fileDownload && $0.isPermissionGranted == .allowed })
                             .first != nil {
-                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
-                            self.webView.load(URLRequest(url: url))
-                        })
+                        if let onResponse = onExternalWebviewResponse, let onClose = onExternalWebviewClose {
+                            navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose)
+                        }
                     }
                     return decisionHandler(.cancel)
                 } else {
