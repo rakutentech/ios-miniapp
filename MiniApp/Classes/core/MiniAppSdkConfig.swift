@@ -81,14 +81,6 @@ public class MiniAppSdkConfig {
         }
     }
 
-    public var dynamicDeepLinksList: [String]? {
-        didSet {
-            if dynamicDeepLinksList?.count == 0 {
-                dynamicDeepLinksList = []
-            }
-        }
-    }
-
     /// Initialize a MiniAppSdkConfig object that can be used to configure a MiniApp client. All the parameters are optional.
     /// If a parameter is omitted the client will fallback its value to the configuration values provided into the project configuration .plist
     ///
@@ -107,8 +99,7 @@ public class MiniAppSdkConfig {
                 isPreviewMode: Bool? = nil,
                 analyticsConfigList: [MAAnalyticsConfig]? = [],
                 requireMiniAppSignatureVerification: Bool? = nil,
-                sslKeyHash: MiniAppConfigSSLKeyHash? = nil,
-                dynamicDeepLinksList: [String]? = []) {
+                sslKeyHash: MiniAppConfigSSLKeyHash? = nil) {
         self.isPreviewMode = isPreviewMode
         self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
         self.rasProjectId = rasProjectId?.count ?? 0 > 0 ? rasProjectId  : nil
@@ -117,6 +108,5 @@ public class MiniAppSdkConfig {
         self.analyticsConfigList = analyticsConfigList
         self.requireMiniAppSignatureVerification = requireMiniAppSignatureVerification
         self.sslKeyHash = sslKeyHash
-        self.dynamicDeepLinksList = dynamicDeepLinksList
     }
 }

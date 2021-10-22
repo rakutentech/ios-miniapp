@@ -9,7 +9,6 @@ internal class RealMiniApp {
     var miniAppPermissionStorage: MiniAppPermissionsStorage
     var miniAppManifestStorage: MAManifestStorage
     var miniAppAnalyticsConfig: [MAAnalyticsConfig]
-    var dynamicDeepLinksList: [String]
     var previewMiniAppInfoFetcher: PreivewMiniAppFetcher
 
     convenience init() {
@@ -31,7 +30,6 @@ internal class RealMiniApp {
         miniAppDownloader = MiniAppDownloader(apiClient: miniAppClient, manifestDownloader: manifestDownloader, status: miniAppStatus)
         displayer = Displayer(navigationSettings)
         miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
-        dynamicDeepLinksList = settings?.dynamicDeepLinksList ?? []
         previewMiniAppInfoFetcher = PreivewMiniAppFetcher()
     }
 
@@ -39,7 +37,6 @@ internal class RealMiniApp {
         miniAppClient.updateEnvironment(with: settings)
         displayer.navConfig = navigationSettings
         miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
-        dynamicDeepLinksList = settings?.dynamicDeepLinksList ?? []
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
@@ -122,7 +119,7 @@ internal class RealMiniApp {
                                     if !success {
                                         errorHandler(NSError.invalidURLError())
                                     }
-                                 }, analyticsConfig: self.miniAppAnalyticsConfig, dynamicDeepLinks: dynamicDeepLinksList)
+                                 }, analyticsConfig: self.miniAppAnalyticsConfig)
     }
 
     /// Download Mini app for a given Mini app info object
@@ -221,7 +218,7 @@ internal class RealMiniApp {
                                                                                miniAppTitle: miniAppTitle,
                                                                                queryParams: queryParams,
                                                                                hostAppMessageDelegate: hostAppMessageDelegate,
-                                                                               adsDisplayer: adsDisplayer, analyticsConfig: analyticsConfig, dynamicDeepLinks: self.dynamicDeepLinksList)
+                                                                               adsDisplayer: adsDisplayer, analyticsConfig: analyticsConfig)
                     completionHandler(.success(miniAppDisplayProtocol))
                 }
             case .failure(let error):

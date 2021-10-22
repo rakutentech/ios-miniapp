@@ -17,7 +17,6 @@ internal class RealMiniAppView: UIView {
     internal var supportedMiniAppOrientation: UIInterfaceOrientationMask
     internal var initialLoadCallback: ((Bool) -> Void)?
     internal var analyticsConfig: [MAAnalyticsConfig]?
-    internal var dynamicDeeplinkSupportList = [String]()
 
     internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
@@ -36,8 +35,7 @@ internal class RealMiniAppView: UIView {
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
-        analyticsConfig: [MAAnalyticsConfig]? = [],
-        dynamicDeepLinks: [String]?) {
+        analyticsConfig: [MAAnalyticsConfig]? = []) {
 
         self.miniAppTitle = miniAppTitle
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId, queryParams: queryParams)
@@ -47,7 +45,6 @@ internal class RealMiniAppView: UIView {
         self.miniAppVersion = versionId
         self.projectId = projectId
         self.analyticsConfig = analyticsConfig
-        self.dynamicDeeplinkSupportList = dynamicDeepLinks ?? []
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -66,8 +63,7 @@ internal class RealMiniAppView: UIView {
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
-        analyticsConfig: [MAAnalyticsConfig]? = [],
-        dynamicDeepLinks: [String]?) {
+        analyticsConfig: [MAAnalyticsConfig]? = []) {
 
         self.miniAppTitle = miniAppTitle
         self.miniAppURL = miniAppURL
@@ -77,7 +73,6 @@ internal class RealMiniAppView: UIView {
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
         self.analyticsConfig = analyticsConfig
-        self.dynamicDeeplinkSupportList = dynamicDeepLinks ?? []
 
         super.init(frame: .zero)
         commonInit(miniAppId: "custom\(Int32.random(in: 0...Int32.max))", // some id is needed to handle permissions
@@ -188,45 +183,33 @@ internal class RealMiniAppView: UIView {
 
     func validateScheme(requestURL: URL, navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let scheme = requestURL.scheme {
-            if !isDynamicDeeplink(url: requestURL.absoluteString) {
-                let schemeType = MiniAppSupportedSchemes(rawValue: scheme)
-                switch schemeType {
-                case .about: // mainly implemented to manage built-in alert dialogs
+            let schemeType = MiniAppSupportedSchemes(rawValue: scheme)
+            switch schemeType {
+            case .about: // mainly implemented to manage built-in alert dialogs
+                return decisionHandler(.allow)
+            case .tel, .mailto:
+                UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
+            default:
+                if requestURL.isMiniAppURL(customMiniAppURL: miniAppURL) {
                     return decisionHandler(.allow)
-                case .tel, .mailto:
-                    UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
-                default:
-                    if requestURL.isMiniAppURL(customMiniAppURL: miniAppURL) {
+                } else {
+                    // Allow navigation for requests loading external web content resources. E.G: iFrames
+                    guard navigationAction.targetFrame?.isMainFrame != false else {
                         return decisionHandler(.allow)
+                    }
+                    if let miniAppURL = miniAppURL {
+                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
+                            self.webView.load(URLRequest(url: url))
+                        }, customMiniAppURL: miniAppURL)
                     } else {
-                        // Allow navigation for requests loading external web content resources. E.G: iFrames
-                        guard navigationAction.targetFrame?.isMainFrame != false else {
-                            return decisionHandler(.allow)
-                        }
-                        if let miniAppURL = miniAppURL {
-                            self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
-                                self.webView.load(URLRequest(url: url))
-                            }, customMiniAppURL: miniAppURL)
-                        } else {
-                            self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
-                                self.webView.load(URLRequest(url: url))
-                            })
-                        }
+                        self.navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: { (url) in
+                            self.webView.load(URLRequest(url: url))
+                        })
                     }
                 }
-            } else {
-                UIApplication.shared.open(requestURL, options: [:], completionHandler: nil)
             }
         }
         decisionHandler(.cancel)
-    }
-
-    internal func isDynamicDeeplink(url: String?) -> Bool {
-        guard let urlString = url else {
-            return false
-        }
-        dynamicDeeplinkSupportList = dynamicDeeplinkSupportList.map { $0.lowercased() }
-        return dynamicDeeplinkSupportList.contains(where: urlString.lowercased().hasPrefix)
     }
 
     internal func presentAlert(alertController: UIAlertController) {

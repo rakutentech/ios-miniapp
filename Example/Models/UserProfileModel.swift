@@ -59,7 +59,7 @@ func getDeepLinksList(key: String = "DeeplinkList") -> [String] {
     return []
 }
 
-func setDeepLinksList(forKey key: String = "DeeplinkList", deeplinksList: [String]? = getDeepLinksList()) -> Bool {
+@discardableResult func setDeepLinksList(forKey key: String = "DeeplinkList", deeplinksList: [String]? = getDeepLinksList()) -> Bool {
     if let data = try? PropertyListEncoder().encode(deeplinksList) {
         UserDefaults.standard.set(data, forKey: key)
         return UserDefaults.standard.synchronize()
@@ -83,8 +83,8 @@ func updateContactList(list: [MAContact]?) {
     }
 }
 
-func updateDeeplinkList(list: [String]?) {
-    _ = setDeepLinksList(deeplinksList: list)
+@discardableResult func updateDeeplinkList(list: [String]?) -> Bool {
+    return setDeepLinksList(deeplinksList: list)
 }
 
 @discardableResult func saveTokenInfo(accessToken: String, expiryDate: Date, scopes: MASDKAccessTokenScopes?, forKey key: String = "AccessTokenInfo") -> Bool {

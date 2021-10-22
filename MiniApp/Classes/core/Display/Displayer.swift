@@ -13,8 +13,7 @@ internal class Displayer {
                         queryParams: String? = nil,
                         hostAppMessageDelegate: MiniAppMessageDelegate,
                         adsDisplayer: MiniAppAdDisplayer? = nil,
-                        analyticsConfig: [MAAnalyticsConfig]? = [],
-                        dynamicDeepLinks: [String]?) -> MiniAppDisplayDelegate {
+                        analyticsConfig: [MAAnalyticsConfig]? = []) -> MiniAppDisplayDelegate {
         RealMiniAppView(
           miniAppId: miniAppId,
           versionId: versionId,
@@ -26,8 +25,7 @@ internal class Displayer {
           displayNavBar: navConfig?.navigationBarVisibility ?? .never,
           navigationDelegate: navConfig?.navigationDelegate,
           navigationView: navConfig?.navigationView,
-            analyticsConfig: analyticsConfig,
-            dynamicDeepLinks: dynamicDeepLinks)
+            analyticsConfig: analyticsConfig)
     }
 
     func getMiniAppView(miniAppURL: URL,
@@ -36,8 +34,7 @@ internal class Displayer {
                         hostAppMessageDelegate: MiniAppMessageDelegate,
                         adsDisplayer: MiniAppAdDisplayer? = nil,
                         initialLoadCallback: @escaping (Bool) -> Void,
-                        analyticsConfig: [MAAnalyticsConfig]? = [],
-                        dynamicDeepLinks: [String]?) -> MiniAppDisplayDelegate {
+                        analyticsConfig: [MAAnalyticsConfig]? = []) -> MiniAppDisplayDelegate {
         RealMiniAppView(
             miniAppURL: miniAppURL,
             miniAppTitle: miniAppTitle,
@@ -48,7 +45,6 @@ internal class Displayer {
             displayNavBar: navConfig?.navigationBarVisibility ?? .never,
             navigationDelegate: navConfig?.navigationDelegate,
             navigationView: navConfig?.navigationView,
-            analyticsConfig: analyticsConfig,
-            dynamicDeepLinks: dynamicDeepLinks)
+            analyticsConfig: analyticsConfig)
     }
 }
