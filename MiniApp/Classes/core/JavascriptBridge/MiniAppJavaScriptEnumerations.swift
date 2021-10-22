@@ -52,6 +52,8 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
     case deviceLocation = "rakuten.miniapp.device.LOCATION"
     /// Custom permission for retrieving points from the host app
     case points = "rakuten.miniapp.user.POINTS"
+    /// Custom permission for downloading files
+    case fileDownload = "rakuten.miniapp.device.FILE_DOWNLOAD"
 
     public var title: String {
         switch self {
@@ -69,6 +71,8 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
             return "Send Message"
         case .points:
             return "Rakuten Points"
+        case .fileDownload:
+            return "File Download"
         }
     }
 }

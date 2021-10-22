@@ -5,6 +5,7 @@
 **SDK**
 
 - **Feature:** MiniApp custom events (pause, resume, external webview closed)
+- **Feature:** Added `rakuten.miniapp.device.FILE_DOWNLOAD` custom permission
 
 ### 3.7.0 (2021-10-08)
 
