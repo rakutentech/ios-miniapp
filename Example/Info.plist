@@ -41,16 +41,8 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<false/>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>This will let you to take Photos</string>
@@ -74,6 +66,15 @@
 	<string>$(RMA_USER_AGENT)</string>
 	<key>RMAIsPreviewMode</key>
 	<true/>
+	<key>RMARequireMiniAppSignatureVerification</key>
+	<false/>
+	<key>RMASSLKeyHash</key>
+	<dict>
+		<key>backup</key>
+		<string>$(RMA_SSL_KEY_HASH_BACKUP)</string>
+		<key>main</key>
+		<string>$(RMA_SSL_KEY_HASH)</string>
+	</dict>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

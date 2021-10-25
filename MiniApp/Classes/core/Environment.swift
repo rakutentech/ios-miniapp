@@ -2,6 +2,7 @@ internal protocol EnvironmentProtocol {
     var valueNotFound: String { get }
     func value(for key: String) -> String?
     func bool(for key: String) -> Bool?
+    func object(forInfoDictionaryKey: String) -> Any?
 }
 
 internal class Environment {
@@ -13,15 +14,21 @@ internal class Environment {
         case endpoint = "RMAAPIEndpoint"
         case isPreviewMode = "RMAIsPreviewMode"
         case hostAppUserAgentInfo = "RMAHostAppUserAgentInfo"
+        case requireMiniAppSignatureVerification = "RMARequireMiniAppSignatureVerification"
+        case sslKeyHash = "RMASSLKeyHash"
+        case host = "RMAAPIHost"
     }
 
     let bundle: EnvironmentProtocol
 
     var customUrl: String?
+    var customSSLKeyHash: String?
+    var customSSLKeyHashBackup: String?
     var customProjectId: String?
     var customAppVersion: String?
     var customSubscriptionKey: String?
     var customIsPreviewMode: Bool?
+    var customSignatureVerification: Bool?
 
     init(bundle: EnvironmentProtocol = Bundle.main) {
         self.bundle = bundle
@@ -29,19 +36,22 @@ internal class Environment {
 
     convenience init(with config: MiniAppSdkConfig, bundle: EnvironmentProtocol = Bundle.main) {
         self.init(bundle: bundle)
-        self.customUrl = config.baseUrl
-        self.customProjectId = config.rasProjectId
-        self.customSubscriptionKey = config.subscriptionKey
-        self.customAppVersion = config.hostAppVersion
-        self.customIsPreviewMode = config.isPreviewMode
+        customUrl = config.baseUrl
+        customSSLKeyHash = config.sslKeyHash?.pin
+        customSSLKeyHashBackup = config.sslKeyHash?.backupPin
+        customProjectId = config.rasProjectId
+        customSubscriptionKey = config.subscriptionKey
+        customAppVersion = config.hostAppVersion
+        customIsPreviewMode = config.isPreviewMode
+        customSignatureVerification = config.requireMiniAppSignatureVerification
     }
 
     var projectId: String {
-        return value(for: customProjectId, fallback: .projectId)
+        value(for: customProjectId, fallback: .projectId)
     }
 
     var appVersion: String {
-        return value(for: customAppVersion, fallback: .version)
+        value(for: customAppVersion, fallback: .version)
     }
 
     var sdkVersion: MiniAppVersion? {
@@ -49,15 +59,19 @@ internal class Environment {
     }
 
     var subscriptionKey: String {
-        return value(for: customSubscriptionKey, fallback: .subscriptionKey)
+        value(for: customSubscriptionKey, fallback: .subscriptionKey)
     }
 
     var isPreviewMode: Bool {
-        return bool(for: customIsPreviewMode, fallback: .isPreviewMode)
+        bool(for: customIsPreviewMode, fallback: .isPreviewMode)
+    }
+
+    var requireMiniAppSignatureVerification: Bool {
+        bool(for: customSignatureVerification, fallback: .requireMiniAppSignatureVerification)
     }
 
     var hostAppUserAgentInfo: String {
-        return bundle.value(for: Key.hostAppUserAgentInfo.rawValue) ?? bundle.valueNotFound
+        bundle.value(for: Key.hostAppUserAgentInfo.rawValue) ?? bundle.valueNotFound
     }
 
     var baseUrl: URL? {
@@ -69,15 +83,37 @@ internal class Environment {
         return URL(string: "\(endpointUrlString)")
     }
 
+    var host: String {
+        guard let bundleHost = bundle.value(for: Key.host.rawValue) else {
+            if let url = baseUrl, let comp = URLComponents(url: url, resolvingAgainstBaseURL: false), let host = comp.host {
+                return host
+            }
+            return bundle.valueNotFound
+        }
+        return bundleHost
+    }
+
+    var sslKeyHash: String? {
+        customSSLKeyHash
+    }
+
+    var sslKeyHashBackup: String? {
+        customSSLKeyHashBackup
+    }
+
     func value(for field: String?, fallback key: Key) -> String {
-        return field ?? bundle.value(for: key.rawValue) ?? bundle.valueNotFound
+        field ?? bundle.value(for: key.rawValue) ?? bundle.valueNotFound
     }
 
     func value(for field: String?, fallback key: Key, fallbackParam: String) -> String {
-        return field ?? bundle.value(for: key.rawValue) ?? fallbackParam
+        field ?? bundle.value(for: key.rawValue) ?? fallbackParam
     }
 
     func bool(for field: Bool?, fallback key: Key) -> Bool {
-        return field ?? bundle.bool(for: key.rawValue) ?? false
+        field ?? bundle.bool(for: key.rawValue) ?? false
+    }
+
+    func dictionary(for key: Key) -> [String: Any?]? {
+        bundle.object(forInfoDictionaryKey: key.rawValue) as? [String: Any?]
     }
 }

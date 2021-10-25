@@ -1,6 +1,7 @@
 @testable import MiniApp
 import WebKit
 import Foundation
+let mockHost = "https://example.com"
 
 let jSONManifest = """
 {
@@ -45,6 +46,8 @@ let mockMetaDataString = """
 
 let mockRATAcc = "123"
 let mockRATAid = "1"
+let mockSignature = "mockSignature"
+let mockSignatureId = "mockSignatureId"
 
 // swiftlint:disable file_length
 class MockAPIClient: MiniAppClient {
@@ -54,10 +57,11 @@ class MockAPIClient: MiniAppClient {
     var error: Error?
     var request: URLRequest?
     var zipFile: String?
+    var corrupted: Bool = false
     var headers: [String: String]?
     var mockSDKConfig: MiniAppSdkConfig?
 
-    init(previewMode: Bool? = false) {
+    init(previewMode: Bool = false, requireSignature: Bool = false) {
         let bundle = MockBundle()
         bundle.mockPreviewMode = previewMode
         mockSDKConfig = MiniAppSdkConfig(
@@ -66,7 +70,8 @@ class MockAPIClient: MiniAppClient {
             subscriptionKey: bundle.mockSubscriptionKey,
             hostAppVersion: bundle.mockHostAppUserAgentInfo,
             isPreviewMode: bundle.mockPreviewMode,
-            analyticsConfigList: [MAAnalyticsConfig(acc: mockRATAcc, aid: mockRATAid)]
+            analyticsConfigList: [MAAnalyticsConfig(acc: mockRATAcc, aid: mockRATAid)],
+            requireMiniAppSignatureVerification: requireSignature
         )
         super.init(with: mockSDKConfig!)
     }
@@ -111,6 +116,8 @@ class MockAPIClient: MiniAppClient {
             return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
         }
 
+        signatures[versionId] = (mockSignatureId, corrupted ? "anotherSignature" : mockSignature)
+
         requestServer(urlRequest: urlRequest, responseData: responseData, completionHandler: completionHandler)
     }
 
@@ -145,7 +152,17 @@ class MockAPIClient: MiniAppClient {
             delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
             return
         }
-        delegate?.fileDownloaded(at: mockSourceFileURL, downloadedURL: destinationURL)
+        #if RMA_SDK_SIGNATURE
+            if let data = data {
+                verifySignature(version: "", signature: mockSignature, keyId: mockSignatureId, data: data) {  result in
+                    self.delegate?.fileDownloaded(at: mockSourceFileURL, downloadedURL: destinationURL, signatureChecked: result)
+                }
+            } else {
+                delegate?.fileDownloaded(at: mockSourceFileURL, downloadedURL: destinationURL, signatureChecked: true)
+            }
+        #else
+            delegate?.fileDownloaded(at: mockSourceFileURL, downloadedURL: destinationURL)
+        #endif
     }
 
     override func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
@@ -170,6 +187,12 @@ class MockAPIClient: MiniAppClient {
             return completionHandler(.success(ResponseData(data, httpResponse)))
         }
     }
+
+    #if RMA_SDK_SIGNATURE
+    override func verifySignature(version: String, signature: String, keyId: String, data: Data, handler: @escaping (Bool) -> Void) {
+        handler(!corrupted)
+    }
+    #endif
 }
 
 class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
@@ -249,14 +272,14 @@ class MockManifestDownloader: ManifestDownloader {
 
 class MockBundle: EnvironmentProtocol {
     var valueNotFound: String {
-        return mockValueNotFound ?? ""
+        mockValueNotFound ?? ""
     }
 
     var mockValueNotFound: String?
     var mockProjectId: String?
     var mockSubscriptionKey: String?
     var mockAppVersion: String?
-    var mockEndpoint: String? = "https://www.example.com/"
+    var mockEndpoint: String? = "\(mockHost)/"
     var mockPreviewMode: Bool?
     var mockHostAppUserAgentInfo: String?
 
@@ -281,6 +304,13 @@ class MockBundle: EnvironmentProtocol {
             return mockEndpoint
         case "RMAHostAppUserAgentInfo":
             return mockHostAppUserAgentInfo
+        default:
+            return nil
+        }
+    }
+
+    func object(forInfoDictionaryKey: String) -> Any? {
+        switch forInfoDictionaryKey {
         default:
             return nil
         }
@@ -436,7 +466,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
 
 var mockMiniAppInfo: MiniAppInfo {
     let mockVersion = Version(versionTag: "Dev", versionId: "ver-id-test")
-    let info = MiniAppInfo.init(id: "app-id-test", displayName: "Mini App Title", icon: URL(string: "https://www.example.com/icon.png")!, version: mockVersion)
+    let info = MiniAppInfo.init(id: "app-id-test", displayName: "Mini App Title", icon: URL(string: "\(mockHost)/icon.png")!, version: mockVersion)
     return info
 }
 
@@ -584,7 +614,11 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
 }
 
 class MockNavigationView: UIView, MiniAppNavigationDelegate {
+
+    var onNavigateToUrl: ((URL?) -> Void)?
+
     func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping MiniAppNavigationResponseHandler) {
+        onNavigateToUrl?(url)
         externalLinkResponseHandler(url)
     }
 
@@ -713,4 +747,57 @@ extension UIImage {
 
         return "data:\(mimeType);base64,\(imageData.base64EncodedString())"
     }
+}
+
+#if RMA_SDK_SIGNATURE
+    class FetcherMock: SignatureFetcher {
+        var fetchConfigCalledNumTimes = 0
+        var fetchKeyCalledNumTimes = 0
+        var fetchedKey: KeyModel? = KeyModel(identifier: "", key: "", pem: "")
+
+        init() { super.init(apiClient: SignatureAPI(), config: Config(baseURL: URL(string: mockHost)!, subscriptionKey: "")) }
+
+        override func fetchKey(with keyId: String, completionHandler: @escaping (Result<KeyModel, Error>) -> Void) {
+            fetchKeyCalledNumTimes += 1
+            if let key = fetchedKey {
+                completionHandler(.success(key))
+            } else {
+                completionHandler(.failure(NSError.invalidSignature()))
+            }
+        }
+    }
+
+    class VerifierMock: Verifiable {
+        var verifyOK = true
+        var lastUsedKey: String?
+
+        func verify(signatureBase64: String, objectData: Data, keyBase64: String) -> Bool {
+            lastUsedKey = keyBase64
+            return verifyOK
+        }
+    }
+
+    class APIClientMock: SignatureAPI {
+        var data: Data?
+        var headers: [String: String]?
+        var error: Error?
+        var request: URLRequest?
+
+        override func send(request: URLRequest, completionHandler: @escaping (Result<KeyModel, Error>) -> Void) {
+            self.request = request
+
+            guard let data = data else {
+                completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+                return
+            }
+            if let object = try? JSONDecoder().decode(KeyModel.self, from: data) {
+                completionHandler(.success(object))
+            }
+        }
+    }
+#endif
+
+func getExampleBase64String() -> String {
+    // swiftlint:disable:next line_length
+    return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAADUlEQVQIHWNgYGD4DwABBAEAHnOcQAAAAABJRU5ErkJggg=="
 }

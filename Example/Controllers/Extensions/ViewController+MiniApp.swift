@@ -11,6 +11,13 @@ extension ViewController: MiniAppNavigationDelegate {
         miniAppDisplayController.refreshNavigationBarButtons(backButtonEnabled: back, forwardButtonEnabled: forward)
     }
 
+    func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
+        if url.absoluteString.starts(with: "data:") {
+            let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            presentedViewController?.present(activityViewController, animated: true, completion: nil)
+        }
+    }
+
     func fetchAppList(inBackground: Bool) {
         showProgressIndicator(silently: inBackground) {
             MiniApp.shared(with: Config.current(), navigationSettings: Config.getNavConfig(delegate: self)).list { (result) in
@@ -112,6 +119,10 @@ extension ViewController: MiniAppNavigationDelegate {
         switch error {
         case .metaDataFailure:
             metaDataFailure()
+        case .invalidSignature:
+            self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize(.signatureFailed), dismissController: true) { _ in
+                self.fetchAppList(inBackground: true)
+            }
         default:
             self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize(.downloadFailed), dismissController: true) { _ in
                 self.fetchAppList(inBackground: true)
@@ -131,7 +142,7 @@ extension ViewController: MiniAppNavigationDelegate {
                         self.fetchAppList(inBackground: true)
                     }
                 }
-                self.fetchMiniAppMetaData(miniAppInfo: miniAppInfo)
+                self.fetchMiniAppMetaData(miniAppInfo: miniAppInfo, config: Config.current())
             }
         }
     }

@@ -21,14 +21,6 @@ class EnvironmentTests: QuickSpec {
 
                 expect(environment.projectId).to(equal("1.1"))
             }
-            it("has the expected app version") {
-                let mockBundle = MockBundle()
-                mockBundle.mockAppVersion = "mini"
-
-                let environment = Environment(bundle: mockBundle)
-
-                expect(environment.appVersion).to(equal("mini"))
-            }
             it("has the expected subscription key") {
                 let mockBundle = MockBundle()
                 mockBundle.mockSubscriptionKey = "mini-subscription-key"
@@ -39,10 +31,10 @@ class EnvironmentTests: QuickSpec {
             }
             it("will return base url endpoint") {
                 let mockBundle = MockBundle()
-                mockBundle.mockEndpoint = "https://example-endpoint.com"
+                mockBundle.mockEndpoint = mockHost
                 let environment = Environment(bundle: mockBundle)
 
-                expect(environment.baseUrl?.absoluteString).to(equal("https://example-endpoint.com"))
+                expect(environment.baseUrl?.absoluteString).to(equal(mockHost))
             }
             it("will return host app info") {
                 let mockBundle = MockBundle()
@@ -79,6 +71,10 @@ class EnvironmentTests: QuickSpec {
             }
             it("will return app version as nil") {
                 expect(environment.appVersion).to(equal(mockBundle.valueNotFound))
+            }
+            it("will return ssl pins as nil") {
+                expect(environment.sslKeyHash).to(beNil())
+                expect(environment.sslKeyHashBackup).to(beNil())
             }
             it("will return host app info value not found") {
                 expect(environment.hostAppUserAgentInfo).to(equal(mockBundle.valueNotFound))

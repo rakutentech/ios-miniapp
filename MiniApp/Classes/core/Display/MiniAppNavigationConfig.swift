@@ -14,9 +14,9 @@ public class MiniAppNavigationConfig {
     var navigationView: (UIView & MiniAppNavigationDelegate)?
 
     public init(
-        navigationBarVisibility: MiniAppNavigationVisibility? = .never,
-        navigationDelegate: MiniAppNavigationDelegate? = nil,
-        customNavigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
+            navigationBarVisibility: MiniAppNavigationVisibility? = .never,
+            navigationDelegate: MiniAppNavigationDelegate? = nil,
+            customNavigationView: (UIView & MiniAppNavigationDelegate)? = nil) {
         self.navigationBarVisibility = navigationBarVisibility
         self.navigationDelegate = navigationDelegate
         self.navigationView = customNavigationView
@@ -68,18 +68,41 @@ public extension MiniAppNavigationDelegate {
                                                         externalLinkResponseHandler: responseHandler,
                                                         customMiniAppURL: nil)
     }
+
     func miniAppNavigation(shouldOpen url: URL,
                            with responseHandler: @escaping MiniAppNavigationResponseHandler,
                            customMiniAppURL: URL) {
-        MiniAppExternalWebViewController.presentModally(url: url,
-                                                        externalLinkResponseHandler: responseHandler,
-                                                        customMiniAppURL: customMiniAppURL)
+        checkWebsiteSecurity(url: url) { canLaunch in
+            DispatchQueue.main.async {
+                if canLaunch {
+                    MiniAppExternalWebViewController.presentModally(url: url,
+                                                                    externalLinkResponseHandler: responseHandler,
+                                                                    customMiniAppURL: customMiniAppURL)
+                } else {
+                    UIApplication.shared.open(url)
+                }
+            }
+        }
     }
+
     func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
     }
+
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
     }
+
     func miniAppNavigationCanGo(back: Bool, forward: Bool) {
+    }
+
+    func checkWebsiteSecurity(url: URL, with responseHandler: @escaping (Bool) -> Void) {
+        let urlRequest = URLRequest(url: url)
+        let config     = URLSessionConfiguration.default
+        let session    = URLSession(configuration: config)
+
+        let task = session.dataTask(with: urlRequest, completionHandler: { (_, _, error) in
+            responseHandler(error == nil)
+        })
+        task.resume()
     }
 }
 

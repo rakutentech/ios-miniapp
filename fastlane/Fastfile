@@ -10,30 +10,40 @@ platform :ios do
     cocoapods(repo_update: ENV['MA_FL_CP_REPO_UPDATE'] || false)
   end
 
-  desc "Build All"
+  desc "Check lint"
   lane :ci do |options|
-    xcversion(version: "~> 12.0")
-
     swiftlint(
       strict: true,
       ignore_exit_status: false
     )
-
-    updatePods
-
-    scan(
-      clean: true,
-      output_directory: './artifacts/unit-tests',
-      scheme: 'MiniApp_Tests',
-      device: 'iPhone X',
-      code_coverage: true,
-      output_types: 'json-compilation-database,html,junit',
-      output_files: 'compile_commands.json,report.html,report.junit')
+# Uncomment this to disable Unit tests on Bitrise
+#     if !is_ci
+       tests
+#     end
 
   end
 
+  desc "Unit tests"
+  lane :tests do |options|
+      xcversion(version: "~> 12.4")
+      updatePods
+      fetched_sim = sh("xcrun simctl list | grep 'Fastlane' | cat")
+      if !fetched_sim.empty?
+          sh("xcrun", "simctl", "delete", "iPhone Fastlane")
+      end
+      sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-7","com.apple.CoreSimulator.SimRuntime.iOS-13-7")
+      scan(
+        clean: true,
+        output_directory: './artifacts/unit-tests',
+        scheme: 'MiniApp_Tests',
+        device: 'iPhone Fastlane',
+        code_coverage: true,
+        output_types: 'json-compilation-database,html,junit',
+        output_files: 'compile_commands.json,report.html,report.junit')
+  end
+
   lane :build_simulator do |options|
-    xcversion(version: "~> 12.0")
+    xcversion(version: "~> 12.4")
 
     updatePods
 

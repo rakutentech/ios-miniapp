@@ -10,13 +10,16 @@ internal enum MiniAppRATEvent: String, CaseIterable {
     case hostLaunch = "host_launch"
     case open
     case close
+    case signatureFailure = "mini_app_signature_validation_fail"
 
     func name() -> String {
-        return "mini_app_\(rawValue)"
+        "mini_app_\(rawValue)"
     }
 
     func eType() -> MiniAppRATEventType {
         switch self {
+        case .signatureFailure:
+            return .click
         case .hostLaunch:
             return .appear
         case .open, .close:
@@ -32,7 +35,7 @@ internal enum MiniAppAnalyticsParameter: String, CaseIterable {
     case sdkVersion = "sdk_version"
 
     func name() -> String {
-        return "mini_app_\(rawValue)"
+        "mini_app_\(rawValue)"
     }
 }
 

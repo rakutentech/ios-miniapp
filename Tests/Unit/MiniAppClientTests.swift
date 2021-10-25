@@ -17,7 +17,7 @@ class MiniAppClientTests: QuickSpec {
 
         func startDataTask(with request: URLRequest, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
             attempts += 1
-            urlResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: serverErrorCode, httpVersion: "1", headerFields: nil)
+            urlResponse = HTTPURLResponse(url: URL(string: mockHost)!, statusCode: serverErrorCode, httpVersion: "1", headerFields: nil)
             if let json = jsonObject {
                 data = try? JSONSerialization.data(withJSONObject: json, options: [])
             }
@@ -212,7 +212,7 @@ class MiniAppClientTests: QuickSpec {
                     let mockSession = MockSession(data: ["id": "123",
                         "versionTag": "1.0",
                         "name": "Sample",
-                        "files": ["http://www.example.com"]])
+                        "files": ["\(mockHost)"]])
                     let miniAppClient = MiniAppClient()
                     miniAppClient.session = mockSession
                     miniAppClient.getAppManifest(appId: "abc", versionId: "ver") { (result) in
@@ -283,7 +283,7 @@ class MiniAppClientTests: QuickSpec {
             let endpointKey = "RMAAPIEndpoint"
             let isPreviewMode = "RMAIsPreviewMode"
             let bundle = Bundle.main as EnvironmentProtocol
-            let testURL = "http://dummy.url"
+            let testURL = mockHost
             let testID = "testID"
             let testProjectID = "testProjectID"
             let testKey = "testKey"
@@ -328,7 +328,7 @@ class MiniAppClientTests: QuickSpec {
                         isPreviewMode: true))
 
                     miniAppClient.updateEnvironment(with: MiniAppSdkConfig(
-                        baseUrl: "http://dummy2.url",
+                        baseUrl: mockHost,
                         rasProjectId: "id2",
                         subscriptionKey: "key2",
                         hostAppVersion: "newversion",
@@ -337,7 +337,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.projectId).to(equal("id2"))
                     expect(miniAppClient.environment.appVersion).to(equal("newversion"))
                     expect(miniAppClient.environment.subscriptionKey).to(equal("key2"))
-                    expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal("http://dummy2.url"))
+                    expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(mockHost))
                     expect(miniAppClient.environment.isPreviewMode).to(be(false))
                 }
             }

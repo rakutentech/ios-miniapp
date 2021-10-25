@@ -10,9 +10,11 @@
 "miniapp.sdk.ios.error.message.invalid_url"                     = "URL is invalid.";
 "miniapp.sdk.ios.error.message.invalid_app_id"                  = "Provided Mini App ID is invalid.";
 "miniapp.sdk.ios.error.message.invalid_version_id"              = "Provided Mini App Version ID is invalid.";
+"miniapp.sdk.ios.error.message.invalid_sdk_id"                  = "Provided Mini App SDK ID is invalid.";
 "miniapp.sdk.ios.error.message.invalid_contact_id"              = "Provided contact ID is invalid.";
 "miniapp.sdk.ios.error.message.invalid_response"                = "Invalid response received from server.";
 "miniapp.sdk.ios.error.message.download_failed"                 = "Failed to download the mini app.";
+"miniapp.sdk.ios.error.message.signature_failed"                = "Mini app signature check failed.";
 "miniapp.sdk.ios.error.message.miniapp_meta_data_required_permissions_failure" = "Mini App has not been granted all of the required permissions.";
 "miniapp.sdk.ios.error.message.unknown"                         = "Unknown error occurred in %@ domain with error code %@: %@";
 "miniapp.sdk.ios.error.message.host_app"                        = "Host app Error";

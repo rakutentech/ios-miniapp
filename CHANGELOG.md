@@ -1,16 +1,31 @@
 ## CHANGELOG
 
-### 3.6.0 (release date TBD)
+### 3.8.0 (release date TBD)
+
+**SDK**
+
+- **Feature:** Added `rakuten.miniapp.device.FILE_DOWNLOAD` custom permission
+
+### 3.7.0 (2021-10-08)
 
 **SDK**
 
 - **Feature:** Store Manifest as a json file
 - **Feature:** A secure check is performed on manifest permissions before launching the Mini App
+- **Feature:** A new subspec `MiniApp/Signature` is now available. If the dependency is added to the host, the MiniApp zip file signature is now checked to prevent file corruption or man in the middle attack
+- **Feature:** A `RMAForceSignatureCheck` boolean setting can be set in '.plist' file. It is considered false by default and is only used by `MiniApp/Signature`
+- **Feature:** Added support for App Store URL schemes
+- **Feature:** Added new public interface `getMiniAppPreviewInfo` to get Mini app info using preview token
+- **Feature:** Added SSL pinning check for API calls
+- **Feature:** Added `getHostEnvironmentInfo(completionHandler:)` interface to return `MAHostEnvironmentInfo` details to miniapp
 
 **Sample app**
 
 - **Feature:** First time permissions screen now displays requested scopes
+- **Feature:** ATS deactivated to match production needs
+- **Feature:** Added support for previewing mini app using QR Code
 
+---
 ### 3.5.0 (2021-08-05)
 
 **SDK**
@@ -25,6 +40,7 @@
 - **Feature:** Display of a banner on message contact picker when required
 - **Feature:** Added Points to the settings screen to change `getPoints` response values 
 
+---
 ### 3.4.0 (2021-06-25)
 
 **SDK**

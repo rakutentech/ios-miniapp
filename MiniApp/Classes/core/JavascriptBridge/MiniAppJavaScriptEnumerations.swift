@@ -15,6 +15,7 @@ enum MiniAppJSActionCommand: String {
     case sendMessageToContactId
     case sendMessageToMultipleContacts
     case getPoints
+    case getHostEnvironmentInfo
 }
 
 enum JavaScriptExecResult: String {
@@ -25,7 +26,8 @@ enum JavaScriptExecResult: String {
 enum MiniAppSupportedSchemes: String {
     case tel // used for phone calls
     case about // used to reveal internal state and built-in functions (e.g.: alert dialog)
-    case mailto
+    case mailto // used for e-mails
+    case itmsapps = "itms-apps" // used for app-store links
 }
 
 /// List of Device Permissions supported by the SDK that can be requested by a Mini app
@@ -50,6 +52,8 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
     case deviceLocation = "rakuten.miniapp.device.LOCATION"
     /// Custom permission for retrieving points from the host app
     case points = "rakuten.miniapp.user.POINTS"
+    /// Custom permission for downloading files
+    case fileDownload = "rakuten.miniapp.device.FILE_DOWNLOAD"
 
     public var title: String {
         switch self {
@@ -67,6 +71,8 @@ public enum MiniAppCustomPermissionType: String, Codable, CaseIterable {
             return "Send Message"
         case .points:
             return "Rakuten Points"
+        case .fileDownload:
+            return "File Download"
         }
     }
 }

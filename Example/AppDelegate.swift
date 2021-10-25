@@ -16,6 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.tintColor = UIColor.accent
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         AnalyticsManager.shared().set(loggingLevel: .debug)
+        if let url = launchOptions?[.url] as? URL {
+            guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+                return true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
+                self.deepLinkToMiniApp(using: components.path.replacingOccurrences(of: "/preview/", with: ""))
+            })
+        }
         return true
     }
 
@@ -30,15 +38,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true), let host = components.host else {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             return false
         }
-        print("Host: ", host)
+        deepLinkToMiniApp(using: components.path.replacingOccurrences(of: "/preview/", with: ""))
         return true
     }
+
     override init() {
         super.init()
         UIControl.swizzleSendAction()
+    }
+
+    func deepLinkToMiniApp(using token: String) {
+        let rootController = window?.rootViewController as? UINavigationController
+        guard let controllersStack = rootController?.viewControllers else { return }
+        if let homeViewController = controllersStack.first(where: { $0 is ViewController }) as? ViewController {
+            homeViewController.getMiniAppPreviewInfo(previewToken: token, config: Config.current(pinningEnabled: true))
+        } else if let firstLaunchController = controllersStack.first(where: { $0 is FirstLaunchViewController }) as? FirstLaunchViewController {
+            firstLaunchController.previewUsingQRToken = token
+        }
     }
 }
 

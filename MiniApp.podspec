@@ -1,6 +1,6 @@
 Pod::Spec.new do |miniapp|
   miniapp.name         = 'MiniApp'
-  miniapp.version      = '3.6.0'
+  miniapp.version      = '3.8.0'
   miniapp.authors      = "Rakuten Ecosystem Mobile"
   miniapp.summary      = "Rakuten's Mini App SDK"
   miniapp.description  = "This open-source library allows you to integrate Mini App ecosystem into your iOS applications. Mini App SDK also facilitates communication between a mini app and the host app via a message bridge."
@@ -30,11 +30,18 @@ Pod::Spec.new do |miniapp|
         "MiniApp" => ['MiniApp/Classes/core/**/*.{xcassets,js,pdf,xib}','js-miniapp/bridge.js']
     }
     core.dependency 'ZIPFoundation', '0.9.12'
+    core.dependency 'TrustKit', '~>2.0'
   end
-  
+
   miniapp.subspec 'UI' do |ui|
     ui.source_files = 'MiniApp/Classes/ui/**/*.{swift,h,m}'
     ui.dependency 'MiniApp/Core'
+  end
+
+  miniapp.subspec 'Signature' do |signature|
+    signature.source_files = 'MiniApp/Classes/signature/**/*.{swift,h,m}'
+    signature.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_SIGNATURE' }
+    signature.dependency 'MiniApp/Core'
   end
 
   miniapp.subspec 'Admob' do |admob|

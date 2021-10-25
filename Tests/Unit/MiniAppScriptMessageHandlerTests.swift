@@ -563,7 +563,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                       "id" : "1.9034416849400426",
                       "param" : {
                         "messageToContact" : {
-                          "action" : "https://www.example.com\",
+                          "action" : "\(mockHost)\",
                           "caption" : "Sample caption",
                           "image" : "data:image/png;base64,Test==",
                           "text" : "Sample text"
@@ -592,7 +592,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                       "id" : "1.9034416849400426",
                       "param" : {
                         "messageToContact" : {
-                          "action" : "https://www.example.com\",
+                          "action" : "\(mockHost)\",
                           "caption" : "Sample caption",
                           "image" : "data:image/png;base64,Test==",
                           "text" : "Sample text"
@@ -622,7 +622,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         "param" : {
                             "contactId" : "\(mockMiniAppInfo.id)",
                             "messageToContact" : {
-                                "action" : "https://www.example.com/",
+                                "action" : "\(mockHost)/",
                                 "caption" : "Sample caption",
                                 "image" : "data:image/png;base64,Test==",
                                 "text" : "Sample text"
@@ -654,7 +654,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         "param" : {
                             "contactId" : "\(mockMiniAppInfo.id)",
                             "messageToContact" : {
-                                "action" : "https://www.example.com/",
+                                "action" : "\(mockHost)/",
                                 "caption" : "Sample caption",
                                 "image" : "data:image/png;base64,Test==",
                                 "text" : "Sample text"
@@ -678,7 +678,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         "id" : "5.1141101534045745",
                         "param" : {
                             "messageToContact" : {
-                                "action" : "https://www.example.com/",
+                                "action" : "\(mockHost)/",
                                 "caption" : "Sample caption",
                                 "image" : "data:image/png;base64,Test==",
                                 "text" : "Sample text"
@@ -710,7 +710,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         "id" : "5.1141101534045745",
                         "param" : {
                             "messageToContact" : {
-                                "action" : "https://www.example.com/",
+                                "action" : "\(mockHost)/",
                                 "caption" : "Sample caption",
                                 "image" : "data:image/png;base64,Test==",
                                 "text" : "Sample text"
