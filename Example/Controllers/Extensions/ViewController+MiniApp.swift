@@ -15,7 +15,21 @@ extension ViewController: MiniAppNavigationDelegate {
         if url.absoluteString.starts(with: "data:") {
             let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
             presentedViewController?.present(activityViewController, animated: true, completion: nil)
+        } else {
+            if !isDeepLinkURL(url: url) {
+                MiniAppExternalWebViewController.presentModally(url: url,
+                                                                externalLinkResponseHandler: responseHandler,
+                                                                customMiniAppURL: nil)
+            }
         }
+    }
+
+    func isDeepLinkURL(url: URL) -> Bool {
+        if getDeepLinksList().contains(where: url.absoluteString.hasPrefix) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            return true
+        }
+        return false
     }
 
     func fetchAppList(inBackground: Bool) {
