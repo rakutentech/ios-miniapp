@@ -227,7 +227,6 @@ class ViewController: RATViewControllerWithTableView {
             }
         }
     }
-}
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return miniApps?[miniAppsSection?[section] ?? ""]?.count ?? 0
