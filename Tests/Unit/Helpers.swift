@@ -624,7 +624,7 @@ class MockNavigationView: UIView, MiniAppNavigationDelegate {
 
     var onNavigateToUrl: ((URL?) -> Void)?
 
-    func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping MiniAppNavigationResponseHandler) {
+    func miniAppNavigation(shouldOpen url: URL, with externalLinkResponseHandler: @escaping MiniAppNavigationResponseHandler, onClose closeHandler: MiniAppNavigationResponseHandler?) {
         onNavigateToUrl?(url)
         externalLinkResponseHandler(url)
     }
