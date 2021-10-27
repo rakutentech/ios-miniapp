@@ -23,9 +23,14 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                 miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
             )
             beforeEach {
+                callbackProtocol.customEvent = nil
+                callbackProtocol.eventMessage = nil
+                callbackProtocol.messageId = nil
+                callbackProtocol.errorMessage = nil
                 deleteStatusPreferences()
                 clearCustomPermissionsFromStorage(miniAppId: mockMiniAppInfo.id)
             }
+
             context("when user controller receive valid action and id") {
                 it("will return unique id") {
                     let mockMessage = MockWKScriptMessage(name: "getUniqueId", body: "{\"action\": \"getUniqueId\", \"param\": { \"permission\": null}, \"id\":\"12345\"}" as AnyObject)

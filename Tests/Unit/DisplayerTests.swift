@@ -17,10 +17,10 @@ class DisplayerTests: QuickSpec {
 
             context("when mini app id is passed") {
                 it("will return MiniAppView") {
-                    let miniAppView = miniAppDisplayer.getMiniAppView(miniAppId: "miniappid-testing",
-                                                                      versionId: "version-id",
+                    let miniAppView = miniAppDisplayer.getMiniAppView(miniAppId: mockMiniAppInfo.id,
+                                                                      versionId: mockMiniAppInfo.version.versionId,
                                                                       projectId: "project-id",
-                                                                      miniAppTitle: "Mini app title",
+                                                                      miniAppTitle: mockMiniAppInfo.displayName!,
                                                                       hostAppMessageDelegate: mockMessageInterface)
                     expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))
                 }
@@ -29,14 +29,14 @@ class DisplayerTests: QuickSpec {
             context("when mini app url is passed") {
                 it("will return MiniAppView for valid url") {
                     let miniAppView = miniAppDisplayer.getMiniAppView(miniAppURL: URL(string: "http://miniapp")!,
-                                                                      miniAppTitle: "Mini app title",
+                                                                      miniAppTitle: mockMiniAppInfo.displayName!,
                                                                       hostAppMessageDelegate: mockMessageInterface,
                                                                       initialLoadCallback: { _ in })
                     expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))
                 }
                 it("will return MiniAppView for invalid url") {
                     let miniAppView = miniAppDisplayer.getMiniAppView(miniAppURL: URL(string: "file:/miniapp")!,
-                                                                      miniAppTitle: "Mini app title",
+                                                                      miniAppTitle: mockMiniAppInfo.displayName!,
                                                                       hostAppMessageDelegate: mockMessageInterface,
                                                                       initialLoadCallback: { _ in })
                     expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))

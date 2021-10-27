@@ -14,6 +14,8 @@ class MiniAppAdDisplayerTests: QuickSpec {
     var adsDisplayer: MiniAppAdDisplayer?
     let errorText = "TestError"
     var response: String?
+    var customEvent: MiniAppEvent?
+    var customEventComment: String?
     override func spec() {
         adsDisplayer = MiniAppAdDisplayer(with: self)
         describe("When Ads displayer") {
@@ -141,5 +143,10 @@ extension MiniAppAdDisplayerTests: MiniAppCallbackDelegate {
 
     func didReceiveScriptMessageError(messageId: String, errorMessage: String) {
         response = errorMessage
+    }
+
+    func didReceiveEvent(_ event: MiniAppEvent, message: String) {
+        customEvent = event
+        customEventComment = message
     }
 }
