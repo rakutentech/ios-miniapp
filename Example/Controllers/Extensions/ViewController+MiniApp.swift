@@ -11,7 +11,9 @@ extension ViewController: MiniAppNavigationDelegate {
         miniAppDisplayController.refreshNavigationBarButtons(backButtonEnabled: back, forwardButtonEnabled: forward)
     }
 
-    func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler) {
+    func miniAppNavigation(shouldOpen url: URL,
+                           with responseHandler: @escaping MiniAppNavigationResponseHandler,
+                           onClose closeHandler: MiniAppNavigationResponseHandler?) {
         if url.absoluteString.starts(with: "data:") {
             let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
             presentedViewController?.present(activityViewController, animated: true, completion: nil)
@@ -19,7 +21,8 @@ extension ViewController: MiniAppNavigationDelegate {
             if !isDeepLinkURL(url: url) {
                 MiniAppExternalWebViewController.presentModally(url: url,
                                                                 externalLinkResponseHandler: responseHandler,
-                                                                customMiniAppURL: nil, onCloseHandler: nil)
+                                                                customMiniAppURL: nil,
+                                                                onCloseHandler: closeHandler)
             }
         }
     }
