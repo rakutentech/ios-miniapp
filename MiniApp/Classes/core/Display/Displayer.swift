@@ -4,6 +4,7 @@ internal class Displayer {
     init(_ config: MiniAppNavigationConfig? = nil) {
         self.navConfig = config
     }
+
     func getMiniAppView(miniAppId: String,
                         versionId: String,
                         projectId: String,

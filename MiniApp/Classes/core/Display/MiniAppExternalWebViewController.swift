@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import WebKit
 
-class MiniAppExternalWebViewController: UIViewController {
+public class MiniAppExternalWebViewController: UIViewController {
 
     private var webView: WKWebView!
     private var currentURL: URL?
@@ -46,7 +46,7 @@ class MiniAppExternalWebViewController: UIViewController {
         UIApplication.shared.keyWindow()?.topController()?.present(navigationController, animated: true)
     }
 
-    override func loadView() {
+    public override func loadView() {
         view = UIView()
         view.backgroundColor = .lightGray
         self.webView = WKWebView(frame: self.view.frame, configuration: getWebViewConfig())
@@ -66,7 +66,7 @@ class MiniAppExternalWebViewController: UIViewController {
         return config
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         self.webView.navigationDelegate = self
@@ -96,7 +96,7 @@ class MiniAppExternalWebViewController: UIViewController {
 }
 
 extension MiniAppExternalWebViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.currentURL = self.webView.url
         self.backBarButton.isEnabled = webView.canGoBack
         self.forwardBarButton.isEnabled = webView.canGoForward
