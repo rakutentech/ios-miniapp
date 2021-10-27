@@ -19,6 +19,7 @@
 		2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */; };
 		2AB1B0E926A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */; };
 		2AB1B0F026A6DB77004CAC1B /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */; };
+		2AD324EA271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD324E9271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift */; };
 		2AE218D3269C9E6100F9D1E7 /* Deeplink.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */; };
 		2AE218D7269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */; };
 		2AE218F0269D46DA00F9D1E7 /* UITextView+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */; };
@@ -129,6 +130,7 @@
 		2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalWebViewControllerTests.swift; sourceTree = "<group>"; };
 		2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPermissionsViewControllerTests.swift; sourceTree = "<group>"; };
 		2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
+		2AD324E9271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewMiniAppFetcherTests.swift; sourceTree = "<group>"; };
 		2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Deeplink.storyboard; sourceTree = "<group>"; };
 		2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkErrorViewController.swift; sourceTree = "<group>"; };
 		2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+MiniApp.swift"; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 		2AB1B0D126A6D625004CAC1B /* core */ = {
 			isa = PBXGroup;
 			children = (
+				2AD324E8271E626F006EBEFB /* Downloader */,
 				2AB1B0D826A6D79E004CAC1B /* Display */,
 			);
 			path = core;
@@ -302,6 +305,18 @@
 				2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */,
 			);
 			path = UIModule;
+			sourceTree = "<group>";
+		};
+		2AD324E8271E626F006EBEFB /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */,
+				38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */,
+				38AC730926234835000B9D0E /* MetaDataDownloaderTests.swift */,
+				38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */,
+				2AD324E9271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift */,
+			);
+			path = Downloader;
 			sourceTree = "<group>";
 		};
 		2AE218EC269D2AAC00F9D1E7 /* Deeplink */ = {
@@ -447,9 +462,6 @@
 				2AB1B0EE26A6DB62004CAC1B /* UIModule */,
 				2AB1B0D126A6D625004CAC1B /* core */,
 				389FA22F23D01FA800BC3120 /* MiniAppClientTests.swift */,
-				38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */,
-				38AC730926234835000B9D0E /* MetaDataDownloaderTests.swift */,
-				38252B9C23E029FA008A4E93 /* ManifestDownloaderTests.swift */,
 				388FEEE523DEABCF0062382F /* EnvironmentTests.swift */,
 				38252B9823DFFBAB008A4E93 /* ListingAPITests.swift */,
 				38252B9A23DFFBBE008A4E93 /* ManifestAPITests.swift */,
@@ -457,7 +469,6 @@
 				38F73B4423D554FE00F2C1CE /* Helpers.swift */,
 				188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */,
 				3862EFA723EA5752004D518C /* MiniApp+URLRequestTests.swift */,
-				3862EFB023EABC15004D518C /* MiniAppDownloaderTests.swift */,
 				183AF08224CFCF37000ABCBF /* MiniAppStorageTests.swift */,
 				3862EFB423EAF6B8004D518C /* MiniApp+NSErrorTests.swift */,
 				385C25C923F2E8BA00D61206 /* DisplayerTests.swift */,
@@ -820,6 +831,7 @@
 				3862EFB123EABC15004D518C /* MiniAppDownloaderTests.swift in Sources */,
 				31F57AE626E3D105007E0BFD /* APIClientTests.swift in Sources */,
 				3813F32324051E1D002703D7 /* MiniAppStatusTests.swift in Sources */,
+				2AD324EA271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift in Sources */,
 				750191FB804B88456CA24CA7 /* MiniAppAdDisplayerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

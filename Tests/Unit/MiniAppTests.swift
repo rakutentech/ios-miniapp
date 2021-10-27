@@ -156,6 +156,19 @@ class MiniAppTests: QuickSpec {
                     expect(miniAppInfo).toEventuallyNot(equal(mockMiniAppInfo))
                 }
             }
+            context("when getMiniAppPreviewInfo is called with invalid token") {
+                it("will return server error") {
+                    var testError: MASDKError?
+                    MiniApp.shared().getMiniAppPreviewInfo(using: "TOKEN", completionHandler: { (result) in
+                        switch result {
+                        case .success: break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    })
+                    expect(testError?.localizedDescription).toEventuallyNot(beNil(), timeout: .seconds(5))
+                }
+            }
         }
     }
 }
