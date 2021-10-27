@@ -5,6 +5,7 @@
  */
 
 import { MiniAppBridge } from './common-bridge';
+import { MiniAppSDKLogger } from './common-log';
 import { AdTypes } from './types/ad-types';
 import { Reward } from './types/response-types/rewarded';
 import { DevicePermission } from './types/device-permission';
@@ -34,6 +35,7 @@ import {
 
 export {
   MiniAppBridge,
+  MiniAppSDKLogger,
   AdTypes,
   Reward,
   DevicePermission,

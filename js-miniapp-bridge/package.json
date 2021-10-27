@@ -26,8 +26,8 @@
   "scripts": {
     "lint": "gts check",
     "clean": "gts clean",
-    "browserify-android": "browserify ./build/src/android/android-bridge.js > build/src/android/bridge.js",
-    "browserify-ios": "browserify ./build/src/ios/ios-bridge.js > build/src/ios/bridge.js",
+    "browserify-android": "browserify ./build/src/android/android-bridge.js > build/src/android/bridge.js && browserify ./build/src/android/android-log.js > build/src/android/log.js",
+    "browserify-ios": "browserify ./build/src/ios/ios-bridge.js > build/src/ios/bridge.js && browserify ./build/src/ios/ios-log.js > build/src/ios/log.js",
     "compile": "tsc -p . && npm run browserify-android  && npm run browserify-ios",
     "prebuild": "npm run clean && npm run lint",
     "buildBridge": "npm run lint && npm run compile && npm run test",

@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import * as Bridge from '../src/common-bridge';
+import * as Logger from '../src/common-log';
 import {
   CustomPermissionName,
   CustomPermissionStatus,
@@ -28,7 +29,9 @@ const mockExecutor = {
   execEvents: sinon.stub(),
   getPlatform: sinon.stub(),
 };
-
+const mockLogger = {
+  log: sinon.stub(),
+};
 const handleError = error => {};
 
 const messageToContact: MessageToContact = {
@@ -635,6 +638,44 @@ describe('getPoints', () => {
     mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
 
     return expect(bridge.getPoints()).to.eventually.be.rejected;
+  });
+});
+
+describe('console.log', () => {
+  const logger = new Logger.MiniAppSDKLogger(mockLogger);
+  window.MiniAppSDKLogger = logger;
+
+  it('will use platform logger on log calls', () => {
+    console.log('test');
+    return expect(logger.lastLog).to.deep.equal({
+      icon: '📗',
+      messageType: 'log',
+      message: ['test'],
+    });
+  });
+  it('will use platform logger on warning calls', () => {
+    console.warn('test');
+    return expect(logger.lastLog).to.deep.equal({
+      icon: '📙',
+      messageType: 'warning',
+      message: ['test'],
+    });
+  });
+  it('will use platform logger on debug calls', () => {
+    console.debug('test');
+    return expect(logger.lastLog).to.deep.equal({
+      icon: '📘',
+      messageType: 'debug',
+      message: ['test'],
+    });
+  });
+  it('will use platform logger on error calls', () => {
+    console.error('test');
+    return expect(logger.lastLog).to.deep.equal({
+      icon: '📕',
+      messageType: 'error',
+      message: ['test'],
+    });
   });
 });
 
