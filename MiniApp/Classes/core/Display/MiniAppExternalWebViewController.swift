@@ -8,6 +8,7 @@ public class MiniAppExternalWebViewController: UIViewController {
     private var currentURL: URL?
     private var customMiniAppURL: URL?
     private var miniAppExternalUrlLoader: MiniAppExternalUrlLoader?
+    private var miniAppExternalUrlClose: MiniAppNavigationResponseHandler?
 
     lazy var backBarButton: UIBarButtonItem = {
         let view = UIBarButtonItem(image: UIImage(named: "arrow_left-24", in: Bundle.miniAppSDKBundle(), with: .none), style: .plain, target: self, action: #selector(navigateBack))
@@ -30,8 +31,10 @@ public class MiniAppExternalWebViewController: UIViewController {
     ///
     public class func presentModally(url: URL,
                                      externalLinkResponseHandler: MiniAppNavigationResponseHandler?,
-                                     customMiniAppURL: URL? = nil) {
+                                     customMiniAppURL: URL? = nil,
+                                     onCloseHandler: MiniAppNavigationResponseHandler?) {
         let webctrl = MiniAppExternalWebViewController()
+        webctrl.miniAppExternalUrlClose = onCloseHandler
         webctrl.currentURL = url
         webctrl.customMiniAppURL = customMiniAppURL
         let navigationController = MiniAppCloseNavigationController(rootViewController: webctrl)
@@ -73,6 +76,12 @@ public class MiniAppExternalWebViewController: UIViewController {
 
         // back/forward navigation buttons
         navigationItem.setLeftBarButtonItems([backBarButton, forwardBarButton], animated: true)
+    }
+
+    deinit {
+        if let wView = webView, let url = wView.url {
+            miniAppExternalUrlClose?(url)
+        }
     }
 
     @objc

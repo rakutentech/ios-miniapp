@@ -9,15 +9,43 @@ class RealMiniAppViewTests: QuickSpec {
 
         describe("Mini App view") {
             let mockMessageInterface = MockMessageInterface()
-            let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing",
-                                              versionId: "version-id",
+            let miniAppView = RealMiniAppView(miniAppId: mockMiniAppInfo.id,
+                                              versionId: mockMiniAppInfo.version.versionId,
                                               projectId: "project-id",
-                                              miniAppTitle: "Mini app title",
+                                              miniAppTitle: mockMiniAppInfo.displayName!,
                                               hostAppMessageDelegate: mockMessageInterface)
+
+            context("when SDK should send event") {
+                beforeEach {
+                    miniAppView.messageBodies = []
+                }
+                it("will send pause to MiniApp when host app enters background") {
+                    NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.pause.rawValue))
+                }
+                it("will send resume to MiniApp when host app enters foreground") {
+                    NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.resume.rawValue))
+                }
+                it("will send pause to MiniApp when it opens an external webview") {
+                    miniAppView.validateScheme(requestURL: URL(string: "https://test.com")!, navigationAction: WKNavigationAction()) { _ in }
+                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.pause.rawValue))
+                }
+                it("will send resume to MiniApp when it closes an external webview") {
+                    miniAppView.onExternalWebviewClose?(URL(string: "https://test.com")!)
+                    expect(miniAppView.messageBodies.count).toEventually(be(2))
+                    expect(miniAppView.messageBodies[1]).toEventually(contain(MiniAppEvent.resume.rawValue))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.externalWebViewClosed.rawValue))
+                }
+            }
+
             context("when initialized with valid parameters") {
                 it("will return MiniAppView object for given app id") {
-                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing",
-                                                      versionId: "version-id",
+                    let miniAppView = RealMiniAppView(miniAppId: mockMiniAppInfo.id,
+                                                      versionId: mockMiniAppInfo.version.versionId,
                                                       projectId: "project-id",
                                                       miniAppTitle: "",
                                                       hostAppMessageDelegate: mockMessageInterface)
@@ -38,8 +66,8 @@ class RealMiniAppViewTests: QuickSpec {
             context("when host app info is specified in plist") {
                 it("will add custom string in User agent") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing",
-                        versionId: "version-id",
+                        miniAppId: mockMiniAppInfo.id,
+                        versionId: mockMiniAppInfo.version.versionId,
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface)
@@ -50,10 +78,10 @@ class RealMiniAppViewTests: QuickSpec {
 //        describe("WKUIDelegate") {
 //            func createMiniAppView() -> MockRealMiniAppView {
 //                return MockRealMiniAppView(
-//                    miniAppId: "miniappid-testing",
-//                    versionId: "version-id",
+//                    miniAppId: mockMiniAppInfo.id,
+//                    versionId: mockMiniAppInfo.version.versionId,
 //                    projectId: "project-id",
-//                    miniAppTitle: "Mini app title",
+//                    miniAppTitle: mockMiniAppInfo.displayName!,
 //                    hostAppMessageDelegate: MockMessageInterface())
 //            }
 //            context("when webview is loaded with alert javascript dialog") {
@@ -175,8 +203,8 @@ class RealMiniAppViewNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to never") {
                 it("will return MiniAppView without navigation") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing",
-                        versionId: "version-id",
+                        miniAppId: mockMiniAppInfo.id,
+                        versionId: mockMiniAppInfo.version.versionId,
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
@@ -189,8 +217,8 @@ class RealMiniAppViewNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to always") {
                 it("will return MiniAppView with navigation visible") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing",
-                        versionId: "version-id",
+                        miniAppId: mockMiniAppInfo.id,
+                        versionId: mockMiniAppInfo.version.versionId,
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
@@ -208,8 +236,8 @@ class RealMiniAppViewNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to auto") {
                 it("will return MiniAppView with navigation hidden") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing",
-                        versionId: "version-id", projectId: "project-id", miniAppTitle: "",
+                        miniAppId: mockMiniAppInfo.id,
+                        versionId: mockMiniAppInfo.version.versionId, projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .auto
                     )
@@ -231,7 +259,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to never") {
                 it("will return MiniAppView without navigation") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", projectId: "project-id", miniAppTitle: "",
+                        miniAppId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId, projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .never,
                         navigationDelegate: customNav,
@@ -244,7 +272,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to always") {
                 it("will return MiniAppView with navigation visible") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", projectId: "project-id", miniAppTitle: "",
+                        miniAppId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId, projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .always,
                         navigationDelegate: customNav, navigationView: customNav
@@ -259,7 +287,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to auto") {
                 it("will return MiniAppView with navigation hidden") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", projectId: "project-id", miniAppTitle: "",
+                        miniAppId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId, projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .auto,
                         navigationDelegate: customNav,

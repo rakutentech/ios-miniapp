@@ -114,6 +114,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Catching analytics events](#analytics-events)
     * [Passing Query parameters while creating Mini App](#query-param-mini-app)
     * [Permissions required from the Host app](#permissions-from-host-app)
+    * [MiniApp events](#miniapp-events)
 
 <a id="create-mini-app"></a>
 
@@ -905,6 +906,18 @@ Mini App SDK requires the host app to include the following set of device permis
 | [NSLocationAlwaysAndWhenInUseUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nslocationalwaysandwheninuseusagedescription) |  Location  | Mini app to track/get the current location of the user |
 | [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nscamerausagedescription)                                         |   Camera   | Camera permission required by Mini app to take pictures                              |
 | [NSMicrophoneUsageDescription](https://developer.apple.com/documentation/bundleresources/information_property_list/nsmicrophoneusagedescription)                                 | Microphone | Microphone permission required by Mini app to record a video.                             |
+
+<a id="miniapp-events"></a>
+
+### MiniApp events
+
+Mini App SDK allows MiniApps to react to several events triggered by host app. These include
+
+| Event | Reason |
+|-------|--------|
+| `pause` |  MiniApp view controller will disappear, MiniApp will open an external web view, host application will resign to be active |
+| `resume` | MiniApp view controller did appear, user closed a web view launched by MiniApp, host application did become active|
+| `externalWebViewClosed` | user closed a web view launched by MiniApp |
 
 <a id="faqs-and-troubleshooting"></a>
 
