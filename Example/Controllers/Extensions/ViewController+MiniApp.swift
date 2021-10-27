@@ -19,7 +19,7 @@ extension ViewController: MiniAppNavigationDelegate {
             if !isDeepLinkURL(url: url) {
                 MiniAppExternalWebViewController.presentModally(url: url,
                                                                 externalLinkResponseHandler: responseHandler,
-                                                                customMiniAppURL: nil)
+                                                                customMiniAppURL: nil, onCloseHandler: nil)
             }
         }
     }
