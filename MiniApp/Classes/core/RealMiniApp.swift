@@ -9,7 +9,7 @@ internal class RealMiniApp {
     var miniAppPermissionStorage: MiniAppPermissionsStorage
     var miniAppManifestStorage: MAManifestStorage
     var miniAppAnalyticsConfig: [MAAnalyticsConfig]
-    var previewMiniAppInfoFetcher: PreivewMiniAppFetcher
+    var previewMiniAppInfoFetcher: PreviewMiniAppFetcher
 
     convenience init() {
         self.init(with: nil)
@@ -30,7 +30,7 @@ internal class RealMiniApp {
         miniAppDownloader = MiniAppDownloader(apiClient: miniAppClient, manifestDownloader: manifestDownloader, status: miniAppStatus)
         displayer = Displayer(navigationSettings)
         miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
-        previewMiniAppInfoFetcher = PreivewMiniAppFetcher()
+        previewMiniAppInfoFetcher = PreviewMiniAppFetcher()
     }
 
     func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
