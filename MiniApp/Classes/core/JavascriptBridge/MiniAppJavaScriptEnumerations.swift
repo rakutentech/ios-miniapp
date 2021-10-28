@@ -116,3 +116,16 @@ enum MiniAppAdType: Int {
     /// Rewarded ads are interstistial ads that provide a pre-defined reward to the user if they display it for a certain time
     case rewarded
 }
+
+enum MiniAppEvent: String {
+    case externalWebViewClosed = "miniappwebviewclosed"
+    case pause = "miniapppause"
+    case resume = "miniappresume"
+
+    static let notificationName = Notification.Name("notificationName")
+
+    struct Event {
+        var type: MiniAppEvent
+        var comment: String
+    }
+}

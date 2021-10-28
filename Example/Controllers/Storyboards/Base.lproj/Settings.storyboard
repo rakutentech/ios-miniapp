@@ -96,15 +96,15 @@
                         <sections>
                             <tableViewSection id="EK0-yW-Cx1">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Ge8-BZ-Zye">
-                                        <rect key="frame" x="0.0" y="18" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="2" indentationWidth="2" rowHeight="56" id="Ge8-BZ-Zye">
+                                        <rect key="frame" x="0.0" y="18" width="414" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ge8-BZ-Zye" id="dsG-bS-l3a">
-                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questionmark" translatesAutoresizingMaskIntoConstraints="NO" id="TrC-Nv-NUT">
-                                                    <rect key="frame" x="20" y="9.5" width="25" height="25"/>
+                                                    <rect key="frame" x="20" y="15.5" width="25" height="25"/>
                                                     <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="TrC-Nv-NUT" secondAttribute="height" id="4QM-ne-5dE"/>
@@ -112,7 +112,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Query Parameters" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D3i-Rb-b5E">
-                                                    <rect key="frame" x="53" y="11" width="323.5" height="22"/>
+                                                    <rect key="frame" x="53" y="11" width="323.5" height="34"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -127,8 +127,57 @@
                                                 <constraint firstItem="TrC-Nv-NUT" firstAttribute="centerY" secondItem="D3i-Rb-b5E" secondAttribute="centerY" id="mC4-4U-OgW"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="separatorInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="oGg-OY-2iJ" kind="show" id="P0U-Vq-xmi"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="2" indentationWidth="2" rowHeight="56" id="LDW-zt-ubw">
+                                        <rect key="frame" x="0.0" y="74" width="414" height="56"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LDW-zt-ubw" id="eeq-L4-XV8">
+                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="56"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="link" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dfi-5k-9qa">
+                                                    <rect key="frame" x="20" y="15" width="25" height="26"/>
+                                                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="98A-Bp-4lS"/>
+                                                        <constraint firstAttribute="width" secondItem="dfi-5k-9qa" secondAttribute="height" id="Kk4-kl-4l7"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deep Links" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3dY-Oo-QVM">
+                                                    <rect key="frame" x="53" y="11" width="323.5" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="dfi-5k-9qa" firstAttribute="centerY" secondItem="3dY-Oo-QVM" secondAttribute="centerY" id="44o-c2-mlg"/>
+                                                <constraint firstItem="dfi-5k-9qa" firstAttribute="leading" secondItem="eeq-L4-XV8" secondAttribute="leadingMargin" id="5vP-IW-b2a"/>
+                                                <constraint firstItem="dfi-5k-9qa" firstAttribute="centerY" secondItem="eeq-L4-XV8" secondAttribute="centerY" id="Efr-7d-3pY"/>
+                                                <constraint firstItem="3dY-Oo-QVM" firstAttribute="top" secondItem="eeq-L4-XV8" secondAttribute="topMargin" id="Sgv-Kh-UTl"/>
+                                                <constraint firstItem="3dY-Oo-QVM" firstAttribute="trailing" secondItem="eeq-L4-XV8" secondAttribute="trailingMargin" id="iO7-x9-rdg"/>
+                                                <constraint firstItem="3dY-Oo-QVM" firstAttribute="leading" secondItem="dfi-5k-9qa" secondAttribute="trailing" constant="8" id="vnN-AH-O6Q"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="T5y-pK-Wsq" kind="show" id="Cfj-L0-vuN"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -143,7 +192,43 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fv5-qa-fkc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-86" y="1181"/>
+            <point key="canvasLocation" x="-86.956521739130437" y="1180.5803571428571"/>
+        </scene>
+        <!--Deeplink List View Controller-->
+        <scene sceneID="a2B-kP-GWn">
+            <objects>
+                <tableViewController id="T5y-pK-Wsq" customClass="DeeplinkListViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="258-qk-NDE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" id="k43-Jo-cCg">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k43-Jo-cCg" id="HkW-dj-QOh">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="T5y-pK-Wsq" id="Ml8-6P-SNs"/>
+                            <outlet property="delegate" destination="T5y-pK-Wsq" id="9Dc-31-CCL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="My8-6f-bEB">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="LPH-ZV-Bj3">
+                            <connections>
+                                <action selector="addDeepLink" destination="T5y-pK-Wsq" id="vWk-Es-Kt4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ezs-YY-9Mh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-87" y="1915"/>
         </scene>
         <!--Query Param View Controller-->
         <scene sceneID="2br-f7-rnQ">
@@ -208,7 +293,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2nl-1u-a8V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-86" y="1915"/>
+            <point key="canvasLocation" x="-1042" y="1915"/>
         </scene>
         <!--Settings-->
         <scene sceneID="jCv-b8-5XF">
@@ -1280,6 +1365,7 @@
         <image name="Switch" width="512" height="512"/>
         <image name="UserContacts" width="512" height="512"/>
         <image name="exam" width="512" height="512"/>
+        <image name="link" catalog="system" width="128" height="122"/>
         <image name="p.circle" catalog="system" width="128" height="121"/>
         <image name="profile" width="45.532001495361328" height="45.532001495361328"/>
         <image name="questionmark" width="512" height="512"/>

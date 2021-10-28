@@ -9,15 +9,43 @@ class RealMiniAppViewTests: QuickSpec {
 
         describe("Mini App view") {
             let mockMessageInterface = MockMessageInterface()
-            let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing",
-                                              versionId: "version-id",
+            let miniAppView = RealMiniAppView(miniAppId: mockMiniAppInfo.id,
+                                              versionId: mockMiniAppInfo.version.versionId,
                                               projectId: "project-id",
-                                              miniAppTitle: "Mini app title",
+                                              miniAppTitle: mockMiniAppInfo.displayName!,
                                               hostAppMessageDelegate: mockMessageInterface)
+
+            context("when SDK should send event") {
+                beforeEach {
+                    miniAppView.messageBodies = []
+                }
+                it("will send pause to MiniApp when host app enters background") {
+                    NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.pause.rawValue))
+                }
+                it("will send resume to MiniApp when host app enters foreground") {
+                    NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.resume.rawValue))
+                }
+                it("will send pause to MiniApp when it opens an external webview") {
+                    miniAppView.validateScheme(requestURL: URL(string: "https://test.com")!, navigationAction: WKNavigationAction()) { _ in }
+                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.pause.rawValue))
+                }
+                it("will send resume to MiniApp when it closes an external webview") {
+                    miniAppView.onExternalWebviewClose?(URL(string: "https://test.com")!)
+                    expect(miniAppView.messageBodies.count).toEventually(be(2))
+                    expect(miniAppView.messageBodies[1]).toEventually(contain(MiniAppEvent.resume.rawValue))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.externalWebViewClosed.rawValue))
+                }
+            }
+
             context("when initialized with valid parameters") {
                 it("will return MiniAppView object for given app id") {
-                    let miniAppView = RealMiniAppView(miniAppId: "miniappid-testing",
-                                                      versionId: "version-id",
+                    let miniAppView = RealMiniAppView(miniAppId: mockMiniAppInfo.id,
+                                                      versionId: mockMiniAppInfo.version.versionId,
                                                       projectId: "project-id",
                                                       miniAppTitle: "",
                                                       hostAppMessageDelegate: mockMessageInterface)
@@ -38,8 +66,8 @@ class RealMiniAppViewTests: QuickSpec {
             context("when host app info is specified in plist") {
                 it("will add custom string in User agent") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing",
-                        versionId: "version-id",
+                        miniAppId: mockMiniAppInfo.id,
+                        versionId: mockMiniAppInfo.version.versionId,
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface)
@@ -47,124 +75,6 @@ class RealMiniAppViewTests: QuickSpec {
                 }
             }
         }
-//        describe("WKUIDelegate") {
-//            func createMiniAppView() -> MockRealMiniAppView {
-//                return MockRealMiniAppView(
-//                    miniAppId: "miniappid-testing",
-//                    versionId: "version-id",
-//                    projectId: "project-id",
-//                    miniAppTitle: "Mini app title",
-//                    hostAppMessageDelegate: MockMessageInterface())
-//            }
-//            context("when webview is loaded with alert javascript dialog") {
-//                it("will show native alert with request message") {
-//                    let miniAppView = createMiniAppView()
-//                    miniAppView.webView(miniAppView.webView, runJavaScriptAlertPanelWithMessage: "mini-app-alert",
-//                                        initiatedByFrame: WKFrameInfo(), completionHandler: {})
-//
-//                    expect(miniAppView.alertController?.message).to(equal("mini-app-alert"))
-//                    expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
-//                }
-//                it("will call completion handler when OK is tapped") {
-//                    var okTapped = false
-//                    let miniAppView = createMiniAppView()
-//                    miniAppView.webView(miniAppView.webView, runJavaScriptAlertPanelWithMessage: "mini-app-alert",
-//                                        initiatedByFrame: WKFrameInfo(), completionHandler: { okTapped = true })
-//
-//                    miniAppView.tapButton(.okButton)
-//                    expect(okTapped).toEventually(beTrue(), timeout: .seconds(5))
-//                }
-//            }
-//            context("when webview is loaded with confirm javascript dialog") {
-//                it("will show native alert with request message, ok and cancel button") {
-//                    let miniAppView = createMiniAppView()
-//                    miniAppView.webView(miniAppView.webView, runJavaScriptConfirmPanelWithMessage: "mini-app-confirm",
-//                                        initiatedByFrame: WKFrameInfo(), completionHandler: {(_) in })
-//
-//                    expect(miniAppView.alertController?.message).to(equal("mini-app-confirm"))
-//                    expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
-//                    expect(miniAppView.alertController?.actions[1].title).to(equal("Cancel"))
-//                }
-//                it("will return true to completion handler when OK button is tapped") {
-//                    var confirm = false
-//                    let miniAppView = createMiniAppView()
-//                    miniAppView.webView(miniAppView.webView, runJavaScriptConfirmPanelWithMessage: "mini-app-confirm",
-//                                        initiatedByFrame: WKFrameInfo(), completionHandler: {(status) in
-//                                            confirm = status
-//                                        })
-//
-//                    miniAppView.tapButton(.okButton)
-//                    expect(confirm).toEventually(beTrue(), timeout: .seconds(5))
-//                }
-//                it("will show native alert with request message, ok and cancel button") {
-//                    let miniAppView = createMiniAppView()
-//                    miniAppView.webView(miniAppView.webView, runJavaScriptConfirmPanelWithMessage: "mini-app-confirm",
-//                                        initiatedByFrame: WKFrameInfo(), completionHandler: {(_) in })
-//
-//                    expect(miniAppView.alertController).toEventuallyNot(beNil(), timeout: .seconds(10))
-//                    expect(miniAppView.alertController?.message).to(equal("mini-app-confirm"))
-//                    expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
-//                    expect(miniAppView.alertController?.actions[1].title).to(equal("Cancel"))
-//                }
-//                it("will return false to completion handler when Cancel button is tapped") {
-//                    var confirm = true
-//                    let miniAppView = createMiniAppView()
-//                    miniAppView.webView(miniAppView.webView, runJavaScriptConfirmPanelWithMessage: "mini-app-confirm",
-//                                        initiatedByFrame: WKFrameInfo(), completionHandler: {(status) in
-//                                            confirm = status
-//                                        })
-//
-//                    miniAppView.tapButton(.cancelButton)
-//                    expect(confirm).toEventually(beFalse(), timeout: .seconds(5))
-//                }
-//            }
-//            context("when webview is loaded with prompt javascript dialog") {
-//                it("will show native alert with request message and wanted text in textfield") {
-//                    let miniAppView = createMiniAppView()
-//                    miniAppView.webView(miniAppView.webView, runJavaScriptTextInputPanelWithPrompt: "Please enter your name:",
-//                                        defaultText: "Rakuten Mini app", initiatedByFrame: WKFrameInfo(), completionHandler: {(_) in })
-//
-//                    expect(miniAppView.alertController).toEventuallyNot(beNil(), timeout: .seconds(10))
-//                    expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
-//                    expect(miniAppView.alertController?.actions[1].title).to(equal("Cancel"))
-//                    expect(miniAppView.alertController?.message).to(equal("Please enter your name:"))
-//                    expect(miniAppView.alertController?.textFields?.first?.text).to(equal("Rakuten Mini app"))
-//                }
-//                it("will return text field value to completion handler when OK button is tapped") {
-//                    var userInput: String?
-//                    let miniAppView = createMiniAppView()
-//                    miniAppView.webView(miniAppView.webView, runJavaScriptTextInputPanelWithPrompt: "Please enter your name:",
-//                                        defaultText: "Rakuten Mini app", initiatedByFrame: WKFrameInfo(), completionHandler: {(value) in
-//                                            userInput = value
-//                                        })
-//
-//                    miniAppView.tapButton(.okButton)
-//                    expect(userInput).toEventually(equal("Rakuten Mini app"), timeout: .seconds(5))
-//                }
-//                it("will show native alert with request message and wanted no in textfield") {
-//                    let miniAppView = createMiniAppView()
-//                    miniAppView.webView(miniAppView.webView, runJavaScriptTextInputPanelWithPrompt: "Please enter your name:",
-//                                        defaultText: "", initiatedByFrame: WKFrameInfo(), completionHandler: {(_) in })
-//
-//                    expect(miniAppView.alertController).toEventuallyNot(beNil(), timeout: .seconds(10))
-//                    expect(miniAppView.alertController?.actions[0].title).to(equal("OK"))
-//                    expect(miniAppView.alertController?.actions[1].title).to(equal("Cancel"))
-//                    expect(miniAppView.alertController?.message).to(equal("Please enter your name:"))
-//                    expect(miniAppView.alertController?.textFields?.first?.text).to(equal(""))
-//                }
-//                it("will return nil to completion handler when Cancel button is tapped") {
-//                    var userInput: String? = "fake-text"
-//                    let miniAppView = createMiniAppView()
-//                    miniAppView.webView(miniAppView.webView, runJavaScriptTextInputPanelWithPrompt: "Please enter your name:",
-//                                        defaultText: "", initiatedByFrame: WKFrameInfo(), completionHandler: {(value) in
-//                                            userInput = value
-//                                        })
-//
-//                    miniAppView.tapButton(.cancelButton)
-//                    expect(userInput).toEventually(beNil(), timeout: .seconds(5))
-//                }
-//            }
-//        }
     }
 }
 
@@ -175,8 +85,8 @@ class RealMiniAppViewNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to never") {
                 it("will return MiniAppView without navigation") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing",
-                        versionId: "version-id",
+                        miniAppId: mockMiniAppInfo.id,
+                        versionId: mockMiniAppInfo.version.versionId,
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
@@ -189,8 +99,8 @@ class RealMiniAppViewNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to always") {
                 it("will return MiniAppView with navigation visible") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing",
-                        versionId: "version-id",
+                        miniAppId: mockMiniAppInfo.id,
+                        versionId: mockMiniAppInfo.version.versionId,
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
@@ -208,8 +118,8 @@ class RealMiniAppViewNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to auto") {
                 it("will return MiniAppView with navigation hidden") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing",
-                        versionId: "version-id", projectId: "project-id", miniAppTitle: "",
+                        miniAppId: mockMiniAppInfo.id,
+                        versionId: mockMiniAppInfo.version.versionId, projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .auto
                     )
@@ -231,7 +141,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to never") {
                 it("will return MiniAppView without navigation") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", projectId: "project-id", miniAppTitle: "",
+                        miniAppId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId, projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .never,
                         navigationDelegate: customNav,
@@ -244,7 +154,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to always") {
                 it("will return MiniAppView with navigation visible") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", projectId: "project-id", miniAppTitle: "",
+                        miniAppId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId, projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .always,
                         navigationDelegate: customNav, navigationView: customNav
@@ -259,7 +169,7 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
             context("when initialized with navigation parameter set to auto") {
                 it("will return MiniAppView with navigation hidden") {
                     let miniAppView = RealMiniAppView(
-                        miniAppId: "miniappid-testing", versionId: "version-id", projectId: "project-id", miniAppTitle: "",
+                        miniAppId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId, projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .auto,
                         navigationDelegate: customNav,

@@ -2,12 +2,13 @@ import Foundation
 import UIKit
 import WebKit
 
-class MiniAppExternalWebViewController: UIViewController {
+public class MiniAppExternalWebViewController: UIViewController {
 
     private var webView: WKWebView!
     private var currentURL: URL?
     private var customMiniAppURL: URL?
     private var miniAppExternalUrlLoader: MiniAppExternalUrlLoader?
+    private var miniAppExternalUrlClose: MiniAppNavigationResponseHandler?
 
     lazy var backBarButton: UIBarButtonItem = {
         let view = UIBarButtonItem(image: UIImage(named: "arrow_left-24", in: Bundle.miniAppSDKBundle(), with: .none), style: .plain, target: self, action: #selector(navigateBack))
@@ -30,8 +31,10 @@ class MiniAppExternalWebViewController: UIViewController {
     ///
     public class func presentModally(url: URL,
                                      externalLinkResponseHandler: MiniAppNavigationResponseHandler?,
-                                     customMiniAppURL: URL? = nil) {
+                                     customMiniAppURL: URL? = nil,
+                                     onCloseHandler: MiniAppNavigationResponseHandler?) {
         let webctrl = MiniAppExternalWebViewController()
+        webctrl.miniAppExternalUrlClose = onCloseHandler
         webctrl.currentURL = url
         webctrl.customMiniAppURL = customMiniAppURL
         let navigationController = MiniAppCloseNavigationController(rootViewController: webctrl)
@@ -43,7 +46,7 @@ class MiniAppExternalWebViewController: UIViewController {
         UIApplication.shared.keyWindow()?.topController()?.present(navigationController, animated: true)
     }
 
-    override func loadView() {
+    public override func loadView() {
         view = UIView()
         view.backgroundColor = .lightGray
         self.webView = WKWebView(frame: self.view.frame, configuration: getWebViewConfig())
@@ -63,7 +66,7 @@ class MiniAppExternalWebViewController: UIViewController {
         return config
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         self.webView.navigationDelegate = self
@@ -73,6 +76,12 @@ class MiniAppExternalWebViewController: UIViewController {
 
         // back/forward navigation buttons
         navigationItem.setLeftBarButtonItems([backBarButton, forwardBarButton], animated: true)
+    }
+
+    deinit {
+        if let wView = webView, let url = wView.url {
+            miniAppExternalUrlClose?(url)
+        }
     }
 
     @objc
@@ -87,7 +96,7 @@ class MiniAppExternalWebViewController: UIViewController {
 }
 
 extension MiniAppExternalWebViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.currentURL = self.webView.url
         self.backBarButton.isEnabled = webView.canGoBack
         self.forwardBarButton.isEnabled = webView.canGoForward

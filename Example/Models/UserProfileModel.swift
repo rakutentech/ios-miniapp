@@ -51,6 +51,22 @@ func getProfileSettings(key: String = "UserProfileDetail") -> UserProfileModel? 
     return nil
 }
 
+func getDeepLinksList(key: String = "DeeplinkList") -> [String] {
+    if let deeplinksData = UserDefaults.standard.data(forKey: key) {
+        let deeplinksList = try? PropertyListDecoder().decode([String].self, from: deeplinksData)
+        return deeplinksList ?? []
+    }
+    return []
+}
+
+@discardableResult func setDeepLinksList(forKey key: String = "DeeplinkList", deeplinksList: [String]? = getDeepLinksList()) -> Bool {
+    if let data = try? PropertyListEncoder().encode(deeplinksList) {
+        UserDefaults.standard.set(data, forKey: key)
+        return UserDefaults.standard.synchronize()
+    }
+    return false
+}
+
 func getContactList(key: String = "UserProfileDetail") -> [MAContact]? {
     if let userProfile = UserDefaults.standard.data(forKey: key) {
         let userProfileData = try? PropertyListDecoder().decode(UserProfileModel.self, from: userProfile)
@@ -65,6 +81,10 @@ func updateContactList(list: [MAContact]?) {
     } else {
         _ = setProfileSettings(userDisplayName: "", profileImageURI: "", contactList: list)
     }
+}
+
+@discardableResult func updateDeeplinkList(list: [String]?) -> Bool {
+    return setDeepLinksList(deeplinksList: list)
 }
 
 @discardableResult func saveTokenInfo(accessToken: String, expiryDate: Date, scopes: MASDKAccessTokenScopes?, forKey key: String = "AccessTokenInfo") -> Bool {

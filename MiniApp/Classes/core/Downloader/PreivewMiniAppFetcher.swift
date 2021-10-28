@@ -1,6 +1,6 @@
 import Foundation
 
-internal class PreivewMiniAppFetcher {
+internal class PreviewMiniAppFetcher {
 
     func fetchPreviewMiniAppInfo(apiClient: MiniAppClient, using token: String, completionHandler: @escaping (Result<PreviewMiniAppInfo, MASDKError>) -> Void) {
         apiClient.getPreviewMiniAppInfo(using: token) { (result) in
