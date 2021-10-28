@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
 import { setUUID } from '../services/uuid/actions';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -45,40 +46,12 @@ const UuidFetcher = (props: UUIDProps) => {
     error: false,
   });
 
-  function copyToClipboard() {
-    if (props.uuid === undefined) {
-      return;
-    }
-    if (!navigator.clipboard) {
-      fallbackCopyMethod(props.uuid);
-      return;
-    }
-    navigator.clipboard.writeText(props.uuid).then(
-      function () {
-        setCopyStatus({ success: true, error: false });
-      },
-      function (err) {
-        setCopyStatus({ success: false, error: true });
-      }
-    );
-  }
-
-  function fallbackCopyMethod(text) {
-    var textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.style.top = '0';
-    textArea.style.left = '0';
-    textArea.style.position = 'fixed';
-    document.body !== null && document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-      document.execCommand('copy');
+  function textCopied(text, result) {
+    if (result) {
       setCopyStatus({ success: true, error: false });
-    } catch (err) {
+    } else {
       setCopyStatus({ success: false, error: true });
     }
-    document.body !== null && document.body.removeChild(textArea);
   }
 
   return (
@@ -96,15 +69,20 @@ const UuidFetcher = (props: UUIDProps) => {
         >
           GET UNIQUE ID
         </Button>
-        <Button
+        <CopyToClipboard
           disabled={!props.uuid}
-          data-testid="clipboard-copy"
-          variant="contained"
-          color="primary"
-          onClick={copyToClipboard}
+          text={props.uuid}
+          onCopy={textCopied}
         >
-          Copy
-        </Button>
+          <Button
+            disabled={!props.uuid}
+            data-testid="clipboard-copy"
+            variant="contained"
+            color="primary"
+          >
+            Copy
+          </Button>
+        </CopyToClipboard>
         <Snackbar
           open={copyStatus.success}
           autoHideDuration={3000}
