@@ -14,15 +14,9 @@ commands:
             git checkout js-bridge-<<parameters.platform>>
             cp js-miniapp-bridge/build/src/<<parameters.platform>>/bridge.js ./
             cp js-miniapp-bridge/build/src/<<parameters.platform>>/log.js ./
-            if [[ `git status bridge.js --porcelain` ]]; then
+            if [[ `git status bridge.js log.js --porcelain` ]]; then
               git add ./bridge.js
-              canpush="yes"
-            fi
-            if [[ `git status log.js --porcelain` ]]; then
               git add ./log.js
-              canpush="yes"
-            fi
-            if [ -z ${canpush:+x} ]
               git config user.name "CI Publisher"
               git config user.email "dev-opensource@mail.rakuten.com"
               git commit -m "export bridge/log resource [ci skip]"
