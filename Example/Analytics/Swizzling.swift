@@ -31,8 +31,8 @@ extension UIControl {
 
     private func trackBarButtonItem(eventType: DemoAppRATEventType, actionType: DemoAppRATActionType, componentName: String, elementType: String) {
         let controller = UINavigationController.topViewController() as? RATViewController
-        DemoAppAnalytics.sendAnalytics(eventType: .appear,
-                                       actionType: .initial,
+        DemoAppAnalytics.sendAnalytics(eventType: eventType,
+                                       actionType: actionType,
                                        pageName: controller?.pageName,
                                        siteSection: controller?.siteSection,
                                        componentName: componentName,
