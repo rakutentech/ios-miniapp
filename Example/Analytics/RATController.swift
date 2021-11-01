@@ -9,7 +9,10 @@ class RATViewController: UIViewController {
         if siteSection.isNilOrEmpty {
             siteSection = pageName
         }
-        DemoAppAnalytics.sendAnalytics(eventType: .pageLoad, pageName: pageName, siteSection: siteSection)
+        DemoAppAnalytics.sendAnalytics(eventType: .pageLoad,
+                                       pageName: pageName,
+                                       siteSection: siteSection,
+                                       componentName: "View Controller")
     }
 }
 
@@ -46,7 +49,10 @@ class RATTableViewController: UITableViewController {
         if siteSection.isNilOrEmpty {
             siteSection = pageName
         }
-        DemoAppAnalytics.sendAnalytics(eventType: .pageLoad, pageName: pageName, siteSection: siteSection)
+        DemoAppAnalytics.sendAnalytics(eventType: .pageLoad,
+                                       pageName: pageName,
+                                       siteSection: siteSection,
+                                       componentName: "Table View Controller")
     }
 }
 

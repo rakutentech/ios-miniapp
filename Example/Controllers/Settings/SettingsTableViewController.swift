@@ -299,6 +299,10 @@ class SettingsTableViewController: RATTableViewController {
         }
         return versionText
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        DemoAppAnalytics.sendAnalytics(eventType: .click, actionType: .open, componentName: segue.identifier, elementType: "TableCell")
+    }
 }
 
 protocol SettingsDelegate: AnyObject {
