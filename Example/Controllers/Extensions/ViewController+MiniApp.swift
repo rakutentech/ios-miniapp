@@ -15,7 +15,17 @@ extension ViewController: MiniAppNavigationDelegate {
                            with responseHandler: @escaping MiniAppNavigationResponseHandler,
                            onClose closeHandler: MiniAppNavigationResponseHandler?) {
         if url.absoluteString.starts(with: "data:") {
-            let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            // currently js sdk is passing no base64 data type
+            let base64String = url.absoluteString.replacingOccurrences(of: "data:;base64,", with: "")
+            guard let base64Data = Data(base64Encoded: base64String, options: .ignoreUnknownCharacters) else { return }
+            var activityItem: Any?
+            if let image = UIImage(data: base64Data) {
+                activityItem = image
+            } else {
+                activityItem = base64Data
+            }
+            guard let wrappedActivityItem = activityItem else { return }
+            let activityViewController = UIActivityViewController(activityItems: [wrappedActivityItem], applicationActivities: nil)
             presentedViewController?.present(activityViewController, animated: true, completion: nil)
         } else {
             if !isDeepLinkURL(url: url) {
