@@ -62,7 +62,7 @@ type FileDownloadProps = {
 
 const FileDownload = (props: FileDownloadProps) => {
   const classes = useStyles();
-  let [isPermissionGranted, setIsPermissionGranted] = useState(false);
+  let [isPermissionGranted, setIsPermissionGranted] = useState(true);
 
   function requestDownloadAttachmentPermission(url, fileName) {
     const permissionsList = [
