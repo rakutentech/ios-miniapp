@@ -16,7 +16,7 @@ extension ViewController: MiniAppNavigationDelegate {
                            onClose closeHandler: MiniAppNavigationResponseHandler?) {
         if url.absoluteString.starts(with: "data:") {
             // currently js sdk is passing no base64 data type
-            let base64String = url.absoluteString.replacingOccurrences(of: "data:;base64,", with: "")
+            let base64String = url.absoluteString.components(separatedBy: ",").last ?? ""
             guard let base64Data = Data(base64Encoded: base64String, options: .ignoreUnknownCharacters) else { return }
             var activityItem: Any?
             if let image = UIImage(data: base64Data) {
