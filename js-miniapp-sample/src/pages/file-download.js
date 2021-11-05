@@ -132,7 +132,10 @@ const FileDownload = (props: FileDownloadProps) => {
             color="primary"
             onClick={() =>
               // $FlowFixMe
-              onDownloadFile(require('../assets/images/panda.png'), 'panda.png')
+              onDownloadFile(
+                'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg',
+                'sample.jpg'
+              )
             }
           >
             Download Image
@@ -145,7 +148,10 @@ const FileDownload = (props: FileDownloadProps) => {
             color="primary"
             onClick={() =>
               // $FlowFixMe
-              onDownloadFile(require('../assets/sample.zip'), 'sample.zip')
+              onDownloadFile(
+                'https://file-examples-com.github.io/uploads/2017/02/zip_2MB.zip',
+                'sample.zip'
+              )
             }
           >
             Download ZIP
@@ -158,12 +164,48 @@ const FileDownload = (props: FileDownloadProps) => {
             color="primary"
             onClick={() =>
               // $FlowFixMe
-              onDownloadFile(require('../assets/sample.mp3'), 'sample.mp3')
+              onDownloadFile(
+                'https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3',
+                'sample.mp3'
+              )
             }
           >
             Download MP3
           </Button>
         </CardActions>
+
+        <CardActions className={classes.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              // $FlowFixMe
+              onDownloadFile(
+                'https://file-examples-com.github.io/uploads/2017/02/file_example_CSV_5000.csv',
+                'sample.csv'
+              )
+            }
+          >
+            Download CSV
+          </Button>
+        </CardActions>
+
+        <CardActions className={classes.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              // $FlowFixMe
+              onDownloadFile(
+                'https://file-examples-com.github.io/uploads/2018/04/file_example_MOV_480_700kB.mov',
+                'sample.mov'
+              )
+            }
+          >
+            Download MOV
+          </Button>
+        </CardActions>
+
         <div className={classes.info}>
           <p>
             {!isPermissionGranted && '"FILE_DOWNLOAD" permission not granted.'}
