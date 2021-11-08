@@ -50,6 +50,8 @@
 	<string>Demo app helps you find more information near you</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Needs Microphone while recording video</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Demo app needs permission to save photos</string>
 	<key>RASProjectId</key>
 	<string>$(RAS_PROJECT_IDENTIFIER)</string>
 	<key>RASProjectSubscriptionKey</key>
