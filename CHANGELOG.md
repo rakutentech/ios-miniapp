@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 3.8.0 (release date TBD)
+### 3.8.0 (2021-11-09)
 
 **SDK**
 
@@ -10,6 +10,7 @@
 **Sample app**
 
 - **Feature:** Added Dynamic deeplink support in the sample app.
+- **Feature:** Sample app changes to show support for download files via Mini app.
 
 ---
 ### 3.7.0 (2021-10-08)
