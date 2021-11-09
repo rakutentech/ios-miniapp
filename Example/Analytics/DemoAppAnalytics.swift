@@ -11,7 +11,7 @@ internal enum DemoAppRATActionType: String, CaseIterable {
     case open
     case close
     case changeStatus
-    case initial
+    case initial = "default"
 }
 
 internal enum DemoAppAnalyticsParameter: String, CaseIterable {
