@@ -2,9 +2,8 @@ import UIKit
 import MiniApp
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: RATViewControllerWithTableView {
 
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     let refreshControl = UIRefreshControl()
     let adsDisplayer = AdMobDisplayer()
@@ -46,6 +45,7 @@ class ViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
         self.tableView.refreshControl = refreshControl
         locationManager.delegate = self
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -227,33 +227,12 @@ class ViewController: UIViewController {
             }
         }
     }
-}
 
-// MARK: - Actions
-extension ViewController {
-    @IBAction func refreshList(_ sender: UIRefreshControl) {
-        fetchAppList(inBackground: false)
-    }
-}
-
-// MARK: - UITableViewControllerDelegate
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let miniAppsSection = self.miniAppsSection {
-            return miniAppsSection[section]
-        }
-        return nil
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return miniApps?[miniAppsSection?[section] ?? ""]?.count ?? 0
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return miniAppsSection?.count ?? 1
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MiniAppCell", for: indexPath) as? MiniAppCell {
             let miniAppDetail = miniApps?[miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row]
             cell.titleLabel?.text = miniAppDetail?.displayName ?? "Null"
@@ -266,11 +245,34 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
         if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
             self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo, config: Config.current())
         }
+    }
+}
+
+// MARK: - Actions
+extension ViewController {
+    @IBAction func refreshList(_ sender: UIRefreshControl) {
+        fetchAppList(inBackground: false)
+    }
+}
+
+// MARK: - UITableViewControllerDelegate
+extension ViewController {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return miniAppsSection?.count ?? 1
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let miniAppsSection = self.miniAppsSection {
+            return miniAppsSection[section]
+        }
+        return nil
     }
 }
 

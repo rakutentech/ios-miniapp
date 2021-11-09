@@ -1,7 +1,7 @@
 import UIKit
 import MiniApp
 
-class MAFirstLaunchController: UIViewController {
+class MAFirstLaunchController: RATViewController {
 
     @IBOutlet weak var miniAppMetaInfoContainer: UIView!
     @IBOutlet weak var acceptButton: UIButton!
@@ -32,6 +32,7 @@ class MAFirstLaunchController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -1,13 +1,14 @@
 import UIKit
 import MiniApp
 
-class AccessTokenViewController: UITableViewController {
+class AccessTokenViewController: RATTableViewController {
 
     @IBOutlet weak var accessTokenTextField: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
 
     override func viewDidLoad() {
         retrieveAccessTokenInfo()
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.accesstoken")
     }
 
     func retrieveAccessTokenInfo() {

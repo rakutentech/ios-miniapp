@@ -133,7 +133,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Mini App Sample" id="hBN-sq-KdF">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" image="Settings" id="QKl-NE-KE1">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" image="Settings" id="QKl-NE-KE1" customClass="RATBarButtonItems" customModule="MiniApp_Example" customModuleProvider="target">
                             <connections>
                                 <segue destination="Ald-Xp-UTb" kind="presentation" identifier="CustomConfiguration" id="TEz-gL-CO6"/>
                             </connections>
@@ -647,7 +647,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Mgh-Ps-pab">
-                        <barButtonItem key="rightBarButtonItem" title="Setting" image="Settings" id="WPI-EJ-83i">
+                        <barButtonItem key="rightBarButtonItem" title="Setting" image="Settings" id="WPI-EJ-83i" customClass="RATBarButtonItems" customModule="MiniApp_Example" customModuleProvider="target">
                             <connections>
                                 <segue destination="Ald-Xp-UTb" kind="presentation" identifier="CustomConfiguration" id="f4Y-XS-cWR"/>
                             </connections>

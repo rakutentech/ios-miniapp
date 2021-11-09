@@ -1,12 +1,17 @@
 import UIKit
 import MiniApp
 
-class DisplayController: UIViewController {
+class DisplayController: RATViewController {
 
     @IBOutlet var backButton: UIBarButtonItem!
     @IBOutlet var forwardButton: UIBarButtonItem!
     weak var navBarDelegate: MiniAppNavigationBarDelegate?
     weak var miniAppDisplayDelegate: MiniAppDisplayDelegate?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.display.miniapp")
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         guard let controller = self.navigationController as? DisplayNavigationController,

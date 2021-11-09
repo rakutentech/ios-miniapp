@@ -452,7 +452,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <segue destination="dSA-09-RCk" kind="show" id="GWj-rx-WVS"/>
+                                            <segue destination="dSA-09-RCk" kind="show" identifier="General" id="GWj-rx-WVS"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="xo8-Lz-DlH">
@@ -489,7 +489,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <segue destination="RUR-PV-VQO" kind="show" id="yXl-dm-9KC"/>
+                                            <segue destination="RUR-PV-VQO" kind="show" identifier="QA" id="yXl-dm-9KC"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="QGc-M2-0GN">
@@ -527,7 +527,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <segue destination="uyv-le-C26" kind="show" id="Zvy-iv-uv9"/>
+                                            <segue destination="uyv-le-C26" kind="show" identifier="Profile" id="Zvy-iv-uv9"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="fHG-y5-CLd">
@@ -564,7 +564,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <segue destination="ZUe-ly-Bk2" kind="show" id="W6A-do-86m"/>
+                                            <segue destination="ZUe-ly-Bk2" kind="show" identifier="Contacts" id="W6A-do-86m"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="aeT-dH-LK1">
@@ -602,7 +602,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <segue destination="aUB-RZ-zZM" kind="show" id="7SG-nJ-SRr"/>
+                                            <segue destination="aUB-RZ-zZM" kind="show" identifier="Permissions" id="7SG-nJ-SRr"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="0Eo-Xq-ngM">
@@ -638,7 +638,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <segue destination="mbX-F9-YpC" kind="show" id="mdP-Ap-kv8"/>
+                                            <segue destination="mbX-F9-YpC" kind="show" identifier="Access Token" id="mdP-Ap-kv8"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="4Qd-NY-XgC">
@@ -674,7 +674,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <segue destination="7ap-jg-cep" kind="show" id="hgO-oD-aCd"/>
+                                            <segue destination="7ap-jg-cep" kind="show" identifier="Points" id="hgO-oD-aCd"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="X35-0B-7Dk">
@@ -710,7 +710,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <segue destination="7aO-pg-diH" kind="show" id="6w5-hS-JyT"/>
+                                            <segue destination="7aO-pg-diH" kind="show" identifier="Signature" id="6w5-hS-JyT"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -723,12 +723,12 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Custom runtime settings" image="Settings" id="VtT-o6-1JW"/>
                     <navigationItem key="navigationItem" title="Settings" prompt="version" id="kDZ-gH-afY">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Cju-iP-W6n">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Cju-iP-W6n">
                             <connections>
                                 <action selector="actionResetConfig:" destination="OKP-QI-epG" id="7dM-b8-Lmq"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ueG-dC-Z10">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="ueG-dC-Z10">
                             <connections>
                                 <action selector="actionSaveConfig" destination="OKP-QI-epG" id="aHt-cm-Ize"/>
                             </connections>
