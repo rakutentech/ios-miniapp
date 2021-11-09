@@ -45,6 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    override init() {
+        super.init()
+        UIControl.swizzleSendAction()
+    }
+
     func deepLinkToMiniApp(using token: String) {
         let rootController = window?.rootViewController as? UINavigationController
         guard let controllersStack = rootController?.viewControllers else { return }

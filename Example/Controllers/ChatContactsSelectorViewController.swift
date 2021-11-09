@@ -1,7 +1,7 @@
 import UIKit
 import MiniApp
 
-class ChatContactsSelectorViewController: UIViewController {
+class ChatContactsSelectorViewController: RATViewController {
     var contactsController: ContactsListSettingsTableViewController?
     var multipleSelection = false {
         didSet {
@@ -46,6 +46,7 @@ class ChatContactsSelectorViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.chatselector")
     }
 
     override func viewWillAppear(_ animated: Bool) {

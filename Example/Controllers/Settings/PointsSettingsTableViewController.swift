@@ -1,7 +1,8 @@
 import Foundation
 import UIKit
+import MiniApp
 
-class PointsSettingsViewController: UITableViewController {
+class PointsSettingsViewController: RATTableViewController {
 
     @IBOutlet weak var standardPointsTextField: UITextField!
     @IBOutlet weak var termPointsTextField: UITextField!
@@ -26,6 +27,7 @@ class PointsSettingsViewController: UITableViewController {
                 timeLimitedPointsTextField.text = String(timeLimitedPoints)
             }
         }
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.points")
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

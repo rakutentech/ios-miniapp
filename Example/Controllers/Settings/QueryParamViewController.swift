@@ -1,12 +1,13 @@
 import UIKit
 import MiniApp
 
-class QueryParamViewController: UITableViewController {
+class QueryParamViewController: RATTableViewController {
 
     @IBOutlet weak var queryStringTextfield: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.queryparam")
     }
 
     override func viewWillAppear(_ animated: Bool) {

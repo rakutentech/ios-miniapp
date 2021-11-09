@@ -1,7 +1,7 @@
 import UIKit
 import MiniApp
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: RATTableViewController {
 
     @IBOutlet weak var endPointSegmentedControl: UISegmentedControl!
     @IBOutlet weak var textFieldAppID: UITextField!
@@ -48,6 +48,7 @@ class SettingsTableViewController: UITableViewController {
         addTapGesture()
         addBuildVersionLabel()
         self.tableView.separatorStyle = .singleLine
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.settings")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -297,6 +298,10 @@ class SettingsTableViewController: UITableViewController {
             versionText.append("(\(build))")
         }
         return versionText
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        DemoAppAnalytics.sendAnalytics(eventType: .click, actionType: .open, componentName: segue.identifier, elementType: "TableCell")
     }
 }
 
