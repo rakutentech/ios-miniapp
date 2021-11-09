@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 3.7.0 Docs
+          MiniApp 3.8.0 Docs
         </a>
-         (62% documented)
+         (61% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -98,6 +98,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppExternalWebViewController.html">MiniAppExternalWebViewController</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a>
@@ -283,9 +286,11 @@ Mini App SDK also facilitates communication between a Mini App and the host app 
 <p>All the MiniApp files downloaded by the MiniApp iOS library are cached locally</p>
 <h2 id='requirements' class='heading'>Requirements</h2>
 
-<p>This module supports <strong>iOS 13.0 and above</strong>. It has been tested on iOS 13.0 and above.</p>
+<p>This module supports <strong>iOS 14.0 and above</strong>. It has been tested on iOS 14.0 and above.</p>
 
 <p>It is written in Swift 5.0 and can be used in compatible Xcode versions.</p>
+
+<p><em>Note:</em> This module is currently set to <code>deployment_target = &#39;13.0&#39;</code>, however support for iOS 13.0 has been deprecated and could be removed in a later release.</p>
 <h2 id='getting-started' class='heading'>Getting started</h2>
 
 <ul>
@@ -397,6 +402,7 @@ You can also provide a new default behavior by using a <code>RMARequireMiniAppSi
 <li><a href="#retrieve-user-profile-details">Retrieve User Profile details</a></li>
 <li><a href="#send-message-to-contacts">Send message to contacts</a></li>
 <li><a href="#retrieve-points">Retrieve points</a></li>
+<li><a href="#file-download">File Download</a></li>
 </ul></li>
 <li><a href="#load-miniapp-list">Load the Mini App list</a></li>
 <li><a href="#get-mini-appinfo">Get a MiniAppInfo</a></li>
@@ -419,6 +425,7 @@ You can also provide a new default behavior by using a <code>RMARequireMiniAppSi
 <li><a href="#analytics-events">Catching analytics events</a></li>
 <li><a href="#query-param-mini-app">Passing Query parameters while creating Mini App</a></li>
 <li><a href="#permissions-from-host-app">Permissions required from the Host app</a></li>
+<li><a href="#miniapp-events">MiniApp events</a></li>
 </ul></li>
 </ul>
 
@@ -851,6 +858,12 @@ Three methods can be triggered by the Mini App, and here are the recommended beh
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
+
+<p><a id="file-download"></a></p>
+<h6 id='file-download' class='heading'>File Download</h6>
+
+<p>Support to download files of base64 urls.<br>
+It&rsquo;s necessary to allow the <code>File Download</code> custom permission to make file downloads available.</p>
 
 <p><a id="load-miniapp-list"></a></p>
 <h3 id='load-the-code-miniapp-code-list' class='heading'>Load the <code><a href="Classes/MiniApp.html">MiniApp</a></code> list:</h3>
@@ -1354,6 +1367,31 @@ Mini App SDK will look in the host app <code>Localizable.strings</code> for thes
 </tr>
 </tbody></table>
 
+<p><a id="miniapp-events"></a></p>
+<h3 id='miniapp-events' class='heading'>MiniApp events</h3>
+
+<p>Mini App SDK allows MiniApps to react to several events triggered by host app. These include</p>
+
+<table><thead>
+<tr>
+<th>Event</th>
+<th>Reason</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>pause</code></td>
+<td>MiniApp view controller will disappear, MiniApp will open an external web view, host application will resign to be active</td>
+</tr>
+<tr>
+<td><code>resume</code></td>
+<td>MiniApp view controller did appear, user closed a web view launched by MiniApp, host application did become active</td>
+</tr>
+<tr>
+<td><code>externalWebViewClosed</code></td>
+<td>user closed a web view launched by MiniApp</td>
+</tr>
+</tbody></table>
+
 <p><a id="faqs-and-troubleshooting"></a></p>
 <h2 id='faqs-and-troubleshooting' class='heading'>FAQs and Troubleshooting</h2>
 <h3 id='how-do-i-deep-link-to-mini-apps' class='heading'>How do I deep link to mini apps?</h3>
@@ -1434,7 +1472,7 @@ Mini App SDK will look in the host app <code>Localizable.strings</code> for thes
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-10-08)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2021-11-09)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
