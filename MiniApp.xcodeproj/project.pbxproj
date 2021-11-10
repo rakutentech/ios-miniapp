@@ -15,7 +15,7 @@
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
 		2A54C85C26676377002B204F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C85B26676377002B204F /* UITextField.swift */; };
 		2A7C7EC826DDA76300520DF9 /* Swizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7C7EC726DDA76300520DF9 /* Swizzling.swift */; };
-		2A88BA18273BAD2000782FE4 /* MiniAppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A88BA17273BAD2000782FE4 /* MiniAppVersionTests.swift */; };
+		2A88BA19273BB06800782FE4 /* MiniAppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A88BA17273BAD2000782FE4 /* MiniAppVersionTests.swift */; };
 		2A99B5B5271538A0009C0D36 /* DeeplinkListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A99B5B4271538A0009C0D36 /* DeeplinkListViewController.swift */; };
 		2AA894BA26D6895F0078B2F4 /* NotificationCenter+RAT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA894B926D6895F0078B2F4 /* NotificationCenter+RAT.swift */; };
 		2AA894D226D697520078B2F4 /* DemoAppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA894D126D697520078B2F4 /* DemoAppAnalytics.swift */; };
@@ -805,7 +805,6 @@
 				38920B0B251D9C57004C5DDD /* ViewController+MiniApp.swift in Sources */,
 				2A99B5B5271538A0009C0D36 /* DeeplinkListViewController.swift in Sources */,
 				38CEFA5125C0A3CA00EE250A /* UIView+MiniApp.swift in Sources */,
-				2A88BA18273BAD2000782FE4 /* MiniAppVersionTests.swift in Sources */,
 				2A7C7EC826DDA76300520DF9 /* Swizzling.swift in Sources */,
 				38D04804252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift in Sources */,
 				38920AF8251D9C57004C5DDD /* Progress+UIViewController.swift in Sources */,
@@ -818,6 +817,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				31F57AE726E3D105007E0BFD /* RealSignatureVerifierTests.swift in Sources */,
+				2A88BA19273BB06800782FE4 /* MiniAppVersionTests.swift in Sources */,
 				382B960324F6DAC500DA8B7D /* MiniAppTests.swift in Sources */,
 				3862EFA823EA5752004D518C /* MiniApp+URLRequestTests.swift in Sources */,
 				38F3B7F024192E7300914E37 /* UrlParserTests.swift in Sources */,
