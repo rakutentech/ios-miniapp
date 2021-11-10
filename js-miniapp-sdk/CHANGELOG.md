@@ -1,4 +1,12 @@
 ## CHANGELOG
+### 1.12.0 (2021-10-10)
+
+- **Feature:** Added `CustomPermissionName.FILE_DOWNLOAD` permission to support downloading attachments
+- **Feature:** Added `getHostEnvironmentInfo()`  to retrieve Host app environment information
+- **Feature:** Added support for Mini app external webview close events
+
+--- 
+
 ### 1.11.0 (2021-08-05)
 - **Feature:** Added interface to get user points
 - **Feature:** Added an optional banner message field in messaging feature

@@ -1,6 +1,6 @@
 {
   "name": "js-miniapp-sdk",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "description": "Mini App SDK for JavaScript",
   "main": "build/miniapp.bundle.js",
   "browser": "build/miniapp.bundle.js",
