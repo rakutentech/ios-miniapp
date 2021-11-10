@@ -4,6 +4,7 @@ import Nimble
 
 // swiftlint:disable function_body_length
 // swiftlint:disable cyclomatic_complexity
+// swiftlint:disable file_length
 class MiniAppClientTests: QuickSpec {
     class MockSession: SessionProtocol {
         func startDownloadTask(downloadUrl: URL) { }
@@ -74,6 +75,23 @@ class MiniAppClientTests: QuickSpec {
                     expect((client.session as? MockSession)?.attempts).toNotEventually(beGreaterThan(1), timeout: .seconds(2))
                 }
             }
+
+            #if RMA_SDK_SIGNATURE
+                context("when network response contains valid data") {
+                    var testResult: Bool?
+                    it("will pass a result to success completion handler with expected value") {
+                        let mockSession = MockSession(data: ["key": "value"], statusCode: 200, error: nil)
+                        let miniAppClient = MiniAppClient()
+                        miniAppClient.session = mockSession
+
+                        miniAppClient.verifySignature(version: mockMiniAppInfo.version.versionId, signature: "test", keyId: "test", data: mockSession.data ?? Data()) { verified in
+                            testResult = verified
+                        }
+
+                        expect(testResult).toEventuallyNot(beNil())
+                    }
+                }
+            #endif
 
             context("when network response doesn't contain data") {
                 var testError: NSError = NSError.init(

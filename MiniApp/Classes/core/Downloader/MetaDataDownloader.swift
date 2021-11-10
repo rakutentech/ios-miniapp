@@ -37,24 +37,4 @@ internal class MetaDataDownloader {
     func getCachedManifest(miniAppId: String) -> MiniAppManifest? {
         manifestManager.getManifestInfo(forMiniApp: miniAppId)
     }
-
-    func prepareMiniAppManifest(metaDataResponse: MetaDataCustomPermissionModel, versionId: String) -> MiniAppManifest {
-        MiniAppManifest(
-                requiredPermissions: getCustomPermissionModel(metaDataCustomPermissionResponse: metaDataResponse.reqPermissions),
-                optionalPermissions: getCustomPermissionModel(
-                        metaDataCustomPermissionResponse: metaDataResponse.optPermissions),
-                customMetaData: metaDataResponse.customMetaData,
-                accessTokenPermissions: metaDataResponse.accessTokenPermissions,
-                versionId: versionId)
-    }
-
-    private func getCustomPermissionModel(metaDataCustomPermissionResponse: [MACustomPermissionsResponse]?) -> [MASDKCustomPermissionModel]? {
-        metaDataCustomPermissionResponse?.compactMap {
-            guard let name = $0.name, let permissionType = MiniAppCustomPermissionType(rawValue: name) else {
-                return nil
-            }
-            return MASDKCustomPermissionModel(permissionName: permissionType, isPermissionGranted: .allowed, permissionRequestDescription: $0.reason)
-        }
-
-    }
 }
