@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 3.9.0 (release date TBD)
+
+**SDK**
+
 ### 3.8.0 (2021-11-09)
 
 **SDK**
