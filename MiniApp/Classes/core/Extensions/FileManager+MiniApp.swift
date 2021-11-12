@@ -100,28 +100,4 @@ extension FileManager {
 
         return cachePath.appendingPathComponent(miniAppDirectory)
     }
-
-    /// Returns the Mini App version directory for the given app Id
-    /// - Parameter appId: { appId: String } - AppID of the MiniApp.
-    /// - Parameter version: { version: String? } - version of the MiniApp
-    /// - Returns: URL path to the MiniApp.
-    class func getMiniAppVersionDirectory(usingAppId id: String, version: String? = nil) -> URL? {
-        do {
-            let miniAppDir = getMiniAppDirectory(with: id)
-            guard let versionId = version else {
-                var isDir: ObjCBool = true
-                if FileManager.default.fileExists(
-                    atPath: miniAppDir.path,
-                    isDirectory: &isDir) {
-                    let versionDirectory = try FileManager.default.contentsOfDirectory(at: miniAppDir, includingPropertiesForKeys: [URLResourceKey.isDirectoryKey], options: [.skipsHiddenFiles])[0]
-                    return versionDirectory
-                }
-                return nil
-            }
-            return miniAppDir.appendingPathComponent(versionId)
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            return nil
-        }
-    }
 }

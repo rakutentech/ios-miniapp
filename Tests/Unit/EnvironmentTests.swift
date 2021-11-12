@@ -36,6 +36,16 @@ class EnvironmentTests: QuickSpec {
 
                 expect(environment.baseUrl?.absoluteString).to(equal(mockHost))
             }
+            it("will return host/domain from base URL") {
+                let mockBundle = MockBundle()
+                mockBundle.mockEndpoint = mockHost
+                let environment = Environment(bundle: mockBundle)
+                expect(mockHost).to(contain(environment.host))
+            }
+            it("will return host") {
+                let environment = Environment()
+                expect(environment.host).notTo(beNil())
+            }
             it("will return host app info") {
                 let mockBundle = MockBundle()
                 mockBundle.mockHostAppUserAgentInfo = "Demo app v1.1"
@@ -49,6 +59,19 @@ class EnvironmentTests: QuickSpec {
                 let environment = Environment(bundle: mockBundle)
 
                 expect(environment.isPreviewMode).to(equal(false))
+            }
+            it("will return preview mode if it is provided") {
+                let mockBundle = MockBundle()
+                mockBundle.mockPreviewMode = false
+                let environment = Environment(bundle: mockBundle)
+
+                expect(environment.requireMiniAppSignatureVerification).to(equal(false))
+            }
+            it("will return preview mode if it is provided") {
+                let mockBundle = MockBundle()
+                mockBundle.mockPreviewMode = false
+                let miniAppVersion = Environment(bundle: mockBundle).sdkVersion
+                expect(miniAppVersion).notTo(beNil())
             }
         }
         context("when bundle does not have valid key values") {
@@ -68,6 +91,9 @@ class EnvironmentTests: QuickSpec {
             }
             it("will return endpoint as nil") {
                 expect(environment.baseUrl?.absoluteString).to(beNil())
+            }
+            it("will return host as nil") {
+                expect(environment.host).to(equal(mockBundle.valueNotFound))
             }
             it("will return app version as nil") {
                 expect(environment.appVersion).to(equal(mockBundle.valueNotFound))

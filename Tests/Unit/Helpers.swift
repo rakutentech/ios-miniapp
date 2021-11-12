@@ -257,7 +257,7 @@ class MockMetaDataDownloader: MetaDataDownloader {
             case .success(let responseData):
                 if let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
                                                                data: responseData.data) {
-                    return completionHandler(.success(self.prepareMiniAppManifest(
+                    return completionHandler(.success(self.manifestManager.prepareMiniAppManifest(
                                                         metaDataResponse: decodeResponse.bundleManifest,
                                                         versionId: miniAppVersion)))
                 }

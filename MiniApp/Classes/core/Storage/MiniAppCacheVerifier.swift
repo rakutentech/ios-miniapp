@@ -24,12 +24,8 @@ internal class MiniAppCacheVerifier {
     }
 
     private func calculateHash(appId: String, version: String) -> String {
-        guard let directory = FileManager.getMiniAppVersionDirectory(usingAppId: appId, version: version) else {
-            return ""
-        }
-
         guard let enumerator = FileManager.default.enumerator(
-            at: directory,
+            at: FileManager.getMiniAppVersionDirectory(with: appId, and: version),
             includingPropertiesForKeys: [.creationDateKey, .isDirectoryKey],
             options: [],
             errorHandler: { (url, error) -> Bool in

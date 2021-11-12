@@ -15,11 +15,7 @@ internal struct MiniAppVersion {
         var version = string.components(separatedBy: ".")
 
         guard let majorString = version.first else {
-            minor = nil
-            hotfix = nil
-            environment = nil
-            major = nil
-            return
+            return nil
         }
         major = Int(majorString)
         guard major != nil, version.count > 1 else {
