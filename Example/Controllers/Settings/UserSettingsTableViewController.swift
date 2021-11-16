@@ -35,6 +35,7 @@ class UserSettingsTableViewController: RATTableViewController, UIImagePickerCont
             return
         }
         editPhotoButton.setTitle(editTitleText, for: .normal)
+        deletePhotoButton.setTitle("Remove Photo", for: .normal)
         self.imageView.image = profileImage
         self.userProfileImage = profileImage
     }
@@ -94,7 +95,9 @@ class UserSettingsTableViewController: RATTableViewController, UIImagePickerCont
     }
 
     @IBAction func deletePhotoPressed(_ sender: Any) {
-        self.imageView.image = UIImage(named: "Rakuten")
+        let rakutenImage = UIImage(named: "Rakuten")
+        self.imageView.image = rakutenImage
+        self.userProfileImage = rakutenImage
     }
 }
 
