@@ -8,8 +8,10 @@ class UserSettingsTableViewController: RATTableViewController, UIImagePickerCont
     @IBOutlet weak var displayNameTextField: UITextField!
     @IBOutlet weak var modifyProfileSettingsButton: UIBarButtonItem!
     @IBOutlet weak var deletePhotoButton: UIButton!
-    private var saveTitleText = "Save"
-    private var editTitleText = "Edit"
+    private var saveTitleText = MASDKLocale.localize("miniapp.sdk.ios.page.settings.userprofile.save")
+    private var editTitleText = MASDKLocale.localize("miniapp.sdk.ios.page.settings.userprofile.edit")
+    private var addTitleText = MASDKLocale.localize("miniapp.sdk.ios.page.settings.userprofile.add")
+    private var removeTitleText = MASDKLocale.localize("miniapp.sdk.ios.page.settings.userprofile.remove")
 
     var userProfileImage: UIImage?
 
@@ -28,13 +30,14 @@ class UserSettingsTableViewController: RATTableViewController, UIImagePickerCont
         guard let profileImage = image else {
             let imageConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 12, weight: .semibold))
             editPhotoButton.setImage(UIImage(systemName: "plus", withConfiguration: imageConfig), for: .normal)
-            editPhotoButton.setTitle("Add Photo", for: .normal)
+            editPhotoButton.setTitle(addTitleText, for: .normal)
 
             deletePhotoButton.setImage(UIImage(systemName: "trash", withConfiguration: imageConfig), for: .normal)
-            deletePhotoButton.setTitle("Remove Photo", for: .normal)
+            deletePhotoButton.setTitle(removeTitleText, for: .normal)
             return
         }
         editPhotoButton.setTitle(editTitleText, for: .normal)
+        deletePhotoButton.setTitle(removeTitleText, for: .normal)
         self.imageView.image = profileImage
         self.userProfileImage = profileImage
     }
@@ -94,7 +97,9 @@ class UserSettingsTableViewController: RATTableViewController, UIImagePickerCont
     }
 
     @IBAction func deletePhotoPressed(_ sender: Any) {
-        self.imageView.image = UIImage(named: "Rakuten")
+        let rakutenImage = UIImage(named: "Rakuten")
+        self.imageView.image = rakutenImage
+        self.userProfileImage = rakutenImage
     }
 }
 

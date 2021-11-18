@@ -8,6 +8,11 @@
 "miniapp.sdk.ios.param.save_title"                      = "Parameters saved";
 "miniapp.sdk.ios.param.save_text"                       = "Configuration is saved and Miniapp list is updated";
 
+"miniapp.sdk.ios.page.settings.userprofile.save"        = "Save";
+"miniapp.sdk.ios.page.settings.userprofile.edit"        = "Edit";
+"miniapp.sdk.ios.page.settings.userprofile.add"         = "Add Photo";
+"miniapp.sdk.ios.page.settings.userprofile.remove"      = "Remove Photo";
+
 "miniapp.sdk.ios.error.title"                           = "Error";
 "miniapp.sdk.ios.error.message.miniapp"                 = "Couldn't retrieve Miniapp, please try again later";
 "miniapp.sdk.ios.error.message.list"                    = "Couldn't retrieve Miniapp list, please try again later";
