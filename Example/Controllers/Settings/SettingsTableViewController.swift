@@ -8,16 +8,19 @@ class SettingsTableViewController: RATTableViewController {
     @IBOutlet weak var textFieldSubKey: UITextField!
     @IBOutlet weak var invalidHostAppIdLabel: UILabel!
     @IBOutlet weak var invalidSubscriptionKeyLabel: UILabel!
+    @IBOutlet weak var environmentSwitchView: UISwitch!
     weak var configUpdateDelegate: SettingsDelegate?
 
     let predefinedKeys: [String] = ["RAS_PROJECT_IDENTIFIER", "RAS_SUBSCRIPTION_KEY", ""]
     let localizedErrorTitle = MASDKLocale.localize("miniapp.sdk.ios.error.title")
 
     enum SectionHeader: Int {
-        case RAS = 1
-        case profile = 2
+        case environment = 1
+        case RAS = 2
+        case profile = 3
         case previewMode = 0
     }
+
     enum TestMode: Int, CaseIterable {
         case HOSTED,
              PREVIEW
@@ -49,6 +52,7 @@ class SettingsTableViewController: RATTableViewController {
         addBuildVersionLabel()
         self.tableView.separatorStyle = .singleLine
         self.pageName = MASDKLocale.localize("demo.app.rat.page.name.settings")
+        environmentSwitchView.isOn = Config.isProd
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -60,8 +64,13 @@ class SettingsTableViewController: RATTableViewController {
     func resetFields() {
         self.invalidHostAppIdLabel.isHidden = true
         self.invalidSubscriptionKeyLabel.isHidden = true
-        configure(field: self.textFieldAppID, for: .projectId)
-        configure(field: self.textFieldSubKey, for: .subscriptionKey)
+        if Config.isProd {
+            configure(field: self.textFieldAppID, for: .projectId)
+            configure(field: self.textFieldSubKey, for: .subscriptionKey)
+        } else {
+            configure(field: self.textFieldAppID, for: .stagingProjectId)
+            configure(field: self.textFieldSubKey, for: .stagingSubscriptionKey)
+        }
         configureMode()
     }
 
@@ -73,11 +82,13 @@ class SettingsTableViewController: RATTableViewController {
     @IBAction func actionSaveConfig() {
         if isValueEntered(text: self.textFieldAppID.text, key: .projectId) && isValueEntered(text: self.textFieldSubKey.text, key: .subscriptionKey) {
             if self.textFieldAppID.text!.isValidUUID() {
+                let environmentUrl = Config.userDefaults?.string(forKey: Config.Key.endpoint.rawValue) ?? ""
                 let selectedMode = TestMode(rawValue: self.endPointSegmentedControl.selectedSegmentIndex)
                 let isPreview = selectedMode?.isPreviewMode() ?? true
 
                 fetchAppList(withConfig:
                                 createConfig(
+                                    baseUrl: environmentUrl,
                                     projectId: self.textFieldAppID.text!,
                                     subscriptionKey: self.textFieldSubKey.text!,
                                     loadPreviewVersions: isPreview
@@ -86,6 +97,11 @@ class SettingsTableViewController: RATTableViewController {
             }
             displayInvalidValueErrorMessage(forKey: .projectId)
         }
+    }
+
+    @IBAction func environmentSwitchToggled(_ sender: Any) {
+        Config.changeEnvironment(isStaging: !environmentSwitchView.isOn)
+        resetFields()
     }
 
     /// Fetch the mini app list for a given Host app ID and subscription key.
@@ -143,8 +159,9 @@ class SettingsTableViewController: RATTableViewController {
         }
     }
 
-    func createConfig(projectId: String, subscriptionKey: String, loadPreviewVersions: Bool) -> MiniAppSdkConfig {
+    func createConfig(baseUrl: String, projectId: String, subscriptionKey: String, loadPreviewVersions: Bool) -> MiniAppSdkConfig {
         return MiniAppSdkConfig(
+            baseUrl: baseUrl,
             rasProjectId: projectId,
             subscriptionKey: subscriptionKey,
             hostAppVersion: Bundle.main.infoDictionary?[Config.Key.version.rawValue] as? String,
@@ -159,7 +176,7 @@ class SettingsTableViewController: RATTableViewController {
     }
 
     func configure(field: UITextField?, for key: Config.Key) {
-        field?.placeholder = Bundle.main.infoDictionary?[key.rawValue] as? String
+        field?.placeholder = Config.getInfoPlistString(key: key)
         field?.text = getTextFieldValue(key: key, placeholderText: field?.placeholder)
     }
 
@@ -179,7 +196,7 @@ class SettingsTableViewController: RATTableViewController {
     }
 
     func getTextFieldValue(key: Config.Key, placeholderText: String?) -> String? {
-        guard let value = Config.userDefaults?.string(forKey: key.rawValue) else {
+        guard let value = Config.getUserDefaultsString(key: key) else {
             return placeholderText
         }
         return value
@@ -195,7 +212,7 @@ class SettingsTableViewController: RATTableViewController {
 
     func save(field: UITextField?, for key: Config.Key) {
         if let textField = field {
-            Config.userDefaults?.set(textField.text, forKey: key.rawValue)
+            Config.setUserDefaultsString(key: key, value: textField.text)
         } else {
             Config.userDefaults?.removeObject(forKey: key.rawValue)
         }
@@ -312,6 +329,8 @@ protocol SettingsDelegate: AnyObject {
 extension SettingsTableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
+        case SectionHeader.environment.rawValue:
+            return "Environment"
         case SectionHeader.previewMode.rawValue:
             return "Preview Mode"
         case SectionHeader.profile.rawValue:

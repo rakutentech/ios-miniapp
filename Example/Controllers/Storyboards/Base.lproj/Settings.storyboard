@@ -330,10 +330,43 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Environment" id="vq9-q6-jH9">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="tIY-dU-wvc">
+                                        <rect key="frame" x="0.0" y="159.5" width="414" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tIY-dU-wvc" id="470-pU-20f">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x55-rk-Uk1">
+                                                    <rect key="frame" x="16" y="19.5" width="33" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WHm-uU-aDy">
+                                                    <rect key="frame" x="329" y="14.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="environmentSwitchToggled:" destination="OKP-QI-epG" eventType="valueChanged" id="bDS-8l-Dxw"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="WHm-uU-aDy" firstAttribute="centerY" secondItem="470-pU-20f" secondAttribute="centerY" id="BUg-GO-YZn"/>
+                                                <constraint firstItem="x55-rk-Uk1" firstAttribute="leading" secondItem="470-pU-20f" secondAttribute="leading" constant="16" id="Cie-TX-ocL"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="x55-rk-Uk1" secondAttribute="bottom" constant="8.5" id="OyP-8s-KFg"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="WHm-uU-aDy" secondAttribute="trailing" constant="16" id="lNg-Ca-y8X"/>
+                                                <constraint firstItem="x55-rk-Uk1" firstAttribute="top" secondItem="470-pU-20f" secondAttribute="topMargin" constant="8.5" id="wcz-rQ-6KI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="RAS" id="is3-Dp-fFn">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="124" id="f3g-OC-uRb">
-                                        <rect key="frame" x="0.0" y="159.5" width="414" height="124"/>
+                                        <rect key="frame" x="0.0" y="269.5" width="414" height="124"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f3g-OC-uRb" id="npc-1Q-nTI">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="124"/>
@@ -736,6 +769,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="endPointSegmentedControl" destination="Va6-XJ-WmZ" id="TkX-xD-ZUt"/>
+                        <outlet property="environmentSwitchView" destination="WHm-uU-aDy" id="zlo-er-kgE"/>
                         <outlet property="invalidHostAppIdLabel" destination="8V7-8P-W9f" id="u2R-5O-9jg"/>
                         <outlet property="invalidSubscriptionKeyLabel" destination="hAB-kv-0rv" id="oN3-1A-riU"/>
                         <outlet property="textFieldAppID" destination="jGk-Df-9bo" id="LLe-TL-UUg"/>

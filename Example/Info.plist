@@ -54,16 +54,22 @@
 	<string>Demo app needs permission to save photos</string>
 	<key>RASProjectId</key>
 	<string>$(RAS_PROJECT_IDENTIFIER)</string>
+	<key>RASStagingProjectId</key>
+	<string>$(RAS_PROJECT_STAGING_IDENTIFIER)</string>
 	<key>RASProjectSubscriptionKey</key>
 	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY)</string>
+	<key>RASStagingProjectSubscriptionKey</key>
+	<string>$(RAS_PROJECT_STAGING_SUBSCRIPTION_KEY)</string>
 	<key>RATAccountIdentifier</key>
-	<integer>1553</integer>
+	<real>1553</real>
 	<key>RATAppIdentifier</key>
 	<integer>1</integer>
 	<key>RATEndpoint</key>
 	<string>$(RAT_ENDPOINT)</string>
 	<key>RMAAPIEndpoint</key>
 	<string>$(RMA_API_ENDPOINT)</string>
+	<key>RMAAPIStagingEndpoint</key>
+	<string>$(RMA_API_STAGING_ENDPOINT)</string>
 	<key>RMAHostAppUserAgentInfo</key>
 	<string>$(RMA_USER_AGENT)</string>
 	<key>RMAIsPreviewMode</key>
