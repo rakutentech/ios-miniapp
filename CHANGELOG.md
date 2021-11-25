@@ -3,6 +3,7 @@
 ### 3.9.0 (release date TBD)
 
 **SDK**
+- **Feature:** Added support for Manifest localization
 
 **Sample app**
 
