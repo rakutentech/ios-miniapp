@@ -40,7 +40,10 @@ class MiniAppTests: QuickSpec {
             context("when getMiniAppManifest is called with invalid miniappId") {
                 it("will return invalidAppId error") {
                     var testError: MASDKError?
-                    MiniApp.shared().getMiniAppManifest(miniAppId: "", miniAppVersion: "", completionHandler: { (result) in
+                    MiniApp.shared().getMiniAppManifest(miniAppId: "",
+                                                        miniAppVersion: "",
+                                                        languageCode: NSLocale.current.languageCode,
+                                                        completionHandler: { (result) in
                         switch result {
                         case .success: break
                         case .failure(let error):
@@ -53,7 +56,10 @@ class MiniAppTests: QuickSpec {
             context("when getMiniAppManifest is called with invalid miniapp versionId") {
                 it("will return invalidVersionId error") {
                     var testError: MASDKError?
-                    MiniApp.shared().getMiniAppManifest(miniAppId: "abc", miniAppVersion: "", completionHandler: { (result) in
+                    MiniApp.shared().getMiniAppManifest(miniAppId: "abc",
+                                                        miniAppVersion: "",
+                                                        languageCode: NSLocale.current.languageCode,
+                                                        completionHandler: { (result) in
                         switch result {
                         case .success: break
                         case .failure(let error):

@@ -115,8 +115,14 @@ public class MiniApp: NSObject {
     ///   - miniAppId:  Mini AppId String value
     ///   - miniAppVersion:  Mini VersionId String value
     ///   - completionHandler: A block to be called on successful retrieval of mini-app meta data MiniAppManifest or throws errors if any
-    public func getMiniAppManifest(miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
-        return realMiniApp.retrieveMiniAppMetaData(appId: miniAppId, version: miniAppVersion, completionHandler: completionHandler)
+    public func getMiniAppManifest(miniAppId: String,
+                                   miniAppVersion: String,
+                                   languageCode: String? = nil,
+                                   completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
+        return realMiniApp.retrieveMiniAppMetaData(appId: miniAppId,
+                                                   version: miniAppVersion,
+                                                   languageCode: languageCode,
+                                                   completionHandler: completionHandler)
     }
 
     /// Method to return the cached meta-data information of a mini-app
