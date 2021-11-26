@@ -301,7 +301,11 @@ class SettingsTableViewController: RATTableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        DemoAppAnalytics.sendAnalytics(eventType: .click, actionType: .open, componentName: segue.identifier, elementType: "TableCell")
+        DemoAppAnalytics.sendAnalytics(eventType: .click,
+                                       actionType: .open,
+                                       pageName: self.pageName,
+                                       siteSection: self.siteSection,
+                                       componentName: segue.identifier, elementType: "TableCell")
     }
 }
 
