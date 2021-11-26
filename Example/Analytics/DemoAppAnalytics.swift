@@ -52,7 +52,7 @@ public class DemoAppAnalytics {
                                       elementType: String? = "",
                                       customParameters: (String, String)...) {
         let params = getAnalyticsInfo() + customParameters
-        NotificationCenter.default.sendAnalytics(eventType: eventType ?? .click,
+        RATNotificationCenter.sendAnalytics(eventType: eventType ?? .click,
                                                  actionType: actionType ?? .open,
                                                  pageName: pageName ?? "",
                                                  siteSection: siteSection ?? "",
@@ -62,12 +62,13 @@ public class DemoAppAnalytics {
 
     internal class func sendAnalyticsForCell(eventType: DemoAppRATEventType,
                                              actionType: DemoAppRATActionType,
+                                             pageName: String,
+                                             siteSection: String,
                                              cell: UITableViewCell) {
-        let controller = UINavigationController.topViewController() as? RATViewController
         DemoAppAnalytics.sendAnalytics(eventType: eventType,
                                        actionType: actionType,
-                                       pageName: controller?.pageName,
-                                       siteSection: controller?.siteSection,
+                                       pageName: pageName,
+                                       siteSection: siteSection,
                                        componentName: getComponentName(cell: cell), elementType: "TableViewCell")
     }
 

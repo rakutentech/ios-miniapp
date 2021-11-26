@@ -14,6 +14,7 @@ class ManageCustomPermissionsViewController: RATTableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         downloadedMiniApps = MiniApp.shared().listDownloadedWithCustomPermissions()
         self.tableView.reloadData()
     }

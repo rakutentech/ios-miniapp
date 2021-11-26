@@ -85,10 +85,10 @@
             </objects>
             <point key="canvasLocation" x="2132" y="1181"/>
         </scene>
-        <!--Table View Controller-->
+        <!--General Table View Controller-->
         <scene sceneID="VAz-sd-fPi">
             <objects>
-                <tableViewController id="dSA-09-RCk" sceneMemberID="viewController">
+                <tableViewController id="dSA-09-RCk" customClass="GeneralTableViewController" customModule="MiniApp_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="zBX-Aw-hEH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
