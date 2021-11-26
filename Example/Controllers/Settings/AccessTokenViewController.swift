@@ -8,7 +8,7 @@ class AccessTokenViewController: RATTableViewController {
 
     override func viewDidLoad() {
         retrieveAccessTokenInfo()
-        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.accesstoken")
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.access_token")
     }
 
     func retrieveAccessTokenInfo() {

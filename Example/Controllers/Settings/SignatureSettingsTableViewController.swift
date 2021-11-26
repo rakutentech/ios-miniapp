@@ -1,13 +1,14 @@
 import UIKit
 import MiniApp
 
-class SignatureSettingsTableViewController: UITableViewController {
+class SignatureSettingsTableViewController: RATTableViewController {
 
     @IBOutlet weak var signatureCheckSettingControl: UISegmentedControl!
 
     override func viewDidLoad() {
         setLayout(signatureCheckSetting: Config.userDefaults?.value(forKey: Config.Key.requireMiniAppSignatureVerification.rawValue) as?
                                          Bool)
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.deeplink")
     }
 
     func setLayout(signatureCheckSetting: Bool?) {

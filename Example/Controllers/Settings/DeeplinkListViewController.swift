@@ -1,7 +1,7 @@
 import UIKit
 import MiniApp
 
-class DeeplinkListViewController: UITableViewController {
+class DeeplinkListViewController: RATTableViewController {
 
     var bannerMessage: CGFloat = 0
     var deepLinkList: [String]? = []
@@ -11,6 +11,7 @@ class DeeplinkListViewController: UITableViewController {
         deepLinkList = getDeepLinksList()
         tableView.separatorStyle = .singleLine
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: bannerMessage))
+        self.pageName = MASDKLocale.localize("demo.app.rat.page.name.deeplink")
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
