@@ -29,7 +29,7 @@ extension String {
             value: defaultValue,
             comment: "")
     }
-    
+
     var isValidLocale: Bool {
         let capturePattern = #"^[a-z]{2}(-[A-Z]{2})?$"#
         guard
