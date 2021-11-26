@@ -68,3 +68,5 @@
 "demo.app.rat.page.name.custom.permissions.list"        =   "Custom Permissions list";
 "demo.app.rat.page.name.custom.permissions.manage"      =   "Custom Permissions manage";
 "demo.app.rat.page.name.chatselector"                   =   "Chat Selector";
+"demo.app.rat.page.name.custom.permission.list"         =   "Permissions List";
+"demo.app.rat.page.name.custom.signature.verification"  =   "Signature Verification";
