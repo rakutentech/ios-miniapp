@@ -1,3 +1,5 @@
+"locale"                                                        = "en-US";
+
 "miniapp.sdk.ios.alert.title.ok"                                = "OK";
 "miniapp.sdk.ios.alert.title.cancel"                            = "Cancel";
 "miniapp.sdk.ios.ui.allow"                                      = "Allow";

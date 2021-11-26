@@ -21,7 +21,8 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
                                   miniAppTitle: String,
                                   completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 
-    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void)
+    /// Optional closure that can be implemented in the host app to handle the environment info and locale.
+    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {get}
 }
 
 public extension MiniAppMessageDelegate {
@@ -67,17 +68,13 @@ public extension MiniAppMessageDelegate {
         return uniqueId
     }
 
-    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
-        let environment = Environment(bundle: Bundle.main)
+    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {
         guard
-            let sdkVersion = environment.sdkVersion?.description
+            let info = MAHostEnvironmentInfo(hostLocale: "locale".localizedString())
         else {
-            completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.invalidSDKId))))
-            return
+            return { return nil }
         }
-        let platformVersion = UIDevice.current.systemVersion
-        let appVersion = environment.appVersion
-        completionHandler(.success(MAHostEnvironmentInfo(platformVersion: platformVersion, hostVersion: appVersion, sdkVersion: sdkVersion)))
+        return { return info }
     }
 }
 
@@ -95,10 +92,23 @@ public class MAHostEnvironmentInfo: Codable {
     let platformVersion: String
     let hostVersion: String
     let sdkVersion: String
+    let hostLocale: String
 
-    public init(platformVersion: String, hostVersion: String, sdkVersion: String) {
+    public init?(platformVersion: String, hostVersion: String, sdkVersion: String, hostLocale: String) {
+        guard hostLocale.isValidLocale else { return nil }
         self.platformVersion = platformVersion
         self.hostVersion = hostVersion
         self.sdkVersion = sdkVersion
+        self.hostLocale = hostLocale
+    }
+
+    public convenience init?(hostLocale: String) {
+        let environment = Environment(bundle: Bundle.main)
+        self.init(
+            platformVersion: UIDevice.current.systemVersion,
+            hostVersion: environment.appVersion,
+            sdkVersion: environment.sdkVersion?.description ?? "-",
+            hostLocale: hostLocale
+        )
     }
 }

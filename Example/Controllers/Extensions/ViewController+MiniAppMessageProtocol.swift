@@ -54,4 +54,10 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
         break
         }
     }
+
+    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {
+        let locale = NSLocalizedString("locale", comment: "")
+        let info = MAHostEnvironmentInfo(hostLocale: locale)
+        return { return info }
+    }
 }

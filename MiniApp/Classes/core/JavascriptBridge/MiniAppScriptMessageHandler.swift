@@ -500,26 +500,22 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func getHostEnvironmentInfo(with callbackId: String) {
-        hostAppMessageDelegate?.getHostEnvironmentInfo(completionHandler: { (result) in
-            switch result {
-            case .success(let response):
-                guard let encodedResult = ResponseEncoder.encode(data: response) else {
-                    self.executeJavaScriptCallback(
-                        responseStatus: .onError,
-                        messageId: callbackId,
-                        response: prepareMAJavascriptError(MiniAppJavaScriptError.internalError)
-                    )
-                    return
-                }
-                self.executeJavaScriptCallback(
-                    responseStatus: .onSuccess,
-                    messageId: callbackId,
-                    response: encodedResult
-                )
-            case .failure(let error):
-                self.handleMASDKErrorWithJson(error: error, callbackId: callbackId)
-            }
-        })
+        guard
+            let info = hostAppMessageDelegate?.getEnvironmentInfo?(),
+            let encodedResult = ResponseEncoder.encode(data: info)
+        else {
+            self.executeJavaScriptCallback(
+                responseStatus: .onError,
+                messageId: callbackId,
+                response: prepareMAJavascriptError(MiniAppJavaScriptError.internalError)
+            )
+            return
+        }
+        self.executeJavaScriptCallback(
+            responseStatus: .onSuccess,
+            messageId: callbackId,
+            response: encodedResult
+        )
     }
 
     private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {
