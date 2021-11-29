@@ -263,6 +263,7 @@ internal class RealMiniApp {
 
     func retrieveMiniAppMetaData(appId: String,
                                  version: String,
+                                 languageCode: String? = nil,
                                  completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if appId.isEmpty {
             return completionHandler(.failure(.invalidAppId))
@@ -272,7 +273,8 @@ internal class RealMiniApp {
         }
         metaDataDownloader.getMiniAppMetaInfo(miniAppId: appId,
                                               miniAppVersion: version,
-                                              apiClient: self.miniAppClient) { (result) in
+                                              apiClient: self.miniAppClient,
+                                              languageCode: (languageCode ?? NSLocale.current.languageCode) ?? "") { (result) in
             switch result {
             case .success(let metaData):
                 completionHandler(.success(metaData))

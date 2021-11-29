@@ -88,7 +88,9 @@ class ViewController: RATViewControllerWithTableView {
     }
 
     func fetchMiniAppMetaData(miniAppInfo: MiniAppInfo, config: MiniAppSdkConfig) {
-        MiniApp.shared(with: config).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
+        MiniApp.shared(with: config).getMiniAppManifest(miniAppId: miniAppInfo.id,
+                                                        miniAppVersion: miniAppInfo.version.versionId,
+                                                        languageCode: NSLocale.current.languageCode) { (result) in
             switch result {
             case .success(let manifestData):
                 self.dismissProgressIndicator {
@@ -107,7 +109,9 @@ class ViewController: RATViewControllerWithTableView {
         guard let downloadedManifest = manifest else {
             return completionHandler(.success(true))
         }
-        MiniApp.shared(with: config).getMiniAppManifest(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { (result) in
+        MiniApp.shared(with: config).getMiniAppManifest(miniAppId: miniAppInfo.id,
+                                                        miniAppVersion: miniAppInfo.version.versionId,
+                                                        languageCode: NSLocale.current.languageCode) { (result) in
             switch result {
             case .success(let manifestData):
                 self.dismissProgressIndicator {

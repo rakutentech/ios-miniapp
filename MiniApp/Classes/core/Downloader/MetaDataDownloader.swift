@@ -6,9 +6,13 @@ internal class MetaDataDownloader {
         manifestManager = MAManifestStorage()
     }
 
-    func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
+    func getMiniAppMetaInfo(miniAppId: String,
+                            miniAppVersion: String,
+                            apiClient: MiniAppClient,
+                            languageCode: String,
+                            completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         guard let manifest = getCachedManifest(miniAppId: miniAppId), !apiClient.environment.isPreviewMode else {
-            apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion) { (result) in
+            apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion, languageCode: languageCode) { (result) in
                 switch result {
                 case .success(let responseData):
                     guard let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,

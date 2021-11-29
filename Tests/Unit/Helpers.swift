@@ -121,8 +121,11 @@ class MockAPIClient: MiniAppClient {
         requestServer(urlRequest: urlRequest, responseData: responseData, completionHandler: completionHandler)
     }
 
-    override func getMiniAppMetaData(appId: String, versionId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId) else {
+    override func getMiniAppMetaData(appId: String,
+                                     versionId: String,
+                                     languageCode: String,
+                                     completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId, languageCode: "") else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
 
@@ -248,11 +251,17 @@ class MockMetaDataDownloader: MetaDataDownloader {
     var data: Data?
     var error: Error?
 
-    override func getMiniAppMetaInfo(miniAppId: String, miniAppVersion: String, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
+    override func getMiniAppMetaInfo(miniAppId: String,
+                                     miniAppVersion: String,
+                                     apiClient: MiniAppClient,
+                                     languageCode: String,
+                                     completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if error != nil {
             return completionHandler(.failure(.unknownError(domain: "Unknown Error", code: 1, description: "Failed to retrieve getMiniAppMetaInfo")))
         }
-        apiClient.getMiniAppMetaData(appId: miniAppId, versionId: miniAppVersion) { (result) in
+        apiClient.getMiniAppMetaData(appId: miniAppId,
+                                     versionId: miniAppVersion,
+                                     languageCode: "") { (result) in
             switch result {
             case .success(let responseData):
                 if let decodeResponse = ResponseDecoder.decode(decodeType: MetaDataResponse.self,
