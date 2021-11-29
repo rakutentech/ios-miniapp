@@ -605,10 +605,12 @@ Host app will use the defined interfaces to retrieve these details from manifest
 }
 ```
 
-Retrieve the meta-data of a MiniApp using the following method,
+You can retrieve the meta-data of a MiniApp using the following method,
 
 ```swift
-MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAppVersionId) { (result) in
+MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, 
+                                    miniAppVersion: miniAppVersionId, 
+                                    languageCode: NSLocale.current.languageCode) { (result) in
     switch result {
         case .success(let manifestData):
             // Retrieve the custom key/value pair like the following.
@@ -619,6 +621,8 @@ MiniApp.shared().getMiniAppManifest(miniAppId: miniAppId, miniAppVersion: miniAp
 	...
 }
 ```
+By passing the `languageCode` in the above `getMiniAppManifest` method, you can get the localized description/reason for the permission from the platform API. 
+If there is no localized description/reason is available, it will return the default value given in the `manifest.json`
 
 <a id="how-to-use-meta-data"></a>
 
