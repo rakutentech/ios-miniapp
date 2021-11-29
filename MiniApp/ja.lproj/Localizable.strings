@@ -1,4 +1,4 @@
-"locale"                                                        = "ja-JP";
+"miniapp.sdk.ios.locale"                                        = "ja-JP";
 
 "miniapp.sdk.ios.alert.title.ok"                                = "OK";
 "miniapp.sdk.ios.alert.title.cancel"                            = "キャンセル";

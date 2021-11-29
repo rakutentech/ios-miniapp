@@ -22,6 +22,9 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
                                   completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 
     /// Optional closure that can be implemented in the host app to handle the environment info and locale.
+    @available(*, deprecated, renamed: "getEnvironmentInfo")
+    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void)
+
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {get}
 }
 
@@ -68,9 +71,20 @@ public extension MiniAppMessageDelegate {
         return uniqueId
     }
 
+    @available(*, deprecated, renamed: "getEnvironmentInfo")
+    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
+        guard
+            let info = MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString())
+        else {
+            completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.invalidSDKId))))
+            return
+        }
+        completionHandler(.success(info))
+    }
+
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {
         guard
-            let info = MAHostEnvironmentInfo(hostLocale: "locale".localizedString())
+            let info = MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString())
         else {
             return { return nil }
         }

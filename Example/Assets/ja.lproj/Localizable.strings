@@ -1,4 +1,4 @@
-"locale"                                                = "ja-JP";
+"miniapp.sdk.ios.locale"                                = "ja-JP";
 
 "input_valid_miniapp_title"                             = "Please enter valid Miniapp ID and try again";
 "miniapp.sdk.ios.error.message.invalid_miniapp_id"      = "Invalid Miniapp ID";
