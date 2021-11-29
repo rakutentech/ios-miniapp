@@ -274,7 +274,7 @@ internal class RealMiniApp {
         metaDataDownloader.getMiniAppMetaInfo(miniAppId: appId,
                                               miniAppVersion: version,
                                               apiClient: self.miniAppClient,
-                                              languageCode: languageCode ?? NSLocale.current.languageCode) { (result) in
+                                              languageCode: (languageCode ?? NSLocale.current.languageCode) ?? "") { (result) in
             switch result {
             case .success(let metaData):
                 completionHandler(.success(metaData))
