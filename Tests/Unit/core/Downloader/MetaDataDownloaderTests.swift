@@ -49,7 +49,8 @@ class MetaDataDownloaderTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     metaDataDownloader.getMiniAppMetaInfo(miniAppId: mockMiniAppInfo.id,
                                                           miniAppVersion: mockMiniAppInfo.version.versionId,
-                                                          apiClient: mockAPIClient, completionHandler: { (result) in
+                                                          apiClient: mockAPIClient,
+                                                          languageCode: "", completionHandler: { (result) in
                         switch result {
                         case .success(let responseData):
                             decodedResponse = responseData
@@ -67,7 +68,8 @@ class MetaDataDownloaderTests: QuickSpec {
                     var testError: NSError?
                     metaDataDownloader.getMiniAppMetaInfo(miniAppId: mockMiniAppInfo.id,
                                                           miniAppVersion: mockMiniAppInfo.version.versionId,
-                                                          apiClient: mockAPIClient, completionHandler: { (result) in
+                                                          apiClient: mockAPIClient,
+                                                          languageCode: "", completionHandler: { (result) in
                         switch result {
                         case .success:
                             break
@@ -98,7 +100,9 @@ class MetaDataDownloaderTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     metaDataDownloader.getMiniAppMetaInfo(miniAppId: mockMiniAppInfo.id,
                                                           miniAppVersion: mockMiniAppInfo.version.versionId,
-                                                          apiClient: mockAPIClient, completionHandler: { (result) in
+                                                          apiClient: mockAPIClient,
+                                                          languageCode: "",
+                                                          completionHandler: { (result) in
                         switch result {
                         case .success:
                             break

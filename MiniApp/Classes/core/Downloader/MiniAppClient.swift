@@ -121,8 +121,12 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func getMiniAppMetaData(appId: String,
                             versionId: String,
+                            languageCode: String,
                             completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId, testPath: self.previewPath) else {
+        guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId,
+                                                                 versionId: versionId,
+                                                                 testPath: self.previewPath,
+                                                                 languageCode: languageCode) else {
             return completionHandler(.failure(NSError.invalidURLError()))
         }
         return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
