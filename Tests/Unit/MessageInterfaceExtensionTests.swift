@@ -98,6 +98,35 @@ class MessageInterfaceExtensionTests: QuickSpec {
                     expect(points?.cash).to(equal(10))
                 }
             }
+            context("and when getHostEnvironmentInfo interface method is called") {
+                it("it will return the environment values") {
+                    var info: MAHostEnvironmentInfo?
+                    let mockMessageInterface = MockMessageInterface()
+                    mockMessageInterface.mockEnvironmentInfo = true
+                    mockMessageInterface.getHostEnvironmentInfo { result in
+                        switch result {
+                        case .success(let envInfo):
+                            info = envInfo
+                        case .failure: break
+                        }
+                    }
+                    expect(info?.platformVersion).to(equal("1.0.0"))
+                    expect(info?.hostVersion).to(equal("2.0.0"))
+                    expect(info?.sdkVersion).to(equal("3.0.0"))
+                    expect(info?.hostLocale).to(equal("ja-JP"))
+                }
+            }
+            context("and when getEnvironmentInfo interface method is called") {
+                it("it will return the environment values") {
+                    let mockMessageInterface = MockMessageInterface()
+                    mockMessageInterface.mockEnvironmentInfo = true
+                    let info = mockMessageInterface.getEnvironmentInfo?()
+                    expect(info?.platformVersion).to(equal("1.0.0"))
+                    expect(info?.hostVersion).to(equal("2.0.0"))
+                    expect(info?.sdkVersion).to(equal("3.0.0"))
+                    expect(info?.hostLocale).to(equal("ja-JP"))
+                }
+            }
         }
     }
 }
