@@ -9,6 +9,7 @@ type LandingProps = {
   platformVersion: ?string,
   hostVersion: ?string,
   sdkVersion: ?string,
+  hostLocale: ?string,
   infoError: string,
   getHostInfo: Function,
 };
@@ -67,6 +68,8 @@ const Landing = (props: LandingProps) => {
           Host Version: {props.hostVersion ?? '-'}
           <br />
           SDK Version: {props.sdkVersion ?? '-'}
+          <br />
+          Host Locale: {props.hostLocale ?? '-'}
         </p>
         <p className={classes.info}>
           Query Parameters: {window.location.search || 'None'}
@@ -86,6 +89,7 @@ const mapStateToProps = (state, props) => {
     platformVersion: state.info.platformVersion,
     hostVersion: state.info.hostVersion,
     sdkVersion: state.info.sdkVersion,
+    hostLocale: state.info.hostLocale,
     infoError: state.info.infoError,
   };
 };

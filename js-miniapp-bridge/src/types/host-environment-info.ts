@@ -6,4 +6,5 @@ export interface HostEnvironmentInfo {
   platformVersion?: string;
   hostVersion?: string;
   sdkVersion?: string;
+  hostLocale?: string;
 }
