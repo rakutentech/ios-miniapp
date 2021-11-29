@@ -6,6 +6,8 @@
 
 **Sample app**
 
+- **Feature:** Added production and staging toggle to change environments.
+
 ---
 
 ### 3.8.0 (2021-11-09)

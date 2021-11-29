@@ -17,6 +17,7 @@ class FirstLaunchViewController: RATViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        setupEnvironment()
         if checkSettingsOK() {
             self.performSegue(withIdentifier: "ShowList", sender: nil)
         } else {
@@ -24,8 +25,20 @@ class FirstLaunchViewController: RATViewController {
         }
     }
 
+    func setupEnvironment() {
+        guard Config.userDefaults?.string(forKey: Config.Key.endpoint.rawValue) != nil
+        else {
+            Config.savePlistValueToUserDefaults(for: .endpoint)
+            Config.savePlistValueToUserDefaults(for: .stagingEndpoint)
+            return
+        }
+    }
+
     func checkSettingsOK() -> Bool {
-        return Config.userDefaults?.string(forKey: Config.Key.projectId.rawValue) != nil && Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue) != nil
+        return
+            Config.userDefaults?.string(forKey: Config.Key.projectId.rawValue) != nil &&
+            Config.userDefaults?.string(forKey: Config.Key.subscriptionKey.rawValue) != nil &&
+            Config.userDefaults?.string(forKey: Config.Key.endpoint.rawValue) != nil
     }
 
     func animateViews() {
