@@ -5,12 +5,12 @@ BOLD='\033[1m'
 RED='\033[0;31m'
 NOCOLOR='\033[0m'
 
-RMA_API_HOST=$(echo $RMA_API_ENDPOINT | cut -d'/' -f3 | cut -d':' -f2)
-RMA_API_PORT=$(echo $RMA_API_ENDPOINT | cut -d'/' -f3 | cut -d':' -f3)
+RMA_API_HOST=$(echo $RMA_API_ENDPOINT_PROD | cut -d'/' -f3 | cut -d':' -f2)
+RMA_API_PORT=$(echo $RMA_API_ENDPOINT_PROD | cut -d'/' -f3 | cut -d':' -f3)
 
 if [ "$RMA_API_HOST" = "$RMA_API_PORT" ]
   then
-    PROTOCOL=$(echo "$RMA_API_ENDPOINT" | cut -d':' -f1)
+    PROTOCOL=$(echo "$RMA_API_ENDPOINT_PROD" | cut -d':' -f1)
     if [ "$(echo "$PROTOCOL" | tr "[:lower:]" "[:upper:]")" = "HTTPS" ]
     then
       RMA_API_PORT=443
@@ -21,7 +21,7 @@ fi
 
 if [ -z "$RMA_API_HOST" ]
   then
-    echo "${NOCOLOR}➜ ${RED}Can't generate SSL pin! please define ${YELLOW}RMA_API_ENDPOINT${RED} environment variable${NOCOLOR}"
+    echo "${NOCOLOR}➜ ${RED}Can't generate SSL pin! please define ${YELLOW}RMA_API_ENDPOINT_PROD${RED} environment variable${NOCOLOR}"
     echo "" > SSL-pinning.xcconfig
 else
   echo "➜ ${BOLD}Generating SSL pin for ${YELLOW}$RMA_API_HOST${GREY}"
