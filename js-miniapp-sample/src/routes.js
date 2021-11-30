@@ -16,9 +16,11 @@ import ShareIcon from '@material-ui/icons/Share';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import EventIcon from '@material-ui/icons/CompareArrows';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
+import Camera from './pages/camera';
 import FileDownload from './pages/file-download';
 import FileUploader from './pages/file-upload';
 import GifPage from './pages/gifs';
@@ -115,6 +117,12 @@ const appItems = [
     label: 'Ads',
     navLink: '/ads',
     component: Ads,
+  },
+  {
+    icon: <PhotoCamera />,
+    label: 'Camera',
+    navLink: '/camera',
+    component: Camera,
   },
   {
     icon: <CloudDownloadIcon />,
