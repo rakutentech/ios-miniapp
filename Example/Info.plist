@@ -53,13 +53,13 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Demo app needs permission to save photos</string>
 	<key>RASProjectId</key>
-	<string>$(RAS_PROJECT_IDENTIFIER)</string>
+	<string>$(RAS_PROJECT_IDENTIFIER_PROD)</string>
 	<key>RASStagingProjectId</key>
-	<string>$(RAS_PROJECT_STAGING_IDENTIFIER)</string>
+	<string>$(RAS_PROJECT_IDENTIFIER_STG)</string>
 	<key>RASProjectSubscriptionKey</key>
-	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY)</string>
+	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY_PROD)</string>
 	<key>RASStagingProjectSubscriptionKey</key>
-	<string>$(RAS_PROJECT_STAGING_SUBSCRIPTION_KEY)</string>
+	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY_STG)</string>
 	<key>RATAccountIdentifier</key>
 	<real>1553</real>
 	<key>RATAppIdentifier</key>
@@ -67,9 +67,9 @@
 	<key>RATEndpoint</key>
 	<string>$(RAT_ENDPOINT)</string>
 	<key>RMAAPIEndpoint</key>
-	<string>$(RMA_API_ENDPOINT)</string>
+	<string>$(RMA_API_ENDPOINT_PROD)</string>
 	<key>RMAAPIStagingEndpoint</key>
-	<string>$(RMA_API_STAGING_ENDPOINT)</string>
+	<string>$(RMA_API_ENDPOINT_STG)</string>
 	<key>RMAHostAppUserAgentInfo</key>
 	<string>$(RMA_USER_AGENT)</string>
 	<key>RMAIsPreviewMode</key>
