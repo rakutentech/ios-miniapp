@@ -25,7 +25,7 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     @available(*, deprecated, renamed: "getEnvironmentInfo")
     func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void)
 
-    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {get}
+    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {get}
 }
 
 public extension MiniAppMessageDelegate {
@@ -73,21 +73,12 @@ public extension MiniAppMessageDelegate {
 
     @available(*, deprecated, renamed: "getEnvironmentInfo")
     func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
-        guard
-            let info = MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString())
-        else {
-            completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.invalidSDKId))))
-            return
-        }
+        let info = MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString())
         completionHandler(.success(info))
     }
 
-    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {
-        guard
-            let info = MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString())
-        else {
-            return { return nil }
-        }
+    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {
+        let info = MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString())
         return { return info }
     }
 }
@@ -108,15 +99,18 @@ public class MAHostEnvironmentInfo: Codable {
     let sdkVersion: String
     let hostLocale: String
 
-    public init?(platformVersion: String, hostVersion: String, sdkVersion: String, hostLocale: String) {
-        guard hostLocale.isValidLocale else { return nil }
+    public init(platformVersion: String, hostVersion: String, sdkVersion: String, hostLocale: String) {
         self.platformVersion = platformVersion
         self.hostVersion = hostVersion
         self.sdkVersion = sdkVersion
-        self.hostLocale = hostLocale
+        if hostLocale.isValidLocale {
+            self.hostLocale = hostLocale
+        } else {
+            self.hostLocale = "miniapp.sdk.ios.locale".localizedString()
+        }
     }
 
-    public convenience init?(hostLocale: String) {
+    public convenience init(hostLocale: String) {
         let environment = Environment(bundle: Bundle.main)
         self.init(
             platformVersion: UIDevice.current.systemVersion,

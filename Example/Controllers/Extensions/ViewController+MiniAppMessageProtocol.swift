@@ -57,11 +57,11 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
 
     func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
         let locale = NSLocalizedString("miniapp.sdk.ios.locale", comment: "")
-        let info = MAHostEnvironmentInfo(hostLocale: locale)!
+        let info = MAHostEnvironmentInfo(hostLocale: locale)
         completionHandler(.success(info))
     }
 
-    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {
+    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {
         let locale = NSLocalizedString("miniapp.sdk.ios.locale", comment: "")
         let info = MAHostEnvironmentInfo(hostLocale: locale)
         return { return info }
