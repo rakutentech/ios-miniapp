@@ -51,12 +51,12 @@ Here are the different environment variables you can set before running `fastlan
 | Name | Description | Required |
 |:-----|:------------|:---------|
 |`RAT_ENDPOINT` |[See usage here](#build-sample-app) |no |
-|`RMA_API_ENDPOINT` |Used by every SDK calls to the API. It will also be used to generate the `SSL-pinning.xcconfig` file containing the SSL certificate key hash of your host |yes |
-|`RMA_API_STAGING_ENDPOINT` |Used by every SDK calls to the API but uses RAS staging environment |yes |
-|`RAS_PROJECT_SUBSCRIPTION_KEY` |Project subscription key you can find in your Rakuten App Studio project |yes |
-|`RAS_PROJECT_STAGING_SUBSCRIPTION_KEY` |Project subscription key you can find in your staging Rakuten App Studio project |yes |
-|`RAS_PROJECT_IDENTIFIER` |Project id key you can find in your Rakuten App Studio project |yes |
-|`RAS_PROJECT_STAGING_IDENTIFIER` |Project id you can find in your staging Rakuten App Studio project |yes |
+|`RMA_API_ENDPOINT_PROD` |Used by every SDK calls to the API. It will also be used to generate the `SSL-pinning.xcconfig` file containing the SSL certificate key hash of your host |yes |
+|`RMA_API_ENDPOINT_STG` |Used by every SDK calls to the API but uses RAS staging environment |yes |
+|`RAS_PROJECT_SUBSCRIPTION_KEY_PROD` |Project subscription key you can find in your Rakuten App Studio project |yes |
+|`RAS_PROJECT_SUBSCRIPTION_KEY_STG` |Project subscription key you can find in your staging Rakuten App Studio project |yes |
+|`RAS_PROJECT_IDENTIFIER_PROD` |Project id key you can find in your Rakuten App Studio project |yes |
+|`RAS_PROJECT_IDENTIFIER_STG` |Project id you can find in your staging Rakuten App Studio project |yes |
 |`RMA_DEMO_APP_BUILD_TYPE` |This is used as a suffix for your demo app version name (for example if demo app is 3.7.0 and you provide `DEV` as value for this variable, your version will be named `3.7.0-DEV`) |no |
 |`RMA_GAD_APPLICATION_IDENTIFIER` |Only required if you intend to work with the Google Ads subspec `MiniApp/Admob` or `MiniApp/Admob8` |no |
 |`RMA_APP_CENTER_SECRET` |This variable is used to send crash reports to an AppCenter project (the token can be generated in your AppCenter project page). |no |

@@ -13,7 +13,7 @@ usage: $0 param1 param[n]...
    - param1: The SDK name which needs to have a -Secrets.xcconfig file
    - param[n]: a list of secrets environment variables to put in secret config file
   Example usage:
-    $0 MiniApp RMA_API_ENDPOINT RAS_PROJECT_SUBSCRIPTION_KEY RAS_PROJECT_IDENTIFIER
+    $0 MiniApp RMA_API_ENDPOINT_PROD RAS_PROJECT_SUBSCRIPTION_KEY_PROD RAS_PROJECT_IDENTIFIER_PROD
 HELP_USAGE
 }
 
