@@ -83,8 +83,8 @@ public extension MiniAppMessageDelegate {
                 switch result {
                 case .success(let resultInfo):
                     completion = { return resultInfo }
-                case .failure(let e):
-                    MiniAppLogger.e("no default implementation", e)
+                case .failure(let error):
+                    MiniAppLogger.e("no default implementation", error)
                     completion = nil
                 }
             }
