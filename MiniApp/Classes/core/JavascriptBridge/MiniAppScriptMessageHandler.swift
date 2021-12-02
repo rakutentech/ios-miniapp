@@ -87,11 +87,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         case .getPoints:
             fetchPoints(with: callbackId)
         case .getHostEnvironmentInfo:
-            if hostAppMessageDelegate?.getEnvironmentInfo != nil {
-                getEnvironmentInfo(with: callbackId)
-            } else {
-                getHostEnvironmentInfo(with: callbackId)
-            }
+            getEnvironmentInfo(with: callbackId)
         }
     }
 

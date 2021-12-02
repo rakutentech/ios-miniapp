@@ -73,13 +73,28 @@ public extension MiniAppMessageDelegate {
 
     @available(*, deprecated, renamed: "getEnvironmentInfo")
     func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
-        let info = MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString())
-        completionHandler(.success(info))
+        completionHandler(.success(getDefaultHostEnvironmentInfo()))
     }
 
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {
+        return { () -> (() -> (MAHostEnvironmentInfo))? in
+            var completion: (() -> (MAHostEnvironmentInfo))?
+            self.getHostEnvironmentInfo { result in
+                switch result {
+                case .success(let resultInfo):
+                    completion = { return resultInfo }
+                case .failure(let e):
+                    MiniAppLogger.e("no default implementation", e)
+                    completion = nil
+                }
+            }
+            return completion
+        }()
+    }
+
+    private func getDefaultHostEnvironmentInfo() -> MAHostEnvironmentInfo {
         let info = MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString())
-        return { return info }
+        return info
     }
 }
 
