@@ -500,7 +500,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
 
     func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
         if mockEnvironmentInfo {
-            completionHandler(.success(MAHostEnvironmentInfo(platformVersion: "1.0.0", hostVersion: "2.0.0", sdkVersion: "3.0.0", hostLocale: "ja-JP")!))
+            completionHandler(.success(MAHostEnvironmentInfo(platformVersion: "1.0.0", hostVersion: "2.0.0", sdkVersion: "3.0.0", hostLocale: "ja-JP")))
         } else {
             completionHandler(.failure(.failedToConformToProtocol))
         }
