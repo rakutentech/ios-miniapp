@@ -395,6 +395,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var messageContentAllowed: Bool = false
     var mockPointsInterface: Bool = false
     var mockAccessToken: String? = ""
+    var mockEnvironmentInfo: Bool = false
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         if messageContentAllowed {
@@ -495,6 +496,19 @@ class MockMessageInterface: MiniAppMessageDelegate {
         } else {
             completionHandler(.failure(.error(description: "Failed to retrieve Points details")))
         }
+    }
+
+    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
+        if mockEnvironmentInfo {
+            completionHandler(.success(MAHostEnvironmentInfo(platformVersion: "1.0.0", hostVersion: "2.0.0", sdkVersion: "3.0.0", hostLocale: "ja-JP")))
+        } else {
+            completionHandler(.failure(.failedToConformToProtocol))
+        }
+    }
+
+    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {
+        let info = MAHostEnvironmentInfo(platformVersion: "1.0.0", hostVersion: "2.0.0", sdkVersion: "3.0.0", hostLocale: "ja-JP")
+        return { return info }
     }
 }
 

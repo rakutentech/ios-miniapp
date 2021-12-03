@@ -29,4 +29,19 @@ extension String {
             value: defaultValue,
             comment: "")
     }
+
+    var isValidLocale: Bool {
+        let capturePattern = #"^[a-z]{2}(-[A-Z]{2})?$"#
+        guard
+            let captureRegex = try? NSRegularExpression(
+                pattern: capturePattern,
+                options: []
+            )
+        else { return false }
+        let textRange = NSRange(
+            self.startIndex..<self.endIndex,
+            in: self
+        )
+        return captureRegex.firstMatch(in: self, options: [], range: textRange) != nil
+    }
 }

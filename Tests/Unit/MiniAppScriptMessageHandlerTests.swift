@@ -886,18 +886,17 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             "param" : null
                         }
                         """
-                        mockMessageInterface.mockPointsInterface = true
+                        mockMessageInterface.mockEnvironmentInfo = true
                         let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                         scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                         guard let responseData: Data = mockCallbackProtocol.response?.data(using: .utf8) else {
                             fail("MiniAppScriptMessageHandler - getHostEnvironmentInfo failed")
                             return
                         }
-                        let environment = Environment(bundle: Bundle.main)
                         let environmentInfo = ResponseDecoder.decode(decodeType: MAHostEnvironmentInfo.self, data: responseData)
-                        expect(environmentInfo?.sdkVersion).toEventually(equal(environment.sdkVersion?.description))
-                        expect(environmentInfo?.platformVersion).toEventually(equal(UIDevice.current.systemVersion))
-                        expect(environmentInfo?.hostVersion).toEventually(equal(environment.appVersion))
+                        expect(environmentInfo?.sdkVersion).toEventually(equal("3.0.0"))
+                        expect(environmentInfo?.platformVersion).toEventually(equal("1.0.0"))
+                        expect(environmentInfo?.hostVersion).toEventually(equal("2.0.0"))
                     }
                 }
             }
