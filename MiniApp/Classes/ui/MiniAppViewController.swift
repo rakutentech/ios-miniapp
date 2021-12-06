@@ -234,7 +234,7 @@ public class MiniAppViewController: UIViewController {
         backButton.isEnabled = backButtonEnabled
         forwardButton.isEnabled = forwardButtonEnabled
     }
-    
+
     // MARK: - Sharing
     @objc
     public func sharePressed() {
@@ -257,10 +257,10 @@ public class MiniAppViewController: UIViewController {
                 }
         }
     }
-    
+
     private func showShareAlert(text: String, imageUrl: String) {
-        let vc = MiniAppSharePreviewViewController(promotionText: text, promotionImageUrl: imageUrl)
-        let nvc = UINavigationController(rootViewController: vc)
+        let shareVC = MiniAppSharePreviewViewController(promotionText: text, promotionImageUrl: imageUrl)
+        let nvc = UINavigationController(rootViewController: shareVC)
         nvc.navigationBar.isTranslucent = false
         nvc.navigationBar.barTintColor = .systemBackground
         present(nvc, animated: true, completion: nil)
