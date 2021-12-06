@@ -238,21 +238,23 @@ public class MiniAppViewController: UIViewController {
     // MARK: - Sharing
     @objc
     public func sharePressed() {
-        MiniApp.shared(with: config, navigationSettings: .none).info(miniAppId: appId, miniAppVersion: version) { result in
-            switch result {
-            case .success(let info):
-                guard
-                    let text = info.promotionalText,
-                    let imageUrl = info.promotionalImageUrl
-                else {
-                    return
+        MiniApp
+            .shared(with: config, navigationSettings: .none)
+            .info(miniAppId: appId, miniAppVersion: version) { result in
+                switch result {
+                case .success(let info):
+                    guard
+                        let text = info.promotionalText,
+                        let imageUrl = info.promotionalImageUrl
+                    else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.showShareAlert(text: text, imageUrl: imageUrl)
+                    }
+                case .failure(let error):
+                    print(error)
                 }
-                DispatchQueue.main.async {
-                    self.showShareAlert(text: text, imageUrl: imageUrl)
-                }
-            case .failure(let error):
-                print(error)
-            }
         }
     }
     
