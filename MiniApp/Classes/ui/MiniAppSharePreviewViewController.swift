@@ -40,9 +40,9 @@ public class MiniAppSharePreviewViewController: UIViewController {
         self.promotionImageUrl = promotionImageUrl
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) { return nil }
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,18 +52,18 @@ public class MiniAppSharePreviewViewController: UIViewController {
 
         setupUI()
     }
-    
+
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         loadPreviewImage()
     }
-    
+
     func setupUI() {
         view.addSubview(promotionLabel)
         NSLayoutConstraint.activate([
             promotionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             promotionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            promotionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            promotionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
         view.addSubview(promotionImageView)
@@ -71,13 +71,13 @@ public class MiniAppSharePreviewViewController: UIViewController {
             promotionImageView.topAnchor.constraint(equalTo: promotionLabel.bottomAnchor, constant: 20),
             promotionImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             promotionImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            promotionImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.667, constant: -40),
+            promotionImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.667, constant: -40)
         ])
 
         promotionImageView.addSubview(loadingIndicatorView)
         NSLayoutConstraint.activate([
             loadingIndicatorView.centerXAnchor.constraint(equalTo: promotionImageView.centerXAnchor),
-            loadingIndicatorView.centerYAnchor.constraint(equalTo: promotionImageView.centerYAnchor),
+            loadingIndicatorView.centerYAnchor.constraint(equalTo: promotionImageView.centerYAnchor)
         ])
     }
 
