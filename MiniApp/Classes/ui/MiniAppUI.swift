@@ -11,6 +11,7 @@ public struct MiniAppUIParams {
     var navigationInterface: MiniAppNavigationDelegate?
     var queryParams: String?
     var adsDisplayer: MiniAppAdDisplayer?
+    var enableSharePreview: Bool
 
     public init(
         title: String = "",
@@ -20,7 +21,8 @@ public struct MiniAppUIParams {
         messageInterface: MiniAppMessageDelegate,
         navigationInterface: MiniAppNavigationDelegate? = nil,
         queryParams: String? = nil,
-        adsDisplayer: MiniAppAdDisplayer? = nil
+        adsDisplayer: MiniAppAdDisplayer? = nil,
+        enableSharePreview: Bool = false
     ) {
         self.title = title
         self.miniAppId = miniAppId
@@ -30,6 +32,7 @@ public struct MiniAppUIParams {
         self.navigationInterface = navigationInterface
         self.queryParams = queryParams
         self.adsDisplayer = adsDisplayer
+        self.enableSharePreview = enableSharePreview
     }
 }
 
@@ -74,7 +77,8 @@ internal class RealMiniAppUI {
             messageDelegate: params.messageInterface,
             navDelegate: params.navigationInterface,
             queryParams: params.queryParams,
-            adsDisplayer: params.adsDisplayer
+            adsDisplayer: params.adsDisplayer,
+            enableSharePreview: params.enableSharePreview
         )
         return miniAppVC
     }
