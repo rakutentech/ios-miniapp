@@ -240,7 +240,8 @@ public class MiniAppViewController: UIViewController {
     public func sharePressed() {
         MiniApp
             .shared(with: config, navigationSettings: .none)
-            .info(miniAppId: appId, miniAppVersion: version) { result in
+            .info(miniAppId: appId, miniAppVersion: version) { [weak self] result in
+                guard let self = self else { return }
                 switch result {
                 case .success(let info):
                     guard
