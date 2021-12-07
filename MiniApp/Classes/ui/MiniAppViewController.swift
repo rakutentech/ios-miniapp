@@ -66,7 +66,7 @@ public class MiniAppViewController: UIViewController {
     }()
 
     private lazy var closeButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(title: MASDKLocale.localize(.uiNavButtonClose), style: .plain, target: self, action: #selector(closePressed))
+        let view = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closePressed))
         return view
     }()
 
