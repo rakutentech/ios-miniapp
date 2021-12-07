@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React, { useRef, useState } from 'react';
 import { Card, Grid, Button, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +50,9 @@ const Camera = () => {
   const classes = useStyles();
 
   const [image, setImage] = useState(null);
-  const [backCamera, setBackCamera] = useState('');
+  const [backCamera] = useState(undefined);
+
+  const cameraRef = useRef(null);
 
   const setFiles = (e) => {
     const files = e.target.files;
@@ -63,7 +64,9 @@ const Camera = () => {
 
   function clear() {
     setImage(null);
-    setBackCamera('');
+    if (cameraRef.current !== null) {
+      cameraRef.current.value = '';
+    }
   }
 
   return (
@@ -87,6 +90,7 @@ const Camera = () => {
             data-testid="file-input-image-back"
             capture="environment"
             value={backCamera}
+            ref={cameraRef}
           />
         </div>
         <div className={classes.contentSection}>
