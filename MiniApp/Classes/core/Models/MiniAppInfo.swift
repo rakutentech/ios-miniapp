@@ -12,12 +12,18 @@ public struct MiniAppInfo: Codable, Hashable {
     public var icon: URL
     /// Version information of a Miniapp
     public var version: Version
+    /// Promotional image url
+    public var promotionalImageUrl: String?
+    /// Promotional text
+    public var promotionalText: String?
 
     private enum CodingKeys: String, CodingKey {
         case id,
         displayName,
         icon,
-        version
+        version,
+        promotionalImageUrl,
+        promotionalText
     }
 }
 

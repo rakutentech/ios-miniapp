@@ -8,6 +8,7 @@
 **Sample app**
 
 - **Feature:** Added production and staging toggle to change environments.
+- **Feature:** Added promotional preview by enabling `enableSharePreview` when launching the MiniApp with MiniAppUI.
 
 ---
 

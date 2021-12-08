@@ -27,6 +27,7 @@ public class MiniAppViewController: UIViewController {
     var config: MiniAppSdkConfig?
     var queryParams: String?
     var adsDisplayer: MiniAppAdDisplayer?
+    var enableSharePreview: Bool
 
     var state: ViewState = .loading {
         didSet { update() }
@@ -59,8 +60,13 @@ public class MiniAppViewController: UIViewController {
         return view
     }()
 
+    private lazy var shareButton: UIBarButtonItem = {
+        let view = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(sharePressed))
+        return view
+    }()
+
     private lazy var closeButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(title: MASDKLocale.localize(.uiNavButtonClose), style: .plain, target: self, action: #selector(closePressed))
+        let view = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closePressed))
         return view
     }()
 
@@ -85,7 +91,8 @@ public class MiniAppViewController: UIViewController {
         messageDelegate: MiniAppMessageDelegate,
         navDelegate: MiniAppNavigationDelegate? = nil,
         queryParams: String? = nil,
-        adsDisplayer: MiniAppAdDisplayer? = nil
+        adsDisplayer: MiniAppAdDisplayer? = nil,
+        enableSharePreview: Bool = false
     ) {
         self.appId = appId
         self.version = version
@@ -94,6 +101,7 @@ public class MiniAppViewController: UIViewController {
         self.navDelegate = navDelegate
         self.queryParams = queryParams
         self.adsDisplayer = adsDisplayer
+        self.enableSharePreview = enableSharePreview
         super.init(nibName: nil, bundle: nil)
         self.title = title
         if navDelegate == nil {
@@ -119,7 +127,9 @@ public class MiniAppViewController: UIViewController {
                 navigationItem.setLeftBarButtonItems([backButton, forwardButton], animated: true)
             }
             if navigationItem.rightBarButtonItems == nil {
-                navigationItem.setRightBarButton(closeButton, animated: true)
+                navigationItem.setRightBarButtonItems(
+                    enableSharePreview ? [closeButton, shareButton] : [closeButton], animated: true
+                )
             }
         }
 
@@ -223,6 +233,38 @@ public class MiniAppViewController: UIViewController {
     public func refreshNavigationBarButtons(backButtonEnabled: Bool, forwardButtonEnabled: Bool) {
         backButton.isEnabled = backButtonEnabled
         forwardButton.isEnabled = forwardButtonEnabled
+    }
+
+    // MARK: - Sharing
+    @objc
+    public func sharePressed() {
+        MiniApp
+            .shared(with: config, navigationSettings: .none)
+            .info(miniAppId: appId, miniAppVersion: version) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let info):
+                    guard
+                        let text = info.promotionalText,
+                        let imageUrl = info.promotionalImageUrl
+                    else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.showShareAlert(text: text, imageUrl: imageUrl)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+        }
+    }
+
+    private func showShareAlert(text: String, imageUrl: String) {
+        let shareVC = MiniAppSharePreviewViewController(promotionText: text, promotionImageUrl: imageUrl)
+        let nvc = UINavigationController(rootViewController: shareVC)
+        nvc.navigationBar.isTranslucent = false
+        nvc.navigationBar.barTintColor = .systemBackground
+        present(nvc, animated: true, completion: nil)
     }
 }
 

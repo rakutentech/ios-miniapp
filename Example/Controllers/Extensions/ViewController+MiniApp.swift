@@ -111,7 +111,8 @@ extension ViewController: MiniAppNavigationDelegate {
                 messageInterface: self,
                 navigationInterface: self,
                 queryParams: getQueryParam(),
-                adsDisplayer: self.adsDisplayer
+                adsDisplayer: self.adsDisplayer,
+                enableSharePreview: true
             )
             MiniAppUI
                 .shared()
