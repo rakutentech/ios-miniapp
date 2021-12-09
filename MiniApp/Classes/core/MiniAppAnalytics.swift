@@ -11,6 +11,24 @@ internal enum MiniAppRATEvent: String, CaseIterable {
     case open
     case close
     case signatureFailure = "mini_app_signature_validation_fail"
+    
+    case getUniqueId = "mini_app_get_unique_id"
+    case getCurrentPosition = "mini_app_get_current_position"
+    case requrestPermission = "mini_app_request_permission"
+    case requrestCustomPermission = "mini_app_request_custom_permission"
+    case shareInfo = "mini_app_share_info"
+    case loadAd = "mini_app_load_ad"
+    case showAd = "mini_app_show_ad"
+    case getuserName = "mini_app_show_user_name"
+    case getProfilePhoto = "mini_app_get_profile_photo"
+    case getAccessToken = "mini_app_get_access_token"
+    case getPoints = "mini_app_get_points"
+    case setScreenOrientation = "mini_app_set_screen_orientation"
+    case getContacts = "mini_app_get_contacts"
+    case sendMessageToContact = "mini_app_send_message_to_contact"
+    case sendMessageToContactId = "mini_app_send_message_to_contact_id"
+    case sendMessageToMultipleContacts = "mini_app_send_message_to_multiple_contacts"
+    case getEnvironemtnInfo = "mini_app_get_environment_info"
 
     func name() -> String {
         "mini_app_\(rawValue)"
@@ -23,6 +41,24 @@ internal enum MiniAppRATEvent: String, CaseIterable {
         case .hostLaunch:
             return .appear
         case .open, .close:
+            return .click
+        case .getUniqueId,
+             .getCurrentPosition,
+             .requrestPermission,
+             .requrestCustomPermission,
+             .shareInfo,
+             .loadAd,
+             .showAd,
+             .getuserName,
+             .getProfilePhoto,
+             .getAccessToken,
+             .getPoints,
+             .setScreenOrientation,
+             .getContacts,
+             .sendMessageToContact,
+             .sendMessageToContactId,
+             .sendMessageToMultipleContacts,
+             .getEnvironemtnInfo:
             return .click
         }
     }
@@ -88,5 +124,52 @@ public class MiniAppAnalytics {
         let params = getAnalyticsInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId) + customParameters
         MiniAppLogger.d("posting \(event.name()) analytic \(event.eType()) event with params:\n\(params)", "📡")
         NotificationCenter.default.sendAnalytics(event: event, parameters: params, analyticsConfig: getAnalyticsConfigList(analyticsConfig: analyticsConfig))
+    }
+
+    internal class func sendAnalytics(command: MiniAppJSActionCommand) {
+        guard let ratEvent = getRatEvent(for: command) else {
+            MiniAppLogger.e("invalid tracking for \(command)")
+            return
+        }
+        sendAnalytics(event: ratEvent)
+    }
+
+    private class func getRatEvent(for command: MiniAppJSActionCommand) -> MiniAppRATEvent? {
+        switch command {
+        case .getUniqueId:
+            return .getUniqueId
+        case .getCurrentPosition:
+            return .getCurrentPosition
+        case .requestPermission:
+            return .requrestPermission
+        case .requestCustomPermissions:
+            return .requrestCustomPermission
+        case .shareInfo:
+            return .shareInfo
+        case .getUserName:
+            return .getuserName
+        case .getProfilePhoto:
+            return .getProfilePhoto
+        case .setScreenOrientation:
+            return .setScreenOrientation
+        case .getAccessToken:
+            return .getAccessToken
+        case .loadAd:
+            return .loadAd
+        case .showAd:
+            return .showAd
+        case .getContacts:
+            return .getContacts
+        case .sendMessageToContact:
+            return .sendMessageToContact
+        case .sendMessageToContactId:
+            return .sendMessageToContactId
+        case .sendMessageToMultipleContacts:
+            return .sendMessageToMultipleContacts
+        case .getPoints:
+            return .getPoints
+        case .getHostEnvironmentInfo:
+            return .getEnvironemtnInfo
+        }
     }
 }

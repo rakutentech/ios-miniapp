@@ -52,6 +52,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func handleActionCommand(action: MiniAppJSActionCommand, requestParam: RequestParameters?, callbackId: String) {
+        MiniAppAnalytics.sendAnalytics(command: action)
         switch action {
         case .getUniqueId:
             sendUniqueId(messageId: callbackId)
