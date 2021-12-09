@@ -3,6 +3,6 @@ documentation: "*.md"
 xcodebuild_arguments: -scheme,Tests
 module: MiniApp
 sdk: iphone
-source_directory: MiniApp
+source_directory: Sources
 theme: fullwidth
 readme: USERGUIDE.md

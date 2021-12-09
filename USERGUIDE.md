@@ -31,6 +31,9 @@ It is written in Swift 5.0 and can be used in compatible Xcode versions.
 
 ### Installation
 
+<a id="Cocoapods"></a>
+## Cocoapods
+
 Mini App SDK is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
@@ -62,6 +65,16 @@ You can also provide a new default behavior by using a `RMARequireMiniAppSignatu
 ```ruby
 pod 'MiniApp/Signature'
 ```
+
+<a id="Carthage"></a>
+## Carthage
+
+Due to some dependencies limitations, the Carthage version of MiniApps embbed all the features [described above](#Cocoapods). It also needs the host projet to implement the latest Google Mobile Ads framework independently (see [documentation](https://developers.google.com/admob/ios/quick-start)).
+To depend on MiniApp SDK through Carthage add this line to you Cartfile:
+
+```ruby
+github "https://github.com/rakutentech/ios-miniapp" "prod"
+``` 
 
 ### Configuration
 

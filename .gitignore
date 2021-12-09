@@ -31,3 +31,8 @@ DerivedData
 vendor/bundle
 /certificate.pem
 /SSL-pinning.xcconfig
+/Carthage
+/MiniAppCarthage/MiniApp/bundle
+/MiniAppCarthage/MiniApp/gadsdk
+/MiniAppCarthage/MiniApp/googlemobileadssdkios.zip
+/MiniAppCarthage/MiniApp/prebuild.log
