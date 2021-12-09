@@ -11,7 +11,6 @@ internal enum MiniAppRATEvent: String, CaseIterable {
     case open
     case close
     case signatureFailure = "mini_app_signature_validation_fail"
-    
     case getUniqueId = "mini_app_get_unique_id"
     case getCurrentPosition = "mini_app_get_current_position"
     case requrestPermission = "mini_app_request_permission"
