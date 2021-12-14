@@ -1,5 +1,5 @@
 VERSION=$(grep -o -m 1 -E "([0-9]{1,}\.)+([0-9]{1,}\.)+[0-9]{1,}" CHANGELOG.md)
-echo "$VERSION" > version.env
+echo "$VERSION" | tr -d '[:space:]' > version.env
 # set framework folder name
 FRAMEWORK_FOLDER_NAME="XCFramework"
 # set framework name or read it from project by this variable
@@ -20,6 +20,12 @@ xcodebuild archive -scheme ${FRAMEWORK_NAME} -workspace ${FRAMEWORK_NAME}.xcwork
 xcodebuild archive -scheme ${FRAMEWORK_NAME} -workspace ${FRAMEWORK_NAME}.xcworkspace -destination="iOS" -archivePath "${IOS_DEVICE_ARCHIVE_PATH}" -sdk iphoneos SKIP_INSTALL=NO BUILD_LIBRARIES_FOR_DISTRIBUTION=YES
 #Creating XCFramework
 xcodebuild -create-xcframework -framework ${SIMULATOR_ARCHIVE_PATH}/Products/Library/Frameworks/${FRAMEWORK_NAME}.framework -framework ${IOS_DEVICE_ARCHIVE_PATH}/Products/Library/Frameworks/${FRAMEWORK_NAME}.framework -output "${FRAMEWORK_PATH}"
+zip -r "${FRAMEWORK_PATH}".zip "${FRAMEWORK_PATH}"
+FRAMEWORK_CHECKSUM=$(swift package compute-checksum "${FRAMEWORK_PATH}".zip)
+echo "${FRAMEWORK_CHECKSUM}"
+sed -i -e "s/.*checksum.*/            checksum: \"$FRAMEWORK_CHECKSUM\"/" Package.swift
+rm -rf "${FRAMEWORK_PATH}"
 rm -rf "${SIMULATOR_ARCHIVE_PATH}"
 rm -rf "${IOS_DEVICE_ARCHIVE_PATH}"
-open "${FINAL_FOLDER}"
+git commit -m "SPM checksum" Package.swift
+#open "${FINAL_FOLDER}"
