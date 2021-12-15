@@ -160,6 +160,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		313C0ED82770412D00C76614 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		313C0ED92770412D00C76614 /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = USERGUIDE.md; path = ../../USERGUIDE.md; sourceTree = "<group>"; };
+		313C0EDA2770412D00C76614 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../../CHANGELOG.md; sourceTree = "<group>"; };
+		313C0EDB2770412D00C76614 /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = DEV.md; path = ../../DEV.md; sourceTree = "<group>"; };
+		313C0EDC2770412D00C76614 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../../LICENSE; sourceTree = "<group>"; };
+		313C0EF12770415100C76614 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Fastfile; path = ../../fastlane/Fastfile; sourceTree = "<group>"; };
+		313C0EF22770415200C76614 /* .codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .codecov.yml; path = ../../.codecov.yml; sourceTree = "<group>"; };
+		313C0EF32770415200C76614 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Gemfile; path = ../../Gemfile; sourceTree = "<group>"; };
+		313C0EF42770415200C76614 /* .jazzy.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .jazzy.yaml; path = ../../.jazzy.yaml; sourceTree = "<group>"; };
+		313C0EF52770415200C76614 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = ../../.swiftlint.yml; sourceTree = "<group>"; };
+		313C0EF62770415200C76614 /* Dangerfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Dangerfile; path = ../../Dangerfile; sourceTree = "<group>"; };
+		313C0F03277042AE00C76614 /* MiniApp.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = MiniApp.podspec; path = ../../MiniApp.podspec; sourceTree = "<group>"; };
 		317AA306276265560037180D /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
 		317AA308276265560037180D /* Promises-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Promises-LICENSE"; sourceTree = "<group>"; };
 		317AA309276265560037180D /* NanoPB-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "NanoPB-LICENSE"; sourceTree = "<group>"; };
@@ -326,6 +338,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		313C0EDD2770412D00C76614 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				313C0ED82770412D00C76614 /* README.md */,
+				313C0ED92770412D00C76614 /* USERGUIDE.md */,
+				313C0EDA2770412D00C76614 /* CHANGELOG.md */,
+				313C0EDB2770412D00C76614 /* DEV.md */,
+				313C0EDC2770412D00C76614 /* LICENSE */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+		313C0EE52770415100C76614 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				317AA325276274F40037180D /* bundles.xcconfig */,
+				317AA324276274A40037180D /* common.xcconfig */,
+				313C0F03277042AE00C76614 /* MiniApp.podspec */,
+				313C0EF22770415200C76614 /* .codecov.yml */,
+				313C0EF42770415200C76614 /* .jazzy.yaml */,
+				313C0EF52770415200C76614 /* .swiftlint.yml */,
+				313C0EF62770415200C76614 /* Dangerfile */,
+				313C0EF12770415100C76614 /* Fastfile */,
+				313C0EF32770415200C76614 /* Gemfile */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
 		317AA305276265560037180D /* gadsdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -362,21 +402,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		317AA327276275130037180D /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				317AA324276274A40037180D /* common.xcconfig */,
-				317AA325276274F40037180D /* bundles.xcconfig */,
-			);
-			path = Config;
-			sourceTree = "<group>";
-		};
 		31FA5E4A27608A450070B611 = {
 			isa = PBXGroup;
 			children = (
 				319164F927683FB9004B540A /* Package.swift */,
+				313C0EE52770415100C76614 /* Config */,
+				313C0EDD2770412D00C76614 /* Documentation */,
 				317AA322276267BA0037180D /* downloadLibs.sh */,
-				317AA327276275130037180D /* Config */,
 				317AA31D276265C00037180D /* Frameworks */,
 				31FA5E5827608A450070B611 /* Info.plist */,
 				31FA60362761A6DA0070B611 /* Javascript */,
@@ -709,11 +741,10 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		31FA5E5327608A450070B611 /* MiniApp */ = {
+		31FA5E5327608A450070B611 /* MiniAppSDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 31FA5E5C27608A450070B611 /* Build configuration list for PBXNativeTarget "MiniApp" */;
+			buildConfigurationList = 31FA5E5C27608A450070B611 /* Build configuration list for PBXNativeTarget "MiniAppSDK" */;
 			buildPhases = (
-				317AA2F6276263F90037180D /* Google Ads */,
 				31FA5E4F27608A450070B611 /* Headers */,
 				31FA5E5027608A450070B611 /* Sources */,
 				31FA5E5127608A450070B611 /* Frameworks */,
@@ -726,7 +757,7 @@
 				31FA60422761B9590070B611 /* PBXTargetDependency */,
 				31FA60442761B9590070B611 /* PBXTargetDependency */,
 			);
-			name = MiniApp;
+			name = MiniAppSDK;
 			productName = MiniApp;
 			productReference = 31FA5E5427608A450070B611 /* MiniApp.framework */;
 			productType = "com.apple.product-type.framework";
@@ -795,7 +826,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				31FA5E5327608A450070B611 /* MiniApp */,
+				31FA5E5327608A450070B611 /* MiniAppSDK */,
 				31FA60172761945A0070B611 /* Localization */,
 				31FA602C2761A4370070B611 /* Other */,
 			);
@@ -835,27 +866,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		317AA2F6276263F90037180D /* Google Ads */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Google Ads";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash -eu\ncurl -O https://dl.google.com/googleadmobadssdk/googlemobileadssdkios.zip\nbsdtar -xf googlemobileadssdkios.zip -s'|[^/]*/|gadsdk/|'\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		31FA5E5027608A450070B611 /* Sources */ = {
@@ -1151,7 +1161,7 @@
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.MiniApp;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = MiniApp;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
@@ -1180,7 +1190,7 @@
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.MiniApp;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = MiniApp;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
@@ -1280,7 +1290,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		31FA5E5C27608A450070B611 /* Build configuration list for PBXNativeTarget "MiniApp" */ = {
+		31FA5E5C27608A450070B611 /* Build configuration list for PBXNativeTarget "MiniAppSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				31FA5E5D27608A450070B611 /* Debug */,

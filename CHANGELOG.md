@@ -8,7 +8,7 @@
 
 ---
 
-### 3.9.0 (2021-12-17)m)
+### 3.9.0 (2021-12-17)
 
 **SDK**
 - **Feature:** Added support for Manifest localization by updating `getMiniAppManifest(miniAppId:miniAppVersion:languageCode:)` interface

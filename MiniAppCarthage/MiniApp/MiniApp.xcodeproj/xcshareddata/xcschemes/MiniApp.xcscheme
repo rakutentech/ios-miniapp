@@ -16,7 +16,7 @@
                      BuildableIdentifier = "primary"
                      BlueprintIdentifier = "31FA5E5327608A450070B611"
                      BuildableName = "MiniApp.framework"
-                     BlueprintName = "MiniApp"
+                     BlueprintName = "MiniAppSDK"
                      ReferencedContainer = "container:MiniApp.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
@@ -34,7 +34,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "31FA5E5327608A450070B611"
                BuildableName = "MiniApp.framework"
-               BlueprintName = "MiniApp"
+               BlueprintName = "MiniAppSDK"
                ReferencedContainer = "container:MiniApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -65,15 +65,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "31FA5E5327608A450070B611"
-            BuildableName = "MiniApp.framework"
-            BlueprintName = "MiniApp"
-            ReferencedContainer = "container:MiniApp.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
