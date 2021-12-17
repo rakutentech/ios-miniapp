@@ -1,4 +1,12 @@
 ## CHANGELOG
+### 1.13.0 (2021-12-17)
+
+- **Feature:** Added default values for message form in demo app
+- **Feature:** Added `hostLocale` to `HostEnvironmentInfo` to retrieve locale info from host app
+- **Feature:** Added camera picture screen in demo app
+
+--- 
+
 ### 1.12.0 (2021-10-10)
 
 - **Feature:** Added `CustomPermissionName.FILE_DOWNLOAD` permission to support downloading attachments
