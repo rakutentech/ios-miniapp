@@ -15,18 +15,7 @@ extension ViewController: MiniAppNavigationDelegate {
                            with responseHandler: @escaping MiniAppNavigationResponseHandler,
                            onClose closeHandler: MiniAppNavigationResponseHandler?) {
         if url.absoluteString.starts(with: "data:") {
-            // currently js sdk is passing no base64 data type
-            let base64String = url.absoluteString.components(separatedBy: ",").last ?? ""
-            guard let base64Data = Data(base64Encoded: base64String, options: .ignoreUnknownCharacters) else { return }
-            var activityItem: Any?
-            if let image = UIImage(data: base64Data) {
-                activityItem = image
-            } else {
-                activityItem = base64Data
-            }
-            guard let wrappedActivityItem = activityItem else { return }
-            let activityViewController = UIActivityViewController(activityItems: [wrappedActivityItem], applicationActivities: nil)
-            presentedViewController?.present(activityViewController, animated: true, completion: nil)
+            navigateForBase64(url: url)
         } else {
             if !isDeepLinkURL(url: url) {
                 MiniAppExternalWebViewController.presentModally(url: url,
@@ -35,6 +24,27 @@ extension ViewController: MiniAppNavigationDelegate {
                                                                 onCloseHandler: closeHandler)
             }
         }
+    }
+
+    func navigateForBase64(url: URL) {
+        // currently js sdk is passing no base64 data type
+        let base64String = url.absoluteString.components(separatedBy: ",").last ?? ""
+        guard let base64Data = Data(base64Encoded: base64String, options: .ignoreUnknownCharacters) else { return }
+        var activityItem: Any?
+        if let image = UIImage(data: base64Data) {
+            activityItem = image
+        } else {
+            activityItem = base64Data
+        }
+        guard let wrappedActivityItem = activityItem else { return }
+        let activityViewController = UIActivityViewController(activityItems: [wrappedActivityItem], applicationActivities: nil)
+        activityViewController.completionWithItemsHandler = { [weak self] (activityType, completed, _, error) in
+            guard completed else { return }
+            let vc = UIAlertController(title: "Nice", message: "Successfully shared!", preferredStyle: .alert)
+            vc.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self?.presentedViewController?.present(vc, animated: true, completion: nil)
+        }
+        presentedViewController?.present(activityViewController, animated: true, completion: nil)
     }
 
     func isDeepLinkURL(url: URL) -> Bool {
