@@ -1,9 +1,12 @@
 ## CHANGELOG
 
-### 3.9.0 (release date TBD)
+### 3.9.0 (2021-12-17)
 
 **SDK**
 - **Feature:** Added support for Manifest localization by updating `getMiniAppManifest(miniAppId:miniAppVersion:languageCode:)` interface
+- **Feature:** Added support for taking picture from camera in Mini App.
+- **Feature:** Added `promotionalImageUrl` and `promotionalText` in MiniAppInfo model.
+- **Update:** Updated `getHostEnvironmentInfo(completionHandler:)` interface to return `MAHostEnvironmentInfo` details with default locale to miniapp
 
 **Sample app**
 
