@@ -38,11 +38,11 @@ extension ViewController: MiniAppNavigationDelegate {
         }
         guard let wrappedActivityItem = activityItem else { return }
         let activityViewController = UIActivityViewController(activityItems: [wrappedActivityItem], applicationActivities: nil)
-        activityViewController.completionWithItemsHandler = { [weak self] (activityType, completed, _, error) in
+        activityViewController.completionWithItemsHandler = { [weak self] (_, completed, _, _) in
             guard completed else { return }
-            let vc = UIAlertController(title: "Nice", message: "Successfully shared!", preferredStyle: .alert)
-            vc.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-            self?.presentedViewController?.present(vc, animated: true, completion: nil)
+            let controller = UIAlertController(title: "Nice", message: "Successfully shared!", preferredStyle: .alert)
+            controller.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self?.presentedViewController?.present(controller, animated: true, completion: nil)
         }
         presentedViewController?.present(activityViewController, animated: true, completion: nil)
     }
