@@ -5,7 +5,7 @@ xcov.report(
   workspace: 'MiniApp.xcworkspace',
   scheme: 'MiniApp_Tests',
   output_directory: './artifacts/unit-tests/coverage',
-  source_directory: 'MiniApp',
+  source_directory: 'Sources',
   json_report: true,
   include_targets: 'MiniApp.framework',
   include_test_targets: false,
