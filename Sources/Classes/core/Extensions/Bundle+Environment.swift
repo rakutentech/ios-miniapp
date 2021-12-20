@@ -1,7 +1,7 @@
 extension Bundle {
     open class var miniAppBundle: Bundle? {
         let bundle = Bundle(for: MiniApp.self)
-        guard let resourcesBundleUrl = bundle.resourceURL?.appendingPathComponent("MiniApp.bundle") else {
+        guard let resourcesBundleUrl = bundle.url(forResource: "MiniApp", withExtension: "bundle") else {
             return nil
         }
         return Bundle(url: resourcesBundleUrl)
