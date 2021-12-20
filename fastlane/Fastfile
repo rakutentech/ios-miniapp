@@ -90,7 +90,7 @@ platform :ios do
           repository_name: "rakutentech/ios-miniapp",
           api_token: ENV["GITHUB_API_TOKEN"],
           name: "Miniapp",
-          tag_name: File.read("../version.env"),
+          tag_name: "v"+File.read("../tmp/version.env"),
           description: (File.read("../tmp/CHANGELOG.md") rescue "No changelog provided"),
           commitish: "candidate",
           upload_assets: ["./Binary/XCFramework/MiniApp.xcframework.zip"]

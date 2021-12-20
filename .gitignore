@@ -36,3 +36,5 @@ vendor/bundle
 /MiniAppCarthage/MiniApp/gadsdk
 /MiniAppCarthage/MiniApp/googlemobileadssdkios.zip
 /MiniAppCarthage/MiniApp/prebuild.log
+/tmp
+/Binary

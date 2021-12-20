@@ -177,6 +177,7 @@
 		317AA324276274A40037180D /* common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = common.xcconfig; sourceTree = "<group>"; };
 		317AA325276274F40037180D /* bundles.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = bundles.xcconfig; sourceTree = "<group>"; };
 		317AA32A2762D0740037180D /* MiniAppSharePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSharePreviewViewController.swift; sourceTree = "<group>"; };
+		319164F927683FB9004B540A /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../../Package.swift; sourceTree = "<group>"; };
 		31FA5E5427608A450070B611 /* MiniApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MiniApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FA5E5727608A450070B611 /* MiniApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MiniApp.h; sourceTree = SOURCE_ROOT; };
 		31FA5E5827608A450070B611 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -373,6 +374,7 @@
 		31FA5E4A27608A450070B611 = {
 			isa = PBXGroup;
 			children = (
+				319164F927683FB9004B540A /* Package.swift */,
 				317AA322276267BA0037180D /* downloadLibs.sh */,
 				317AA327276275130037180D /* Config */,
 				317AA31D276265C00037180D /* Frameworks */,

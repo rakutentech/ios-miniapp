@@ -1,6 +1,14 @@
 ## CHANGELOG
 
-### 3.9.0 (2021-12-17)
+### 4.0.0  (release date TBD)
+
+**SDK**
+-Added support for Carthage
+-Added support for Swift Package Manager
+
+---
+
+### 3.9.0 (2021-12-17)m)
 
 **SDK**
 - **Feature:** Added support for Manifest localization by updating `getMiniAppManifest(miniAppId:miniAppVersion:languageCode:)` interface
