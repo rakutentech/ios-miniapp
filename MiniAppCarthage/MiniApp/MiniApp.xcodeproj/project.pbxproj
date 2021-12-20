@@ -16,7 +16,7 @@
 		317AA31C276265560037180D /* GoogleUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 317AA311276265560037180D /* GoogleUtilities.xcframework */; };
 		317AA320276266140037180D /* ZIPFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 317AA31E276266140037180D /* ZIPFoundation.xcframework */; };
 		317AA321276266140037180D /* TrustKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 317AA31F276266140037180D /* TrustKit.xcframework */; };
-		317AA323276267BA0037180D /* downloadGAds.sh in Resources */ = {isa = PBXBuildFile; fileRef = 317AA322276267BA0037180D /* downloadGAds.sh */; };
+		317AA323276267BA0037180D /* downloadLibs.sh in Resources */ = {isa = PBXBuildFile; fileRef = 317AA322276267BA0037180D /* downloadLibs.sh */; };
 		317AA32B2762D0740037180D /* MiniAppSharePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317AA32A2762D0740037180D /* MiniAppSharePreviewViewController.swift */; };
 		31FA5E5927608A450070B611 /* MiniApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 31FA5E5727608A450070B611 /* MiniApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		31FA5EEE27608D1A0070B611 /* MiniAppUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5E6E27608D1A0070B611 /* MiniAppUI.swift */; };
@@ -173,7 +173,7 @@
 		317AA311276265560037180D /* GoogleUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GoogleUtilities.xcframework; sourceTree = "<group>"; };
 		317AA31E276266140037180D /* ZIPFoundation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ZIPFoundation.xcframework; path = ../../Carthage/Build/ZIPFoundation.xcframework; sourceTree = "<group>"; };
 		317AA31F276266140037180D /* TrustKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TrustKit.xcframework; path = ../../Carthage/Build/TrustKit.xcframework; sourceTree = "<group>"; };
-		317AA322276267BA0037180D /* downloadGAds.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = downloadGAds.sh; sourceTree = "<group>"; };
+		317AA322276267BA0037180D /* downloadLibs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = downloadLibs.sh; sourceTree = "<group>"; };
 		317AA324276274A40037180D /* common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = common.xcconfig; sourceTree = "<group>"; };
 		317AA325276274F40037180D /* bundles.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = bundles.xcconfig; sourceTree = "<group>"; };
 		317AA32A2762D0740037180D /* MiniAppSharePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSharePreviewViewController.swift; sourceTree = "<group>"; };
@@ -373,7 +373,7 @@
 		31FA5E4A27608A450070B611 = {
 			isa = PBXGroup;
 			children = (
-				317AA322276267BA0037180D /* downloadGAds.sh */,
+				317AA322276267BA0037180D /* downloadLibs.sh */,
 				317AA327276275130037180D /* Config */,
 				317AA31D276265C00037180D /* Frameworks */,
 				31FA5E5827608A450070B611 /* Info.plist */,
@@ -805,7 +805,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				317AA323276267BA0037180D /* downloadGAds.sh in Resources */,
+				317AA323276267BA0037180D /* downloadLibs.sh in Resources */,
 				31FA60452761F71A0070B611 /* Localization.bundle in Resources */,
 				31FA60462761F71A0070B611 /* MiniApp.bundle in Resources */,
 			);
@@ -1132,6 +1132,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 317AA324276274A40037180D /* common.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1146,6 +1147,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.MiniApp;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1159,6 +1161,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 317AA324276274A40037180D /* common.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1173,6 +1176,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.MiniApp;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

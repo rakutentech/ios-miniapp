@@ -80,4 +80,16 @@ platform :ios do
         body: "This is the candidate merge after a successful SDK release"       # optional
       )
   end
+  
+  lane :create_release do |options|
+      set_github_release(
+          repository_name: "rakutentech/ios-miniapp",
+          api_token: ENV["GITHUB_API_TOKEN"],
+          name: "Miniapp",
+          tag_name: File.read("../version.env"),
+          description: (File.read("../tmp/CHANGELOG.md") rescue "No changelog provided"),
+          commitish: "prod",
+          upload_assets: ["./Binary/XCFramework/MiniApp.xcframework"]
+    )
+  end
 end
