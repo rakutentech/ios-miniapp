@@ -12,6 +12,8 @@
 
 - **Feature:** Added production and staging toggle to change environments.
 - **Feature:** Added promotional preview by enabling `enableSharePreview` when launching the MiniApp with MiniAppUI.
+- **Bugfix:** Added error message when name and email are invalid when adding contacts
+- **Enhancement:** Add an alert when successful shared content (file downloads)
 
 ---
 
