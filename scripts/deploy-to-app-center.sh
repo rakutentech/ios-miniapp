@@ -16,7 +16,7 @@ TMP_DIR=$WORK_DIR/tmp
 mkdir -p "$TMP_DIR"
 
 echo "Retrieving changelog"
-./extract-version.sh
+$(dirname "$0")/extract-version.sh
 
 echo "Installing App Center CLI."
 npm install -g appcenter-cli
