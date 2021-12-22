@@ -201,6 +201,12 @@ class ContactsListSettingsTableViewController: RATTableViewController {
                                  contactId: contactIdTextField.text,
                                  contactName: name,
                                  contactEmail: email, isNewContact: isNewContact)
+            } else if name.isValueEmpty() && email.isValueEmpty() {
+                self.editContact(title: "Name and Email ID are empty, please try again",
+                                 index: index,
+                                 contactId: contactIdTextField.text,
+                                 contactName: name,
+                                 contactEmail: email, isNewContact: isNewContact)
             } else if name.isValueEmpty() && (email.isValueEmpty() || !email.isValidEmail()) {
                 self.editContact(title: "Invalid Name and invalid Email ID, please try again",
                                  index: index,
@@ -209,6 +215,12 @@ class ContactsListSettingsTableViewController: RATTableViewController {
                                  contactEmail: email, isNewContact: isNewContact)
             } else if name.isValueEmpty() {
                 self.editContact(title: "Invalid Name, please try again",
+                                 index: index,
+                                 contactId: contactIdTextField.text,
+                                 contactName: name,
+                                 contactEmail: email, isNewContact: isNewContact)
+            } else if email.isValueEmpty() {
+                self.editContact(title: "Email ID is empty, please try again",
                                  index: index,
                                  contactId: contactIdTextField.text,
                                  contactName: name,
