@@ -21,7 +21,7 @@ let package = Package(
         .binaryTarget(
             name: "MiniApp",
             url: "https://github.com/rakutentech/ios-miniapp/releases/download/v3.9.0/MiniApp.xcframework.zip",
-            checksum: "fe56fa64bb053ada7243f8cb232ed0f8ef859a02bcb9930e2d74112cf0a3f9d2"
+            checksum: "662d6ba0615630c2b941d6dc1661b69f0bf5d68fd3c5dd20b207b74a87b3bedf"
         )
     ],
     swiftLanguageVersions: [
