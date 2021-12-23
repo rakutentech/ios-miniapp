@@ -8,8 +8,8 @@ line_length:
     ignores_comments: true
     ignores_urls: true
 function_body_length:
-    warning: 60
-    error: 100
+    warning: 40
+    error: 60
 type_body_length:
     warning: 300
     error: 400

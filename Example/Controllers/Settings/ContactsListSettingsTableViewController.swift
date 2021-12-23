@@ -193,6 +193,7 @@ class ContactsListSettingsTableViewController: RATTableViewController {
         }
     }
 
+    // swiftlint:disable function_body_length
     func validateAllValues(index: Int, contactId: String?, textField: UITextField?, name: String, email: String, isNewContact: Bool? = false) {
         if let contactIdTextField = textField {
             if contactIdTextField.isTextFieldEmpty() {
