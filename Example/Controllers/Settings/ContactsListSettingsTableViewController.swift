@@ -193,10 +193,17 @@ class ContactsListSettingsTableViewController: RATTableViewController {
         }
     }
 
+    // swiftlint:disable function_body_length
     func validateAllValues(index: Int, contactId: String?, textField: UITextField?, name: String, email: String, isNewContact: Bool? = false) {
         if let contactIdTextField = textField {
             if contactIdTextField.isTextFieldEmpty() {
                 self.editContact(title: "Invalid Contact ID, please try again",
+                                 index: index,
+                                 contactId: contactIdTextField.text,
+                                 contactName: name,
+                                 contactEmail: email, isNewContact: isNewContact)
+            } else if name.isValueEmpty() && email.isValueEmpty() {
+                self.editContact(title: "Name and Email ID are empty, please try again",
                                  index: index,
                                  contactId: contactIdTextField.text,
                                  contactName: name,
@@ -209,6 +216,12 @@ class ContactsListSettingsTableViewController: RATTableViewController {
                                  contactEmail: email, isNewContact: isNewContact)
             } else if name.isValueEmpty() {
                 self.editContact(title: "Invalid Name, please try again",
+                                 index: index,
+                                 contactId: contactIdTextField.text,
+                                 contactName: name,
+                                 contactEmail: email, isNewContact: isNewContact)
+            } else if email.isValueEmpty() {
+                self.editContact(title: "Email ID is empty, please try again",
                                  index: index,
                                  contactId: contactIdTextField.text,
                                  contactName: name,
