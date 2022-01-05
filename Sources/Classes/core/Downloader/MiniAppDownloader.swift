@@ -180,6 +180,19 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
         urlToDirectoryMap[destinationPath]?.completionHandler(.failure(NSError.invalidSignature()))
     }
 
+    func moveFileToTempLocation(from sourcePath: URL, to tempLocation: String?) -> URL? {
+        guard let tempLocationFolder = tempLocation else {
+            return nil
+        }
+        let tempFilePath = FileManager.default.temporaryDirectory.appendingPathComponent(tempLocationFolder + "/" + sourcePath.lastPathComponent)
+        guard let error = miniAppStorage.save(sourcePath: sourcePath, destinationPath: tempFilePath)
+        else {
+            return tempFilePath
+        }
+        urlToDirectoryMap[tempLocationFolder]?.completionHandler(.failure(error))
+        return nil
+    }
+
     /// Delegate called whenever download task is completed/failed.
     /// This method will be called everytime any download file task is completed/failed
     ///
