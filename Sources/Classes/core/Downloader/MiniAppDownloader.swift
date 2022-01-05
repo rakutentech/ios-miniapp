@@ -180,6 +180,9 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
         urlToDirectoryMap[destinationPath]?.completionHandler(.failure(NSError.invalidSignature()))
     }
 
+    /// Any file that is downloaded is moved into a seperate directory inside tmp folder.
+    /// This is because, while downloading the mini app for the first time Signature SDK isn't returning the verification status immediately and
+    /// the downloaded *.tmp is removed. So we are moving into a seperate folder to get hold of it until the Signature verification is completed.
     func moveFileToTempLocation(from sourcePath: URL, to tempLocation: String?) -> URL? {
         guard let tempLocationFolder = tempLocation else {
             return nil

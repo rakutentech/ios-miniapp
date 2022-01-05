@@ -337,6 +337,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         }
     }
 
+    /// Deleting the temporary directory that is created after downloading the mini-app file.
     func cleanUpTmpFolder(tmpDirectory: String) {
         if tmpDirectory.isEmpty { return }
         do {
