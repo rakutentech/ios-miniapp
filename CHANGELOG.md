@@ -6,6 +6,10 @@
 -Added support for Carthage
 -Added support for Swift Package Manager
 
+**Sample app**
+- **Bugfix:** Added error message when name and email are invalid when adding contacts
+- **Enhancement:** Add an alert when successful shared content (file downloads)
+
 ---
 
 ### 3.9.0 (2021-12-17)
