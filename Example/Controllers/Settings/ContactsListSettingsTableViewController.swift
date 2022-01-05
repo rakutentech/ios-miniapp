@@ -209,7 +209,7 @@ class ContactsListSettingsTableViewController: RATTableViewController {
                                  contactName: name,
                                  contactEmail: email, isNewContact: isNewContact)
             } else if name.isValueEmpty() && (email.isValueEmpty() || !email.isValidEmail()) {
-                self.editContact(title: "Invalid Name and invalid Email ID, please try again",
+                self.editContact(title: "Name is empty and Email ID is invalid, please try again",
                                  index: index,
                                  contactId: contactIdTextField.text,
                                  contactName: name,
