@@ -283,7 +283,6 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     private func checkFileSignature(destinationURL: String, location: URL) {
-        MiniAppLogger.d("LEO: checkFileSignature", destinationURL)
         let ids = idsForUrls[destinationURL]
         #if RMA_SDK_SIGNATURE
             let requireMiniAppSignatureVerification = environment.requireMiniAppSignatureVerification
