@@ -51,12 +51,12 @@ public class MiniAppViewController: UIViewController {
 
     // MARK: UI - Navigation
     private lazy var backButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(image: UIImage(named: "arrow_left-24", in: Bundle.miniAppSDKBundle(), with: .none), style: .plain, target: self, action: #selector(backPressed))
+        let view = UIBarButtonItem(image: UIImage(named: "arrow_left-24", in: Bundle.miniAppSDKBundle, with: .none), style: .plain, target: self, action: #selector(backPressed))
         return view
     }()
 
     private lazy var forwardButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(image: UIImage(named: "arrow_right-24", in: Bundle.miniAppSDKBundle(), with: .none), style: .plain, target: self, action: #selector(forwardPressed))
+        let view = UIBarButtonItem(image: UIImage(named: "arrow_right-24", in: Bundle.miniAppSDKBundle, with: .none), style: .plain, target: self, action: #selector(forwardPressed))
         return view
     }()
 

@@ -15,7 +15,7 @@ class CustomPermissionsRequestViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let podBundle: Bundle = Bundle.miniAppSDKBundle()
+        let podBundle: Bundle = Bundle.miniAppSDKBundle
         let nib = UINib(nibName: "MACustomPermissionCell", bundle: podBundle)
         self.tableView.register(nib, forCellReuseIdentifier: "MACustomPermissionCell")
         self.tableView.tableFooterView = UIView(frame: .zero)

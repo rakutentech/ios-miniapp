@@ -21,7 +21,7 @@ extension MiniAppViewController {
 
         lazy var iconImageView: UIImageView = {
             let view = UIImageView()
-            view.image = UIImage(named: "error_bubble", in: Bundle.miniAppSDKBundle(), with: .none)
+            view.image = UIImage(named: "error_bubble", in: Bundle.miniAppSDKBundle, with: .none)
             view.contentMode = .scaleAspectFit
             return view
         }()

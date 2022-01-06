@@ -17,6 +17,6 @@ then
     carthage update --platform ios --use-xcframeworks
     #carthage build --no-skip-current --platform ios --use-xcframeworks
 fi
-if [ $passed -eq 1 ]; then
+if [ $depdl -eq 1 ]; then
     osascript -e 'display notification "Prebuild finished. Logs available at '${PROJECT_DIR}/prebuild.log'" with title "Dependencies download" subtitle "Finished"'
 fi

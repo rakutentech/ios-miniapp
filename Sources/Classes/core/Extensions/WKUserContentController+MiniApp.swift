@@ -31,7 +31,7 @@ extension WKUserContentController {
     /// Method to add the Bridging Javascript to the WebView User Controller
     /// This JavaScript is responsible for communication between SDK and Mini App
     /// Any request from Mini App is communicated via the contract available in the Bridging script
-    func addBridgingJavaScript(podBundle: Bundle = Bundle.miniAppSDKBundle()) {
+    func addBridgingJavaScript(podBundle: Bundle = Bundle.miniAppSDKBundle) {
         injectScript(from: "bridge", in: podBundle)
 
         #if DEBUG
