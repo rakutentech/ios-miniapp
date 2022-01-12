@@ -1,5 +1,5 @@
 class DownloadOperation {
-    typealias DownloadCompletionHandler = (Result<URL, Error>) -> Void
+    typealias DownloadCompletionHandler = (Result<URL, MASDKError>) -> Void
 
     var fileStoragePath: URL
     var miniAppDirectoryPath: URL

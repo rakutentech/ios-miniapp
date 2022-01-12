@@ -71,16 +71,16 @@ class MiniAppDownloaderTests: QuickSpec {
                     let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
                     mockAPIClient.data = responseString.data(using: .utf8)
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (_) in }
-                    mockManifestDownloader.error = NSError(domain: "URLErrorDomain", code: -1009, userInfo: nil)
+                    mockManifestDownloader.error = MASDKError.unknownError(domain: "URLErrorDomain", code: -1009, description: "")
                     mockAPIClient.data = nil
                     mockManifestDownloader.data = nil
-                    var testError: NSError?
+                    var testError: MASDKError?
                     downloader.verifyAndDownload(appId: appId, versionId: "\(versionId).1") { (result) in
                         switch result {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
                     expect(testError?.code).toEventually(equal(-1009), timeout: .seconds(20))

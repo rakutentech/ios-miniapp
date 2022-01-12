@@ -36,7 +36,7 @@ class ManifestDownloaderTests: QuickSpec {
                 it("will decode the response with MiniAppInfo decodable") {
                     let mockAPIClient = MockAPIClient()
                     let manifestDownloader = ManifestDownloader()
-                    var testError: NSError?
+                    var testError: MASDKError?
                     let responseString = """
                       {
                         "files": [
@@ -51,31 +51,27 @@ class ManifestDownloaderTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     })
-                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidResponseData.rawValue), timeout: .seconds(30))
+                    expect(testError?.errorDescription).toEventually(equal(MASDKError.invalidResponseData.errorDescription), timeout: .seconds(30))
                 }
             }
             context("when request from server returns error") {
                 it("will pass an error with status code and failure completion handler is called") {
                     let mockAPIClient = MockAPIClient()
-                    var testError: NSError?
-                    mockAPIClient.error = NSError(
-                        domain: "Test",
-                        code: 123,
-                        userInfo: nil
-                    )
+                    var testError: MASDKError?
+                    mockAPIClient.error = MASDKError.unknownError(domain: "Test", code: 123, description: "")
                     let manifestDownloader = ManifestDownloader()
                     manifestDownloader.fetchManifest(apiClient: mockAPIClient, appId: "Apple", versionId: "beta", completionHandler: { (result) in
                         switch result {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     })
-                    expect(testError?.code).toEventually(equal(123))
+                    expect(testError?.code).toEventually(equal(123), timeout: .seconds(3))
                 }
             }
         }

@@ -95,6 +95,17 @@ extension MASDKError: LocalizedError {
             return String(format: MASDKLocale.localize(.unknownError), domain, "\(code)", description)
         }
     }
+
+    public var code: Int {
+        switch self {
+        case .serverError(let code, _):
+            return code
+        case .unknownError(_, let code, _):
+            return code
+        default:
+            return 0
+        }
+    }
 }
 
 extension MASDKError {

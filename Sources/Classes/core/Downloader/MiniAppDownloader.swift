@@ -32,7 +32,7 @@ class MiniAppDownloader {
         miniAppStorage.cleanVersions(for: appId, differentFrom: version, status: miniAppStatus)
     }
 
-    func verifyAndDownload(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+    func verifyAndDownload(appId: String, versionId: String, completionHandler: @escaping (Result<URL, MASDKError>) -> Void) {
         if isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId) {
             if !miniAppClient.environment.isPreviewMode, cacheVerifier.verify(appId: appId, version: versionId) {
                 cleanApp(appId, for: versionId)
@@ -50,7 +50,7 @@ class MiniAppDownloader {
         }
     }
 
-    private func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+    private func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, MASDKError>) -> Void) {
         let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
         self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
             switch result {
@@ -109,7 +109,7 @@ class MiniAppDownloader {
         return nil
     }
 
-    private func startDownloadingFiles(urls: [String], to miniAppPath: URL, miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<URL, Error>) -> Void) {
+    private func startDownloadingFiles(urls: [String], to miniAppPath: URL, miniAppId: String, miniAppVersion: String, completionHandler: @escaping (Result<URL, MASDKError>) -> Void) {
         self.miniAppClient.delegate = self
         time = Date()
         MiniAppLogger.d("MiniApp dl start")
@@ -118,7 +118,7 @@ class MiniAppDownloader {
                 return
             }
             guard let fileDirectory = UrlParser.getFileStoragePath(from: url, with: self.miniAppClient.environment) else {
-                completionHandler(.failure(NSError.downloadingFailed()))
+                completionHandler(.failure(.downloadingFailed))
                 return
             }
             let filePath = miniAppPath.appendingPathComponent(fileDirectory)
@@ -174,10 +174,10 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
                 unzipFile(fromURL: destinationPath, to: filePath)
                 return
             }
-            urlToDirectoryMap[destinationPath]?.completionHandler(.failure(error))
+            urlToDirectoryMap[destinationPath]?.completionHandler(.failure(.fromError(error: error)))
             return
         }
-        urlToDirectoryMap[destinationPath]?.completionHandler(.failure(NSError.invalidSignature()))
+        urlToDirectoryMap[destinationPath]?.completionHandler(.failure(.invalidSignature))
     }
 
     /// Delegate called whenever download task is completed/failed.
@@ -185,12 +185,12 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
     ///
     /// - Parameters:
     ///   - url: URL of the file which was downloaded
-    ///   - error: Error information if the downloading is failed with error
-    func downloadFileTaskCompleted(url: String, error: Error?) {
+    ///   - error: MASDKError information if the downloading is failed with error
+    func downloadFileTaskCompleted(url: String, error: MASDKError?) {
         let completionHandler = urlToDirectoryMap[url]?.completionHandler
         guard let error = error else {
             guard let miniAppDirectoryPath = urlToDirectoryMap[url]?.miniAppDirectoryPath else {
-                completionHandler?(.failure(NSError.downloadingFailed()))
+                completionHandler?(.failure(.downloadingFailed))
                 return
             }
             urlToDirectoryMap.removeValue(forKey: url)
@@ -214,7 +214,7 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
                 }
             } catch let err {
                 MiniAppLogger.e("error unzipping archive", err)
-                urlToDirectoryMap[destinationPath]?.completionHandler(.failure(err))
+                urlToDirectoryMap[destinationPath]?.completionHandler(.failure(.fromError(error: err)))
             }
 
             do {

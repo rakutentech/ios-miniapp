@@ -376,7 +376,7 @@ class RealMiniAppTests: QuickSpec {
                       }
                     """
                     realMiniApp.miniAppInfoFetcher = mockMiniAppInfoFetcher
-                    mockMiniAppInfoFetcher.error = NSError(domain: "URLErrorDomain", code: -1009, userInfo: nil)
+                    mockMiniAppInfoFetcher.error = MASDKError.unknownError(domain: "URLErrorDomain", code: -1009, description: "")
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     var testError: MASDKError?
@@ -433,17 +433,17 @@ class RealMiniAppTests: QuickSpec {
                         "manifest": ["\(mockHost)/app-id-test/ver-id-test/HelloWorld.txt"]
                       }
                     """
-                    var testError: NSError?
+                    var testError: MASDKError?
                     mockAPIClient.data = responseString.data(using: .utf8)
                     realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                             switch result {
                             case .success:
                                 break
                             case .failure(let error):
-                                testError = error as NSError
+                                testError = error
                         }
                     }, messageInterface: mockMessageInterface)
-                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidURLError.rawValue))
+                    expect(testError?.errorDescription).toEventually(equal(MASDKError.invalidResponseData.errorDescription), timeout: .seconds(2))
                 }
             }
             context("when createMiniApp is called with url parameter") {
@@ -460,13 +460,13 @@ class RealMiniAppTests: QuickSpec {
                 }
 
                 it("will return an error if initial load of the mini app has failed") {
-                    var testError: NSError?
+                    var testError: MASDKError?
                     mockedDisplayer.mockedInitialLoadCallbackResponse = false
                     _ = realMiniApp.createMiniApp(url: URL(string: "http://miniapp")!,
                                               errorHandler: { error in
-                        testError = error as NSError
+                        testError = error
                     }, messageInterface: mockMessageInterface)
-                    expect(testError).toEventually(equal(NSError.invalidURLError()), timeout: .seconds(2))
+                    expect(testError?.errorDescription).toEventually(equal(MASDKError.invalidURLError.errorDescription), timeout: .seconds(2))
                 }
             }
         }
