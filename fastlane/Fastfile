@@ -92,7 +92,7 @@ platform :ios do
           name: "Miniapp",
           tag_name: "v"+File.read("../tmp/version.env"),
           description: (File.read("../tmp/CHANGELOG.md") rescue "No changelog provided"),
-          commitish: "candidate",
+#           commitish: "candidate", # uncomment this line to enforce tag to be on candidate branch
           upload_assets: ["./Binary/XCFramework/MiniApp.xcframework.zip"]
        )
   end

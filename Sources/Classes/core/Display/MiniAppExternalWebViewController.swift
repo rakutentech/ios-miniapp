@@ -11,12 +11,12 @@ public class MiniAppExternalWebViewController: UIViewController {
     private var miniAppExternalUrlClose: MiniAppNavigationResponseHandler?
 
     lazy var backBarButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(image: UIImage(named: "arrow_left-24", in: Bundle.miniAppSDKBundle(), with: .none), style: .plain, target: self, action: #selector(navigateBack))
+        let view = UIBarButtonItem(image: UIImage(named: "arrow_left-24", in: Bundle.miniAppSDKBundle, with: .none), style: .plain, target: self, action: #selector(navigateBack))
         view.isEnabled = false
         return view
     }()
     lazy var forwardBarButton: UIBarButtonItem = {
-        let view = UIBarButtonItem(image: UIImage(named: "arrow_right-24", in: Bundle.miniAppSDKBundle(), with: .none), style: .plain, target: self, action: #selector(navigateForward))
+        let view = UIBarButtonItem(image: UIImage(named: "arrow_right-24", in: Bundle.miniAppSDKBundle, with: .none), style: .plain, target: self, action: #selector(navigateForward))
         view.isEnabled = false
         return view
     }()

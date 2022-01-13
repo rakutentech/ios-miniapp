@@ -1,0 +1,3 @@
+#include "common.xcconfig"
+
+OTHER_SWIFT_FLAGS = $(inherited) -D RMA_SDK_ADMOB -D RMA_SDK_ADMOB8 -D RMA_SDK_SIGNATURE
