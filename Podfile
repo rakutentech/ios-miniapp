@@ -21,7 +21,7 @@ def miniapp_pods
   pod 'MiniApp/Signature', :path => './'
 end
 
-platform :ios, '13.0'
+platform :ios, '14.0'
 target sdk_name + '_Example' do
   project 'Sample.xcodeproj'
   workspace sdk_name + '.xcworkspace'

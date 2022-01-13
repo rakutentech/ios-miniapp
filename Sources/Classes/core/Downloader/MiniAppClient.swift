@@ -23,6 +23,9 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     private var previewPath: String {
         environment.isPreviewMode ? "preview" : ""
     }
+    private var isSignatureVerified: Bool = false
+    private var isDownloadStatusUpdated: Bool = false
+
     weak var delegate: MiniAppDownloaderProtocol?
 
     convenience init(baseUrl: String? = nil, sslKeyHash: MiniAppConfigSSLKeyHash? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = false) {
@@ -231,26 +234,45 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
             delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
-        checkFileSignature(destinationURL: destinationURL, location: location)
+        fileDownloadCompleted(originalURLString: originalURLString, at: location)
     }
 
-    private func checkFileSignature(destinationURL: String, location: URL) {
-        let ids = idsForUrls[destinationURL]
+    private func fileDownloadCompleted(originalURLString: String, at location: URL) {
+        isSignatureVerified = false
+        isDownloadStatusUpdated = false
+        let ids = idsForUrls[originalURLString]
+        let tempPathDirName = (ids?.0 ?? "") + "/" + (ids?.1 ?? "")
+        guard let tempLocation = self.delegate?.moveFileToTempLocation(from: location, to: tempPathDirName) else {
+            delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
+            return
+        }
+        checkFileSignature(originalURLString: originalURLString, location: tempLocation)
+    }
+
+    private func checkFileSignature(originalURLString: String, location: URL) {
+        let ids = idsForUrls[originalURLString]
         #if RMA_SDK_SIGNATURE
             let requireMiniAppSignatureVerification = environment.requireMiniAppSignatureVerification
             if let versionId = ids?.1, let data = try? Data(contentsOf: location) {
                 verifySignature(version: versionId, signature: signatures[versionId]?.1 ?? "", keyId: signatures[versionId]?.0 ?? "", data: data) { [weak self] isVerified in
                     if !isVerified { MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: versionId) }
                     let shouldPassTest =  isVerified || !requireMiniAppSignatureVerification // if verification is not required, the test should pass even is the signature is not verified
-                    self?.delegate?.fileDownloaded(at: location, downloadedURL: destinationURL, signatureChecked: shouldPassTest)
+                    self?.delegate?.fileDownloaded(at: location, downloadedURL: originalURLString, signatureChecked: shouldPassTest)
+                    self?.isSignatureVerified = true
+                    if self?.isDownloadStatusUpdated == false {
+                        self?.delegate?.downloadFileTaskCompleted(url: originalURLString, error: nil)
+                    }
+                    self?.cleanUpTmpFolder(tmpDirectory: ids?.0 ?? "")
                 }
             } else {
                 MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: ids?.1)
-                delegate?.fileDownloaded(at: location, downloadedURL: destinationURL, signatureChecked: !requireMiniAppSignatureVerification)
+                delegate?.fileDownloaded(at: location, downloadedURL: originalURLString, signatureChecked: !requireMiniAppSignatureVerification)
+                cleanUpTmpFolder(tmpDirectory: ids?.0 ?? "")
             }
         #else
             MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: ids?.1)
             delegate?.fileDownloaded(at: location, downloadedURL: destinationURL)
+            cleanUpTmpFolder(tmpDirectory: ids?.0 ?? "")
         #endif
     }
 
@@ -259,7 +281,16 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
             delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
-        delegate?.downloadFileTaskCompleted(url: url, error: .fromError(error: errorInfo))
+        #if RMA_SDK_SIGNATURE
+            if isSignatureVerified {
+                isDownloadStatusUpdated = true
+                delegate?.downloadFileTaskCompleted(url: url, error: .fromError(error: error))
+            } else {
+                isDownloadStatusUpdated = false
+            }
+        #else
+            delegate?.downloadFileTaskCompleted(url: url, error: .fromError(error: error))
+        #endif
     }
 
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
@@ -269,6 +300,16 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         } else if !TrustKit.sharedInstance().pinningValidator.handle(challenge, completionHandler: completionHandler) {
             MiniAppLogger.w("TrustKit did not handle this challenge: perhaps it was not for server trust or the domain was not pinned. Fall back to the default behavior")
             completionHandler(.performDefaultHandling, nil)
+        }
+    }
+
+    /// Deleting the temporary directory that is created after downloading the mini-app file.
+    func cleanUpTmpFolder(tmpDirectory: String) {
+        if tmpDirectory.isEmpty { return }
+        do {
+            try FileManager.default.removeItem(at: FileManager.default.temporaryDirectory.appendingPathComponent(tmpDirectory))
+        } catch let err {
+            MiniAppLogger.e("error deleting Tmp folder", err)
         }
     }
 }
