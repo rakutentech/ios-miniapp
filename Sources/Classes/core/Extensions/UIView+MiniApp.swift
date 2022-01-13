@@ -4,7 +4,7 @@ extension UIView {
 
     @discardableResult
     func fromNib<T: UIView>() -> T? {
-        guard let contentView = Bundle.miniAppSDKBundle().loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as? T else {
+        guard let contentView = Bundle.miniAppSDKBundle.loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as? T else {
             return nil
         }
         self.addSubview(contentView)
