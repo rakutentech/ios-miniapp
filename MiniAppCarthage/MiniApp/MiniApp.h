@@ -1,9 +1,3 @@
-//
-//  MiniApp.h
-//  MiniApp
-//
-//  Created by Villa, Pierre | Pm | MTSD on 2021/12/08.
-//
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #else
