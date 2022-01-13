@@ -192,7 +192,7 @@ extension MiniAppDownloader: MiniAppDownloaderProtocol {
         else {
             return tempFilePath
         }
-        urlToDirectoryMap[tempLocationFolder]?.completionHandler(.failure(error))
+        urlToDirectoryMap[tempLocationFolder]?.completionHandler(.failure(.fromError(error: error)))
         return nil
     }
 
