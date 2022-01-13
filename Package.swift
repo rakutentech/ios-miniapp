@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/weichsel/ZIPFoundation.git", .upToNextMajor(from: "0.9.0")),
         .package(url: "https://github.com/datatheorem/TrustKit", .upToNextMajor(from: "2.0.0")),
-        .package(url: "https://github.com/Climbatize/GoogleMobileAds.git", .upToNextMajor(from: "8.12.0"))
+        .package(url: "https://github.com/rakutentech/GoogleMobileAds-SPM.git", .upToNextMajor(from: "8.13.0"))
     ],
     targets: [
         .binaryTarget(
