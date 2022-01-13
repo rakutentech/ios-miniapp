@@ -3,8 +3,10 @@
 ### 4.0.0  (release date TBD)
 
 **SDK**
--Added support for Carthage
--Added support for Swift Package Manager
+- **Feature:** Added support for Carthage
+- **Feature:** Added support for Swift Package Manager
+- **Feature:** Changed deployment target from 13.0 to 14.0
+
 
 **Sample app**
 - **Bugfix:** Added error message when name and email are invalid when adding contacts

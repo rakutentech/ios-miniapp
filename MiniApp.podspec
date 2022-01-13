@@ -18,7 +18,7 @@ Pod::Spec.new do |miniapp|
   }
   miniapp.documentation_url = "https://rakutentech.github.io/ios-miniapp/"
   miniapp.platform = :ios
-  miniapp.ios.deployment_target = '13.0'
+  miniapp.ios.deployment_target = '14.0'
   miniapp.default_subspec = 'Core'
   miniapp.static_framework = true
   miniapp.swift_versions = [5.0, 5.3, 5.4]
