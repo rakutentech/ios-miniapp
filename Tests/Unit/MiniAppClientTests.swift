@@ -81,7 +81,7 @@ class MiniAppClientTests: QuickSpec {
                     var testResult: Bool?
                     it("will pass a result to success completion handler with expected value") {
                         let mockSession = MockSession(data: ["key": "value"], statusCode: 200, error: nil)
-                        let miniAppClient = MiniAppClient()
+                        let miniAppClient = MockAPIClient()
                         miniAppClient.session = mockSession
 
                         miniAppClient.verifySignature(version: mockMiniAppInfo.version.versionId, signature: "test", keyId: "test", data: mockSession.data ?? Data()) { verified in
