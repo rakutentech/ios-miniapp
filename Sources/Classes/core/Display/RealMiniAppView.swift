@@ -89,11 +89,11 @@ internal class RealMiniAppView: UIView {
     }
 
     fileprivate func initExternalWebViewClosures() {
-        onExternalWebviewResponse = { (url) in
-            self.webView.load(URLRequest(url: url))
+        onExternalWebviewResponse = { [weak self] (url) in
+            self?.webView.load(URLRequest(url: url))
         }
-        onExternalWebviewClose = { (url) in
-            self.didReceiveEvent(.externalWebViewClosed, message: url.absoluteString)
+        onExternalWebviewClose = { [weak self] (url) in
+            self?.didReceiveEvent(.externalWebViewClosed, message: url.absoluteString)
             NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp close external webview"))
         }
     }
@@ -141,11 +141,11 @@ internal class RealMiniAppView: UIView {
     }
 
     func observeWebView() {
-        canGoBackObservation = webView.observe(\.canGoBack, options: .initial) { (webView, _) in
-            self.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
+        canGoBackObservation = webView.observe(\.canGoBack, options: .initial) { [weak self] (webView, _) in
+            self?.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
         }
-        canGoForwardObservation = webView.observe(\.canGoForward) { (webView, _) in
-            self.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
+        canGoForwardObservation = webView.observe(\.canGoForward) { [weak self] (webView, _) in
+            self?.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
         }
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(sendCustomEvent(notification:)),
