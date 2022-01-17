@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### 3.8.1 (2022-01-17)
+
+**SDK**
+
+- **Fix:** Added weak references fix for clearing the RealMiniAppView object from memory.
+
+---
 ### 3.8.0 (2021-11-09)
 
 **SDK**

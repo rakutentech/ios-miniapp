@@ -89,11 +89,11 @@ internal class RealMiniAppView: UIView {
     }
 
     fileprivate func initExternalWebViewClosures() {
-        onExternalWebviewResponse = { (url) in
-            self.webView.load(URLRequest(url: url))
+        onExternalWebviewResponse = { [weak self] (url) in
+            self?.webView.load(URLRequest(url: url))
         }
-        onExternalWebviewClose = { (url) in
-            self.didReceiveEvent(.externalWebViewClosed, message: url.absoluteString)
+        onExternalWebviewClose = { [weak self] (url) in
+            self?.didReceiveEvent(.externalWebViewClosed, message: url.absoluteString)
             NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp close external webview"))
         }
     }
