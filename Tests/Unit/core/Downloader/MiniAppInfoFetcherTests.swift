@@ -78,7 +78,7 @@ class MiniAppInfoFetcherTests: QuickSpec {
                             testError = error
                         }
                     })
-                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidResponseData.rawValue))
+                    expect(testError?.code).toEventually(equal(MASDKError.invalidResponseData.code))
                 }
             }
             context("when request from server returns error") {
@@ -154,7 +154,7 @@ class MiniAppInfoFetcherTests: QuickSpec {
                             testError = error
                         }
                     })
-                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidResponseData.rawValue))
+                    expect(testError?.code).toEventually(equal(MASDKError.invalidResponseData.code))
                 }
             }
             context("when request from server returns error") {
@@ -190,7 +190,7 @@ class MiniAppInfoFetcherTests: QuickSpec {
                         }
                     })
 
-                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.noPublishedVersion.rawValue))
+                    expect(testError?.code).toEventually(equal(MASDKError.noPublishedVersion.code))
                 }
             }
         }
