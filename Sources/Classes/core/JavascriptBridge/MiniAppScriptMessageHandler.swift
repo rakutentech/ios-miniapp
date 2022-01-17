@@ -560,7 +560,7 @@ class LocationManager: NSObject {
     }
 
     func updateLocation(result: @escaping (Result<CLLocation?, MAJSNaviGeolocationError>) -> Void) {
-        if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+        if self.manager.authorizationStatus == .authorizedAlways || self.manager.authorizationStatus == .authorizedWhenInUse {
             self.locationListener = result
             manager.startUpdatingLocation()
         } else {

@@ -13,17 +13,10 @@ public protocol MiniAppUserInfoDelegate: AnyObject {
     /// Interface that is used to retrieve the Contact list
     func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void)
 
-    @available(*, deprecated, renamed:"getContacts(completionHandler:)")
-    func getContacts() -> [MAContact]?
-
     /// Interface that is used to retrieve the Token Info
     func getAccessToken(miniAppId: String,
                         scopes: MASDKAccessTokenScopes,
                         completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void)
-
-    /// Old interface that was used to retrieve the Token Info. Use of a MASDKAccessTokenScopes is now mandatory. Will be removed in v4.0+
-    @available(*, deprecated, renamed:"getAccessToken(miniAppId:scopes:completionHandler:)")
-    func getAccessToken(miniAppId: String, completionHandler: @escaping (Result<MATokenInfo, MASDKCustomPermissionError>) -> Void)
 
     /// Interface that is used to retrieve rakuten points
     func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void)

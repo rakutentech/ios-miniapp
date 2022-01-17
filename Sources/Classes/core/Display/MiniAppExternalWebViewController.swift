@@ -59,7 +59,7 @@ public class MiniAppExternalWebViewController: UIViewController {
 
     func getWebViewConfig() -> WKWebViewConfiguration {
         let config = WKWebViewConfiguration()
-        config.preferences.javaScriptEnabled = true
+        config.defaultWebpagePreferences.allowsContentJavaScript = true
         config.allowsInlineMediaPlayback = true
         config.allowsPictureInPictureMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []

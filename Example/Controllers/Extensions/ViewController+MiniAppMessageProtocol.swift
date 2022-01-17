@@ -7,7 +7,7 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         switch permissionType {
         case .location:
-            let locStatus = CLLocationManager.authorizationStatus()
+            let locStatus = locationManager.authorizationStatus
             permissionHandlerObj = completionHandler
             switch locStatus {
             case .notDetermined:

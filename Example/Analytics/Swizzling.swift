@@ -23,8 +23,8 @@ extension UIControl {
 
     // MARK: - Method Swizzling
     @objc private func swapSendAction(_ action: Selector, to target: AnyObject?, forEvent event: UIEvent?) {
-        if let barButtonItem = target?.barButtonItem as? UIBarButtonItem {
-            trackBarButtonItem(eventType: .click, actionType: .open, componentName: barButtonItem.title ?? "", elementType: "BarButtonItem")
+        if let barButtonItem = target?.barButtonItem {
+            trackBarButtonItem(eventType: .click, actionType: .open, componentName: barButtonItem?.title ?? "", elementType: "BarButtonItem")
         }
         _ = target?.perform(action, with: self, with: UIEvent())
     }
