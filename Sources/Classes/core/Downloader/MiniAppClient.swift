@@ -28,6 +28,8 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     weak var delegate: MiniAppDownloaderProtocol?
 
+    typealias MAResponseDataHandler = (Result<ResponseData, MASDKError>) -> Void
+
     convenience init(baseUrl: String? = nil, sslKeyHash: MiniAppConfigSSLKeyHash? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = false) {
         self.init(with: MiniAppSdkConfig(
                 baseUrl: baseUrl,
@@ -83,7 +85,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         URLSession(configuration: .default, delegate: self, delegateQueue: nil)
     }()
 
-    func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
+    func getMiniAppsList(completionHandler: @escaping MAResponseDataHandler) {
 
         guard let urlRequest = self.listingApi.createURLRequest(testPath: self.previewPath) else {
             return completionHandler(.failure(.invalidURLError))
@@ -91,7 +93,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         return requestDataFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
 
-    func getMiniApp(_ miniAppId: String, completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
+    func getMiniApp(_ miniAppId: String, completionHandler: @escaping MAResponseDataHandler) {
 
         guard let urlRequest = self.listingApi.createURLRequest(for: miniAppId, testPath: self.previewPath) else {
             return completionHandler(.failure(.invalidURLError))
@@ -101,7 +103,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func getAppManifest(appId: String,
                         versionId: String,
-                        completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
+                        completionHandler: @escaping MAResponseDataHandler) {
 
         guard let urlRequest = self.manifestApi.createURLRequest(appId: appId, versionId: versionId, testPath: self.previewPath) else {
             return completionHandler(.failure(.invalidURLError))
@@ -125,7 +127,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     func getMiniAppMetaData(appId: String,
                             versionId: String,
                             languageCode: String,
-                            completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
+                            completionHandler: @escaping MAResponseDataHandler) {
         guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId,
                                                                  versionId: versionId,
                                                                  testPath: self.previewPath,
@@ -144,7 +146,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     func getPreviewMiniAppInfo(using token: String,
-                               completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
+                               completionHandler: @escaping MAResponseDataHandler) {
         guard let urlRequest = self.previewMiniappApi.createURLRequest(previewToken: token) else {
             return completionHandler(.failure(.invalidURLError))
         }
@@ -152,7 +154,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     /// Method added to return MASDKError and which could be easy to handle in the Host app side.
-    func requestDataFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
+    func requestDataFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping MAResponseDataHandler) {
         return session.startDataTask(with: urlRequest) { (result) in
             switch result {
             case .success(let responseData):
