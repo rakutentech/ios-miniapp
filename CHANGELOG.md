@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### 3.8.2 (2022-01-17)
+
+**SDK**
+
+- **Fix:** Memory leak issue fix
+
+---
 ### 3.8.0 (2021-11-09)
 
 **SDK**
