@@ -22,4 +22,5 @@ identifier_name:
     - id
 excluded:
   - Pods
+  - Carthage
   - vendor

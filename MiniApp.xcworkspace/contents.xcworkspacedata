@@ -2,7 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:MiniApp.xcodeproj">
+      location = "group:MiniAppCarthage/MiniApp/MiniApp.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Sample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

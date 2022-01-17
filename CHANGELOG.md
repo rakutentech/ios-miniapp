@@ -1,8 +1,22 @@
 ## CHANGELOG
 
+### 4.0.0  (release date TBD)
+
+**SDK**
+- **Feature:** Added support for Carthage
+- **Feature:** Added support for Swift Package Manager
+- **Feature:** Changed deployment target from 13.0 to 14.0
+
+
+**Sample app**
+- **Bugfix:** Added error message when name and email are invalid when adding contacts
+- **Enhancement:** Add an alert when successful shared content (file downloads)
+
+---
 ### 3.9.1 (2022-01-17)
 - **Fix:** Added weak references fix for clearing the RealMiniAppView object from memory.
 
+---
 ### 3.9.0 (2021-12-17)
 
 **SDK**

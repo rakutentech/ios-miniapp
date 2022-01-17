@@ -93,7 +93,8 @@ echo "Updating MiniApp.podspec file miniapp.version variable with v$VERSION vers
 sed -i "" -e "s/$SEARCH_STRING/$REPLACE_STRING/" MiniApp.podspec
 
 echo -e "\nChangelog:"
-awk -v version="$VERSION" '/### / {printit = $2 == version}; printit;' CHANGELOG.md
+./extract-version.sh
+cat tmp/CHANGELOG.md
 
 if [ $NO_PROMPT == 0 ]
 then

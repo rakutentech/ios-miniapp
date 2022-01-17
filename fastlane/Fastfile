@@ -31,7 +31,7 @@ platform :ios do
       if !fetched_sim.empty?
           sh("xcrun", "simctl", "delete", "iPhone Fastlane")
       end
-      sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-7","com.apple.CoreSimulator.SimRuntime.iOS-13-7")
+      sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-8","com.apple.CoreSimulator.SimRuntime.iOS-14-2")
       scan(
         clean: true,
         output_directory: './artifacts/unit-tests',
@@ -79,5 +79,21 @@ platform :ios do
         base: "master", # optional, defaults to "master"
         body: "This is the candidate merge after a successful SDK release"       # optional
       )
+  end
+  
+  lane :create_release do |options|
+      Dir.chdir("..") do
+          sh("./scripts/build-framework.sh")
+      end
+      push_to_git_remote()
+      set_github_release(
+          repository_name: "rakutentech/ios-miniapp",
+          api_token: ENV["GITHUB_API_TOKEN"],
+          name: "Miniapp",
+          tag_name: "v"+File.read("../tmp/version.env"),
+          description: (File.read("../tmp/CHANGELOG.md") rescue "No changelog provided"),
+#           commitish: "candidate", # uncomment this line to enforce tag to be on candidate branch
+          upload_assets: ["./Binary/XCFramework/MiniApp.xcframework.zip"]
+       )
   end
 end

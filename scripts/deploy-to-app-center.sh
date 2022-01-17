@@ -16,8 +16,7 @@ TMP_DIR=$WORK_DIR/tmp
 mkdir -p "$TMP_DIR"
 
 echo "Retrieving changelog"
-VERSION=$(grep -o -m 1 -E "([0-9]{1,}\.)+([0-9]{1,}\.)+[0-9]{1,}" CHANGELOG.md)
-awk -v version="$VERSION" '/### / {printit = $2 == version}; printit;' CHANGELOG.md > "$TMP_DIR"/CHANGELOG.md
+$(dirname "$0")/extract-version.sh
 
 echo "Installing App Center CLI."
 npm install -g appcenter-cli
