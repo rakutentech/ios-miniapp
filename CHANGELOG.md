@@ -13,7 +13,10 @@
 - **Enhancement:** Add an alert when successful shared content (file downloads)
 
 ---
+### 3.9.1 (2022-01-17)
+- **Fix:** Added weak references fix for clearing the RealMiniAppView object from memory.
 
+---
 ### 3.9.0 (2021-12-17)
 
 **SDK**
@@ -28,7 +31,13 @@
 - **Feature:** Added promotional preview by enabling `enableSharePreview` when launching the MiniApp with MiniAppUI.
 
 ---
+### 3.8.1 (2022-01-17)
 
+**SDK**
+
+- **Fix:** Added weak references fix for clearing the RealMiniAppView object from memory.
+
+---
 ### 3.8.0 (2021-11-09)
 
 **SDK**
