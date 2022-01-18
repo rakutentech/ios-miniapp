@@ -279,19 +279,27 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        guard let url = task.currentRequest?.url?.absoluteString, let errorInfo = error else {
+        guard let url = task.currentRequest?.url?.absoluteString else {
             delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
+        guard let errorInfo = error else {
+            downloadSessionCompleted(error: nil, urlString: url)
+            return
+        }
+        downloadSessionCompleted(error: .fromError(error: errorInfo), urlString: url)
+    }
+
+    private func downloadSessionCompleted(error: MASDKError?, urlString: String) {
         #if RMA_SDK_SIGNATURE
             if isSignatureVerified {
                 isDownloadStatusUpdated = true
-                delegate?.downloadFileTaskCompleted(url: url, error: .fromError(error: errorInfo))
+                delegate?.downloadFileTaskCompleted(url: urlString, error: error)
             } else {
                 isDownloadStatusUpdated = false
             }
         #else
-            delegate?.downloadFileTaskCompleted(url: url, error: .fromError(error: error))
+            delegate?.downloadFileTaskCompleted(url: urlString, error: error)
         #endif
     }
 

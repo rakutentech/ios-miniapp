@@ -179,26 +179,15 @@ class MockAPIClient: MiniAppClient {
     }
 
     override func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        guard let url = task.currentRequest?.url?.absoluteString, let errorInfo = error else {
+        guard let url = task.currentRequest?.url?.absoluteString else {
             delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
-        delegate?.downloadFileTaskCompleted(url: url, error: .fromError(error: errorInfo))
-    }
-
-    private func requestServer(urlRequest: URLRequest, responseData: Data?, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-        guard let data = responseData else {
-            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
-        }
-
-        guard let url = urlRequest.url else {
+        guard let errorInfo = error else {
+            delegate?.downloadFileTaskCompleted(url: url, error: nil)
             return
         }
-
-        self.request = urlRequest
-        if let httpResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
-            return completionHandler(.success(ResponseData(data, httpResponse)))
-        }
+        delegate?.downloadFileTaskCompleted(url: url, error: .fromError(error: errorInfo))
     }
 
     private func requestServer(urlRequest: URLRequest, responseData: Data?, completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
@@ -207,7 +196,7 @@ class MockAPIClient: MiniAppClient {
         }
 
         guard let url = urlRequest.url else {
-            return
+            return completionHandler(.failure(.invalidURLError))
         }
 
         self.request = urlRequest
@@ -249,7 +238,7 @@ class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
 
 class MockMetaDataDownloader: MetaDataDownloader {
     var data: Data?
-    var error: Error?
+    var error: MASDKError?
 
     override func getMiniAppMetaInfo(miniAppId: String,
                                      miniAppVersion: String,
@@ -272,7 +261,7 @@ class MockMetaDataDownloader: MetaDataDownloader {
                 }
                 return completionHandler(.failure(.invalidResponseData))
             case .failure(let error):
-                return completionHandler(.failure(.fromError(error: error)))
+                return completionHandler(.failure(error))
             }
         }
     }

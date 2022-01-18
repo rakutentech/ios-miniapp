@@ -105,7 +105,6 @@ class MiniAppDownloaderTests: QuickSpec {
                      let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: "\(versionId).2")
                      let oldMiniAppDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: "\(versionId).1")
                      var isDir: ObjCBool = true
-
                      expect(FileManager.default.fileExists(atPath: miniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(true), timeout: .seconds(30))
                      expect(FileManager.default.fileExists(atPath: oldMiniAppDirectory.path, isDirectory: &isDir)).toEventually(equal(false), timeout: .seconds(30))
                  }
@@ -199,16 +198,16 @@ class MiniAppDownloaderTests: QuickSpec {
                     let mockManifestDownloader = MockManifestDownloader()
                     let downloader = MiniAppDownloader(apiClient: mockAPIClient, manifestDownloader: mockManifestDownloader, status: miniAppStatus)
                     mockAPIClient.data = nil
-                    var testError: NSError?
+                    var testError: MASDKError?
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
                         switch result {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
-                    expect(testError?.code).toEventually(equal(0), timeout: .seconds(10))
+                    expect(testError?.code).toEventually(equal(MASDKError.invalidResponseData.code), timeout: .seconds(5))
                 }
             }
         }
