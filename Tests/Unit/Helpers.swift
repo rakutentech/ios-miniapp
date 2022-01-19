@@ -54,7 +54,7 @@ class MockAPIClient: MiniAppClient {
     var data: Data?
     var manifestData: Data?
     var metaData: Data?
-    var error: Error?
+    var error: MASDKError?
     var request: URLRequest?
     var zipFile: String?
     var corrupted: Bool = false
@@ -76,13 +76,13 @@ class MockAPIClient: MiniAppClient {
         super.init(with: mockSDKConfig!)
     }
 
-    override func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+    override func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
         guard let urlRequest = self.listingApi.createURLRequest() else {
-            return completionHandler(.failure(NSError.invalidURLError()))
+            return completionHandler(.failure(.invalidURLError))
         }
 
         guard let data = data else {
-            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+            return completionHandler(.failure(error ?? .invalidResponseData))
         }
 
         guard let url = urlRequest.url else {
@@ -95,25 +95,25 @@ class MockAPIClient: MiniAppClient {
         }
     }
 
-    override func getMiniApp(_ miniAppId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+    override func getMiniApp(_ miniAppId: String, completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
         guard let urlRequest = self.listingApi.createURLRequest() else {
-            return completionHandler(.failure(NSError.invalidURLError()))
+            return completionHandler(.failure(.invalidURLError))
         }
 
         guard let data = data else {
-            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+            return completionHandler(.failure(error ?? .invalidResponseData))
         }
 
         requestServer(urlRequest: urlRequest, responseData: data, completionHandler: completionHandler)
     }
 
-    override func getAppManifest(appId: String, versionId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+    override func getAppManifest(appId: String, versionId: String, completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
         guard let urlRequest = self.manifestApi.createURLRequest(appId: appId, versionId: versionId) else {
-            return completionHandler(.failure(NSError.invalidURLError()))
+            return completionHandler(.failure(.invalidURLError))
         }
 
         guard let responseData = manifestData ?? data else {
-            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+            return completionHandler(.failure(error ?? .invalidResponseData))
         }
 
         signatures[versionId] = (mockSignatureId, corrupted ? "anotherSignature" : mockSignature)
@@ -124,13 +124,13 @@ class MockAPIClient: MiniAppClient {
     override func getMiniAppMetaData(appId: String,
                                      versionId: String,
                                      languageCode: String,
-                                     completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+                                     completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
         guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId, versionId: versionId, languageCode: "") else {
-            return completionHandler(.failure(NSError.invalidURLError()))
+            return completionHandler(.failure(.invalidURLError))
         }
 
         guard let responseData = metaData ?? data else {
-            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+            return completionHandler(.failure(error ?? .invalidResponseData))
         }
 
         requestServer(urlRequest: urlRequest, responseData: responseData, completionHandler: completionHandler)
@@ -148,11 +148,11 @@ class MockAPIClient: MiniAppClient {
 
     override func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         guard let destinationURL = downloadTask.currentRequest?.url?.absoluteString else {
-            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
         guard let fileName = downloadTask.currentRequest?.url?.lastPathComponent else {
-            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
 
@@ -162,7 +162,7 @@ class MockAPIClient: MiniAppClient {
         } else if let file = MockFile.createTestFile(fileName: fileName) {
             mockSourceFileURL = file
         } else {
-            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
         #if RMA_SDK_SIGNATURE
@@ -180,25 +180,14 @@ class MockAPIClient: MiniAppClient {
 
     override func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         guard let url = task.currentRequest?.url?.absoluteString else {
-            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
-        delegate?.downloadFileTaskCompleted(url: url, error: error)
-    }
-
-    private func requestServer(urlRequest: URLRequest, responseData: Data?, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-        guard let data = responseData else {
-            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
-        }
-
-        guard let url = urlRequest.url else {
+        guard let errorInfo = error else {
+            delegate?.downloadFileTaskCompleted(url: url, error: nil)
             return
         }
-
-        self.request = urlRequest
-        if let httpResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "1.1", headerFields: headers) {
-            return completionHandler(.success(ResponseData(data, httpResponse)))
-        }
+        delegate?.downloadFileTaskCompleted(url: url, error: .fromError(error: errorInfo))
     }
 
     private func requestServer(urlRequest: URLRequest, responseData: Data?, completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
@@ -207,7 +196,7 @@ class MockAPIClient: MiniAppClient {
         }
 
         guard let url = urlRequest.url else {
-            return
+            return completionHandler(.failure(.invalidURLError))
         }
 
         self.request = urlRequest
@@ -225,18 +214,18 @@ class MockAPIClient: MiniAppClient {
 
 class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
     var data: Data?
-    var error: Error?
+    var error: MASDKError?
 
-    override func getInfo(miniAppId: String, miniAppVersion: String? = nil, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, Error>) -> Void) {
+    override func getInfo(miniAppId: String, miniAppVersion: String? = nil, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
 
         if error != nil {
-            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+            return completionHandler(.failure(error ?? .invalidResponseData))
         }
         apiClient.getMiniApp(miniAppId) { (result) in
             switch result {
             case .success(let responseData):
                 guard let decodeResponse = ResponseDecoder.decode(decodeType: Array<MiniAppInfo>.self, data: responseData.data), let miniApp = decodeResponse.first else {
-                    return completionHandler(.failure(NSError.invalidResponseData()))
+                    return completionHandler(.failure(.invalidResponseData))
                 }
                 return completionHandler(.success(miniApp))
 
@@ -249,7 +238,7 @@ class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
 
 class MockMetaDataDownloader: MetaDataDownloader {
     var data: Data?
-    var error: Error?
+    var error: MASDKError?
 
     override func getMiniAppMetaInfo(miniAppId: String,
                                      miniAppVersion: String,
@@ -272,7 +261,7 @@ class MockMetaDataDownloader: MetaDataDownloader {
                 }
                 return completionHandler(.failure(.invalidResponseData))
             case .failure(let error):
-                return completionHandler(.failure(.fromError(error: error)))
+                return completionHandler(.failure(error))
             }
         }
     }
@@ -280,21 +269,21 @@ class MockMetaDataDownloader: MetaDataDownloader {
 
 class MockManifestDownloader: ManifestDownloader {
     var data: Data?
-    var error: Error?
+    var error: MASDKError?
     var request: URLRequest?
     var headers: [String: String]?
 
-    override func fetchManifest(apiClient: MiniAppClient, appId: String, versionId: String, completionHandler: @escaping (Result<ManifestResponse, Error>) -> Void) {
+    override func fetchManifest(apiClient: MiniAppClient, appId: String, versionId: String, completionHandler: @escaping (Result<ManifestResponse, MASDKError>) -> Void) {
 
         if error != nil {
-            return completionHandler(.failure(error ?? NSError(domain: "Test", code: 0, userInfo: nil)))
+            return completionHandler(.failure(error ?? .invalidResponseData))
         }
 
         apiClient.getAppManifest(appId: appId, versionId: versionId) { (result) in
             switch result {
             case .success(let responseData):
                 guard let decodeResponse = ResponseDecoder.decode(decodeType: ManifestResponse.self, data: responseData.data) else {
-                    return completionHandler(.failure(NSError.invalidResponseData()))
+                    return completionHandler(.failure(.invalidResponseData))
                 }
                 return completionHandler(.success(decodeResponse))
             case .failure(let error):

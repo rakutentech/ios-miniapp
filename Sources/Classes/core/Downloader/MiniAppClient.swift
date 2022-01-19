@@ -28,6 +28,8 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     weak var delegate: MiniAppDownloaderProtocol?
 
+    typealias MAResponseDataHandler = (Result<ResponseData, MASDKError>) -> Void
+
     convenience init(baseUrl: String? = nil, sslKeyHash: MiniAppConfigSSLKeyHash? = nil, rasProjectId: String? = nil, subscriptionKey: String? = nil, hostAppVersion: String? = nil, isPreviewMode: Bool? = false) {
         self.init(with: MiniAppSdkConfig(
                 baseUrl: baseUrl,
@@ -83,30 +85,30 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         URLSession(configuration: .default, delegate: self, delegateQueue: nil)
     }()
 
-    func getMiniAppsList(completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+    func getMiniAppsList(completionHandler: @escaping MAResponseDataHandler) {
 
         guard let urlRequest = self.listingApi.createURLRequest(testPath: self.previewPath) else {
-            return completionHandler(.failure(NSError.invalidURLError()))
+            return completionHandler(.failure(.invalidURLError))
         }
-        return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
+        return requestDataFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
 
-    func getMiniApp(_ miniAppId: String, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+    func getMiniApp(_ miniAppId: String, completionHandler: @escaping MAResponseDataHandler) {
 
         guard let urlRequest = self.listingApi.createURLRequest(for: miniAppId, testPath: self.previewPath) else {
-            return completionHandler(.failure(NSError.invalidURLError()))
+            return completionHandler(.failure(.invalidURLError))
         }
-        return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
+        return requestDataFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
 
     func getAppManifest(appId: String,
                         versionId: String,
-                        completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+                        completionHandler: @escaping MAResponseDataHandler) {
 
         guard let urlRequest = self.manifestApi.createURLRequest(appId: appId, versionId: versionId, testPath: self.previewPath) else {
-            return completionHandler(.failure(NSError.invalidURLError()))
+            return completionHandler(.failure(.invalidURLError))
         }
-        return requestFromServer(urlRequest: urlRequest) { [weak self] result in
+        return requestDataFromServer(urlRequest: urlRequest) { [weak self] result in
             switch result {
             case .success(let data) :
                 if let signature = data.httpResponse.value(forHTTPHeaderField: "Signature"), let signatureId = ResponseDecoder.decode(decodeType: ManifestResponse.self, data: data.data)?.publicKeyId {
@@ -125,14 +127,14 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     func getMiniAppMetaData(appId: String,
                             versionId: String,
                             languageCode: String,
-                            completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
+                            completionHandler: @escaping MAResponseDataHandler) {
         guard let urlRequest = self.metaDataApi.createURLRequest(appId: appId,
                                                                  versionId: versionId,
                                                                  testPath: self.previewPath,
                                                                  languageCode: languageCode) else {
-            return completionHandler(.failure(NSError.invalidURLError()))
+            return completionHandler(.failure(.invalidURLError))
         }
-        return requestFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
+        return requestDataFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
 
     func download(url: String, miniAppId: String, miniAppVersion: String) {
@@ -144,48 +146,15 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
     }
 
     func getPreviewMiniAppInfo(using token: String,
-                               completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
+                               completionHandler: @escaping MAResponseDataHandler) {
         guard let urlRequest = self.previewMiniappApi.createURLRequest(previewToken: token) else {
             return completionHandler(.failure(.invalidURLError))
         }
         return requestDataFromServer(urlRequest: urlRequest, completionHandler: completionHandler)
     }
 
-    func requestFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping (Result<ResponseData, Error>) -> Void) {
-        return session.startDataTask(with: urlRequest) { (result) in
-            switch result {
-            case .success(let responseData):
-                let statusCode = responseData.httpResponse.statusCode
-                let logIcon = statusCode < 300 ? "🟢" : "🟠"
-                MiniAppLogger.d("[\(statusCode)] urlRequest \(urlRequest.url?.absoluteString ?? "-") : \n\(String(data: responseData.data, encoding: .utf8) ?? "Empty response")", logIcon)
-                responseData.httpResponse.allHeaderFields.forEach { key, value in  MiniAppLogger.d("[\(key)]\t \(value)", "\t🎩")}
-
-                if !(200...299).contains(statusCode) {
-                    let failure = self.handleHttpResponse(responseData: responseData.data, httpResponse: responseData.httpResponse)
-                    if statusCode >= 500, retry500 < 5 {
-                        let backOff = 2.0
-                        let retry = retry500 + 1
-                        let waitTime = 0.5*pow(backOff, Double(retry500))
-                        let failureMessage = "\(failure.localizedDescription) : Attempt [\(retry)]."
-                        MiniAppLogger.d("\(failureMessage) \nRetry in \(waitTime)s", "🟠")
-                        return DispatchQueue.main.asyncAfter(deadline: .now() + waitTime) {
-                            self.requestFromServer(urlRequest: urlRequest, retry500: retry, completionHandler: completionHandler)
-                        }
-                    }
-                    MiniAppLogger.d("\(failure.localizedDescription)", "🔴")
-                    return completionHandler(.failure(failure))
-                }
-                return completionHandler(.success(ResponseData(responseData.data,
-                                                               responseData.httpResponse)))
-            case .failure(let error):
-                MiniAppLogger.d("urlRequest \(urlRequest.url?.absoluteString ?? "-") : Failure", "🔴")
-                return completionHandler(.failure(error))
-            }
-        }
-    }
-
     /// Method added to return MASDKError and which could be easy to handle in the Host app side.
-    func requestDataFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping (Result<ResponseData, MASDKError>) -> Void) {
+    func requestDataFromServer(urlRequest: URLRequest, retry500: Int = 0, completionHandler: @escaping MAResponseDataHandler) {
         return session.startDataTask(with: urlRequest) { (result) in
             switch result {
             case .success(let responseData):
@@ -264,7 +233,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         guard let originalURLString = downloadTask.currentRequest?.url?.absoluteString else {
-            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
         fileDownloadCompleted(originalURLString: originalURLString, at: location)
@@ -276,7 +245,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         let ids = idsForUrls[originalURLString]
         let tempPathDirName = (ids?.0 ?? "") + "/" + (ids?.1 ?? "")
         guard let tempLocation = self.delegate?.moveFileToTempLocation(from: location, to: tempPathDirName) else {
-            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
         checkFileSignature(originalURLString: originalURLString, location: tempLocation)
@@ -311,18 +280,26 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         guard let url = task.currentRequest?.url?.absoluteString else {
-            delegate?.downloadFileTaskCompleted(url: "", error: NSError.downloadingFailed())
+            delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)
             return
         }
+        guard let errorInfo = error else {
+            downloadSessionCompleted(error: nil, urlString: url)
+            return
+        }
+        downloadSessionCompleted(error: .fromError(error: errorInfo), urlString: url)
+    }
+
+    private func downloadSessionCompleted(error: MASDKError?, urlString: String) {
         #if RMA_SDK_SIGNATURE
             if isSignatureVerified {
                 isDownloadStatusUpdated = true
-                delegate?.downloadFileTaskCompleted(url: url, error: error)
+                delegate?.downloadFileTaskCompleted(url: urlString, error: error)
             } else {
                 isDownloadStatusUpdated = false
             }
         #else
-            delegate?.downloadFileTaskCompleted(url: url, error: error)
+            delegate?.downloadFileTaskCompleted(url: urlString, error: error)
         #endif
     }
 

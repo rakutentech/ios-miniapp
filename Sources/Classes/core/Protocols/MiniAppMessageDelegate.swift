@@ -42,7 +42,7 @@ public extension MiniAppMessageDelegate {
     }
 
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
+        completionHandler(.failure(.failedToConformToProtocol))
     }
 
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {
