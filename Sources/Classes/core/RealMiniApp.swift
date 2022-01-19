@@ -40,12 +40,12 @@ internal class RealMiniApp {
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
-        return miniAppInfoFetcher.fetchList(apiClient: self.miniAppClient, completionHandler: self.createCompletionHandler(completionHandler: completionHandler))
+        return miniAppInfoFetcher.fetchList(apiClient: self.miniAppClient, completionHandler: completionHandler)
     }
 
     func getMiniApp(miniAppId: String, miniAppVersion: String? = nil, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
         return miniAppInfoFetcher.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion, apiClient: self.miniAppClient,
-                                                  completionHandler: self.createCompletionHandler(completionHandler: completionHandler))
+                                                  completionHandler: completionHandler)
     }
 
     /// For a given Miniapp info object, this method will check whether the version id is the latest one with the platform.
@@ -57,7 +57,11 @@ internal class RealMiniApp {
     ///   - completionHandler: Completion Handler that needed to pass back the MiniAppDisplayProtocol
     ///   - messageInterface: Miniapp communication protocol object.
     ///   - adsDisplayer: a delegate that will handle Miniapp ads requests
-    func createMiniApp(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func createMiniApp(appInfo: MiniAppInfo,
+                       queryParams: String? = nil,
+                       completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void,
+                       messageInterface: MiniAppMessageDelegate? = nil,
+                       adsDisplayer: MiniAppAdDisplayer? = nil) {
         getMiniApp(miniAppId: appInfo.id, miniAppVersion: appInfo.version.versionId) { (result) in
             switch result {
             case .success(let responseData):
@@ -86,7 +90,12 @@ internal class RealMiniApp {
             } }
     }
 
-    func createMiniApp(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func createMiniApp(appId: String,
+                       version: String? = nil,
+                       queryParams: String? = nil,
+                       completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void,
+                       messageInterface: MiniAppMessageDelegate? = nil,
+                       adsDisplayer: MiniAppAdDisplayer? = nil) {
         if appId.isEmpty {
             return completionHandler(.failure(.invalidAppId))
         }
@@ -96,20 +105,20 @@ internal class RealMiniApp {
                 self.miniAppStatus.saveMiniAppInfo(appInfo: responseData, key: responseData.id)
                 self.downloadMiniApp(appInfo: responseData,
                                      queryParams: queryParams,
-                                     completionHandler: self.createCompletionHandler(completionHandler: completionHandler),
+                                     completionHandler: completionHandler,
                                      messageInterface: messageInterface,
                                      adsDisplayer: adsDisplayer)
             case .failure(let error):
                 self.handleMiniAppDownloadError(appId: appId,
                                  error: error,
                                  queryParams: queryParams,
-                                 completionHandler: self.createCompletionHandler(completionHandler: completionHandler),
+                                 completionHandler: completionHandler,
                                  messageInterface: messageInterface,
                                  adsDisplayer: adsDisplayer)
             } }
     }
 
-    func createMiniApp(url: URL, queryParams: String? = nil, errorHandler: @escaping (Error) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
+    func createMiniApp(url: URL, queryParams: String? = nil, errorHandler: @escaping (MASDKError) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
         displayer.getMiniAppView(miniAppURL: url,
                                  miniAppTitle: "Mini app",
                                  queryParams: queryParams,
@@ -117,7 +126,7 @@ internal class RealMiniApp {
                                  adsDisplayer: adsDisplayer,
                                  initialLoadCallback: { success in
                                     if !success {
-                                        errorHandler(NSError.invalidURLError())
+                                        errorHandler(.invalidURLError)
                                     }
                                  }, analyticsConfig: self.miniAppAnalyticsConfig)
     }
@@ -131,7 +140,7 @@ internal class RealMiniApp {
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     func downloadMiniApp(appInfo: MiniAppInfo,
                          queryParams: String? = nil,
-                         completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void,
+                         completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void,
                          messageInterface: MiniAppMessageDelegate? = nil,
                          adsDisplayer: MiniAppAdDisplayer? = nil) {
         return miniAppDownloader.verifyAndDownload(appId: appInfo.id, versionId: appInfo.version.versionId) { (result) in
@@ -155,7 +164,7 @@ internal class RealMiniApp {
         }
     }
 
-    func getMiniAppView(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    func getMiniAppView(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) {
         self.miniAppStatus.setDownloadStatus(true, appId: appInfo.id, versionId: appInfo.version.versionId)
         self.miniAppStatus.setCachedVersion(appInfo.version.versionId, for: appInfo.id)
         verifyUserHasAgreedToManifest(miniAppId: appInfo.id,
@@ -170,9 +179,9 @@ internal class RealMiniApp {
     }
 
     func handleMiniAppDownloadError(appId: String,
-                                    error: Error,
+                                    error: MASDKError,
                                     queryParams: String? = nil,
-                                    completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void,
+                                    completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void,
                                     messageInterface: MiniAppMessageDelegate? = nil,
                                     adsDisplayer: MiniAppAdDisplayer? = nil) {
         let downloadError = error as NSError
@@ -181,7 +190,7 @@ internal class RealMiniApp {
                 return completionHandler(.failure(error))
             }
             guard let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: miniAppInfo.id, versionId: miniAppInfo.version.versionId) else {
-                return completionHandler(.failure(downloadError))
+                return completionHandler(.failure(error))
             }
             verifyUserHasAgreedToManifest(miniAppId: appId,
                                           versionId: cachedVersion,
@@ -205,7 +214,7 @@ internal class RealMiniApp {
                                        hostAppMessageDelegate: MiniAppMessageDelegate,
                                        adsDisplayer: MiniAppAdDisplayer? = nil,
                                        analyticsConfig: [MAAnalyticsConfig]? = [],
-                                       completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void) {
+                                       completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void) {
         isRequiredPermissionsAllowed(
                 appId: miniAppId,
                 versionId: versionId) { (result) in
@@ -249,16 +258,6 @@ internal class RealMiniApp {
 
     func getDownloadedListWithCustomPermissions() -> MASDKDownloadedListPermissionsPair {
         miniAppStatus.getMiniAppsListWithCustomPermissionsInfo() ?? []
-    }
-
-    func createCompletionHandler<T>(completionHandler: @escaping (Result<T, MASDKError>) -> Void) -> (Result<T, Error>) -> Void { { (result) in
-            switch result {
-            case .success(let responseData):
-                completionHandler(.success(responseData))
-            case .failure(let error):
-                completionHandler(.failure(.fromError(error: error)))
-            }
-        }
     }
 
     func retrieveMiniAppMetaData(appId: String,

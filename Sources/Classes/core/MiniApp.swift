@@ -24,7 +24,7 @@ public class MiniApp: NSObject {
     /// - Parameters:
     ///     -   completionHandler: A block to be called when list of [MiniAppInfo] information is fetched. Completion blocks receives the following parameters
     ///         -   [MiniAppInfo]: List of [MiniAppInfo] information.
-    ///         -   Error: Error details if fetching is failed.
+    ///         -   MASDKError: MASDKError details if fetching is failed.
     public func list(completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
         return realMiniApp.listMiniApp(completionHandler: completionHandler)
     }
@@ -35,7 +35,7 @@ public class MiniApp: NSObject {
     ///     -   miniAppId: the identifier string of the Mini App you want information
     ///     -   completionHandler: A block to be called when MiniAppInfo information is fetched. Completion blocks receives the following parameters
     ///         -   MiniAppInfo: MiniAppInfo information.
-    ///         -   Error: Error details if fetching is failed.
+    ///         -   MASDKError: MASDKError details if fetching is failed.
     public func info(miniAppId: String, miniAppVersion: String? = nil, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
         if miniAppId.count == 0 {
             return completionHandler(.failure(.invalidAppId))
@@ -52,7 +52,7 @@ public class MiniApp: NSObject {
     ///   - completionHandler: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
-    ///         -   Error: Error details if Mini App View creating is failed
+    ///         -   MASDKError: MASDKError details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     public func create(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
@@ -98,10 +98,10 @@ public class MiniApp: NSObject {
     ///   - completionHandler: A block to be called on successful creation of [MiniAppView] or throws errors if any. Completion blocks receives the following parameters
     ///         -   MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
-    ///         -   Error: Error details if Mini App View creating is failed
+    ///         -   MASDKError: MASDKError details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, Error>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
         return realMiniApp.createMiniApp(
                 appInfo: appInfo,
                 queryParams: queryParams,
@@ -152,13 +152,13 @@ public extension MiniApp {
     ///   - url: a HTTP url containing Mini App content
     ///   - queryParams: Optional Query parameters that the host app would like to share while creating a mini app
     ///   - errorHandler: A block to be called on unsuccessful initial load of Mini App's web content. The handler block receives the following parameter
-    ///         -   Error: Error details if Mini App's url content loading is failed, otherwise nil.
+    ///         -   MASDKError: MASDKError details if Mini App's url content loading is failed, otherwise nil.
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     //    - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     /// - Returns: MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
     func create(url: URL, queryParams: String? = nil,
-                errorHandler: @escaping (Error) -> Void,
+                errorHandler: @escaping (MASDKError) -> Void,
                 messageInterface: MiniAppMessageDelegate,
                 adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
         return realMiniApp.createMiniApp(url: url,

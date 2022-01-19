@@ -47,7 +47,7 @@ class MiniAppInfoFetcherTests: QuickSpec {
             context("when request from server returns invalid data") {
                 it("will decode the response with MiniAppInfo decodable") {
                     let mockAPIClient = MockAPIClient()
-                    var testError: NSError?
+                    var testError: MASDKError?
                     let miniAppInfoFetcher = MiniAppInfoFetcher()
                     let responseString = """
                     [
@@ -75,28 +75,24 @@ class MiniAppInfoFetcherTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     })
-                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidResponseData.rawValue))
+                    expect(testError?.code).toEventually(equal(MASDKError.invalidResponseData.code))
                 }
             }
             context("when request from server returns error") {
                 it("will pass an error with status code and failure completion handler is called") {
                     let mockAPIClient = MockAPIClient()
-                    var testError: NSError?
-                    mockAPIClient.error = NSError(
-                        domain: "Test",
-                        code: 123,
-                        userInfo: nil
-                    )
+                    var testError: MASDKError?
+                    mockAPIClient.error = MASDKError.unknownError(domain: "Test", code: 123, description: "")
                     let miniAppInfoFetcher = MiniAppInfoFetcher()
                     miniAppInfoFetcher.fetchList(apiClient: mockAPIClient, completionHandler: { (result) in
                         switch result {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     })
                     expect(testError?.code).toEventually(equal(123))
@@ -136,7 +132,7 @@ class MiniAppInfoFetcherTests: QuickSpec {
             context("when request from server returns invalid data") {
                 it("will decode the response with MiniAppInfo decodable") {
                     let mockAPIClient = MockAPIClient()
-                    var testError: NSError?
+                    var testError: MASDKError?
                     let miniAppInfoFetcher = MiniAppInfoFetcher()
                     let responseString = """
                     [{
@@ -155,28 +151,24 @@ class MiniAppInfoFetcherTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     })
-                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.invalidResponseData.rawValue))
+                    expect(testError?.code).toEventually(equal(MASDKError.invalidResponseData.code))
                 }
             }
             context("when request from server returns error") {
                 it("will pass an error with status code and failure completion handler is called") {
                     let mockAPIClient = MockAPIClient()
-                    var testError: NSError?
-                    mockAPIClient.error = NSError(
-                        domain: "Test",
-                        code: 123,
-                        userInfo: nil
-                    )
+                    var testError: MASDKError?
+                    mockAPIClient.error = MASDKError.unknownError(domain: "Test", code: 123, description: "")
                     let miniAppInfoFetcher = MiniAppInfoFetcher()
                     miniAppInfoFetcher.getInfo(miniAppId: "123", apiClient: mockAPIClient, completionHandler: { (result) in
                         switch result {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     })
                     expect(testError?.code).toEventually(equal(123))
@@ -186,7 +178,7 @@ class MiniAppInfoFetcherTests: QuickSpec {
                 it("will pass no published versions error to completion handler") {
                     let mockAPIClient = MockAPIClient()
                     mockAPIClient.data = "[]".data(using: .utf8)
-                    var testError: NSError?
+                    var testError: MASDKError?
                     let miniAppInfoFetcher = MiniAppInfoFetcher()
 
                     miniAppInfoFetcher.getInfo(miniAppId: "123", apiClient: mockAPIClient, completionHandler: { (result) in
@@ -194,12 +186,11 @@ class MiniAppInfoFetcherTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     })
 
-                    expect(testError?.domain).toEventually(equal(MiniAppSDKErrorDomain))
-                    expect(testError?.code).toEventually(equal(MiniAppSDKErrorCode.noPublishedVersion.rawValue))
+                    expect(testError?.code).toEventually(equal(MASDKError.noPublishedVersion.code))
                 }
             }
         }

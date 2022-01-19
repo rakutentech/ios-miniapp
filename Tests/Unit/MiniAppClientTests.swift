@@ -4,7 +4,6 @@ import Nimble
 
 // swiftlint:disable function_body_length
 // swiftlint:disable cyclomatic_complexity
-// swiftlint:disable file_length
 class MiniAppClientTests: QuickSpec {
     class MockSession: SessionProtocol {
         func startDownloadTask(downloadUrl: URL) { }
@@ -39,7 +38,7 @@ class MiniAppClientTests: QuickSpec {
         }
     }
 
-    @discardableResult func executeSession(data: [String: Any]? = nil, statusCode: Int = 200, error: NSError? = nil, completion: @escaping (Result<ResponseData, Error>) -> Void) -> MiniAppClient {
+    @discardableResult func executeSession(data: [String: Any]? = nil, statusCode: Int = 200, error: NSError? = nil, completion: @escaping (Result<ResponseData, MASDKError>) -> Void) -> MiniAppClient {
         let mockSession = MockSession(data: data, statusCode: statusCode, error: error)
         let miniAppClient = MiniAppClient()
         miniAppClient.session = mockSession
@@ -47,7 +46,7 @@ class MiniAppClientTests: QuickSpec {
         return miniAppClient
     }
 
-    func executeSessionWithBadEnvironment(data: [String: Any]? = nil, statusCode: Int = 200, error: NSError? = nil, completion: @escaping (Result<ResponseData, Error>) -> Void) {
+    func executeSessionWithBadEnvironment(data: [String: Any]? = nil, statusCode: Int = 200, error: NSError? = nil, completion: @escaping (Result<ResponseData, MASDKError>) -> Void) {
         let mockSession = MockSession(data: data, statusCode: statusCode, error: error)
         let mockBundle = MockBundle()
         mockBundle.mockAppVersion = "1.0"
@@ -94,34 +93,30 @@ class MiniAppClientTests: QuickSpec {
             #endif
 
             context("when network response doesn't contain data") {
-                var testError: NSError = NSError.init(
-                    domain: "Error",
-                    code: 0,
-                    userInfo: nil
-                )
+                var testError: MASDKError?
                 it("will pass an error with status code and completion handler expected to return the same") {
                     let client = self.executeSession(statusCode: 400) { (result) in
                         switch result {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
-                    expect(testError.code).toEventually(equal(400), timeout: .seconds(2))
+                    expect(testError?.code).toEventually(equal(400), timeout: .seconds(2))
                     expect((client.session as? MockSession)?.attempts).toNotEventually(beGreaterThan(1), timeout: .seconds(2))
                 }
             }
 
             context("when network response contains valid error json") {
-                var testError: NSError?
+                var testError: MASDKError?
                 it("will pass an error to completion handler with expected code") {
                     let client = self.executeSession(data: ["code": 400, "message": "error message"], statusCode: 400) { (result) in
                         switch result {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
                     expect(testError?.code).toEventually(equal(400), timeout: .seconds(2))
@@ -133,11 +128,11 @@ class MiniAppClientTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
 
-                    expect(testError?.localizedDescription).toEventually(equal("error message description"), timeout: .seconds(2))
+                    expect(testError?.errorDescription).toEventually(contain("error message description"), timeout: .seconds(2))
                     expect((client.session as? MockSession)?.attempts).toNotEventually(beGreaterThan(1), timeout: .seconds(2))
                 }
 
@@ -148,12 +143,12 @@ class MiniAppClientTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
-                    expect(testError?.localizedDescription)
+                    expect(testError?.errorDescription)
                         .toEventually(
-                            equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"),
+                            contain("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"),
                             timeout: .seconds(2))
                 }
                 it("will pass an error to completion handler with expected message if it is a 403 error") {
@@ -162,48 +157,48 @@ class MiniAppClientTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
-                    expect(testError?.localizedDescription)
+                    expect(testError?.errorDescription)
                         .toEventually(
-                            equal("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"),
+                            contain("\(sessionDataForbidden["error"] ?? "null"): \(sessionDataForbidden["error_description"] ?? "null")"),
                             timeout: .seconds(2))
                     expect((client.session as? MockSession)?.attempts).toNotEventually(beGreaterThan(1), timeout: .seconds(2))
                 }
             }
             context("when network response contains invalid error") {
-                var testError: NSError?
+                var testError: MASDKError?
                 it("will pass an error to completion handler with expected code") {
                     let client = self.executeSession(data: ["error_code": 404, "message": "error message"], statusCode: 404) { (result) in
                         switch result {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
-                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(2))
+                    expect(testError).toEventually(beAnInstanceOf(MASDKError.self), timeout: .seconds(2))
                     expect((client.session as? MockSession)?.attempts).toNotEventually(beGreaterThan(1), timeout: .seconds(2))
                 }
             }
             context("when environment is invalid") {
-                var testError: NSError?
+                var testError: MASDKError?
                 it("will pass an error to completion handler with expected code") {
                     let client = self.executeSession(data: ["error_code": 404, "message": "error message"], statusCode: 404) { (result) in
                         switch result {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
-                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(2))
+                    expect(testError).toEventually(beAnInstanceOf(MASDKError.self), timeout: .seconds(2))
                     expect((client.session as? MockSession)?.attempts).toNotEventually(beGreaterThan(1), timeout: .seconds(2))
                 }
             }
             context("when environment is failing") {
-                var testError: NSError?
+                var testError: MASDKError?
                 var client: MiniAppClient?
                 it("will pass an error after 5 tries to completion handler with expected code") {
                     let startTime = Date()
@@ -213,11 +208,12 @@ class MiniAppClientTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                             timeSpent = abs(startTime.timeIntervalSinceNow)
                         }
                     }
-                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(20))
+                    expect(testError).toEventually(beAnInstanceOf(MASDKError.self), timeout: .seconds(20))
+                    expect(testError?.code).toEventually(equal(500), timeout: .seconds(2))
                     expect((client?.session as? MockSession)?.attempts).toEventually(equal(6), timeout: .seconds(20)) // 1 attempt + 5 retries
                     expect(timeSpent).toEventually(beGreaterThan(15.0), timeout: .seconds(20))
                 }
@@ -244,11 +240,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(testResult).toEventuallyNot(beNil())
                 }
                 it("returns response data as nil") {
-                    var testError: NSError = NSError.init(
-                        domain: "Error",
-                        code: 0,
-                        userInfo: nil
-                    )
+                    var testError: MASDKError?
                     let mockSession = MockSession(data: nil, statusCode: 400)
                     let miniAppClient = MiniAppClient()
                     miniAppClient.session = mockSession
@@ -257,13 +249,13 @@ class MiniAppClientTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
-                    expect(testError.code).toEventually(equal(400), timeout: .seconds(2))
+                    expect(testError?.code).toEventually(equal(400), timeout: .seconds(2))
                 }
                 it("returns valid error response") {
-                    var testError: NSError?
+                    var testError: MASDKError?
                     let mockSession = MockSession(data: ["code": 400, "message": "error message"], statusCode: 400)
                     let miniAppClient = MiniAppClient()
                     miniAppClient.session = mockSession
@@ -272,13 +264,13 @@ class MiniAppClientTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
                     expect(testError?.code).toEventually(equal(400), timeout: .seconds(2))
                 }
                 it("returns invalid error response") {
-                    var testError: NSError?
+                    var testError: MASDKError?
                     let mockSession = MockSession(data: ["error_code": 404, "message": "error message"], statusCode: 404)
                     let miniAppClient = MiniAppClient()
                     miniAppClient.session = mockSession
@@ -287,10 +279,10 @@ class MiniAppClientTests: QuickSpec {
                         case .success:
                             break
                         case .failure(let error):
-                            testError = error as NSError
+                            testError = error
                         }
                     }
-                    expect(testError).toEventually(beAnInstanceOf(NSError.self), timeout: .seconds(2))
+                    expect(testError).toEventually(beAnInstanceOf(MASDKError.self), timeout: .seconds(2))
                 }
             }
         }
