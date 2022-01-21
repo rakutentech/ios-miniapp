@@ -389,10 +389,6 @@ extension RealMiniApp: MiniAppMessageDelegate {
         completionHandler(.failure(error as Error))
     }
 
-    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
-        completionHandler(.failure(.failedToConformToProtocol))
-    }
-
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {
         return nil
     }

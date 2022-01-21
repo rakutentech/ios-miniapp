@@ -10,7 +10,7 @@ class MASDKLocaleTests: QuickSpec {
         describe("When MASDKLocale localize method is called") {
             context("with localizable key that has no params to be passed") {
                 it("it will return the value of just the localizable key") {
-                    expect(MASDKLocale.localize(.allow, "Test")).to(equal("Allow"))
+                    expect(MASDKLocale.localize(.allow)).to(equal("Allow"))
                 }
             }
         }

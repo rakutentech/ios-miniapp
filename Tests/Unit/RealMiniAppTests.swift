@@ -171,7 +171,7 @@ class RealMiniAppTests: QuickSpec {
                     mockAPIClient.metaData = mockMetaDataString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
 
-                    waitUntil { done in
+                    waitUntil(timeout: .seconds(5)) { done in
                         realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
                             switch result {
                             case .success(let responseData):
@@ -269,15 +269,24 @@ class RealMiniAppTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
                     mockAPIClient.metaData = mockMetaDataString.data(using: .utf8)
-                    waitUntil { done in
+                    waitUntil(timeout: .seconds(5)) { done in
                         realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
                             switch result {
                             case .success(let responseData):
                                 expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
                                 if let rmap = responseData as? RealMiniAppView {
                                     expect(rmap.hostAppMessageDelegate).notTo(beNil())
-                                    let uniqueID = rmap.hostAppMessageDelegate?.getUniqueId()
-                                    expect(uniqueID).to(beNil())
+                                    var uniqueID: String? = "tmp"
+                                    rmap.hostAppMessageDelegate?.getUniqueId { (result) in
+                                        switch result {
+                                        case .success(let uid):
+                                            uniqueID = uid
+                                        case .failure(let error):
+                                            uniqueID = nil
+                                            expect(error.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
+                                        }
+                                    }
+                                    expect(uniqueID).toEventually(beNil())
                                 } else {
                                     fail("create RealMiniAppView failure")
                                 }

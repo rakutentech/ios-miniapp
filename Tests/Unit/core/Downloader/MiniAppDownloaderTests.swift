@@ -228,17 +228,18 @@ class MiniAppDownloaderTests: QuickSpec {
                 it("will return true") {
                     let responseString = self.manifest(urls: "\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt")
                     mockAPIClient.data = responseString.data(using: .utf8)
-                    var isDownloaded: Bool = false
+                    var isDownloaded: Bool?
                     downloader.verifyAndDownload(appId: appId, versionId: versionId) { (result) in
                         switch result {
                         case .success:
                             miniAppStatus.setDownloadStatus(true, appId: appId, versionId: versionId)
                             isDownloaded = downloader.isMiniAppAlreadyDownloaded(appId: appId, versionId: versionId)
                         case .failure:
-                            break
+                            isDownloaded = false
                         }
                     }
-                    expect(isDownloaded).toEventually(equal(true))
+                    expect(isDownloaded).toNotEventually(beNil(), timeout: .seconds(5))
+                    expect(isDownloaded).toEventually(beTrue(), timeout: .seconds(5))
                 }
             }
         }
