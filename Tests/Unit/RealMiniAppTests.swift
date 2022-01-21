@@ -170,29 +170,31 @@ class RealMiniAppTests: QuickSpec {
                     mockAPIClient.data = responseString.data(using: .utf8)
                     mockAPIClient.metaData = mockMetaDataString.data(using: .utf8)
                     mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
-
-                    waitUntil(timeout: .seconds(5)) { done in
-                        realMiniApp.createMiniApp(appId: mockMiniAppInfo.id, completionHandler: { (result) in
+                    var responseData: RealMiniAppView?
+                    realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        switch result {
+                        case .success(let response):
+                            responseData = response as? RealMiniAppView
+                        case .failure:
+                            fail("create MiniApp failure")
+                        }
+                    })
+                    expect(responseData).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: .seconds(20))
+                    if let rmap = responseData {
+                        expect(rmap.hostAppMessageDelegate).notTo(beNil())
+                        var uniqueID: String? = "tmp"
+                        rmap.hostAppMessageDelegate?.getUniqueId { (result) in
                             switch result {
-                            case .success(let responseData):
-                                expect(responseData).to(beAnInstanceOf(RealMiniAppView.self))
-                                if let rmap = responseData as? RealMiniAppView {
-                                    expect(rmap.hostAppMessageDelegate).notTo(beNil())
-                                    rmap.hostAppMessageDelegate?.getUniqueId { (result) in
-                                        switch result {
-                                        case .success: break
-                                        case .failure(let error):
-                                            expect(error.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
-                                        }
-                                    }
-                                } else {
-                                    fail("create RealMiniAppView failure")
-                                }
-                                done()
-                            case .failure:
-                                fail("create MiniApp failure")
+                            case .success(let uid):
+                                uniqueID = uid
+                            case .failure(let error):
+                                uniqueID = nil
+                                expect(error.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
                             }
-                        })
+                        }
+                        expect(uniqueID).toEventually(beNil())
+                    } else {
+                        fail("create RealMiniAppView failure")
                     }
                 }
             }
