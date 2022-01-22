@@ -24,3 +24,4 @@ excluded:
   - Pods
   - Carthage
   - vendor
+  - .build

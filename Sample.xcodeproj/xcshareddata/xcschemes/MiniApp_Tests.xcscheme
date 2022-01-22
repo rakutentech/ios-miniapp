@@ -5,6 +5,24 @@
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "exec &gt; prebuild.log 2&gt;&amp;1&#10;CURRENT_VERSION=$(grep -o -m 1 -E &quot;([0-9]{1,}\.)+([0-9]{1,}\.)+[0-9]{1,}&quot; MiniApp.podspec)&#10;REPLACE_STRING=&quot;                        expect(environmentInfo?.sdkVersion).toEventually(equal(\&quot;$CURRENT_VERSION\&quot;))&quot;&#10;SEARCH_STRING=$(grep &quot;expect(environmentInfo?.sdkVersion)&quot; Tests/Unit/MiniAppScriptMessageHandlerTests.swift)&#10;sed -i &quot;&quot; -e &quot;s/$SEARCH_STRING/$REPLACE_STRING/&quot; Tests/Unit/MiniAppScriptMessageHandlerTests.swift&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+                     BuildableName = "MiniApp_Example.app"
+                     BlueprintName = "MiniApp_Example"
+                     ReferencedContainer = "container:Sample.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"

@@ -158,7 +158,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     mockMessageInterface.locationAllowed = false
                     let mockMessage = MockWKScriptMessage(name: "", body: "{\"action\": \"getCurrentPosition\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+                    let status = CLLocationManager().authorizationStatus
+                    if status == .authorizedAlways || status == .authorizedWhenInUse {
                         expect(callbackProtocol.response).toEventually(contain("latitude"))
                         expect(callbackProtocol.response).toEventually(contain("longitude"))
                     } else {
@@ -894,9 +895,10 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             return
                         }
                         let environmentInfo = ResponseDecoder.decode(decodeType: MAHostEnvironmentInfo.self, data: responseData)
-                        expect(environmentInfo?.sdkVersion).toEventually(equal("3.0.0"))
-                        expect(environmentInfo?.platformVersion).toEventually(equal("1.0.0"))
-                        expect(environmentInfo?.hostVersion).toEventually(equal("2.0.0"))
+                        expect(environmentInfo?.sdkVersion).toEventually(equal("4.0.0"))
+                        expect(environmentInfo?.platformVersion).toEventually(equal("15.2")) // This is the version defines on Fastlane for simulator
+                        expect(environmentInfo?.hostVersion).toEventually(equal(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String))
+                        expect(environmentInfo?.hostLocale).toEventually(equal("en-US"))
                     }
                 }
             }

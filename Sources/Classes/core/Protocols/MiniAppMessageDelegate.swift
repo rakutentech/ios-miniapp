@@ -7,10 +7,6 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
 
-    @available(*, deprecated,
-        renamed: "getUniqueId(completionHandler:)")
-    func getUniqueId() -> String?
-
     /// Interface that should be implemented in the host app that handles the code to request any permission and the
     /// result (allowed/denied) should be returned.
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void)
@@ -20,10 +16,6 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel],
                                   miniAppTitle: String,
                                   completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
-
-    /// Optional closure that can be implemented in the host app to handle the environment info and locale.
-    @available(*, deprecated, renamed: "getEnvironmentInfo")
-    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void)
 
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {get}
 }
@@ -53,48 +45,10 @@ public extension MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    @available(*, deprecated,
-        renamed: "getUniqueId(completionHandler:)")
-    func getUniqueId() -> String? {
-        let semaphore = DispatchSemaphore(value: 0)
-        var uniqueId: String?
-        getUniqueId { result in
-            switch result {
-            case .success(let id):
-                uniqueId = id
-            default:
-                uniqueId = nil
-            }
-            semaphore.signal()
-        }
-        semaphore.wait()
-        return uniqueId
-    }
-
-    @available(*, deprecated, renamed: "getEnvironmentInfo")
-    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
-        completionHandler(.success(getDefaultHostEnvironmentInfo()))
-    }
-
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {
         return { () -> (() -> (MAHostEnvironmentInfo))? in
-            var completion: (() -> (MAHostEnvironmentInfo))?
-            self.getHostEnvironmentInfo { result in
-                switch result {
-                case .success(let resultInfo):
-                    completion = { return resultInfo }
-                case .failure(let error):
-                    MiniAppLogger.e("no default implementation", error)
-                    completion = nil
-                }
-            }
-            return completion
+            return { MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString()) }
         }()
-    }
-
-    private func getDefaultHostEnvironmentInfo() -> MAHostEnvironmentInfo {
-        let info = MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString())
-        return info
     }
 }
 
