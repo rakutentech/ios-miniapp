@@ -273,7 +273,7 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
             }
         #else
             MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: ids?.1)
-            delegate?.fileDownloaded(at: location, downloadedURL: originalURLString)
+            delegate?.fileDownloaded(at: location, downloadedURL: originalURLString, signatureChecked: false)
             cleanUpTmpFolder(tmpDirectory: ids?.0 ?? "")
         #endif
     }
