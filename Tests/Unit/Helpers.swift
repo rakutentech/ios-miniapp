@@ -174,7 +174,7 @@ class MockAPIClient: MiniAppClient {
                 delegate?.fileDownloaded(at: mockSourceFileURL, downloadedURL: destinationURL, signatureChecked: true)
             }
         #else
-            delegate?.fileDownloaded(at: mockSourceFileURL, downloadedURL: destinationURL)
+            delegate?.fileDownloaded(at: mockSourceFileURL, downloadedURL: destinationURL, signatureChecked: true)
         #endif
     }
 
