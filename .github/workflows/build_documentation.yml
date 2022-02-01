@@ -11,5 +11,4 @@ jobs:
     - name: Repository checkout
       uses: actions/checkout@v2
     - name: Build Documentation
-      run: |
-        $GITHUB_WORKSPACE/scripts/build-doc.sh
+      run: sh $GITHUB_WORKSPACE/scripts/build-doc.sh
