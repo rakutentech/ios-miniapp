@@ -1,4 +1,4 @@
-name: Swiftlint Check
+name: Build Documentation 
 
 on:
   pull_request:
@@ -10,5 +10,5 @@ jobs:
     steps:
     - name: Repository checkout
       uses: actions/checkout@v2
-    - name: Run SwiftLint
-      run: swiftlint --strict
+    - name: Build Documentation
+      run: sh $GITHUB_WORKSPACE/scripts/build-doc.sh
