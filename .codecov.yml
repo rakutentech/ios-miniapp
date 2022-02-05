@@ -13,7 +13,7 @@ ignore:
 
 coverage:
   status:
-    patch:
+    patch: false
       default:
         target: 70%
         threshold: 5%
@@ -25,3 +25,6 @@ coverage:
         threshold: 5%
         base: auto
         if_ci_failed: error
+
+github_checks:
+    annotations: false
