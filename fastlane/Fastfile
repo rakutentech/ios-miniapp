@@ -50,7 +50,6 @@ platform :ios do
       proj: "Sample.xcodeproj",
       workspace: "MiniApp.xcworkspace",
       output_directory: "fastlane/code_coverage",
-      cobertura_xml: true,
     )    
   end
 

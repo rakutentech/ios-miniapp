@@ -26,5 +26,6 @@ coverage:
         base: auto
         if_ci_failed: error
 
+comment: false
 github_checks:
-    annotations: false
+  annotations: false
