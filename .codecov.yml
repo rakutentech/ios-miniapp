@@ -8,22 +8,20 @@ ignore:
    - "Sources/Classes/core/Display/MiniAppExternalWebViewController.swift"
    - "Sources/Classes/core/Display/MiniAppNavigationConfig.swift"
    - "Sources/Classes/core/Extensions/RealMiniAppView+WKUIDelegate.swift"
-   - "Sources/Classes/core/Extensions/Storyboard.swift"
    - "Sources/Classes/admob/AdMobDisplayer.swift"
    - "Sources/Classes/core/Display/ViewControllers/Custom\ Permissions/CustomPermissionsRequestViewController.swift"
-   - "Sources/Classes/core/Protocols/MiniAppShareContentDelegate.swift"
 
 coverage:
   status:
     patch: false
       default:
-        target: 80%
+        target: 70%
         threshold: 5%
         base: auto 
         if_ci_failed: error
     project:
       default:
-        target: 80%
+        target: 70%
         threshold: 5%
         base: auto
         if_ci_failed: error
