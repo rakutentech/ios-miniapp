@@ -19,6 +19,7 @@ platform :ios do
 # Uncomment this to disable Unit tests on Bitrise
 #     if !is_ci
        tests
+       slather_report
 #     end
 
   end
@@ -40,6 +41,17 @@ platform :ios do
         code_coverage: true,
         output_types: 'json-compilation-database,html,junit',
         output_files: 'compile_commands.json,report.html,report.junit')
+  end
+
+  desc "Slather Coverage report"
+  lane :slather_report do |options|
+    slather(
+      scheme: "MiniApp-Example",
+      proj: "Sample.xcodeproj",
+      workspace: "MiniApp.xcworkspace",
+      output_directory: "fastlane/code_coverage",
+      cobertura_xml: true,
+    )    
   end
 
   lane :build_simulator do |options|

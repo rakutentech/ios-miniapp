@@ -1,27 +1,31 @@
 ignore:
-   - "Pods"
-   - "Tests"
-   - "Example"
-   - "Carthage"
-   - "MiniAppCarthage"
-   - "Sources/Classes/ui"
-   - "Sources/Classes/core/Display/MiniAppExternalWebViewController.swift"
-   - "Sources/Classes/core/Display/MiniAppNavigationConfig.swift"
-   - "Sources/Classes/core/Extensions/RealMiniAppView+WKUIDelegate.swift"
-   - "Sources/Classes/admob/AdMobDisplayer.swift"
-   - "Sources/Classes/core/Display/ViewControllers/Custom\ Permissions/CustomPermissionsRequestViewController.swift"
+  - "Pods"
+  - "Tests"
+  - "Example"
+  - "Carthage"
+  - "MiniAppCarthage"
+  - "Sources/Classes/ui"
+  - "Sources/Classes/core/Display/MiniAppExternalWebViewController.swift"
+  - "Sources/Classes/core/Display/MiniAppNavigationConfig.swift"
+  - "Sources/Classes/core/Extensions/RealMiniAppView+WKUIDelegate.swift"
+  - "Sources/Classes/core/Extensions/Storyboard.swift"
+  - "Sources/Classes/core/Extensions/UIApplication.swift"
+  - "Sources/Classes/core/Extensions/UIViewController+MiniApp.swift"
+  - "Sources/Classes/core/Extensions/UIWindow+MiniApp.swift"
+  - "Sources/Classes/admob/AdMobDisplayer.swift"
+  - "Sources/Classes/core/Display/ViewControllers/Custom\ Permissions/CustomPermissionsRequestViewController.swift"
 
 coverage:
   status:
-    patch:
+    patch: off
       default:
-        target: 70%
+        target: 80%
         threshold: 5%
         base: auto 
-        if_ci_failed: error
+        if_ci_failed: ignore
     project:
       default:
-        target: 70%
+        target: 80%
         threshold: 5%
         base: auto
-        if_ci_failed: error
+        if_ci_failed: ignore

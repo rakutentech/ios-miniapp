@@ -209,28 +209,6 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
         return MASDKError.serverError(code: code, message: message)
     }
 
-    func handleHttpResponse(responseData: Data, httpResponse: HTTPURLResponse) -> NSError {
-        let code = httpResponse.statusCode
-        var message: String
-
-        switch code {
-        case 401, 403:
-            guard let errorModel = ResponseDecoder.decode(decodeType: UnauthorizedData.self,
-                                                          data: responseData) else {
-                                                            return NSError.unknownServerError(httpResponse: httpResponse)
-            }
-            message = "\(errorModel.error): \(errorModel.errorDescription)"
-        default:
-            guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self,
-                                                          data: responseData) else {
-                                                            return NSError.unknownServerError(httpResponse: httpResponse)
-            }
-            message = errorModel.message
-        }
-
-        return NSError.serverError(code: code, message: message)
-    }
-
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         guard let originalURLString = downloadTask.currentRequest?.url?.absoluteString else {
             delegate?.downloadFileTaskCompleted(url: "", error: .downloadingFailed)

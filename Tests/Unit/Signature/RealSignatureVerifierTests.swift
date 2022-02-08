@@ -39,7 +39,7 @@ class RealSignatureVerifierSpec: QuickSpec {
 
                     it("will not call fetcher") {
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { _ in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { _ in
                                 done()
                             }
                         }
@@ -48,7 +48,7 @@ class RealSignatureVerifierSpec: QuickSpec {
 
                     it("will call Verifier using cached key") {
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { _ in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { _ in
                                 done()
                             }
                         }
@@ -58,7 +58,7 @@ class RealSignatureVerifierSpec: QuickSpec {
                     it("will pass verification result to resultHandler (negative)") {
                         verifier.verifyOK = false
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { verified in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { verified in
                                 expect(verified).to(beFalse())
                                 done()
                             }
@@ -68,7 +68,7 @@ class RealSignatureVerifierSpec: QuickSpec {
                     it("will pass verification result to resultHandler (positive)") {
                         verifier.verifyOK = true
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { verified in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { verified in
                                 expect(verified).to(beTrue())
                                 done()
                             }
@@ -85,7 +85,7 @@ class RealSignatureVerifierSpec: QuickSpec {
 
                     it("will call fetcher to fetch the key") {
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { _ in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { _ in
                                 done()
                             }
                         }
@@ -95,7 +95,7 @@ class RealSignatureVerifierSpec: QuickSpec {
                     it("will pass negative result to resultHandler if fetched key was nil") {
                         fetcher.fetchedKey = nil
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { verified in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { verified in
                                 expect(verified).to(beFalse())
                                 done()
                             }
@@ -105,7 +105,7 @@ class RealSignatureVerifierSpec: QuickSpec {
                     it("will pass verification result to resultHandler (negative)") {
                         verifier.verifyOK = false
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { verified in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { verified in
                                 expect(verified).to(beFalse())
                                 done()
                             }
@@ -115,7 +115,7 @@ class RealSignatureVerifierSpec: QuickSpec {
                     it("will pass verification result to resultHandler (positive)") {
                         verifier.verifyOK = true
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { verified in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { verified in
                                 expect(verified).to(beTrue())
                                 done()
                             }
@@ -125,7 +125,7 @@ class RealSignatureVerifierSpec: QuickSpec {
                     it("will add fetched key to the KeyStore") {
                         verifier.verifyOK = true
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { _ in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { _ in
                                 done()
                             }
                         }
@@ -135,7 +135,7 @@ class RealSignatureVerifierSpec: QuickSpec {
                     it("will add fetched key to the KeyStore even if verification was unsuccessful") {
                         verifier.verifyOK = false
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { _ in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { _ in
                                 done()
                             }
                         }
@@ -146,7 +146,7 @@ class RealSignatureVerifierSpec: QuickSpec {
                         verifier.verifyOK = true
                         fetcher.fetchedKey = nil
                         waitUntil { done in
-                            svModule.verify(signature: "siganture", for: "version", keyId: keyId, data: mockData) { _ in
+                            svModule.verify(signature: "signature", for: "version", keyId: keyId, data: mockData) { _ in
                                 done()
                             }
                         }

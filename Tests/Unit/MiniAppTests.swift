@@ -175,6 +175,19 @@ class MiniAppTests: QuickSpec {
                     expect(testError?.localizedDescription).toEventuallyNot(beNil(), timeout: .seconds(5))
                 }
             }
+            context("when list is called") {
+                it("will return server error") {
+                    var testError: MASDKError?
+                    MiniApp.shared(with: MockBundle.getMockSDKConfig(), navigationSettings: nil).list { (result) in
+                        switch result {
+                        case .success: break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    }
+                    expect(testError).toEventuallyNot(beNil())
+                }
+            }
         }
     }
 }
