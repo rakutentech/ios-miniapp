@@ -76,28 +76,6 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:
 github "https://github.com/rakutentech/ios-miniapp" "prod"
 ``` 
 
-<a id="SPM"></a>
-## Swift Package Manager
-
-SPM version of MiniApp SDK also embbed all the features [described above](#Cocoapods). The main difference with Carthage version is that you don't need to implement Google Ads, as we implemented a workaround to depend on them until Google supports SPM officially (see [bug report](https://github.com/googleads/googleads-mobile-unity/issues/1125#issuecomment-880784075)).
-To depend on MiniApp SDK through you have to add it to the dependencies of your Package.swift file and refer to that dependency in your target.:
-
-```swift
-// swift-tools-version:5.0
-import PackageDescription
-let package = Package(
-    name: "<Your Product Name>",
-    dependencies: [
-        .package(url: "https://github.com/rakutentech/ios-miniapp.git", .exact("v4.0.0"))
-    ],
-    targets: [
-        .target(
-        name: "<Your Target Name>",
-        dependencies: ["MiniApp"]),
-    ]
-)
-``` 
-
 ### Configuration
 
 In your project configuration .plist you should add below Key/Value :
