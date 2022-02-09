@@ -1,4 +1,5 @@
 import MiniApp
+import UIKit
 
 extension ViewController: MiniAppUserInfoDelegate {
 
@@ -57,5 +58,29 @@ extension ViewController: MiniAppUserInfoDelegate {
             )
         }
         completionHandler(.success(MAPoints(standard: 0, term: 0, cash: 0)))
+    }
+    
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+        let fileNameParts = fileName.split(separator: ".")
+        let fileName = String(fileNameParts[0])
+        let fileExtension = String(fileNameParts[1])
+        guard let url = URL(string: url), let data = try? Data(contentsOf: url), let savedUrl = saveTemporaryFile(data: data, resourceName: fileName, fileExtension: fileExtension) else { return }
+        // save file temporarily
+        let vc = UIActivityViewController(activityItems: [savedUrl], applicationActivities: nil)
+        self.presentedViewController?.present(vc, animated: true, completion: nil)
+        completionHandler(.success(fileName))
+    }
+
+    public func saveTemporaryFile(data: Data, resourceName: String, fileExtension: String) -> URL?
+    {
+        let tempDirectoryURL = URL.init(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        let targetURL = tempDirectoryURL.appendingPathComponent("\(resourceName).\(fileExtension)")
+        do {
+            try data.write(to: targetURL, options: .atomic)
+            return targetURL
+        } catch let error {
+            print("Unable to copy file: \(error)")
+        }
+        return nil
     }
 }

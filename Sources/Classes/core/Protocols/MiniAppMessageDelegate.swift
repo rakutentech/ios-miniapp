@@ -18,6 +18,9 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
                                   completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {get}
+
+    /// Interface that is used to download files
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKError>) -> Void)
 }
 
 public extension MiniAppMessageDelegate {
@@ -49,6 +52,10 @@ public extension MiniAppMessageDelegate {
         return { () -> (() -> (MAHostEnvironmentInfo))? in
             return { MAHostEnvironmentInfo(hostLocale: "miniapp.sdk.ios.locale".localizedString()) }
         }()
+    }
+
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
     }
 }
 
@@ -88,4 +95,8 @@ public class MAHostEnvironmentInfo: Codable {
             hostLocale: hostLocale
         )
     }
+}
+
+public class DownloadHeaders: Codable {
+    let token: String?
 }
