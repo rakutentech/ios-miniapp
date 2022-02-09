@@ -4,7 +4,6 @@
 
 **SDK**
 - **Feature:** Added support for Carthage
-- **Feature:** Added support for Swift Package Manager
 - **Feature:** Changed deployment target from 13.0 to 14.0
 
 
