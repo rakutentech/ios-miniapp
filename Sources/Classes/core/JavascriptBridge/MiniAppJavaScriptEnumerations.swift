@@ -16,6 +16,7 @@ enum MiniAppJSActionCommand: String {
     case sendMessageToMultipleContacts
     case getPoints
     case getHostEnvironmentInfo
+    case purchaseProduct
 }
 
 enum JavaScriptExecResult: String {

@@ -89,6 +89,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             fetchPoints(with: callbackId)
         case .getHostEnvironmentInfo:
             getEnvironmentInfo(with: callbackId)
+        case .purchaseProduct:
+            purchaseProduct(with: callbackId, parameters: requestParam)
         }
     }
 
@@ -517,6 +519,20 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             messageId: callbackId,
             response: encodedResult
         )
+    }
+
+    private func purchaseProduct(with callBackId: String, parameters: RequestParameters?) {
+        if let purchaseItemId = parameters?.productId {
+            hostAppMessageDelegate?.purchaseProduct(withId: purchaseItemId,
+                                                    completionHandler: { result in
+                switch result {
+                case .success(let response):
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: response)
+                case .failure(let error):
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+                }
+            })
+        }
     }
 
     private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {

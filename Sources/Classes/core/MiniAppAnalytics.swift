@@ -28,6 +28,7 @@ internal enum MiniAppRATEvent: String, CaseIterable {
     case sendMessageToContactId = "mini_app_send_message_to_contact_id"
     case sendMessageToMultipleContacts = "mini_app_send_message_to_multiple_contacts"
     case getEnvironemtnInfo = "mini_app_get_environment_info"
+    case purchaseProduct = "mini_app_purchase_product"
 
     func name() -> String {
         "mini_app_\(rawValue)"
@@ -57,7 +58,8 @@ internal enum MiniAppRATEvent: String, CaseIterable {
              .sendMessageToContact,
              .sendMessageToContactId,
              .sendMessageToMultipleContacts,
-             .getEnvironemtnInfo:
+             .getEnvironemtnInfo,
+             .purchaseProduct:
             return .click
         }
     }
@@ -169,6 +171,8 @@ public class MiniAppAnalytics {
             return .getPoints
         case .getHostEnvironmentInfo:
             return .getEnvironemtnInfo
+        case .purchaseProduct:
+            return .purchaseProduct
         }
     }
 }
