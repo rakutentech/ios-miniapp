@@ -1,6 +1,9 @@
 import MiniApp
 
 extension ViewController: MiniAppUserInfoDelegate {
+    func purchaseProduct(withId: String, completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
 
     func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         guard let userProfile = getProfileSettings(), let userName = userProfile.displayName else {

@@ -89,7 +89,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             fetchPoints(with: callbackId)
         case .getHostEnvironmentInfo:
             getEnvironmentInfo(with: callbackId)
-        case .purchaseProduct:
+        case .purchaseItem:
             purchaseProduct(with: callbackId, parameters: requestParam)
         }
     }
@@ -522,7 +522,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     private func purchaseProduct(with callBackId: String, parameters: RequestParameters?) {
-        if let purchaseItemId = parameters?.productId {
+        if let purchaseItemId = parameters?.itemId {
             hostAppMessageDelegate?.purchaseProduct(withId: purchaseItemId,
                                                     completionHandler: { result in
                 switch result {
