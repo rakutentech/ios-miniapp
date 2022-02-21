@@ -121,11 +121,22 @@ enum MiniAppEvent: String {
     case externalWebViewClosed = "miniappwebviewclosed"
     case pause = "miniapppause"
     case resume = "miniappresume"
+    case keyboardShown = "keyboardshown"
+    case keyboardHidden = "keyboardhidden"
 
     static let notificationName = Notification.Name("notificationName")
 
     struct Event {
         var type: MiniAppEvent
         var comment: String
+        var screenHeight: CGFloat?
+        var keyboardHeight: CGFloat?
+        
+        init(type: MiniAppEvent, comment: String, keyboardHeight: CGFloat? = nil, screenHeight: CGFloat? = nil) {
+            self.type = type
+            self.comment = comment
+            self.keyboardHeight = keyboardHeight
+            self.screenHeight = screenHeight
+        }
     }
 }

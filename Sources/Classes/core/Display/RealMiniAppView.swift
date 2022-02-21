@@ -170,7 +170,7 @@ internal class RealMiniAppView: UIView {
             didReceiveEvent(.resume, message: "Host app did become active")
         default:
             if let event = notification.object as? MiniAppEvent.Event {
-                didReceiveEvent(event.type, message: event.comment)
+                didReceiveEvent(event.type, message: event.comment, screenHeight: event.screenHeight, keyboardHeight: event.keyboardHeight)
             } else {
                 MiniAppLogger.w("MiniAppEvent not present in notification")
             }
@@ -298,8 +298,13 @@ extension RealMiniAppView: MiniAppCallbackDelegate {
         self.supportedMiniAppOrientation = orientation
     }
 
-    func didReceiveEvent(_ event: MiniAppEvent, message: String) {
-        let messageBody = Constants.JavaScript.eventCallback + "('\(event.rawValue)'," + "'\(message)')"
+    func didReceiveEvent(_ event: MiniAppEvent, message: String, screenHeight: CGFloat? = nil, keyboardHeight: CGFloat? = nil) {
+        var messageBody = Constants.JavaScript.eventCallback + "('\(event.rawValue)'," + "'\(message)'"
+        if let screenHeight = screenHeight, let keyboardHeight = keyboardHeight {
+            messageBody += ",'\(screenHeight)','\(keyboardHeight)')"
+        } else {
+            messageBody += ")"
+        }
         messageBodies.append(messageBody)
         MiniAppLogger.d(messageBody, "♨️️")
         webView.evaluateJavaScript(messageBody)

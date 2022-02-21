@@ -393,3 +393,12 @@ extension RealMiniApp: MiniAppMessageDelegate {
         return nil
     }
 }
+
+extension RealMiniApp {
+    func keyboardShown(screenHeight: CGFloat, keyboardheight: CGFloat) {
+        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .keyboardShown, comment: "Keyboard was shown", keyboardHeight: keyboardheight, screenHeight: screenHeight))
+    }
+    func keyboardHidden(screenHeight: CGFloat = 0, keyboardheight: CGFloat = 0) {
+        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .keyboardHidden, comment: "Keyboard was hidden", keyboardHeight: keyboardheight, screenHeight: screenHeight))
+    }
+}

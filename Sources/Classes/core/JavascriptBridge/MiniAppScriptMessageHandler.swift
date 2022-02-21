@@ -5,7 +5,7 @@ import CoreLocation
 protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveScriptMessageResponse(messageId: String, response: String)
     func didReceiveScriptMessageError(messageId: String, errorMessage: String)
-    func didReceiveEvent(_ event: MiniAppEvent, message: String)
+    func didReceiveEvent(_ event: MiniAppEvent, message: String, screenHeight: CGFloat?, keyboardHeight: CGFloat?)
 }
 
 // swiftlint:disable file_length
@@ -333,8 +333,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func execCustomEventsCallback(with event: MiniAppEvent, message: String) {
-        delegate?.didReceiveEvent(event, message: message)
+    func execCustomEventsCallback(with event: MiniAppEvent, message: String, screenHeight: CGFloat?, keyboardHeight: CGFloat?) {
+        delegate?.didReceiveEvent(event, message: message, screenHeight: screenHeight, keyboardHeight: keyboardHeight)
     }
 
     func shareContent(requestParam: RequestParameters?, callbackId: String) {

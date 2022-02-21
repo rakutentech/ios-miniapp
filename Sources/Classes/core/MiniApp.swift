@@ -140,6 +140,14 @@ public class MiniApp: NSObject {
     public func getMiniAppPreviewInfo(using token: String, completionHandler: @escaping (Result<PreviewMiniAppInfo, MASDKError>) -> Void) {
         realMiniApp.getMiniAppPreviewInfo(using: token, completionHandler: completionHandler)
     }
+
+    public func keyboardShown(screenHeight: CGFloat, keyboardheight: CGFloat) {
+        realMiniApp.keyboardShown(screenHeight: screenHeight, keyboardheight: keyboardheight)
+    }
+
+    public func keyboardHidden(screenHeight: CGFloat = 0, keyboardheight: CGFloat = 0) {
+        realMiniApp.keyboardHidden(screenHeight: screenHeight, keyboardheight: keyboardheight)
+    }
 }
 
 // MARK: - Testing
