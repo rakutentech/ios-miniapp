@@ -483,6 +483,151 @@ class RealMiniAppTests: QuickSpec {
                     expect(testError?.errorDescription).toEventually(equal(MASDKError.invalidURLError.errorDescription), timeout: .seconds(2))
                 }
             }
+
+            context("when mini-app is requested from cache") {
+                it("will check the app-id is not empty") {
+                    var testError: MASDKError?
+
+                    MiniApp.shared().create(appId: "",
+                                            version: "",
+                                            queryParams: nil, completionHandler: { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    }, messageInterface: mockMessageInterface, adsDisplayer: nil, fromCache: true)
+                    expect(testError?.errorDescription).toEventually(equal(MASDKError.invalidAppId.errorDescription), timeout: .seconds(2))
+                }
+                it("will check the version is not empty") {
+                    var testError: MASDKError?
+
+                    MiniApp.shared().create(appId: mockMiniAppInfo.id,
+                                            version: "",
+                                            queryParams: nil, completionHandler: { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    }, messageInterface: mockMessageInterface, adsDisplayer: nil, fromCache: true)
+                    expect(testError?.errorDescription).toEventually(equal(MASDKError.invalidVersionId.errorDescription), timeout: .seconds(2))
+                }
+                it("will check the app-id and version is not empty, also if mini app is downloaded already") {
+                    var testError: MASDKError?
+
+                    MiniApp.shared().create(appId: mockMiniAppInfo.id,
+                                            version: mockMiniAppInfo.version.versionId,
+                                            queryParams: nil, completionHandler: { (result) in
+                        switch result {
+                        case .success:
+                            break
+                        case .failure(let error):
+                            testError = error
+                        }
+                    }, messageInterface: mockMessageInterface, adsDisplayer: nil, fromCache: true)
+                    expect(testError?.errorDescription).toEventually(equal(MASDKError.miniAppCorrupted.errorDescription), timeout: .seconds(2))
+                }
+                it("download a mini app first and try to return the cached version using app id and version id") {
+                    let responseString = """
+                    [{
+                        "id": "\(mockMiniAppInfo.id)",
+                        "displayName": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "\(mockMiniAppInfo.version.versionId)",
+                        }
+                      }]
+                    """
+                    let manifestResponse = """
+                      {
+                        "manifest": ["\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.metaData = mockMetaDataString.data(using: .utf8)
+                    mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
+                    realMiniApp.storeCustomPermissions(forMiniApp: mockMiniAppInfo.id,
+                                                       permissionList: [MASDKCustomPermissionModel(permissionName: .userName,
+                                                                                                   isPermissionGranted: .allowed,
+                                                                                                   permissionRequestDescription: ""),
+                                                                        MASDKCustomPermissionModel(permissionName: .profilePhoto,
+                                                                                                   isPermissionGranted: .allowed,
+                                                                                                   permissionRequestDescription: "")])
+                    var responseData: RealMiniAppView?
+                    realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        switch result {
+                        case .success(let response):
+                            responseData = response as? RealMiniAppView
+                        case .failure:
+                            fail("create MiniApp failure")
+                        }
+                    }, fromCache: false)
+                    expect(responseData).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: .seconds(10))
+                    var testResponseData: MiniAppDisplayDelegate?
+                    realMiniApp.createMiniApp(appId: mockMiniAppInfo.id,
+                                              version: mockMiniAppInfo.version.versionId, completionHandler: { (result) in
+                        switch result {
+                        case .success(let responseData):
+                            testResponseData = responseData
+                        case .failure:
+                            fail("create MiniApp failure")
+                        }
+                    }, messageInterface: mockMessageInterface, fromCache: true)
+                    expect(testResponseData).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: .seconds(10))
+                }
+                it("download a mini app first and try to return the cached version using app info") {
+                    let responseString = """
+                    [{
+                        "id": "\(mockMiniAppInfo.id)",
+                        "displayName": "Test",
+                        "icon": "https://test.com",
+                        "version": {
+                            "versionTag": "1.0.0",
+                            "versionId": "\(mockMiniAppInfo.version.versionId)",
+                        }
+                      }]
+                    """
+                    let manifestResponse = """
+                      {
+                        "manifest": ["\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+                      }
+                    """
+                    mockAPIClient.data = responseString.data(using: .utf8)
+                    mockAPIClient.metaData = mockMetaDataString.data(using: .utf8)
+                    mockAPIClient.manifestData = manifestResponse.data(using: .utf8)
+                    realMiniApp.storeCustomPermissions(forMiniApp: mockMiniAppInfo.id,
+                                                       permissionList: [MASDKCustomPermissionModel(permissionName: .userName,
+                                                                                                   isPermissionGranted: .allowed,
+                                                                                                   permissionRequestDescription: ""),
+                                                                        MASDKCustomPermissionModel(permissionName: .profilePhoto,
+                                                                                                   isPermissionGranted: .allowed,
+                                                                                                   permissionRequestDescription: "")])
+                    var responseData: RealMiniAppView?
+                    realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        switch result {
+                        case .success(let response):
+                            responseData = response as? RealMiniAppView
+                        case .failure:
+                            fail("create MiniApp failure")
+                        }
+                    }, fromCache: false)
+                    expect(responseData).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: .seconds(10))
+                    var testResponseData: MiniAppDisplayDelegate?
+                    realMiniApp.createMiniApp(appInfo: mockMiniAppInfo, completionHandler: { (result) in
+                        switch result {
+                        case .success(let responseData):
+                            testResponseData = responseData
+                        case .failure:
+                            fail("create MiniApp failure")
+                        }
+                    }, messageInterface: mockMessageInterface, fromCache: true)
+                    expect(testResponseData).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: .seconds(10))
+                }
+            }
         }
     }
 }
