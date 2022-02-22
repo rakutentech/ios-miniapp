@@ -1,4 +1,5 @@
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 internal class RealMiniApp {
     var miniAppInfoFetcher: MiniAppInfoFetcher
     var metaDataDownloader: MetaDataDownloader
