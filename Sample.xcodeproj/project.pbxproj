@@ -16,7 +16,6 @@
 		2A0CD0752745F2DE00877ABE /* GeneralTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CD0742745F2DE00877ABE /* GeneralTableViewController.swift */; };
 		2A54C85C26676377002B204F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C85B26676377002B204F /* UITextField.swift */; };
 		2A7C7EC826DDA76300520DF9 /* Swizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7C7EC726DDA76300520DF9 /* Swizzling.swift */; };
-		2A88BA19273BB06800782FE4 /* MiniAppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A88BA17273BAD2000782FE4 /* MiniAppVersionTests.swift */; };
 		2A99B5B5271538A0009C0D36 /* DeeplinkListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A99B5B4271538A0009C0D36 /* DeeplinkListViewController.swift */; };
 		2AA894BA26D6895F0078B2F4 /* RATNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA894B926D6895F0078B2F4 /* RATNotificationCenter.swift */; };
 		2AA894D226D697520078B2F4 /* DemoAppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA894D126D697520078B2F4 /* DemoAppAnalytics.swift */; };
@@ -29,6 +28,8 @@
 		2AE218D3269C9E6100F9D1E7 /* Deeplink.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */; };
 		2AE218D7269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */; };
 		2AE218F0269D46DA00F9D1E7 /* UITextView+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */; };
+		2AFDE8EA27B1221100B7B340 /* MiniAppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFDE8E927B1221000B7B340 /* MiniAppVersionTests.swift */; };
+		2AFDE8EC27B1222A00B7B340 /* MiniAppManifestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFDE8EB27B1222A00B7B340 /* MiniAppManifestTests.swift */; };
 		317FED2525E5EB4300774919 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317FED2725E5EB4300774919 /* Settings.storyboard */; };
 		317FFF21267095040066E455 /* QASettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317FFF20267095040066E455 /* QASettingsTableViewController.swift */; };
 		3180E6BF2689A20900B6B590 /* Encodable+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3180E6BE2689A20900B6B590 /* Encodable+MiniApp.swift */; };
@@ -133,7 +134,6 @@
 		2A0CD0742745F2DE00877ABE /* GeneralTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralTableViewController.swift; sourceTree = "<group>"; };
 		2A54C85B26676377002B204F /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		2A7C7EC726DDA76300520DF9 /* Swizzling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swizzling.swift; sourceTree = "<group>"; };
-		2A88BA17273BAD2000782FE4 /* MiniAppVersionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppVersionTests.swift; sourceTree = "<group>"; };
 		2A99B5B4271538A0009C0D36 /* DeeplinkListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeeplinkListViewController.swift; sourceTree = "<group>"; };
 		2AA894B926D6895F0078B2F4 /* RATNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RATNotificationCenter.swift; sourceTree = "<group>"; };
 		2AA894D126D697520078B2F4 /* DemoAppAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppAnalytics.swift; sourceTree = "<group>"; };
@@ -146,6 +146,8 @@
 		2AE218D2269C9E6100F9D1E7 /* Deeplink.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Deeplink.storyboard; sourceTree = "<group>"; };
 		2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkErrorViewController.swift; sourceTree = "<group>"; };
 		2AE218EF269D46DA00F9D1E7 /* UITextView+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+MiniApp.swift"; sourceTree = "<group>"; };
+		2AFDE8E927B1221000B7B340 /* MiniAppVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppVersionTests.swift; sourceTree = "<group>"; };
+		2AFDE8EB27B1222A00B7B340 /* MiniAppManifestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppManifestTests.swift; sourceTree = "<group>"; };
 		31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "MiniApp-Secrets.xcconfig"; path = "../../../MiniApp-Secrets.xcconfig"; sourceTree = "<group>"; };
 		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
 		31070C63258C554500BED77C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
@@ -307,7 +309,7 @@
 		2AB1B0D126A6D625004CAC1B /* core */ = {
 			isa = PBXGroup;
 			children = (
-				2A88BA17273BAD2000782FE4 /* MiniAppVersionTests.swift */,
+				2AFDE8E627B121C300B7B340 /* Models */,
 				2AD324E8271E626F006EBEFB /* Downloader */,
 				2AB1B0D826A6D79E004CAC1B /* Display */,
 			);
@@ -349,6 +351,15 @@
 				2AE218D6269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift */,
 			);
 			path = Deeplink;
+			sourceTree = "<group>";
+		};
+		2AFDE8E627B121C300B7B340 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2AFDE8E927B1221000B7B340 /* MiniAppVersionTests.swift */,
+				2AFDE8EB27B1222A00B7B340 /* MiniAppManifestTests.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		31070C65258C557D00BED77C /* Documentation */ = {
@@ -821,7 +832,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				31F57AE726E3D105007E0BFD /* RealSignatureVerifierTests.swift in Sources */,
-				2A88BA19273BB06800782FE4 /* MiniAppVersionTests.swift in Sources */,
+				2AFDE8EA27B1221100B7B340 /* MiniAppVersionTests.swift in Sources */,
 				382B960324F6DAC500DA8B7D /* MiniAppTests.swift in Sources */,
 				3862EFA823EA5752004D518C /* MiniApp+URLRequestTests.swift in Sources */,
 				38F3B7F024192E7300914E37 /* UrlParserTests.swift in Sources */,
@@ -841,6 +852,7 @@
 				3850AE722434E02D0046978C /* RealMiniAppTests.swift in Sources */,
 				38AC730A26234835000B9D0E /* MetaDataDownloaderTests.swift in Sources */,
 				38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */,
+				2AFDE8EC27B1222A00B7B340 /* MiniAppManifestTests.swift in Sources */,
 				188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */,
 				3871A8E124C54AD600BEC6CF /* MiniApp+StringTests.swift in Sources */,
 				38252B9923DFFBAB008A4E93 /* ListingAPITests.swift in Sources */,

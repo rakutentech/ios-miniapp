@@ -1,4 +1,3 @@
-[![Swift Package Manager compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![Cocoapods](https://img.shields.io/cocoapods/v/MiniApp)](https://cocoapods.org/pods/MiniApp)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://app.bitrise.io/app/bddaf16e1f0fc0d6/status.svg?token=79YRf2JDkNHluFGQUlNCPg&branch=master)](https://app.bitrise.io/app/bddaf16e1f0fc0d6)

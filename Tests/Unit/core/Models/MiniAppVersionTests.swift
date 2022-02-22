@@ -67,6 +67,24 @@ class MiniAppVersionTests: QuickSpec {
                     expect(miniAppVersion?.environment).toEventually(equal("-"))
                 }
             }
+            context("when mini app versions are compared") {
+                guard let majorMiniAppVersion = MiniAppVersion(string: "3.8.2"), let miniAppVersion = MiniAppVersion(string: "3.8.0") else {
+                    fail("Failed to create Mini App Versions")
+                    return
+                }
+                it("will compare and return 1 if major version is compared with minor ") {
+                    expect(majorMiniAppVersion.compare(miniAppVersion, checkEnvironment: false)).toEventually(equal(1))
+                }
+                it("will compare which is greater version") {
+                    expect(majorMiniAppVersion > miniAppVersion).toEventually(equal(true))
+                }
+                it("will compare which is lesser version") {
+                    expect(majorMiniAppVersion < miniAppVersion).toEventually(equal(false))
+                }
+                it("will compare if both are equal") {
+                    expect(majorMiniAppVersion == miniAppVersion).toEventually(equal(false))
+                }
+            }
         }
     }
 }

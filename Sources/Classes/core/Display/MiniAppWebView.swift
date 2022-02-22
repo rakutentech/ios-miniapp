@@ -26,14 +26,6 @@ internal class MiniAppWebView: WKWebView {
         commonInit(urlRequest: urlRequest)
     }
 
-    private static func getURL(miniAppURL: URL, queryParams: String?) -> URL {
-        guard let urlWithQueryParam = miniAppURL.appendingPathComponent(Self.getQueryParams(queryParams: queryParams)).absoluteString.removingPercentEncoding else {
-            return miniAppURL
-        }
-
-        return URL(string: urlWithQueryParam)!
-    }
-
     private static func getURLRequest(miniAppId: String, schemeName: String, queryParams: String?) -> URLRequest {
         let baseUrl = schemeName + "://miniapp/" + Constants.rootFileName
         guard let url = URL(string: baseUrl + MiniAppWebView.getQueryParams(queryParams: queryParams)) else {

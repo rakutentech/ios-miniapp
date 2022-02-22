@@ -49,7 +49,7 @@ class APIClientSpec: QuickSpec {
                                 break
                             }
                         })
-                    expect(testResult).toEventually(equal(keyModel), timeout: .seconds(2))
+                    expect(testResult).toEventually(equal(keyModel), timeout: .seconds(5))
                 }
             }
             context("when network response contains valid error json") {
