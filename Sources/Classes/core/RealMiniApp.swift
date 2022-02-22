@@ -387,6 +387,7 @@ internal class RealMiniApp {
         previewMiniAppInfoFetcher.fetchPreviewMiniAppInfo(apiClient: miniAppClient, using: token, completionHandler: completionHandler)
     }
 
+    // swiftlint:disable empty_enum_arguments
     func getCachedMiniApp(appId: String,
                           version: String,
                           queryParams: String? = nil,
@@ -396,21 +397,33 @@ internal class RealMiniApp {
         if appId.isEmpty {
             return completionHandler(.failure(.invalidAppId))
         }
-        if version.isEmpty {
-            return completionHandler(.failure(.invalidVersionId))
+        guard let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: appId, versionId: version) else {
+            return completionHandler(.failure(.miniAppNotFound))
         }
-        if miniAppDownloader.isCacheSecure(appId: appId, versionId: version) {
+        if miniAppDownloader.isCacheSecure(appId: appId, versionId: cachedVersion) {
             /// Retrieving Cached Manifest Data to get the display name
             let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId)
-            verifyUserHasAgreedToManifest(miniAppId: appId,
-                                          versionId: version,
-                                          projectId: self.miniAppClient.environment.projectId,
-                                          miniAppTitle: miniAppInfo?.displayName ?? "Mini app",
-                                          queryParams: queryParams,
-                                          hostAppMessageDelegate: messageInterface ?? self,
-                                          adsDisplayer: adsDisplayer,
-                                          analyticsConfig: self.miniAppAnalyticsConfig,
-                                          completionHandler: completionHandler)
+            let cachedMetaData = miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
+            verifyRequiredPermissions(appId: appId,
+                                      miniAppManifest: cachedMetaData,
+                                      completionHandler: { (result) in
+                switch result {
+                case .success(_):
+                    DispatchQueue.main.async {
+                        let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId,
+                                                                                   versionId: cachedVersion,
+                                                                                   projectId: self.miniAppClient.environment.projectId,
+                                                                                   miniAppTitle: miniAppInfo?.displayName ?? "Mini App",
+                                                                                   queryParams: queryParams,
+                                                                                   hostAppMessageDelegate: messageInterface ?? self,
+                                                                                   adsDisplayer: adsDisplayer,
+                                                                                   analyticsConfig: self.miniAppAnalyticsConfig)
+                        completionHandler(.success(miniAppDisplayProtocol))
+                    }
+                case .failure(let error):
+                    completionHandler(.failure(error))
+                }
+            })
         } else {
             completionHandler(.failure(.miniAppCorrupted))
         }
