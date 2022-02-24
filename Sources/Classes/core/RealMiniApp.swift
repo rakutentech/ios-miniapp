@@ -212,7 +212,7 @@ internal class RealMiniApp {
                                     adsDisplayer: MiniAppAdDisplayer? = nil) {
         let downloadError = error as NSError
         if downloadError.isDeviceOfflineError() {
-            guard let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId) else {
+            guard let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId), !miniAppClient.environment.isPreviewMode else {
                 return completionHandler(.failure(error))
             }
             guard let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: miniAppInfo.id, versionId: miniAppInfo.version.versionId) else {

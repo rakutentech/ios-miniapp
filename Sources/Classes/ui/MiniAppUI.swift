@@ -12,6 +12,7 @@ public struct MiniAppUIParams {
     var queryParams: String?
     var adsDisplayer: MiniAppAdDisplayer?
     var enableSharePreview: Bool
+    var loadFromCacheIfFailed: Bool
 
     public init(
         title: String = "",
@@ -22,7 +23,8 @@ public struct MiniAppUIParams {
         navigationInterface: MiniAppNavigationDelegate? = nil,
         queryParams: String? = nil,
         adsDisplayer: MiniAppAdDisplayer? = nil,
-        enableSharePreview: Bool = false
+        enableSharePreview: Bool = false,
+        loadFromCacheIfFailed: Bool = false
     ) {
         self.title = title
         self.miniAppId = miniAppId
@@ -33,6 +35,7 @@ public struct MiniAppUIParams {
         self.queryParams = queryParams
         self.adsDisplayer = adsDisplayer
         self.enableSharePreview = enableSharePreview
+        self.loadFromCacheIfFailed = loadFromCacheIfFailed
     }
 }
 
@@ -78,7 +81,8 @@ internal class RealMiniAppUI {
             navDelegate: params.navigationInterface,
             queryParams: params.queryParams,
             adsDisplayer: params.adsDisplayer,
-            enableSharePreview: params.enableSharePreview
+            enableSharePreview: params.enableSharePreview,
+            loadFromCacheIfFailed: params.loadFromCacheIfFailed
         )
         return miniAppVC
     }
