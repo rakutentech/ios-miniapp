@@ -141,12 +141,12 @@ public class MiniApp: NSObject {
         realMiniApp.getMiniAppPreviewInfo(using: token, completionHandler: completionHandler)
     }
 
-    public func keyboardShown(screenHeight: CGFloat, keyboardheight: CGFloat) {
-        realMiniApp.keyboardShown(screenHeight: screenHeight, keyboardheight: keyboardheight)
+    public func keyboardShown(navigationBarHeight: CGFloat, screenHeight: CGFloat, keyboardheight: CGFloat) {
+        realMiniApp.keyboardShown(navigationBarHeight: navigationBarHeight, screenHeight: screenHeight, keyboardheight: keyboardheight)
     }
 
-    public func keyboardHidden(screenHeight: CGFloat = 0, keyboardheight: CGFloat = 0) {
-        realMiniApp.keyboardHidden(screenHeight: screenHeight, keyboardheight: keyboardheight)
+    public func keyboardHidden(navigationBarHeight: CGFloat, screenHeight: CGFloat = 0, keyboardheight: CGFloat = 0) {
+        realMiniApp.keyboardHidden(navigationBarHeight: navigationBarHeight, screenHeight: screenHeight, keyboardheight: keyboardheight)
     }
 }
 

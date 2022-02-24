@@ -129,12 +129,14 @@ enum MiniAppEvent: String {
     struct Event {
         var type: MiniAppEvent
         var comment: String
+        var navigationBarHeight: CGFloat?
         var screenHeight: CGFloat?
         var keyboardHeight: CGFloat?
         
-        init(type: MiniAppEvent, comment: String, keyboardHeight: CGFloat? = nil, screenHeight: CGFloat? = nil) {
+        init(type: MiniAppEvent, comment: String, navigationBarHeight: CGFloat? = nil, keyboardHeight: CGFloat? = nil, screenHeight: CGFloat? = nil) {
             self.type = type
             self.comment = comment
+            self.navigationBarHeight = navigationBarHeight
             self.keyboardHeight = keyboardHeight
             self.screenHeight = screenHeight
         }

@@ -160,14 +160,15 @@ public class MiniAppViewController: UIViewController {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        let screenHeight = view.bounds.height - (navigationController?.navigationBar.bounds.height ?? 0) - (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
+        let navigationBarHeight = (navigationController?.navigationBar.bounds.height ?? 0) + (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
+        let screenHeight = view.bounds.height - navigationBarHeight
         let keyboardHeight = keyboardViewEndFrame.height
-        MiniApp.shared(with: config).keyboardShown(screenHeight: screenHeight, keyboardheight: keyboardHeight)
+        MiniApp.shared(with: config).keyboardShown(navigationBarHeight: navigationBarHeight, screenHeight: screenHeight, keyboardheight: keyboardHeight)
     }
     
     @objc
     func keyboardHidden(notification: Notification) {
-        MiniApp.shared(with: config).keyboardHidden(screenHeight: 0, keyboardheight: 0)
+        MiniApp.shared(with: config).keyboardHidden(navigationBarHeight: 0, screenHeight: 0, keyboardheight: 0)
     }
 
     func setupMiniApp() {
