@@ -408,18 +408,21 @@ internal class RealMiniApp {
                                       miniAppManifest: cachedMetaData,
                                       completionHandler: { (result) in
                 switch result {
-                // swiftlint:disable empty_enum_arguments
-                case .success(_):
-                    DispatchQueue.main.async {
-                        let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId,
-                                                                                   versionId: cachedVersion,
-                                                                                   projectId: self.miniAppClient.environment.projectId,
-                                                                                   miniAppTitle: miniAppInfo?.displayName ?? "Mini App",
-                                                                                   queryParams: queryParams,
-                                                                                   hostAppMessageDelegate: messageInterface ?? self,
-                                                                                   adsDisplayer: adsDisplayer,
-                                                                                   analyticsConfig: self.miniAppAnalyticsConfig)
-                        completionHandler(.success(miniAppDisplayProtocol))
+                case .success(let permissionsAgreed):
+                    if permissionsAgreed {
+                        DispatchQueue.main.async {
+                            let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId,
+                                                                                       versionId: cachedVersion,
+                                                                                       projectId: self.miniAppClient.environment.projectId,
+                                                                                       miniAppTitle: miniAppInfo?.displayName ?? "Mini App",
+                                                                                       queryParams: queryParams,
+                                                                                       hostAppMessageDelegate: messageInterface ?? self,
+                                                                                       adsDisplayer: adsDisplayer,
+                                                                                       analyticsConfig: self.miniAppAnalyticsConfig)
+                            completionHandler(.success(miniAppDisplayProtocol))
+                        }
+                    } else {
+                        completionHandler(.failure(.metaDataFailure))
                     }
                 case .failure(let error):
                     completionHandler(.failure(error))
