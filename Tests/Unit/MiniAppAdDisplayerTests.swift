@@ -99,6 +99,45 @@ class MiniAppAdDisplayerTests: QuickSpec {
                 }
             }
         }
+        describe("Mini app ad display error") {
+            context("when MASDKAdsDisplayError is returned") {
+                it("will return UKNOWN_ERROR error, description and description is not empty") {
+                    let error = MASDKAdsDisplayError(rawValue: "UKNOWN_ERROR")
+                    expect(error).toEventually(equal(.unknownError))
+                    expect(error?.description).notTo(beEmpty())
+                }
+                it("will return FAILED_TO_CONFORM_PROTOCOL error, description and description is not empty") {
+                    let error = MASDKAdsDisplayError(rawValue: "FAILED_TO_CONFORM_PROTOCOL")
+                    expect(error).toEventually(equal(.failedToConformToProtocol))
+                    expect(error?.description).notTo(beEmpty())
+                }
+                it("will return sdkError error, description and description is not empty") {
+                    let error = MASDKAdsDisplayError(rawValue: "sdkError")
+                    expect(error).toEventually(equal(.sdkError))
+                    expect(error?.description).notTo(beEmpty())
+                }
+                it("will return adNotLoaded error, description and description is not empty") {
+                    let error = MASDKAdsDisplayError(rawValue: "adNotLoaded")
+                    expect(error).toEventually(equal(.adNotLoaded))
+                    expect(error?.description).notTo(beEmpty())
+                }
+                it("will return rewardFailure error, description and description is not empty") {
+                    let error = MASDKAdsDisplayError(rawValue: "rewardFailure")
+                    expect(error).toEventually(equal(.rewardFailure))
+                    expect(error?.description).notTo(beEmpty())
+                }
+                it("will return hostUIError error, description and description is not empty") {
+                    let error = MASDKAdsDisplayError(rawValue: "hostUIError")
+                    expect(error).toEventually(equal(.hostUIError))
+                    expect(error?.description).notTo(beEmpty())
+                }
+                it("will return adIdError error, description and description is not empty") {
+                    let error = MASDKAdsDisplayError(rawValue: "adIdError")
+                    expect(error).toEventually(equal(.adIdError))
+                    expect(error?.description).notTo(beEmpty())
+                }
+            }
+        }
     }
 }
 

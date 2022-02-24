@@ -338,6 +338,20 @@ class MockBundle: EnvironmentProtocol {
             return nil
         }
     }
+
+    static func getMockSDKConfig() -> MiniAppSdkConfig {
+        let bundle = MockBundle()
+        bundle.mockPreviewMode = false
+        return MiniAppSdkConfig(
+            baseUrl: bundle.mockEndpoint,
+            rasProjectId: bundle.mockProjectId,
+            subscriptionKey: bundle.mockSubscriptionKey,
+            hostAppVersion: bundle.mockHostAppUserAgentInfo,
+            isPreviewMode: bundle.mockPreviewMode,
+            analyticsConfigList: [MAAnalyticsConfig(acc: mockRATAcc, aid: mockRATAid)],
+            requireMiniAppSignatureVerification: false
+        )
+    }
 }
 
 class MockFile {
