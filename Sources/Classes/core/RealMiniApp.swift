@@ -388,7 +388,6 @@ internal class RealMiniApp {
         previewMiniAppInfoFetcher.fetchPreviewMiniAppInfo(apiClient: miniAppClient, using: token, completionHandler: completionHandler)
     }
 
-    // swiftlint:disable empty_enum_arguments
     func getCachedMiniApp(appId: String,
                           version: String,
                           queryParams: String? = nil,
@@ -409,6 +408,7 @@ internal class RealMiniApp {
                                       miniAppManifest: cachedMetaData,
                                       completionHandler: { (result) in
                 switch result {
+                // swiftlint:disable empty_enum_arguments
                 case .success(_):
                     DispatchQueue.main.async {
                         let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId,
