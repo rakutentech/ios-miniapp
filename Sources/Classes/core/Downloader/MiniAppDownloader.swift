@@ -41,7 +41,6 @@ class MiniAppDownloader {
                 completionHandler(.success(miniAppStoragePath))
             } else {
                 MiniAppLogger.w("Cached Mini App did not pass the hash verification. The Mini App will be re-downloaded.")
-
                 cleanApp(appId, for: "")
                 download(appId: appId, versionId: versionId, completionHandler: completionHandler)
             }
@@ -133,6 +132,10 @@ class MiniAppDownloader {
         if urlToDirectoryMap.isEmpty {
             completionHandler(.success(miniAppPath))
         }
+    }
+
+    internal func isCacheSecure(appId: String, versionId: String) -> Bool {
+        return cacheVerifier.verify(appId: appId, version: versionId)
     }
 }
 
