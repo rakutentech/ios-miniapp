@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 4.1.0 (TBD)
+### 4.1.0 (release date TBD)
 
 **SDK**
 - **Feature:** Updated create method with optional `fromCache` variable that helps to load the mini-app from cache.
