@@ -108,6 +108,10 @@ public class MiniAppViewController: UIViewController {
             self.navDelegate = self
         }
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     required init?(coder: NSCoder) { return nil }
 

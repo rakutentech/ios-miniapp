@@ -7,6 +7,7 @@ enum Constants {
         static let successCallback = "MiniAppBridge.execSuccessCallback"
         static let errorCallback = "MiniAppBridge.execErrorCallback"
         static let eventCallback = "MiniAppBridge.execCustomEventsCallback"
+        static let keyboardEventCallback = "MiniAppBridge.execKeyboardEventsCallback"
     }
 }
 

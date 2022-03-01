@@ -28,4 +28,8 @@ internal extension NotificationCenter {
     func sendCustomEvent(_ event: MiniAppEvent.Event) {
         post(name: MiniAppEvent.notificationName, object: event)
     }
+
+    func sendKeyboardEvent(_ event: MiniAppKeyboardEvent.Event) {
+        post(name: MiniAppKeyboardEvent.notificationName, object: event)
+    }
 }

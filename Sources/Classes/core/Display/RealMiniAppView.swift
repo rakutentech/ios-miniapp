@@ -159,6 +159,11 @@ internal class RealMiniAppView: UIView {
                                                selector: #selector(sendCustomEvent(notification:)),
                                                name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
+        // keyboard events
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendKeyboardEvent(notification:)),
+                                               name: MiniAppKeyboardEvent.notificationName,
+                                               object: nil)
     }
 
     @objc
@@ -170,10 +175,25 @@ internal class RealMiniAppView: UIView {
             didReceiveEvent(.resume, message: "Host app did become active")
         default:
             if let event = notification.object as? MiniAppEvent.Event {
-                didReceiveEvent(event.type, message: event.comment, navigationBarHeight: event.navigationBarHeight, screenHeight: event.screenHeight, keyboardHeight: event.keyboardHeight)
+                didReceiveEvent(event.type, message: event.comment)
             } else {
                 MiniAppLogger.w("MiniAppEvent not present in notification")
             }
+        }
+
+    }
+
+    @objc
+    func sendKeyboardEvent(notification: NSNotification) {
+        switch notification.name {
+        case MiniAppKeyboardEvent.notificationName:
+            if let event = notification.object as? MiniAppKeyboardEvent.Event {
+                didReceiveKeyboardEvent(event.type, message: event.comment, navigationBarHeight: event.navigationBarHeight, screenHeight: event.screenHeight, keyboardHeight: event.keyboardHeight)
+            } else {
+                MiniAppLogger.w("MiniAppEvent not present in notification")
+            }
+        default:
+            ()
         }
 
     }
@@ -298,8 +318,15 @@ extension RealMiniAppView: MiniAppCallbackDelegate {
         self.supportedMiniAppOrientation = orientation
     }
 
-    func didReceiveEvent(_ event: MiniAppEvent, message: String, navigationBarHeight: CGFloat? = nil, screenHeight: CGFloat? = nil, keyboardHeight: CGFloat? = nil) {
-        var messageBody = Constants.JavaScript.eventCallback + "('\(event.rawValue)'," + "'\(message)'"
+    func didReceiveEvent(_ event: MiniAppEvent, message: String) {
+        let messageBody = Constants.JavaScript.eventCallback + "('\(event.rawValue)'," + "'\(message)')"
+        messageBodies.append(messageBody)
+        MiniAppLogger.d(messageBody, "♨️️")
+        webView.evaluateJavaScript(messageBody)
+    }
+
+    func didReceiveKeyboardEvent(_ event: MiniAppKeyboardEvent, message: String, navigationBarHeight: CGFloat? = nil, screenHeight: CGFloat? = nil, keyboardHeight: CGFloat? = nil) {
+        var messageBody = Constants.JavaScript.keyboardEventCallback + "('\(event.rawValue)'," + "'\(message)'"
         if let navigationBarHeight = navigationBarHeight, let screenHeight = screenHeight, let keyboardHeight = keyboardHeight {
             messageBody += ",'\(navigationBarHeight)','\(screenHeight)','\(keyboardHeight)')"
         } else {
