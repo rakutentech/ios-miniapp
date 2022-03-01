@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 4.0.0  (release date TBD)
+### 4.0.0  (2022-03-01)
 
 **SDK**
 - **Feature:** Added support for Carthage
