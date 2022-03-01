@@ -5,7 +5,9 @@
 **SDK**
 - **Feature:** Added support for Carthage
 - **Feature:** Changed deployment target from 13.0 to 14.0
-
+- **Feature:** Updated create method with optional `fromCache` variable that helps to load the mini-app from cache.
+`MiniApp#create(appId:versionId:queryParams:completionHandler:messageInterface:adsDisplayer:fromCache)`
+`MiniApp#create(appInfo:queryParams:completionHandler:messageInterface:adsDisplayer:fromCache)`
 
 **Sample app**
 - **Bugfix:** Added error message when name and email are invalid when adding contacts
