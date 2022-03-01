@@ -1,3 +1,5 @@
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 internal class RealMiniApp {
     var miniAppInfoFetcher: MiniAppInfoFetcher
     var metaDataDownloader: MetaDataDownloader
@@ -61,33 +63,45 @@ internal class RealMiniApp {
                        queryParams: String? = nil,
                        completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void,
                        messageInterface: MiniAppMessageDelegate? = nil,
-                       adsDisplayer: MiniAppAdDisplayer? = nil) {
-        getMiniApp(miniAppId: appInfo.id, miniAppVersion: appInfo.version.versionId) { (result) in
-            switch result {
-            case .success(let responseData):
-                if appInfo.version.versionId != responseData.version.versionId {
+                       adsDisplayer: MiniAppAdDisplayer? = nil,
+                       fromCache: Bool? = false) {
+        if fromCache ?? false {
+            getCachedMiniApp(appId: appInfo.id,
+                             version: appInfo.version.versionId,
+                             queryParams: queryParams,
+                             completionHandler: completionHandler,
+                             messageInterface: messageInterface,
+                             adsDisplayer: adsDisplayer)
+        } else {
+            getMiniApp(miniAppId: appInfo.id, miniAppVersion: appInfo.version.versionId) { (result) in
+                switch result {
+                case .success(let responseData):
+                    if appInfo.version.versionId != responseData.version.versionId {
+                        self.downloadMiniApp(
+                                appInfo: responseData,
+                                queryParams: queryParams,
+                                completionHandler: completionHandler,
+                                messageInterface: messageInterface,
+                                adsDisplayer: adsDisplayer)
+                        return
+                    }
                     self.downloadMiniApp(
-                            appInfo: responseData,
+                            appInfo: appInfo,
+                            queryParams: queryParams,
+                            completionHandler: completionHandler,
+                            messageInterface: messageInterface)
+                case .failure(let error):
+                    self.handleMiniAppDownloadError(
+                            appId: appInfo.id,
+                            error: error,
                             queryParams: queryParams,
                             completionHandler: completionHandler,
                             messageInterface: messageInterface,
                             adsDisplayer: adsDisplayer)
-                    return
                 }
-                self.downloadMiniApp(
-                        appInfo: appInfo,
-                        queryParams: queryParams,
-                        completionHandler: completionHandler,
-                        messageInterface: messageInterface)
-            case .failure(let error):
-                self.handleMiniAppDownloadError(
-                        appId: appInfo.id,
-                        error: error,
-                        queryParams: queryParams,
-                        completionHandler: completionHandler,
-                        messageInterface: messageInterface,
-                        adsDisplayer: adsDisplayer)
-            } }
+            }
+        }
+
     }
 
     func createMiniApp(appId: String,
@@ -95,27 +109,39 @@ internal class RealMiniApp {
                        queryParams: String? = nil,
                        completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void,
                        messageInterface: MiniAppMessageDelegate? = nil,
-                       adsDisplayer: MiniAppAdDisplayer? = nil) {
+                       adsDisplayer: MiniAppAdDisplayer? = nil,
+                       fromCache: Bool? = false) {
         if appId.isEmpty {
             return completionHandler(.failure(.invalidAppId))
         }
-        getMiniApp(miniAppId: appId, miniAppVersion: version) { (result) in
-            switch result {
-            case .success(let responseData):
-                self.miniAppStatus.saveMiniAppInfo(appInfo: responseData, key: responseData.id)
-                self.downloadMiniApp(appInfo: responseData,
+        if fromCache ?? false {
+            getCachedMiniApp(appId: appId,
+                             version: version ?? "",
+                             queryParams: queryParams,
+                             completionHandler: completionHandler,
+                             messageInterface: messageInterface,
+                             adsDisplayer: adsDisplayer)
+        } else {
+            getMiniApp(miniAppId: appId, miniAppVersion: version) { (result) in
+                switch result {
+                case .success(let responseData):
+                    self.miniAppStatus.saveMiniAppInfo(appInfo: responseData, key: responseData.id)
+                    self.downloadMiniApp(appInfo: responseData,
+                                         queryParams: queryParams,
+                                         completionHandler: completionHandler,
+                                         messageInterface: messageInterface,
+                                         adsDisplayer: adsDisplayer)
+                case .failure(let error):
+                    self.handleMiniAppDownloadError(appId: appId,
+                                     error: error,
                                      queryParams: queryParams,
                                      completionHandler: completionHandler,
                                      messageInterface: messageInterface,
                                      adsDisplayer: adsDisplayer)
-            case .failure(let error):
-                self.handleMiniAppDownloadError(appId: appId,
-                                 error: error,
-                                 queryParams: queryParams,
-                                 completionHandler: completionHandler,
-                                 messageInterface: messageInterface,
-                                 adsDisplayer: adsDisplayer)
-            } }
+                }
+            }
+        }
+
     }
 
     func createMiniApp(url: URL, queryParams: String? = nil, errorHandler: @escaping (MASDKError) -> Void, messageInterface: MiniAppMessageDelegate? = nil, adsDisplayer: MiniAppAdDisplayer? = nil) -> MiniAppDisplayDelegate {
@@ -186,7 +212,7 @@ internal class RealMiniApp {
                                     adsDisplayer: MiniAppAdDisplayer? = nil) {
         let downloadError = error as NSError
         if downloadError.isDeviceOfflineError() {
-            guard let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId) else {
+            guard let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId), !miniAppClient.environment.isPreviewMode else {
                 return completionHandler(.failure(error))
             }
             guard let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: miniAppInfo.id, versionId: miniAppInfo.version.versionId) else {
@@ -360,6 +386,51 @@ internal class RealMiniApp {
 
     func getMiniAppPreviewInfo(using token: String, completionHandler: @escaping (Result<PreviewMiniAppInfo, MASDKError>) -> Void) {
         previewMiniAppInfoFetcher.fetchPreviewMiniAppInfo(apiClient: miniAppClient, using: token, completionHandler: completionHandler)
+    }
+
+    func getCachedMiniApp(appId: String,
+                          version: String,
+                          queryParams: String? = nil,
+                          completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void,
+                          messageInterface: MiniAppMessageDelegate? = nil,
+                          adsDisplayer: MiniAppAdDisplayer? = nil) {
+        if appId.isEmpty {
+            return completionHandler(.failure(.invalidAppId))
+        }
+        guard let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: appId, versionId: version) else {
+            return completionHandler(.failure(.miniAppNotFound))
+        }
+        if miniAppDownloader.isCacheSecure(appId: appId, versionId: cachedVersion) {
+            /// Retrieving Cached Manifest Data to get the display name
+            let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId)
+            let cachedMetaData = miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
+            verifyRequiredPermissions(appId: appId,
+                                      miniAppManifest: cachedMetaData,
+                                      completionHandler: { (result) in
+                switch result {
+                case .success(let permissionsAgreed):
+                    if permissionsAgreed {
+                        DispatchQueue.main.async {
+                            let miniAppDisplayProtocol = self.displayer.getMiniAppView(miniAppId: appId,
+                                                                                       versionId: cachedVersion,
+                                                                                       projectId: self.miniAppClient.environment.projectId,
+                                                                                       miniAppTitle: miniAppInfo?.displayName ?? "Mini App",
+                                                                                       queryParams: queryParams,
+                                                                                       hostAppMessageDelegate: messageInterface ?? self,
+                                                                                       adsDisplayer: adsDisplayer,
+                                                                                       analyticsConfig: self.miniAppAnalyticsConfig)
+                            completionHandler(.success(miniAppDisplayProtocol))
+                        }
+                    } else {
+                        completionHandler(.failure(.metaDataFailure))
+                    }
+                case .failure(let error):
+                    completionHandler(.failure(error))
+                }
+            })
+        } else {
+            completionHandler(.failure(.miniAppCorrupted))
+        }
     }
 }
 
