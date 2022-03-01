@@ -21,7 +21,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          MiniApp 3.9.1 Docs
+          MiniApp 4.0.0 Docs
         </a>
          (60% documented)
       </p>
@@ -394,41 +394,6 @@ with the Native implementation for User profile related retrieval</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB16UserInfoDelegateP11getContactsSayAA9MAContactCGSgyF"></a>
-                    <a name="//apple_ref/swift/Method/getContacts()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegateP11getContactsSayAA9MAContactCGSgyF">getContacts()</a>
-                    </code>
-                      <span class="declaration-note">
-                        Default implementation
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <h4>Default Implementation</h4>
-                      <div class="default_impl abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getContacts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/MAContact.html">MAContact</a></span><span class="p">]?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:7MiniApp0aB16UserInfoDelegateP14getAccessToken04miniB2Id6scopes17completionHandlerySS_AA011MASDKAccessH6ScopesVys6ResultOyAA07MATokenD0CAA0nH5ErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/getAccessToken(miniAppId:scopes:completionHandler:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegateP14getAccessToken04miniB2Id6scopes17completionHandlerySS_AA011MASDKAccessH6ScopesVys6ResultOyAA07MATokenD0CAA0nH5ErrorOGctF">getAccessToken(miniAppId:<wbr>scopes:<wbr>completionHandler:<wbr>)</a>
@@ -456,42 +421,6 @@ with the Native implementation for User profile related retrieval</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getAccessToken</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
                     <span class="nv">scopes</span><span class="p">:</span> <span class="kt"><a href="../Structs/MASDKAccessTokenScopes.html">MASDKAccessTokenScopes</a></span><span class="p">,</span>
                     <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/MATokenInfo.html">MATokenInfo</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/MASDKAccessTokenError.html">MASDKAccessTokenError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7MiniApp0aB16UserInfoDelegateP14getAccessToken04miniB2Id17completionHandlerySS_ys6ResultOyAA07MATokenD0CAA26MASDKCustomPermissionErrorOGctF"></a>
-                    <a name="//apple_ref/swift/Method/getAccessToken(miniAppId:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegateP14getAccessToken04miniB2Id17completionHandlerySS_ys6ResultOyAA07MATokenD0CAA26MASDKCustomPermissionErrorOGctF">getAccessToken(miniAppId:<wbr>completionHandler:<wbr>)</a>
-                    </code>
-                      <span class="declaration-note">
-                        Default implementation
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Old interface that was used to retrieve the Token Info. Use of a MASDKAccessTokenScopes is now mandatory. Will be removed in v4.0+</p>
-
-                      </div>
-                      <h4>Default Implementation</h4>
-                      <div class="default_impl abstract">
-                        <p>Old interface that was used to retrieve the Token Info. Use of a MASDKAccessTokenScopes is now mandatory. Will be removed in v4.0+</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "getAccessToken(miniAppId:scopes:completionHandler:﹚")</span>
-<span class="kd">func</span> <span class="nf">getAccessToken</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/MATokenInfo.html">MATokenInfo</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -532,6 +461,66 @@ with the Native implementation for User profile related retrieval</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB16UserInfoDelegatePAAE11getContactsSayAA9MAContactCGSgyF"></a>
+                    <a name="//apple_ref/swift/Method/getContacts()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegatePAAE11getContactsSayAA9MAContactCGSgyF">getContacts()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getContacts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/MAContact.html">MAContact</a></span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB16UserInfoDelegatePAAE14getAccessToken04miniB2Id17completionHandlerySS_ys6ResultOyAA07MATokenD0CAA26MASDKCustomPermissionErrorOGctF"></a>
+                    <a name="//apple_ref/swift/Method/getAccessToken(miniAppId:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB16UserInfoDelegatePAAE14getAccessToken04miniB2Id17completionHandlerySS_ys6ResultOyAA07MATokenD0CAA26MASDKCustomPermissionErrorOGctF">getAccessToken(miniAppId:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Old interface that was used to retrieve the Token Info. Use of a MASDKAccessTokenScopes is now mandatory. Will be removed in v4.0+</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getAccessToken</span><span class="p">(</span><span class="nv">miniAppId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/MATokenInfo.html">MATokenInfo</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -540,7 +529,7 @@ with the Native implementation for User profile related retrieval</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-01-17)</p>
+      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-03-01)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
