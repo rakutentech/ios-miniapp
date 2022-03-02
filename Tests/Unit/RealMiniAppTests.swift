@@ -16,7 +16,11 @@ class RealMiniAppTests: QuickSpec {
                 deleteStatusPreferences()
             }
             let realMiniApp = RealMiniApp()
+            let mockBundle = MockBundle()
+            mockBundle.mockPreviewMode = false
+            let environment = Environment(bundle: mockBundle)
             let mockAPIClient = MockAPIClient()
+            mockAPIClient.environment = environment
             let mockMiniAppInfoFetcher = MockMiniAppInfoFetcher()
             realMiniApp.miniAppClient = mockAPIClient
             let mockManifestDownloader = MockManifestDownloader()

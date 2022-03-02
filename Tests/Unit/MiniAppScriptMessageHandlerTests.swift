@@ -895,7 +895,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             return
                         }
                         let environmentInfo = ResponseDecoder.decode(decodeType: MAHostEnvironmentInfo.self, data: responseData)
-                        expect(environmentInfo?.sdkVersion).toEventually(equal("4.0.0"))
+                        expect(environmentInfo?.sdkVersion).toEventually(equal("4.1.0"))
                         expect(environmentInfo?.hostVersion).toEventually(equal(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String))
                         expect(environmentInfo?.hostLocale).toEventually(equal("en-US"))
                     }
