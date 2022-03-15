@@ -20,8 +20,9 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "MiniApp",
-            url: "https://github.com/rakutentech/ios-miniapp/releases/download/v3.9.0/MiniApp.xcframework.zip",
-            checksum: "c1552faab96627c38d9c22eda89cf394cac47ade9c87aa21b594a319a80854a9"
+            url: "https://github.com/rakutentech/ios-miniapp/releases/download/v4.0.0/MiniApp.xcframework.zip",
+            checksum: "dbde912b6717dce3db5f7c5f3e1ecbc37cc9b54cede575fbad2f259b2c72b3be"
+            dependencies: ["ZIPFoundation", "TrustKit", "GoogleMobileAds-SPM"]
         )
     ],
     swiftLanguageVersions: [

@@ -1,0 +1,19 @@
+ignore:
+  - Pods/*
+  - Tests/*
+  - Example/*
+  - Carthage/*
+  - MiniAppCarthage/*
+  - Sources/Classes/ui/*
+  - Sources/Classes/UI/*
+  - Sources/Classes/core/Display/MiniAppExternalWebViewController.swift
+  - Sources/Classes/core/Display/MiniAppNavigationConfig.swift
+  - Sources/Classes/core/Extensions/RealMiniAppView+WKUIDelegate.swift
+  - Sources/Classes/core/Extensions/Storyboard.swift
+  - Sources/Classes/core/Extensions/UIApplication.swift
+  - Sources/Classes/core/Extensions/UIViewController+MiniApp.swift
+  - Sources/Classes/core/Extensions/UIWindow+MiniApp.swift
+  - Sources/Classes/core/Protocols/MiniAppShareContentDelegate.swift
+  - Sources/Classes/admob/AdMobDisplayer.swift
+  - Sources/Classes/core/Display/ViewControllers/Custom\ Permissions/MACustomPermissionCell.swift
+  - Sources/Classes/core/Display/ViewControllers/Custom\ Permissions/CustomPermissionsRequestViewController.swift

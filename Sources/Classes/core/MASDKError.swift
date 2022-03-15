@@ -43,6 +43,9 @@ public enum MASDKError: Error {
     /// ZIP archive signature has changed during download phase
     case invalidSignature
 
+    /// Error code to let the Host app know that Mini app is modified or corrupted after downloading
+    case miniAppCorrupted
+
     /// An unexpected error occurred.
     ///
     /// - Parameters:
@@ -90,6 +93,8 @@ extension MASDKError: LocalizedError {
             return MASDKLocale.localize(.failedToConformToProtocol)
         case .invalidContactId:
             return MASDKLocale.localize(.invalidContactId)
+        case .miniAppCorrupted:
+            return MASDKLocale.localize(.miniAppCorrupted)
 
         case .unknownError(let domain, let code, let description):
             return String(format: MASDKLocale.localize(.unknownError), domain, "\(code)", description)

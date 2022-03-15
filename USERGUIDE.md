@@ -76,28 +76,6 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:
 github "https://github.com/rakutentech/ios-miniapp" "prod"
 ``` 
 
-<a id="SPM"></a>
-## Swift Package Manager
-
-SPM version of MiniApp SDK also embbed all the features [described above](#Cocoapods). The main difference with Carthage version is that you don't need to implement Google Ads, as we implemented a workaround to depend on them until Google supports SPM officially (see [bug report](https://github.com/googleads/googleads-mobile-unity/issues/1125#issuecomment-880784075)).
-To depend on MiniApp SDK through you have to add it to the dependencies of your Package.swift file and refer to that dependency in your target.:
-
-```swift
-// swift-tools-version:5.0
-import PackageDescription
-let package = Package(
-    name: "<Your Product Name>",
-    dependencies: [
-        .package(url: "https://github.com/rakutentech/ios-miniapp.git", .exact("v4.0.0"))
-    ],
-    targets: [
-        .target(
-        name: "<Your Target Name>",
-        dependencies: ["MiniApp"]),
-    ]
-)
-``` 
-
 ### Configuration
 
 In your project configuration .plist you should add below Key/Value :
@@ -150,6 +128,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Passing Query parameters while creating Mini App](#query-param-mini-app)
     * [Permissions required from the Host app](#permissions-from-host-app)
     * [MiniApp events](#miniapp-events)
+    * [Load Mini app from Cache](#miniapp-load-cache)
 
 <a id="create-mini-app"></a>
 
@@ -957,6 +936,27 @@ Mini App SDK allows MiniApps to react to several events triggered by host app. T
 | `pause` |  MiniApp view controller will disappear, MiniApp will open an external web view, host application will resign to be active |
 | `resume` | MiniApp view controller did appear, user closed a web view launched by MiniApp, host application did become active|
 | `externalWebViewClosed` | user closed a web view launched by MiniApp |
+
+### Load Mini app from Cache
+
+Load Mini-app from cache directly using the following approach,
+
+```swift
+MiniApp.shared().create(appId: String, completionHandler: { (result) in
+	switch result {
+            case .success(let miniAppDisplay):
+                let view = miniAppDisplay.getMiniAppView()
+                view.frame = self.view.bounds
+                self.view.addSubview(view)
+            case .failure(let error):
+                print("Error: ", error.localizedDescription)
+            }
+}, messageInterface: self, fromCache: true)
+
+```
+
+`fromCache` helps to retrieve the already downloaded mini-app from the cache.
+NOTE: Using the above approach will never retrieve/query latest version of the mini-app.
 
 <a id="faqs-and-troubleshooting"></a>
 
