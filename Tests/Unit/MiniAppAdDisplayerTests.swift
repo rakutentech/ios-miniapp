@@ -192,7 +192,7 @@ extension MiniAppAdDisplayerTests: MiniAppCallbackDelegate {
         customEvent = event
         customEventComment = message
     }
-    
+
     func didReceiveKeyboardEvent(_ event: MiniAppKeyboardEvent, message: String, navigationBarHeight: CGFloat?, screenHeight: CGFloat?, keyboardHeight: CGFloat?) {
         keyboardEvent = event
         self.navBarHeight = navigationBarHeight
