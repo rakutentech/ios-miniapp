@@ -111,7 +111,7 @@ public class MiniAppViewController: UIViewController {
             self.navDelegate = self
         }
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -172,7 +172,7 @@ public class MiniAppViewController: UIViewController {
         let keyboardHeight = keyboardViewEndFrame.height
         MiniApp.shared(with: config).keyboardShown(navigationBarHeight: navigationBarHeight, screenHeight: screenHeight, keyboardheight: keyboardHeight)
     }
-    
+
     @objc
     func keyboardHidden(notification: Notification) {
         MiniApp.shared(with: config).keyboardHidden(navigationBarHeight: 0, screenHeight: 0, keyboardheight: 0)
