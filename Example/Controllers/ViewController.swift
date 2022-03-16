@@ -105,7 +105,7 @@ class ViewController: RATViewControllerWithTableView {
     func compareMiniAppMetaData(miniAppInfo: MiniAppInfo,
                                 manifest: MiniAppManifest?,
                                 config: MiniAppSdkConfig,
-                                completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+                                completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
         guard let downloadedManifest = manifest else {
             return completionHandler(.success(true))
         }

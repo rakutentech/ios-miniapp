@@ -397,7 +397,7 @@ internal class RealMiniApp {
         if appId.isEmpty {
             return completionHandler(.failure(.invalidAppId))
         }
-        guard let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: appId, versionId: version) else {
+        guard let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: appId, versionId: version), !miniAppClient.environment.isPreviewMode else {
             return completionHandler(.failure(.miniAppNotFound))
         }
         if miniAppDownloader.isCacheSecure(appId: appId, versionId: cachedVersion) {
