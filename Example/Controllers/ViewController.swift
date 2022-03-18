@@ -1,8 +1,9 @@
 import UIKit
 import MiniApp
 import CoreLocation
+import StoreKit
 
-class ViewController: RATViewControllerWithTableView {
+class ViewController: RATViewControllerWithTableView, SKProductsRequestDelegate, SKPaymentTransactionObserver {
 
     @IBOutlet var searchBar: UISearchBar!
     let refreshControl = UIRefreshControl()
@@ -37,6 +38,7 @@ class ViewController: RATViewControllerWithTableView {
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
     var displayController: DisplayNavigationController?
+    private var models = [SKProduct]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -255,6 +257,35 @@ class ViewController: RATViewControllerWithTableView {
         if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
             self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo, config: Config.current())
         }
+    }
+
+    // StoreKit
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        DispatchQueue.main.async {
+            print("Count: \(response.products)")
+            self.models = response.products
+        }
+    }
+
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        transactions.forEach({
+            switch $0.transactionState {
+            case .purchasing:
+                print("Purchasing: ", $0.payment.productIdentifier)
+            case .purchased:
+                SKPaymentQueue.default().finishTransaction($0)
+                print("Purchased: ", $0.payment.productIdentifier)
+            case .failed:
+                SKPaymentQueue.default().finishTransaction($0)
+                print("Failed", $0.payment.productIdentifier)
+            case .restored:
+                print("Restored", $0.payment.productIdentifier)
+            case .deferred:
+                print("Deferred", $0.payment.productIdentifier)
+            @unknown default:
+                print("Default", $0.payment.productIdentifier)
+            }
+        })
     }
 }
 
