@@ -36,6 +36,8 @@ public extension MiniAppUserInfoDelegate {
         completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
     }
 
+    /// Method to support old version of getContacts() interface
+    /// - Returns: List of MAContact
     func getContacts() -> [MAContact]? {
         let semaphore = DispatchSemaphore(value: 0)
         var contacts: [MAContact]?

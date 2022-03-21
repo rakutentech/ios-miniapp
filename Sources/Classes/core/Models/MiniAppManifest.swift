@@ -54,7 +54,9 @@ internal struct MACustomPermissionsResponse: Codable, Hashable {
 
 /// Mini App access token permissions containing audience and scopes, usually taken from manifest.json
 public struct MASDKAccessTokenScopes: Codable, Hashable, Comparable {
+    /// Access token audience string
     public var audience: String
+    /// List of scopes that is available for the audience
     public var scopes: [String]
 
     private enum CodingKeys: String, CodingKey {
@@ -77,7 +79,8 @@ public struct MASDKAccessTokenScopes: Codable, Hashable, Comparable {
         }
         return  self
     }
-
+    
+    /// Constructor for MASDKAccessTokenScopes
     public init?(audience: String?, scopes: [String]?) {
         if let audience = audience, let scopes = scopes {
             self.audience = audience
@@ -86,16 +89,22 @@ public struct MASDKAccessTokenScopes: Codable, Hashable, Comparable {
             return nil
         }
     }
-
+    
+    /// Method to perform Hash
+    /// - Parameter hasher: Hasher value
     public func hash(into hasher: inout Hasher) {
         hasher.combine(audience)
         scopes.sorted().forEach { scope in hasher.combine(scope) }
     }
-
+    
+    /// Method to compare MiniAppManifest
+    /// - Returns: Whether both manifest values are equal or not
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.hashValue == rhs.hashValue
     }
-
+    
+    /// Method to check if manifest access token is lesser than the other one
+    /// - Returns: Whether lhs audience is lesser than the rhs audience
     public static func < (lhs: MASDKAccessTokenScopes, rhs: MASDKAccessTokenScopes) -> Bool {
         lhs.audience < rhs.audience
     }
@@ -185,7 +194,9 @@ public struct MiniAppManifest: Codable, Equatable {
         self.accessTokenPermissions = accessTokenPermissions
         self.versionId = versionId
     }
-
+    
+    /// Method to comapare if both hash values of MiniAppManifest are same
+    /// - Returns: Comapres both MiniAppManifest and returns the status
     public static func == (lhs: MiniAppManifest, rhs: MiniAppManifest) -> Bool {
         lhs.permissionsHash == rhs.permissionsHash
     }

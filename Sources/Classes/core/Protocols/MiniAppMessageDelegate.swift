@@ -17,6 +17,7 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
                                   miniAppTitle: String,
                                   completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void)
 
+    /// Optional Interface that can be implemented in the host app to retrieve MAHostEnvironmentInfo
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {get}
 }
 

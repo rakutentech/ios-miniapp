@@ -1,9 +1,13 @@
 import Foundation
 import UIKit
 
+/// Protocol to track Miniapp loading/Close status
 public protocol MiniAppUIDelegate: AnyObject {
+    /// Interface that is used to get controller and config
     func miniApp(_ viewController: MiniAppViewController, didLaunchWith config: MiniAppSdkConfig?)
+    /// Interface that is used to get controller and navigation action
     func miniApp(_ viewController: MiniAppViewController, shouldExecute action: MiniAppNavigationAction)
+    /// Interface that is used to notify if Mini app failed to load
     func miniApp(_ viewController: MiniAppViewController, didLoadWith error: MASDKError?)
     func onClose()
 }
@@ -20,6 +24,7 @@ public extension MiniAppUIDelegate {
     }
 }
 
+/// ViewController that can be used by Host app to display a MiniApp
 public class MiniAppViewController: UIViewController {
 
     let appId: String
@@ -33,12 +38,14 @@ public class MiniAppViewController: UIViewController {
     var state: ViewState = .loading {
         didSet { update() }
     }
-
+    
+    /// Overridden viewDidAppear to send analytics
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp view did appear"))
     }
 
+    /// Overridden viewWillDisappear to send analytics
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp view will disappear"))
@@ -247,16 +254,19 @@ public class MiniAppViewController: UIViewController {
     }
 
     @objc
+    /// Method that is called when back button is pressed
     public func backPressed() {
         navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back)
     }
 
     @objc
+    /// Method that is called when forward button is pressed
     public func forwardPressed() {
         navBarDelegate?.miniAppNavigationBar(didTriggerAction: .forward)
     }
 
     @objc
+    /// Method that is called when mini app is closed
     public func closePressed() {
         if miniAppUiDelegate == nil {
             dismiss(animated: true, completion: nil)
@@ -265,6 +275,7 @@ public class MiniAppViewController: UIViewController {
         }
     }
 
+    /// Method that is called when navigation buttons need to be refreshed
     public func refreshNavigationBarButtons(backButtonEnabled: Bool, forwardButtonEnabled: Bool) {
         backButton.isEnabled = backButtonEnabled
         forwardButton.isEnabled = forwardButtonEnabled
@@ -272,6 +283,7 @@ public class MiniAppViewController: UIViewController {
 
     // MARK: - Sharing
     @objc
+    /// Method that is called when share button is pressed
     public func sharePressed() {
         MiniApp
             .shared(with: config, navigationSettings: .none)

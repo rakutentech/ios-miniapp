@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 
+/// Struct that is needed to launch Mini App using Paramerters
 public struct MiniAppUIParams {
 
     var title: String
@@ -13,7 +14,19 @@ public struct MiniAppUIParams {
     var adsDisplayer: MiniAppAdDisplayer?
     var enableSharePreview: Bool
     var loadFromCacheIfFailed: Bool
-
+    
+    /// Constructor for initializing MiniAppUIParams
+    /// - Parameters:
+    ///   - title: Title of the mini app
+    ///   - miniAppId: Mini app ID
+    ///   - miniAppVersion: Mini app version number
+    ///   - config: Config that helps to configure endpoints at run time
+    ///   - messageInterface: Message interface delegate to communicate with Host app
+    ///   - navigationInterface: Navigation interface that keeps track of Mini app navigation stack
+    ///   - queryParams: Query parameters that is used while launching a mini app
+    ///   - adsDisplayer: Ad mob displayer delegate
+    ///   - enableSharePreview: Share Preview optional bool
+    ///   - loadFromCacheIfFailed: Bool to retrieve mini app from cache (If it is downloaded already)
     public init(
         title: String = "",
         miniAppId: String,
@@ -44,7 +57,9 @@ public class MiniAppUI {
 
     private static let sharedInstance = MiniAppUI()
     private let realMiniAppUI = RealMiniAppUI()
-
+    
+    /// Singleton object for MiniAppUI Class
+    /// - Returns: Return MiniAppUI Object
     public class func shared() -> MiniAppUI {
         return sharedInstance
     }
