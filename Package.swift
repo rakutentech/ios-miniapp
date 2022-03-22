@@ -17,7 +17,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MiniApp",
+            name: "MiniApp-Static",
             dependencies: [
                 "ZIPFoundation",
                 "TrustKit",
@@ -29,11 +29,15 @@ let package = Package(
                 "admob7/AdMobDisplayer.swift"
             ]
         ),
-//        .binaryTarget(
-//            name: "MiniApp",
-//            url: "https://github.com/rakutentech/ios-miniapp/releases/download/v4.0.0/MiniApp.xcframework.zip",
-//            checksum: "dbde912b6717dce3db5f7c5f3e1ecbc37cc9b54cede575fbad2f259b2c72b3be"
-//        )
+        .binaryTarget(
+            name: "MiniApp",
+            url: "https://github.com/rakutentech/ios-miniapp/releases/download/v4.0.0/MiniApp.xcframework.zip",
+            checksum: "dbde912b6717dce3db5f7c5f3e1ecbc37cc9b54cede575fbad2f259b2c72b3be"
+        ),
+        .binaryTarget(
+            name: "MiniApp-Local",
+            path: "Binary/XCFramework/MiniApp.xcframework"
+        )
     ],
     swiftLanguageVersions: [
         .v5
