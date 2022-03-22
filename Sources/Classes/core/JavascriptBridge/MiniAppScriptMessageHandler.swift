@@ -560,11 +560,17 @@ class LocationManager: NSObject {
     }
 
     func updateLocation(result: @escaping (Result<CLLocation?, MAJSNaviGeolocationError>) -> Void) {
-        if self.manager.authorizationStatus == .authorizedAlways || self.manager.authorizationStatus == .authorizedWhenInUse {
-            self.locationListener = result
-            manager.startUpdatingLocation()
+        if #available(iOS 14.0, *) {
+            if self.manager.authorizationStatus == .authorizedAlways || self.manager.authorizationStatus == .authorizedWhenInUse {
+                self.locationListener = result
+                manager.startUpdatingLocation()
+            } else {
+                result(.failure(.devicePermissionDenied))
+            }
         } else {
-            result(.failure(.devicePermissionDenied))
+            // TODO: iOS 13 implementation
+            locationListener = result
+            manager.startUpdatingLocation()
         }
     }
 }

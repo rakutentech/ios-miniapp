@@ -1,3 +1,5 @@
+import Foundation
+
 extension Bundle {
      class func miniAppBundle(_ name: String) -> Bundle {
         // Get the bundle containing the binary with the current class.

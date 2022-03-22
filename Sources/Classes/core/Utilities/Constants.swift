@@ -1,3 +1,5 @@
+import Foundation
+
 enum Constants {
     static let miniAppSchemePrefix = "mscheme."
     static let rootFileName = "index.html"

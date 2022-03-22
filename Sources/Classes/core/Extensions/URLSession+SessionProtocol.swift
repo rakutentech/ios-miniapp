@@ -1,3 +1,5 @@
+import Foundation
+
 extension URLSession: SessionProtocol {
     func startDataTask(
         with request: URLRequest,

@@ -1,3 +1,4 @@
+import Foundation
 import CommonCrypto
 
 internal class MiniAppCacheVerifier {

@@ -1,3 +1,6 @@
+import Foundation
+import UIKit
+
 /// Mini App Public API methods
 public class MiniApp: NSObject {
     private static let shared = MiniApp()

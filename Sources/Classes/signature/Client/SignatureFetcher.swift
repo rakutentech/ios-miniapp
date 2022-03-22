@@ -1,3 +1,5 @@
+import Foundation
+
 internal class SignatureFetcher {
 
     struct Config {

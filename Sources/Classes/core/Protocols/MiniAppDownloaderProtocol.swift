@@ -1,3 +1,5 @@
+import Foundation
+
 /**
  * Protocol for the Downloader class that handles downloading the files for Mini App.
  */
