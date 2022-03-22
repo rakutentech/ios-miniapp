@@ -14,7 +14,7 @@ public struct MiniAppUIParams {
     var adsDisplayer: MiniAppAdDisplayer?
     var enableSharePreview: Bool
     var loadFromCacheIfFailed: Bool
-    
+
     /// Constructor for initializing MiniAppUIParams
     /// - Parameters:
     ///   - title: Title of the mini app
@@ -57,7 +57,7 @@ public class MiniAppUI {
 
     private static let sharedInstance = MiniAppUI()
     private let realMiniAppUI = RealMiniAppUI()
-    
+
     /// Singleton object for MiniAppUI Class
     /// - Returns: Return MiniAppUI Object
     public class func shared() -> MiniAppUI {

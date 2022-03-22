@@ -35,12 +35,12 @@ public struct MiniAppConfigSSLKeyHash {
 }
 /// MiniAppSdkConfig class helps you to configure the endpoints at runtime.
 public class MiniAppSdkConfig {
-    
+
     /// Preview mode (Mini app won't be stored in local)
     public var isPreviewMode: Bool?
     /// Bool used to verifty Mini app signature after download is complete
     public var requireMiniAppSignatureVerification: Bool?
-    
+
     /// Base Endpoint URL
     public var baseUrl: String? {
         didSet {
@@ -88,7 +88,7 @@ public class MiniAppSdkConfig {
             }
         }
     }
-    
+
     /// Array of MAAnalyticsConfig that is used to send impressions
     public var analyticsConfigList: [MAAnalyticsConfig]? {
         didSet {

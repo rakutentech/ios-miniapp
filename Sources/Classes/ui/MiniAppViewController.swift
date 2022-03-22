@@ -38,7 +38,7 @@ public class MiniAppViewController: UIViewController {
     var state: ViewState = .loading {
         didSet { update() }
     }
-    
+
     /// Overridden viewDidAppear to send analytics
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
