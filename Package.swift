@@ -8,7 +8,8 @@ let package = Package(
         .iOS(.v13)
     ],
     products: [
-        .library(name: "MiniApp", targets: ["MiniApp-Static", "MiniApp"])
+        .library(name: "MiniApp", targets: ["MiniApp-Static"]),
+        .library(name: "MiniApp-Binary", targets: ["MiniApp"])
     ],
     dependencies: [
         .package(url: "https://github.com/weichsel/ZIPFoundation.git", .upToNextMajor(from: "0.9.0")),
