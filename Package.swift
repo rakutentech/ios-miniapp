@@ -36,7 +36,7 @@ let package = Package(
         ),
         .binaryTarget(
             name: "MiniApp-Local",
-            path: "Binary/XCFramework/MiniApp.xcframework"
+            path: "artifacts/MiniApp.xcframework"
         )
     ],
     swiftLanguageVersions: [
