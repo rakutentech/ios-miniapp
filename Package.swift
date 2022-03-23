@@ -18,7 +18,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MiniApp-Static",
+            name: "MiniApp",
             dependencies: [
                 "ZIPFoundation",
                 "TrustKit",
