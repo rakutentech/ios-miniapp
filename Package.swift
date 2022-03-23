@@ -30,7 +30,7 @@ let package = Package(
                 "admob7/AdMobDisplayer.swift"
             ],
             resources: [
-                .process("Resources")
+                .process("resources")
             ]
         ),
         // issues
