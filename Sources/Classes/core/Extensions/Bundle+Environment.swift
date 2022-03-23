@@ -7,6 +7,10 @@ extension Bundle {
         // if static libraries are used, this is the main app bundle (.app).
         let myBundle = Bundle(for: MiniApp.self)
 
+        let moduleBundle = Bundle.module
+        print(moduleBundle)
+        return moduleBundle
+
         // Get the URL to the resource bundle within the bundle
         // of the current class.
         var resourceBundleURL = myBundle.url(forResource: name, withExtension: "bundle")

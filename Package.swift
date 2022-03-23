@@ -28,8 +28,11 @@ let package = Package(
             exclude: [
                 "core/Utilities/LoaderObjC.m",
                 "admob7/AdMobDisplayer.swift"
-            ],
-            resources: [.process("Resources")]
+            ]
+//            resources: [
+//                .process("en.lproj"),
+//                .process("Resources")
+//            ]
         ),
         // issues
         // swift toolkit version (5.4.2 <> 5.5.2)
