@@ -76,7 +76,7 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:
 github "https://github.com/rakutentech/ios-miniapp" "prod"
 ``` 
 
-<a id="Swift Package Manager"></a>
+<a id="SPM"></a>
 ## Swift Package Manager
 
 To integrate MiniApp SDK into your Xcode project using Swift Package Manager, add it to the dependencies value of your `Package.swift`:

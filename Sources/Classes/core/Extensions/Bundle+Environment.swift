@@ -7,10 +7,6 @@ extension Bundle {
         // if static libraries are used, this is the main app bundle (.app).
         let myBundle = Bundle(for: MiniApp.self)
 
-        let moduleBundle = Bundle.module
-        print(moduleBundle)
-        return moduleBundle
-
         // Get the URL to the resource bundle within the bundle
         // of the current class.
         var resourceBundleURL = myBundle.url(forResource: name, withExtension: "bundle")
@@ -18,10 +14,18 @@ extension Bundle {
             resourceBundleURL = myBundle.resourceURL?.appendingPathComponent("Frameworks/MiniApp.framework/\(name).bundle")
         }
 
-        guard let finalURL = resourceBundleURL else { fatalError("\(name).bundle not found!") }
+        guard let finalURL = resourceBundleURL
+        else {
+            print("🛑 \(name).bundle not found!")
+            return Bundle.module
+        }
 
         // Create a bundle object for the bundle found at that URL.
-        guard let resourceBundle = Bundle(url: finalURL) else { fatalError("Cannot access \(name).bundle!") }
+        guard let resourceBundle = Bundle(url: finalURL)
+        else {
+            print("🛑 Cannot access \(name).bundle!")
+            return Bundle.module
+        }
 
         return resourceBundle
     }
