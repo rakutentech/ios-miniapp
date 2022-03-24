@@ -97,6 +97,5 @@ public class MAHostEnvironmentInfo: Codable {
     }
 }
 
-public class DownloadHeaders: Codable {
-    let token: String?
-}
+// Used for download files headers
+public typealias DownloadHeaders = [String: String]

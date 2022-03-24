@@ -64,7 +64,11 @@ extension ViewController: MiniAppUserInfoDelegate {
         let fileNameParts = fileName.split(separator: ".")
         let fileName = String(fileNameParts[0])
         let fileExtension = String(fileNameParts[1])
-        guard let url = URL(string: url), let data = try? Data(contentsOf: url), let savedUrl = saveTemporaryFile(data: data, resourceName: fileName, fileExtension: fileExtension) else { return }
+        guard
+            let url = URL(string: url),
+            let data = try? Data(contentsOf: url),
+            let savedUrl = saveTemporaryFile(data: data, resourceName: fileName, fileExtension: fileExtension)
+        else { return }
         // save file temporarily
         let activityVc = UIActivityViewController(activityItems: [savedUrl], applicationActivities: nil)
         self.presentedViewController?.present(activityVc, animated: true, completion: nil)
