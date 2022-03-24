@@ -384,6 +384,10 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         let mockMessageInterface = MockMessageInterface()
         mockMessageInterface.sendMessageToMultipleContacts(message, completionHandler: completionHandler)
     }
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.downloadFile(fileName: fileName, url: url, headers: headers, completionHandler: completionHandler)
+    }
 }
 
 class MockMessageInterface: MiniAppMessageDelegate {
@@ -399,6 +403,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockPointsInterface: Bool = false
     var mockAccessToken: String? = ""
     var mockEnvironmentInfo: Bool = false
+    var mockDownloadFile: Bool = false
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         if messageContentAllowed {
@@ -504,6 +509,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {
         let info = MAHostEnvironmentInfo(platformVersion: "1.0.0", hostVersion: "2.0.0", sdkVersion: "3.0.0", hostLocale: "ja-JP")
         return { return info }
+    }
+
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
+        if mockDownloadFile {
+            completionHandler(.success("sample.jpg"))
+        } else {
+            completionHandler(.failure(.downloadFailed))
+        }
     }
 }
 
