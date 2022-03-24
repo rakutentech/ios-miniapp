@@ -126,7 +126,7 @@ class MessageInterfaceExtensionTests: QuickSpec {
                     var fileName: String = ""
                     let mockMessageInterface = MockMessageInterface()
                     mockMessageInterface.mockDownloadFile = true
-                    mockMessageInterface.downloadFile(fileName: "sample.jpg", url: "https://rakutenn.com/sample.jpg", headers: [:]) { result in
+                    mockMessageInterface.downloadFile(fileName: "sample.jpg", url: "", headers: [:]) { result in //NOSONAR
                         switch result {
                         case .success(let name):
                             fileName = name
