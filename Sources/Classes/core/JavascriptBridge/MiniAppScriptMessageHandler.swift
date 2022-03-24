@@ -568,7 +568,6 @@ class LocationManager: NSObject {
                 result(.failure(.devicePermissionDenied))
             }
         } else {
-            // TODO: iOS 13 implementation
             locationListener = result
             manager.startUpdatingLocation()
         }

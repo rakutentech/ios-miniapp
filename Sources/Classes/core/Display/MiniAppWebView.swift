@@ -7,7 +7,7 @@ internal class MiniAppWebView: WKWebView {
         if #available(iOS 14.0, *) {
             config.defaultWebpagePreferences.allowsContentJavaScript = true
         } else {
-            // TODO: iOS 13 implementation
+            // iOS 13 implementation
         }
         config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         config.allowsInlineMediaPlayback = true

@@ -62,7 +62,7 @@ public class MiniAppExternalWebViewController: UIViewController {
         if #available(iOS 14.0, *) {
             config.defaultWebpagePreferences.allowsContentJavaScript = true
         } else {
-            // TODO: iOS 13 implementation
+            // iOS 13 implementation
         }
         config.allowsInlineMediaPlayback = true
         config.allowsPictureInPictureMediaPlayback = true
