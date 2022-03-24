@@ -122,7 +122,7 @@ class MessageInterfaceExtensionTests: QuickSpec {
                 }
             }
             context("and when downloadFile interface method is called") {
-                it("it will return the downloaded file name") {
+                it("it will return the downloaded file name") { //NOSONAR
                     var fileName: String = ""
                     let mockMessageInterface = MockMessageInterface()
                     mockMessageInterface.mockDownloadFile = true
