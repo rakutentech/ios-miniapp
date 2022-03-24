@@ -11,6 +11,12 @@ public class MiniApp: NSObject {
         realMiniApp.cleanUpKeychain()
     }
 
+    /// Starts configuration and makes sure to load analytics
+    /// Should be called in AppDelegate didLoad when the app starts
+    static func configure() {
+        MiniAppAnalyticsLoader.loadMiniAppAnalytics()
+    }
+
     /// Instance of MiniApp which uses the default config settings as defined in Info.plist.
     /// A MiniAppSdkConfig object can be provided to override this configuration
     ///

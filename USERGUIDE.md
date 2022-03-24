@@ -76,6 +76,17 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:
 github "https://github.com/rakutentech/ios-miniapp" "prod"
 ``` 
 
+<a id="Swift Package Manager"></a>
+## Swift Package Manager
+
+To integrate MiniApp SDK into your Xcode project using Swift Package Manager, add it to the dependencies value of your `Package.swift`:
+
+```ruby
+dependencies: [
+    .package(url: "https://github.com/rakutentech/ios-miniapp.git", .upToNextMajor(from: "4.1.0"))
+]
+``` 
+
 ### Configuration
 
 In your project configuration .plist you should add below Key/Value :
@@ -100,6 +111,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 
 ### Usage
 
+* [Configure MiniApp](#configure-mini-app)
 * [Create a MiniApp](#create-mini-app)
 * [Mini App Features](#mini-app-features)
     * [Retrieving Unique ID](#retrieve-unique-id)
@@ -129,6 +141,30 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Permissions required from the Host app](#permissions-from-host-app)
     * [MiniApp events](#miniapp-events)
     * [Load Mini app from Cache](#miniapp-load-cache)
+
+<a id="configure-mini-app"></a>
+
+### Configure MiniApp
+---
+
+1. Import the MiniApp SDK in your `UIApplicationDelegate`:
+
+```swift
+import MiniApp
+```
+
+2. `MiniApp.configure()` should be called at launch by `AppDelegate`. 
+This will ensure that Analytics will be loaded and the shared instance to be configured.
+
+```swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    
+    MiniApp.configure()
+    // ...
+    
+    return true
+}
+```
 
 <a id="create-mini-app"></a>
 
