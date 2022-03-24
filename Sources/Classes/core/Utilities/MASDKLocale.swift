@@ -20,6 +20,7 @@ public struct MASDKLocale {
         case invalidContactId                       = "miniapp.sdk.ios.error.message.invalid_contact_id"
         case invalidResponse                        = "miniapp.sdk.ios.error.message.invalid_response"
         case downloadFailed                         = "miniapp.sdk.ios.error.message.download_failed"
+        case saveTemporarilyFailed                  = "miniapp.sdk.ios.error.message.save_temporarily_failed"
         case signatureFailed                        = "miniapp.sdk.ios.error.message.signature_failed"
         case miniAppCorrupted                       = "miniapp.sdk.ios.error.message.miniapp_corrupted"
         case noPublishedVersion                     = "miniapp.sdk.ios.error.message.no_published_version"

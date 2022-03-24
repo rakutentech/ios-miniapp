@@ -531,9 +531,17 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
              hostAppMessageDelegate?.downloadFile(fileName: fileName, url: url, headers: headers) { (result) in
                 switch result {
                 case .success:
-                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: fileName)
-                case .failure:
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onSuccess,
+                        messageId: callbackId,
+                        response: fileName
+                    )
+                case .failure(let error):
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onError,
+                        messageId: callbackId,
+                        response: prepareMAJavascriptError(error)
+                    )
                 }
             }
         }

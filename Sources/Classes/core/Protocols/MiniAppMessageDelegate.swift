@@ -20,7 +20,7 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {get}
 
     /// Interface that is used to download files
-    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKError>) -> Void)
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void)
 }
 
 public extension MiniAppMessageDelegate {

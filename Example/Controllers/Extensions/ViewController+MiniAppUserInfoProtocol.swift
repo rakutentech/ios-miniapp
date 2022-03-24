@@ -60,16 +60,29 @@ extension ViewController: MiniAppUserInfoDelegate {
         completionHandler(.success(MAPoints(standard: 0, term: 0, cash: 0)))
     }
 
-    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
         let fileNameParts = fileName.split(separator: ".")
         let fileName = String(fileNameParts[0])
         let fileExtension = String(fileNameParts[1])
         guard
-            let url = URL(string: url),
-            let data = try? Data(contentsOf: url),
+            let url = URL(string: url)
+        else {
+            completionHandler(.failure(MASDKDownloadFileError.invalidUrl))
+            return
+        }
+        guard
+            let data = try? Data(contentsOf: url)
+        else {
+            completionHandler(.failure(MASDKDownloadFileError.downloadFailed))
+            return
+        }
+        guard
             let savedUrl = saveTemporaryFile(data: data, resourceName: fileName, fileExtension: fileExtension)
-        else { return }
-        // save file temporarily
+        else {
+            completionHandler(.failure(MASDKDownloadFileError.saveTemporarilyFailed))
+            return
+        }
+        // share temporarily saved file
         let activityVc = UIActivityViewController(activityItems: [savedUrl], applicationActivities: nil)
         self.presentedViewController?.present(activityVc, animated: true, completion: nil)
         completionHandler(.success(fileName))
