@@ -24,6 +24,7 @@ public class MiniAppNavigationConfig {
 }
 
 // MARK: - Delegates
+/// Type alias for Mini app navigation response Handler
 public typealias MiniAppNavigationResponseHandler = (URL) -> Void
 
 /// A delegate used by Mini App view to communicate about available actions based on current user interactions on the Mini App

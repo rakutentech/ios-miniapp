@@ -1,5 +1,6 @@
 import Foundation
 
+/// Delegates for Chat message features
 public protocol ChatMessageBridgeDelegate: AnyObject {
     /// Triggered when Mini App wants to send a message to a contact.
     /// Should open a contact chooser which allows the user to choose a single contact,
