@@ -26,7 +26,7 @@ Pod::Spec.new do |miniapp|
   miniapp.subspec 'Core' do |core|
     core.source_files = 'Sources/Classes/core/**/*.{swift,h,m}'
     core.resource_bundle = {
-        "Localization" => ["Sources/Resources/*.lproj/*.strings"],
+        "Localization" => ["Sources/resources/*.lproj/*.strings"],
         "MiniApp" => ['Sources/Classes/core/**/*.{xcassets,pdf,xib}','js-miniapp/*.js']
     }
     core.dependency 'ZIPFoundation', '0.9.12'
