@@ -23,7 +23,7 @@ public class MiniApp: NSObject {
 
     private func checkConfiguration() {
         guard MiniApp.didConfigure else {
-            fatalError("`MiniApp.configure()` has to be launched at app start before using any method")
+            fatalError("`MiniApp.configure()` has to be called at app start before using any MiniApp method")
         }
     }
 
