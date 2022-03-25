@@ -6,15 +6,25 @@ public class MiniApp: NSObject {
     private static let shared = MiniApp()
     private let realMiniApp = RealMiniApp()
     public static var MAOrientationLock: UIInterfaceOrientationMask = []
+    private static var didConfigure: Bool = false
 
     private override init() {
+        super.init()
+        checkConfiguration()
         realMiniApp.cleanUpKeychain()
     }
 
     /// Starts configuration and makes sure to load analytics
     /// Should be called in AppDelegate didLoad when the app starts
-    static func configure() {
+    public static func configure() {
+        didConfigure = true
         MiniAppAnalyticsLoader.loadMiniAppAnalytics()
+    }
+
+    private func checkConfiguration() {
+        guard MiniApp.didConfigure else {
+            fatalError("`MiniApp.configure()` has to be launched at app start before using any method")
+        }
     }
 
     /// Instance of MiniApp which uses the default config settings as defined in Info.plist.

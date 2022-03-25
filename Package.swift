@@ -5,7 +5,7 @@ let package = Package(
     name: "MiniApp",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v14)
     ],
     products: [
         .library(name: "MiniApp", targets: ["MiniApp"])

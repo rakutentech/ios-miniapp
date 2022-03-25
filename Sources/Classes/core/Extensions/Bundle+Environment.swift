@@ -17,14 +17,22 @@ extension Bundle {
         guard let finalURL = resourceBundleURL
         else {
             print("🛑 \(name).bundle not found!")
+            #if SWIFT_PACKAGE
             return Bundle.module
+            #else
+            fatalError("could not find resource bundle url")
+            #endif
         }
 
         // Create a bundle object for the bundle found at that URL.
         guard let resourceBundle = Bundle(url: finalURL)
         else {
             print("🛑 Cannot access \(name).bundle!")
+            #if SWIFT_PACKAGE
             return Bundle.module
+            #else
+            fatalError("could not load resource bundle")
+            #endif
         }
 
         return resourceBundle

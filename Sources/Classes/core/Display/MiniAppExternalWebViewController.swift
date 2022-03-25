@@ -59,11 +59,7 @@ public class MiniAppExternalWebViewController: UIViewController {
 
     func getWebViewConfig() -> WKWebViewConfiguration {
         let config = WKWebViewConfiguration()
-        if #available(iOS 14.0, *) {
-            config.defaultWebpagePreferences.allowsContentJavaScript = true
-        } else {
-            // iOS 13 implementation
-        }
+        config.defaultWebpagePreferences.allowsContentJavaScript = true
         config.allowsInlineMediaPlayback = true
         config.allowsPictureInPictureMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []

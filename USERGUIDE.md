@@ -153,8 +153,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 import MiniApp
 ```
 
-2. `MiniApp.configure()` should be called at launch by `AppDelegate`. 
-This will ensure that Analytics will be loaded and the shared instance to be configured.
+2. `MiniApp.configure()` should be always called at launch by `AppDelegate`.
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
