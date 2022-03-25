@@ -12,6 +12,7 @@ enum Constants {
     }
 }
 
+/// Type alias for Download Lsit permissions pair
 public typealias MASDKDownloadedListPermissionsPair = [(MiniAppInfo, [MASDKCustomPermissionModel])]
 
 let offlineErrorCodeList: [Int] = [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut]

@@ -1,7 +1,10 @@
 import Foundation
 
+/// Model for Preview Mini app Info
 public struct PreviewMiniAppInfo: Codable {
+    /// Mini app Info object
     public var miniapp: MiniAppInfo
+    /// Host info object that contains Project ID and Key details
     public var host: Host?
 }
 
