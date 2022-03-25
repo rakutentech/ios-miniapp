@@ -73,7 +73,6 @@
 		31FA5F2227608D1B0070B611 /* MiniAppExternalUrlLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EA827608D1A0070B611 /* MiniAppExternalUrlLoader.swift */; };
 		31FA5F2327608D1B0070B611 /* MASDKLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EA927608D1A0070B611 /* MASDKLocale.swift */; };
 		31FA5F2427608D1B0070B611 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EAA27608D1A0070B611 /* ResponseDecoder.swift */; };
-		31FA5F2527608D1B0070B611 /* LoaderObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EAB27608D1A0070B611 /* LoaderObjC.m */; };
 		31FA5F2627608D1B0070B611 /* MASDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EAC27608D1A0070B611 /* MASDKError.swift */; };
 		31FA5F2727608D1B0070B611 /* PreviewMiniappAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EAE27608D1A0070B611 /* PreviewMiniappAPI.swift */; };
 		31FA5F2827608D1B0070B611 /* ListingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EAF27608D1A0070B611 /* ListingAPI.swift */; };
@@ -247,7 +246,6 @@
 		31FA5EA827608D1A0070B611 /* MiniAppExternalUrlLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalUrlLoader.swift; sourceTree = "<group>"; };
 		31FA5EA927608D1A0070B611 /* MASDKLocale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MASDKLocale.swift; sourceTree = "<group>"; };
 		31FA5EAA27608D1A0070B611 /* ResponseDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
-		31FA5EAB27608D1A0070B611 /* LoaderObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoaderObjC.m; sourceTree = "<group>"; };
 		31FA5EAC27608D1A0070B611 /* MASDKError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MASDKError.swift; sourceTree = "<group>"; };
 		31FA5EAE27608D1A0070B611 /* PreviewMiniappAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewMiniappAPI.swift; sourceTree = "<group>"; };
 		31FA5EAF27608D1A0070B611 /* ListingAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingAPI.swift; sourceTree = "<group>"; };
@@ -564,7 +562,6 @@
 				31FA5EA827608D1A0070B611 /* MiniAppExternalUrlLoader.swift */,
 				31FA5EA927608D1A0070B611 /* MASDKLocale.swift */,
 				31FA5EAA27608D1A0070B611 /* ResponseDecoder.swift */,
-				31FA5EAB27608D1A0070B611 /* LoaderObjC.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -966,7 +963,6 @@
 				31FA5EFB27608D1B0070B611 /* MiniAppInfoFetcher.swift in Sources */,
 				31FA5EF827608D1B0070B611 /* MiniAppClient.swift in Sources */,
 				31FA5F2327608D1B0070B611 /* MASDKLocale.swift in Sources */,
-				31FA5F2527608D1B0070B611 /* LoaderObjC.m in Sources */,
 				31FA5F2D27608D1B0070B611 /* MiniAppLogger.swift in Sources */,
 				31FA5EF527608D1B0070B611 /* MiniAppAnalytics.swift in Sources */,
 				31FA5F2127608D1B0070B611 /* UrlParser.swift in Sources */,
@@ -1012,7 +1008,7 @@
 				31FA602B2761974E0070B611 /* ja */,
 			);
 			name = Localizable.strings;
-			path = ../../Sources;
+			path = ../../Sources/Classes/resources;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
