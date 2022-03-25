@@ -1,6 +1,7 @@
 import Foundation
 import TrustKit
 
+/// MiniAppSSLConfig helps to set the SSL Key pinning for endpoints
 public struct MiniAppSSLConfig {
     internal var domains: [String: [String: Any]]
     lazy private var dateFormatter: DateFormatter = DateFormatter()
