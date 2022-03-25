@@ -25,7 +25,6 @@ let package = Package(
             ],
             path: "Sources/Classes/",
             exclude: [
-                "core/Utilities/LoaderObjC.m",
                 "admob7/AdMobDisplayer.swift"
             ],
             resources: [

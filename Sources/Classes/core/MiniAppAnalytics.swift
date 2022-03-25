@@ -74,9 +74,7 @@ internal enum MiniAppAnalyticsParameter: String, CaseIterable {
     }
 }
 
-// Swift doesn't have load-time initialization so we need
-// this proxy class that is called by LoaderObjC's `load`
-// method.
+// Call `MiniApp.configure()` at start to load analytics
 public class MiniAppAnalyticsLoader: NSObject {
     @objc public static func loadMiniAppAnalytics() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
