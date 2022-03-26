@@ -160,7 +160,6 @@
 		3180E6BE2689A20900B6B590 /* Encodable+MiniApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Encodable+MiniApp.swift"; sourceTree = "<group>"; };
 		3180E6C02689A21000B6B590 /* Print+MiniApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Print+MiniApp.swift"; sourceTree = "<group>"; };
 		31850BC0269837F300CFE422 /* UIColor+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+MiniApp.swift"; sourceTree = "<group>"; };
-		319D66D525D65C37005688F4 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
 		31AB8EE125CA43A30046F694 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = SOURCE_ROOT; };
 		31AB8EE225CA43E40046F694 /* Dangerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dangerfile; sourceTree = SOURCE_ROOT; };
 		31AB8EE325CA43FC0046F694 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; };
@@ -248,7 +247,7 @@
 		7FB3A4D3F3350D35AED2F43D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A13C249726A15048003ADC6D /* UserPointsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointsModel.swift; sourceTree = "<group>"; };
 		A1FDEABF26A141CC00E48831 /* PointsSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSettingsTableViewController.swift; sourceTree = "<group>"; };
-		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = MiniApp.podspec; sourceTree = "<group>"; };
 		D07452302567B72A00B6E842 /* MASDKErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKErrorTests.swift; sourceTree = "<group>"; };
 		D85784C7998D04CE64578236 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F7C8804526D8974800B828C6 /* UITableView+EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+EmptyView.swift"; sourceTree = "<group>"; };
@@ -553,7 +552,6 @@
 			isa = PBXGroup;
 			children = (
 				31B2FDE02701B9450032A6DA /* workflows */,
-				319D66D525D65C37005688F4 /* scripts */,
 				31070C65258C557D00BED77C /* Documentation */,
 				607FACD21AFB9204008FA782 /* Example for MiniApp */,
 				607FACE81AFB9204008FA782 /* Tests */,

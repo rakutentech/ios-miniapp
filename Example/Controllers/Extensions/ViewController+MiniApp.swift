@@ -1,4 +1,6 @@
+import Foundation
 import MiniApp
+import UIKit
 
 extension ViewController: MiniAppNavigationDelegate {
     func miniAppNavigationCanGo(back: Bool, forward: Bool) {

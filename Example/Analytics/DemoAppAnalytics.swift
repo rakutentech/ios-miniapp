@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import MiniApp
 
 internal enum DemoAppRATEventType: String, CaseIterable {
@@ -28,7 +29,7 @@ internal enum DemoAppAnalyticsParameter: String, CaseIterable {
 public class DemoAppAnalytics {
     public static let notificationName = Notification.Name("com.rakuten.esd.sdk.events.custom")
     open class var sdkVersion: String? {
-        Bundle.miniAppSDKBundle.infoDictionary?["CFBundleShortVersionString"] as? String
+        "SPM"
     }
     internal static let defaultRATAcc = MAAnalyticsConfig(acc: String(Bundle.main.infoDictionary?["RATAccountIdentifier"] as? Int ?? 0) ,
                                                           aid: String(Bundle.main.infoDictionary?["RATAppIdentifier"] as? Int ?? 0) )

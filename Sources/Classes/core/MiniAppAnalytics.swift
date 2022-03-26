@@ -86,7 +86,7 @@ public class MiniAppAnalyticsLoader: NSObject {
 public class MiniAppAnalytics {
     public static let notificationName = Notification.Name("com.rakuten.esd.sdk.events.custom")
     open class var sdkVersion: String? {
-        Bundle.miniAppSDKBundle.infoDictionary?["CFBundleShortVersionString"] as? String
+        Bundle.miniAppSDKBundle.infoDictionary?["CFBundleShortVersionString"] as? String ?? MiniApp.version
     }
     internal static let defaultRATAcc = MAAnalyticsConfig(acc: "1553", aid: "1")
 

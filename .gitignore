@@ -39,5 +39,5 @@ vendor/bundle
 /tmp
 /Binary
 /MiniAppCarthage/MiniApp/common.xcconfig
-Package.swift-e
 /.build
+*.swift-e
