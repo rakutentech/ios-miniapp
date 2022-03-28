@@ -41,3 +41,4 @@ vendor/bundle
 /MiniAppCarthage/MiniApp/common.xcconfig
 /.build
 *.swift-e
+prebuild.log
