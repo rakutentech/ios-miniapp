@@ -1,3 +1,5 @@
+import Foundation
+
 /// Model for a Mini App information
 public struct MiniAppInfo: Codable, Hashable {
     public static func == (lhs: MiniAppInfo, rhs: MiniAppInfo) -> Bool {

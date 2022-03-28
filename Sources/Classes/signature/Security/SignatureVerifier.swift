@@ -1,3 +1,5 @@
+import Foundation
+
 internal final class SignatureVerifier {
 
     let keyStore: SignatureKeyStore

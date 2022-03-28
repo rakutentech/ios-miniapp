@@ -1,3 +1,5 @@
+import Foundation
+
 internal final class SignatureKeyStore {
     private let service: String
     private let account: String

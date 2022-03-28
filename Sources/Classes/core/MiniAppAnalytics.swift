@@ -76,9 +76,7 @@ internal enum MiniAppAnalyticsParameter: String, CaseIterable {
     }
 }
 
-// Swift doesn't have load-time initialization so we need
-// this proxy class that is called by LoaderObjC's `load`
-// method.
+// Call `MiniApp.configure()` at start to load analytics
 public class MiniAppAnalyticsLoader: NSObject {
     @objc public static func loadMiniAppAnalytics() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -90,7 +88,7 @@ public class MiniAppAnalyticsLoader: NSObject {
 public class MiniAppAnalytics {
     public static let notificationName = Notification.Name("com.rakuten.esd.sdk.events.custom")
     open class var sdkVersion: String? {
-        Bundle.miniAppSDKBundle.infoDictionary?["CFBundleShortVersionString"] as? String
+        Bundle.miniAppSDKBundle.infoDictionary?["CFBundleShortVersionString"] as? String ?? MiniApp.version
     }
     internal static let defaultRATAcc = MAAnalyticsConfig(acc: "1553", aid: "1")
 

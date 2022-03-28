@@ -1,3 +1,5 @@
+import UIKit
+
 class MACustomPermissionCell: UITableViewCell {
 
     @IBOutlet weak var permissionTitle: UILabel!

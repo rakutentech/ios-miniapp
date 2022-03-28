@@ -1,3 +1,5 @@
+import Foundation
+
 protocol Verifiable {
     func verify(signatureBase64: String, objectData: Data, keyBase64: String) -> Bool
 }

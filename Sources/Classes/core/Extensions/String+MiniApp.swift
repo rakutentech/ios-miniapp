@@ -1,3 +1,5 @@
+import Foundation
+
 extension String {
     var djb2hash: Int {
         let unicodeScalars = self.unicodeScalars.map { $0.value }
