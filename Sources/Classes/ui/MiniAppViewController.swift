@@ -324,7 +324,7 @@ public class MiniAppViewController: UIViewController {
                         self.showShareAlert(text: text, imageUrl: imageUrl)
                     }
                 case .failure(let error):
-                    print(error)
+                    MiniAppLogger.e("Could not retrieve info", error)
                 }
         }
     }

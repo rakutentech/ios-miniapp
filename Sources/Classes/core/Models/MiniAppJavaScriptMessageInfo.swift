@@ -16,6 +16,9 @@ struct RequestParameters: Decodable {
     let scopes: [String]?
     let messageToContact: MessageToContact?
     let contactId: String?
+    let filename: String?
+    let url: String?
+    let headers: DownloadHeaders?
 }
 
 struct LocationOptions: Decodable {

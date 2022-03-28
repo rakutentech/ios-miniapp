@@ -234,3 +234,47 @@ enum MAJSNaviGeolocationError: Error {
         }
     }
 }
+
+/// Enumeration that is used to return DownloadFile error
+public enum MASDKDownloadFileError: Error, MiniAppErrorProtocol {
+
+    /// Host app failed to implement required interface
+    ///
+    case failedToConformToProtocol
+    case invalidUrl
+    case downloadFailed(code: Int?, reason: String)
+    case saveTemporarilyFailed
+    case error(description: String)
+
+    /// Detailed Description
+    public var description: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return MASDKLocale.localize(.failedToConformToProtocol)
+        case .invalidUrl:
+            return MASDKLocale.localize(.invalidUrl)
+        case .downloadFailed(let code, let reason):
+            return "\(code ?? -1): \(reason); (\(MASDKLocale.localize(.downloadFailed))"
+        case .saveTemporarilyFailed:
+            return MASDKLocale.localize(.unknownError)
+        case .error(let description):
+            return description
+        }
+    }
+
+    /// Title of the error
+    public var name: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return "FailedToConformToProtocol"
+        case .invalidUrl:
+            return "InvalidUrl"
+        case .downloadFailed:
+            return "DownloadFailed"
+        case .saveTemporarilyFailed:
+            return "SaveTemporarilyFailed"
+        case .error:
+            return ""
+        }
+    }
+}

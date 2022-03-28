@@ -465,6 +465,10 @@ extension RealMiniApp: MiniAppMessageDelegate {
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {
         return nil
     }
+
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
 }
 
 extension RealMiniApp {

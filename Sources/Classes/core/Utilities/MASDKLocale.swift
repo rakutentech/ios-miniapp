@@ -35,6 +35,8 @@ public struct MASDKLocale {
         case invalidResponse                        = "miniapp.sdk.ios.error.message.invalid_response"
         /// Localizable key for displaying for downloading failed error
         case downloadFailed                         = "miniapp.sdk.ios.error.message.download_failed"
+        /// Localizable key for displaying file download error
+        case saveTemporarilyFailed                  = "miniapp.sdk.ios.error.message.save_temporarily_failed"
         /// Localizable key for displaying Signature verification failed error
         case signatureFailed                        = "miniapp.sdk.ios.error.message.signature_failed"
         /// Localizable key for displaying error if Mini app is corrupted
