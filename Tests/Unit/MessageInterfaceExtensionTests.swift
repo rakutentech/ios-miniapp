@@ -121,6 +121,21 @@ class MessageInterfaceExtensionTests: QuickSpec {
                     expect(info?.hostLocale).to(equal("ja-JP"))
                 }
             }
+            context("and when downloadFile interface method is called") {
+                it("it will return the downloaded file name") {
+                    var fileName: String = ""
+                    let mockMessageInterface = MockMessageInterface()
+                    mockMessageInterface.mockDownloadFile = true
+                    mockMessageInterface.downloadFile(fileName: "sample.jpg", url: "", headers: [:]) { result in
+                        switch result {
+                        case .success(let name):
+                            fileName = name
+                        case .failure: break
+                        }
+                    }
+                    expect(fileName).to(equal("sample.jpg"))
+                }
+            }
         }
     }
 }

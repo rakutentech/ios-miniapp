@@ -89,6 +89,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             fetchPoints(with: callbackId)
         case .getHostEnvironmentInfo:
             getEnvironmentInfo(with: callbackId)
+        case .downloadFile:
+            downloadFile(with: callbackId, parameters: requestParam)
         }
     }
 
@@ -517,6 +519,32 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             messageId: callbackId,
             response: encodedResult
         )
+    }
+
+    func downloadFile(with callbackId: String, parameters: RequestParameters?) {
+         if
+            isUserAllowedPermission(customPermissionType: .fileDownload, callbackId: callbackId),
+            let fileName = parameters?.filename,
+            let url = parameters?.url,
+            let headers = parameters?.headers
+        {
+             hostAppMessageDelegate?.downloadFile(fileName: fileName, url: url, headers: headers) { (result) in
+                switch result {
+                case .success:
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onSuccess,
+                        messageId: callbackId,
+                        response: fileName
+                    )
+                case .failure(let error):
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onError,
+                        messageId: callbackId,
+                        response: prepareMAJavascriptError(error)
+                    )
+                }
+            }
+        }
     }
 
     private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {
