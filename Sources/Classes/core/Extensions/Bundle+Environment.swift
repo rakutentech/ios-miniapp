@@ -27,7 +27,7 @@ extension Bundle {
 
         return resourceBundle
     }
-    
+
     private class func miniAppModuleFallbackForBundle(_ name: String) -> Bundle {
         #if SWIFT_PACKAGE
         MiniAppLogger.w("\(name).bundle does not exist, accessing Bundle.module")
