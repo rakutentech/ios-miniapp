@@ -1,3 +1,5 @@
+import Foundation
+
 extension Date {
     var epochInMilliseconds: String {
         let currentDate = Date()

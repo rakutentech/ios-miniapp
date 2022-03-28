@@ -9,8 +9,8 @@
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
-               title = "Run Script"
-               scriptText = "exec &gt; prebuild.log 2&gt;&amp;1&#10;CURRENT_VERSION=$(grep -o -m 1 -E &quot;([0-9]{1,}\.)+([0-9]{1,}\.)+[0-9]{1,}&quot; MiniApp.podspec)&#10;REPLACE_STRING=&quot;                        expect(environmentInfo?.sdkVersion).toEventually(equal(\&quot;$CURRENT_VERSION\&quot;))&quot;&#10;SEARCH_STRING=$(grep &quot;expect(environmentInfo?.sdkVersion)&quot; Tests/Unit/MiniAppScriptMessageHandlerTests.swift)&#10;sed -i &quot;&quot; -e &quot;s/$SEARCH_STRING/$REPLACE_STRING/&quot; Tests/Unit/MiniAppScriptMessageHandlerTests.swift&#10;">
+               title = "Manage version number"
+               scriptText = "exec &gt; ${PROJECT_DIR}/prebuild.log 2&gt;&amp;1&#10;cd ${PROJECT_DIR}&#10;CURRENT_VERSION=$(grep -o -m 1 -E &quot;([0-9]{1,}\.)+([0-9]{1,}\.)+[0-9]{1,}&quot; MiniApp.podspec)&#10;REPLACE_STRING=&quot;                        expect(environmentInfo?.sdkVersion).toEventually(equal(\&quot;$CURRENT_VERSION\&quot;))&quot;&#10;SEARCH_STRING=$(grep &quot;expect(environmentInfo?.sdkVersion)&quot; Tests/Unit/MiniAppScriptMessageHandlerTests.swift)&#10;sed -i &quot;&quot; -e &quot;s/$SEARCH_STRING/$REPLACE_STRING/&quot; Tests/Unit/MiniAppScriptMessageHandlerTests.swift&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"

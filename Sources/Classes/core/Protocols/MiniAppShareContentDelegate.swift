@@ -1,3 +1,6 @@
+import Foundation
+import UIKit
+
 /**
  Public Protocol that will be used by the Mini App to communicate
  with the Native implementation for content sharing mechanism

@@ -1,3 +1,5 @@
+import Foundation
+
 class MiniAppDownloader {
     enum MiniAppArchiveError: Error {
         case noRoot

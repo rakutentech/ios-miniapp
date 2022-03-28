@@ -1,3 +1,5 @@
+import Foundation
+
 internal extension NotificationCenter {
 
     func sendAnalytics(event: MiniAppRATEvent, type: MiniAppRATEventType? = nil, parameters customData: [(String, String)]? = nil, analyticsConfig: [MAAnalyticsConfig] = [MiniAppAnalytics.defaultRATAcc]) {

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public protocol MiniAppFallbackViewable: UIView {
     var onRetry: (() -> Void)? {get set}

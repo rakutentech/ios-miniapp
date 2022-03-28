@@ -1,3 +1,5 @@
+import Foundation
+
 extension NSError {
 
     class func serverError(code: Int, message: String) -> NSError {

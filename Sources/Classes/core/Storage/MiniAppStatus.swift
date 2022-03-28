@@ -1,3 +1,5 @@
+import Foundation
+
 class MiniAppStatus {
 
     private let defaults: UserDefaults?

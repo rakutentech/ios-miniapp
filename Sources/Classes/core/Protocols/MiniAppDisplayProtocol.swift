@@ -1,3 +1,5 @@
+import UIKit
+
 /**
  Public Protocol that will be used by any hosting application
  to communicate with the Mini App display module

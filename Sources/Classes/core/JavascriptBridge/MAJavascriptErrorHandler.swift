@@ -1,3 +1,5 @@
+import Foundation
+
 func prepareJSONString<T: Codable>(_ value: T) -> String {
     let encoder = JSONEncoder()
     do {

@@ -1,3 +1,5 @@
+import UIKit
+
 enum MiniAppJSActionCommand: String {
     case getUniqueId
     case getCurrentPosition

@@ -1,5 +1,7 @@
 import MiniApp
 import CoreLocation
+import Foundation
+import UIKit
 
 extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
     typealias PermissionCompletionHandler = (((Result<MASDKPermissionResponse, MASDKPermissionError>)) -> Void)

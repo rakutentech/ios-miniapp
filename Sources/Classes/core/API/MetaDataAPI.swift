@@ -1,3 +1,5 @@
+import Foundation
+
 internal class MetaDataAPI {
     let environment: Environment
 
