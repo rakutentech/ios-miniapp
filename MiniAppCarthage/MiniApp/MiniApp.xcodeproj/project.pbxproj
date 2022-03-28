@@ -73,7 +73,6 @@
 		31FA5F2227608D1B0070B611 /* MiniAppExternalUrlLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EA827608D1A0070B611 /* MiniAppExternalUrlLoader.swift */; };
 		31FA5F2327608D1B0070B611 /* MASDKLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EA927608D1A0070B611 /* MASDKLocale.swift */; };
 		31FA5F2427608D1B0070B611 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EAA27608D1A0070B611 /* ResponseDecoder.swift */; };
-		31FA5F2527608D1B0070B611 /* LoaderObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EAB27608D1A0070B611 /* LoaderObjC.m */; };
 		31FA5F2627608D1B0070B611 /* MASDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EAC27608D1A0070B611 /* MASDKError.swift */; };
 		31FA5F2727608D1B0070B611 /* PreviewMiniappAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EAE27608D1A0070B611 /* PreviewMiniappAPI.swift */; };
 		31FA5F2827608D1B0070B611 /* ListingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA5EAF27608D1A0070B611 /* ListingAPI.swift */; };
@@ -164,13 +163,13 @@
 		313C0EDA2770412D00C76614 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../../CHANGELOG.md; sourceTree = "<group>"; };
 		313C0EDB2770412D00C76614 /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = DEV.md; path = ../../DEV.md; sourceTree = "<group>"; };
 		313C0EDC2770412D00C76614 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../../LICENSE; sourceTree = "<group>"; };
-		313C0EF12770415100C76614 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Fastfile; path = ../../fastlane/Fastfile; sourceTree = "<group>"; };
+		313C0EF12770415100C76614 /* Fastfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Fastfile; path = ../../fastlane/Fastfile; sourceTree = "<group>"; };
 		313C0EF22770415200C76614 /* .codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .codecov.yml; path = ../../.codecov.yml; sourceTree = "<group>"; };
-		313C0EF32770415200C76614 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Gemfile; path = ../../Gemfile; sourceTree = "<group>"; };
+		313C0EF32770415200C76614 /* Gemfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Gemfile; path = ../../Gemfile; sourceTree = "<group>"; };
 		313C0EF42770415200C76614 /* .jazzy.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .jazzy.yaml; path = ../../.jazzy.yaml; sourceTree = "<group>"; };
 		313C0EF52770415200C76614 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = ../../.swiftlint.yml; sourceTree = "<group>"; };
-		313C0EF62770415200C76614 /* Dangerfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Dangerfile; path = ../../Dangerfile; sourceTree = "<group>"; };
-		313C0F03277042AE00C76614 /* MiniApp.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = MiniApp.podspec; path = ../../MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		313C0EF62770415200C76614 /* Dangerfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Dangerfile; path = ../../Dangerfile; sourceTree = "<group>"; };
+		313C0F03277042AE00C76614 /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = MiniApp.podspec; path = ../../MiniApp.podspec; sourceTree = "<group>"; };
 		317AA306276265560037180D /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
 		317AA308276265560037180D /* Promises-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Promises-LICENSE"; sourceTree = "<group>"; };
 		317AA309276265560037180D /* NanoPB-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "NanoPB-LICENSE"; sourceTree = "<group>"; };
@@ -188,6 +187,17 @@
 		317AA325276274F40037180D /* bundles.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = bundles.xcconfig; sourceTree = "<group>"; };
 		317AA32A2762D0740037180D /* MiniAppSharePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSharePreviewViewController.swift; sourceTree = "<group>"; };
 		319164F927683FB9004B540A /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../../Package.swift; sourceTree = "<group>"; };
+		31A716AC27EF0E19003770E9 /* build-framework.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-framework.sh"; sourceTree = "<group>"; };
+		31A716AD27EF0E19003770E9 /* release-candidate.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "release-candidate.sh"; sourceTree = "<group>"; };
+		31A716AE27EF0E19003770E9 /* build-doc.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-doc.sh"; sourceTree = "<group>"; };
+		31A716AF27EF0E19003770E9 /* extract-version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "extract-version.sh"; sourceTree = "<group>"; };
+		31A716B027EF0E19003770E9 /* release-prod-branch.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "release-prod-branch.sh"; sourceTree = "<group>"; };
+		31A716B127EF0E19003770E9 /* configure-secrets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "configure-secrets.sh"; sourceTree = "<group>"; };
+		31A716B227EF0E19003770E9 /* downloadLibs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = downloadLibs.sh; sourceTree = "<group>"; };
+		31A716B327EF0E19003770E9 /* deploy-to-app-center.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "deploy-to-app-center.sh"; sourceTree = "<group>"; };
+		31A716B427EF0E19003770E9 /* release-docs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "release-docs.sh"; sourceTree = "<group>"; };
+		31A716B527EF0E19003770E9 /* generate-ssh-pin.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "generate-ssh-pin.sh"; sourceTree = "<group>"; };
+		31A716B627EF0E19003770E9 /* release-cocoapods.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "release-cocoapods.sh"; sourceTree = "<group>"; };
 		31C2B4052786CD5B00A03B66 /* sdk.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = sdk.xcconfig; sourceTree = "<group>"; };
 		31FA5E5427608A450070B611 /* MiniApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MiniApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FA5E5727608A450070B611 /* MiniApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MiniApp.h; sourceTree = SOURCE_ROOT; };
@@ -247,7 +257,6 @@
 		31FA5EA827608D1A0070B611 /* MiniAppExternalUrlLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalUrlLoader.swift; sourceTree = "<group>"; };
 		31FA5EA927608D1A0070B611 /* MASDKLocale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MASDKLocale.swift; sourceTree = "<group>"; };
 		31FA5EAA27608D1A0070B611 /* ResponseDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
-		31FA5EAB27608D1A0070B611 /* LoaderObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoaderObjC.m; sourceTree = "<group>"; };
 		31FA5EAC27608D1A0070B611 /* MASDKError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MASDKError.swift; sourceTree = "<group>"; };
 		31FA5EAE27608D1A0070B611 /* PreviewMiniappAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewMiniappAPI.swift; sourceTree = "<group>"; };
 		31FA5EAF27608D1A0070B611 /* ListingAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingAPI.swift; sourceTree = "<group>"; };
@@ -301,7 +310,6 @@
 		31FA60342761A4370070B611 /* MiniApp.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FA60372761B06B0070B611 /* log.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = log.js; sourceTree = "<group>"; };
 		31FA60382761B06B0070B611 /* bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bridge.js; sourceTree = "<group>"; };
-		7501954B4ADC0DBD87E72326 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = ../../scripts; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,11 +411,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		31A716AB27EF0E19003770E9 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				31A716AC27EF0E19003770E9 /* build-framework.sh */,
+				31A716AD27EF0E19003770E9 /* release-candidate.sh */,
+				31A716AE27EF0E19003770E9 /* build-doc.sh */,
+				31A716AF27EF0E19003770E9 /* extract-version.sh */,
+				31A716B027EF0E19003770E9 /* release-prod-branch.sh */,
+				31A716B127EF0E19003770E9 /* configure-secrets.sh */,
+				31A716B227EF0E19003770E9 /* downloadLibs.sh */,
+				31A716B327EF0E19003770E9 /* deploy-to-app-center.sh */,
+				31A716B427EF0E19003770E9 /* release-docs.sh */,
+				31A716B527EF0E19003770E9 /* generate-ssh-pin.sh */,
+				31A716B627EF0E19003770E9 /* release-cocoapods.sh */,
+			);
+			name = scripts;
+			path = ../../scripts;
+			sourceTree = "<group>";
+		};
 		31FA5E4A27608A450070B611 = {
 			isa = PBXGroup;
 			children = (
 				319164F927683FB9004B540A /* Package.swift */,
-				7501954B4ADC0DBD87E72326 /* scripts */,
+				31A716AB27EF0E19003770E9 /* scripts */,
 				313C0EE52770415100C76614 /* Config */,
 				313C0EDD2770412D00C76614 /* Documentation */,
 				317AA31D276265C00037180D /* Frameworks */,
@@ -564,7 +591,6 @@
 				31FA5EA827608D1A0070B611 /* MiniAppExternalUrlLoader.swift */,
 				31FA5EA927608D1A0070B611 /* MASDKLocale.swift */,
 				31FA5EAA27608D1A0070B611 /* ResponseDecoder.swift */,
-				31FA5EAB27608D1A0070B611 /* LoaderObjC.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -725,7 +751,7 @@
 				31FA60372761B06B0070B611 /* log.js */,
 			);
 			name = Javascript;
-			path = "../../js-miniapp";
+			path = "../../Sources/Classes/js-miniapp";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -966,7 +992,6 @@
 				31FA5EFB27608D1B0070B611 /* MiniAppInfoFetcher.swift in Sources */,
 				31FA5EF827608D1B0070B611 /* MiniAppClient.swift in Sources */,
 				31FA5F2327608D1B0070B611 /* MASDKLocale.swift in Sources */,
-				31FA5F2527608D1B0070B611 /* LoaderObjC.m in Sources */,
 				31FA5F2D27608D1B0070B611 /* MiniAppLogger.swift in Sources */,
 				31FA5EF527608D1B0070B611 /* MiniAppAnalytics.swift in Sources */,
 				31FA5F2127608D1B0070B611 /* UrlParser.swift in Sources */,
@@ -1012,7 +1037,7 @@
 				31FA602B2761974E0070B611 /* ja */,
 			);
 			name = Localizable.strings;
-			path = ../../Sources;
+			path = ../../Sources/Classes/resources;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1164,7 +1189,6 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1193,7 +1217,6 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "-ObjC";

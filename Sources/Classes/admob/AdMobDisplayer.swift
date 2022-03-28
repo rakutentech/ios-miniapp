@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import GoogleMobileAds
 
 /// This subclass of [MiniAppAdDisplayer](x-source-tag://MiniAppAdDisplayer) is internally used by Mini App SDK to display Google Ads

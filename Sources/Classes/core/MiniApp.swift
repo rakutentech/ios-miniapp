@@ -1,11 +1,31 @@
+import Foundation
+import UIKit
+
 /// Mini App Public API methods
 public class MiniApp: NSObject {
+    public static let version = "4.1.0"
     private static let shared = MiniApp()
     private let realMiniApp = RealMiniApp()
     public static var MAOrientationLock: UIInterfaceOrientationMask = []
+    private static var didConfigure: Bool = false
 
     private override init() {
+        super.init()
+        checkConfiguration()
         realMiniApp.cleanUpKeychain()
+    }
+
+    /// Starts configuration and makes sure to load analytics
+    /// Should be called in AppDelegate didLoad when the app starts
+    public static func configure() {
+        didConfigure = true
+        MiniAppAnalyticsLoader.loadMiniAppAnalytics()
+    }
+
+    private func checkConfiguration() {
+        guard MiniApp.didConfigure else {
+            fatalError("`MiniApp.configure()` has to be called at app start before using any MiniApp method")
+        }
     }
 
     /// Instance of MiniApp which uses the default config settings as defined in Info.plist.

@@ -1,3 +1,5 @@
+import Foundation
+
 extension MiniAppScriptMessageHandler {
     func requestCustomPermissions(requestParam: RequestParameters?, callbackId: String) {
         cachedUnknownCustomPermissionRequest.removeAll()

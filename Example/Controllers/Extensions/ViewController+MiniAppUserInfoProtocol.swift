@@ -1,4 +1,5 @@
 import MiniApp
+import Foundation
 
 extension ViewController: MiniAppUserInfoDelegate {
 

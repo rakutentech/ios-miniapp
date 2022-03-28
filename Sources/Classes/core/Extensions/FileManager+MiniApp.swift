@@ -1,3 +1,5 @@
+import Foundation
+
 /**
  * MiniAppSDK helper methods by extending FileManager.
  */

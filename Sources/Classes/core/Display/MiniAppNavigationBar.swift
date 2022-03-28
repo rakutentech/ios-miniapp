@@ -1,3 +1,5 @@
+import UIKit
+
 internal class MiniAppNavigationBar: UIView {
 
     @IBOutlet var contentView: UIView!

@@ -1,3 +1,5 @@
+import Foundation
+
 class MiniAppStorage {
 
     internal func save(sourcePath: URL, destinationPath: URL) -> NSError? {

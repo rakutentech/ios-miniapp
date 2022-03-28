@@ -1,3 +1,5 @@
+import Foundation
+
 internal class Displayer {
     var navConfig: MiniAppNavigationConfig?
 

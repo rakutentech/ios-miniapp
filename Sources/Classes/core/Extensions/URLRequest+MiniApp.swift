@@ -1,3 +1,5 @@
+import Foundation
+
 extension URLRequest {
     static func createURLRequest(url: URL, subscriptionKey: String = "") -> URLRequest {
         var urlRequest = URLRequest(url: url)

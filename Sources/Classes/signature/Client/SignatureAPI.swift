@@ -1,3 +1,5 @@
+import Foundation
+
 internal class SignatureAPI {
     let session: SessionType
 

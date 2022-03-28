@@ -3,6 +3,7 @@
 ### 4.1.0 (release date TBD)
 
 **SDK**
+- **Feature:** Added support for Swift Package Manager
 - **Feature:** Updated create method with optional `fromCache` variable that helps to load the mini-app from cache.
 `MiniApp#create(appId:versionId:queryParams:completionHandler:messageInterface:adsDisplayer:fromCache)`
 `MiniApp#create(appInfo:queryParams:completionHandler:messageInterface:adsDisplayer:fromCache)`
