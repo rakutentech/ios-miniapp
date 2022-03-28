@@ -242,7 +242,7 @@ public enum MASDKDownloadFileError: Error, MiniAppErrorProtocol {
     ///
     case failedToConformToProtocol
     case invalidUrl
-    case downloadFailed
+    case downloadFailed(code: Int?, reason: String)
     case saveTemporarilyFailed
     case error(description: String)
 
@@ -253,8 +253,8 @@ public enum MASDKDownloadFileError: Error, MiniAppErrorProtocol {
             return MASDKLocale.localize(.failedToConformToProtocol)
         case .invalidUrl:
             return MASDKLocale.localize(.invalidUrl)
-        case .downloadFailed:
-            return MASDKLocale.localize(.downloadFailed)
+        case .downloadFailed(let code, let reason):
+            return "\(code ?? -1): \(reason); (\(MASDKLocale.localize(.downloadFailed))"
         case .saveTemporarilyFailed:
             return MASDKLocale.localize(.unknownError)
         case .error(let description):

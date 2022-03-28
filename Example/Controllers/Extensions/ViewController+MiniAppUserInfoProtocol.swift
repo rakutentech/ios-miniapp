@@ -70,25 +70,62 @@ extension ViewController: MiniAppUserInfoDelegate {
             completionHandler(.failure(MASDKDownloadFileError.invalidUrl))
             return
         }
-        guard
-            let data = try? Data(contentsOf: url)
-        else {
-            completionHandler(.failure(MASDKDownloadFileError.downloadFailed))
-            return
+        download(url: url, headers: headers) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                guard
+                    let savedUrl = self.saveTemporaryFile(data: data, resourceName: fileName, fileExtension: fileExtension)
+                else {
+                    completionHandler(.failure(MASDKDownloadFileError.saveTemporarilyFailed))
+                    return
+                }
+                let activityVc = UIActivityViewController(activityItems: [savedUrl], applicationActivities: nil)
+                DispatchQueue.main.async {
+                    self.presentedViewController?.present(activityVc, animated: true, completion: nil)
+                }
+                completionHandler(.success(fileName))
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
         }
-        guard
-            let savedUrl = saveTemporaryFile(data: data, resourceName: fileName, fileExtension: fileExtension)
-        else {
-            completionHandler(.failure(MASDKDownloadFileError.saveTemporarilyFailed))
-            return
-        }
-        // share temporarily saved file
-        let activityVc = UIActivityViewController(activityItems: [savedUrl], applicationActivities: nil)
-        self.presentedViewController?.present(activityVc, animated: true, completion: nil)
-        completionHandler(.success(fileName))
     }
 
-    public func saveTemporaryFile(data: Data, resourceName: String, fileExtension: String) -> URL? {
+    func download(url: URL, headers: DownloadHeaders, completion: ((Result<Data, MASDKDownloadFileError>) -> Void)? = nil) {
+        let session = URLSession.shared
+        var request = URLRequest(url: url)
+        headers.forEach({ request.addValue($0.value, forHTTPHeaderField: $0.key) })
+        let task = session.downloadTask(with: request) { (tempFileUrl, response, error) in
+            if let error = error {
+                completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: error.localizedDescription)))
+                return
+            }
+            guard
+                let statusCode = (response as? HTTPURLResponse)?.statusCode
+            else {
+                completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: "no status code")))
+                return
+            }
+            guard
+                statusCode >= 200 && statusCode <= 300
+            else {
+                completion?(.failure(MASDKDownloadFileError.downloadFailed(code: statusCode, reason: "download failed")))
+                return
+            }
+            guard
+                let tempFileUrl = tempFileUrl,
+                    let data = try? Data(contentsOf: tempFileUrl)
+            else {
+                completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: "could not load local data")))
+                return
+            }
+
+            completion?(.success(data))
+        }
+        task.resume()
+    }
+
+    func saveTemporaryFile(data: Data, resourceName: String, fileExtension: String) -> URL? {
         let tempDirectoryURL = URL.init(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
         let targetURL = tempDirectoryURL.appendingPathComponent("\(resourceName).\(fileExtension)")
         do {
