@@ -16,26 +16,26 @@ extension Bundle {
 
         guard let finalURL = resourceBundleURL
         else {
-            print("🛑 \(name).bundle not found!")
-            #if SWIFT_PACKAGE
-            return Bundle.module
-            #else
-            fatalError("could not find resource bundle url")
-            #endif
+            return miniAppModuleFallbackForBundle(name)
         }
 
         // Create a bundle object for the bundle found at that URL.
         guard let resourceBundle = Bundle(url: finalURL)
         else {
-            print("🛑 Cannot access \(name).bundle!")
-            #if SWIFT_PACKAGE
-            return Bundle.module
-            #else
-            fatalError("could not load resource bundle")
-            #endif
+            return miniAppModuleFallbackForBundle(name)
         }
 
         return resourceBundle
+    }
+    
+    private class func miniAppModuleFallbackForBundle(_ name: String) -> Bundle {
+        #if SWIFT_PACKAGE
+        MiniAppLogger.w("\(name).bundle does not exist, accessing Bundle.module")
+        return Bundle.module
+        #else
+        MiniAppLogger.e("Cannot access \(name).bundle!")
+        fatalError("could not load resource bundle")
+        #endif
     }
 
     public class var miniAppSDKBundle: Bundle {
