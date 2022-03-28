@@ -515,7 +515,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
         if mockDownloadFile {
             completionHandler(.success("sample.jpg"))
         } else {
-            completionHandler(.failure(.downloadFailed))
+            completionHandler(.failure(.downloadFailed(code: -1, reason: "download failed")))
         }
     }
 }
