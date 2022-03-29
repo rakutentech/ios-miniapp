@@ -913,27 +913,29 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             delegate: mockCallbackProtocol,
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
-                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                            miniAppId: mockMiniAppInfo.id,
+                            miniAppTitle: mockMiniAppTitle
                         )
                         let command = """
                         {
                             "action" : "downloadFile",
                             "id" : "5.1141101534045745",
-                            "filename" : "sample.jpg",
-                            "url" : "https://rakuten.co.jp/sample.jpg",
-                            "headers" : { "token": "test" }
+                            "param": {
+                                "filename" : "sample.jpg",
+                                "url" : "https://rakuten.co.jp/sample.jpg",
+                                "headers" : { "token": "test" }
+                            }
                         }
                         """
-                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .fileDownload, status: .allowed)
+                        updateCustomPermissionStatus(
+                            miniAppId: mockMiniAppInfo.id,
+                            permissionType: .fileDownload,
+                            status: .allowed
+                        )
                         mockMessageInterface.mockDownloadFile = true
                         let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                         scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                        guard let responseData: Data = mockCallbackProtocol.response?.data(using: .utf8) else {
-                            fail("MiniAppScriptMessageHandler - downloadFile failed")
-                            return
-                        }
-                        let fileName = ResponseDecoder.decode(decodeType: String.self, data: responseData)
-                        expect(fileName).toEventually(equal("sample.jpg"))
+                        expect(mockCallbackProtocol.response).toEventually(equal("sample.jpg"))
                     }
                 }
                 context("when MiniAppScriptMessageHandler executes keyboard events") {
