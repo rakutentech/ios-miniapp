@@ -656,6 +656,10 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     var errorMessage: String?
     var eventMessage: String?
     var customEvent: MiniAppEvent?
+    var keyboardEvent: MiniAppKeyboardEvent?
+    var navBarHeight: CGFloat?
+    var screenHeight: CGFloat?
+    var keyboardHeight: CGFloat?
 
     func didReceiveScriptMessageResponse(messageId: String, response: String) {
         self.messageId = messageId
@@ -670,6 +674,14 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     func didReceiveEvent(_ event: MiniAppEvent, message: String) {
         customEvent = event
         eventMessage = message
+    }
+
+    func didReceiveKeyboardEvent(_ event: MiniAppKeyboardEvent, message: String, navigationBarHeight: CGFloat?, screenHeight: CGFloat?, keyboardHeight: CGFloat?) {
+        keyboardEvent = event
+        messageId = message
+        self.navBarHeight = navigationBarHeight
+        self.screenHeight = screenHeight
+        self.keyboardHeight = keyboardHeight
     }
 
     func didOrientationChanged(orientation: UIInterfaceOrientationMask) {

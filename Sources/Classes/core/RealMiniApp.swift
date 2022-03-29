@@ -470,3 +470,30 @@ extension RealMiniApp: MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }
+
+extension RealMiniApp {
+    func keyboardShown(navigationBarHeight: CGFloat = 0, screenHeight: CGFloat = 0, keyboardheight: CGFloat = 0) {
+        NotificationCenter.default
+            .sendKeyboardEvent(
+                MiniAppKeyboardEvent.Event(
+                    type: .keyboardShown,
+                    comment: "Keyboard was shown",
+                    navigationBarHeight: navigationBarHeight,
+                    keyboardHeight: keyboardheight,
+                    screenHeight: screenHeight
+                )
+            )
+    }
+    func keyboardHidden(navigationBarHeight: CGFloat = 0, screenHeight: CGFloat = 0, keyboardheight: CGFloat = 0) {
+        NotificationCenter.default
+            .sendKeyboardEvent(
+                MiniAppKeyboardEvent.Event(
+                    type: .keyboardHidden,
+                    comment: "Keyboard was hidden",
+                    navigationBarHeight: navigationBarHeight,
+                    keyboardHeight: keyboardheight,
+                    screenHeight: screenHeight
+                )
+            )
+    }
+}

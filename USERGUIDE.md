@@ -141,6 +141,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Permissions required from the Host app](#permissions-from-host-app)
     * [MiniApp events](#miniapp-events)
     * [Load Mini app from Cache](#miniapp-load-cache)
+    * [Keyboard Events](#keyboard-events)
 
 <a id="configure-mini-app"></a>
 
@@ -972,6 +973,8 @@ Mini App SDK allows MiniApps to react to several events triggered by host app. T
 | `resume` | MiniApp view controller did appear, user closed a web view launched by MiniApp, host application did become active|
 | `externalWebViewClosed` | user closed a web view launched by MiniApp |
 
+<a id="miniapp-load-cache"></a>
+
 ### Load Mini app from Cache
 
 Load Mini-app from cache directly using the following approach,
@@ -992,6 +995,33 @@ MiniApp.shared().create(appId: String, completionHandler: { (result) in
 
 `fromCache` helps to retrieve the already downloaded mini-app from the cache.
 NOTE: Using the above approach will never retrieve/query latest version of the mini-app.
+
+<a id="keyboard-events"></a>
+
+### Keyboard Events
+
+MiniApp SDK allows to send keyboard `shown` and `hidden` events.
+
+```swift
+MiniApp
+    .shared()
+    .keyboardShown(navigationBarHeight: 84, screenHeight: 814, keyboardheight: 350)
+    
+MiniApp
+    .shared()
+    .keyboardHidden(navigationBarHeight: 0, screenHeight: 0, keyboardheight: 0)
+
+```
+
+These events can be listened to by the JS SDK 
+```javascript 
+window.addEventListener(MiniAppKeyboardEvents.KEYBOARDSHOWN, function (e) {
+    ...
+}
+window.addEventListener(MiniAppKeyboardEvents.KEYBOARDHIDDEN, function (e) {
+    ...
+}
+```
 
 <a id="faqs-and-troubleshooting"></a>
 

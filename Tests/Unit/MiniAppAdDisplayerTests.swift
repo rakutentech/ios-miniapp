@@ -16,6 +16,10 @@ class MiniAppAdDisplayerTests: QuickSpec {
     var response: String?
     var customEvent: MiniAppEvent?
     var customEventComment: String?
+    var keyboardEvent: MiniAppKeyboardEvent?
+    var navBarHeight: CGFloat?
+    var screenHeight: CGFloat?
+    var keyboardHeight: CGFloat?
     override func spec() {
         adsDisplayer = MiniAppAdDisplayer(with: self)
         describe("When Ads displayer") {
@@ -187,5 +191,12 @@ extension MiniAppAdDisplayerTests: MiniAppCallbackDelegate {
     func didReceiveEvent(_ event: MiniAppEvent, message: String) {
         customEvent = event
         customEventComment = message
+    }
+
+    func didReceiveKeyboardEvent(_ event: MiniAppKeyboardEvent, message: String, navigationBarHeight: CGFloat?, screenHeight: CGFloat?, keyboardHeight: CGFloat?) {
+        keyboardEvent = event
+        self.navBarHeight = navigationBarHeight
+        self.screenHeight = screenHeight
+        self.keyboardHeight = keyboardHeight
     }
 }
