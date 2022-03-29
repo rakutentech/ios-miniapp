@@ -917,12 +917,14 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         )
                         let command = """
                         {
-                            "action" : "\(MiniAppJSActionCommand.downloadFile.rawValue)",
-                            "fileName" : "sample.jpg",
-                            "url": "rakuten.co.jp/sample.jpg",
-                            "headers" : { 'token': 'test' }
+                            "action" : "downloadFile",
+                            "id" : "5.1141101534045745",
+                            "filename" : "sample.jpg",
+                            "url" : "https://rakuten.co.jp/sample.jpg",
+                            "headers" : { "token": "test" }
                         }
                         """
+                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .fileDownload, status: .allowed)
                         mockMessageInterface.mockDownloadFile = true
                         let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                         scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
