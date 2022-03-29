@@ -40,6 +40,42 @@ class RealMiniAppViewTests: QuickSpec {
                     expect(miniAppView.messageBodies[1]).toEventually(contain(MiniAppEvent.resume.rawValue))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.externalWebViewClosed.rawValue))
                 }
+                it("will send keyboard shown event") {
+                    NotificationCenter.default
+                        .sendKeyboardEvent(
+                            MiniAppKeyboardEvent.Event(
+                                type: .keyboardShown,
+                                comment: "Keyboard was shown",
+                                navigationBarHeight: 100,
+                                keyboardHeight: 200,
+                                screenHeight: 300
+                            )
+                        )
+                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppKeyboardEvent.keyboardShown.rawValue))
+                }
+                it("will send keyboard hidden events") {
+                    NotificationCenter.default
+                        .sendKeyboardEvent(
+                            MiniAppKeyboardEvent.Event(
+                                type: .keyboardHidden,
+                                comment: "Keyboard was hidden",
+                                navigationBarHeight: 100,
+                                keyboardHeight: 200,
+                                screenHeight: 300
+                            )
+                        )
+                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppKeyboardEvent.keyboardHidden.rawValue))
+                }
+                it("will send keyboard event without data") {
+                    NotificationCenter.default.post(name: MiniAppKeyboardEvent.notificationName, object: nil)
+                    expect(miniAppView.messageBodies.count).toEventually(be(0))
+                }
+                it("will send unrelated notification as keyboard event") {
+                    miniAppView.sendKeyboardEvent(notification: NSNotification(name: UIApplication.willResignActiveNotification, object: nil))
+                    expect(miniAppView.messageBodies.count).toEventually(be(0))
+                }
             }
 
             context("when initialized with valid parameters") {
