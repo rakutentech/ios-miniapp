@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
