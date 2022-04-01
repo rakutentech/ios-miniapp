@@ -73,21 +73,21 @@ extension ViewController: MiniAppUserInfoDelegate {
         }
         download(url: url, headers: headers) { [weak self] result in
             guard let self = self else { return }
-            switch result {
-            case .success(let data):
-                guard
-                    let savedUrl = self.saveTemporaryFile(data: data, resourceName: fileName, fileExtension: fileExtension)
-                else {
-                    completionHandler(.failure(MASDKDownloadFileError.saveTemporarilyFailed))
-                    return
-                }
-                let activityVc = UIActivityViewController(activityItems: [savedUrl], applicationActivities: nil)
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let data):
+                    guard
+                        let savedUrl = self.saveTemporaryFile(data: data, resourceName: fileName, fileExtension: fileExtension)
+                    else {
+                        completionHandler(.failure(MASDKDownloadFileError.saveTemporarilyFailed))
+                        return
+                    }
+                    let activityVc = UIActivityViewController(activityItems: [savedUrl], applicationActivities: nil)
                     self.presentedViewController?.present(activityVc, animated: true, completion: nil)
+                    completionHandler(.success(fileName))
+                case .failure(let error):
+                    completionHandler(.failure(error))
                 }
-                completionHandler(.success(fileName))
-            case .failure(let error):
-                completionHandler(.failure(error))
             }
         }
     }
