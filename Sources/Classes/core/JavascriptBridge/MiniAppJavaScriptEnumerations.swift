@@ -2,6 +2,8 @@ import UIKit
 
 enum MiniAppJSActionCommand: String {
     case getUniqueId
+    case getContactId
+    case getMauid
     case getCurrentPosition
     case requestPermission
     case requestCustomPermissions

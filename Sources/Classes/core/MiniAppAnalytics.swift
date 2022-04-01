@@ -12,6 +12,8 @@ internal enum MiniAppRATEvent: String, CaseIterable {
     case close
     case signatureFailure = "mini_app_signature_validation_fail"
     case getUniqueId = "mini_app_get_unique_id"
+    case getContactId = "mini_app_get_contact_id"
+    case getMauid = "mini_app_get_mauid_id"
     case getCurrentPosition = "mini_app_get_current_position"
     case requrestPermission = "mini_app_request_permission"
     case requrestCustomPermission = "mini_app_request_custom_permission"
@@ -43,6 +45,8 @@ internal enum MiniAppRATEvent: String, CaseIterable {
         case .open, .close:
             return .click
         case .getUniqueId,
+             .getContactId,
+             .getMauid,
              .getCurrentPosition,
              .requrestPermission,
              .requrestCustomPermission,
@@ -137,6 +141,10 @@ public class MiniAppAnalytics {
         switch command {
         case .getUniqueId:
             return .getUniqueId
+        case .getContactId:
+            return .getContactId
+        case .getMauid:
+            return .getMauid
         case .getCurrentPosition:
             return .getCurrentPosition
         case .requestPermission:

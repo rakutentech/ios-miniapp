@@ -34,6 +34,14 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
         completionHandler(.success(deviceId))
     }
 
+    func getContactId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success("TEST-CONTACT-ID-01234-56789"))
+    }
+
+    func getMauid(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success("TEST-MAUID-01234-56789"))
+    }
+
     func displayLocationDisabledAlert() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let alert = UIAlertController(title: "Location Services are disabled", message: "Please enable Location Services in your Settings", preferredStyle: .alert)
