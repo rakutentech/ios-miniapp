@@ -234,3 +234,19 @@ enum MAJSNaviGeolocationError: Error {
         }
     }
 }
+
+public struct MAJSGenericResponse {
+    let status: MAJSGenericResponseStatus
+    let error: MAJSGenericError
+    let response: Any
+}
+
+public enum MAJSGenericResponseStatus: String {
+    case success = "SUCCESS"
+    case failed = "FAILED"
+    case unknown = "UKNOWN"
+}
+
+public struct MAJSGenericError {
+    let error: Error
+}

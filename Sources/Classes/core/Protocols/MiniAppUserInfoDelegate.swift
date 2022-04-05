@@ -23,7 +23,7 @@ public protocol MiniAppUserInfoDelegate: AnyObject {
 
     /// Interface used to purchase a product using Id
     func purchaseProduct(withId: String,
-                         completionHandler: @escaping (Result<String, MASDKError>) -> Void)
+                         completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void)
 }
 
 public extension MiniAppUserInfoDelegate {

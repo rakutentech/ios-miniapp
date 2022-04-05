@@ -523,11 +523,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     private func purchaseProduct(with callBackId: String, parameters: RequestParameters?) {
         if let purchaseItemId = parameters?.itemId {
-            hostAppMessageDelegate?.purchaseProduct(withId: purchaseItemId,
-                                                    completionHandler: { result in
+            hostAppMessageDelegate?.purchaseProduct(withId: purchaseItemId, completionHandler: { result in
                 switch result {
                 case .success(let response):
-                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: response)
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: "response")
+//                    prepareMAJSGenericResponse(responseStatus: .onSuccess, messageId: callBackId, response: response, error: nil)
                 case .failure(let error):
                     self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
                 }
@@ -561,6 +561,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             messageId: callbackId,
             response: prepareMAJavascriptError(MiniAppErrorType.unknownError)
         )
+    }
+    
+    func prepareMAJSGenericResponse(responseStatus: JavaScriptExecResult, messageId: String, response: Decodable, error: String?) {
+        
+//        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
     }
 }
 

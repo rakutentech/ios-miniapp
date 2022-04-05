@@ -368,7 +368,9 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
-    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
+    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MASDKError>) -> Void) {
+    }
+    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MAProductResponseError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
     }
@@ -387,6 +389,9 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
 }
 
 class MockMessageInterface: MiniAppMessageDelegate {
+    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void) {
+    }
+
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
     var permissionError: MASDKPermissionError?

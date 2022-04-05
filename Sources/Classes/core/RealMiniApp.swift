@@ -364,7 +364,7 @@ internal class RealMiniApp {
 }
 
 extension RealMiniApp: MiniAppMessageDelegate {
-    func purchaseProduct(withId: String, completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 

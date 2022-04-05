@@ -2,11 +2,13 @@ import MiniApp
 import StoreKit
 
 extension ViewController: MiniAppUserInfoDelegate {
-    func purchaseProduct(withId: String, completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
-        let productRequest = SKProductsRequest(productIdentifiers: Set(["com.test.miniapp"]))
+    typealias ProductResponseCompletionHandler = ((Result<MAProductResponse, MAProductResponseError>)) -> Void
+//    ProductResponseCompletionHandler
+    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void) {
+        productResponseHandlerObj = completionHandler
+        let productRequest = SKProductsRequest(productIdentifiers: Set(["com.temporary.id"]))
         productRequest.delegate = self
         productRequest.start()
-        completionHandler(.failure(.failedToConformToProtocol))
     }
 
     func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
