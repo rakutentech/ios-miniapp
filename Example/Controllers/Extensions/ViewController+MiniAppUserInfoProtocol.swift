@@ -1,6 +1,5 @@
 import Foundation
 import MiniApp
-import StoreKit
 import UIKit
 
 extension ViewController: MiniAppUserInfoDelegate {

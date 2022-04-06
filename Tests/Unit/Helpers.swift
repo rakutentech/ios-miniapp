@@ -368,9 +368,11 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
-    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MASDKError>) -> Void) {
+    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        return mockMessageInterface.purchaseProduct(withId: "com.rakuten.test", completionHandler: completionHandler)
     }
-    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MAProductResponseError>) -> Void) {
+    func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
     }

@@ -598,11 +598,6 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             response: prepareMAJavascriptError(MiniAppErrorType.unknownError)
         )
     }
-    
-    func prepareMAJSGenericResponse(responseStatus: JavaScriptExecResult, messageId: String, response: Decodable, error: String?) {
-        
-//        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
-    }
 }
 
 class LocationManager: NSObject {
