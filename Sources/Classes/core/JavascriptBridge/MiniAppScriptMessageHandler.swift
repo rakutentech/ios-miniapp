@@ -554,17 +554,21 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    private func purchaseProduct(with callBackId: String, parameters: RequestParameters?) {
-    if let purchaseItemId = parameters?.itemId {
-        hostAppMessageDelegate?.purchaseProduct(withId: purchaseItemId, completionHandler: { result in
-            switch result {
-            case .success(let response):
-                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: "response")
-//                    prepareMAJSGenericResponse(responseStatus: .onSuccess, messageId: callBackId, response: response, error: nil)
-            case .failure(let error):
-                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
-            }
-        })
+    private func purchaseProduct(with callbackId: String, parameters: RequestParameters?) {
+        if let purchaseItemId = parameters?.itemId {
+            hostAppMessageDelegate?.purchaseProduct(withId: purchaseItemId, completionHandler: { result in
+                switch result {
+                case .success(let response):
+                    guard let encodedResponse = ResponseEncoder.encode(data: response) else {
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
+                        return
+                    }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: encodedResponse)
+                case .failure(let error):
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                }
+            })
+        }
     }
 
     private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {
