@@ -122,14 +122,14 @@ enum MiniAppAdType: Int {
     case rewarded
 }
 
-enum MiniAppEvent: String {
+public enum MiniAppEvent: String {
     case externalWebViewClosed = "miniappwebviewclosed"
     case pause = "miniapppause"
     case resume = "miniappresume"
 
-    static let notificationName = Notification.Name("notificationName")
+    public static let notificationName = Notification.Name("MiniAppNotificationEvent")
 
-    struct Event {
+    public struct Event {
         var type: MiniAppEvent
         var comment: String
 
@@ -140,13 +140,13 @@ enum MiniAppEvent: String {
     }
 }
 
-enum MiniAppKeyboardEvent: String {
+public enum MiniAppKeyboardEvent: String {
     case keyboardShown = "miniappkeyboardshown"
     case keyboardHidden = "miniappkeyboardhidden"
 
-    static let notificationName = Notification.Name("notificationNameKeyboard")
+    public static let notificationName = Notification.Name("MiniAppKeyboardNotificationEvent")
 
-    struct Event {
+    public struct Event {
         var type: MiniAppKeyboardEvent
         var comment: String
         var navigationBarHeight: CGFloat?
