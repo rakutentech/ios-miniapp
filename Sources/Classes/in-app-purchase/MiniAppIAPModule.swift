@@ -2,7 +2,7 @@ import Foundation
 import StoreKit
 
 public class MiniAppIAPModule: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver {
-    
+
     public typealias ProductResponseCompletionHandler = ((Result<MAProductResponse, MAProductResponseError>)) -> Void
     var productResponseHandlerObj: ProductResponseCompletionHandler?
     var paymentProductObj: SKProduct?
@@ -16,14 +16,14 @@ public class MiniAppIAPModule: NSObject, SKProductsRequestDelegate, SKPaymentTra
         productRequest.delegate = self
         productRequest.start()
     }
-    
+
     func displayPaymentScreen(product: SKProduct) {
         SKPaymentQueue.default().add(self)
         let payment = SKPayment(product: product)
         SKPaymentQueue.default().add(payment)
         paymentProductObj = product
     }
-    
+
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         DispatchQueue.main.async {
             self.models = response.products
@@ -34,7 +34,7 @@ public class MiniAppIAPModule: NSObject, SKProductsRequestDelegate, SKPaymentTra
             }
         }
     }
-    
+
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         transactions.forEach({
             switch $0.transactionState {
