@@ -1,3 +1,5 @@
+import Foundation
+
 internal class ListingApi {
     let environment: Environment
     var path: String {

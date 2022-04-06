@@ -1,4 +1,5 @@
 import UIKit
+import RAnalytics
 
 class RATViewController: UIViewController {
     var pageName: String?

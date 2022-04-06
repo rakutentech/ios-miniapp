@@ -1,6 +1,6 @@
 Pod::Spec.new do |miniapp|
   miniapp.name         = 'MiniApp'
-  miniapp.version      = '4.0.0'
+  miniapp.version      = '4.1.0'
   miniapp.authors      = "Rakuten Ecosystem Mobile"
   miniapp.summary      = "Rakuten's Mini App SDK"
   miniapp.description  = "This open-source library allows you to integrate Mini App ecosystem into your iOS applications. Mini App SDK also facilitates communication between a mini app and the host app via a message bridge."
@@ -26,8 +26,8 @@ Pod::Spec.new do |miniapp|
   miniapp.subspec 'Core' do |core|
     core.source_files = 'Sources/Classes/core/**/*.{swift,h,m}'
     core.resource_bundle = {
-        "Localization" => ["Sources/*.lproj/*.strings"],
-        "MiniApp" => ['Sources/Classes/core/**/*.{xcassets,pdf,xib}','js-miniapp/*.js']
+        "Localization" => ["Sources/Classes/resources/*.lproj/*.strings"],
+        "MiniApp" => ['Sources/Classes/core/**/*.{xcassets,pdf,xib}','Sources/Classes/js-miniapp/*.js']
     }
     core.dependency 'ZIPFoundation', '0.9.12'
     core.dependency 'TrustKit', '~>2.0'

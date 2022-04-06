@@ -76,6 +76,17 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:
 github "https://github.com/rakutentech/ios-miniapp" "prod"
 ``` 
 
+<a id="SPM"></a>
+## Swift Package Manager
+
+To integrate MiniApp SDK into your Xcode project using Swift Package Manager, add it to the dependencies value of your `Package.swift`:
+
+```ruby
+dependencies: [
+    .package(url: "https://github.com/rakutentech/ios-miniapp.git", .upToNextMajor(from: "4.1.0"))
+]
+``` 
+
 ### Configuration
 
 In your project configuration .plist you should add below Key/Value :
@@ -100,6 +111,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 
 ### Usage
 
+* [Configure MiniApp](#configure-mini-app)
 * [Create a MiniApp](#create-mini-app)
 * [Mini App Features](#mini-app-features)
     * [Retrieving Unique ID](#retrieve-unique-id)
@@ -128,6 +140,31 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Passing Query parameters while creating Mini App](#query-param-mini-app)
     * [Permissions required from the Host app](#permissions-from-host-app)
     * [MiniApp events](#miniapp-events)
+    * [Load Mini app from Cache](#miniapp-load-cache)
+    * [Keyboard Events](#keyboard-events)
+
+<a id="configure-mini-app"></a>
+
+### Configure MiniApp
+---
+
+1. Import the MiniApp SDK in your `UIApplicationDelegate`:
+
+```swift
+import MiniApp
+```
+
+2. `MiniApp.configure()` should be always called at launch by `AppDelegate`.
+
+```swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    
+    MiniApp.configure()
+    // ...
+    
+    return true
+}
+```
 
 <a id="create-mini-app"></a>
 
@@ -935,6 +972,56 @@ Mini App SDK allows MiniApps to react to several events triggered by host app. T
 | `pause` |  MiniApp view controller will disappear, MiniApp will open an external web view, host application will resign to be active |
 | `resume` | MiniApp view controller did appear, user closed a web view launched by MiniApp, host application did become active|
 | `externalWebViewClosed` | user closed a web view launched by MiniApp |
+
+<a id="miniapp-load-cache"></a>
+
+### Load Mini app from Cache
+
+Load Mini-app from cache directly using the following approach,
+
+```swift
+MiniApp.shared().create(appId: String, completionHandler: { (result) in
+	switch result {
+            case .success(let miniAppDisplay):
+                let view = miniAppDisplay.getMiniAppView()
+                view.frame = self.view.bounds
+                self.view.addSubview(view)
+            case .failure(let error):
+                print("Error: ", error.localizedDescription)
+            }
+}, messageInterface: self, fromCache: true)
+
+```
+
+`fromCache` helps to retrieve the already downloaded mini-app from the cache.
+NOTE: Using the above approach will never retrieve/query latest version of the mini-app.
+
+<a id="keyboard-events"></a>
+
+### Keyboard Events
+
+MiniApp SDK allows to send keyboard `shown` and `hidden` events.
+
+```swift
+MiniApp
+    .shared()
+    .keyboardShown(navigationBarHeight: 84, screenHeight: 814, keyboardheight: 350)
+    
+MiniApp
+    .shared()
+    .keyboardHidden(navigationBarHeight: 0, screenHeight: 0, keyboardheight: 0)
+
+```
+
+These events can be listened to by the JS SDK 
+```javascript 
+window.addEventListener(MiniAppKeyboardEvents.KEYBOARDSHOWN, function (e) {
+    ...
+}
+window.addEventListener(MiniAppKeyboardEvents.KEYBOARDHIDDEN, function (e) {
+    ...
+}
+```
 
 <a id="faqs-and-troubleshooting"></a>
 

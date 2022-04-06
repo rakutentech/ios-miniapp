@@ -1,11 +1,19 @@
 import Foundation
 
+/// Struct used to configure SSL Pinning
 public struct MiniAppConfigSSLKeyHash {
     enum KeyType: String {
         case main, backup
     }
+    /// SSL Pin
     public var pin: String
+    /// Default SSL pin that is used as a fallback
     public var backupPin: String?
+
+    /// Constructor for MiniAppConfigSSLKeyHash
+    /// - Parameters:
+    ///   - pin: SSL Pin string
+    ///   - backup: Default SSL Pin string (Optional)
     public init(pin: String, backup: String? = nil) {
         if pin == backup {
             preconditionFailure("Pin can't be equal to its backup value")
@@ -28,9 +36,12 @@ public struct MiniAppConfigSSLKeyHash {
 /// MiniAppSdkConfig class helps you to configure the endpoints at runtime.
 public class MiniAppSdkConfig {
 
+    /// Preview mode (Mini app won't be stored in local)
     public var isPreviewMode: Bool?
+    /// Bool used to verifty Mini app signature after download is complete
     public var requireMiniAppSignatureVerification: Bool?
 
+    /// Base Endpoint URL
     public var baseUrl: String? {
         didSet {
             if baseUrl?.count ?? 0 == 0 {
@@ -38,12 +49,14 @@ public class MiniAppSdkConfig {
             }
         }
     }
+    /// Host/Domain name which is retrieved from Base URL
     public var host: String? {
         if let url = baseUrl {
             return URLComponents(string: url)?.host
         }
         return nil
     }
+    /// MiniAppConfigSSLKeyHash config object
     public var sslKeyHash: MiniAppConfigSSLKeyHash? {
         didSet {
             if sslKeyHash?.pin.count ?? 0 == 0 {
@@ -51,6 +64,7 @@ public class MiniAppSdkConfig {
             }
         }
     }
+    /// Project ID that is associated with the mini app
     public var rasProjectId: String? {
         didSet {
             if rasProjectId?.count ?? 0 == 0 {
@@ -58,6 +72,7 @@ public class MiniAppSdkConfig {
             }
         }
     }
+    /// Subscription Key that is associated with the mini app
     public var subscriptionKey: String? {
         didSet {
             if subscriptionKey?.count ?? 0 == 0 {
@@ -65,6 +80,7 @@ public class MiniAppSdkConfig {
             }
         }
     }
+    /// Optional - Host app version for e.g, 1.0
     public var hostAppVersion: String? {
         didSet {
             if hostAppVersion?.count ?? 0 == 0 {
@@ -73,6 +89,7 @@ public class MiniAppSdkConfig {
         }
     }
 
+    /// Array of MAAnalyticsConfig that is used to send impressions
     public var analyticsConfigList: [MAAnalyticsConfig]? {
         didSet {
             if analyticsConfigList?.count == 0 {

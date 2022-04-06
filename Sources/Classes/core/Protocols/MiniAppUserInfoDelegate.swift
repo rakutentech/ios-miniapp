@@ -1,3 +1,5 @@
+import Foundation
+
 /**
  Public Protocol that will be used by the Mini App to communicate
  with the Native implementation for User profile related retrieval
@@ -40,6 +42,8 @@ public extension MiniAppUserInfoDelegate {
         completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
     }
 
+    /// Method to support old version of getContacts() interface
+    /// - Returns: List of MAContact
     func getContacts() -> [MAContact]? {
         let semaphore = DispatchSemaphore(value: 0)
         var contacts: [MAContact]?

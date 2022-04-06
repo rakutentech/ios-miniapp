@@ -1,11 +1,31 @@
+import Foundation
+import UIKit
+
 /// Mini App Public API methods
 public class MiniApp: NSObject {
+    public static let version = "4.1.0"
     private static let shared = MiniApp()
     private let realMiniApp = RealMiniApp()
     public static var MAOrientationLock: UIInterfaceOrientationMask = []
+    private static var didConfigure: Bool = false
 
     private override init() {
+        super.init()
+        checkConfiguration()
         realMiniApp.cleanUpKeychain()
+    }
+
+    /// Starts configuration and makes sure to load analytics
+    /// Should be called in AppDelegate didLoad when the app starts
+    public static func configure() {
+        didConfigure = true
+        MiniAppAnalyticsLoader.loadMiniAppAnalytics()
+    }
+
+    private func checkConfiguration() {
+        guard MiniApp.didConfigure else {
+            fatalError("`MiniApp.configure()` has to be called at app start before using any MiniApp method")
+        }
     }
 
     /// Instance of MiniApp which uses the default config settings as defined in Info.plist.
@@ -55,14 +75,21 @@ public class MiniApp: NSObject {
     ///         -   MASDKError: MASDKError details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appId: String, version: String? = nil, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appId: String,
+                       version: String? = nil,
+                       queryParams: String? = nil,
+                       completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void,
+                       messageInterface: MiniAppMessageDelegate,
+                       adsDisplayer: MiniAppAdDisplayer? = nil,
+                       fromCache: Bool? = false) {
         return realMiniApp.createMiniApp(
-                appId: appId,
-                version: version,
-                queryParams: queryParams,
-                completionHandler: completionHandler,
-                messageInterface: messageInterface,
-                adsDisplayer: adsDisplayer)
+            appId: appId,
+            version: version,
+            queryParams: queryParams,
+            completionHandler: completionHandler,
+            messageInterface: messageInterface,
+            adsDisplayer: adsDisplayer,
+            fromCache: fromCache)
     }
 
     /// Cache the Custom permissions status for a given MiniApp ID
@@ -101,13 +128,19 @@ public class MiniApp: NSObject {
     ///         -   MASDKError: MASDKError details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
-    public func create(appInfo: MiniAppInfo, queryParams: String? = nil, completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void, messageInterface: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer? = nil) {
+    public func create(appInfo: MiniAppInfo,
+                       queryParams: String? = nil,
+                       completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void,
+                       messageInterface: MiniAppMessageDelegate,
+                       adsDisplayer: MiniAppAdDisplayer? = nil,
+                       fromCache: Bool? = false) {
         return realMiniApp.createMiniApp(
-                appInfo: appInfo,
-                queryParams: queryParams,
-                completionHandler: completionHandler,
-                messageInterface: messageInterface,
-                adsDisplayer: adsDisplayer)
+            appInfo: appInfo,
+            queryParams: queryParams,
+            completionHandler: completionHandler,
+            messageInterface: messageInterface,
+            adsDisplayer: adsDisplayer,
+            fromCache: fromCache)
     }
 
     /// Method to return the meta-data information of a mini-app
@@ -139,6 +172,14 @@ public class MiniApp: NSObject {
     ///   - completionHandler: Completion handler that returns PreviewMiniAppInfo on successful retrieval or Error
     public func getMiniAppPreviewInfo(using token: String, completionHandler: @escaping (Result<PreviewMiniAppInfo, MASDKError>) -> Void) {
         realMiniApp.getMiniAppPreviewInfo(using: token, completionHandler: completionHandler)
+    }
+
+    public func keyboardShown(navigationBarHeight: CGFloat, screenHeight: CGFloat, keyboardheight: CGFloat) {
+        realMiniApp.keyboardShown(navigationBarHeight: navigationBarHeight, screenHeight: screenHeight, keyboardheight: keyboardheight)
+    }
+
+    public func keyboardHidden(navigationBarHeight: CGFloat, screenHeight: CGFloat = 0, keyboardheight: CGFloat = 0) {
+        realMiniApp.keyboardHidden(navigationBarHeight: navigationBarHeight, screenHeight: screenHeight, keyboardheight: keyboardheight)
     }
 }
 

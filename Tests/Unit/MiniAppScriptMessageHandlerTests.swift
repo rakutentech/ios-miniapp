@@ -58,7 +58,11 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         audience: nil,
                         scopes: nil,
                         messageToContact: nil,
-                        contactId: nil, itemId: ""
+                        contactId: nil,
+                        filename: nil,
+                        url: nil,
+                        headers: nil,
+                        itemId: ""
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -78,7 +82,11 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         audience: nil,
                         scopes: nil,
                         messageToContact: nil,
-                        contactId: nil, itemId: ""
+                        contactId: nil,
+                        filename: nil,
+                        url: nil,
+                        headers: nil,
+                        itemId: ""
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -895,9 +903,69 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             return
                         }
                         let environmentInfo = ResponseDecoder.decode(decodeType: MAHostEnvironmentInfo.self, data: responseData)
-                        expect(environmentInfo?.sdkVersion).toEventually(equal("4.0.0"))
+                        expect(environmentInfo?.sdkVersion).toEventually(equal("4.1.0"))
                         expect(environmentInfo?.hostVersion).toEventually(equal(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String))
                         expect(environmentInfo?.hostLocale).toEventually(equal("en-US"))
+                    }
+                }
+                context("when MiniAppScriptMessageHandler receives downloadFile command") {
+                    it("will return ") {
+                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                        let scriptMessageHandler = MiniAppScriptMessageHandler(
+                            delegate: mockCallbackProtocol,
+                            hostAppMessageDelegate: mockMessageInterface,
+                            adsDisplayer: mockAdsDelegate,
+                            miniAppId: mockMiniAppInfo.id,
+                            miniAppTitle: mockMiniAppTitle
+                        )
+                        let command = """
+                        {
+                            "action" : "downloadFile",
+                            "id" : "5.1141101534045745",
+                            "param": {
+                                "filename" : "sample.jpg",
+                                "url" : "https://rakuten.co.jp/sample.jpg",
+                                "headers" : { "token": "test" }
+                            }
+                        }
+                        """
+                        updateCustomPermissionStatus(
+                            miniAppId: mockMiniAppInfo.id,
+                            permissionType: .fileDownload,
+                            status: .allowed
+                        )
+                        mockMessageInterface.mockDownloadFile = true
+                        let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                        scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                        expect(mockCallbackProtocol.response).toEventually(equal("sample.jpg"))
+                    }
+                }
+                context("when MiniAppScriptMessageHandler executes keyboard events") {
+                    it("keyboard shown succeeds") {
+                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                        let scriptMessageHandler = MiniAppScriptMessageHandler(
+                            delegate: mockCallbackProtocol,
+                            hostAppMessageDelegate: mockMessageInterface,
+                            adsDisplayer: mockAdsDelegate,
+                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                        )
+                        scriptMessageHandler.execKeyboardEventsCallback(with: .keyboardShown, message: "keyboard shown", navigationBarHeight: 100, screenHeight: 200, keyboardHeight: 300)
+                        expect(mockCallbackProtocol.navBarHeight).to(equal(100))
+                        expect(mockCallbackProtocol.screenHeight).to(equal(200))
+                        expect(mockCallbackProtocol.keyboardHeight).to(equal(300))
+                    }
+                    it("keyboard hidden succeeds") {
+                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                        let scriptMessageHandler = MiniAppScriptMessageHandler(
+                            delegate: mockCallbackProtocol,
+                            hostAppMessageDelegate: mockMessageInterface,
+                            adsDisplayer: mockAdsDelegate,
+                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                        )
+                        scriptMessageHandler.execKeyboardEventsCallback(with: .keyboardHidden, message: "keyboard hidden", navigationBarHeight: 100, screenHeight: 200, keyboardHeight: 300)
+                        expect(mockCallbackProtocol.navBarHeight).to(equal(100))
+                        expect(mockCallbackProtocol.screenHeight).to(equal(200))
+                        expect(mockCallbackProtocol.keyboardHeight).to(equal(300))
                     }
                 }
             }

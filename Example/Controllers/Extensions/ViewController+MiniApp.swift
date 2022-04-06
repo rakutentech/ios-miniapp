@@ -1,4 +1,6 @@
+import Foundation
 import MiniApp
+import UIKit
 
 extension ViewController: MiniAppNavigationDelegate {
     func miniAppNavigationCanGo(back: Bool, forward: Bool) {
@@ -122,7 +124,8 @@ extension ViewController: MiniAppNavigationDelegate {
                 navigationInterface: self,
                 queryParams: getQueryParam(),
                 adsDisplayer: self.adsDisplayer,
-                enableSharePreview: true
+                enableSharePreview: true,
+                loadFromCacheIfFailed: true
             )
             MiniAppUI
                 .shared()

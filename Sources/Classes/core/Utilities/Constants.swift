@@ -1,3 +1,5 @@
+import Foundation
+
 enum Constants {
     static let miniAppSchemePrefix = "mscheme."
     static let rootFileName = "index.html"
@@ -7,9 +9,11 @@ enum Constants {
         static let successCallback = "MiniAppBridge.execSuccessCallback"
         static let errorCallback = "MiniAppBridge.execErrorCallback"
         static let eventCallback = "MiniAppBridge.execCustomEventsCallback"
+        static let keyboardEventCallback = "MiniAppBridge.execKeyboardEventsCallback"
     }
 }
 
+/// Type alias for Download Lsit permissions pair
 public typealias MASDKDownloadedListPermissionsPair = [(MiniAppInfo, [MASDKCustomPermissionModel])]
 
 let offlineErrorCodeList: [Int] = [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut]

@@ -1,3 +1,5 @@
+import Foundation
+
 internal protocol EnvironmentProtocol {
     var valueNotFound: String { get }
     func value(for key: String) -> String?

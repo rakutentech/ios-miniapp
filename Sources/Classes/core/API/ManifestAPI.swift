@@ -1,3 +1,5 @@
+import Foundation
+
 internal class ManifestApi {
     let environment: Environment
 

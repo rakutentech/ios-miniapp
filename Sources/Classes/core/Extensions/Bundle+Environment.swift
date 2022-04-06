@@ -1,3 +1,5 @@
+import Foundation
+
 extension Bundle {
      class func miniAppBundle(_ name: String) -> Bundle {
         // Get the bundle containing the binary with the current class.
@@ -12,12 +14,28 @@ extension Bundle {
             resourceBundleURL = myBundle.resourceURL?.appendingPathComponent("Frameworks/MiniApp.framework/\(name).bundle")
         }
 
-        guard let finalURL = resourceBundleURL else { fatalError("\(name).bundle not found!") }
+        guard let finalURL = resourceBundleURL
+        else {
+            return miniAppModuleFallbackForBundle(name)
+        }
 
         // Create a bundle object for the bundle found at that URL.
-        guard let resourceBundle = Bundle(url: finalURL) else { fatalError("Cannot access \(name).bundle!") }
+        guard let resourceBundle = Bundle(url: finalURL)
+        else {
+            return miniAppModuleFallbackForBundle(name)
+        }
 
         return resourceBundle
+    }
+
+    private class func miniAppModuleFallbackForBundle(_ name: String) -> Bundle {
+        #if SWIFT_PACKAGE
+        MiniAppLogger.w("\(name).bundle does not exist, accessing Bundle.module")
+        return Bundle.module
+        #else
+        MiniAppLogger.e("Cannot access \(name).bundle!")
+        fatalError("could not load resource bundle")
+        #endif
     }
 
     public class var miniAppSDKBundle: Bundle {

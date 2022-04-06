@@ -1,3 +1,5 @@
+import UIKit
+
 extension UIApplication {
   func keyWindow() -> UIWindow? {
       return windows.filter { $0.isKeyWindow }.first

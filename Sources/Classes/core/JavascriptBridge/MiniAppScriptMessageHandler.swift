@@ -6,6 +6,7 @@ protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveScriptMessageResponse(messageId: String, response: String)
     func didReceiveScriptMessageError(messageId: String, errorMessage: String)
     func didReceiveEvent(_ event: MiniAppEvent, message: String)
+    func didReceiveKeyboardEvent(_ event: MiniAppKeyboardEvent, message: String, navigationBarHeight: CGFloat?, screenHeight: CGFloat?, keyboardHeight: CGFloat?)
 }
 
 // swiftlint:disable file_length
@@ -89,6 +90,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             fetchPoints(with: callbackId)
         case .getHostEnvironmentInfo:
             getEnvironmentInfo(with: callbackId)
+        case .downloadFile:
+            downloadFile(with: callbackId, parameters: requestParam)
         case .purchaseItem:
             purchaseProduct(with: callbackId, parameters: requestParam)
         }
@@ -339,6 +342,10 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         delegate?.didReceiveEvent(event, message: message)
     }
 
+    func execKeyboardEventsCallback(with event: MiniAppKeyboardEvent, message: String, navigationBarHeight: CGFloat?, screenHeight: CGFloat?, keyboardHeight: CGFloat?) {
+        delegate?.didReceiveKeyboardEvent(event, message: message, navigationBarHeight: navigationBarHeight, screenHeight: screenHeight, keyboardHeight: keyboardHeight)
+    }
+
     func shareContent(requestParam: RequestParameters?, callbackId: String) {
         guard let requestParamValue = requestParam?.shareInfo else {
             executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
@@ -521,18 +528,43 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         )
     }
 
-    private func purchaseProduct(with callBackId: String, parameters: RequestParameters?) {
-        if let purchaseItemId = parameters?.itemId {
-            hostAppMessageDelegate?.purchaseProduct(withId: purchaseItemId, completionHandler: { result in
+    func downloadFile(with callbackId: String, parameters: RequestParameters?) {
+         if
+            isUserAllowedPermission(customPermissionType: .fileDownload, callbackId: callbackId),
+            let fileName = parameters?.filename,
+            let url = parameters?.url,
+            let headers = parameters?.headers
+        {
+             hostAppMessageDelegate?.downloadFile(fileName: fileName, url: url, headers: headers) { (result) in
                 switch result {
-                case .success(let response):
-                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: "response")
-//                    prepareMAJSGenericResponse(responseStatus: .onSuccess, messageId: callBackId, response: response, error: nil)
+                case .success:
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onSuccess,
+                        messageId: callbackId,
+                        response: fileName
+                    )
                 case .failure(let error):
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onError,
+                        messageId: callbackId,
+                        response: prepareMAJavascriptError(error)
+                    )
                 }
-            })
+            }
         }
+    }
+
+    private func purchaseProduct(with callBackId: String, parameters: RequestParameters?) {
+    if let purchaseItemId = parameters?.itemId {
+        hostAppMessageDelegate?.purchaseProduct(withId: purchaseItemId, completionHandler: { result in
+            switch result {
+            case .success(let response):
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callBackId, response: "response")
+//                    prepareMAJSGenericResponse(responseStatus: .onSuccess, messageId: callBackId, response: response, error: nil)
+            case .failure(let error):
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: error.localizedDescription)
+            }
+        })
     }
 
     private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {

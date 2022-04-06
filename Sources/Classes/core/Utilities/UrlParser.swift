@@ -1,3 +1,5 @@
+import Foundation
+
 /**
  * Utility class to help process URL parsing operations.
  */

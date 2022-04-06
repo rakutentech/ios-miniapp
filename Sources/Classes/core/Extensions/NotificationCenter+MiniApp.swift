@@ -1,3 +1,5 @@
+import Foundation
+
 internal extension NotificationCenter {
 
     func sendAnalytics(event: MiniAppRATEvent, type: MiniAppRATEventType? = nil, parameters customData: [(String, String)]? = nil, analyticsConfig: [MAAnalyticsConfig] = [MiniAppAnalytics.defaultRATAcc]) {
@@ -27,5 +29,9 @@ internal extension NotificationCenter {
 
     func sendCustomEvent(_ event: MiniAppEvent.Event) {
         post(name: MiniAppEvent.notificationName, object: event)
+    }
+
+    func sendKeyboardEvent(_ event: MiniAppKeyboardEvent.Event) {
+        post(name: MiniAppKeyboardEvent.notificationName, object: event)
     }
 }

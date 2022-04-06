@@ -1,3 +1,5 @@
+import Foundation
+
 class DownloadOperation {
     typealias DownloadCompletionHandler = (Result<URL, MASDKError>) -> Void
 

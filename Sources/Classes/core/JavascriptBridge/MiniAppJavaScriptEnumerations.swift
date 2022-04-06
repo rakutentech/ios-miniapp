@@ -1,3 +1,5 @@
+import UIKit
+
 enum MiniAppJSActionCommand: String {
     case getUniqueId
     case getCurrentPosition
@@ -16,6 +18,7 @@ enum MiniAppJSActionCommand: String {
     case sendMessageToMultipleContacts
     case getPoints
     case getHostEnvironmentInfo
+    case downloadFile
     case purchaseItem
 }
 
@@ -128,5 +131,33 @@ enum MiniAppEvent: String {
     struct Event {
         var type: MiniAppEvent
         var comment: String
+
+        init(type: MiniAppEvent, comment: String) {
+            self.type = type
+            self.comment = comment
+        }
+    }
+}
+
+enum MiniAppKeyboardEvent: String {
+    case keyboardShown = "miniappkeyboardshown"
+    case keyboardHidden = "miniappkeyboardhidden"
+
+    static let notificationName = Notification.Name("notificationNameKeyboard")
+
+    struct Event {
+        var type: MiniAppKeyboardEvent
+        var comment: String
+        var navigationBarHeight: CGFloat?
+        var screenHeight: CGFloat?
+        var keyboardHeight: CGFloat?
+
+        init(type: MiniAppKeyboardEvent, comment: String, navigationBarHeight: CGFloat? = nil, keyboardHeight: CGFloat? = nil, screenHeight: CGFloat? = nil) {
+            self.type = type
+            self.comment = comment
+            self.navigationBarHeight = navigationBarHeight
+            self.keyboardHeight = keyboardHeight
+            self.screenHeight = screenHeight
+        }
     }
 }

@@ -43,15 +43,15 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.7.0)"
   - GoogleUtilities/Reachability (7.7.0):
     - GoogleUtilities/Logger
-  - MiniApp/Admob8 (4.0.0):
+  - MiniApp/Admob8 (4.1.0):
     - Google-Mobile-Ads-SDK (~> 8.0)
     - MiniApp/Core
-  - MiniApp/Core (4.0.0):
+  - MiniApp/Core (4.1.0):
     - TrustKit (~> 2.0)
     - ZIPFoundation (= 0.9.12)
-  - MiniApp/Signature (4.0.0):
+  - MiniApp/Signature (4.1.0):
     - MiniApp/Core
-  - MiniApp/UI (4.0.0):
+  - MiniApp/UI (4.1.0):
     - MiniApp/Core
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -61,7 +61,7 @@ PODS:
   - Nimble (9.2.1)
   - PromisesObjC (2.0.0)
   - Quick (4.0.0)
-  - RAnalytics (9.2.0)
+  - RAnalytics (9.3.0)
   - TrustKit (2.0.0)
   - ZIPFoundation (0.9.12)
 
@@ -100,15 +100,15 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 71156240babd3cc6ced03e0d54816f01a880c730
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
-  MiniApp: ad07bd9d8e2fed71d0318b5d130be97fc91d1fe1
+  MiniApp: 66172e1265f19ad53d255cba69771d379ef2ba0a
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
-  RAnalytics: 7b86143babaa1db901fd7cf735fcedc7aad5d182
+  RAnalytics: f57f6b62a259b87afca24e41f20eb257ec5a932f
   TrustKit: 610b8c71c07914756dd74c380040a3408a747798
   ZIPFoundation: e27423c004a5a1410c15933407747374e7c6cb6e
 
 PODFILE CHECKSUM: 7ded8017a25a70915cb528199b51b20102679669
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.2

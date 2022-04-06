@@ -1,9 +1,13 @@
 import Foundation
 import UIKit
 
+/// Protocol to track Miniapp loading/Close status
 public protocol MiniAppUIDelegate: AnyObject {
+    /// Interface that is used to get controller and config
     func miniApp(_ viewController: MiniAppViewController, didLaunchWith config: MiniAppSdkConfig?)
+    /// Interface that is used to get controller and navigation action
     func miniApp(_ viewController: MiniAppViewController, shouldExecute action: MiniAppNavigationAction)
+    /// Interface that is used to notify if Mini app failed to load
     func miniApp(_ viewController: MiniAppViewController, didLoadWith error: MASDKError?)
     func onClose()
 }
@@ -20,6 +24,7 @@ public extension MiniAppUIDelegate {
     }
 }
 
+/// ViewController that can be used by Host app to display a MiniApp
 public class MiniAppViewController: UIViewController {
 
     let appId: String
@@ -28,16 +33,19 @@ public class MiniAppViewController: UIViewController {
     var queryParams: String?
     var adsDisplayer: MiniAppAdDisplayer?
     var enableSharePreview: Bool
+    var loadFromCacheIfFailed: Bool
 
     var state: ViewState = .loading {
         didSet { update() }
     }
 
+    /// Overridden viewDidAppear to send analytics
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp view did appear"))
     }
 
+    /// Overridden viewWillDisappear to send analytics
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp view will disappear"))
@@ -92,7 +100,8 @@ public class MiniAppViewController: UIViewController {
         navDelegate: MiniAppNavigationDelegate? = nil,
         queryParams: String? = nil,
         adsDisplayer: MiniAppAdDisplayer? = nil,
-        enableSharePreview: Bool = false
+        enableSharePreview: Bool = false,
+        loadFromCacheIfFailed: Bool = false
     ) {
         self.appId = appId
         self.version = version
@@ -102,11 +111,16 @@ public class MiniAppViewController: UIViewController {
         self.queryParams = queryParams
         self.adsDisplayer = adsDisplayer
         self.enableSharePreview = enableSharePreview
+        self.loadFromCacheIfFailed = loadFromCacheIfFailed
         super.init(nibName: nil, bundle: nil)
         self.title = title
         if navDelegate == nil {
             self.navDelegate = self
         }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     required init?(coder: NSCoder) { return nil }
@@ -150,6 +164,25 @@ public class MiniAppViewController: UIViewController {
         ])
         backButton.isEnabled = false
         forwardButton.isEnabled = false
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShown), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc
+    func keyboardShown(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        let navigationBarHeight = (navigationController?.navigationBar.bounds.height ?? 0) + (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
+        let screenHeight = view.bounds.height - navigationBarHeight
+        let keyboardHeight = keyboardViewEndFrame.height
+        MiniApp.shared(with: config).keyboardShown(navigationBarHeight: navigationBarHeight, screenHeight: screenHeight, keyboardheight: keyboardHeight)
+    }
+
+    @objc
+    func keyboardHidden(notification: Notification) {
+        MiniApp.shared(with: config).keyboardHidden(navigationBarHeight: 0, screenHeight: 0, keyboardheight: 0)
     }
 
     func setupMiniApp() {
@@ -179,12 +212,44 @@ public class MiniAppViewController: UIViewController {
                         self.miniAppUiDelegate?.miniApp(self, didLoadWith: nil)
                         self.state = .success
                     case .failure(let error):
+                        if self.loadFromCacheIfFailed {
+                            self.loadFromCache(navSettings: navSettings, messageDelegate: messageDelegate)
+                        } else {
+                            self.miniAppUiDelegate?.miniApp(self, didLoadWith: error)
+                            self.state = .error
+                        }
+                    }
+                },
+                messageInterface: messageDelegate,
+                adsDisplayer: adsDisplayer
+            )
+    }
+
+    func loadFromCache(navSettings: MiniAppNavigationConfig?, messageDelegate: MiniAppMessageDelegate) {
+        MiniApp
+            .shared(with: config, navigationSettings: navSettings)
+            .create(
+                appId: appId,
+                version: version,
+                queryParams: queryParams,
+                completionHandler: { [weak self] (result) in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let miniAppDisplay):
+                        let view = miniAppDisplay.getMiniAppView()
+                        view.frame = self.view.bounds
+                        self.view.addSubview(view)
+                        self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
+                        self.miniAppUiDelegate?.miniApp(self, didLoadWith: nil)
+                        self.state = .success
+                    case .failure(let error):
                         self.miniAppUiDelegate?.miniApp(self, didLoadWith: error)
                         self.state = .error
                     }
                 },
                 messageInterface: messageDelegate,
-                adsDisplayer: adsDisplayer
+                adsDisplayer: adsDisplayer,
+                fromCache: true
             )
     }
 
@@ -212,16 +277,19 @@ public class MiniAppViewController: UIViewController {
     }
 
     @objc
+    /// Method that is called when back button is pressed
     public func backPressed() {
         navBarDelegate?.miniAppNavigationBar(didTriggerAction: .back)
     }
 
     @objc
+    /// Method that is called when forward button is pressed
     public func forwardPressed() {
         navBarDelegate?.miniAppNavigationBar(didTriggerAction: .forward)
     }
 
     @objc
+    /// Method that is called when mini app is closed
     public func closePressed() {
         if miniAppUiDelegate == nil {
             dismiss(animated: true, completion: nil)
@@ -230,6 +298,7 @@ public class MiniAppViewController: UIViewController {
         }
     }
 
+    /// Method that is called when navigation buttons need to be refreshed
     public func refreshNavigationBarButtons(backButtonEnabled: Bool, forwardButtonEnabled: Bool) {
         backButton.isEnabled = backButtonEnabled
         forwardButton.isEnabled = forwardButtonEnabled
@@ -237,6 +306,7 @@ public class MiniAppViewController: UIViewController {
 
     // MARK: - Sharing
     @objc
+    /// Method that is called when share button is pressed
     public func sharePressed() {
         MiniApp
             .shared(with: config, navigationSettings: .none)
@@ -254,7 +324,7 @@ public class MiniAppViewController: UIViewController {
                         self.showShareAlert(text: text, imageUrl: imageUrl)
                     }
                 case .failure(let error):
-                    print(error)
+                    MiniAppLogger.e("Could not retrieve info", error)
                 }
         }
     }

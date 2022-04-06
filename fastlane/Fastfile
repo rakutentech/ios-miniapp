@@ -101,10 +101,10 @@ platform :ios do
       set_github_release(
           repository_name: "rakutentech/ios-miniapp",
           api_token: ENV["GITHUB_API_TOKEN"],
-          name: "Miniapp",
+          name: "Miniapp SDK v"+File.read("../tmp/version.env"),
           tag_name: "v"+File.read("../tmp/version.env"),
           description: (File.read("../tmp/CHANGELOG.md") rescue "No changelog provided"),
-#           commitish: "candidate", # uncomment this line to enforce tag to be on candidate branch
+          commitish: "candidate", # uncomment this line to enforce tag to be on candidate branch
           upload_assets: ["./Binary/XCFramework/MiniApp.xcframework.zip"]
        )
   end

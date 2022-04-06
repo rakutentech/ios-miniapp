@@ -29,14 +29,13 @@ cd "${FINAL_FOLDER}"
 zip -r "${FRAMEWORK_FILE}".zip "${FRAMEWORK_FILE}"
 cd -
 FRAMEWORK_CHECKSUM=$(swift package compute-checksum "${FRAMEWORK_PATH}".zip)
-echo "${FRAMEWORK_CHECKSUM}"
+echo "Framework checksum ${FRAMEWORK_CHECKSUM}"
 
-sed -i -e "s/.*xcframework.*/            url: \"https:\/\/github.com\/rakutentech\/ios-miniapp\/releases\/download\/v$VERSION\/MiniApp.xcframework.zip\",/" Package.swift
-sed -i -e "s/.*checksum.*/            checksum: \"$FRAMEWORK_CHECKSUM\"/" Package.swift
+sed -i -e "s/.*let version =.*/    public static let version = \"$VERSION\"/" Sources/Classes/core/MiniApp.swift
+#sed -i -e "s/.*checksum.*/            checksum: \"$FRAMEWORK_CHECKSUM\"/" Package.swift
 
 rm -rf "${FRAMEWORK_PATH}"
 rm -rf "${SIMULATOR_ARCHIVE_PATH}"
 rm -rf "${IOS_DEVICE_ARCHIVE_PATH}"
-git commit -m "SPM checksum" Package.swift
-#git tag v$VERSION
+git commit -m "Update version" Sources/Classes/core/MiniApp.swift
 #open "${FINAL_FOLDER}"

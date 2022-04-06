@@ -235,18 +235,46 @@ enum MAJSNaviGeolocationError: Error {
     }
 }
 
-public struct MAJSGenericResponse {
-    let status: MAJSGenericResponseStatus
-    let error: MAJSGenericError
-    let response: Any
-}
+/// Enumeration that is used to return DownloadFile error
+public enum MASDKDownloadFileError: Error, MiniAppErrorProtocol {
 
-public enum MAJSGenericResponseStatus: String {
-    case success = "SUCCESS"
-    case failed = "FAILED"
-    case unknown = "UKNOWN"
-}
+    /// Host app failed to implement required interface
+    ///
+    case failedToConformToProtocol
+    case invalidUrl
+    case downloadFailed(code: Int?, reason: String)
+    case saveTemporarilyFailed
+    case error(description: String)
 
-public struct MAJSGenericError {
-    let error: Error
+    /// Detailed Description
+    public var description: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return MASDKLocale.localize(.failedToConformToProtocol)
+        case .invalidUrl:
+            return MASDKLocale.localize(.invalidUrl)
+        case .downloadFailed(let code, let reason):
+            return "\(code ?? -1): \(reason); (\(MASDKLocale.localize(.downloadFailed))"
+        case .saveTemporarilyFailed:
+            return MASDKLocale.localize(.unknownError)
+        case .error(let description):
+            return description
+        }
+    }
+
+    /// Title of the error
+    public var name: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return "FailedToConformToProtocol"
+        case .invalidUrl:
+            return "InvalidUrl"
+        case .downloadFailed:
+            return "DownloadFailed"
+        case .saveTemporarilyFailed:
+            return "SaveTemporarilyFailed"
+        case .error:
+            return ""
+        }
+    }
 }

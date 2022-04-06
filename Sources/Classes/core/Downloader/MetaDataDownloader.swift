@@ -1,3 +1,5 @@
+import Foundation
+
 internal class MetaDataDownloader {
 
     var manifestManager: MAManifestStorage

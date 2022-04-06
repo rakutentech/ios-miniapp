@@ -386,6 +386,10 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         let mockMessageInterface = MockMessageInterface()
         mockMessageInterface.sendMessageToMultipleContacts(message, completionHandler: completionHandler)
     }
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.downloadFile(fileName: fileName, url: url, headers: headers, completionHandler: completionHandler)
+    }
 }
 
 class MockMessageInterface: MiniAppMessageDelegate {
@@ -404,6 +408,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockPointsInterface: Bool = false
     var mockAccessToken: String? = ""
     var mockEnvironmentInfo: Bool = false
+    var mockDownloadFile: Bool = false
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         if messageContentAllowed {
@@ -509,6 +514,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo?))? {
         let info = MAHostEnvironmentInfo(platformVersion: "1.0.0", hostVersion: "2.0.0", sdkVersion: "3.0.0", hostLocale: "ja-JP")
         return { return info }
+    }
+
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
+        if mockDownloadFile {
+            completionHandler(.success("sample.jpg"))
+        } else {
+            completionHandler(.failure(.downloadFailed(code: -1, reason: "download failed")))
+        }
     }
 }
 
@@ -648,6 +661,10 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     var errorMessage: String?
     var eventMessage: String?
     var customEvent: MiniAppEvent?
+    var keyboardEvent: MiniAppKeyboardEvent?
+    var navBarHeight: CGFloat?
+    var screenHeight: CGFloat?
+    var keyboardHeight: CGFloat?
 
     func didReceiveScriptMessageResponse(messageId: String, response: String) {
         self.messageId = messageId
@@ -662,6 +679,14 @@ class MockMiniAppCallbackProtocol: MiniAppCallbackDelegate {
     func didReceiveEvent(_ event: MiniAppEvent, message: String) {
         customEvent = event
         eventMessage = message
+    }
+
+    func didReceiveKeyboardEvent(_ event: MiniAppKeyboardEvent, message: String, navigationBarHeight: CGFloat?, screenHeight: CGFloat?, keyboardHeight: CGFloat?) {
+        keyboardEvent = event
+        messageId = message
+        self.navBarHeight = navigationBarHeight
+        self.screenHeight = screenHeight
+        self.keyboardHeight = keyboardHeight
     }
 
     func didOrientationChanged(orientation: UIInterfaceOrientationMask) {
