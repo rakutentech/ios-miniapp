@@ -63,7 +63,6 @@ public struct ProductInfo: Codable {
 }
 
 public struct ProductPrice: Codable {
-//    let amount: Float
     let currencyCode: String
     let price: String
 

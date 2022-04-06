@@ -3,7 +3,7 @@ import MiniApp
 import CoreLocation
 import StoreKit
 
-class ViewController: RATViewControllerWithTableView, SKProductsRequestDelegate, SKPaymentTransactionObserver {
+class ViewController: RATViewControllerWithTableView {
 
     @IBOutlet var searchBar: UISearchBar!
     let refreshControl = UIRefreshControl()
@@ -38,9 +38,7 @@ class ViewController: RATViewControllerWithTableView, SKProductsRequestDelegate,
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
     var displayController: DisplayNavigationController?
-    private var models = [SKProduct]()
-    var productResponseHandlerObj: ProductResponseCompletionHandler?
-    var paymentProductObj: SKProduct?
+    var miniAppIAPModule: MiniAppIAPModule?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +48,11 @@ class ViewController: RATViewControllerWithTableView, SKProductsRequestDelegate,
         self.tableView.refreshControl = refreshControl
         locationManager.delegate = self
         self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
-        SKPaymentQueue.default().add(self)
+        miniAppIAPModule = MiniAppIAPModule()
+        guard let inAppPurchaseModule = miniAppIAPModule else {
+            return
+        }
+        SKPaymentQueue.default().add(inAppPurchaseModule)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -260,73 +262,6 @@ class ViewController: RATViewControllerWithTableView, SKProductsRequestDelegate,
         if let miniAppInfo = self.miniApps?[self.miniAppsSection?[indexPath.section] ?? ""]?[indexPath.row] {
             self.showFirstTimeLaunchScreen(miniAppInfo: miniAppInfo, config: Config.current())
         }
-    }
-
-    // StoreKit
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        DispatchQueue.main.async {
-            print("Count: \(response.products)")
-            self.models = response.products
-            if response.products.count == 0 {
-                self.productResponseHandlerObj?(.failure(.productNotFound))
-            } else {
-                self.initiateProductPayment(product: response.products[0])
-            }
-        }
-    }
-
-    func initiateProductPayment(product: SKProduct) {
-        let payment = SKPayment(product: product)
-        SKPaymentQueue.default().add(payment)
-        paymentProductObj = product
-    }
-
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        transactions.forEach({
-            switch $0.transactionState {
-            case .purchasing:
-                print("Purchasing: ", $0.payment.productIdentifier)
-            case .purchased:
-                SKPaymentQueue.default().finishTransaction($0)
-                print("Purchased: ", $0.payment.productIdentifier)
-                print("Purchased: ", $0.payment.productIdentifier)
-//                let productPrice = ProductPrice(currencyCode: paymentProductObj?.priceLocale.currencyCode, price: paymentProductObj?.price)
-                sendTranactionDetails(transaction: $0, status: .purchased)
-            case .failed:
-                SKPaymentQueue.default().finishTransaction($0)
-                print("Failed", $0.payment.productIdentifier)
-                sendTranactionDetails(transaction: $0, status: .failed)
-            case .restored:
-                SKPaymentQueue.default().finishTransaction($0)
-                print("Restored", $0.payment.productIdentifier)
-                sendTranactionDetails(transaction: $0, status: .restored)
-            case .deferred:
-                print("Deferred", $0.payment.productIdentifier)
-            @unknown default:
-                print("Default", $0.payment.productIdentifier)
-            }
-        })
-    }
-
-    func sendTranactionDetails(transaction: SKPaymentTransaction, status: MAProductResponseStatus) {
-        let productPrice = ProductPrice(currencyCode: paymentProductObj?.priceLocale.currencyCode ?? "UNKNOWN", price: "paymentProductObj?.price")
-        let productInfo = ProductInfo(title: paymentProductObj?.localizedTitle ?? "",
-                                      description: paymentProductObj?.localizedDescription ?? "",
-                                      id: paymentProductObj?.productIdentifier ?? "",
-                                      price: productPrice)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        guard let transactionDate = transaction.transactionDate, let transactionId = transaction.transactionIdentifier else {
-            productResponseHandlerObj?(.success(MAProductResponse(status: status,
-                                                                  product: PurchasedProduct(product: productInfo,
-                                                                                            transactionId: "UNKNOWN",
-                                                                                            transactionDate: "UNKNOWN"))))
-            return
-        }
-        productResponseHandlerObj?(.success(MAProductResponse(status: status,
-                                                              product: PurchasedProduct(product: productInfo,
-                                                                                        transactionId: transactionId,
-                                                                                        transactionDate: dateFormatter.string(from: transactionDate)))))
     }
 }
 

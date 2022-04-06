@@ -22,10 +22,6 @@ public protocol MiniAppUserInfoDelegate: AnyObject {
 
     /// Interface that is used to retrieve rakuten points
     func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void)
-
-    /// Interface used to purchase a product using Id
-    func purchaseProduct(withId: String,
-                         completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void)
 }
 
 public extension MiniAppUserInfoDelegate {

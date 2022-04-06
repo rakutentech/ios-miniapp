@@ -4,14 +4,6 @@ import StoreKit
 import UIKit
 
 extension ViewController: MiniAppUserInfoDelegate {
-    typealias ProductResponseCompletionHandler = ((Result<MAProductResponse, MAProductResponseError>)) -> Void
-//    ProductResponseCompletionHandler
-    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void) {
-        productResponseHandlerObj = completionHandler
-        let productRequest = SKProductsRequest(productIdentifiers: Set(["com.temporary.id"]))
-        productRequest.delegate = self
-        productRequest.start()
-    }
 
     func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         guard let userProfile = getProfileSettings(), let userName = userProfile.displayName else {

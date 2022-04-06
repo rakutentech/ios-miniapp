@@ -1,6 +1,6 @@
 PODS:
-  - AppCenter/Core (4.4.1)
-  - AppCenter/Crashes (4.4.1):
+  - AppCenter/Core (4.4.2)
+  - AppCenter/Crashes (4.4.2):
     - AppCenter/Core
   - Google-Mobile-Ads-SDK (8.13.0):
     - GoogleAppMeasurement (< 9.0, >= 7.0)
@@ -49,6 +49,8 @@ PODS:
   - MiniApp/Core (4.1.0):
     - TrustKit (~> 2.0)
     - ZIPFoundation (= 0.9.12)
+  - MiniApp/InAppPurchase (4.1.0):
+    - MiniApp/Core
   - MiniApp/Signature (4.1.0):
     - MiniApp/Core
   - MiniApp/UI (4.1.0):
@@ -68,6 +70,7 @@ PODS:
 DEPENDENCIES:
   - AppCenter/Crashes
   - MiniApp/Admob8 (from `./`)
+  - MiniApp/InAppPurchase (from `./`)
   - MiniApp/Signature (from `./`)
   - MiniApp/UI (from `./`)
   - Nimble (~> 9.2.1)
@@ -95,12 +98,12 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  AppCenter: b0b6f1190215b5f983c42934db718f3b46fff3c0
+  AppCenter: b0eca112a27b71e97488ffa1949ee38c7abd4b79
   Google-Mobile-Ads-SDK: 05e5d68bb42a61b2e5bef336a52789785605aa22
   GoogleAppMeasurement: 71156240babd3cc6ced03e0d54816f01a880c730
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
-  MiniApp: 66172e1265f19ad53d255cba69771d379ef2ba0a
+  MiniApp: f1107b6147b3f1e65ea2e0e3e32c06da40a3f908
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
@@ -109,6 +112,6 @@ SPEC CHECKSUMS:
   TrustKit: 610b8c71c07914756dd74c380040a3408a747798
   ZIPFoundation: e27423c004a5a1410c15933407747374e7c6cb6e
 
-PODFILE CHECKSUM: 7ded8017a25a70915cb528199b51b20102679669
+PODFILE CHECKSUM: 39e9d4aff423064c9822a7d3c25705412b91769b
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.10.2
