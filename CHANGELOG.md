@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 4.1.0 (release date TBD)
+### 4.1.0 (2022-04-11)
 
 **SDK**
 - **Feature:** Added support for Swift Package Manager
