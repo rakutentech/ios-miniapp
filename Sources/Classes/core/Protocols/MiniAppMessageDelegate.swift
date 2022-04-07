@@ -11,7 +11,7 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
-    func getContactId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
+    func getMessageUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     func getMauid(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
@@ -58,7 +58,7 @@ public extension MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func getContactId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+    func getMessageUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 

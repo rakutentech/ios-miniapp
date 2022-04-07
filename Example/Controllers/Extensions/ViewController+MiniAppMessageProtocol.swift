@@ -34,8 +34,8 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
         completionHandler(.success(deviceId))
     }
 
-    func getContactId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.success("TEST-CONTACT-ID-01234-56789"))
+    func getMessageUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success("TEST-MESSAGE_UNIQUE-ID-01234"))
     }
 
     func getMauid(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
