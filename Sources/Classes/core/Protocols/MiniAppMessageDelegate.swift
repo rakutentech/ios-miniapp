@@ -10,10 +10,10 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
 
-    /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
+    /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device assembled as message unique id
     func getMessageUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
 
-    /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
+    /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device assembled as mauid
     func getMauid(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
 
     /// Interface that should be implemented in the host app that handles the code to request any permission and the
