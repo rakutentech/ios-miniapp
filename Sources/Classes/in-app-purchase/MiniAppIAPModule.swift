@@ -12,7 +12,7 @@ public class MiniAppIAPModule: NSObject, SKProductsRequestDelegate, SKPaymentTra
     public func initiateProductPayment(productId: String, completionHandler: @escaping ProductResponseCompletionHandler) {
         self.productResponseHandlerObj = completionHandler
         self.productId = productId
-        let productRequest = SKProductsRequest(productIdentifiers: Set(["com.temporary.id"]))
+        let productRequest = SKProductsRequest(productIdentifiers: Set([self.productId]))
         productRequest.delegate = self
         productRequest.start()
     }

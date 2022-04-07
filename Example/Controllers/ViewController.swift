@@ -49,10 +49,11 @@ class ViewController: RATViewControllerWithTableView {
         locationManager.delegate = self
         self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
         miniAppIAPModule = MiniAppIAPModule()
-        guard let inAppPurchaseModule = miniAppIAPModule else {
-            return
+        if miniAppIAPModule == nil {
+            let module = MiniAppIAPModule()
+            self.miniAppIAPModule = module
+            SKPaymentQueue.default().add(module)
         }
-        SKPaymentQueue.default().add(inAppPurchaseModule)
     }
 
     override func viewDidAppear(_ animated: Bool) {

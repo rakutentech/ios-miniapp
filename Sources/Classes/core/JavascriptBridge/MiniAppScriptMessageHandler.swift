@@ -52,7 +52,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         handleActionCommand(action: requestAction, requestParam: requestParam, callbackId: callbackId)
     }
 
-    func handleActionCommand(action: MiniAppJSActionCommand, requestParam: RequestParameters?, callbackId: String) { // swiftlint:disable:this function_body_length
+    // swiftlint:disable:this function_body_length
+    func handleActionCommand(action: MiniAppJSActionCommand, requestParam: RequestParameters?, callbackId: String) {
         MiniAppAnalytics.sendAnalytics(command: action)
         switch action {
         case .getUniqueId:
