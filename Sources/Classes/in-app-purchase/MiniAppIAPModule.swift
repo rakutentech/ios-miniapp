@@ -47,7 +47,7 @@ public class MiniAppIAPModule: NSObject, SKProductsRequestDelegate, SKPaymentTra
                 SKPaymentQueue.default().finishTransaction($0)
                 sendTranactionDetails(transaction: $0, status: .failed)
             @unknown default:
-                print("Default", $0.payment.productIdentifier)
+                MiniAppLogger.d("MiniApp Transaction Update: Default \($0.payment.productIdentifier)")
             }
         })
     }
