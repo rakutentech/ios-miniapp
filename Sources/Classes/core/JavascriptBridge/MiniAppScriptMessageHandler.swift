@@ -57,11 +57,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         MiniAppAnalytics.sendAnalytics(command: action)
         switch action {
         case .getUniqueId:
-            getUniqueId(messageId: callbackId)
+            getUniqueId(callbackId: callbackId)
         case .getMessageUniqueId:
-            getMessageUniqueId(messageId: callbackId)
+            getMessageUniqueId(callbackId: callbackId)
         case .getMauid:
-            getMauid(messageId: callbackId)
+            getMauid(callbackId: callbackId)
         case .requestPermission:
             requestDevicePermission(requestParam: requestParam, callbackId: callbackId)
         case .getCurrentPosition:
@@ -190,47 +190,47 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func getUniqueId(messageId: String) {
+    func getUniqueId(callbackId: String) {
         hostAppMessageDelegate?.getUniqueId { (result) in
             switch result {
             case .success(let response):
                 guard let uniqueId = response else {
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
                     return
                 }
-                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: messageId, response: uniqueId)
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: uniqueId)
             case .failure(let error):
-                self.handleMASDKError(error: error, callbackId: messageId)
+                self.handleMASDKError(error: error, callbackId: callbackId)
             }
         }
     }
 
-    func getMessageUniqueId(messageId: String) {
+    func getMessageUniqueId(callbackId: String) {
         hostAppMessageDelegate?.getMessageUniqueId { (result) in
             switch result {
             case .success(let response):
                 guard let contactId = response else {
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
                     return
                 }
-                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: messageId, response: contactId)
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: contactId)
             case .failure(let error):
-                self.handleMASDKError(error: error, callbackId: messageId)
+                self.handleMASDKError(error: error, callbackId: callbackId)
             }
         }
     }
 
-    func getMauid(messageId: String) {
+    func getMauid(callbackId: String) {
         hostAppMessageDelegate?.getMauid { (result) in
             switch result {
             case .success(let response):
                 guard let mauid = response else {
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
                     return
                 }
-                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: messageId, response: mauid)
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: mauid)
             case .failure(let error):
-                self.handleMASDKError(error: error, callbackId: messageId)
+                self.handleMASDKError(error: error, callbackId: callbackId)
             }
         }
     }
