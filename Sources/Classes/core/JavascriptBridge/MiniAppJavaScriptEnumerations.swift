@@ -19,7 +19,9 @@ enum MiniAppJSActionCommand: String {
     case getPoints
     case getHostEnvironmentInfo
     case downloadFile
+    #if RMA_SDK_IAP
     case purchaseItem
+    #endif
 }
 
 enum JavaScriptExecResult: String {

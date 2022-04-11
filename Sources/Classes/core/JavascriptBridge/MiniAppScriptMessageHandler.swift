@@ -93,8 +93,10 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             getEnvironmentInfo(with: callbackId)
         case .downloadFile:
             downloadFile(with: callbackId, parameters: requestParam)
+        #if RMA_SDK_IAP
         case .purchaseItem:
             purchaseProduct(with: callbackId, parameters: requestParam)
+        #endif
         }
     }
 
@@ -555,6 +557,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
+    #if RMA_SDK_IAP
     private func purchaseProduct(with callbackId: String, parameters: RequestParameters?) {
         if let purchaseItemId = parameters?.itemId {
             hostAppMessageDelegate?.purchaseProduct(withId: purchaseItemId, completionHandler: { result in
@@ -571,6 +574,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             })
         }
     }
+    #endif
 
     private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {
         executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(type))

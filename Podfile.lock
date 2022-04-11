@@ -61,7 +61,7 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - Nimble (9.2.1)
-  - PromisesObjC (2.0.0)
+  - PromisesObjC (2.1.0)
   - Quick (4.0.0)
   - RAnalytics (9.3.0)
   - TrustKit (2.0.0)
