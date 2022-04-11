@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppAdDisplayDelegate Protocol Reference</title>
+    <title>MiniAppKeyboardEvent Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Protocol/MiniAppAdDisplayDelegate" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Enum/MiniAppKeyboardEvent" class="dashAnchor"></a>
 
-    <a title="MiniAppAdDisplayDelegate Protocol Reference"></a>
+    <a title="MiniAppKeyboardEvent Enumeration Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -38,7 +38,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">MiniApp Reference</a>
       <img class="carat" src="../img/carat.png" alt=""/>
-      MiniAppAdDisplayDelegate Protocol Reference
+      MiniAppKeyboardEvent Enumeration Reference
     </p>
 
     <div class="content-wrapper">
@@ -289,11 +289,11 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>MiniAppAdDisplayDelegate</h1>
+            <h1>MiniAppKeyboardEvent</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppAdDisplayDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MiniAppKeyboardEvent</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
 
                 </div>
               </div>
@@ -309,9 +309,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB17AdDisplayDelegateP16loadInterstitial3for8onLoadedySS_ys6ResultOyyts5Error_pGctF"></a>
-                    <a name="//apple_ref/swift/Method/loadInterstitial(for:onLoaded:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB17AdDisplayDelegateP16loadInterstitial3for8onLoadedySS_ys6ResultOyyts5Error_pGctF">loadInterstitial(for:<wbr>onLoaded:<wbr>)</a>
+                    <a name="/s:7MiniApp0aB13KeyboardEventO13keyboardShownyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/keyboardShown" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB13KeyboardEventO13keyboardShownyA2CmF">keyboardShown</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -319,16 +319,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Load Interstitial ad
-This function preloads Interstitial ad before they are requested for display.
-Can be called multiple times to pre-load multiple ads.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">loadInterstitial</span><span class="p">(</span><span class="k">for</span> <span class="nv">adId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">onLoaded</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Void</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">keyboardShown</span> <span class="o">=</span> <span class="s">"miniappkeyboardshown"</span></code></pre>
 
                         </div>
                       </div>
@@ -338,9 +336,9 @@ Can be called multiple times to pre-load multiple ads.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB17AdDisplayDelegateP16showInterstitial3for8onClosedySS_ys6ResultOyyts5Error_pGctF"></a>
-                    <a name="//apple_ref/swift/Method/showInterstitial(for:onClosed:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB17AdDisplayDelegateP16showInterstitial3for8onClosedySS_ys6ResultOyyts5Error_pGctF">showInterstitial(for:<wbr>onClosed:<wbr>)</a>
+                    <a name="/s:7MiniApp0aB13KeyboardEventO14keyboardHiddenyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/keyboardHidden" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB13KeyboardEventO14keyboardHiddenyA2CmF">keyboardHidden</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -348,14 +346,14 @@ Can be called multiple times to pre-load multiple ads.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Show a pre-loaded Interstitial ad</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">showInterstitial</span><span class="p">(</span><span class="k">for</span> <span class="nv">adId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">onClosed</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Void</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">keyboardHidden</span> <span class="o">=</span> <span class="s">"miniappkeyboardhidden"</span></code></pre>
 
                         </div>
                       </div>
@@ -365,9 +363,9 @@ Can be called multiple times to pre-load multiple ads.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB17AdDisplayDelegateP12loadRewarded3for8onLoadedySS_ys6ResultOyyts5Error_pGctF"></a>
-                    <a name="//apple_ref/swift/Method/loadRewarded(for:onLoaded:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB17AdDisplayDelegateP12loadRewarded3for8onLoadedySS_ys6ResultOyyts5Error_pGctF">loadRewarded(for:<wbr>onLoaded:<wbr>)</a>
+                    <a name="/s:7MiniApp0aB13KeyboardEventO16notificationNameSo014NSNotificationF0avpZ"></a>
+                    <a name="//apple_ref/swift/Variable/notificationName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB13KeyboardEventO16notificationNameSo014NSNotificationF0avpZ">notificationName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -375,16 +373,14 @@ Can be called multiple times to pre-load multiple ads.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Load Rewarded ad
-This function preloads Interstitial ad before they are requested for display.
-Can be called multiple times to pre-load multiple ads.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">loadRewarded</span><span class="p">(</span><span class="k">for</span> <span class="nv">adId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">onLoaded</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Void</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">notificationName</span><span class="p">:</span> <span class="kt">Notification</span><span class="o">.</span><span class="kt">Name</span></code></pre>
 
                         </div>
                       </div>
@@ -394,9 +390,9 @@ Can be called multiple times to pre-load multiple ads.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB17AdDisplayDelegateP12showRewarded3for8onClosedySS_ys6ResultOyAA0aB6RewardVs5Error_pGctF"></a>
-                    <a name="//apple_ref/swift/Method/showRewarded(for:onClosed:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB17AdDisplayDelegateP12showRewarded3for8onClosedySS_ys6ResultOyAA0aB6RewardVs5Error_pGctF">showRewarded(for:<wbr>onClosed:<wbr>)</a>
+                    <a name="/s:7MiniApp0aB13KeyboardEventO0D0V"></a>
+                    <a name="//apple_ref/swift/Struct/Event" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB13KeyboardEventO0D0V">Event</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -404,14 +400,14 @@ Can be called multiple times to pre-load multiple ads.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Show a pre-loaded Rewarded ad</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">showRewarded</span><span class="p">(</span><span class="k">for</span> <span class="nv">adId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">onClosed</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/MiniAppReward.html">MiniAppReward</a></span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Event</span></code></pre>
 
                         </div>
                       </div>

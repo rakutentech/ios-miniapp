@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MiniAppAdDisplayDelegate Protocol Reference</title>
+    <title>MASDKDownloadFileError Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Protocol/MiniAppAdDisplayDelegate" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Enum/MASDKDownloadFileError" class="dashAnchor"></a>
 
-    <a title="MiniAppAdDisplayDelegate Protocol Reference"></a>
+    <a title="MASDKDownloadFileError Enumeration Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -38,7 +38,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">MiniApp Reference</a>
       <img class="carat" src="../img/carat.png" alt=""/>
-      MiniAppAdDisplayDelegate Protocol Reference
+      MASDKDownloadFileError Enumeration Reference
     </p>
 
     <div class="content-wrapper">
@@ -289,15 +289,15 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>MiniAppAdDisplayDelegate</h1>
+            <h1>MASDKDownloadFileError</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppAdDisplayDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MASDKDownloadFileError</span> <span class="p">:</span> <span class="kt">Error</span><span class="p">,</span> <span class="kt">MiniAppErrorProtocol</span></code></pre>
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Enumeration that is used to return DownloadFile error</p>
 
           </div>
         </section>
@@ -309,9 +309,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB17AdDisplayDelegateP16loadInterstitial3for8onLoadedySS_ys6ResultOyyts5Error_pGctF"></a>
-                    <a name="//apple_ref/swift/Method/loadInterstitial(for:onLoaded:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB17AdDisplayDelegateP16loadInterstitial3for8onLoadedySS_ys6ResultOyyts5Error_pGctF">loadInterstitial(for:<wbr>onLoaded:<wbr>)</a>
+                    <a name="/s:7MiniApp22MASDKDownloadFileErrorO015failedToConformG8ProtocolyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/failedToConformToProtocol" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp22MASDKDownloadFileErrorO015failedToConformG8ProtocolyA2CmF">failedToConformToProtocol</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -319,16 +319,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Load Interstitial ad
-This function preloads Interstitial ad before they are requested for display.
-Can be called multiple times to pre-load multiple ads.</p>
+                        <p>Host app failed to implement required interface</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">loadInterstitial</span><span class="p">(</span><span class="k">for</span> <span class="nv">adId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">onLoaded</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Void</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">failedToConformToProtocol</span></code></pre>
 
                         </div>
                       </div>
@@ -338,9 +336,9 @@ Can be called multiple times to pre-load multiple ads.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB17AdDisplayDelegateP16showInterstitial3for8onClosedySS_ys6ResultOyyts5Error_pGctF"></a>
-                    <a name="//apple_ref/swift/Method/showInterstitial(for:onClosed:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB17AdDisplayDelegateP16showInterstitial3for8onClosedySS_ys6ResultOyyts5Error_pGctF">showInterstitial(for:<wbr>onClosed:<wbr>)</a>
+                    <a name="/s:7MiniApp22MASDKDownloadFileErrorO10invalidUrlyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/invalidUrl" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp22MASDKDownloadFileErrorO10invalidUrlyA2CmF">invalidUrl</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -348,14 +346,14 @@ Can be called multiple times to pre-load multiple ads.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Show a pre-loaded Interstitial ad</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">showInterstitial</span><span class="p">(</span><span class="k">for</span> <span class="nv">adId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">onClosed</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Void</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">invalidUrl</span></code></pre>
 
                         </div>
                       </div>
@@ -365,9 +363,9 @@ Can be called multiple times to pre-load multiple ads.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB17AdDisplayDelegateP12loadRewarded3for8onLoadedySS_ys6ResultOyyts5Error_pGctF"></a>
-                    <a name="//apple_ref/swift/Method/loadRewarded(for:onLoaded:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB17AdDisplayDelegateP12loadRewarded3for8onLoadedySS_ys6ResultOyyts5Error_pGctF">loadRewarded(for:<wbr>onLoaded:<wbr>)</a>
+                    <a name="/s:7MiniApp22MASDKDownloadFileErrorO14downloadFailedyACSiSg_SStcACmF"></a>
+                    <a name="//apple_ref/swift/Element/downloadFailed(code:reason:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp22MASDKDownloadFileErrorO14downloadFailedyACSiSg_SStcACmF">downloadFailed(code:<wbr>reason:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -375,16 +373,14 @@ Can be called multiple times to pre-load multiple ads.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Load Rewarded ad
-This function preloads Interstitial ad before they are requested for display.
-Can be called multiple times to pre-load multiple ads.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">loadRewarded</span><span class="p">(</span><span class="k">for</span> <span class="nv">adId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">onLoaded</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Void</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">downloadFailed</span><span class="p">(</span><span class="nv">code</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?,</span> <span class="nv">reason</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -394,9 +390,9 @@ Can be called multiple times to pre-load multiple ads.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB17AdDisplayDelegateP12showRewarded3for8onClosedySS_ys6ResultOyAA0aB6RewardVs5Error_pGctF"></a>
-                    <a name="//apple_ref/swift/Method/showRewarded(for:onClosed:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB17AdDisplayDelegateP12showRewarded3for8onClosedySS_ys6ResultOyAA0aB6RewardVs5Error_pGctF">showRewarded(for:<wbr>onClosed:<wbr>)</a>
+                    <a name="/s:7MiniApp22MASDKDownloadFileErrorO21saveTemporarilyFailedyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/saveTemporarilyFailed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp22MASDKDownloadFileErrorO21saveTemporarilyFailedyA2CmF">saveTemporarilyFailed</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -404,14 +400,95 @@ Can be called multiple times to pre-load multiple ads.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Show a pre-loaded Rewarded ad</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">showRewarded</span><span class="p">(</span><span class="k">for</span> <span class="nv">adId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">onClosed</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Structs/MiniAppReward.html">MiniAppReward</a></span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">saveTemporarilyFailed</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp22MASDKDownloadFileErrorO5erroryACSS_tcACmF"></a>
+                    <a name="//apple_ref/swift/Element/error(description:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp22MASDKDownloadFileErrorO5erroryACSS_tcACmF">error(description:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">error</span><span class="p">(</span><span class="nv">description</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp22MASDKDownloadFileErrorO11descriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp22MASDKDownloadFileErrorO11descriptionSSvp">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Detailed Description</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp22MASDKDownloadFileErrorO4nameSSvp"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp22MASDKDownloadFileErrorO4nameSSvp">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Title of the error</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>

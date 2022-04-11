@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 4.0.0 Docs
+          MiniApp 4.1.0 Docs
         </a>
-         (60% documented)
+         (77% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -132,6 +132,9 @@
                 <a class="nav-group-task-link" href="Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MASDKDownloadFileError.html">MASDKDownloadFileError</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MASDKError.html">MASDKError</a>
               </li>
               <li class="nav-group-task">
@@ -154,6 +157,18 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppDevicePermissionType.html">MiniAppDevicePermissionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppEvent.html">MiniAppEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppEvent.html#/s:7MiniApp0aB5EventO0C0V">– Event</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppKeyboardEvent.html">MiniAppKeyboardEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppKeyboardEvent.html#/s:7MiniApp0aB13KeyboardEventO0D0V">– Event</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
@@ -257,6 +272,9 @@
             <a class="nav-group-name-link" href="Typealiases.html">Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp15DownloadHeadersa">DownloadHeaders</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
               </li>
               <li class="nav-group-task">
@@ -337,6 +355,15 @@ You can also provide a new default behavior by using a <code>RMARequireMiniAppSi
 To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
 <pre class="highlight ruby"><code><span class="n">github</span> <span class="s2">"https://github.com/rakutentech/ios-miniapp"</span> <span class="s2">"prod"</span>
 </code></pre>
+
+<p><a id="SPM"></a></p>
+<h2 id='swift-package-manager' class='heading'>Swift Package Manager</h2>
+
+<p>To integrate MiniApp SDK into your Xcode project using Swift Package Manager, add it to the dependencies value of your <code>Package.swift</code>:</p>
+<pre class="highlight ruby"><code><span class="ss">dependencies: </span><span class="p">[</span>
+    <span class="p">.</span><span class="nf">package</span><span class="p">(</span><span class="ss">url: </span><span class="s2">"https://github.com/rakutentech/ios-miniapp.git"</span><span class="p">,</span> <span class="p">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="ss">from: </span><span class="s2">"4.1.0"</span><span class="p">))</span>
+<span class="p">]</span>
+</code></pre>
 <h3 id='configuration' class='heading'>Configuration</h3>
 
 <p>In your project configuration .plist you should add below Key/Value :</p>
@@ -404,6 +431,7 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
 <h3 id='usage' class='heading'>Usage</h3>
 
 <ul>
+<li><a href="#configure-mini-app">Configure MiniApp</a></li>
 <li><a href="#create-mini-app">Create a MiniApp</a></li>
 <li><a href="#mini-app-features">Mini App Features</a>
 
@@ -440,8 +468,33 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
 <li><a href="#query-param-mini-app">Passing Query parameters while creating Mini App</a></li>
 <li><a href="#permissions-from-host-app">Permissions required from the Host app</a></li>
 <li><a href="#miniapp-events">MiniApp events</a></li>
+<li><a href="#miniapp-load-cache">Load Mini app from Cache</a></li>
+<li><a href="#keyboard-events">Keyboard Events</a></li>
 </ul></li>
 </ul>
+
+<p><a id="configure-mini-app"></a></p>
+<h3 id='configure-miniapp' class='heading'>Configure MiniApp</h3>
+
+<hr>
+
+<ol>
+<li>Import the MiniApp SDK in your <code>UIApplicationDelegate</code>:</li>
+</ol>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">MiniApp</span>
+</code></pre>
+
+<ol>
+<li><code><a href="Classes/MiniApp.html#/s:7MiniAppAAC9configureyyFZ">MiniApp.configure()</a></code> should be always called at launch by <code>AppDelegate</code>.</li>
+</ol>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplication</span><span class="o">.</span><span class="kt">LaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+
+    <span class="kt">MiniApp</span><span class="o">.</span><span class="nf">configure</span><span class="p">()</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre>
 
 <p><a id="create-mini-app"></a></p>
 <h3 id='create-a-miniapp-for-the-given-code-miniappid-code' class='heading'>Create a MiniApp for the given <code>MiniAppId</code> :</h3>
@@ -1411,6 +1464,49 @@ Mini App SDK will look in the host app <code>Localizable.strings</code> for thes
 </tr>
 </tbody></table>
 
+<p><a id="miniapp-load-cache"></a></p>
+<h3 id='load-mini-app-from-cache' class='heading'>Load Mini app from Cache</h3>
+
+<p>Load Mini-app from cache directly using the following approach,</p>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">()</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">appId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="k">let</span> <span class="nv">miniAppDisplay</span><span class="p">):</span>
+                <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="n">miniAppDisplay</span><span class="o">.</span><span class="nf">getMiniAppView</span><span class="p">()</span>
+                <span class="n">view</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">bounds</span>
+                <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+            <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+                <span class="nf">print</span><span class="p">(</span><span class="s">"Error: "</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="p">)</span>
+            <span class="p">}</span>
+<span class="p">},</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="k">self</span><span class="p">,</span> <span class="nv">fromCache</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>fromCache</code> helps to retrieve the already downloaded mini-app from the cache.
+NOTE: Using the above approach will never retrieve/query latest version of the mini-app.</p>
+
+<p><a id="keyboard-events"></a></p>
+<h3 id='keyboard-events' class='heading'>Keyboard Events</h3>
+
+<p>MiniApp SDK allows to send keyboard <code>shown</code> and <code>hidden</code> events.</p>
+<pre class="highlight swift"><code><span class="kt">MiniApp</span>
+    <span class="o">.</span><span class="nf">shared</span><span class="p">()</span>
+    <span class="o">.</span><span class="nf">keyboardShown</span><span class="p">(</span><span class="nv">navigationBarHeight</span><span class="p">:</span> <span class="mi">84</span><span class="p">,</span> <span class="nv">screenHeight</span><span class="p">:</span> <span class="mi">814</span><span class="p">,</span> <span class="nv">keyboardheight</span><span class="p">:</span> <span class="mi">350</span><span class="p">)</span>
+
+<span class="kt">MiniApp</span>
+    <span class="o">.</span><span class="nf">shared</span><span class="p">()</span>
+    <span class="o">.</span><span class="nf">keyboardHidden</span><span class="p">(</span><span class="nv">navigationBarHeight</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">screenHeight</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">keyboardheight</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+
+</code></pre>
+
+<p>These events can be listened to by the JS SDK </p>
+<pre class="highlight javascript"><code><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">MiniAppKeyboardEvents</span><span class="p">.</span><span class="nx">KEYBOARDSHOWN</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">MiniAppKeyboardEvents</span><span class="p">.</span><span class="nx">KEYBOARDHIDDEN</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</code></pre>
+
 <p><a id="faqs-and-troubleshooting"></a></p>
 <h2 id='faqs-and-troubleshooting' class='heading'>FAQs and Troubleshooting</h2>
 <h3 id='how-do-i-deep-link-to-mini-apps' class='heading'>How do I deep link to mini apps?</h3>
@@ -1491,8 +1587,8 @@ Mini App SDK will look in the host app <code>Localizable.strings</code> for thes
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-03-01)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-04-11)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
 </html>

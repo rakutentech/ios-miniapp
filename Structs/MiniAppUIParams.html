@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          MiniApp 4.0.0 Docs
+          MiniApp 4.1.0 Docs
         </a>
-         (60% documented)
+         (77% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -133,6 +133,9 @@
                 <a class="nav-group-task-link" href="../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MASDKDownloadFileError.html">MASDKDownloadFileError</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MASDKError.html">MASDKError</a>
               </li>
               <li class="nav-group-task">
@@ -155,6 +158,18 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MiniAppDevicePermissionType.html">MiniAppDevicePermissionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MiniAppEvent.html">MiniAppEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MiniAppEvent.html#/s:7MiniApp0aB5EventO0C0V">– Event</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MiniAppKeyboardEvent.html">MiniAppKeyboardEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MiniAppKeyboardEvent.html#/s:7MiniApp0aB13KeyboardEventO0D0V">– Event</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
@@ -258,6 +273,9 @@
             <a class="nav-group-name-link" href="../Typealiases.html">Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7MiniApp15DownloadHeadersa">DownloadHeaders</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
               </li>
               <li class="nav-group-task">
@@ -279,7 +297,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Struct that is needed to launch Mini App using Paramerters</p>
 
           </div>
         </section>
@@ -291,9 +309,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniApp0aB8UIParamsV5title04miniB2Id0eB7Version6config16messageInterface010navigationJ011queryParams12adsDisplayer18enableSharePreviewACSS_S2SSgAA0aB9SdkConfigCSgAA0aB15MessageDelegate_pAA0ab10NavigationV0_pSgAmA0ab2AdO0CSgSbtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(title:miniAppId:miniAppVersion:config:messageInterface:navigationInterface:queryParams:adsDisplayer:enableSharePreview:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniApp0aB8UIParamsV5title04miniB2Id0eB7Version6config16messageInterface010navigationJ011queryParams12adsDisplayer18enableSharePreviewACSS_S2SSgAA0aB9SdkConfigCSgAA0aB15MessageDelegate_pAA0ab10NavigationV0_pSgAmA0ab2AdO0CSgSbtcfc">init(title:<wbr>miniAppId:<wbr>miniAppVersion:<wbr>config:<wbr>messageInterface:<wbr>navigationInterface:<wbr>queryParams:<wbr>adsDisplayer:<wbr>enableSharePreview:<wbr>)</a>
+                    <a name="/s:7MiniApp0aB8UIParamsV5title04miniB2Id0eB7Version6config16messageInterface010navigationJ011queryParams12adsDisplayer18enableSharePreview21loadFromCacheIfFailedACSS_S2SSgAA0aB9SdkConfigCSgAA0aB15MessageDelegate_pAA0aB18NavigationDelegate_pSgAnA0ab2AdO0CSgS2btcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(title:miniAppId:miniAppVersion:config:messageInterface:navigationInterface:queryParams:adsDisplayer:enableSharePreview:loadFromCacheIfFailed:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB8UIParamsV5title04miniB2Id0eB7Version6config16messageInterface010navigationJ011queryParams12adsDisplayer18enableSharePreview21loadFromCacheIfFailedACSS_S2SSgAA0aB9SdkConfigCSgAA0aB15MessageDelegate_pAA0aB18NavigationDelegate_pSgAnA0ab2AdO0CSgS2btcfc">init(title:<wbr>miniAppId:<wbr>miniAppVersion:<wbr>config:<wbr>messageInterface:<wbr>navigationInterface:<wbr>queryParams:<wbr>adsDisplayer:<wbr>enableSharePreview:<wbr>loadFromCacheIfFailed:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -301,7 +319,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Constructor for initializing MiniAppUIParams</p>
 
                       </div>
                       <div class="declaration">
@@ -317,10 +335,138 @@
     <span class="nv">navigationInterface</span><span class="p">:</span> <span class="kt"><a href="../Protocols/MiniAppNavigationDelegate.html">MiniAppNavigationDelegate</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">queryParams</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
     <span class="nv">adsDisplayer</span><span class="p">:</span> <span class="kt"><a href="../Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
-    <span class="nv">enableSharePreview</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="nv">enableSharePreview</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nv">loadFromCacheIfFailed</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span>
 <span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>title</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Title of the mini app</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>miniAppId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Mini app ID</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>miniAppVersion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Mini app version number</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>config</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Config that helps to configure endpoints at run time</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>messageInterface</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Message interface delegate to communicate with Host app</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>navigationInterface</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Navigation interface that keeps track of Mini app navigation stack</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queryParams</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Query parameters that is used while launching a mini app</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>adsDisplayer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Ad mob displayer delegate</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>enableSharePreview</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Share Preview optional bool</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>loadFromCacheIfFailed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Bool to retrieve mini app from cache (If it is downloaded already)</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -333,8 +479,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-03-01)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-04-11)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
 </html>

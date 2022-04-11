@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          MiniApp 4.0.0 Docs
+          MiniApp 4.1.0 Docs
         </a>
-         (60% documented)
+         (77% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -133,6 +133,9 @@
                 <a class="nav-group-task-link" href="../Enums/MASDKCustomPermissionError.html">MASDKCustomPermissionError</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MASDKDownloadFileError.html">MASDKDownloadFileError</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MASDKError.html">MASDKError</a>
               </li>
               <li class="nav-group-task">
@@ -155,6 +158,18 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MiniAppDevicePermissionType.html">MiniAppDevicePermissionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MiniAppEvent.html">MiniAppEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MiniAppEvent.html#/s:7MiniApp0aB5EventO0C0V">– Event</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MiniAppKeyboardEvent.html">MiniAppKeyboardEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MiniAppKeyboardEvent.html#/s:7MiniApp0aB13KeyboardEventO0D0V">– Event</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
@@ -258,6 +273,9 @@
             <a class="nav-group-name-link" href="../Typealiases.html">Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7MiniApp15DownloadHeadersa">DownloadHeaders</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:7MiniApp34MASDKDownloadedListPermissionsPaira">MASDKDownloadedListPermissionsPair</a>
               </li>
               <li class="nav-group-task">
@@ -291,6 +309,33 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7MiniAppAAC7versionSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/version" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC7versionSSvpZ">version</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">version</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7MiniAppAAC17MAOrientationLockSo26UIInterfaceOrientationMaskVvpZ"></a>
                     <a name="//apple_ref/swift/Variable/MAOrientationLock" class="dashAnchor"></a>
                     <a class="token" href="#/s:7MiniAppAAC17MAOrientationLockSo26UIInterfaceOrientationMaskVvpZ">MAOrientationLock</a>
@@ -309,6 +354,34 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">MAOrientationLock</span><span class="p">:</span> <span class="kt">UIInterfaceOrientationMask</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniAppAAC9configureyyFZ"></a>
+                    <a name="//apple_ref/swift/Method/configure()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC9configureyyFZ">configure()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Starts configuration and makes sure to load analytics
+Should be called in AppDelegate didLoad when the app starts</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">configure</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -480,9 +553,9 @@ Error information will be returned if any problem while fetching from the backed
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniAppAAC6create5appId7version11queryParams17completionHandler16messageInterface12adsDisplayerySS_SSSgAJys6ResultOyAA0aB15DisplayDelegate_pAA10MASDKErrorOGcAA0ab7MessageQ0_pAA0ab2AdN0CSgtF"></a>
-                    <a name="//apple_ref/swift/Method/create(appId:version:queryParams:completionHandler:messageInterface:adsDisplayer:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniAppAAC6create5appId7version11queryParams17completionHandler16messageInterface12adsDisplayerySS_SSSgAJys6ResultOyAA0aB15DisplayDelegate_pAA10MASDKErrorOGcAA0ab7MessageQ0_pAA0ab2AdN0CSgtF">create(appId:<wbr>version:<wbr>queryParams:<wbr>completionHandler:<wbr>messageInterface:<wbr>adsDisplayer:<wbr>)</a>
+                    <a name="/s:7MiniAppAAC6create5appId7version11queryParams17completionHandler16messageInterface12adsDisplayer9fromCacheySS_SSSgAKys6ResultOyAA0aB15DisplayDelegate_pAA10MASDKErrorOGcAA0ab7MessageS0_pAA0ab2AdN0CSgSbSgtF"></a>
+                    <a name="//apple_ref/swift/Method/create(appId:version:queryParams:completionHandler:messageInterface:adsDisplayer:fromCache:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC6create5appId7version11queryParams17completionHandler16messageInterface12adsDisplayer9fromCacheySS_SSSgAKys6ResultOyAA0aB15DisplayDelegate_pAA10MASDKErrorOGcAA0ab7MessageS0_pAA0ab2AdN0CSgSbSgtF">create(appId:<wbr>version:<wbr>queryParams:<wbr>completionHandler:<wbr>messageInterface:<wbr>adsDisplayer:<wbr>fromCache:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -497,7 +570,13 @@ Error information will be returned if any problem while fetching from the backed
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">appId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">version</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">queryParams</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="kt"><a href="../Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></span><span class="p">,</span> <span class="nv">adsDisplayer</span><span class="p">:</span> <span class="kt"><a href="../Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">appId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                   <span class="nv">version</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                   <span class="nv">queryParams</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                   <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span>
+                   <span class="nv">messageInterface</span><span class="p">:</span> <span class="kt"><a href="../Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></span><span class="p">,</span>
+                   <span class="nv">adsDisplayer</span><span class="p">:</span> <span class="kt"><a href="../Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                   <span class="nv">fromCache</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -731,9 +810,9 @@ Error information will be returned if any problem while fetching from the backed
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7MiniAppAAC6create7appInfo11queryParams17completionHandler16messageInterface12adsDisplayeryAA0abE0V_SSSgys6ResultOyAA0aB15DisplayDelegate_pAA10MASDKErrorOGcAA0ab7MessageP0_pAA0ab2AdM0CSgtF"></a>
-                    <a name="//apple_ref/swift/Method/create(appInfo:queryParams:completionHandler:messageInterface:adsDisplayer:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7MiniAppAAC6create7appInfo11queryParams17completionHandler16messageInterface12adsDisplayeryAA0abE0V_SSSgys6ResultOyAA0aB15DisplayDelegate_pAA10MASDKErrorOGcAA0ab7MessageP0_pAA0ab2AdM0CSgtF">create(appInfo:<wbr>queryParams:<wbr>completionHandler:<wbr>messageInterface:<wbr>adsDisplayer:<wbr>)</a>
+                    <a name="/s:7MiniAppAAC6create7appInfo11queryParams17completionHandler16messageInterface12adsDisplayer9fromCacheyAA0abE0V_SSSgys6ResultOyAA0aB15DisplayDelegate_pAA10MASDKErrorOGcAA0ab7MessageR0_pAA0ab2AdM0CSgSbSgtF"></a>
+                    <a name="//apple_ref/swift/Method/create(appInfo:queryParams:completionHandler:messageInterface:adsDisplayer:fromCache:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC6create7appInfo11queryParams17completionHandler16messageInterface12adsDisplayer9fromCacheyAA0abE0V_SSSgys6ResultOyAA0aB15DisplayDelegate_pAA10MASDKErrorOGcAA0ab7MessageR0_pAA0ab2AdM0CSgSbSgtF">create(appInfo:<wbr>queryParams:<wbr>completionHandler:<wbr>messageInterface:<wbr>adsDisplayer:<wbr>fromCache:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -749,7 +828,12 @@ This method should only be used in &ldquo;Preview Mode&rdquo;.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">appInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/MiniAppInfo.html">MiniAppInfo</a></span><span class="p">,</span> <span class="nv">queryParams</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="kt"><a href="../Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></span><span class="p">,</span> <span class="nv">adsDisplayer</span><span class="p">:</span> <span class="kt"><a href="../Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">appInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/MiniAppInfo.html">MiniAppInfo</a></span><span class="p">,</span>
+                   <span class="nv">queryParams</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                   <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Protocols/MiniAppDisplayDelegate.html">MiniAppDisplayDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span>
+                   <span class="nv">messageInterface</span><span class="p">:</span> <span class="kt"><a href="../Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></span><span class="p">,</span>
+                   <span class="nv">adsDisplayer</span><span class="p">:</span> <span class="kt"><a href="../Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                   <span class="nv">fromCache</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1010,6 +1094,60 @@ This method should only be used in &ldquo;Preview Mode&rdquo;.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniAppAAC13keyboardShown19navigationBarHeight06screenG014keyboardheighty12CoreGraphics7CGFloatV_A2ItF"></a>
+                    <a name="//apple_ref/swift/Method/keyboardShown(navigationBarHeight:screenHeight:keyboardheight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC13keyboardShown19navigationBarHeight06screenG014keyboardheighty12CoreGraphics7CGFloatV_A2ItF">keyboardShown(navigationBarHeight:<wbr>screenHeight:<wbr>keyboardheight:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">keyboardShown</span><span class="p">(</span><span class="nv">navigationBarHeight</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">screenHeight</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">keyboardheight</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniAppAAC14keyboardHidden19navigationBarHeight06screenG014keyboardheighty12CoreGraphics7CGFloatV_A2ItF"></a>
+                    <a name="//apple_ref/swift/Method/keyboardHidden(navigationBarHeight:screenHeight:keyboardheight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniAppAAC14keyboardHidden19navigationBarHeight06screenG014keyboardheighty12CoreGraphics7CGFloatV_A2ItF">keyboardHidden(navigationBarHeight:<wbr>screenHeight:<wbr>keyboardheight:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">keyboardHidden</span><span class="p">(</span><span class="nv">navigationBarHeight</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">screenHeight</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">keyboardheight</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -1065,8 +1203,8 @@ This method should only be used in &ldquo;Preview Mode&rdquo;.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-03-01)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-04-11)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
 </html>
