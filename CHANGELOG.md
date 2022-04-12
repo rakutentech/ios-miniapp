@@ -1,12 +1,13 @@
 ## CHANGELOG
 
-### 4.1.0 (release date TBD)
+### 4.1.0 (2022-04-11)
 
 **SDK**
 - **Feature:** Added support for Swift Package Manager
 - **Feature:** Updated create method with optional `fromCache` variable that helps to load the mini-app from cache.
 `MiniApp#create(appId:versionId:queryParams:completionHandler:messageInterface:adsDisplayer:fromCache)`
 `MiniApp#create(appInfo:queryParams:completionHandler:messageInterface:adsDisplayer:fromCache)`
+- **Feature:** Added a new interface `downloadFile(fileName:url:headers:completionHandler:)` in `MiniAppMessageDelegate` to support downloadFile behavior with custom file.
 
 ---
 ### 4.0.0  (2022-03-01)
