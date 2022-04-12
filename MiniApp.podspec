@@ -65,6 +65,6 @@ Pod::Spec.new do |miniapp|
   miniapp.subspec 'InAppPurchase' do |in_app_purchase|
     in_app_purchase.source_files = 'Sources/Classes/in-app-purchase/**/*.{swift,h,m}'
     in_app_purchase.dependency 'MiniApp/Core'
-    signature.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_IAP' }
+    in_app_purchase.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_IAP' }
   end
 end

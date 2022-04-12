@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+### 4.2.0 (TBD)
+**SDK**
+- **Feature:** Added In-App purchase feature. Mini App can initiate purchase product using `purchaseProduct` method and added a new protocol `MiniAppPurchaseDelegate` to support the flow in Host app
+
+**Sample app**
+- **Feature:** Implementation to support In-App purchase flow
+
+---
 ### 4.1.0 (2022-04-11)
 
 **SDK**

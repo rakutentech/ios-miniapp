@@ -395,8 +395,6 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
 }
 
 class MockMessageInterface: MiniAppMessageDelegate {
-    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void) {
-    }
 
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
@@ -411,6 +409,15 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockAccessToken: String? = ""
     var mockEnvironmentInfo: Bool = false
     var mockDownloadFile: Bool = false
+    var mockPurchaseProduct: Bool = false
+    var mockProductResponse = MAProductResponse(status: .purchased,
+                                                product: PurchasedProduct(product: ProductInfo(title: "Mock Title",
+                                                                                               description: "Mock Description",
+                                                                                               id: "123",
+                                                                                               price: ProductPrice(currencyCode: "JPY",
+                                                                                                                   price: "100")),
+                                                                          transactionId: "123",
+                                                                          transactionDate: "2022/04/13"))
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         if messageContentAllowed {
@@ -523,6 +530,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
             completionHandler(.success("sample.jpg"))
         } else {
             completionHandler(.failure(.downloadFailed(code: -1, reason: "download failed")))
+        }
+    }
+
+    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void) {
+        if mockPurchaseProduct {
+            completionHandler(.success(mockProductResponse))
+        } else {
+            completionHandler(.failure(.productNotFound))
         }
     }
 }

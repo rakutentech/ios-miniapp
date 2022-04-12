@@ -569,7 +569,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     }
                     self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: encodedResponse)
                 case .failure(let error):
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(error))
                 }
             })
         }
