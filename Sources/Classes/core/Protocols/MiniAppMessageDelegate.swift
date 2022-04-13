@@ -27,11 +27,9 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
     func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void)
 }
 
-#if !RMA_SDK_IAP
 public protocol MiniAppPurchaseDelegate: AnyObject {
  /// placeholder protocol to support IAP delegate extension when in app purchase module is not included
 }
-#endif
 
 public extension MiniAppMessageDelegate {
 

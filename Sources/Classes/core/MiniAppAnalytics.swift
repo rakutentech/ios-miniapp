@@ -174,10 +174,8 @@ public class MiniAppAnalytics {
             return .getEnvironemtnInfo
         case .downloadFile:
             return .downloadFile
-        #if RMA_SDK_IAP
         case .purchaseItem:
             return .purchaseItem
-        #endif
         }
     }
 }

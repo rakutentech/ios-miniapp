@@ -42,10 +42,10 @@ public class MiniAppIAPModule: NSObject, SKProductsRequestDelegate, SKPaymentTra
                 break
             case .purchased:
                 SKPaymentQueue.default().finishTransaction($0)
-                sendTranactionDetails(transaction: $0, status: .purchased)
+                sendTransactionDetails(transaction: $0, status: .purchased)
             case .failed:
                 SKPaymentQueue.default().finishTransaction($0)
-                sendTranactionDetails(transaction: $0, status: .failed)
+                sendTransactionDetails(transaction: $0, status: .failed)
             @unknown default:
                 MiniAppLogger.d("MiniApp Transaction Update: Default \($0.payment.productIdentifier)")
             }
