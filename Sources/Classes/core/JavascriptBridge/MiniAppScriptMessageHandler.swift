@@ -58,8 +58,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         switch action {
         case .getUniqueId:
             getUniqueId(callbackId: callbackId)
-        case .getMessageUniqueId:
-            getMessageUniqueId(callbackId: callbackId)
+        case .getMessagingUniqueId:
+            getMessagingUniqueId(callbackId: callbackId)
         case .getMauid:
             getMauid(callbackId: callbackId)
         case .requestPermission:
@@ -205,8 +205,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func getMessageUniqueId(callbackId: String) {
-        hostAppMessageDelegate?.getMessageUniqueId { (result) in
+    func getMessagingUniqueId(callbackId: String) {
+        hostAppMessageDelegate?.getMessagingUniqueId { (result) in
             switch result {
             case .success(let response):
                 guard let contactId = response else {

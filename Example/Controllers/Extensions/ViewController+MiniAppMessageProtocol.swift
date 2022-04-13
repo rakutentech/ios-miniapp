@@ -34,7 +34,7 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
         completionHandler(.success(deviceId))
     }
 
-    func getMessageUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+    func getMessagingUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.success("TEST-MESSAGE_UNIQUE-ID-01234"))
     }
 
