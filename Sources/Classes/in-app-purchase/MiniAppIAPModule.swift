@@ -52,7 +52,7 @@ public class MiniAppIAPModule: NSObject, SKProductsRequestDelegate, SKPaymentTra
         })
     }
 
-    func sendTranactionDetails(transaction: SKPaymentTransaction, status: MAProductResponseStatus) {
+    func sendTransactionDetails(transaction: SKPaymentTransaction, status: MAProductResponseStatus) {
         let productPrice = ProductPrice(currencyCode: paymentProductObj?.priceLocale.currencyCode ?? "UNKNOWN", price: paymentProductObj?.price.stringValue ?? "UNKNOWN")
         let productInfo = ProductInfo(title: paymentProductObj?.localizedTitle ?? "",
                                       description: paymentProductObj?.localizedDescription ?? "",
