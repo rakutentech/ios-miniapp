@@ -137,7 +137,7 @@ public class MiniAppAnalytics {
         sendAnalytics(event: ratEvent)
     }
 
-    // swiftlint:disable superfluous_disable_command type_body_length
+    // swiftlint:disable function_body_length
     private class func getRatEvent(for command: MiniAppJSActionCommand) -> MiniAppRATEvent? {
         switch command {
         case .getUniqueId:

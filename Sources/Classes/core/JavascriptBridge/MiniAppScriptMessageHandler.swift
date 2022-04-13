@@ -9,8 +9,7 @@ protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveKeyboardEvent(_ event: MiniAppKeyboardEvent, message: String, navigationBarHeight: CGFloat?, screenHeight: CGFloat?, keyboardHeight: CGFloat?)
 }
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     var locationManager: LocationManager?
@@ -52,7 +51,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         handleActionCommand(action: requestAction, requestParam: requestParam, callbackId: callbackId)
     }
 
-    // swiftlint:disable superfluous_disable_command type_body_length
+    // swiftlint:disable function_body_length
     func handleActionCommand(action: MiniAppJSActionCommand, requestParam: RequestParameters?, callbackId: String) {
         MiniAppAnalytics.sendAnalytics(command: action)
         switch action {
