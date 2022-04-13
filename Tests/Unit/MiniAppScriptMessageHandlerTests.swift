@@ -969,7 +969,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     }
                 }
             }
-            
+
             context("when MiniAppScriptMessageHandler receives in-app-purchase command") {
                 it("will check if product is available and return error if not found") {
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
