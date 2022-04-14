@@ -42,7 +42,10 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
 
             context("when user controller receive valid action and id (messaging unique id)") {
                 it("will return unique id") {
-                    let mockMessage = MockWKScriptMessage(name: "getMessagingUniqueId", body: "{\"action\": \"getMessagingUniqueId\", \"param\": { \"permission\": null}, \"id\":\"12345\"}" as AnyObject)
+                    let mockMessage = MockWKScriptMessage(
+                        name: "getMessagingUniqueId",
+                        body: "{\"action\": \"getMessagingUniqueId\", \"param\": { \"permission\": null}, \"id\":\"12345\"}" as AnyObject
+                    )
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.messageId).toEventually(equal("12345"))
                     expect(callbackProtocol.response).toEventuallyNot(beNil())
