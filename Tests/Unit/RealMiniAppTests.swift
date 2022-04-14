@@ -197,6 +197,30 @@ class RealMiniAppTests: QuickSpec {
                             }
                         }
                         expect(uniqueID).toEventually(beNil())
+
+                        var messagingUniqueId: String? = "tmp"
+                        rmap.hostAppMessageDelegate?.getMessagingUniqueId { (result) in
+                            switch result {
+                            case .success(let uid):
+                                messagingUniqueId = uid
+                            case .failure(let error):
+                                messagingUniqueId = nil
+                                expect(error.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
+                            }
+                        }
+                        expect(messagingUniqueId).toEventually(beNil())
+
+                        var mauid: String? = "tmp"
+                        rmap.hostAppMessageDelegate?.getMauid { (result) in
+                            switch result {
+                            case .success(let uid):
+                                mauid = uid
+                            case .failure(let error):
+                                mauid = nil
+                                expect(error.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
+                            }
+                        }
+                        expect(mauid).toEventually(beNil())
                     } else {
                         fail("create RealMiniAppView failure")
                     }
@@ -239,6 +263,20 @@ class RealMiniAppTests: QuickSpec {
                     if let rmap = responseInfo {
                         expect(rmap.hostAppMessageDelegate).notTo(beNil())
                         rmap.hostAppMessageDelegate?.getUniqueId { (result) in
+                            switch result {
+                            case .success: break
+                            case .failure(let error):
+                                expect(error.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
+                            }
+                        }
+                        rmap.hostAppMessageDelegate?.getMessagingUniqueId { (result) in
+                            switch result {
+                            case .success: break
+                            case .failure(let error):
+                                expect(error.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
+                            }
+                        }
+                        rmap.hostAppMessageDelegate?.getMauid { (result) in
                             switch result {
                             case .success: break
                             case .failure(let error):
@@ -305,6 +343,44 @@ class RealMiniAppTests: QuickSpec {
                     }
                     expect(uniqueID).toEventually(beNil())
                     expect(errorInfo?.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
+
+                    var messagingUniqueID: String? = "tmp"
+                    var messagingUniqueIdErrorInfo: MASDKError?
+                    if let rmap = responseInfo {
+                        expect(rmap.hostAppMessageDelegate).notTo(beNil())
+                        rmap.hostAppMessageDelegate?.getMessagingUniqueId { (result) in
+                            switch result {
+                            case .success(let uid):
+                                messagingUniqueID = uid
+                            case .failure(let error):
+                                messagingUniqueID = nil
+                                messagingUniqueIdErrorInfo = error
+                            }
+                        }
+                    } else {
+                        fail("create RealMiniAppView failure")
+                    }
+                    expect(messagingUniqueID).toEventually(beNil())
+                    expect(messagingUniqueIdErrorInfo?.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
+
+                    var mauid: String? = "tmp"
+                    var mauidErrorInfo: MASDKError?
+                    if let rmap = responseInfo {
+                        expect(rmap.hostAppMessageDelegate).notTo(beNil())
+                        rmap.hostAppMessageDelegate?.getMauid { (result) in
+                            switch result {
+                            case .success(let uid):
+                                mauid = uid
+                            case .failure(let error):
+                                mauid = nil
+                                mauidErrorInfo = error
+                            }
+                        }
+                    } else {
+                        fail("create RealMiniAppView failure")
+                    }
+                    expect(mauid).toEventually(beNil())
+                    expect(mauidErrorInfo?.errorDescription).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
                 }
             }
 

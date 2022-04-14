@@ -9,8 +9,7 @@ protocol MiniAppCallbackDelegate: AnyObject {
     func didReceiveKeyboardEvent(_ event: MiniAppKeyboardEvent, message: String, navigationBarHeight: CGFloat?, screenHeight: CGFloat?, keyboardHeight: CGFloat?)
 }
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     var locationManager: LocationManager?
@@ -52,11 +51,16 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         handleActionCommand(action: requestAction, requestParam: requestParam, callbackId: callbackId)
     }
 
+    // swiftlint:disable function_body_length
     func handleActionCommand(action: MiniAppJSActionCommand, requestParam: RequestParameters?, callbackId: String) {
         MiniAppAnalytics.sendAnalytics(command: action)
         switch action {
         case .getUniqueId:
-            sendUniqueId(messageId: callbackId)
+            getUniqueId(callbackId: callbackId)
+        case .getMessagingUniqueId:
+            getMessagingUniqueId(callbackId: callbackId)
+        case .getMauid:
+            getMauid(callbackId: callbackId)
         case .requestPermission:
             requestDevicePermission(requestParam: requestParam, callbackId: callbackId)
         case .getCurrentPosition:
@@ -185,17 +189,47 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func sendUniqueId(messageId: String) {
+    func getUniqueId(callbackId: String) {
         hostAppMessageDelegate?.getUniqueId { (result) in
             switch result {
             case .success(let response):
                 guard let uniqueId = response else {
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: messageId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
                     return
                 }
-                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: messageId, response: uniqueId)
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: uniqueId)
             case .failure(let error):
-                self.handleMASDKError(error: error, callbackId: messageId)
+                self.handleMASDKError(error: error, callbackId: callbackId)
+            }
+        }
+    }
+
+    func getMessagingUniqueId(callbackId: String) {
+        hostAppMessageDelegate?.getMessagingUniqueId { (result) in
+            switch result {
+            case .success(let response):
+                guard let contactId = response else {
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                    return
+                }
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: contactId)
+            case .failure(let error):
+                self.handleMASDKError(error: error, callbackId: callbackId)
+            }
+        }
+    }
+
+    func getMauid(callbackId: String) {
+        hostAppMessageDelegate?.getMauid { (result) in
+            switch result {
+            case .success(let response):
+                guard let mauid = response else {
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                    return
+                }
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: mauid)
+            case .failure(let error):
+                self.handleMASDKError(error: error, callbackId: callbackId)
             }
         }
     }

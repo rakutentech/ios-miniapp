@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+### 4.2.0 (release date TBD)
+
+**SDK**
+- **Feature:** Added a new interface `getMessagingUnique` in `MiniAppMessageDelegate` for future support of MAUID v2 and another interface `getMauid` in `MiniAppMessageDelegate` for retrieving the MAUID
+
+**Sample app**
+- **Enhancement:** Added `GET MESSAGING UNIQUE ID` and `GET MAUID` for retrieving the ID's. (Messaging Unique ID for now will return the same as Unique ID)
+
 ### 4.1.0 (2022-04-11)
 
 **SDK**
