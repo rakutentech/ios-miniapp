@@ -458,6 +458,13 @@ class MockMessageInterface: MiniAppMessageDelegate {
         completionHandler(.success(deviceId))
     }
 
+    func getMauid(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+            return completionHandler(.failure(.unknownError(domain: "MASDKError", code: 1, description: "Unable to retrieve Mauid")))
+        }
+        completionHandler(.success(deviceId))
+    }
+
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         if locationAllowed {
             completionHandler(.success(.allowed))

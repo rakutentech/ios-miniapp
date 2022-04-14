@@ -1,10 +1,13 @@
 ## CHANGELOG
 
-### 4.2.0 (TBD)
+### 4.2.0 (release date TBD)
+
 **SDK**
+- **Feature:** Added a new interface `getMessagingUnique` in `MiniAppMessageDelegate` for future support of MAUID v2 and another interface `getMauid` in `MiniAppMessageDelegate` for retrieving the MAUID
 - **Feature:** Added In-App purchase feature. Mini App can initiate purchase product using `purchaseProduct` method and added a new protocol `MiniAppPurchaseDelegate` to support the flow in Host app
 
 **Sample app**
+- **Enhancement:** Added `GET MESSAGING UNIQUE ID` and `GET MAUID` for retrieving the ID's. (Messaging Unique ID for now will return the same as Unique ID)
 - **Feature:** Implementation to support In-App purchase flow
 
 ---
