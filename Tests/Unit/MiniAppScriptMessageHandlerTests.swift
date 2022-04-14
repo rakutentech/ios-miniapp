@@ -40,6 +40,15 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                 }
             }
 
+            context("when user controller receive valid action and id (messaging unique id)") {
+                it("will return unique id") {
+                    let mockMessage = MockWKScriptMessage(name: "getMessagingUniqueId", body: "{\"action\": \"getMessagingUniqueId\", \"param\": { \"permission\": null}, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.messageId).toEventually(equal("12345"))
+                    expect(callbackProtocol.response).toEventuallyNot(beNil())
+                }
+            }
+
             context("when user controller receive valid action and id (mauid)") {
                 it("will return unique id") {
                     let mockMessage = MockWKScriptMessage(name: "getMauid", body: "{\"action\": \"getMauid\", \"param\": { \"permission\": null}, \"id\":\"12345\"}" as AnyObject)
@@ -97,6 +106,29 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         headers: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
+                    scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
+                }
+            }
+            context("when handleBridgeMessage receive valid action, invalid messaging unique id") {
+                it("will return error") {
+                    let requestParam = RequestParameters(
+                        action: "",
+                        permission: "location",
+                        permissions: nil,
+                        locationOptions: nil,
+                        shareInfo: ShareInfoParameters(content: ""),
+                        adType: 0,
+                        adUnitId: "",
+                        audience: nil,
+                        scopes: nil,
+                        messageToContact: nil,
+                        contactId: nil,
+                        filename: nil,
+                        url: nil,
+                        headers: nil
+                    )
+                    let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMessagingUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
                 }
