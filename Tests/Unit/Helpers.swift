@@ -411,7 +411,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockDownloadFile: Bool = false
     var mockPurchaseProduct: Bool = false
     var mockProductResponse = MAProductResponse(status: .purchased,
-                                                product: PurchasedProduct(product: ProductInfo(title: "Mock Title",
+                                                product: PurchasedProduct(productInfo: ProductInfo(title: "Mock Title",
                                                                                                description: "Mock Description",
                                                                                                id: "123",
                                                                                                price: ProductPrice(currencyCode: "JPY",

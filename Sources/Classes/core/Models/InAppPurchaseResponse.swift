@@ -37,12 +37,12 @@ public struct MAProductResponse: Codable {
 }
 
 public struct PurchasedProduct: Codable {
-    let product: ProductInfo
+    let productInfo: ProductInfo
     let transactionId: String
     let transactionDate: String
 
-    public init(product: ProductInfo, transactionId: String, transactionDate: String) {
-        self.product = product
+    public init(productInfo: ProductInfo, transactionId: String, transactionDate: String) {
+        self.productInfo = productInfo
         self.transactionId = transactionId
         self.transactionDate = transactionDate
     }

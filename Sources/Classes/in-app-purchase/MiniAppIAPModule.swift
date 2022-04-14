@@ -38,7 +38,7 @@ public class MiniAppIAPModule: NSObject, SKProductsRequestDelegate, SKPaymentTra
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         transactions.forEach({
             switch $0.transactionState {
-            case .purchasing, .deferred, .restored:
+            case .purchasing, .deferred:
                 break
             case .purchased:
                 SKPaymentQueue.default().finishTransaction($0)
@@ -46,6 +46,9 @@ public class MiniAppIAPModule: NSObject, SKProductsRequestDelegate, SKPaymentTra
             case .failed:
                 SKPaymentQueue.default().finishTransaction($0)
                 sendTransactionDetails(transaction: $0, status: .failed)
+            case .restored:
+                SKPaymentQueue.default().finishTransaction($0)
+                sendTransactionDetails(transaction: $0, status: .restored)
             @unknown default:
                 MiniAppLogger.d("MiniApp Transaction Update: Default \($0.payment.productIdentifier)")
             }
@@ -62,13 +65,13 @@ public class MiniAppIAPModule: NSObject, SKProductsRequestDelegate, SKPaymentTra
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         guard let transactionDate = transaction.transactionDate, let transactionId = transaction.transactionIdentifier else {
             productResponseHandlerObj?(.success(MAProductResponse(status: status,
-                                                                  product: PurchasedProduct(product: productInfo,
+                                                                  product: PurchasedProduct(productInfo: productInfo,
                                                                                             transactionId: "UNKNOWN",
                                                                                             transactionDate: "UNKNOWN"))))
             return
         }
         productResponseHandlerObj?(.success(MAProductResponse(status: status,
-                                                              product: PurchasedProduct(product: productInfo,
+                                                              product: PurchasedProduct(productInfo: productInfo,
                                                                                         transactionId: transactionId,
                                                                                         transactionDate: dateFormatter.string(from: transactionDate)))))
     }
