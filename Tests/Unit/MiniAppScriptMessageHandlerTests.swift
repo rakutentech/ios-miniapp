@@ -131,7 +131,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         contactId: nil,
                         filename: nil,
                         url: nil,
-                        headers: nil
+                        headers: nil,
+                        itemId: ""
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMessagingUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -154,7 +155,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         contactId: nil,
                         filename: nil,
                         url: nil,
-                        headers: nil
+                        headers: nil,
+                        itemId: ""
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMauid", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -1101,11 +1103,11 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let productInfo = ResponseDecoder.decode(decodeType: MAProductResponse.self, data: responseData)
                     expect(productInfo?.product.transactionId).toEventually(equal("123"))
                     expect(productInfo?.product.transactionDate).toEventually(equal("2022/04/13"))
-                    expect(productInfo?.product.product.id).toEventually(equal("123"))
-                    expect(productInfo?.product.product.title).toEventually(equal("Mock Title"))
-                    expect(productInfo?.product.product.description).toEventually(equal("Mock Description"))
-                    expect(productInfo?.product.product.price.price).toEventually(equal("100"))
-                    expect(productInfo?.product.product.price.currencyCode).toEventually(equal("JPY"))
+                    expect(productInfo?.product.productInfo.id).toEventually(equal("123"))
+                    expect(productInfo?.product.productInfo.title).toEventually(equal("Mock Title"))
+                    expect(productInfo?.product.productInfo.description).toEventually(equal("Mock Description"))
+                    expect(productInfo?.product.productInfo.price.price).toEventually(equal("100"))
+                    expect(productInfo?.product.productInfo.price.currencyCode).toEventually(equal("JPY"))
 
                 }
             }
