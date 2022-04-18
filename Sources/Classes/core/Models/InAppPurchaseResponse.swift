@@ -13,7 +13,7 @@ public enum MAProductResponseError: String, Codable, MiniAppErrorProtocol {
     public var description: String {
         switch self {
         case .productNotFound:
-        return "Host app Error"
+        return "Unable to find the product for the given ID"
         case .failedToConformToProtocol:
         return "Host app failed to implement required interface"
         }
