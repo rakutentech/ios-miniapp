@@ -368,6 +368,10 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
+    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        return mockMessageInterface.purchaseProduct(withId: "com.rakuten.test", completionHandler: completionHandler)
+    }
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
@@ -391,6 +395,7 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
 }
 
 class MockMessageInterface: MiniAppMessageDelegate {
+
     var locationAllowed: Bool = false
     var customPermissions: Bool = false
     var permissionError: MASDKPermissionError?
@@ -404,6 +409,15 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockAccessToken: String? = ""
     var mockEnvironmentInfo: Bool = false
     var mockDownloadFile: Bool = false
+    var mockPurchaseProduct: Bool = false
+    var mockProductResponse = MAProductResponse(status: .purchased,
+                                                product: PurchasedProduct(productInfo: ProductInfo(title: "Mock Title",
+                                                                                               description: "Mock Description",
+                                                                                               id: "123",
+                                                                                               price: ProductPrice(currencyCode: "JPY",
+                                                                                                                   price: "100")),
+                                                                          transactionId: "123",
+                                                                          transactionDate: "2022/04/13"))
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         if messageContentAllowed {
@@ -523,6 +537,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
             completionHandler(.success("sample.jpg"))
         } else {
             completionHandler(.failure(.downloadFailed(code: -1, reason: "download failed")))
+        }
+    }
+
+    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void) {
+        if mockPurchaseProduct {
+            completionHandler(.success(mockProductResponse))
+        } else {
+            completionHandler(.failure(.productNotFound))
         }
     }
 }

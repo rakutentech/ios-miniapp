@@ -52,6 +52,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     // swiftlint:disable function_body_length
+    // swiftlint:disable cyclomatic_complexity
     func handleActionCommand(action: MiniAppJSActionCommand, requestParam: RequestParameters?, callbackId: String) {
         MiniAppAnalytics.sendAnalytics(command: action)
         switch action {
@@ -96,6 +97,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             getEnvironmentInfo(with: callbackId)
         case .downloadFile:
             downloadFile(with: callbackId, parameters: requestParam)
+        case .purchaseItem:
+            purchaseProduct(with: callbackId, parameters: requestParam)
         }
     }
 
@@ -583,6 +586,23 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     )
                 }
             }
+        }
+    }
+
+    private func purchaseProduct(with callbackId: String, parameters: RequestParameters?) {
+        if let purchaseItemId = parameters?.itemId {
+            hostAppMessageDelegate?.purchaseProduct(withId: purchaseItemId, completionHandler: { result in
+                switch result {
+                case .success(let response):
+                    guard let encodedResponse = ResponseEncoder.encode(data: response) else {
+                        self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppErrorType.unknownError))
+                        return
+                    }
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: encodedResponse)
+                case .failure(let error):
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
+                }
+            })
         }
     }
 

@@ -19,6 +19,7 @@ def miniapp_pods
   pod 'MiniApp/Admob8', :path => './'
   pod 'MiniApp/UI', :path => './'
   pod 'MiniApp/Signature', :path => './'
+  pod 'MiniApp/InAppPurchase', :path => './'
 end
 
 platform :ios, '14.0'

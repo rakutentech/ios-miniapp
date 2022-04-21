@@ -61,4 +61,9 @@ Pod::Spec.new do |miniapp|
     admob.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
     admob.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   end
+
+  miniapp.subspec 'InAppPurchase' do |in_app_purchase|
+    in_app_purchase.source_files = 'Sources/Classes/in-app-purchase/**/*.{swift,h,m}'
+    in_app_purchase.dependency 'MiniApp/Core'
+  end
 end
