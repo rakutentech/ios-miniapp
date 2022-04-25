@@ -65,6 +65,35 @@ extension FileManager {
         return nil
     }
 
+    /// Retrieve and convert a plist from a file on disk
+    ///
+    /// - Parameters:
+    ///   - fileName: name of the file where plist data is stored
+    ///   - directory: directory where plist data is stored
+    ///   - type: dictionary
+    /// - Returns: decoded model(s) of data
+    func retrievePlist<T: Decodable>(_ fileName: String, from directory: URL, as type: T.Type) -> T? {
+        let url = directory.appendingPathComponent(fileName, isDirectory: false)
+        guard fileExists(atPath: url.path) else {
+            MiniAppLogger.e("\(fileName) at path \(url.path) does not exist!")
+            return nil
+        }
+
+        if let data = contents(atPath: url.path) {
+            let decoder = PropertyListDecoder()
+            do {
+                let model = try decoder.decode(type, from: data)
+                return model
+            } catch {
+                MiniAppLogger.e("Error while reading \(fileName)", error)
+            }
+        } else {
+            MiniAppLogger.e("No data at \(url.path)!")
+        }
+
+        return nil
+    }
+
     /// Remove specified file from specified directory
     func remove(_ fileName: String, from directory: URL) {
         let url = directory.appendingPathComponent(fileName, isDirectory: false)

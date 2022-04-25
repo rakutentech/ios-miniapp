@@ -76,4 +76,8 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
         let info = MAHostEnvironmentInfo(hostLocale: locale)
         return { return info }
     }
+
+    func purchaseProduct(withId: String, completionHandler: @escaping (Result<MAProductResponse, MAProductResponseError>) -> Void) {
+        // missing implementation
+    }
 }

@@ -27,6 +27,8 @@ internal class RealMiniAppView: UIView {
     var canGoBackObservation: NSKeyValueObservation?
     var canGoForwardObservation: NSKeyValueObservation?
 
+    let secureStorage: MiniAppSecureStorage
+
     init(
         miniAppId: String,
         versionId: String,
@@ -48,6 +50,7 @@ internal class RealMiniAppView: UIView {
         self.miniAppVersion = versionId
         self.projectId = projectId
         self.analyticsConfig = analyticsConfig
+        self.secureStorage = MiniAppSecureStorage(appId: miniAppId)
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -68,6 +71,7 @@ internal class RealMiniAppView: UIView {
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
         analyticsConfig: [MAAnalyticsConfig]? = []) {
 
+        let miniAppId = "custom\(Int32.random(in: 0...Int32.max))" // some id is needed to handle permissions
         self.miniAppTitle = miniAppTitle
         self.miniAppURL = miniAppURL
         self.initialLoadCallback = initialLoadCallback
@@ -76,8 +80,9 @@ internal class RealMiniAppView: UIView {
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
         self.analyticsConfig = analyticsConfig
+        self.secureStorage = MiniAppSecureStorage(appId: miniAppId)
         super.init(frame: .zero)
-        commonInit(miniAppId: "custom\(Int32.random(in: 0...Int32.max))", // some id is needed to handle permissions
+        commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
                    adsDisplayer: adsDisplayer,
                    navigationDelegate: navigationDelegate,
@@ -138,6 +143,26 @@ internal class RealMiniAppView: UIView {
         MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
         initExternalWebViewClosures()
         observeWebView()
+
+        secureStorage.loadStorage { success in
+            //try? MiniAppSecureStorage.clearSecureStorage()
+            try? MiniAppSecureStorage.size(for: "404e46b4-263d-4768-b2ec-8a423224bead")
+            // load secure storage (put stuff here that should execute when store is available)
+//            print("🔑 get: ", try? self.secureStorage.get(key: "test3"))
+//            self.secureStorage.remove(keys: ["key7"]) { result in
+//                switch result {
+//                case let .success(success): print("🔑 save keys success: \(success)")
+//                case let .failure(error): print("🔑 save keys failure: \(error)")
+//                }
+//            }
+//            self.secureStorage.set(dict: ["key7": "key7"]) { result in
+//                switch result {
+//                case let .success(success): print("🔑 save keys success: \(success)")
+//                case let .failure(error): print("🔑 save keys failure: \(error)")
+//                }
+//            }
+        }
+
     }
 
     func observeWebView() {
@@ -242,6 +267,7 @@ internal class RealMiniAppView: UIView {
         UIViewController.attemptRotationToDeviceOrientation()
         webView.configuration.userContentController.removeMessageHandler()
         NotificationCenter.default.removeObserver(self)
+        secureStorage.unloadStorage()
     }
 
     func validateScheme(requestURL: URL, navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
