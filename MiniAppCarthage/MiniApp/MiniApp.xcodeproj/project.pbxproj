@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		316F3F2C2803A28A003D3415 /* InAppPurchaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316F3F2B2803A28A003D3415 /* InAppPurchaseResponse.swift */; };
-		316F3F2E2803A2A8003D3415 /* MiniAppPurchaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316F3F2D2803A2A7003D3415 /* MiniAppPurchaseDelegate.swift */; };
-		316F3F312803A2C6003D3415 /* MiniAppIAPModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316F3F302803A2C6003D3415 /* MiniAppIAPModule.swift */; };
 		317AA312276265560037180D /* nanopb.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 317AA306276265560037180D /* nanopb.xcframework */; };
 		317AA317276265560037180D /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 317AA30C276265560037180D /* GoogleAppMeasurementIdentitySupport.xcframework */; };
 		317AA318276265560037180D /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 317AA30D276265560037180D /* PromisesObjC.xcframework */; };
@@ -173,9 +170,6 @@
 		313C0EF52770415200C76614 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = ../../.swiftlint.yml; sourceTree = "<group>"; };
 		313C0EF62770415200C76614 /* Dangerfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Dangerfile; path = ../../Dangerfile; sourceTree = "<group>"; };
 		313C0F03277042AE00C76614 /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = MiniApp.podspec; path = ../../MiniApp.podspec; sourceTree = "<group>"; };
-		316F3F2B2803A28A003D3415 /* InAppPurchaseResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppPurchaseResponse.swift; sourceTree = "<group>"; };
-		316F3F2D2803A2A7003D3415 /* MiniAppPurchaseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppPurchaseDelegate.swift; sourceTree = "<group>"; };
-		316F3F302803A2C6003D3415 /* MiniAppIAPModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppIAPModule.swift; sourceTree = "<group>"; };
 		317AA306276265560037180D /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
 		317AA308276265560037180D /* Promises-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Promises-LICENSE"; sourceTree = "<group>"; };
 		317AA309276265560037180D /* NanoPB-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "NanoPB-LICENSE"; sourceTree = "<group>"; };
@@ -381,14 +375,6 @@
 			name = Config;
 			sourceTree = "<group>";
 		};
-		316F3F2F2803A2C6003D3415 /* in-app-purchase */ = {
-			isa = PBXGroup;
-			children = (
-				316F3F302803A2C6003D3415 /* MiniAppIAPModule.swift */,
-			);
-			path = "in-app-purchase";
-			sourceTree = "<group>";
-		};
 		317AA305276265560037180D /* gadsdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -483,7 +469,6 @@
 		31FA5E6C27608D1A0070B611 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				316F3F2F2803A2C6003D3415 /* in-app-purchase */,
 				31FA5E6D27608D1A0070B611 /* ui */,
 				31FA5E7227608D1A0070B611 /* core */,
 				31FA5ED927608D1A0070B611 /* signature */,
@@ -546,7 +531,6 @@
 		31FA5E8027608D1A0070B611 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				316F3F2B2803A28A003D3415 /* InAppPurchaseResponse.swift */,
 				31FA5E8127608D1A0070B611 /* MAAnalyticsConfig.swift */,
 				31FA5E8227608D1A0070B611 /* MiniAppJavascriptErrorInfo.swift */,
 				31FA5E8327608D1A0070B611 /* MiniAppInfo.swift */,
@@ -671,7 +655,6 @@
 		31FA5EC827608D1A0070B611 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				316F3F2D2803A2A7003D3415 /* MiniAppPurchaseDelegate.swift */,
 				31FA5EC927608D1A0070B611 /* MiniAppDownloaderProtocol.swift */,
 				31FA5ECA27608D1A0070B611 /* MiniAppDisplayProtocol.swift */,
 				31FA5ECB27608D1A0070B611 /* MiniAppErrorProtocol.swift */,
@@ -915,7 +898,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				316F3F2C2803A28A003D3415 /* InAppPurchaseResponse.swift in Sources */,
 				31FA5F1D27608D1B0070B611 /* UIApplication.swift in Sources */,
 				31FA5F4D27608D1B0070B611 /* Verifier.swift in Sources */,
 				31FA5F3E27608D1B0070B611 /* MiniAppDisplayProtocol.swift in Sources */,
@@ -952,7 +934,6 @@
 				31FA5F2A27608D1B0070B611 /* DownloadAPI.swift in Sources */,
 				31FA5F4127608D1B0070B611 /* MiniAppAdDisplayDelegate.swift in Sources */,
 				31FA5F0D27608D1B0070B611 /* MiniAppKeyChain.swift in Sources */,
-				316F3F312803A2C6003D3415 /* MiniAppIAPModule.swift in Sources */,
 				31FA5F5027608D1B0070B611 /* SignatureAPI.swift in Sources */,
 				31FA5F0527608D1B0070B611 /* APIResponse.swift in Sources */,
 				31FA5F4827608D1B0070B611 /* MiniAppJavaScriptPermissionManager.swift in Sources */,
@@ -966,7 +947,6 @@
 				31FA5F4627608D1B0070B611 /* MessageToContact.swift in Sources */,
 				31FA5F1227608D1B0070B611 /* NSError+MiniApp.swift in Sources */,
 				31FA5F3A27608D1B0070B611 /* Displayer.swift in Sources */,
-				316F3F2E2803A2A8003D3415 /* MiniAppPurchaseDelegate.swift in Sources */,
 				31FA5F0027608D1B0070B611 /* MiniAppInfo.swift in Sources */,
 				317AA32B2762D0740037180D /* MiniAppSharePreviewViewController.swift in Sources */,
 				31FA5F1027608D1B0070B611 /* String+MiniApp.swift in Sources */,
