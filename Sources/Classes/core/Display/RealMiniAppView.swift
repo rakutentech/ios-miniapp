@@ -145,24 +145,8 @@ internal class RealMiniAppView: UIView {
         observeWebView()
 
         secureStorage.loadStorage { success in
-            //try? MiniAppSecureStorage.clearSecureStorage()
-            try? MiniAppSecureStorage.size(for: "404e46b4-263d-4768-b2ec-8a423224bead")
-            // load secure storage (put stuff here that should execute when store is available)
-//            print("🔑 get: ", try? self.secureStorage.get(key: "test3"))
-//            self.secureStorage.remove(keys: ["key7"]) { result in
-//                switch result {
-//                case let .success(success): print("🔑 save keys success: \(success)")
-//                case let .failure(error): print("🔑 save keys failure: \(error)")
-//                }
-//            }
-//            self.secureStorage.set(dict: ["key7": "key7"]) { result in
-//                switch result {
-//                case let .success(success): print("🔑 save keys success: \(success)")
-//                case let .failure(error): print("🔑 save keys failure: \(error)")
-//                }
-//            }
+            // secure storage loaded
         }
-
     }
 
     func observeWebView() {
