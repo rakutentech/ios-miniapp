@@ -28,15 +28,16 @@ class MiniAppStorageTests: QuickSpec {
 
             context("when miniapp directory exists") {
 
+                let miniAppId = "test-1234"
                 beforeEach {
-                    try? MiniAppSecureStorage.clearSecureStorage(for: "test-1234")
+                    try? MiniAppSecureStorage.clearSecureStorage(for: miniAppId)
                     let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-                    let miniAppPath = cachePath.appendingPathComponent("/MiniApp").appendingPathComponent("/test-1234")
+                    let miniAppPath = cachePath.appendingPathComponent("/MiniApp").appendingPathComponent("/\(miniAppId)")
                     try? FileManager.default.createDirectory(at: miniAppPath, withIntermediateDirectories: true, attributes: nil)
                 }
 
                 it("will load the storage") {
-                    let storage = MiniAppSecureStorage(appId: "test-1234")
+                    let storage = MiniAppSecureStorage(appId: miniAppId)
                     var didLoadStorage = false
                     storage.loadStorage { success in
                         didLoadStorage = success
@@ -45,7 +46,7 @@ class MiniAppStorageTests: QuickSpec {
                 }
 
                 it("will unload the storage") {
-                    let storage = MiniAppSecureStorage(appId: "test-1234")
+                    let storage = MiniAppSecureStorage(appId: miniAppId)
                     var didLoadStorage = false
                     storage.loadStorage { success in
                         didLoadStorage = success
@@ -64,7 +65,7 @@ class MiniAppStorageTests: QuickSpec {
                 }
 
                 it("will load the storage and set some values") {
-                    let storage = MiniAppSecureStorage(appId: "test-1234")
+                    let storage = MiniAppSecureStorage(appId: miniAppId)
                     var didLoadStorage = false
                     storage.loadStorage { success in
                         didLoadStorage = success
@@ -86,7 +87,7 @@ class MiniAppStorageTests: QuickSpec {
                 }
 
                 it("will load the storage and add then remove some values") {
-                    let storage = MiniAppSecureStorage(appId: "test-1234")
+                    let storage = MiniAppSecureStorage(appId: miniAppId)
                     var didLoadStorage = false
                     storage.loadStorage { success in
                         didLoadStorage = success
@@ -112,16 +113,42 @@ class MiniAppStorageTests: QuickSpec {
                     expect(didLoadStorage).toEventually(beTrue())
                 }
 
+                it("will block operations when busy") {
+                    let storage = MiniAppSecureStorage(appId: miniAppId)
+                    var didLoadStorage = false
+                    storage.loadStorage { success in
+                        didLoadStorage = success
+                        storage.set(dict: ["test1": "test1Value"]) { result in
+                            switch result {
+                            case .success: ()
+                            case let .failure(error): fail(error.localizedDescription)
+                            }
+                        }
+                        expect(storage.isBusy).to(beTrue())
+                        storage.set(dict: ["test1": "test1Value"]) { result in
+                            switch result {
+                            case .success:
+                                fail("second operation should fail")
+                            case let .failure(error):
+                                if let error = error as? MiniAppSecureStorageError {
+                                    expect(error).to(equal(MiniAppSecureStorageError.storageBusyProcessing))
+                                }
+                            }
+                        }
+                    }
+                    expect(didLoadStorage).toEventually(beTrue())
+                }
+
                 it("will clear secure storage for miniapp") {
-                    let secureStorageUrl = FileManager.getMiniAppDirectory(with: "test-1234").appendingPathComponent("/securestorage.plist")
-                    try? MiniAppSecureStorage.clearSecureStorage(for: "test-1234")
+                    let secureStorageUrl = FileManager.getMiniAppDirectory(with: miniAppId).appendingPathComponent("/securestorage.plist")
+                    try? MiniAppSecureStorage.clearSecureStorage(for: miniAppId)
                     expect(FileManager.default.fileExists(atPath: secureStorageUrl.path)).to(beFalse())
                 }
 
                 it("will calculate size for an empty storage") {
-                    _ = MiniAppSecureStorage(appId: "test-1234")
+                    _ = MiniAppSecureStorage(appId: miniAppId)
                     do {
-                        let fileSize: UInt64 = try MiniAppSecureStorage.size(for: "test-1234")
+                        let fileSize: UInt64 = try MiniAppSecureStorage.size(for: miniAppId)
                         expect(fileSize).to(equal(42))
                     } catch {
                         fail("could not get fileSize")

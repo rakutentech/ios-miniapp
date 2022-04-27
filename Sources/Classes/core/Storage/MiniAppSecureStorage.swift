@@ -6,7 +6,7 @@ class MiniAppSecureStorage {
     let appId: String
     private var storage: [String: String]?
     private var isStoreLoading: Bool = false
-    private var isBusy: Bool = false
+    var isBusy: Bool = false
 
     private static let storageName: String = "securestorage"
     static var storageFullName: String { return storageName + ".plist" }
