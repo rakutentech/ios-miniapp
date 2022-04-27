@@ -83,8 +83,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         contactId: nil,
                         filename: nil,
                         url: nil,
-                        headers: nil,
-                        itemId: ""
+                        headers: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -107,8 +106,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         contactId: nil,
                         filename: nil,
                         url: nil,
-                        headers: nil,
-                        itemId: ""
+                        headers: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -131,8 +129,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         contactId: nil,
                         filename: nil,
                         url: nil,
-                        headers: nil,
-                        itemId: ""
+                        headers: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMessagingUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -155,8 +152,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         contactId: nil,
                         filename: nil,
                         url: nil,
-                        headers: nil,
-                        itemId: ""
+                        headers: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMauid", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -1037,78 +1033,6 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         expect(mockCallbackProtocol.screenHeight).to(equal(200))
                         expect(mockCallbackProtocol.keyboardHeight).to(equal(300))
                     }
-                }
-            }
-
-            context("when MiniAppScriptMessageHandler receives in-app-purchase command") {
-                it("will check if product is available and return error if not found") {
-                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: mockCallbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppInfo.id,
-                        miniAppTitle: mockMiniAppTitle
-                    )
-                    let command = """
-                    {
-                        "action" : "purchaseItem",
-                        "id" : "5.1141101534045745",
-                        "param": {
-                            "itemId" : "com.temporary.id"
-                        }
-                    }
-                    """
-                    updateCustomPermissionStatus(
-                        miniAppId: mockMiniAppInfo.id,
-                        permissionType: .fileDownload,
-                        status: .allowed
-                    )
-                    mockMessageInterface.mockPurchaseProduct = false
-                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
-                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MAProductResponseError.productNotFound.rawValue), timeout: .seconds(10))
-                }
-                it("will check if product is available ") {
-                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: mockCallbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        miniAppId: mockMiniAppInfo.id,
-                        miniAppTitle: mockMiniAppTitle
-                    )
-                    let command = """
-                    {
-                        "action" : "purchaseItem",
-                        "id" : "5.1141101534045745",
-                        "param": {
-                            "itemId" : "com.temporary.id"
-                        }
-                    }
-                    """
-                    updateCustomPermissionStatus(
-                        miniAppId: mockMiniAppInfo.id,
-                        permissionType: .fileDownload,
-                        status: .allowed
-                    )
-                    mockMessageInterface.mockPurchaseProduct = true
-                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
-                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-//                    expect(mockCallbackProtocol.response).toEventually(contain(MAProductResponseError.productNotFound.rawValue), timeout: .seconds(10))
-                    guard let responseData: Data = mockCallbackProtocol.response?.data(using: .utf8) else {
-                        fail("MiniAppScriptMessageHandler - purchaseItem failed")
-                        return
-                    }
-                    let productInfo = ResponseDecoder.decode(decodeType: MAProductResponse.self, data: responseData)
-                    expect(productInfo?.product.transactionId).toEventually(equal("123"))
-                    expect(productInfo?.product.transactionDate).toEventually(equal("2022/04/13"))
-                    expect(productInfo?.product.productInfo.id).toEventually(equal("123"))
-                    expect(productInfo?.product.productInfo.title).toEventually(equal("Mock Title"))
-                    expect(productInfo?.product.productInfo.description).toEventually(equal("Mock Description"))
-                    expect(productInfo?.product.productInfo.price.price).toEventually(equal("100"))
-                    expect(productInfo?.product.productInfo.price.currencyCode).toEventually(equal("JPY"))
-
                 }
             }
         }

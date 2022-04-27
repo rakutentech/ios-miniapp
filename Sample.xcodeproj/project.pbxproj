@@ -15,7 +15,6 @@
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
 		2A0CD0752745F2DE00877ABE /* GeneralTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CD0742745F2DE00877ABE /* GeneralTableViewController.swift */; };
 		2A54C85C26676377002B204F /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A54C85B26676377002B204F /* UITextField.swift */; };
-		2A70C16327FE1738007ACB37 /* ViewController+MiniAppPurchaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A70C16227FE1738007ACB37 /* ViewController+MiniAppPurchaseDelegate.swift */; };
 		2A7C7EC826DDA76300520DF9 /* Swizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7C7EC726DDA76300520DF9 /* Swizzling.swift */; };
 		2A99B5B5271538A0009C0D36 /* DeeplinkListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A99B5B4271538A0009C0D36 /* DeeplinkListViewController.swift */; };
 		2AA894BA26D6895F0078B2F4 /* RATNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA894B926D6895F0078B2F4 /* RATNotificationCenter.swift */; };
@@ -134,7 +133,6 @@
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
 		2A0CD0742745F2DE00877ABE /* GeneralTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralTableViewController.swift; sourceTree = "<group>"; };
 		2A54C85B26676377002B204F /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
-		2A70C16227FE1738007ACB37 /* ViewController+MiniAppPurchaseDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+MiniAppPurchaseDelegate.swift"; sourceTree = "<group>"; };
 		2A7C7EC726DDA76300520DF9 /* Swizzling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swizzling.swift; sourceTree = "<group>"; };
 		2A99B5B4271538A0009C0D36 /* DeeplinkListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeeplinkListViewController.swift; sourceTree = "<group>"; };
 		2AA894B926D6895F0078B2F4 /* RATNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RATNotificationCenter.swift; sourceTree = "<group>"; };
@@ -486,7 +484,6 @@
 				38920AEE251D9C57004C5DDD /* ViewController+MiniAppMessageProtocol.swift */,
 				38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */,
 				7501986FB5D52F78E841069D /* ViewController+ChatDelegate.swift */,
-				2A70C16227FE1738007ACB37 /* ViewController+MiniAppPurchaseDelegate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -788,7 +785,6 @@
 				A13C249826A15048003ADC6D /* UserPointsModel.swift in Sources */,
 				38CEFA4B25C0A3B300EE250A /* MAFirstLaunchController.swift in Sources */,
 				2AA894BA26D6895F0078B2F4 /* RATNotificationCenter.swift in Sources */,
-				2A70C16327FE1738007ACB37 /* ViewController+MiniAppPurchaseDelegate.swift in Sources */,
 				2A54C85C26676377002B204F /* UITextField.swift in Sources */,
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
 				31CC3B4626DF97F200441154 /* SignatureSettingsTableViewController.swift in Sources */,

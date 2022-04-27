@@ -1,7 +1,6 @@
 import UIKit
 import MiniApp
 import CoreLocation
-import StoreKit
 
 class ViewController: RATViewControllerWithTableView {
 
@@ -38,7 +37,6 @@ class ViewController: RATViewControllerWithTableView {
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
     var displayController: DisplayNavigationController?
-    var miniAppIAPModule: MiniAppIAPModule?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,12 +46,6 @@ class ViewController: RATViewControllerWithTableView {
         self.tableView.refreshControl = refreshControl
         locationManager.delegate = self
         self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
-        miniAppIAPModule = MiniAppIAPModule()
-        if miniAppIAPModule == nil {
-            let module = MiniAppIAPModule()
-            self.miniAppIAPModule = module
-            SKPaymentQueue.default().add(module)
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

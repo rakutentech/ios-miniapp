@@ -21,7 +21,6 @@ enum MiniAppJSActionCommand: String {
     case getPoints
     case getHostEnvironmentInfo
     case downloadFile
-    case purchaseItem
 }
 
 enum JavaScriptExecResult: String {
