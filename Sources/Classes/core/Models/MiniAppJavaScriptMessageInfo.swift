@@ -19,7 +19,6 @@ struct RequestParameters: Decodable {
     let filename: String?
     let url: String?
     let headers: DownloadHeaders?
-    let itemId: String?
 }
 
 struct LocationOptions: Decodable {

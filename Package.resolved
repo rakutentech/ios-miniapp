@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/rakutentech/GoogleMobileAds-SPM.git",
         "state": {
           "branch": null,
-          "revision": "7d006438585368541fce6f4840d30b682cd9ee0d",
-          "version": "8.13.0"
+          "revision": "b6300f79fcb35f79fb3ee52586110c06d7f4e72e",
+          "version": "9.0.0"
         }
       },
       {
@@ -35,15 +35,6 @@
           "branch": null,
           "revision": "b3bb0c5551fb3f80ca939829639ab5b093edd14f",
           "version": "7.7.0"
-        }
-      },
-      {
-        "package": "RAnalytics",
-        "repositoryURL": "https://github.com/rakutentech/ios-analytics-framework.git",
-        "state": {
-          "branch": null,
-          "revision": "f24b551dbd438120a3637d0f31200bec338c6250",
-          "version": "8.3.0"
         }
       },
       {

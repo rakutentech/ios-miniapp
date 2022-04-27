@@ -30,7 +30,6 @@ internal enum MiniAppRATEvent: String, CaseIterable {
     case sendMessageToContactId = "mini_app_send_message_to_contact_id"
     case sendMessageToMultipleContacts = "mini_app_send_message_to_multiple_contacts"
     case getEnvironemtnInfo = "mini_app_get_environment_info"
-    case purchaseItem = "mini_app_purchase_product"
     case downloadFile = "mini_app_download_file"
 
     func name() -> String {
@@ -64,8 +63,7 @@ internal enum MiniAppRATEvent: String, CaseIterable {
              .sendMessageToContactId,
              .sendMessageToMultipleContacts,
              .getEnvironemtnInfo,
-             .downloadFile,
-             .purchaseItem:
+             .downloadFile:
             return .click
         }
     }
@@ -140,7 +138,6 @@ public class MiniAppAnalytics {
     }
 
     // swiftlint:disable function_body_length
-    // swiftlint:disable cyclomatic_complexity
     private class func getRatEvent(for command: MiniAppJSActionCommand) -> MiniAppRATEvent? {
         switch command {
         case .getUniqueId:
@@ -183,8 +180,6 @@ public class MiniAppAnalytics {
             return .getEnvironemtnInfo
         case .downloadFile:
             return .downloadFile
-        case .purchaseItem:
-            return .purchaseItem
         }
     }
 }
