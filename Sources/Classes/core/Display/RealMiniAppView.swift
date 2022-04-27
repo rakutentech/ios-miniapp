@@ -144,7 +144,7 @@ internal class RealMiniAppView: UIView {
         initExternalWebViewClosures()
         observeWebView()
 
-        secureStorage.loadStorage { success in
+        secureStorage.loadStorage { _ in
             // secure storage loaded
         }
     }

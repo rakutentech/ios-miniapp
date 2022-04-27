@@ -175,10 +175,11 @@ class MiniAppSecureStorage {
         try FileManager.default.removeItem(at: storagePath(appId: miniAppId))
     }
 
-    static func size(for miniAppId: String) throws {
-        let fileSize = storagePath(appId: miniAppId).fileSize
+    static func size(for miniAppId: String) throws -> UInt64 {
+        let fileSize = MiniAppSecureStorage.storagePath(appId: miniAppId).fileSize
         guard fileSize > 0 else { throw MiniAppSecureStorageError.storageFileEmpty }
         MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")
+        return fileSize
     }
 }
 
