@@ -110,7 +110,8 @@ extension ViewController: MiniAppUserInfoDelegate {
             guard
                 statusCode >= 200 && statusCode <= 300
             else {
-                completion?(.failure(MASDKDownloadFileError.downloadFailed(code: statusCode, reason: "download failed")))
+                let reason = HTTPURLResponse.localizedString(forStatusCode: statusCode)
+                completion?(.failure(MASDKDownloadFileError.downloadHttpError(code: statusCode, reason: reason)))
                 return
             }
             guard
