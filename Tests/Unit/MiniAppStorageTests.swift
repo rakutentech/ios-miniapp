@@ -2,6 +2,7 @@ import Quick
 import Nimble
 @testable import MiniApp
 
+// swiftlint:disable function_body_length
 class MiniAppStorageTests: QuickSpec {
 
     override func spec() {
@@ -22,7 +23,7 @@ class MiniAppStorageTests: QuickSpec {
                 }
             }
         }
-        
+
         describe("miniapp secure storage") {
 
             context("when miniapp directory exists") {
@@ -50,7 +51,7 @@ class MiniAppStorageTests: QuickSpec {
                         didLoadStorage = success
                         storage.set(dict: ["test1": "test1Value"]) { result in
                             switch result {
-                            case .success(_):
+                            case .success:
                                 storage.unloadStorage()
                                 let test1 = try? storage.get(key: "test1")
                                 expect(test1).to(beNil())
@@ -69,7 +70,7 @@ class MiniAppStorageTests: QuickSpec {
                         didLoadStorage = success
                         storage.set(dict: ["test1": "test1Value", "test2": "test2Value", "test3": "test3Value"]) { result in
                             switch result {
-                            case .success(_):
+                            case .success:
                                 let test1 = try? storage.get(key: "test1")
                                 expect(test1).to(equal("test1Value"))
                                 let test2 = try? storage.get(key: "test2")
@@ -91,10 +92,10 @@ class MiniAppStorageTests: QuickSpec {
                         didLoadStorage = success
                         storage.set(dict: ["test1": "test1Value", "test2": "test2Value"]) { result in
                             switch result {
-                            case .success(_):
+                            case .success:
                                 storage.remove(keys: ["test1", "test2"], completion: { removeResult in
                                     switch removeResult {
-                                    case .success(_):
+                                    case .success:
                                         let test1 = try? storage.get(key: "test1")
                                         expect(test1).to(beNil())
                                         let test2 = try? storage.get(key: "test2")
