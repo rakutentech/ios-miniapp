@@ -888,15 +888,15 @@ class MockMiniAppSecureStorage: MiniAppSecureStorageDelegate {
     func get(key: String) throws -> String? {
         return ""
     }
-    
-    func set(dict: [String : String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
+
+    func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
         completion?(.success(true))
     }
-    
+
     func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
         completion?(.success(true))
     }
-    
+
     func size() throws -> UInt64 {
         return 42
     }
