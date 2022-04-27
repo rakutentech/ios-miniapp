@@ -130,9 +130,7 @@ class MiniAppStorageTests: QuickSpec {
                             case .success:
                                 fail("second operation should fail")
                             case let .failure(error):
-                                if let error = error as? MiniAppSecureStorageError {
-                                    expect(error).to(equal(MiniAppSecureStorageError.storageBusyProcessing))
-                                }
+                                expect(error).to(equal(MiniAppSecureStorageError.storageBusyProcessing))
                             }
                         }
                     }
@@ -146,9 +144,9 @@ class MiniAppStorageTests: QuickSpec {
                 }
 
                 it("will calculate size for an empty storage") {
-                    _ = MiniAppSecureStorage(appId: miniAppId)
+                    let storage = MiniAppSecureStorage(appId: miniAppId)
                     do {
-                        let fileSize: UInt64 = try MiniAppSecureStorage.size(for: miniAppId)
+                        let fileSize: UInt64 = try storage.size()
                         expect(fileSize).to(equal(42))
                     } catch {
                         fail("could not get fileSize")

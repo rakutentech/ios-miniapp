@@ -19,6 +19,9 @@ struct RequestParameters: Decodable {
     let filename: String?
     let url: String?
     let headers: DownloadHeaders?
+    let secureStorageKey: String?
+    let secureStorageItems: [String: String]?
+    let secureStorageKeyList: [String]?
 }
 
 struct LocationOptions: Decodable {

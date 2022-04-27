@@ -21,6 +21,11 @@ enum MiniAppJSActionCommand: String {
     case getPoints
     case getHostEnvironmentInfo
     case downloadFile
+    case getSecureStorageItem
+    case setSecureStorageItems
+    case removeSecureStorageItems
+    case clearSecureStorage
+    case getSecureStorageSize
 }
 
 enum JavaScriptExecResult: String {

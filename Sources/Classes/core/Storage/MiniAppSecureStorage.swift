@@ -1,7 +1,21 @@
 import Foundation
 import CryptoKit
 
-class MiniAppSecureStorage {
+public protocol MiniAppSecureStorageDelegate: AnyObject {
+    /// retrieve a value from the storage
+    func get(key: String) throws -> String?
+
+    /// add a key/value set and save it to the disk
+    func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?)
+
+    /// remove a set of keys from the storage and save it to disk
+    func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?)
+
+    /// retrieve the storage size in bytes
+    func size() throws -> UInt64
+}
+
+public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     let appId: String
     private var storage: [String: String]?
@@ -11,7 +25,7 @@ class MiniAppSecureStorage {
     private static let storageName: String = "securestorage"
     static var storageFullName: String { return storageName + ".plist" }
 
-    init(appId: String) {
+    public init(appId: String) {
         self.appId = appId
         try? setup(appId: appId)
     }
@@ -33,7 +47,7 @@ class MiniAppSecureStorage {
     }
 
     // MARK: - Load/Unload
-    func loadStorage(completion: ((Bool) -> Void)? = nil) {
+    public func loadStorage(completion: ((Bool) -> Void)? = nil) {
         isStoreLoading = true
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let strongSelf = self else { return }
@@ -55,13 +69,13 @@ class MiniAppSecureStorage {
     }
 
     // MARK: - Actions
-    func get(key: String) throws -> String? {
+    public func get(key: String) throws -> String? {
         guard let storage = storage else { throw MiniAppSecureStorageError.storageNotExistent }
         MiniAppLogger.d("🔑 Secure Storage: get '\(key)'")
         return storage[key]
     }
 
-    func set(dict: [String: String], completion: ((Result<Bool, Error>) -> Void)? = nil) {
+    public func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         guard storage != nil else {
             completion?(.failure(MiniAppSecureStorageError.storageNotExistent))
             return
@@ -82,7 +96,11 @@ class MiniAppSecureStorage {
                 try strongSelf.saveStoreToDisk()
             } catch let error {
                 strongSelf.isBusy = false
-                completion?(.failure(error))
+                if let error = error as? MiniAppSecureStorageError {
+                    completion?(.failure(error))
+                } else {
+                    completion?(.failure(.unknown(description: error.localizedDescription)))
+                }
                 return
             }
             DispatchQueue.main.async {
@@ -93,7 +111,7 @@ class MiniAppSecureStorage {
         }
     }
 
-    func remove(keys: [String], completion: ((Result<Bool, Error>) -> Void)? = nil) {
+    public func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         guard storage != nil else {
             completion?(.failure(MiniAppSecureStorageError.storageNotExistent))
             return
@@ -114,7 +132,11 @@ class MiniAppSecureStorage {
                 try strongSelf.saveStoreToDisk()
             } catch let error {
                 strongSelf.isBusy = false
-                completion?(.failure(error))
+                if let error = error as? MiniAppSecureStorageError {
+                    completion?(.failure(error))
+                } else {
+                    completion?(.failure(.unknown(description: error.localizedDescription)))
+                }
                 return
             }
             DispatchQueue.main.async {
@@ -170,12 +192,19 @@ class MiniAppSecureStorage {
         }
     }
 
-    static func clearSecureStorage(for miniAppId: String) throws {
+    public static func clearSecureStorage(for miniAppId: String) throws {
         MiniAppLogger.d("🔑 Secure Storage: destroy")
         try FileManager.default.removeItem(at: storagePath(appId: miniAppId))
     }
 
-    static func size(for miniAppId: String) throws -> UInt64 {
+    public func size() throws -> UInt64 {
+        let fileSize = MiniAppSecureStorage.storagePath(appId: appId).fileSize
+        guard fileSize > 0 else { throw MiniAppSecureStorageError.storageFileEmpty }
+        MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")
+        return fileSize
+    }
+
+    public static func storageSize(for miniAppId: String) throws -> UInt64 {
         let fileSize = MiniAppSecureStorage.storagePath(appId: miniAppId).fileSize
         guard fileSize > 0 else { throw MiniAppSecureStorageError.storageFileEmpty }
         MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")
@@ -183,8 +212,45 @@ class MiniAppSecureStorage {
     }
 }
 
-enum MiniAppSecureStorageError: Error {
+struct MiniAppSecureStorageSize: Codable {
+    let used: UInt64
+    let max: UInt64
+}
+
+public enum MiniAppSecureStorageError: Error, MiniAppErrorProtocol, Equatable {
+    case unknown(description: String)
     case storageNotExistent
     case storageFileEmpty
     case storageBusyProcessing
+    case storageKeyNotFound
+
+    var name: String {
+        switch self {
+        case .unknown:
+            return "unknown"
+        case .storageNotExistent:
+            return "storageNotExistent"
+        case .storageFileEmpty:
+            return "storageFileEmpty"
+        case .storageBusyProcessing:
+            return "storageBusyProcessing"
+        case .storageKeyNotFound:
+            return "storageKeyNotFound"
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .unknown(let description):
+            return description
+        case .storageNotExistent:
+            return "Storage does not exist"
+        case .storageFileEmpty:
+            return "Storage file is empty"
+        case .storageBusyProcessing:
+            return "Storage busy processing"
+        case .storageKeyNotFound:
+            return "Storage key not available"
+        }
+    }
 }

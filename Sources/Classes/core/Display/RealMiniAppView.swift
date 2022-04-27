@@ -1,5 +1,6 @@
 import WebKit
 
+// swiftlint:disable file_length
 internal class RealMiniAppView: UIView {
 
     internal var webView: WKWebView
@@ -125,6 +126,7 @@ internal class RealMiniAppView: UIView {
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self,
                                                                                    hostAppMessageDelegate: hostAppMessageDelegate,
                                                                                    adsDisplayer: adsDisplayer,
+                                                                                   secureStorageDelegate: self,
                                                                                    miniAppId: miniAppId,
                                                                                    miniAppTitle: self.miniAppTitle)
         webView.configuration.userContentController.addBridgingJavaScript()
@@ -386,5 +388,28 @@ extension RealMiniAppView: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         initialLoadCallback?(true)
         initialLoadCallback = nil
+    }
+}
+
+// MARK: - MiniAppSecureStorageDelegate
+extension RealMiniAppView: MiniAppSecureStorageDelegate {
+    func get(key: String) throws -> String? {
+        return try secureStorage.get(key: key)
+    }
+
+    func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
+        return secureStorage.set(dict: dict, completion: completion)
+    }
+
+    func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
+        return secureStorage.remove(keys: keys, completion: completion)
+    }
+
+    func size() throws -> UInt64 {
+        return try secureStorage.size()
+    }
+
+    static func clearSecureStorage(for miniAppId: String) throws {
+        try MiniAppSecureStorage.clearSecureStorage(for: miniAppId)
     }
 }
