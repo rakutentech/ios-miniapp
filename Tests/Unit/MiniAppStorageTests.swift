@@ -30,7 +30,7 @@ class MiniAppStorageTests: QuickSpec {
 
                 let miniAppId = "test-1234"
                 beforeEach {
-                    try? MiniAppSecureStorage.clearSecureStorage(for: miniAppId)
+                    try? MiniAppSecureStorage.wipeSecureStorages()
                     let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
                     let miniAppPath = cachePath.appendingPathComponent("/MiniApp").appendingPathComponent("/\(miniAppId)")
                     try? FileManager.default.createDirectory(at: miniAppPath, withIntermediateDirectories: true, attributes: nil)
@@ -130,7 +130,7 @@ class MiniAppStorageTests: QuickSpec {
                             case .success:
                                 fail("second operation should fail")
                             case let .failure(error):
-                                expect(error).to(equal(MiniAppSecureStorageError.storageBusyProcessing))
+                                expect(error).to(equal(MiniAppSecureStorageError.storageBusy))
                             }
                         }
                     }
@@ -139,18 +139,14 @@ class MiniAppStorageTests: QuickSpec {
 
                 it("will clear secure storage for miniapp") {
                     let secureStorageUrl = FileManager.getMiniAppDirectory(with: miniAppId).appendingPathComponent("/securestorage.plist")
-                    try? MiniAppSecureStorage.clearSecureStorage(for: miniAppId)
+                    try? MiniAppSecureStorage.wipeSecureStorages()
                     expect(FileManager.default.fileExists(atPath: secureStorageUrl.path)).to(beFalse())
                 }
 
                 it("will calculate size for an empty storage") {
                     let storage = MiniAppSecureStorage(appId: miniAppId)
-                    do {
-                        let fileSize: UInt64 = try storage.size()
-                        expect(fileSize).to(equal(42))
-                    } catch {
-                        fail("could not get fileSize")
-                    }
+                    let fileSize: UInt64 = storage.storageFileSize
+                    expect(fileSize).to(equal(42))
                 }
             }
         }

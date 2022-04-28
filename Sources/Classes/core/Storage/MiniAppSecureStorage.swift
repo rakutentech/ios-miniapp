@@ -34,7 +34,11 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     public init(appId: String) {
         self.appId = appId
-        try? setup(appId: appId)
+        do {
+            try setup(appId: appId)
+        } catch {
+            MiniAppLogger.d("🔑 Secure Storage: ❌❌❌ critical error setup did not complete")
+        }
     }
 
     deinit {
@@ -81,22 +85,22 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     // MARK: - Actions
     public func get(key: String) throws -> String? {
-        guard let storage = storage else { throw MiniAppSecureStorageError.storageNotExistent }
+        guard let storage = storage else { throw MiniAppSecureStorageError.storageUnvailable }
         MiniAppLogger.d("🔑 Secure Storage: get '\(key)'")
         return storage[key]
     }
 
     public func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         guard storageFileSize <= fileSizeLimit else {
-            completion?(.failure(MiniAppSecureStorageError.storageSizeExceeded))
+            completion?(.failure(MiniAppSecureStorageError.storageFullError))
             return
         }
         guard storage != nil else {
-            completion?(.failure(MiniAppSecureStorageError.storageNotExistent))
+            completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
             return
         }
         guard !isBusy else {
-            completion?(.failure(MiniAppSecureStorageError.storageBusyProcessing))
+            completion?(.failure(MiniAppSecureStorageError.storageBusy))
             return
         }
         isBusy = true
@@ -114,7 +118,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
                 if let error = error as? MiniAppSecureStorageError {
                     completion?(.failure(error))
                 } else {
-                    completion?(.failure(.unknown(description: error.localizedDescription)))
+                    completion?(.failure(.storageIOError))
                 }
                 return
             }
@@ -128,11 +132,11 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     public func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         guard storage != nil else {
-            completion?(.failure(MiniAppSecureStorageError.storageNotExistent))
+            completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
             return
         }
         guard !isBusy else {
-            completion?(.failure(MiniAppSecureStorageError.storageBusyProcessing))
+            completion?(.failure(MiniAppSecureStorageError.storageBusy))
             return
         }
         isBusy = true
@@ -150,7 +154,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
                 if let error = error as? MiniAppSecureStorageError {
                     completion?(.failure(error))
                 } else {
-                    completion?(.failure(.unknown(description: error.localizedDescription)))
+                    completion?(.failure(.storageIOError))
                 }
                 return
             }
@@ -178,7 +182,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     private func saveStoreToDisk(completion: (() -> Void)? = nil) throws {
-        guard let storage = storage else { throw MiniAppSecureStorageError.storageNotExistent }
+        guard let storage = storage else { throw MiniAppSecureStorageError.storageUnvailable }
         MiniAppLogger.d("🔑 Secure Storage: write store to disk")
         let secureStoragePath = MiniAppSecureStorage.storagePath(appId: appId)
         let secureStorageData = try PropertyListEncoder().encode(storage)
@@ -223,9 +227,8 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         return MiniAppSecureStorageSize(used: storageFileSize, max: fileSizeLimit)
     }
 
-    public static func storageSize(for miniAppId: String) throws -> UInt64 {
+    public static func storageSize(for miniAppId: String) -> UInt64 {
         let fileSize = MiniAppSecureStorage.storagePath(appId: miniAppId).fileSize
-        guard fileSize > 0 else { throw MiniAppSecureStorageError.storageFileEmpty }
         MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")
         return fileSize
     }
@@ -246,44 +249,35 @@ public struct MiniAppSecureStorageSize: Codable {
 }
 
 public enum MiniAppSecureStorageError: Error, MiniAppErrorProtocol, Equatable {
-    case unknown(description: String)
-    case storageNotExistent
-    case storageFileEmpty
-    case storageBusyProcessing
-    case storageKeyNotFound
-    case storageSizeExceeded
+
+    case storageFullError
+    case storageIOError
+    case storageUnvailable
+    case storageBusy
 
     var name: String {
         switch self {
-        case .unknown:
-            return "unknown"
-        case .storageNotExistent:
-            return "storageNotExistent"
-        case .storageFileEmpty:
-            return "storageFileEmpty"
-        case .storageBusyProcessing:
-            return "storageBusyProcessing"
-        case .storageKeyNotFound:
-            return "storageKeyNotFound"
-        case .storageSizeExceeded:
-            return "storageSizeExceeded"
+        case .storageFullError:
+            return "SecureStorageFullError"
+        case .storageIOError:
+            return "SecureStorageIOError"
+        case .storageUnvailable:
+            return "SecureStorageUnavailableError"
+        case .storageBusy:
+            return "SecureStorageBusyError"
         }
     }
 
     var description: String {
         switch self {
-        case .unknown(let description):
-            return description
-        case .storageNotExistent:
-            return "Storage does not exist"
-        case .storageFileEmpty:
-            return "Storage file is empty"
-        case .storageBusyProcessing:
-            return "Storage busy processing"
-        case .storageKeyNotFound:
-            return "Storage key not available"
-        case .storageSizeExceeded:
-            return "Storage size was exceeded"
+        case .storageFullError:
+            return "Storage size exceeded"
+        case .storageIOError:
+            return "IO or unknown error occured"
+        case .storageUnvailable:
+            return "StorageUnavailable"
+        case .storageBusy:
+            return "UnavailableItem"
         }
     }
 }

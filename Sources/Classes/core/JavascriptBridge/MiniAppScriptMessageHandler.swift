@@ -687,7 +687,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             let size = secureStorageDelegate?.size(),
             let encodedSize = ResponseEncoder.encode(data: size)
         else {
-            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppSecureStorageError.storageFileEmpty))
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppSecureStorageError.storageIOError))
             return
         }
         self.executeJavaScriptCallback(

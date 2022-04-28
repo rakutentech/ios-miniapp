@@ -897,7 +897,9 @@ class MockMiniAppSecureStorage: MiniAppSecureStorageDelegate {
         completion?(.success(true))
     }
 
-    func size() throws -> UInt64 {
-        return 42
+    func size() -> MiniAppSecureStorageSize {
+        return MiniAppSecureStorageSize(used: 0, max: 2_000_000)
     }
+
+    func clearSecureStorage() throws {}
 }
