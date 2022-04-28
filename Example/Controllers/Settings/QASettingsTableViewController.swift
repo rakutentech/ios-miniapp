@@ -12,7 +12,7 @@ class QASettingsTableViewController: RATTableViewController {
     @IBOutlet weak var accessTokenErrorControl: UISegmentedControl!
     @IBOutlet weak var accessTokenErrorCustomMessage: UITextField!
     @IBOutlet weak var wipeSecureStorageButton: UIButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         switch Self.accessTokenErrorType() {
@@ -56,14 +56,13 @@ class QASettingsTableViewController: RATTableViewController {
             let alertVc = UIAlertController(title: "Success", message: "All stores were wiped successfully!", preferredStyle: .alert)
             alertVc.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
             present(alertVc, animated: true, completion: nil)
-            
         } catch let error {
             let alertVc = UIAlertController(title: "Failure", message: error.localizedDescription, preferredStyle: .alert)
             alertVc.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
             present(alertVc, animated: true, completion: nil)
         }
     }
-    
+
     func setCustomTokenErrorMessage() {
         if let text = accessTokenErrorCustomMessage.text, !text.isEmpty {
             print(text)
