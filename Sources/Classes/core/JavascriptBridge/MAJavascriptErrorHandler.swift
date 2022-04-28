@@ -30,3 +30,7 @@ func prepareMAJavascriptError<T: MiniAppErrorProtocol>(_ error: T) -> String {
 func prepareMAJSGeolocationError(error: MAJSNaviGeolocationError) -> String {
     return prepareJSONString(MAJSLocationErrorResponseModel(code: error.code, message: error.message))
 }
+
+func prepareMAJSDownloadFileError(error: MASDKDownloadFileError) -> String {
+    return prepareJSONString(MAJSDownloadFileErrorResponseModel(type: error.name, message: error.description, code: error.code))
+}

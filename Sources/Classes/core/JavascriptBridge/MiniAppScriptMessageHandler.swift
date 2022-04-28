@@ -579,7 +579,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     self.executeJavaScriptCallback(
                         responseStatus: .onError,
                         messageId: callbackId,
-                        response: prepareMAJavascriptError(error)
+                        response: prepareMAJSDownloadFileError(error: error)
                     )
                 }
             }
