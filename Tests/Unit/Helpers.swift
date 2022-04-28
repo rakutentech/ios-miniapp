@@ -883,3 +883,23 @@ func getExampleBase64String() -> String {
     // swiftlint:disable:next line_length
     return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAADUlEQVQIHWNgYGD4DwABBAEAHnOcQAAAAABJRU5ErkJggg=="
 }
+
+class MockMiniAppSecureStorage: MiniAppSecureStorageDelegate {
+    func get(key: String) throws -> String? {
+        return ""
+    }
+
+    func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
+        completion?(.success(true))
+    }
+
+    func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
+        completion?(.success(true))
+    }
+
+    func size() -> MiniAppSecureStorageSize {
+        return MiniAppSecureStorageSize(used: 0, max: 2_000_000)
+    }
+
+    func clearSecureStorage() throws {}
+}

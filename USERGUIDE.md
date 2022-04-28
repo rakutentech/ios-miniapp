@@ -123,6 +123,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [Send message to contacts](#send-message-to-contacts)
     * [Retrieve points](#retrieve-points)
     * [File Download](#file-download)
+    * [Secure Storage](#secure-storage)
 * [Load the Mini App list](#load-miniapp-list)
 * [Get a MiniAppInfo](#get-mini-appinfo)
 * [Mini App meta-data](#mini-meta-data)
@@ -558,6 +559,28 @@ extension ViewController: MiniAppMessageDelegate {
 
 Support to download files of base64 urls.  
 It's necessary to allow the `File Download` custom permission to make file downloads available.
+
+<a id="secure-storage"></a>
+
+###### Secure Storage
+
+Allows MiniApps to store data safely in a key/value store.
+
+Use `MiniAppMessageDelegate` new method `getSecureStorageSizeLimit` to define the maximum file size for the storage in bytes.
+When no maximum storage size is set the default value will be 2_000_000 (2Mb). 
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getSecureStorageSizeLimit(completionHandler: @escaping (Result<UInt64, MASDKError>) -> Void) {
+        completion(.success(25_000_000))
+    }
+}
+```
+
+Use `wipeSecureStorages` to delete all secure storages stored on the device.
+```swift
+MiniAppSecureStorage.wipeSecureStorages()
+```
 
 <a id="load-miniapp-list"></a>
 

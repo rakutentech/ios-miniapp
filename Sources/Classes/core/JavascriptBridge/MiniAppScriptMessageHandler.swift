@@ -16,18 +16,27 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     weak var delegate: MiniAppCallbackDelegate?
     weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     weak var adsDelegate: MiniAppAdDisplayDelegate?
+    weak var secureStorageDelegate: MiniAppSecureStorageDelegate?
     var miniAppId: String
     var miniAppTitle: String
     var userAlreadyRespondedRequestList = [MASDKCustomPermissionModel]()
     var cachedUnknownCustomPermissionRequest = [MiniAppCustomPermissionsListResponse]()
     var permissionsNotAddedInManifest = [MASDKCustomPermissionModel]()
     var miniAppKeyStore = MiniAppPermissionsStorage()
-    init(delegate: MiniAppCallbackDelegate, hostAppMessageDelegate: MiniAppMessageDelegate, adsDisplayer: MiniAppAdDisplayer?, miniAppId: String, miniAppTitle: String) {
+    init(
+        delegate: MiniAppCallbackDelegate,
+        hostAppMessageDelegate: MiniAppMessageDelegate,
+        adsDisplayer: MiniAppAdDisplayer?,
+        secureStorageDelegate: MiniAppSecureStorageDelegate,
+        miniAppId: String,
+        miniAppTitle: String
+    ) {
         self.delegate = delegate
         self.hostAppMessageDelegate = hostAppMessageDelegate
         self.miniAppId = miniAppId
         self.miniAppTitle = miniAppTitle
         self.adsDelegate = adsDisplayer
+        self.secureStorageDelegate = secureStorageDelegate
         super.init()
     }
 
@@ -51,7 +60,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         handleActionCommand(action: requestAction, requestParam: requestParam, callbackId: callbackId)
     }
 
-    // swiftlint:disable function_body_length
+    // swiftlint:disable function_body_length cyclomatic_complexity
     func handleActionCommand(action: MiniAppJSActionCommand, requestParam: RequestParameters?, callbackId: String) {
         MiniAppAnalytics.sendAnalytics(command: action)
         switch action {
@@ -96,6 +105,16 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             getEnvironmentInfo(with: callbackId)
         case .downloadFile:
             downloadFile(with: callbackId, parameters: requestParam)
+        case .getSecureStorageItem:
+            getSecureStorageItem(with: callbackId, parameters: requestParam)
+        case .setSecureStorageItems:
+            setSecureStorageItems(with: callbackId, parameters: requestParam)
+        case .removeSecureStorageItems:
+            removeSecureStorageItems(with: callbackId, parameters: requestParam)
+        case .clearSecureStorage:
+            clearSecureStorage(with: callbackId, parameters: requestParam)
+        case .getSecureStorageSize:
+            getSecureStorageSize(with: callbackId, parameters: requestParam)
         }
     }
 
@@ -584,6 +603,98 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 }
             }
         }
+    }
+
+    func getSecureStorageItem(with callbackId: String, parameters: RequestParameters?) {
+        if let key = parameters?.secureStorageKey {
+            do {
+                if let value = try secureStorageDelegate?.get(key: key) {
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onSuccess,
+                        messageId: callbackId,
+                        response: value
+                    )
+                } else {
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onSuccess,
+                        messageId: callbackId,
+                        response: "null"
+                    )
+                }
+            } catch let error {
+                if let error = error as? MiniAppSecureStorageError {
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
+                } else {
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.internalError))
+                }
+            }
+        }
+    }
+
+    func setSecureStorageItems(with callbackId: String, parameters: RequestParameters?) {
+        if let dict = parameters?.secureStorageItems {
+            secureStorageDelegate?.set(dict: dict, completion: { result in
+                switch result {
+                case .success:
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onSuccess,
+                        messageId: callbackId,
+                        response: "success"
+                    )
+                case let .failure(error):
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
+                }
+            })
+        }
+    }
+
+    func removeSecureStorageItems(with callbackId: String, parameters: RequestParameters?) {
+        if let keys = parameters?.secureStorageKeyList {
+            secureStorageDelegate?.remove(keys: keys, completion: { result in
+                switch result {
+                case .success:
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onSuccess,
+                        messageId: callbackId,
+                        response: "success"
+                    )
+                case let .failure(error):
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
+                }
+            })
+        }
+    }
+
+    func clearSecureStorage(with callbackId: String, parameters: RequestParameters?) {
+        do {
+            try secureStorageDelegate?.clearSecureStorage()
+            self.executeJavaScriptCallback(
+                responseStatus: .onSuccess,
+                messageId: callbackId,
+                response: "success"
+            )
+        } catch let error {
+            if let error = error as? MiniAppSecureStorageError {
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
+            } else {
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.internalError))
+            }
+        }
+    }
+
+    func getSecureStorageSize(with callbackId: String, parameters: RequestParameters?) {
+        guard
+            let size = secureStorageDelegate?.size(),
+            let encodedSize = ResponseEncoder.encode(data: size)
+        else {
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppSecureStorageError.storageIOError))
+            return
+        }
+        self.executeJavaScriptCallback(
+            responseStatus: .onSuccess,
+            messageId: callbackId,
+            response: encodedSize
+        )
     }
 
     private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {

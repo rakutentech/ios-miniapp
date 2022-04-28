@@ -1,5 +1,6 @@
 import WebKit
 
+// swiftlint:disable file_length
 internal class RealMiniAppView: UIView {
 
     internal var webView: WKWebView
@@ -27,6 +28,8 @@ internal class RealMiniAppView: UIView {
     var canGoBackObservation: NSKeyValueObservation?
     var canGoForwardObservation: NSKeyValueObservation?
 
+    let secureStorage: MiniAppSecureStorage
+
     init(
         miniAppId: String,
         versionId: String,
@@ -48,6 +51,7 @@ internal class RealMiniAppView: UIView {
         self.miniAppVersion = versionId
         self.projectId = projectId
         self.analyticsConfig = analyticsConfig
+        self.secureStorage = MiniAppSecureStorage(appId: miniAppId)
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -68,6 +72,7 @@ internal class RealMiniAppView: UIView {
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
         analyticsConfig: [MAAnalyticsConfig]? = []) {
 
+        let miniAppId = "custom\(Int32.random(in: 0...Int32.max))" // some id is needed to handle permissions
         self.miniAppTitle = miniAppTitle
         self.miniAppURL = miniAppURL
         self.initialLoadCallback = initialLoadCallback
@@ -76,8 +81,9 @@ internal class RealMiniAppView: UIView {
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
         self.analyticsConfig = analyticsConfig
+        self.secureStorage = MiniAppSecureStorage(appId: miniAppId)
         super.init(frame: .zero)
-        commonInit(miniAppId: "custom\(Int32.random(in: 0...Int32.max))", // some id is needed to handle permissions
+        commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
                    adsDisplayer: adsDisplayer,
                    navigationDelegate: navigationDelegate,
@@ -98,6 +104,7 @@ internal class RealMiniAppView: UIView {
         }
     }
 
+    // swiftlint:disable function_body_length
     private func commonInit(
         miniAppId: String,
         hostAppMessageDelegate: MiniAppMessageDelegate,
@@ -120,6 +127,7 @@ internal class RealMiniAppView: UIView {
         webView.configuration.userContentController.addMiniAppScriptMessageHandler(delegate: self,
                                                                                    hostAppMessageDelegate: hostAppMessageDelegate,
                                                                                    adsDisplayer: adsDisplayer,
+                                                                                   secureStorageDelegate: self,
                                                                                    miniAppId: miniAppId,
                                                                                    miniAppTitle: self.miniAppTitle)
         webView.configuration.userContentController.addBridgingJavaScript()
@@ -138,6 +146,23 @@ internal class RealMiniAppView: UIView {
         MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
         initExternalWebViewClosures()
         observeWebView()
+
+        hostAppMessageDelegate.getSecureStorageSizeLimit { result in
+            switch result {
+            case .success(let size):
+                self.secureStorage.fileSizeLimit = size
+            case .failure(let error):
+                MiniAppLogger.d("Could not set a file size limit. \(error)")
+            }
+        }
+
+        secureStorage.loadStorage { success in
+            if success {
+                MiniAppSecureStorage.sendLoadStorageReady()
+            } else {
+                MiniAppSecureStorage.sendLoadStorageError()
+            }
+        }
     }
 
     func observeWebView() {
@@ -242,6 +267,7 @@ internal class RealMiniAppView: UIView {
         UIViewController.attemptRotationToDeviceOrientation()
         webView.configuration.userContentController.removeMessageHandler()
         NotificationCenter.default.removeObserver(self)
+        secureStorage.unloadStorage()
     }
 
     func validateScheme(requestURL: URL, navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -376,5 +402,28 @@ extension RealMiniAppView: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         initialLoadCallback?(true)
         initialLoadCallback = nil
+    }
+}
+
+// MARK: - MiniAppSecureStorageDelegate
+extension RealMiniAppView: MiniAppSecureStorageDelegate {
+    func get(key: String) throws -> String? {
+        return try secureStorage.get(key: key)
+    }
+
+    func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
+        return secureStorage.set(dict: dict, completion: completion)
+    }
+
+    func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
+        return secureStorage.remove(keys: keys, completion: completion)
+    }
+
+    func size() -> MiniAppSecureStorageSize {
+        return secureStorage.size()
+    }
+
+    func clearSecureStorage() throws {
+        try secureStorage.clearSecureStorage()
     }
 }

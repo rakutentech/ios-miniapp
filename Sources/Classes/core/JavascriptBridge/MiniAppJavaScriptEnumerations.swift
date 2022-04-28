@@ -21,6 +21,11 @@ enum MiniAppJSActionCommand: String {
     case getPoints
     case getHostEnvironmentInfo
     case downloadFile
+    case getSecureStorageItem
+    case setSecureStorageItems
+    case removeSecureStorageItems
+    case clearSecureStorage
+    case getSecureStorageSize
 }
 
 enum JavaScriptExecResult: String {
@@ -126,6 +131,8 @@ public enum MiniAppEvent: String {
     case externalWebViewClosed = "miniappwebviewclosed"
     case pause = "miniapppause"
     case resume = "miniappresume"
+    case secureStorageReady = "miniappsecurestorageready"
+    case secureStorageError = "miniappsecurestorageloaderror"
 
     public static let notificationName = Notification.Name("MiniAppNotificationEvent")
 

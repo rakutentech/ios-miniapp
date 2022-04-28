@@ -11,6 +11,7 @@ class QASettingsTableViewController: RATTableViewController {
     public static let preferenceAccessTokenMessage = "QA_CUSTOM_ACCESS_TOKEN_ERROR_MESSAGE"
     @IBOutlet weak var accessTokenErrorControl: UISegmentedControl!
     @IBOutlet weak var accessTokenErrorCustomMessage: UITextField!
+    @IBOutlet weak var wipeSecureStorageButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +48,19 @@ class QASettingsTableViewController: RATTableViewController {
             UserDefaults.standard.removeObject(forKey: Self.preferenceAccessTokenBehavior)
         }
         setCustomTokenErrorMessage()
+    }
+
+    @IBAction func onWipeSecureStoragesPressed(_ sender: Any) {
+        do {
+            try MiniAppSecureStorage.wipeSecureStorages()
+            let alertVc = UIAlertController(title: "Success", message: "All stores were wiped successfully!", preferredStyle: .alert)
+            alertVc.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            present(alertVc, animated: true, completion: nil)
+        } catch let error {
+            let alertVc = UIAlertController(title: "Failure", message: error.localizedDescription, preferredStyle: .alert)
+            alertVc.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            present(alertVc, animated: true, completion: nil)
+        }
     }
 
     func setCustomTokenErrorMessage() {

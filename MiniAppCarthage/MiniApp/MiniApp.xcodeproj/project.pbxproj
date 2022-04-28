@@ -125,6 +125,7 @@
 		31FA603E2761B8660070B611 /* MiniApp.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31FA5EC727608D1A0070B611 /* MiniApp.xcassets */; };
 		31FA60452761F71A0070B611 /* Localization.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 31FA60182761945A0070B611 /* Localization.bundle */; };
 		31FA60462761F71A0070B611 /* MiniApp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 31FA60342761A4370070B611 /* MiniApp.bundle */; };
+		F79023D128125749000A8A4C /* MiniAppSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -310,6 +311,7 @@
 		31FA60342761A4370070B611 /* MiniApp.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FA60372761B06B0070B611 /* log.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = log.js; sourceTree = "<group>"; };
 		31FA60382761B06B0070B611 /* bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bridge.js; sourceTree = "<group>"; };
+		F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -555,6 +557,7 @@
 				31FA5E9027608D1A0070B611 /* MAManifestStorage.swift */,
 				31FA5E9127608D1A0070B611 /* MiniAppKeyChain.swift */,
 				31FA5E9227608D1A0070B611 /* MiniAppCacheVerifier.swift */,
+				F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -989,6 +992,7 @@
 				31FA5F0127608D1B0070B611 /* ManifestResponse.swift in Sources */,
 				31FA5F4E27608D1B0070B611 /* SignatureVerifier.swift in Sources */,
 				31FA5F3227608D1B0070B611 /* CustomPermissionsRequestViewController.swift in Sources */,
+				F79023D128125749000A8A4C /* MiniAppSecureStorage.swift in Sources */,
 				31FA5EFB27608D1B0070B611 /* MiniAppInfoFetcher.swift in Sources */,
 				31FA5EF827608D1B0070B611 /* MiniAppClient.swift in Sources */,
 				31FA5F2327608D1B0070B611 /* MASDKLocale.swift in Sources */,

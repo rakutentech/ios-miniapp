@@ -31,6 +31,9 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
 
     /// Interface that is used to download files
     func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void)
+
+    /// Interface that is used to limit the secure storage size in bytes
+    func getSecureStorageSizeLimit(completionHandler: @escaping (Result<UInt64, MASDKError>) -> Void)
 }
 
 public extension MiniAppMessageDelegate {
@@ -73,6 +76,10 @@ public extension MiniAppMessageDelegate {
     }
 
     func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
+
+    func getSecureStorageSizeLimit(completionHandler: @escaping (Result<UInt64, MASDKError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }

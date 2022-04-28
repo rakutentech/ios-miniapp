@@ -31,6 +31,11 @@ internal enum MiniAppRATEvent: String, CaseIterable {
     case sendMessageToMultipleContacts = "mini_app_send_message_to_multiple_contacts"
     case getEnvironemtnInfo = "mini_app_get_environment_info"
     case downloadFile = "mini_app_download_file"
+    case getSecureStorageItem = "mini_app_secure_storage_get_item"
+    case setSecureStorageItems = "mini_app_secure_storage_set_items"
+    case removeSecureStorageItems = "mini_app_secure_storage_remove_items"
+    case clearSecureStorage = "mini_app_secure_storage_clear"
+    case getSecureStorageSize = "mini_app_secure_storage_size"
 
     func name() -> String {
         "mini_app_\(rawValue)"
@@ -63,7 +68,12 @@ internal enum MiniAppRATEvent: String, CaseIterable {
              .sendMessageToContactId,
              .sendMessageToMultipleContacts,
              .getEnvironemtnInfo,
-             .downloadFile:
+             .downloadFile,
+             .getSecureStorageItem,
+             .setSecureStorageItems,
+             .removeSecureStorageItems,
+             .clearSecureStorage,
+             .getSecureStorageSize:
             return .click
         }
     }
@@ -137,7 +147,7 @@ public class MiniAppAnalytics {
         sendAnalytics(event: ratEvent)
     }
 
-    // swiftlint:disable function_body_length
+    // swiftlint:disable function_body_length cyclomatic_complexity
     private class func getRatEvent(for command: MiniAppJSActionCommand) -> MiniAppRATEvent? {
         switch command {
         case .getUniqueId:
@@ -180,6 +190,16 @@ public class MiniAppAnalytics {
             return .getEnvironemtnInfo
         case .downloadFile:
             return .downloadFile
+        case .getSecureStorageItem:
+            return .getSecureStorageItem
+        case .setSecureStorageItems:
+            return .setSecureStorageItems
+        case .removeSecureStorageItems:
+            return .removeSecureStorageItems
+        case .clearSecureStorage:
+            return .clearSecureStorage
+        case .getSecureStorageSize:
+            return .getSecureStorageSize
         }
     }
 }
