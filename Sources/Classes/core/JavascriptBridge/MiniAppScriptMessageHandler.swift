@@ -639,7 +639,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     self.executeJavaScriptCallback(
                         responseStatus: .onSuccess,
                         messageId: callbackId,
-                        response: ""
+                        response: "success"
                     )
                 case let .failure(error):
                     self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
@@ -656,7 +656,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     self.executeJavaScriptCallback(
                         responseStatus: .onSuccess,
                         messageId: callbackId,
-                        response: ""
+                        response: "success"
                     )
                 case let .failure(error):
                     self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
@@ -667,28 +667,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func clearSecureStorage(with callbackId: String, parameters: RequestParameters?) {
         do {
-            try MiniAppSecureStorage.clearSecureStorage(for: "")
+            try secureStorageDelegate?.clearSecureStorage()
             self.executeJavaScriptCallback(
                 responseStatus: .onSuccess,
                 messageId: callbackId,
-                response: ""
-            )
-        } catch let error {
-            if let error = error as? MiniAppSecureStorageError {
-                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
-            } else {
-                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.internalError))
-            }
-        }
-    }
-
-    func clearAllSecureStorages(with callbackId: String, parameters: RequestParameters?) {
-        do {
-            try MiniAppSecureStorage.clearSecureStorage()
-            self.executeJavaScriptCallback(
-                responseStatus: .onSuccess,
-                messageId: callbackId,
-                response: ""
+                response: "success"
             )
         } catch let error {
             if let error = error as? MiniAppSecureStorageError {

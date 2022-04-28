@@ -13,6 +13,9 @@ public protocol MiniAppSecureStorageDelegate: AnyObject {
 
     /// retrieve the storage size in bytes
     func size() throws -> UInt64
+
+    /// clears the current storage
+    func clearSecureStorage() throws
 }
 
 public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
@@ -76,6 +79,10 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     public func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
+        guard let size = try? size(), size < 2_000_000 else {
+            completion?(.failure(MiniAppSecureStorageError.storageSizeExceeded))
+            return
+        }
         guard storage != nil else {
             completion?(.failure(MiniAppSecureStorageError.storageNotExistent))
             return
@@ -172,7 +179,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     // MARK: - Clear
-    static func clearSecureStorage() throws {
+    public static func wipeSecureStorages() throws {
         MiniAppLogger.d("🔑 Secure Storage: destroy")
         let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         let miniAppPath = cachePath.appendingPathComponent("/MiniApp/")
@@ -192,9 +199,9 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         }
     }
 
-    public static func clearSecureStorage(for miniAppId: String) throws {
+    public func clearSecureStorage() throws {
         MiniAppLogger.d("🔑 Secure Storage: destroy")
-        try FileManager.default.removeItem(at: storagePath(appId: miniAppId))
+        try FileManager.default.removeItem(at: MiniAppSecureStorage.storagePath(appId: appId))
     }
 
     public func size() throws -> UInt64 {
@@ -223,6 +230,7 @@ public enum MiniAppSecureStorageError: Error, MiniAppErrorProtocol, Equatable {
     case storageFileEmpty
     case storageBusyProcessing
     case storageKeyNotFound
+    case storageSizeExceeded
 
     var name: String {
         switch self {
@@ -236,6 +244,8 @@ public enum MiniAppSecureStorageError: Error, MiniAppErrorProtocol, Equatable {
             return "storageBusyProcessing"
         case .storageKeyNotFound:
             return "storageKeyNotFound"
+        case .storageSizeExceeded:
+            return "storageSizeExceeded"
         }
     }
 
@@ -251,6 +261,8 @@ public enum MiniAppSecureStorageError: Error, MiniAppErrorProtocol, Equatable {
             return "Storage busy processing"
         case .storageKeyNotFound:
             return "Storage key not available"
+        case .storageSizeExceeded:
+            return "Storage size was exceeded"
         }
     }
 }

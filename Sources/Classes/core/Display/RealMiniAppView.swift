@@ -413,7 +413,7 @@ extension RealMiniAppView: MiniAppSecureStorageDelegate {
         return try secureStorage.size()
     }
 
-    static func clearSecureStorage(for miniAppId: String) throws {
-        try MiniAppSecureStorage.clearSecureStorage(for: miniAppId)
+    func clearSecureStorage() throws {
+        try secureStorage.clearSecureStorage()
     }
 }
