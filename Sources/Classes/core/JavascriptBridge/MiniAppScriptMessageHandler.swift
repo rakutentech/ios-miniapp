@@ -615,7 +615,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                         response: value
                     )
                 } else {
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppSecureStorageError.storageKeyNotFound))
+                    self.executeJavaScriptCallback(
+                        responseStatus: .onSuccess,
+                        messageId: callbackId,
+                        response: "null"
+                    )
                 }
             } catch let error {
                 if let error = error as? MiniAppSecureStorageError {
