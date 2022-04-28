@@ -579,7 +579,6 @@ extension ViewController: MiniAppMessageDelegate {
 Use `wipeSecureStorages` to delete all secure storages stored on the device.
 ```swift
 MiniAppSecureStorage.wipeSecureStorages()
-}
 ```
 
 <a id="load-miniapp-list"></a>
