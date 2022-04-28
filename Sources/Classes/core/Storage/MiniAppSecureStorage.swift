@@ -37,6 +37,10 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         try? setup(appId: appId)
     }
 
+    deinit {
+        MiniAppLogger.d("🔑 Secure Storage: deinit")
+    }
+
     private func setup(appId: String) throws {
         let secureStoragePath = MiniAppSecureStorage.storagePath(appId: appId)
         MiniAppLogger.d("🔑 Secure Storage: \(secureStoragePath)")
