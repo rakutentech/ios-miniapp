@@ -12,7 +12,7 @@ public protocol MiniAppSecureStorageDelegate: AnyObject {
     func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?)
 
     /// retrieve the storage size in bytes
-    func size() throws -> UInt64
+    func size() -> MiniAppSecureStorageSize
 
     /// clears the current storage
     func clearSecureStorage() throws
@@ -21,6 +21,10 @@ public protocol MiniAppSecureStorageDelegate: AnyObject {
 public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     let appId: String
+
+    /// file size defined in bytes
+    var fileSizeLimit: UInt64 = 2_000_000
+
     private var storage: [String: String]?
     private var isStoreLoading: Bool = false
     var isBusy: Bool = false
@@ -79,7 +83,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     public func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
-        guard let size = try? size(), size < 2_000_000 else {
+        guard storageFileSize <= fileSizeLimit else {
             completion?(.failure(MiniAppSecureStorageError.storageSizeExceeded))
             return
         }
@@ -204,11 +208,15 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         try FileManager.default.removeItem(at: MiniAppSecureStorage.storagePath(appId: appId))
     }
 
-    public func size() throws -> UInt64 {
+    // MARK: - Size
+    var storageFileSize: UInt64 {
         let fileSize = MiniAppSecureStorage.storagePath(appId: appId).fileSize
-        guard fileSize > 0 else { throw MiniAppSecureStorageError.storageFileEmpty }
         MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")
         return fileSize
+    }
+
+    public func size() -> MiniAppSecureStorageSize {
+        return MiniAppSecureStorageSize(used: storageFileSize, max: fileSizeLimit)
     }
 
     public static func storageSize(for miniAppId: String) throws -> UInt64 {
@@ -219,7 +227,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 }
 
-struct MiniAppSecureStorageSize: Codable {
+public struct MiniAppSecureStorageSize: Codable {
     let used: UInt64
     let max: UInt64
 }

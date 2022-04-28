@@ -146,6 +146,15 @@ internal class RealMiniAppView: UIView {
         initExternalWebViewClosures()
         observeWebView()
 
+        hostAppMessageDelegate.getSecureStorageSizeLimit { result in
+            switch result {
+            case .success(let size):
+                self.secureStorage.fileSizeLimit = size
+            case .failure(let error):
+                MiniAppLogger.d("Could not set a file size limit. \(error)")
+            }
+        }
+
         secureStorage.loadStorage { success in
             if success {
                 NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageReady, comment: "MiniApp Secure Storage Ready"))
@@ -409,8 +418,8 @@ extension RealMiniAppView: MiniAppSecureStorageDelegate {
         return secureStorage.remove(keys: keys, completion: completion)
     }
 
-    func size() throws -> UInt64 {
-        return try secureStorage.size()
+    func size() -> MiniAppSecureStorageSize {
+        return secureStorage.size()
     }
 
     func clearSecureStorage() throws {

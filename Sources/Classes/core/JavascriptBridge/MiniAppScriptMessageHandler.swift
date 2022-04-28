@@ -683,26 +683,18 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func getSecureStorageSize(with callbackId: String, parameters: RequestParameters?) {
-        do {
-            guard
-                let size = try secureStorageDelegate?.size(),
-                let encodedSize = ResponseEncoder.encode(data: MiniAppSecureStorageSize(used: size, max: UInt64(50_000_000)))
-            else {
-                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.internalError))
-                return
-            }
-            self.executeJavaScriptCallback(
-                responseStatus: .onSuccess,
-                messageId: callbackId,
-                response: encodedSize
-            )
-        } catch let error {
-            if let error = error as? MiniAppSecureStorageError {
-                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
-            } else {
-                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.internalError))
-            }
+        guard
+            let size = secureStorageDelegate?.size(),
+            let encodedSize = ResponseEncoder.encode(data: size)
+        else {
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppSecureStorageError.storageFileEmpty))
+            return
         }
+        self.executeJavaScriptCallback(
+            responseStatus: .onSuccess,
+            messageId: callbackId,
+            response: encodedSize
+        )
     }
 
     private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {
