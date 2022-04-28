@@ -8,6 +8,12 @@ internal struct MAJSLocationErrorResponseModel: Codable {
     var message: String?
 }
 
+internal struct MAJSDownloadFileErrorResponseModel: Codable {
+    var type: String
+    var message: String
+    var code: Int?
+}
+
 enum MiniAppErrorType: String, Codable, MiniAppErrorProtocol {
     case hostAppError
     case unknownError
@@ -236,13 +242,14 @@ enum MAJSNaviGeolocationError: Error {
 }
 
 /// Enumeration that is used to return DownloadFile error
-public enum MASDKDownloadFileError: Error, MiniAppErrorProtocol {
+public enum MASDKDownloadFileError: Error {
 
     /// Host app failed to implement required interface
     ///
     case failedToConformToProtocol
     case invalidUrl
     case downloadFailed(code: Int?, reason: String)
+    case downloadHttpError(code: Int, reason: String)
     case saveTemporarilyFailed
     case error(description: String)
 
@@ -253,12 +260,26 @@ public enum MASDKDownloadFileError: Error, MiniAppErrorProtocol {
             return MASDKLocale.localize(.failedToConformToProtocol)
         case .invalidUrl:
             return MASDKLocale.localize(.invalidUrl)
-        case .downloadFailed(let code, let reason):
-            return "\(code ?? -1): \(reason); (\(MASDKLocale.localize(.downloadFailed))"
+        case .downloadFailed(_, let reason):
+            return  "\(reason); \(MASDKLocale.localize(.downloadFailed))"
+        case .downloadHttpError(_, let reason):
+            return "\(reason); \(MASDKLocale.localize(.downloadFailed))"
         case .saveTemporarilyFailed:
             return MASDKLocale.localize(.unknownError)
         case .error(let description):
             return description
+        }
+    }
+
+    /// Status code in the case of HTTP error
+    public var code: Int? {
+        switch self {
+        case .downloadFailed(let code, _):
+            return code
+        case .downloadHttpError(let code, _):
+            return code
+        default:
+            return nil
         }
     }
 
@@ -268,11 +289,13 @@ public enum MASDKDownloadFileError: Error, MiniAppErrorProtocol {
         case .failedToConformToProtocol:
             return "FailedToConformToProtocol"
         case .invalidUrl:
-            return "InvalidUrl"
+            return "InvalidUrlError"
         case .downloadFailed:
-            return "DownloadFailed"
+            return "DownloadFailedError"
+        case .downloadHttpError:
+            return "DownloadHttpError"
         case .saveTemporarilyFailed:
-            return "SaveTemporarilyFailed"
+            return "SaveFailureError"
         case .error:
             return ""
         }

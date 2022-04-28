@@ -4,11 +4,15 @@
 
 **SDK**
 - **Feature:** Added a new interface `getMessagingUnique` in `MiniAppMessageDelegate` for future support of MAUID v2 and another interface `getMauid` in `MiniAppMessageDelegate` for retrieving the MAUID
+- **Feature:** Added file download error type for HTTP errors: `MASDKDownloadFileError.downloadHttpError`.
+- **Fix:** Updated error type names for `MASDKDownloadFileError` so that they are correctly parsed by JS SDK.
 - **Feature:** Added `MiniAppSecureStorage` for MiniApps to store data safely. `MiniAppMessageDelegate` was extended by `getSecureStorageSizeLimit` to define the maximum space in bytes for the secure storage to operate in.
 
 **Sample app**
 - **Enhancement:** Added `GET MESSAGING UNIQUE ID` and `GET MAUID` for retrieving the ID's. (Messaging Unique ID for now will return the same as Unique ID)
 - **Enhancement:** Added a `Wipe Secure Storages` button to Settings/QA to remove all secure storages
+- **Enhancement:** Added `GET MESSAGING UNIQUE ID` and `GET MAUID` for retrieving the ID's. (Messaging Unique ID for now will return the same as Unique ID)
+- **Feature:** Added support for Mini Apps to download Base64 `data:` URIs with the `MiniApp.downloadFile` feature.
 
 ### 4.1.0 (2022-04-11)
 
