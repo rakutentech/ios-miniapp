@@ -65,12 +65,6 @@ extension ViewController: MiniAppUserInfoDelegate {
         let fileNameParts = fileName.split(separator: ".")
         let fileName = String(fileNameParts[0])
         let fileExtension = String(fileNameParts[1])
-        guard
-            let url = URL(string: url)
-        else {
-            completionHandler(.failure(MASDKDownloadFileError.invalidUrl))
-            return
-        }
         download(url: url, headers: headers) { [weak self] result in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -92,39 +86,56 @@ extension ViewController: MiniAppUserInfoDelegate {
         }
     }
 
-    func download(url: URL, headers: DownloadHeaders, completion: ((Result<Data, MASDKDownloadFileError>) -> Void)? = nil) {
-        let session = URLSession.shared
-        var request = URLRequest(url: url)
-        headers.forEach({ request.addValue($0.value, forHTTPHeaderField: $0.key) })
-        let task = session.downloadTask(with: request) { (tempFileUrl, response, error) in
-            if let error = error {
-                completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: error.localizedDescription)))
-                return
-            }
+    func download(url: String, headers: DownloadHeaders, completion: ((Result<Data, MASDKDownloadFileError>) -> Void)? = nil) {
+        if Base64UriHelper.isBase64String(text: url) {
             guard
-                let statusCode = (response as? HTTPURLResponse)?.statusCode
+                let data = Base64UriHelper.decodeBase64String(text: url)
             else {
-                completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: "no status code")))
-                return
-            }
-            guard
-                statusCode >= 200 && statusCode <= 300
-            else {
-                let reason = HTTPURLResponse.localizedString(forStatusCode: statusCode)
-                completion?(.failure(MASDKDownloadFileError.downloadHttpError(code: statusCode, reason: reason)))
-                return
-            }
-            guard
-                let tempFileUrl = tempFileUrl,
-                    let data = try? Data(contentsOf: tempFileUrl)
-            else {
-                completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: "could not load local data")))
+                completion?(.failure(MASDKDownloadFileError.invalidUrl))
                 return
             }
 
             completion?(.success(data))
+        } else {
+            guard
+                let url = URL(string: url)
+            else {
+                completion?(.failure(MASDKDownloadFileError.invalidUrl))
+                return
+            }
+            let session = URLSession.shared
+            var request = URLRequest(url: url)
+            headers.forEach({ request.addValue($0.value, forHTTPHeaderField: $0.key) })
+            let task = session.downloadTask(with: request) { (tempFileUrl, response, error) in
+                if let error = error {
+                    completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: error.localizedDescription)))
+                    return
+                }
+                guard
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode
+                else {
+                    completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: "no status code")))
+                    return
+                }
+                guard
+                    statusCode >= 200 && statusCode <= 300
+                else {
+                    let reason = HTTPURLResponse.localizedString(forStatusCode: statusCode)
+                    completion?(.failure(MASDKDownloadFileError.downloadHttpError(code: statusCode, reason: reason)))
+                    return
+                }
+                guard
+                    let tempFileUrl = tempFileUrl,
+                        let data = try? Data(contentsOf: tempFileUrl)
+                else {
+                    completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: "could not load local data")))
+                    return
+                }
+
+                completion?(.success(data))
+            }
+            task.resume()
         }
-        task.resume()
     }
 
     func saveTemporaryFile(data: Data, resourceName: String, fileExtension: String) -> URL? {
