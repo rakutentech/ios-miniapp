@@ -4,9 +4,11 @@
 
 **SDK**
 - **Feature:** Added a new interface `getMessagingUnique` in `MiniAppMessageDelegate` for future support of MAUID v2 and another interface `getMauid` in `MiniAppMessageDelegate` for retrieving the MAUID
+- **Feature:** Added `MiniAppSecureStorage` for MiniApps to store data safely. `MiniAppMessageDelegate` was extended by `getSecureStorageSizeLimit` to define the maximum space in bytes for the secure storage to operate in.
 
 **Sample app**
 - **Enhancement:** Added `GET MESSAGING UNIQUE ID` and `GET MAUID` for retrieving the ID's. (Messaging Unique ID for now will return the same as Unique ID)
+- **Enhancement:** Added a `Wipe Secure Storages` button to Settings/QA to remove all secure storages
 
 ### 4.1.0 (2022-04-11)
 
