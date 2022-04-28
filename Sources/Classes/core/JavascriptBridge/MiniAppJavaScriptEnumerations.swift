@@ -131,6 +131,8 @@ public enum MiniAppEvent: String {
     case externalWebViewClosed = "miniappwebviewclosed"
     case pause = "miniapppause"
     case resume = "miniappresume"
+    case secureStorageReady = "miniappsecurestorageready"
+    case secureStorageError = "miniappsecurestorageloaderror"
 
     public static let notificationName = Notification.Name("MiniAppNotificationEvent")
 

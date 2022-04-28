@@ -146,8 +146,12 @@ internal class RealMiniAppView: UIView {
         initExternalWebViewClosures()
         observeWebView()
 
-        secureStorage.loadStorage { _ in
-            // secure storage loaded
+        secureStorage.loadStorage { success in
+            if success {
+                NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageReady, comment: "MiniApp Secure Storage Ready"))
+            } else {
+                NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageError, comment: "MiniApp Secure Storage Error"))
+            }
         }
     }
 
