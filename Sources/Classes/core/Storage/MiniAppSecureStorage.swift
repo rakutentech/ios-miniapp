@@ -229,6 +229,15 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")
         return fileSize
     }
+
+    // MARK: - Notifications
+    public static func sendLoadStorageReady() {
+        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageReady, comment: "MiniApp Secure Storage Ready"))
+    }
+
+    public static func sendLoadStorageError() {
+        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageError, comment: "MiniApp Secure Storage Error"))
+    }
 }
 
 public struct MiniAppSecureStorageSize: Codable {

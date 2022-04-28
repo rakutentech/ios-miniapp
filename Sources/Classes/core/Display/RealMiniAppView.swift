@@ -158,9 +158,9 @@ internal class RealMiniAppView: UIView {
 
         secureStorage.loadStorage { success in
             if success {
-                NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageReady, comment: "MiniApp Secure Storage Ready"))
+                MiniAppSecureStorage.sendLoadStorageReady()
             } else {
-                NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageError, comment: "MiniApp Secure Storage Error"))
+                MiniAppSecureStorage.sendLoadStorageError()
             }
         }
     }
