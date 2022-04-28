@@ -567,6 +567,7 @@ It's necessary to allow the `File Download` custom permission to make file downl
 Allows MiniApps to store data safely in a key/value store.
 
 Use `MiniAppMessageDelegate` new method `getSecureStorageSizeLimit` to define the maximum file size for the storage in bytes.
+When no maximum storage size is set the default value will be 2_000_000 (2Mb). 
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
