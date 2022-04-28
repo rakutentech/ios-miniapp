@@ -104,6 +104,7 @@ internal class RealMiniAppView: UIView {
         }
     }
 
+    // swiftlint:disable function_body_length
     private func commonInit(
         miniAppId: String,
         hostAppMessageDelegate: MiniAppMessageDelegate,
