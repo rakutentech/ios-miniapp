@@ -1,7 +1,7 @@
 import Foundation
 import CryptoKit
 
-public protocol MiniAppSecureStorageDelegate: AnyObject {
+protocol MiniAppSecureStorageDelegate: AnyObject {
     /// retrieve a value from the storage
     func get(key: String) throws -> String?
 
@@ -84,13 +84,13 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     // MARK: - Actions
-    public func get(key: String) throws -> String? {
+    func get(key: String) throws -> String? {
         guard let storage = storage else { throw MiniAppSecureStorageError.storageUnvailable }
         MiniAppLogger.d("🔑 Secure Storage: get '\(key)'")
         return storage[key]
     }
 
-    public func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
+    func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         guard storageFileSize <= fileSizeLimit else {
             completion?(.failure(MiniAppSecureStorageError.storageFullError))
             return
@@ -130,7 +130,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         }
     }
 
-    public func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
+    func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         guard storage != nil else {
             completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
             return
@@ -190,29 +190,59 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         MiniAppLogger.d("🔑 Secure Storage: write store to disk completed")
     }
 
-    // MARK: - Clear
-    public static func wipeSecureStorages() throws {
+    // MARK: - Clear All Secure Storage
+    internal static func wipeSecureStorages() {
         MiniAppLogger.d("🔑 Secure Storage: destroy")
-        let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-        let miniAppPath = cachePath.appendingPathComponent("/MiniApp/")
-        guard let contentNames = try? FileManager.default.contentsOfDirectory(atPath: miniAppPath.path) else { return }
+        guard let contentNames = try? FileManager.default.contentsOfDirectory(atPath: FileManager.getMiniAppFolderPath().path) else { return }
         for name in contentNames {
-            let url = miniAppPath.appendingPathComponent("/" + name)
-            if let isDirectory = (try url.resourceValues(forKeys: [.isDirectoryKey])).isDirectory, isDirectory {
-                do {
-                    try FileManager.default.removeItem(at: url.appendingPathComponent("/" + storageFullName))
-                    MiniAppLogger.d("🔑 Secure Storage: destroyed storaged for \(name)")
-                } catch {
-                    MiniAppLogger.d("🔑 Secure Storage: could not destroy storaged for \(name)")
+            let url = FileManager.getMiniAppFolderPath().appendingPathComponent("/" + name)
+            do {
+                if let isDirectory = (try url.resourceValues(forKeys: [.isDirectoryKey])).isDirectory, isDirectory {
+                    do {
+                        try FileManager.default.removeItem(at: url.appendingPathComponent("/" + MiniAppSecureStorage.storageFullName))
+                        MiniAppLogger.d("🔑 Secure Storage: destroyed storaged for \(name)")
+                    } catch {
+                        MiniAppLogger.d("🔑 Secure Storage: could not destroy storaged for \(name)")
+                    }
+                } else {
+                    MiniAppLogger.d("🔑 Secure Storage: ignored \(name)")
                 }
-            } else {
-                MiniAppLogger.d("🔑 Secure Storage: ignored \(name)")
+            } catch let error {
+                MiniAppLogger.d("🔑 Secure Storage Wipe Failed: \(name)", error.localizedDescription)
             }
         }
     }
 
-    public func clearSecureStorage() throws {
+    // MARK: - Clear storage for MiniApp ID
+    internal static func wipeSecureStorage(for miniAppId: String) {
+        if !miniAppId.isEmpty {
+            MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: destroy")
+            guard let contentNames = try? FileManager.default.contentsOfDirectory(atPath: FileManager.getMiniAppFolderPath().path) else { return }
+            for name in contentNames {
+                let url = FileManager.getMiniAppFolderPath().appendingPathComponent("/" + name)
+                do {
+                    if let isDirectory = (try url.resourceValues(forKeys: [.isDirectoryKey])).isDirectory, isDirectory {
+                        do {
+                            if url.path == FileManager.getMiniAppDirectory(with: miniAppId).path {
+                                try FileManager.default.removeItem(at: url.appendingPathComponent("/" + MiniAppSecureStorage.storageFullName))
+                                MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: destroyed storaged for \(name)")
+                            }
+                        } catch {
+                            MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: could not destroy storaged for \(name)")
+                        }
+                    } else {
+                        MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: ignored \(name)")
+                    }
+                } catch let error {
+                    MiniAppLogger.d("🔑 Secure Storage for MiniApp ID Failed: \(name)", error.localizedDescription)
+                }
+            }
+        }
+    }
+
+    func clearSecureStorage() throws {
         MiniAppLogger.d("🔑 Secure Storage: destroy")
+        self.storage?.removeAll()
         try FileManager.default.removeItem(at: MiniAppSecureStorage.storagePath(appId: appId))
     }
 
@@ -223,27 +253,29 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         return fileSize
     }
 
-    public func size() -> MiniAppSecureStorageSize {
+    func size() -> MiniAppSecureStorageSize {
         return MiniAppSecureStorageSize(used: storageFileSize, max: fileSizeLimit)
     }
 
-    public static func storageSize(for miniAppId: String) -> UInt64 {
+    func storageSize(for miniAppId: String) -> UInt64 {
         let fileSize = MiniAppSecureStorage.storagePath(appId: miniAppId).fileSize
         MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")
         return fileSize
     }
 
     // MARK: - Notifications
-    public static func sendLoadStorageReady() {
-        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageReady, comment: "MiniApp Secure Storage Ready"))
+    static func sendLoadStorageReady() {
+        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageReady,
+                                                                      comment: "MiniApp Secure Storage Ready"))
     }
 
-    public static func sendLoadStorageError() {
-        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageError, comment: "MiniApp Secure Storage Error"))
+    static func sendLoadStorageError() {
+        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .secureStorageError,
+                                                                      comment: "MiniApp Secure Storage Error"))
     }
 }
 
-public struct MiniAppSecureStorageSize: Codable {
+struct MiniAppSecureStorageSize: Codable {
     let used: UInt64
     let max: UInt64
 }
