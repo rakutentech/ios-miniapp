@@ -243,7 +243,20 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     func clearSecureStorage() throws {
         MiniAppLogger.d("🔑 Secure Storage: destroy")
         self.storage?.removeAll()
-        try FileManager.default.removeItem(at: MiniAppSecureStorage.storagePath(appId: appId))
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let strongSelf = self else { return }
+            do {
+                try strongSelf.saveStoreToDisk()
+            } catch let error {
+                strongSelf.isBusy = false
+                MiniAppLogger.d("🔑 Secure Storage clear error: ", error.localizedDescription)
+                return
+            }
+            DispatchQueue.main.async {
+                strongSelf.isBusy = false
+                MiniAppLogger.d("🔑 Secure Storage: clear storage finish")
+            }
+        }
     }
 
     // MARK: - Size
