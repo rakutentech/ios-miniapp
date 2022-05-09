@@ -323,7 +323,7 @@ internal class RealMiniAppView: UIView {
     }
 
     func clearSecureStorage(for miniAppId: String) {
-        MiniAppSecureStorage.wipeSecureStorages()
+        MiniAppSecureStorage.wipeSecureStorage(for: miniAppId)
     }
 }
 
