@@ -47,7 +47,8 @@ class Config: NSObject {
             isPreviewMode: Config.userDefaults?.value(forKey: Config.Key.isPreviewMode.rawValue) as? Bool,
             analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")],
             requireMiniAppSignatureVerification: Config.userDefaults?.value(forKey: Config.Key.requireMiniAppSignatureVerification.rawValue) as? Bool,
-            sslKeyHash: pinConf
+            sslKeyHash: pinConf,
+            storageMaxSizeInBytes: 5_000_000
         )
     }
 
