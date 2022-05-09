@@ -23,7 +23,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     let appId: String
 
     /// file size defined in bytes
-    var fileSizeLimit: UInt64 = 2_000_000
+    var fileSizeLimit: UInt64
 
     private var storage: [String: String]?
     private var isStoreLoading: Bool = false
@@ -32,8 +32,9 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     private static let storageName: String = "securestorage"
     static var storageFullName: String { return storageName + ".plist" }
 
-    public init(appId: String) {
+    public init(appId: String, storageMaxSizeInBytes: UInt64?) {
         self.appId = appId
+        self.fileSizeLimit = storageMaxSizeInBytes ?? 2_000_000
         do {
             try setup(appId: appId)
         } catch {
@@ -105,8 +106,13 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         }
         isBusy = true
         for (key, value) in dict {
-            MiniAppLogger.d("🔑 Secure Storage: set '\(key)'")
+            MiniAppLogger.d("🔑 Secure Storage: will set '\(key)'")
+            guard storageFileSize <= fileSizeLimit else {
+                completion?(.failure(MiniAppSecureStorageError.storageFullError))
+                return
+            }
             storage?[key] = value
+            MiniAppLogger.d("🔑 Secure Storage: did set '\(key)'")
         }
 
         DispatchQueue.global(qos: .background).async { [weak self] in

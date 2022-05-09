@@ -76,8 +76,4 @@ extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
         let info = MAHostEnvironmentInfo(hostLocale: locale)
         return { return info }
     }
-
-    func getSecureStorageSizeLimit(completionHandler: @escaping (Result<UInt64, MASDKError>) -> Void) {
-        completionHandler(.success(27_000_000))
-    }
 }

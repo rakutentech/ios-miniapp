@@ -41,7 +41,8 @@ internal class RealMiniAppView: UIView {
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
-        analyticsConfig: [MAAnalyticsConfig]? = []) {
+        analyticsConfig: [MAAnalyticsConfig]? = [],
+        storageMaxSizeInBytes: UInt64? = nil) {
 
         self.miniAppTitle = miniAppTitle
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId, queryParams: queryParams)
@@ -51,7 +52,7 @@ internal class RealMiniAppView: UIView {
         self.miniAppVersion = versionId
         self.projectId = projectId
         self.analyticsConfig = analyticsConfig
-        self.secureStorage = MiniAppSecureStorage(appId: miniAppId)
+        self.secureStorage = MiniAppSecureStorage(appId: miniAppId, storageMaxSizeInBytes: storageMaxSizeInBytes)
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -70,7 +71,8 @@ internal class RealMiniAppView: UIView {
         displayNavBar: MiniAppNavigationVisibility = .never,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
-        analyticsConfig: [MAAnalyticsConfig]? = []) {
+        analyticsConfig: [MAAnalyticsConfig]? = [],
+        storageMaxSizeInBytes: UInt64? = nil) {
 
         let miniAppId = "custom\(Int32.random(in: 0...Int32.max))" // some id is needed to handle permissions
         self.miniAppTitle = miniAppTitle
@@ -81,7 +83,7 @@ internal class RealMiniAppView: UIView {
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
         self.analyticsConfig = analyticsConfig
-        self.secureStorage = MiniAppSecureStorage(appId: miniAppId)
+        self.secureStorage = MiniAppSecureStorage(appId: miniAppId, storageMaxSizeInBytes: storageMaxSizeInBytes)
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -146,15 +148,6 @@ internal class RealMiniAppView: UIView {
         MiniAppAnalytics.sendAnalytics(event: .open, miniAppId: miniAppId, miniAppVersion: miniAppVersion, projectId: projectId, analyticsConfig: analyticsConfig)
         initExternalWebViewClosures()
         observeWebView()
-
-        hostAppMessageDelegate.getSecureStorageSizeLimit { result in
-            switch result {
-            case .success(let size):
-                self.secureStorage.fileSizeLimit = size
-            case .failure(let error):
-                MiniAppLogger.d("Could not set a file size limit. \(error)")
-            }
-        }
 
         secureStorage.loadStorage { success in
             if success {

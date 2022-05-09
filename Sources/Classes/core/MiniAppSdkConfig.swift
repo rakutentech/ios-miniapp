@@ -40,6 +40,8 @@ public class MiniAppSdkConfig {
     public var isPreviewMode: Bool?
     /// Bool used to verifty Mini app signature after download is complete
     public var requireMiniAppSignatureVerification: Bool?
+    /// Max size in bytes for secure storage
+    public var storageMaxSizeInBytes: UInt64?
 
     /// Base Endpoint URL
     public var baseUrl: String? {
@@ -116,7 +118,8 @@ public class MiniAppSdkConfig {
                 isPreviewMode: Bool? = nil,
                 analyticsConfigList: [MAAnalyticsConfig]? = [],
                 requireMiniAppSignatureVerification: Bool? = nil,
-                sslKeyHash: MiniAppConfigSSLKeyHash? = nil) {
+                sslKeyHash: MiniAppConfigSSLKeyHash? = nil,
+                storageMaxSizeInBytes: UInt64? = nil) {
         self.isPreviewMode = isPreviewMode
         self.baseUrl = baseUrl?.count ?? 0 > 0 ? baseUrl : nil
         self.rasProjectId = rasProjectId?.count ?? 0 > 0 ? rasProjectId  : nil
@@ -125,5 +128,6 @@ public class MiniAppSdkConfig {
         self.analyticsConfigList = analyticsConfigList
         self.requireMiniAppSignatureVerification = requireMiniAppSignatureVerification
         self.sslKeyHash = sslKeyHash
+        self.storageMaxSizeInBytes = storageMaxSizeInBytes
     }
 }

@@ -33,13 +33,14 @@ internal class RealMiniApp {
         miniAppPermissionStorage = MiniAppPermissionsStorage()
         miniAppManifestStorage = MAManifestStorage()
         miniAppDownloader = MiniAppDownloader(apiClient: miniAppClient, manifestDownloader: manifestDownloader, status: miniAppStatus)
-        displayer = Displayer(navigationSettings)
+        displayer = Displayer(settings, navigationSettings)
         miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
         previewMiniAppInfoFetcher = PreviewMiniAppFetcher()
     }
 
     func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
         miniAppClient.updateEnvironment(with: settings)
+        displayer.settings = settings
         displayer.navConfig = navigationSettings
         miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
     }
