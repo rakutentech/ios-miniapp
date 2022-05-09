@@ -91,7 +91,6 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         return storage[key]
     }
 
-    // swiftlint:disable function_body_length
     public func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         guard let memorySize = try? getMemoryStorageFileSize() else {
             completion?(.failure(.storageUnvailable))
@@ -109,19 +108,20 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             completion?(.failure(.storageBusy))
             return
         }
+
+        do {
+            try validateAvailableSpace(for: dict)
+            MiniAppLogger.d("🔑 Secure Storage: sufficient space for insert available")
+        } catch let error {
+            let storageError = error as? MiniAppSecureStorageError
+            completion?(.failure(storageError ?? .storageIOError))
+            return
+        }
+
         isBusy = true
         for (key, value) in dict {
-            MiniAppLogger.d("🔑 Secure Storage: will set '\(key)'")
-            do {
-                try validateAvailableSpace(key: key, value: value)
-                storage?[key] = value
-                MiniAppLogger.d("🔑 Secure Storage: did set '\(key)'")
-            } catch let error {
-                let storageError = error as? MiniAppSecureStorageError
-                completion?(.failure(storageError ?? .storageIOError))
-                MiniAppLogger.d("🔑 Secure Storage: did fail for '\(key)'")
-                return
-            }
+            MiniAppLogger.d("🔑 Secure Storage: set '\(key)'")
+            storage?[key] = value
         }
 
         DispatchQueue.global(qos: .background).async { [weak self] in
@@ -253,6 +253,20 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             throw MiniAppSecureStorageError.storageIOError
         }
         let estimatedAddSize = UInt64(estimateAddData.count)
+        let estimatedFinalSize = memorySize + estimatedAddSize
+        guard estimatedFinalSize <= fileSizeLimit else {
+            throw MiniAppSecureStorageError.storageFullError
+        }
+    }
+    
+    func validateAvailableSpace(for dict: [String: String]) throws {
+        guard
+            let dictData = try? PropertyListEncoder().encode(dict),
+            let memorySize = try? getMemoryStorageFileSize()
+        else {
+            throw MiniAppSecureStorageError.storageIOError
+        }
+        let estimatedAddSize = UInt64(dictData.count)
         let estimatedFinalSize = memorySize + estimatedAddSize
         guard estimatedFinalSize <= fileSizeLimit else {
             throw MiniAppSecureStorageError.storageFullError
