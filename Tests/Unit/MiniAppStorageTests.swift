@@ -148,6 +148,28 @@ class MiniAppStorageTests: QuickSpec {
                     let fileSize: UInt64 = storage.storageFileSize
                     expect(fileSize).to(equal(42))
                 }
+
+                it("will exceed storage size and throw an error") {
+                    let storage = MiniAppSecureStorage(appId: miniAppId, storageMaxSizeInBytes: 43)
+                    var resultError: MiniAppSecureStorageError?
+                    storage.loadStorage { success in
+                        let values = [
+                            "test1": "test1Value",
+                            "test2": "test2Value",
+                            "test3": "test3Value",
+                            "test4": "test4Value"
+                        ]
+                        storage.set(dict: values) { result in
+                            switch result {
+                            case .success:
+                                fail("should not exceed")
+                            case .failure(let error):
+                                resultError = error
+                            }
+                        }
+                    }
+                    expect(resultError).toEventually(equal(MiniAppSecureStorageError.storageFullError))
+                }
             }
         }
     }

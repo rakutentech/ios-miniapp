@@ -32,7 +32,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     private static let storageName: String = "securestorage"
     static var storageFullName: String { return storageName + ".plist" }
 
-    public init(appId: String, storageMaxSizeInBytes: UInt64?) {
+    public init(appId: String, storageMaxSizeInBytes: UInt64? = nil) {
         self.appId = appId
         self.fileSizeLimit = storageMaxSizeInBytes ?? 2_000_000
         do {
@@ -107,7 +107,11 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         isBusy = true
         for (key, value) in dict {
             MiniAppLogger.d("🔑 Secure Storage: will set '\(key)'")
-            guard storageFileSize <= fileSizeLimit else {
+            guard
+                let strg = storage,
+                let storageSize = try? PropertyListEncoder().encode(strg),
+                    storageSize.count <= fileSizeLimit
+            else {
                 completion?(.failure(MiniAppSecureStorageError.storageFullError))
                 return
             }
@@ -119,6 +123,11 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             guard let strongSelf = self else { return }
             do {
                 try strongSelf.saveStoreToDisk()
+                DispatchQueue.main.async {
+                    strongSelf.isBusy = false
+                    completion?(.success(true))
+                    MiniAppLogger.d("🔑 Secure Storage: set finish")
+                }
             } catch let error {
                 strongSelf.isBusy = false
                 if let error = error as? MiniAppSecureStorageError {
@@ -127,11 +136,6 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
                     completion?(.failure(.storageIOError))
                 }
                 return
-            }
-            DispatchQueue.main.async {
-                strongSelf.isBusy = false
-                completion?(.success(true))
-                MiniAppLogger.d("🔑 Secure Storage: set finish")
             }
         }
     }

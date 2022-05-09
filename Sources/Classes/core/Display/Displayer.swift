@@ -4,7 +4,7 @@ internal class Displayer {
     var settings: MiniAppSdkConfig?
     var navConfig: MiniAppNavigationConfig?
 
-    init(_ settings: MiniAppSdkConfig?, _ config: MiniAppNavigationConfig? = nil) {
+    init(_ settings: MiniAppSdkConfig? = nil, _ config: MiniAppNavigationConfig? = nil) {
         self.settings = settings
         self.navConfig = config
     }
