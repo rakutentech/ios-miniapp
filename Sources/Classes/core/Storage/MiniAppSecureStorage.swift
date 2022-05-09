@@ -258,7 +258,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             throw MiniAppSecureStorageError.storageFullError
         }
     }
-    
+
     func validateAvailableSpace(for dict: [String: String]) throws {
         guard
             let dictData = try? PropertyListEncoder().encode(dict),
