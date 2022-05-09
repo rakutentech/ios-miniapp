@@ -20,29 +20,29 @@ internal class RealMiniApp {
         self.init(with: nil)
     }
 
-    init(with settings: MiniAppSdkConfig?, and navigationSettings: MiniAppNavigationConfig? = nil, sslPinningSettings: MiniAppSSLConfig? = nil) {
+    init(with config: MiniAppSdkConfig?, and navigationConfig: MiniAppNavigationConfig? = nil, sslPinningSettings: MiniAppSSLConfig? = nil) {
         miniAppInfoFetcher = MiniAppInfoFetcher()
         metaDataDownloader = MetaDataDownloader()
-        miniAppClient = MiniAppClient(baseUrl: settings?.baseUrl,
-                                      rasProjectId: settings?.rasProjectId,
-                                      subscriptionKey: settings?.subscriptionKey,
-                                      hostAppVersion: settings?.hostAppVersion,
-                                      isPreviewMode: settings?.isPreviewMode)
+        miniAppClient = MiniAppClient(baseUrl: config?.baseUrl,
+                                      rasProjectId: config?.rasProjectId,
+                                      subscriptionKey: config?.subscriptionKey,
+                                      hostAppVersion: config?.hostAppVersion,
+                                      isPreviewMode: config?.isPreviewMode)
         manifestDownloader = ManifestDownloader()
         miniAppStatus = MiniAppStatus()
         miniAppPermissionStorage = MiniAppPermissionsStorage()
         miniAppManifestStorage = MAManifestStorage()
         miniAppDownloader = MiniAppDownloader(apiClient: miniAppClient, manifestDownloader: manifestDownloader, status: miniAppStatus)
-        displayer = Displayer(settings, navigationSettings)
-        miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
+        displayer = Displayer(config, navigationConfig)
+        miniAppAnalyticsConfig = config?.analyticsConfigList ?? []
         previewMiniAppInfoFetcher = PreviewMiniAppFetcher()
     }
 
-    func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
-        miniAppClient.updateEnvironment(with: settings)
-        displayer.sdkConfig = settings
-        displayer.navConfig = navigationSettings
-        miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
+    func update(with config: MiniAppSdkConfig?, navigationConfig: MiniAppNavigationConfig? = nil) {
+        miniAppClient.updateEnvironment(with: config)
+        displayer.sdkConfig = config
+        displayer.navConfig = navigationConfig
+        miniAppAnalyticsConfig = config?.analyticsConfigList ?? []
     }
 
     func listMiniApp(completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
