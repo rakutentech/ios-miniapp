@@ -62,7 +62,7 @@ class QASettingsTableViewController: RATTableViewController {
             return
         }
         MiniApp.shared().clearSecureStorage(for: textFieldValue)
-        self.displayAlert(title: "Success", message: "All stores were wiped successfully!")
+        self.displayAlert(title: "Success", message: "Mini App Storage cleared!")
     }
 
     func setCustomTokenErrorMessage() {

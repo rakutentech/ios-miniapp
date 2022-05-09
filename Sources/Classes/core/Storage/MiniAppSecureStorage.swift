@@ -217,25 +217,12 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     internal static func wipeSecureStorage(for miniAppId: String) {
         if !miniAppId.isEmpty {
             MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: destroy")
-            guard let contentNames = try? FileManager.default.contentsOfDirectory(atPath: FileManager.getMiniAppFolderPath().path) else { return }
-            for name in contentNames {
-                let url = FileManager.getMiniAppFolderPath().appendingPathComponent("/" + name)
-                do {
-                    if let isDirectory = (try url.resourceValues(forKeys: [.isDirectoryKey])).isDirectory, isDirectory {
-                        do {
-                            if url.path == FileManager.getMiniAppDirectory(with: miniAppId).path {
-                                try FileManager.default.removeItem(at: url.appendingPathComponent("/" + MiniAppSecureStorage.storageFullName))
-                                MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: destroyed storaged for \(name)")
-                            }
-                        } catch {
-                            MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: could not destroy storaged for \(name)")
-                        }
-                    } else {
-                        MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: ignored \(name)")
-                    }
-                } catch let error {
-                    MiniAppLogger.d("🔑 Secure Storage for MiniApp ID Failed: \(name)", error.localizedDescription)
-                }
+            let miniAppPath = FileManager.getMiniAppFolderPath().appendingPathComponent(miniAppId)
+            do {
+                try FileManager.default.removeItem(at: miniAppPath.appendingPathComponent("/" + MiniAppSecureStorage.storageFullName))
+                MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: destroyed storaged for \(miniAppId)")
+            } catch {
+                MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: could not destroy storaged for \(miniAppId)")
             }
         }
     }
