@@ -164,6 +164,10 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             guard let strongSelf = self else { return }
             do {
                 try strongSelf.saveStoreToDisk()
+                DispatchQueue.main.async {
+                    strongSelf.isBusy = false
+                    completion?(.success(true))
+                }
             } catch let error {
                 strongSelf.isBusy = false
                 if let error = error as? MiniAppSecureStorageError {
@@ -172,10 +176,6 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
                     completion?(.failure(.storageIOError))
                 }
                 return
-            }
-            DispatchQueue.main.async {
-                strongSelf.isBusy = false
-                completion?(.success(true))
             }
         }
     }
