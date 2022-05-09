@@ -112,21 +112,16 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         isBusy = true
         for (key, value) in dict {
             MiniAppLogger.d("🔑 Secure Storage: will set '\(key)'")
-            let estimateAddString = "<key>" + key + "</key><string>" + value + "</string>"
-            guard
-                let estimateAddData = estimateAddString.data(using: .utf8),
-                let memorySize = try? getMemoryStorageFileSize()
-            else { completion?(.failure(.storageIOError))
+            do {
+                try validateAvailableSpace(key: key, value: value)
+                storage?[key] = value
+                MiniAppLogger.d("🔑 Secure Storage: did set '\(key)'")
+            } catch let error {
+                let storageError = error as? MiniAppSecureStorageError
+                completion?(.failure(storageError ?? .storageIOError))
+                MiniAppLogger.d("🔑 Secure Storage: did fail for '\(key)'")
                 return
             }
-            let estimatedAddSize = UInt64(estimateAddData.count)
-            let estimatedFinalSize = memorySize + estimatedAddSize
-            guard estimatedFinalSize <= fileSizeLimit else {
-                completion?(.failure(.storageFullError))
-                return
-            }
-            storage?[key] = value
-            MiniAppLogger.d("🔑 Secure Storage: did set '\(key)'")
         }
 
         DispatchQueue.global(qos: .background).async { [weak self] in
@@ -248,6 +243,22 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         MiniAppLogger.d("🔑 Secure Storage: memory size -> \(size)")
         return UInt64(size)
     }
+
+    func validateAvailableSpace(key: String, value: String) throws {
+        let estimateAddString = "<key>" + key + "</key><string>" + value + "</string>"
+        guard
+            let estimateAddData = estimateAddString.data(using: .utf8),
+            let memorySize = try? getMemoryStorageFileSize()
+        else {
+            throw MiniAppSecureStorageError.storageIOError
+        }
+        let estimatedAddSize = UInt64(estimateAddData.count)
+        let estimatedFinalSize = memorySize + estimatedAddSize
+        guard estimatedFinalSize <= fileSizeLimit else {
+            throw MiniAppSecureStorageError.storageFullError
+        }
+    }
+
     var storageFileSize: UInt64 {
         let fileSize = MiniAppSecureStorage.storagePath(appId: appId).fileSize
         MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")

@@ -45,7 +45,7 @@ class DisplayerTests: QuickSpec {
 
             context("when sdk config with a max storage limit is passed") {
                 it("will equal to the specified storage limit") {
-                    miniAppDisplayer.settings = MiniAppSdkConfig(storageMaxSizeInBytes: 64)
+                    miniAppDisplayer.sdkConfig = MiniAppSdkConfig(storageMaxSizeInBytes: 64)
                     let miniAppView = miniAppDisplayer.getMiniAppView(miniAppId: mockMiniAppInfo.id,
                                                                       versionId: mockMiniAppInfo.version.versionId,
                                                                       projectId: "project-id",

@@ -40,7 +40,7 @@ internal class RealMiniApp {
 
     func update(with settings: MiniAppSdkConfig?, navigationSettings: MiniAppNavigationConfig? = nil) {
         miniAppClient.updateEnvironment(with: settings)
-        displayer.settings = settings
+        displayer.sdkConfig = settings
         displayer.navConfig = navigationSettings
         miniAppAnalyticsConfig = settings?.analyticsConfigList ?? []
     }
