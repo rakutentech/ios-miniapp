@@ -42,6 +42,20 @@ class DisplayerTests: QuickSpec {
                     expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))
                 }
             }
+
+            context("when sdk config with a max storage limit is passed") {
+                it("will equal to the specified storage limit") {
+                    miniAppDisplayer.settings = MiniAppSdkConfig(storageMaxSizeInBytes: 64)
+                    let miniAppView = miniAppDisplayer.getMiniAppView(miniAppId: mockMiniAppInfo.id,
+                                                                      versionId: mockMiniAppInfo.version.versionId,
+                                                                      projectId: "project-id",
+                                                                      miniAppTitle: mockMiniAppInfo.displayName!,
+                                                                      hostAppMessageDelegate: mockMessageInterface)
+                    if let view = miniAppView.getMiniAppView() as? RealMiniAppView {
+                        expect(view.secureStorage.fileSizeLimit).to(equal(64))
+                    }
+                }
+            }
         }
     }
 }
