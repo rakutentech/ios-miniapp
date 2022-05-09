@@ -91,6 +91,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         return storage[key]
     }
 
+    // swiftlint:disable function_body_length
     public func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         guard let memorySize = try? getMemoryStorageFileSize() else {
             completion?(.failure(.storageUnvailable))
