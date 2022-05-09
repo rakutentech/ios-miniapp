@@ -92,27 +92,36 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     public func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
-        guard storageFileSize <= fileSizeLimit else {
-            completion?(.failure(MiniAppSecureStorageError.storageFullError))
+        guard let memorySize = try? getMemoryStorageFileSize() else {
+            completion?(.failure(.storageUnvailable))
+            return
+        }
+        guard memorySize <= fileSizeLimit else {
+            completion?(.failure(.storageFullError))
             return
         }
         guard storage != nil else {
-            completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
+            completion?(.failure(.storageUnvailable))
             return
         }
         guard !isBusy else {
-            completion?(.failure(MiniAppSecureStorageError.storageBusy))
+            completion?(.failure(.storageBusy))
             return
         }
         isBusy = true
         for (key, value) in dict {
             MiniAppLogger.d("🔑 Secure Storage: will set '\(key)'")
+            let estimateAddString = "<key>" + key + "</key><string>" + value + "</string>"
             guard
-                let strg = storage,
-                let storageSize = try? PropertyListEncoder().encode(strg),
-                    storageSize.count <= fileSizeLimit
-            else {
-                completion?(.failure(MiniAppSecureStorageError.storageFullError))
+                let estimateAddData = estimateAddString.data(using: .utf8),
+                let memorySize = try? getMemoryStorageFileSize()
+            else { completion?(.failure(.storageIOError))
+                return
+            }
+            let estimatedAddSize = UInt64(estimateAddData.count)
+            let estimatedFinalSize = memorySize + estimatedAddSize
+            guard estimatedFinalSize <= fileSizeLimit else {
+                completion?(.failure(.storageFullError))
                 return
             }
             storage?[key] = value
@@ -227,6 +236,17 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     // MARK: - Size
+    func getMemoryStorageFileSize() throws -> UInt64 {
+        guard
+            let strg = storage,
+            let storageSize = try? PropertyListEncoder().encode(strg)
+        else {
+            throw MiniAppSecureStorageError.storageUnvailable
+        }
+        let size = storageSize.count
+        MiniAppLogger.d("🔑 Secure Storage: memory size -> \(size)")
+        return UInt64(size)
+    }
     var storageFileSize: UInt64 {
         let fileSize = MiniAppSecureStorage.storagePath(appId: appId).fileSize
         MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")
