@@ -195,7 +195,8 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
-                        displayNavBar: .never
+                        displayNavBar: .never,
+                        shouldAutoLoadSecureStorage: false
                     )
                     miniAppView.refreshNavBar()
                     expect(miniAppView.navBar).to(beNil())
@@ -209,7 +210,8 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
-                        displayNavBar: .always
+                        displayNavBar: .always,
+                        shouldAutoLoadSecureStorage: false
                     )
                     miniAppView.refreshNavBar()
                     expect(miniAppView.navBar).to(beAKindOf(MiniAppNavigationBar.self))
@@ -226,7 +228,8 @@ class RealMiniAppViewNavigationTests: QuickSpec {
                         miniAppId: mockMiniAppInfo.id,
                         versionId: mockMiniAppInfo.version.versionId, projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
-                        displayNavBar: .auto
+                        displayNavBar: .auto,
+                        shouldAutoLoadSecureStorage: false
                     )
                     miniAppView.refreshNavBar()
                     expect(miniAppView.navBar).toNot(beNil())
@@ -250,7 +253,8 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .never,
                         navigationDelegate: customNav,
-                        navigationView: customNav
+                        navigationView: customNav,
+                        shouldAutoLoadSecureStorage: false
                     )
                     miniAppView.refreshNavBar()
                     expect(miniAppView.navBar).to(beNil())
@@ -262,7 +266,8 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
                         miniAppId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId, projectId: "project-id", miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .always,
-                        navigationDelegate: customNav, navigationView: customNav
+                        navigationDelegate: customNav, navigationView: customNav,
+                        shouldAutoLoadSecureStorage: false
                     )
                     miniAppView.refreshNavBar()
                     customNav.actionGoBack()
@@ -278,7 +283,8 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         displayNavBar: .auto,
                         navigationDelegate: customNav,
-                        navigationView: customNav
+                        navigationView: customNav,
+                        shouldAutoLoadSecureStorage: false
                     )
                     miniAppView.refreshNavBar()
                     let webvtest = MockNavigationWebView(miniAppId: "test", versionId: "test")
@@ -301,7 +307,8 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
                     hostAppMessageDelegate: mockMessageInterface,
                     displayNavBar: .always,
                     navigationDelegate: customNav,
-                    navigationView: customNav
+                    navigationView: customNav,
+                    shouldAutoLoadSecureStorage: false
                 )
 
                 let base64Url = URL(string: getExampleBase64String())!
