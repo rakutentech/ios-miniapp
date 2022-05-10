@@ -12,6 +12,7 @@ class QASettingsTableViewController: RATTableViewController {
     @IBOutlet weak var accessTokenErrorControl: UISegmentedControl!
     @IBOutlet weak var accessTokenErrorCustomMessage: UITextField!
     @IBOutlet weak var wipeSecureStorageButton: UIButton!
+    @IBOutlet weak var miniAppIdTextField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,16 +52,17 @@ class QASettingsTableViewController: RATTableViewController {
     }
 
     @IBAction func onWipeSecureStoragesPressed(_ sender: Any) {
-        do {
-            try MiniAppSecureStorage.wipeSecureStorages()
-            let alertVc = UIAlertController(title: "Success", message: "All stores were wiped successfully!", preferredStyle: .alert)
-            alertVc.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-            present(alertVc, animated: true, completion: nil)
-        } catch let error {
-            let alertVc = UIAlertController(title: "Failure", message: error.localizedDescription, preferredStyle: .alert)
-            alertVc.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-            present(alertVc, animated: true, completion: nil)
+        MiniApp.shared().clearAllSecureStorage()
+        self.displayAlert(title: "Success", message: "All stores were wiped successfully!")
+    }
+
+    @IBAction func onWipeSecureStorageForMiniAppId(_ sender: Any) {
+        guard let textFieldValue = self.miniAppIdTextField.text, !textFieldValue.isEmpty else {
+            self.displayAlert(title: MASDKLocale.localize("input_valid_miniapp_title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.invalid_miniapp_id"))
+            return
         }
+        MiniApp.shared().clearSecureStorage(for: textFieldValue)
+        self.displayAlert(title: "Success", message: "Mini App Storage cleared!")
     }
 
     func setCustomTokenErrorMessage() {
