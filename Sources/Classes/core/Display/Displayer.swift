@@ -1,10 +1,12 @@
 import Foundation
 
 internal class Displayer {
+    var sdkConfig: MiniAppSdkConfig?
     var navConfig: MiniAppNavigationConfig?
 
-    init(_ config: MiniAppNavigationConfig? = nil) {
-        self.navConfig = config
+    init(_ sdkConfig: MiniAppSdkConfig? = nil, _ navConfig: MiniAppNavigationConfig? = nil) {
+        self.sdkConfig = sdkConfig
+        self.navConfig = navConfig
     }
 
     func getMiniAppView(miniAppId: String,
@@ -26,7 +28,9 @@ internal class Displayer {
           displayNavBar: navConfig?.navigationBarVisibility ?? .never,
           navigationDelegate: navConfig?.navigationDelegate,
           navigationView: navConfig?.navigationView,
-            analyticsConfig: analyticsConfig)
+          analyticsConfig: analyticsConfig,
+          storageMaxSizeInBytes: sdkConfig?.storageMaxSizeInBytes
+        )
     }
 
     func getMiniAppView(miniAppURL: URL,
@@ -46,6 +50,8 @@ internal class Displayer {
             displayNavBar: navConfig?.navigationBarVisibility ?? .never,
             navigationDelegate: navConfig?.navigationDelegate,
             navigationView: navConfig?.navigationView,
-            analyticsConfig: analyticsConfig)
+            analyticsConfig: analyticsConfig,
+            storageMaxSizeInBytes: sdkConfig?.storageMaxSizeInBytes
+        )
     }
 }

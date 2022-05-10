@@ -566,15 +566,16 @@ It's necessary to allow the `File Download` custom permission to make file downl
 
 Allows MiniApps to store data safely in a key/value store.
 
-Use `MiniAppMessageDelegate` new method `getSecureStorageSizeLimit` to define the maximum file size for the storage in bytes.
-When no maximum storage size is set the default value will be 2_000_000 (2Mb). 
+You can specify the max storage file size in `MiniAppSdkConfig.storageMaxSizeInBytes` when creating a MiniApp.
+When no maximum storage size is set the default value will be 2_000_000 (2Mb). Exceeding the file size limit will
+throw an error `MiniAppSecureStorageError.storageFullError` when setting new values into the storage.
 
 ```swift
-extension ViewController: MiniAppMessageDelegate {
-    func getSecureStorageSizeLimit(completionHandler: @escaping (Result<UInt64, MASDKError>) -> Void) {
-        completion(.success(25_000_000))
-    }
-}
+MiniAppSdkConfig(
+    //...
+    // set the max size to 5 Mb
+    storageMaxSizeInBytes: 5_000_000
+)
 ```
 
 Use `wipeSecureStorages` to delete all secure storages stored on the device.

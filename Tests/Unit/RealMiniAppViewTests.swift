@@ -139,6 +139,31 @@ class RealMiniAppViewTests: QuickSpec {
                     expect(miniAppView.messageBodies.count).toEventually(be(0))
                 }
             }
+
+            context("when host app sets a max storage limit") {
+                it("will equal to the default storage limit") {
+                    let miniAppView = RealMiniAppView(
+                        miniAppId: "abcd",
+                        versionId: "efgh",
+                        projectId: "project-id",
+                        miniAppTitle: "",
+                        hostAppMessageDelegate: mockMessageInterface,
+                        storageMaxSizeInBytes: nil
+                    )
+                    expect(miniAppView.secureStorage.fileSizeLimit).to(equal(2_000_000))
+                }
+                it("will equal to the specified storage limit") {
+                    let miniAppView = RealMiniAppView(
+                        miniAppId: "abcd",
+                        versionId: "efgh",
+                        projectId: "project-id",
+                        miniAppTitle: "",
+                        hostAppMessageDelegate: mockMessageInterface,
+                        storageMaxSizeInBytes: 50
+                    )
+                    expect(miniAppView.secureStorage.fileSizeLimit).to(equal(50))
+                }
+            }
         }
     }
 }

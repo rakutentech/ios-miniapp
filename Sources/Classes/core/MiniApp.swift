@@ -34,7 +34,7 @@ public class MiniApp: NSObject {
     /// - Parameters:
     ///     -   settings: A MiniAppSdkConfig object containing values to override default config settings.
     public class func shared(with settings: MiniAppSdkConfig? = nil, navigationSettings: MiniAppNavigationConfig? = nil) -> MiniApp {
-        shared.realMiniApp.update(with: settings, navigationSettings: navigationSettings)
+        shared.realMiniApp.update(with: settings, navigationConfig: navigationSettings)
         return shared
     }
 

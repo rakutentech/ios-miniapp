@@ -23,7 +23,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     let appId: String
 
     /// file size defined in bytes
-    var fileSizeLimit: UInt64 = 2_000_000
+    var fileSizeLimit: UInt64
 
     private var storage: [String: String]?
     private var isStoreLoading: Bool = false
@@ -32,8 +32,9 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     private static let storageName: String = "securestorage"
     static var storageFullName: String { return storageName + ".plist" }
 
-    public init(appId: String) {
+    public init(appId: String, storageMaxSizeInBytes: UInt64? = nil) {
         self.appId = appId
+        self.fileSizeLimit = storageMaxSizeInBytes ?? 2_000_000
         do {
             try setup(appId: appId)
         } catch {
@@ -91,18 +92,28 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
-        guard storageFileSize <= fileSizeLimit else {
-            completion?(.failure(MiniAppSecureStorageError.storageFullError))
+        guard let memorySize = try? getMemoryStorageFileSize() else {
+            completion?(.failure(.storageUnvailable))
             return
         }
         guard storage != nil else {
-            completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
+            completion?(.failure(.storageUnvailable))
             return
         }
         guard !isBusy else {
-            completion?(.failure(MiniAppSecureStorageError.storageBusy))
+            completion?(.failure(.storageBusy))
             return
         }
+
+        do {
+            try validateAvailableSpace(for: dict)
+            MiniAppLogger.d("🔑 Secure Storage: sufficient space for insert available")
+        } catch let error {
+            let storageError = error as? MiniAppSecureStorageError
+            completion?(.failure(storageError ?? .storageIOError))
+            return
+        }
+
         isBusy = true
         for (key, value) in dict {
             MiniAppLogger.d("🔑 Secure Storage: set '\(key)'")
@@ -113,6 +124,11 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             guard let strongSelf = self else { return }
             do {
                 try strongSelf.saveStoreToDisk()
+                DispatchQueue.main.async {
+                    strongSelf.isBusy = false
+                    completion?(.success(true))
+                    MiniAppLogger.d("🔑 Secure Storage: set finish")
+                }
             } catch let error {
                 strongSelf.isBusy = false
                 if let error = error as? MiniAppSecureStorageError {
@@ -121,11 +137,6 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
                     completion?(.failure(.storageIOError))
                 }
                 return
-            }
-            DispatchQueue.main.async {
-                strongSelf.isBusy = false
-                completion?(.success(true))
-                MiniAppLogger.d("🔑 Secure Storage: set finish")
             }
         }
     }
@@ -149,6 +160,10 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             guard let strongSelf = self else { return }
             do {
                 try strongSelf.saveStoreToDisk()
+                DispatchQueue.main.async {
+                    strongSelf.isBusy = false
+                    completion?(.success(true))
+                }
             } catch let error {
                 strongSelf.isBusy = false
                 if let error = error as? MiniAppSecureStorageError {
@@ -157,10 +172,6 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
                     completion?(.failure(.storageIOError))
                 }
                 return
-            }
-            DispatchQueue.main.async {
-                strongSelf.isBusy = false
-                completion?(.success(true))
             }
         }
     }
@@ -247,6 +258,47 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     // MARK: - Size
+    func getMemoryStorageFileSize() throws -> UInt64 {
+        guard
+            let strg = storage,
+            let storageSize = try? PropertyListEncoder().encode(strg)
+        else {
+            throw MiniAppSecureStorageError.storageUnvailable
+        }
+        let size = storageSize.count
+        MiniAppLogger.d("🔑 Secure Storage: memory size -> \(size)")
+        return UInt64(size)
+    }
+
+    func validateAvailableSpace(key: String, value: String) throws {
+        let estimateAddString = "<key>" + key + "</key><string>" + value + "</string>"
+        guard
+            let estimateAddData = estimateAddString.data(using: .utf8),
+            let memorySize = try? getMemoryStorageFileSize()
+        else {
+            throw MiniAppSecureStorageError.storageIOError
+        }
+        let estimatedAddSize = UInt64(estimateAddData.count)
+        let estimatedFinalSize = memorySize + estimatedAddSize
+        guard estimatedFinalSize <= fileSizeLimit else {
+            throw MiniAppSecureStorageError.storageFullError
+        }
+    }
+
+    func validateAvailableSpace(for dict: [String: String]) throws {
+        guard
+            let dictData = try? PropertyListEncoder().encode(dict),
+            let memorySize = try? getMemoryStorageFileSize()
+        else {
+            throw MiniAppSecureStorageError.storageIOError
+        }
+        let estimatedAddSize = UInt64(dictData.count)
+        let estimatedFinalSize = memorySize + estimatedAddSize
+        guard estimatedFinalSize <= fileSizeLimit else {
+            throw MiniAppSecureStorageError.storageFullError
+        }
+    }
+
     var storageFileSize: UInt64 {
         let fileSize = MiniAppSecureStorage.storagePath(appId: appId).fileSize
         MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")

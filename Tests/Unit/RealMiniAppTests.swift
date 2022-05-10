@@ -129,7 +129,7 @@ class RealMiniAppTests: QuickSpec {
                 config.navigationView = dummyView
 
                 it("will take the new navigation settings in account") {
-                    realMiniApp.update(with: nil, navigationSettings: config)
+                    realMiniApp.update(with: nil, navigationConfig: config)
                     expect(realMiniApp.displayer.navConfig?.navigationBarVisibility) == .always
                     expect(realMiniApp.displayer.navConfig?.navigationDelegate).to(beAKindOf(MiniAppNavigationDelegate.self))
                     expect(realMiniApp.displayer.navConfig?.navigationView).to(beAKindOf(MiniAppNavigationDelegate.self))
