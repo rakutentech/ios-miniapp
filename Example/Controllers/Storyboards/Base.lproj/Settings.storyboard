@@ -641,7 +641,7 @@
                                         <rect key="frame" x="0.0" y="846.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0Eo-Xq-ngM" id="xAd-na-APu">
-                                            <rect key="frame" x="0.0" y="0.0" width="395.5" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="397.5" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Access Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6IY-Z7-dlW">
@@ -677,7 +677,7 @@
                                         <rect key="frame" x="0.0" y="906.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4Qd-NY-XgC" id="o8o-rB-Kdp">
-                                            <rect key="frame" x="0.0" y="0.0" width="395.5" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="397.5" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2GR-6g-BB1">
@@ -713,7 +713,7 @@
                                         <rect key="frame" x="0.0" y="966.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X35-0B-7Dk" id="NE5-Ff-Cgn">
-                                            <rect key="frame" x="0.0" y="0.0" width="395.5" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="397.5" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Signature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avm-bz-jtK">
@@ -1264,17 +1264,17 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Secure Storage" id="fVI-GX-Zpp">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CustomPermissionCell" id="ZIu-ex-Fze" customClass="CustomPermissionCell" customModule="MiniApp_Example" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="187.5" width="414" height="70"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CustomPermissionCell" rowHeight="153" id="ZIu-ex-Fze" customClass="CustomPermissionCell" customModule="MiniApp_Example" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="187.5" width="414" height="153"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZIu-ex-Fze" id="Wgs-5u-eqC">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="153"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeK-sB-sQT">
-                                                    <rect key="frame" x="20" y="10" width="374" height="50"/>
+                                                    <rect key="frame" x="20" y="10" width="374" height="58"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="50" id="8Fb-In-AyV"/>
+                                                        <constraint firstAttribute="height" constant="58" id="8Fb-In-AyV"/>
                                                     </constraints>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="Wipe Secure Storages">
@@ -1292,12 +1292,26 @@
                                                         <action selector="onWipeSecureStoragesPressed:" destination="RUR-PV-VQO" eventType="touchUpInside" id="KYq-1i-Uju"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3K-Vz-FXE">
+                                                    <rect key="frame" x="336" y="97" width="57" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="trash.circle" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="onWipeSecureStorageForMiniAppId:" destination="RUR-PV-VQO" eventType="touchDown" id="DzC-PQ-QP2"/>
+                                                    </connections>
+                                                </button>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mini App ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mVD-Ac-rn9">
+                                                    <rect key="frame" x="20" y="97" width="300" height="34"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="qeK-sB-sQT" firstAttribute="leading" secondItem="Wgs-5u-eqC" secondAttribute="leading" constant="20" id="IyL-GF-9Gp"/>
                                                 <constraint firstAttribute="trailing" secondItem="qeK-sB-sQT" secondAttribute="trailing" constant="20" id="TXi-sC-53J"/>
                                                 <constraint firstItem="qeK-sB-sQT" firstAttribute="top" secondItem="Wgs-5u-eqC" secondAttribute="top" constant="10" id="jg7-1R-ceo"/>
-                                                <constraint firstAttribute="bottom" secondItem="qeK-sB-sQT" secondAttribute="bottom" constant="10" id="wYg-Yf-Tmu"/>
+                                                <constraint firstAttribute="bottom" secondItem="qeK-sB-sQT" secondAttribute="bottom" constant="85" id="wYg-Yf-Tmu"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1313,6 +1327,7 @@
                     <connections>
                         <outlet property="accessTokenErrorControl" destination="1aE-RO-BBb" id="eRJ-LC-jOy"/>
                         <outlet property="accessTokenErrorCustomMessage" destination="Gc2-FL-P84" id="SVc-Zb-MlL"/>
+                        <outlet property="miniAppIdTextField" destination="mVD-Ac-rn9" id="aID-UQ-aAm"/>
                         <outlet property="wipeSecureStorageButton" destination="qeK-sB-sQT" id="JlN-mP-beQ"/>
                     </connections>
                 </tableViewController>
@@ -1445,6 +1460,7 @@
         <image name="profile" width="45.532001495361328" height="45.532001495361328"/>
         <image name="questionmark" width="512" height="512"/>
         <image name="signature" width="398" height="398"/>
+        <image name="trash.circle" catalog="system" width="128" height="121"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

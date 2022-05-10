@@ -131,4 +131,16 @@ extension FileManager {
 
         return cachePath.appendingPathComponent(miniAppDirectory)
     }
+
+    /*
+     * Provide the MiniApp directory by appending the system
+     * cache directory.
+     * @return { URL } - URL path to the MiniApp root folder.
+     */
+    class func getMiniAppFolderPath() -> URL {
+        let cachePath =
+            FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+        let miniAppDirectory = "MiniApp/"
+        return cachePath.appendingPathComponent(miniAppDirectory)
+    }
 }

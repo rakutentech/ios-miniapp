@@ -174,13 +174,35 @@ public class MiniApp: NSObject {
         realMiniApp.getMiniAppPreviewInfo(using: token, completionHandler: completionHandler)
     }
 
+    /// Method to call when the Keyboard is shown
+    /// - Parameters:
+    ///   - navigationBarHeight: Navigation Bar height
+    ///   - screenHeight: Total Height of the screen
+    ///   - keyboardheight: Keyboard Height
     public func keyboardShown(navigationBarHeight: CGFloat, screenHeight: CGFloat, keyboardheight: CGFloat) {
         realMiniApp.keyboardShown(navigationBarHeight: navigationBarHeight, screenHeight: screenHeight, keyboardheight: keyboardheight)
     }
 
+    /// Method to call when the Keyboard is hidden
+    /// - Parameters:
+    ///   - navigationBarHeight: Navigation Bar height
+    ///   - screenHeight: Total Height of the screen
+    ///   - keyboardheight: Keyboard Height
     public func keyboardHidden(navigationBarHeight: CGFloat, screenHeight: CGFloat = 0, keyboardheight: CGFloat = 0) {
         realMiniApp.keyboardHidden(navigationBarHeight: navigationBarHeight, screenHeight: screenHeight, keyboardheight: keyboardheight)
     }
+
+    /// Method which will delete/clears the Secure storage files for all the mini-apps that is downloaded
+    public func clearAllSecureStorage() {
+        MiniAppSecureStorage.wipeSecureStorages()
+    }
+
+    /// Method which will delete/clear secure storage for a specific MiniAppID
+    /// - Parameter miniAppId: MiniApp ID
+    public func clearSecureStorage(for miniAppId: String) {
+        MiniAppSecureStorage.wipeSecureStorage(for: miniAppId)
+    }
+
 }
 
 // MARK: - Testing
