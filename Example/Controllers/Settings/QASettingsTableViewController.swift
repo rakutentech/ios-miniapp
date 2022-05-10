@@ -16,15 +16,15 @@ class QASettingsTableViewController: RATTableViewController {
     @IBOutlet weak var wipeSecureStorageForMiniAppButton: UIButton!
     @IBOutlet weak var miniAppMaxSecureStorageLimitTextField: UITextField!
     @IBOutlet weak var miniAppMaxSecureStorageLimitButton: UIButton!
-    
+
     let storageLimitFormatter: NumberFormatter = {
-        let nf = NumberFormatter()
-        nf.numberStyle = .decimal
-        nf.maximumFractionDigits = 0
-        nf.decimalSeparator = "."
-        return nf
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 0
+        numberFormatter.decimalSeparator = "."
+        return numberFormatter
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         switch Self.accessTokenErrorType() {
@@ -98,7 +98,7 @@ class QASettingsTableViewController: RATTableViewController {
         miniAppMaxSecureStorageLimitTextField.resignFirstResponder()
         self.displayAlert(title: "Success", message: "Saved Max Storage Size Limit to \(textIntString) bytes.")
     }
-    
+
     func setCustomTokenErrorMessage() {
         if let text = accessTokenErrorCustomMessage.text, !text.isEmpty {
             print(text)
