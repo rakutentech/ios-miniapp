@@ -15,6 +15,10 @@ class Config: NSObject {
              requireMiniAppSignatureVerification = "RMARequireMiniAppSignatureVerification",
              sslKeyHash                          = "RMASSLKeyHash"
     }
+    
+    enum LocalKey: String {
+        case maxSecureStorageFileLimit = "MAMaxSecureStorageFileLimit"
+    }
 
     private enum InternalKey: String {
         case stagingActive = "MiniApp.Settings.StagingEnvironmentActive"
@@ -39,6 +43,7 @@ class Config: NSObject {
         if pinningEnabled, let keyHash = (Bundle.main.object(forInfoDictionaryKey: "RMASSLKeyHash") as? [String: Any?])?["main"] as? String {
             pinConf = MiniAppConfigSSLKeyHash(pin: keyHash, backup: (Bundle.main.object(forInfoDictionaryKey: "RMASSLKeyHash") as? [String: Any?])?["backup"] as? String)
         }
+        let storageMaxSizeInBytes = UserDefaults.standard.integer(forKey: LocalKey.maxSecureStorageFileLimit.rawValue)
         return MiniAppSdkConfig(
             baseUrl: getUserDefaultsString(key: .endpoint),
             rasProjectId: rasProjectId,
@@ -48,7 +53,7 @@ class Config: NSObject {
             analyticsConfigList: [MAAnalyticsConfig(acc: "477", aid: "998")],
             requireMiniAppSignatureVerification: Config.userDefaults?.value(forKey: Config.Key.requireMiniAppSignatureVerification.rawValue) as? Bool,
             sslKeyHash: pinConf,
-            storageMaxSizeInBytes: 5_000_000
+            storageMaxSizeInBytes: storageMaxSizeInBytes > 0 ? UInt64(storageMaxSizeInBytes) : nil
         )
     }
 
