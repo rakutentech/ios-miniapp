@@ -13,7 +13,8 @@ class RealMiniAppViewTests: QuickSpec {
                                               versionId: mockMiniAppInfo.version.versionId,
                                               projectId: "project-id",
                                               miniAppTitle: mockMiniAppInfo.displayName!,
-                                              hostAppMessageDelegate: mockMessageInterface)
+                                              hostAppMessageDelegate: mockMessageInterface,
+                                              shouldAutoLoadSecureStorage: false)
 
             context("when SDK should send event") {
                 beforeEach {
@@ -21,40 +22,45 @@ class RealMiniAppViewTests: QuickSpec {
                 }
                 it("will send pause to MiniApp when host app enters background") {
                     NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
-                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.pause.rawValue))
                 }
                 it("will send resume to MiniApp when host app enters foreground") {
                     NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
-                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.resume.rawValue))
                 }
                 it("will send pause to MiniApp when it opens an external webview") {
                     miniAppView.validateScheme(requestURL: URL(string: "https://test.com")!, navigationAction: WKNavigationAction()) { _ in }
-                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.pause.rawValue))
                 }
                 it("will send resume to MiniApp when it closes an external webview") {
                     miniAppView.onExternalWebviewClose?(URL(string: "https://test.com")!)
-                    expect(miniAppView.messageBodies.count).toEventually(be(2))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(2))
                     expect(miniAppView.messageBodies[1]).toEventually(contain(MiniAppEvent.resume.rawValue))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.externalWebViewClosed.rawValue))
                 }
             }
 
             context("when initialized with valid parameters") {
+                beforeEach {
+                    miniAppView.messageBodies = []
+                }
                 it("will return MiniAppView object for given app id") {
                     let miniAppView = RealMiniAppView(miniAppId: mockMiniAppInfo.id,
                                                       versionId: mockMiniAppInfo.version.versionId,
                                                       projectId: "project-id",
                                                       miniAppTitle: "",
-                                                      hostAppMessageDelegate: mockMessageInterface)
+                                                      hostAppMessageDelegate: mockMessageInterface,
+                                                      shouldAutoLoadSecureStorage: false)
                     expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))
                 }
                 it("will return MiniAppView object for given app url") {
                     let miniAppView = RealMiniAppView(miniAppURL: URL(string: "http://miniapp")!,
                                                       miniAppTitle: "",
-                                                      hostAppMessageDelegate: mockMessageInterface)
+                                                      hostAppMessageDelegate: mockMessageInterface,
+                                                      shouldAutoLoadSecureStorage: false)
                     expect(miniAppView).to(beAnInstanceOf(RealMiniAppView.self))
                 }
             }
@@ -64,13 +70,17 @@ class RealMiniAppViewTests: QuickSpec {
                 }
             }
             context("when host app info is specified in plist") {
+                beforeEach {
+                    miniAppView.messageBodies = []
+                }
                 it("will add custom string in User agent") {
                     let miniAppView = RealMiniAppView(
                         miniAppId: mockMiniAppInfo.id,
                         versionId: mockMiniAppInfo.version.versionId,
                         projectId: "project-id",
                         miniAppTitle: "",
-                        hostAppMessageDelegate: mockMessageInterface)
+                        hostAppMessageDelegate: mockMessageInterface,
+                        shouldAutoLoadSecureStorage: false)
                     expect(miniAppView.webView.customUserAgent).toEventually(contain("MiniApp Demo App"), timeout: .seconds(30))
                 }
             }
@@ -141,6 +151,9 @@ class RealMiniAppViewTests: QuickSpec {
             }
 
             context("when host app sets a max storage limit") {
+                beforeEach {
+                    miniAppView.messageBodies = []
+                }
                 it("will equal to the default storage limit") {
                     let miniAppView = RealMiniAppView(
                         miniAppId: "abcd",
@@ -148,7 +161,8 @@ class RealMiniAppViewTests: QuickSpec {
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
-                        storageMaxSizeInBytes: nil
+                        storageMaxSizeInBytes: nil,
+                        shouldAutoLoadSecureStorage: false
                     )
                     expect(miniAppView.secureStorage.fileSizeLimit).to(equal(2_000_000))
                 }
@@ -159,7 +173,8 @@ class RealMiniAppViewTests: QuickSpec {
                         projectId: "project-id",
                         miniAppTitle: "",
                         hostAppMessageDelegate: mockMessageInterface,
-                        storageMaxSizeInBytes: 50
+                        storageMaxSizeInBytes: 50,
+                        shouldAutoLoadSecureStorage: false
                     )
                     expect(miniAppView.secureStorage.fileSizeLimit).to(equal(50))
                 }
