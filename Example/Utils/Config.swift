@@ -15,7 +15,7 @@ class Config: NSObject {
              requireMiniAppSignatureVerification = "RMARequireMiniAppSignatureVerification",
              sslKeyHash                          = "RMASSLKeyHash"
     }
-    
+
     enum LocalKey: String {
         case maxSecureStorageFileLimit = "MAMaxSecureStorageFileLimit"
     }
