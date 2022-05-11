@@ -113,6 +113,8 @@ internal class RealMiniAppUI {
 }
 
 extension UINavigationController {
+    /// When UIDocumentPicker or UIActivityController is dismissed, parent view is also getting dismissed. This seem like a bug in SDK so we are making sure
+    /// here to dismiss only once.
     open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         if(self.presentedViewController != nil && !(self.presentedViewController?.isBeingDismissed ?? false))
         {
