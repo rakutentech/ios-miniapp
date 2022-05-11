@@ -111,3 +111,12 @@ internal class RealMiniAppUI {
     }
 
 }
+
+extension UINavigationController {
+    open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        if(self.presentedViewController != nil && !(self.presentedViewController?.isBeingDismissed ?? false))
+        {
+            super.dismiss(animated: flag, completion: completion)
+        }
+    }
+}
