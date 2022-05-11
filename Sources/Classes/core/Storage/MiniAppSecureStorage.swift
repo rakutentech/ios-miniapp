@@ -65,7 +65,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     // MARK: - Load/Unload
     public func loadStorage(completion: ((Bool) -> Void)? = nil) {
         isStoreLoading = true
-        DispatchQueue.global(qos: .background).async { [weak self] in
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let strongSelf = self else { return }
             let loadedStorage = FileManager.default.retrievePlist(
                 MiniAppSecureStorage.storageFullName,
@@ -115,8 +115,8 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
         }
 
         isBusy = true
+
         for (key, value) in dict {
-            MiniAppLogger.d("🔑 Secure Storage: set '\(key)'")
             storage?[key] = value
         }
 

@@ -13,6 +13,17 @@ class QASettingsTableViewController: RATTableViewController {
     @IBOutlet weak var accessTokenErrorCustomMessage: UITextField!
     @IBOutlet weak var wipeSecureStorageButton: UIButton!
     @IBOutlet weak var miniAppIdTextField: UITextField!
+    @IBOutlet weak var wipeSecureStorageForMiniAppButton: UIButton!
+    @IBOutlet weak var miniAppMaxSecureStorageLimitTextField: UITextField!
+    @IBOutlet weak var miniAppMaxSecureStorageLimitButton: UIButton!
+
+    let storageLimitFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 0
+        numberFormatter.decimalSeparator = "."
+        return numberFormatter
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +37,12 @@ class QASettingsTableViewController: RATTableViewController {
         }
         accessTokenErrorCustomMessage.text = Self.accessTokenErrorMessage()
         self.pageName = MASDKLocale.localize("demo.app.rat.page.name.qa")
+        wipeSecureStorageForMiniAppButton.setTitle("", for: .normal)
+        miniAppMaxSecureStorageLimitButton.setTitle("", for: .normal)
+        let maxSecureStorageLimit = UserDefaults.standard.integer(forKey: Config.LocalKey.maxSecureStorageFileLimit.rawValue)
+        if maxSecureStorageLimit > 0 {
+            miniAppMaxSecureStorageLimitTextField.text = storageLimitFormatter.string(from: NSNumber(value: maxSecureStorageLimit))
+        }
     }
 
     public class func accessTokenErrorType() -> AccessTokenCustomErrorType? {
@@ -63,6 +80,23 @@ class QASettingsTableViewController: RATTableViewController {
         }
         MiniApp.shared().clearSecureStorage(for: textFieldValue)
         self.displayAlert(title: "Success", message: "Mini App Storage cleared!")
+    }
+
+    @IBAction func onSaveMaxStorageLimit(_ sender: Any) {
+        guard
+            let text = miniAppMaxSecureStorageLimitTextField.text,
+            let textNumber = storageLimitFormatter.number(from: text),
+            let textIntString = storageLimitFormatter.string(from: textNumber)
+        else {
+            self.displayAlert(title: "Failure", message: "Something went wrong")
+            return
+        }
+        let textInt = Int(truncating: textNumber)
+        self.miniAppMaxSecureStorageLimitTextField.text = textIntString
+        UserDefaults.standard.set(textInt, forKey: Config.LocalKey.maxSecureStorageFileLimit.rawValue)
+        UserDefaults.standard.synchronize()
+        miniAppMaxSecureStorageLimitTextField.resignFirstResponder()
+        self.displayAlert(title: "Success", message: "Saved Max Storage Size Limit to \(textIntString) bytes.")
     }
 
     func setCustomTokenErrorMessage() {

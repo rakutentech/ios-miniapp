@@ -29,6 +29,7 @@ internal class RealMiniAppView: UIView {
     var canGoForwardObservation: NSKeyValueObservation?
 
     let secureStorage: MiniAppSecureStorage
+    var shouldAutoLoadSecureStorage: Bool
 
     init(
         miniAppId: String,
@@ -42,7 +43,8 @@ internal class RealMiniAppView: UIView {
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
         analyticsConfig: [MAAnalyticsConfig]? = [],
-        storageMaxSizeInBytes: UInt64? = nil) {
+        storageMaxSizeInBytes: UInt64? = nil,
+        shouldAutoLoadSecureStorage: Bool = true) {
 
         self.miniAppTitle = miniAppTitle
         webView = MiniAppWebView(miniAppId: miniAppId, versionId: versionId, queryParams: queryParams)
@@ -53,6 +55,7 @@ internal class RealMiniAppView: UIView {
         self.projectId = projectId
         self.analyticsConfig = analyticsConfig
         self.secureStorage = MiniAppSecureStorage(appId: miniAppId, storageMaxSizeInBytes: storageMaxSizeInBytes)
+        self.shouldAutoLoadSecureStorage = shouldAutoLoadSecureStorage
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -72,7 +75,8 @@ internal class RealMiniAppView: UIView {
         navigationDelegate: MiniAppNavigationDelegate? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil,
         analyticsConfig: [MAAnalyticsConfig]? = [],
-        storageMaxSizeInBytes: UInt64? = nil) {
+        storageMaxSizeInBytes: UInt64? = nil,
+        shouldAutoLoadSecureStorage: Bool = true) {
 
         let miniAppId = "custom\(Int32.random(in: 0...Int32.max))" // some id is needed to handle permissions
         self.miniAppTitle = miniAppTitle
@@ -84,6 +88,7 @@ internal class RealMiniAppView: UIView {
         supportedMiniAppOrientation = []
         self.analyticsConfig = analyticsConfig
         self.secureStorage = MiniAppSecureStorage(appId: miniAppId, storageMaxSizeInBytes: storageMaxSizeInBytes)
+        self.shouldAutoLoadSecureStorage = shouldAutoLoadSecureStorage
         super.init(frame: .zero)
         commonInit(miniAppId: miniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
@@ -148,11 +153,13 @@ internal class RealMiniAppView: UIView {
         initExternalWebViewClosures()
         observeWebView()
 
-        secureStorage.loadStorage { success in
-            if success {
-                MiniAppSecureStorage.sendLoadStorageReady()
-            } else {
-                MiniAppSecureStorage.sendLoadStorageError()
+        if shouldAutoLoadSecureStorage {
+            secureStorage.loadStorage { success in
+                if success {
+                    MiniAppSecureStorage.sendLoadStorageReady()
+                } else {
+                    MiniAppSecureStorage.sendLoadStorageError()
+                }
             }
         }
     }
