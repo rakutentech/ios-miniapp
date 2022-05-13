@@ -140,7 +140,7 @@ public enum MiniAppEvent: String {
         var type: MiniAppEvent
         var comment: String
 
-        init(type: MiniAppEvent, comment: String) {
+        public init(type: MiniAppEvent, comment: String) {
             self.type = type
             self.comment = comment
         }
@@ -160,7 +160,7 @@ public enum MiniAppKeyboardEvent: String {
         var screenHeight: CGFloat?
         var keyboardHeight: CGFloat?
 
-        init(type: MiniAppKeyboardEvent, comment: String, navigationBarHeight: CGFloat? = nil, keyboardHeight: CGFloat? = nil, screenHeight: CGFloat? = nil) {
+        public init(type: MiniAppKeyboardEvent, comment: String, navigationBarHeight: CGFloat? = nil, keyboardHeight: CGFloat? = nil, screenHeight: CGFloat? = nil) {
             self.type = type
             self.comment = comment
             self.navigationBarHeight = navigationBarHeight
