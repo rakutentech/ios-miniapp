@@ -117,15 +117,11 @@ extension UINavigationController {
     /// here to dismiss only once.
     open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         if let controller = self.presentedViewController,
-           controller.isKind(of: UIDocumentPickerViewController.self) || controller.isKind(of: UIActivityViewController.self)
-        {
-             if !controller.isBeingDismissed
-            {
+           controller.isKind(of: UIDocumentPickerViewController.self) || controller.isKind(of: UIActivityViewController.self) {
+            if !controller.isBeingDismissed {
                 super.dismiss(animated: flag, completion: completion)
             }
-        }
-        else
-        {
+        } else {
             super.dismiss(animated: flag, completion: completion)
         }
     }
