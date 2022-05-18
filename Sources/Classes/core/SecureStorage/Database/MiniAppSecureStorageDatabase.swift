@@ -1,10 +1,5 @@
 import Foundation
 
-enum MiniAppSecureStorageDatabaseType {
-    case coreData(MiniAppSecureStorageCoreDatabase)
-    case plist(MiniAppSecureStoragePlistDatabase)
-}
-
 public protocol MiniAppSecureStorageDatabase: AnyObject {
     var appId: String {get set}
     var isStoreAvailable: Bool {get}

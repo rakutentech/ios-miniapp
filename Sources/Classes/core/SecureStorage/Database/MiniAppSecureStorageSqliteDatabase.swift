@@ -1,7 +1,7 @@
 import Foundation
-import CoreData
+import GRDB
 
-class MiniAppSecureStorageCoreDatabase: MiniAppSecureStorageDatabase {
+class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     var appId: String
 
@@ -9,15 +9,10 @@ class MiniAppSecureStorageCoreDatabase: MiniAppSecureStorageDatabase {
     static let storageNameExtension: String = "sqlite"
     static var storageFullName: String { return storageName + ".\(storageNameExtension)" }
 
-    private(set) var managedObjectContext: NSManagedObjectContext?
-    private(set) var persistentStoreCoordinator: NSPersistentStoreCoordinator?
-
-    private lazy var managedObjectModel: NSManagedObjectModel = {
-        return SecureStorageEntry.managedObjectModel()
-    }()
+    private(set) var dbQueue: DatabaseQueue?
 
     var isStoreAvailable: Bool {
-        return managedObjectContext != nil
+        return dbQueue != nil
     }
 
     var storageFullName: String { return Self.storageFullName }
@@ -27,57 +22,43 @@ class MiniAppSecureStorageCoreDatabase: MiniAppSecureStorageDatabase {
     }
 
     func load(completion: ((MiniAppSecureStorageError?) -> Void)?) {
-        _ = managedObjectContext
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        let databasePath = "/\(appId)/\(MiniAppSecureStorageCoreDatabase.storageFullName)"
+        let databasePath = "/\(appId)/\(MiniAppSecureStorageSqliteDatabase.storageFullName)"
         let databaseUrl = FileManager.getMiniAppFolderPath().appendingPathComponent(databasePath)
-        guard let store = try?
-            coordinator.addPersistentStore(
-                ofType: NSSQLiteStoreType,
-                configurationName: nil,
-                at: databaseUrl,
-                options: [NSPersistentStoreFileProtectionKey: FileProtectionType.complete]
-            ),
-            (try? store.loadMetadata()) != nil
-        else {
+        do {
+            let dbQueue = try DatabaseQueue(path: databaseUrl.path)
+            do {
+                try dbQueue.write { database in
+                    try database.create(table: "entries") { table in
+                        table.column("key", .text).primaryKey().notNull()
+                        table.column("value", .text).notNull()
+                    }
+                }
+                print("table created")
+            } catch {
+                print("table already exists")
+            }
+            self.dbQueue = dbQueue
+            completion?(nil)
+        } catch {
+            print(error)
             completion?(.storageIOError)
-            return
         }
-
-        persistentStoreCoordinator = coordinator
-
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        context.persistentStoreCoordinator = coordinator
-        managedObjectContext = context
-
-        completion?(nil)
     }
 
     func unload() throws {
-        managedObjectContext = nil
-        persistentStoreCoordinator = nil
+        dbQueue = nil
     }
 
-    func find(for key: String) throws -> SecureStorageEntry? {
-        guard let context = managedObjectContext else { throw MiniAppSecureStorageError.storageUnvailable }
-        let request = NSFetchRequest<SecureStorageEntry>(entityName: "SecureStorageEntry")
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "key = %@", key)
-        let result = try context.fetch(request)
-        if result.count == 1 {
-            return result[0]
+    func find(for key: String) throws -> Entry? {
+        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
+        let ent = try dbQueue.read { database -> Entry? in
+            return try Entry.fetchOne(database, key: key)
         }
-        return nil
+        return ent
     }
 
     func save(completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) throws {
-        guard let context = managedObjectContext else { throw MiniAppSecureStorageError.storageUnvailable }
-        if context.hasChanges {
-            try context.save()
-            completion?(.success(true))
-        } else {
-            completion?(.failure(.storageIOError))
-        }
+        completion?(.success(true))
     }
 
     func get(key: String) throws -> String? {
@@ -85,47 +66,42 @@ class MiniAppSecureStorageCoreDatabase: MiniAppSecureStorageDatabase {
     }
 
     func set(dict: [String: String]) throws {
-        guard let context = managedObjectContext else { throw MiniAppSecureStorageError.storageUnvailable }
-        for (key, value) in dict {
-            if let existingEntry = try? find(for: key) {
-                existingEntry.value = value
-            } else {
-                let entry = NSManagedObject(entity: SecureStorageEntry.entity(), insertInto: context)
-                entry.setValue(key, forKey: "key")
-                entry.setValue(value, forKey: "value")
+        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
+        try dbQueue.write { database in
+            for (key, value) in dict {
+                let entry = Entry(key: key, value: value)
+                try entry.save(database)
             }
         }
     }
 
     func remove(keys: [String]) throws {
-        guard let context = managedObjectContext else { throw MiniAppSecureStorageError.storageUnvailable }
+        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
         for key in keys {
-            if let existingEntry = try find(for: key) {
-                context.delete(existingEntry)
-            } else {
-                throw MiniAppSecureStorageError.storageIOError
+            _ = try dbQueue.write { database in
+                if try Entry.exists(database, key: key) {
+                    try Entry.deleteOne(database, key: key)
+                } else {
+                    throw MiniAppSecureStorageError.storageIOError
+                }
             }
         }
     }
 
     func clear(completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         MiniAppLogger.d("🔑 Secure Storage: clear")
-        guard let context = managedObjectContext else {
+        guard let dbQueue = dbQueue else {
             completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
             return
         }
-        let request = NSFetchRequest<SecureStorageEntry>(entityName: "SecureStorageEntry")
-        guard let result = try? context.fetch(request) else {
-            completion?(.failure(.storageIOError))
-            return
-        }
-        if !result.isEmpty {
-            do {
-                try remove(keys: result.map({ $0.key }))
+        do {
+            _ = try dbQueue.write { database in
+                try Entry.deleteAll(database)
                 completion?(.success(true))
-            } catch let error {
-                completion?(.failure((error as? MiniAppSecureStorageError) ?? .storageIOError))
             }
+        } catch {
+            completion?(.failure(MiniAppSecureStorageError.storageIOError))
+            return
         }
     }
 

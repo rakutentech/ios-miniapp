@@ -26,7 +26,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     ) {
         self.appId = appId
         self.fileSizeLimit = storageMaxSizeInBytes ?? 2_000_000
-        self.database = database ?? MiniAppSecureStorageCoreDatabase(appId: appId)
+        self.database = database ?? MiniAppSecureStorageSqliteDatabase(appId: appId)
     }
 
     deinit {
@@ -133,13 +133,13 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     // MARK: Wipe all secure storages
     internal static func wipeSecureStorages() {
         MiniAppLogger.d("🔑 Secure Storage: destroy")
-        MiniAppSecureStorageCoreDatabase.wipe()
+        MiniAppSecureStorageSqliteDatabase.wipe()
         MiniAppSecureStoragePlistDatabase.wipe()
     }
 
     // MARK: Wipe storage for MiniApp ID
     internal static func wipeSecureStorage(for miniAppId: String) {
-        MiniAppSecureStorageCoreDatabase.wipe(for: miniAppId)
+        MiniAppSecureStorageSqliteDatabase.wipe(for: miniAppId)
         MiniAppSecureStoragePlistDatabase.wipe(for: miniAppId)
     }
 
