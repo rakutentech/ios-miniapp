@@ -125,6 +125,13 @@
 		31FA603E2761B8660070B611 /* MiniApp.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31FA5EC727608D1A0070B611 /* MiniApp.xcassets */; };
 		31FA60452761F71A0070B611 /* Localization.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 31FA60182761945A0070B611 /* Localization.bundle */; };
 		31FA60462761F71A0070B611 /* MiniApp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 31FA60342761A4370070B611 /* MiniApp.bundle */; };
+		F730D90C2832488200EA3CB1 /* MiniAppSecureStorageCoreDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F730D90B2832488200EA3CB1 /* MiniAppSecureStorageCoreDatabase.swift */; };
+		F760F6412833597200535843 /* MiniAppSecureStoragePlistDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760F6402833597200535843 /* MiniAppSecureStoragePlistDatabase.swift */; };
+		F760F644283387A000535843 /* MiniAppSecureStorageDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760F643283387A000535843 /* MiniAppSecureStorageDatabase.swift */; };
+		F760F646283387E900535843 /* MiniAppSecureStorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760F645283387E900535843 /* MiniAppSecureStorageError.swift */; };
+		F760F648283388BF00535843 /* MiniAppSecureStorage+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760F647283388BF00535843 /* MiniAppSecureStorage+Delegate.swift */; };
+		F760F64A28338E4D00535843 /* MiniAppSecureStorageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760F64928338E4D00535843 /* MiniAppSecureStorageSize.swift */; };
+		F760F64D28338F2300535843 /* MiniAppSecureStorageCoreDatabase+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760F64C28338F2300535843 /* MiniAppSecureStorageCoreDatabase+Model.swift */; };
 		F79023D128125749000A8A4C /* MiniAppSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */; };
 /* End PBXBuildFile section */
 
@@ -311,6 +318,13 @@
 		31FA60342761A4370070B611 /* MiniApp.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FA60372761B06B0070B611 /* log.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = log.js; sourceTree = "<group>"; };
 		31FA60382761B06B0070B611 /* bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bridge.js; sourceTree = "<group>"; };
+		F730D90B2832488200EA3CB1 /* MiniAppSecureStorageCoreDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageCoreDatabase.swift; sourceTree = "<group>"; };
+		F760F6402833597200535843 /* MiniAppSecureStoragePlistDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStoragePlistDatabase.swift; sourceTree = "<group>"; };
+		F760F643283387A000535843 /* MiniAppSecureStorageDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageDatabase.swift; sourceTree = "<group>"; };
+		F760F645283387E900535843 /* MiniAppSecureStorageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageError.swift; sourceTree = "<group>"; };
+		F760F647283388BF00535843 /* MiniAppSecureStorage+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniAppSecureStorage+Delegate.swift"; sourceTree = "<group>"; };
+		F760F64928338E4D00535843 /* MiniAppSecureStorageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageSize.swift; sourceTree = "<group>"; };
+		F760F64C28338F2300535843 /* MiniAppSecureStorageCoreDatabase+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniAppSecureStorageCoreDatabase+Model.swift"; sourceTree = "<group>"; };
 		F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -501,6 +515,7 @@
 				31FA5E7727608D1A0070B611 /* MiniAppSSLConfig.swift */,
 				31FA5E7827608D1A0070B611 /* Downloader */,
 				31FA5E8027608D1A0070B611 /* Models */,
+				F760F6422833878500535843 /* SecureStorage */,
 				31FA5E8A27608D1A0070B611 /* Storage */,
 				31FA5E9327608D1A0070B611 /* Extensions */,
 				31FA5EA527608D1A0070B611 /* Utilities */,
@@ -557,7 +572,6 @@
 				31FA5E9027608D1A0070B611 /* MAManifestStorage.swift */,
 				31FA5E9127608D1A0070B611 /* MiniAppKeyChain.swift */,
 				31FA5E9227608D1A0070B611 /* MiniAppCacheVerifier.swift */,
-				F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -757,6 +771,29 @@
 			path = "../../Sources/Classes/js-miniapp";
 			sourceTree = "<group>";
 		};
+		F760F6422833878500535843 /* SecureStorage */ = {
+			isa = PBXGroup;
+			children = (
+				F760F647283388BF00535843 /* MiniAppSecureStorage+Delegate.swift */,
+				F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */,
+				F760F645283387E900535843 /* MiniAppSecureStorageError.swift */,
+				F760F64928338E4D00535843 /* MiniAppSecureStorageSize.swift */,
+				F760F64B28338EE100535843 /* Database */,
+			);
+			path = SecureStorage;
+			sourceTree = "<group>";
+		};
+		F760F64B28338EE100535843 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				F760F643283387A000535843 /* MiniAppSecureStorageDatabase.swift */,
+				F730D90B2832488200EA3CB1 /* MiniAppSecureStorageCoreDatabase.swift */,
+				F760F64C28338F2300535843 /* MiniAppSecureStorageCoreDatabase+Model.swift */,
+				F760F6402833597200535843 /* MiniAppSecureStoragePlistDatabase.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -903,7 +940,9 @@
 			files = (
 				31FA5F1D27608D1B0070B611 /* UIApplication.swift in Sources */,
 				31FA5F4D27608D1B0070B611 /* Verifier.swift in Sources */,
+				F760F64A28338E4D00535843 /* MiniAppSecureStorageSize.swift in Sources */,
 				31FA5F3E27608D1B0070B611 /* MiniAppDisplayProtocol.swift in Sources */,
+				F760F6412833597200535843 /* MiniAppSecureStoragePlistDatabase.swift in Sources */,
 				31FA5F4227608D1B0070B611 /* MiniAppMessageDelegate.swift in Sources */,
 				31FA5EF127608D1A0070B611 /* MiniAppViewController+ViewState.swift in Sources */,
 				31FA5F0227608D1B0070B611 /* MiniAppManifest.swift in Sources */,
@@ -912,11 +951,14 @@
 				31FA5F3B27608D1B0070B611 /* MiniAppAdDisplayer.swift in Sources */,
 				31FA5F0A27608D1B0070B611 /* MiniAppPermissionsStorage.swift in Sources */,
 				31FA5EFE27608D1B0070B611 /* MAAnalyticsConfig.swift in Sources */,
+				F760F648283388BF00535843 /* MiniAppSecureStorage+Delegate.swift in Sources */,
 				31FA5F1927608D1B0070B611 /* Bundle+Environment.swift in Sources */,
 				31FA5F0627608D1B0070B611 /* MiniAppReward.swift in Sources */,
+				F760F644283387A000535843 /* MiniAppSecureStorageDatabase.swift in Sources */,
 				31FA5F0827608D1B0070B611 /* MiniAppStatus.swift in Sources */,
 				31FA5F4027608D1B0070B611 /* MiniAppUserInfoDelegate.swift in Sources */,
 				31FA5F4927608D1B0070B611 /* MiniAppScriptMessageHandler.swift in Sources */,
+				F730D90C2832488200EA3CB1 /* MiniAppSecureStorageCoreDatabase.swift in Sources */,
 				31FA5F2C27608D1B0070B611 /* MiniApp.swift in Sources */,
 				31FA5EF327608D1B0070B611 /* Environment.swift in Sources */,
 				31FA5F1527608D1B0070B611 /* RealMiniAppView+WKUIDelegate.swift in Sources */,
@@ -968,6 +1010,7 @@
 				31FA5F3F27608D1B0070B611 /* MiniAppErrorProtocol.swift in Sources */,
 				31FA5F0327608D1B0070B611 /* MiniAppJavaScriptMessageInfo.swift in Sources */,
 				31FA5F2027608D1B0070B611 /* Constants.swift in Sources */,
+				F760F646283387E900535843 /* MiniAppSecureStorageError.swift in Sources */,
 				31FA5F0C27608D1B0070B611 /* MAManifestStorage.swift in Sources */,
 				31FA5F4B27608D1B0070B611 /* MiniAppClient+Signature.swift in Sources */,
 				31FA5F0427608D1B0070B611 /* PreviewMiniAppInfo.swift in Sources */,
@@ -981,6 +1024,7 @@
 				31FA5EF027608D1A0070B611 /* MiniAppViewController.swift in Sources */,
 				31FA5F2627608D1B0070B611 /* MASDKError.swift in Sources */,
 				31FA5EFD27608D1B0070B611 /* ManifestDownloader.swift in Sources */,
+				F760F64D28338F2300535843 /* MiniAppSecureStorageCoreDatabase+Model.swift in Sources */,
 				31FA5EF627608D1B0070B611 /* MiniAppSSLConfig.swift in Sources */,
 				31FA5F5227608D1B0070B611 /* SessionType.swift in Sources */,
 				31FA5EEF27608D1A0070B611 /* MiniAppViewController+Fallback.swift in Sources */,

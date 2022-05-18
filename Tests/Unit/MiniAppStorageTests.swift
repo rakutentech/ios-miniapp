@@ -145,7 +145,7 @@ class MiniAppStorageTests: QuickSpec {
 
                 it("will calculate size for an empty storage") {
                     let storage = MiniAppSecureStorage(appId: miniAppId)
-                    let fileSize: UInt64 = storage.storageFileSize
+                    let fileSize: UInt64 = storage.database.storageFileSize
                     expect(fileSize).to(equal(42))
                 }
 
