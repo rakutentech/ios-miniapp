@@ -29,7 +29,6 @@ target sdk_name + '_Example' do
   miniapp_pods
   pod 'AppCenter/Crashes'
   pod 'RAnalytics', :source => 'https://github.com/rakutentech/ios-analytics-framework.git'
-  pod 'GRDB.swift', '~> 5.24.0'
 
   target sdk_name + '_Tests' do
     inherit! :search_paths
