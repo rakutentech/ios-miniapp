@@ -1,5 +1,5 @@
 import Foundation
-import GRDB
+import SQLite
 
 class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
@@ -9,7 +9,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     static let storageNameExtension: String = "sqlite"
     static var storageFullName: String { return storageName + ".\(storageNameExtension)" }
 
-    private(set) var dbQueue: DatabaseQueue?
+    private(set) var dbQueue: Connection?
 
     var isStoreAvailable: Bool {
         return dbQueue != nil
@@ -25,28 +25,15 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
         let databasePath = "/\(appId)/\(MiniAppSecureStorageSqliteDatabase.storageFullName)"
         let databaseUrl = FileManager.getMiniAppFolderPath().appendingPathComponent(databasePath)
         do {
-            let dbQueue = try DatabaseQueue(path: databaseUrl.path)
+            let dbQueue = try Connection(databaseUrl.path)
             self.dbQueue = dbQueue
             do {
-                let exists = try dbQueue.read { database in
-                    return try database.tableExists("entries")
-                }
-                if exists {
-                    MiniAppLogger.d("🔑 Secure Storage: entries table exists")
-                    completion?(nil)
-                } else {
-                    try dbQueue.write { database in
-                        try database.create(table: "entries") { table in
-                            table.column("key", .text).primaryKey().notNull()
-                            table.column("value", .text).notNull()
-                        }
-                    }
-                    MiniAppLogger.d("🔑 Secure Storage: entries table created")
-                    completion?(nil)
-                }
+                try Entry.migrate(database: dbQueue)
+                MiniAppLogger.d("🔑 Secure Storage: entries table created")
+                completion?(nil)
             } catch {
-                MiniAppLogger.d("🔑 Secure Storage: entries table failed to create")
-                completion?(.storageIOError)
+                MiniAppLogger.d("🔑 Secure Storage: entries table exists")
+                completion?(nil)
             }
         } catch {
             print(error)
@@ -60,13 +47,10 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     func find(for key: String) throws -> Entry? {
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
-        let ent = try dbQueue.read { database -> Entry? in
-            return try Entry.fetchOne(database, key: key)
-        }
-        return ent
+        return try Entry.find(database: dbQueue, key: key)
     }
 
-    func save(completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) throws {
+    func save(completion: ((Swift.Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) throws {
         completion?(.success(true))
     }
 
@@ -76,41 +60,26 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     func set(dict: [String: String]) throws {
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
-        try dbQueue.write { database in
-            for (key, value) in dict {
-                let entry = Entry(key: key, value: value)
-                try entry.save(database)
-            }
+        for (key, value) in dict {
+            try Entry.upsert(database: dbQueue, key: key, value: value)
         }
     }
 
     func remove(keys: [String]) throws {
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
         for key in keys {
-            _ = try dbQueue.write { database in
-                if try Entry.exists(database, key: key) {
-                    try Entry.deleteOne(database, key: key)
-                } else {
-                    throw MiniAppSecureStorageError.storageIOError
-                }
-            }
+            try Entry.delete(database: dbQueue, key: key)
         }
     }
 
-    func clear(completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
+    func clear(completion: ((Swift.Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         MiniAppLogger.d("🔑 Secure Storage: clear")
-        guard let dbQueue = dbQueue else {
-            completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
-            return
-        }
+        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
         do {
-            _ = try dbQueue.write { database in
-                try Entry.deleteAll(database)
-                completion?(.success(true))
-            }
+            try Entry.deleteAll(database: dbQueue)
+            completion(.success(true))
         } catch {
-            completion?(.failure(MiniAppSecureStorageError.storageIOError))
-            return
+            completion(.failure(.storageIOError))
         }
     }
 
