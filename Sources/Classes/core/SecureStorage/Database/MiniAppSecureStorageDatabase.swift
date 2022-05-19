@@ -15,12 +15,12 @@ public protocol MiniAppSecureStorageDatabase: AnyObject {
     func save(completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) throws
     func clear(completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?)
 
-    static func wipe()
-    static func wipe(for miniAppId: String)
+    static func wipe() throws
+    static func wipe(for miniAppId: String) throws
 }
 
 extension MiniAppSecureStorageDatabase {
-    static func wipe() {
+    static func wipe() throws {
         guard let contentNames = try? FileManager
                 .default
                 .contentsOfDirectory(atPath: FileManager.getMiniAppFolderPath().path)
@@ -42,11 +42,12 @@ extension MiniAppSecureStorageDatabase {
                 }
             } catch let error {
                 MiniAppLogger.d("🔑 Secure Storage Wipe Failed: \(name)", error.localizedDescription)
+                throw MiniAppSecureStorageError.storageIOError
             }
         }
     }
 
-    static func wipe(for miniAppId: String) {
+    static func wipe(for miniAppId: String) throws {
         if !miniAppId.isEmpty {
             MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: destroy")
             let miniAppPath = FileManager.getMiniAppFolderPath().appendingPathComponent(miniAppId)
@@ -57,6 +58,7 @@ extension MiniAppSecureStorageDatabase {
                 MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: destroyed storage for \(miniAppId)")
             } catch {
                 MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: could not destroy storaged for \(miniAppId)")
+                throw MiniAppSecureStorageError.storageIOError
             }
         }
     }

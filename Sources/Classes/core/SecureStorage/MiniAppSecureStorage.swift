@@ -131,16 +131,16 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     // MARK: - Wipe
     // MARK: Wipe all secure storages
-    internal static func wipeSecureStorages() {
+    internal static func wipeSecureStorages() throws {
         MiniAppLogger.d("🔑 Secure Storage: destroy")
-        MiniAppSecureStorageSqliteDatabase.wipe()
-        MiniAppSecureStoragePlistDatabase.wipe()
+        try MiniAppSecureStorageSqliteDatabase.wipe()
+        try MiniAppSecureStoragePlistDatabase.wipe()
     }
 
     // MARK: Wipe storage for MiniApp ID
-    internal static func wipeSecureStorage(for miniAppId: String) {
-        MiniAppSecureStorageSqliteDatabase.wipe(for: miniAppId)
-        MiniAppSecureStoragePlistDatabase.wipe(for: miniAppId)
+    internal static func wipeSecureStorage(for miniAppId: String) throws {
+        try MiniAppSecureStorageSqliteDatabase.wipe(for: miniAppId)
+        try MiniAppSecureStoragePlistDatabase.wipe(for: miniAppId)
     }
 
     func clearSecureStorage() throws {

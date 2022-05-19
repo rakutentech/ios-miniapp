@@ -86,7 +86,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
         }
     }
 
-    static func wipe() {
+    static func wipe() throws {
         guard let contentNames = try? FileManager
                 .default
                 .contentsOfDirectory(atPath: FileManager.getMiniAppFolderPath().path)
@@ -114,11 +114,12 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
                 }
             } catch let error {
                 MiniAppLogger.d("🔑 Secure Storage Wipe Failed: \(name)", error.localizedDescription)
+                throw MiniAppSecureStorageError.storageIOError
             }
         }
     }
 
-    static func wipe(for miniAppId: String) {
+    static func wipe(for miniAppId: String) throws {
         if !miniAppId.isEmpty {
             MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: destroy")
             let miniAppPath = FileManager.getMiniAppFolderPath().appendingPathComponent(miniAppId)
@@ -135,6 +136,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
                 MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: destroyed storage for \(miniAppId)")
             } catch {
                 MiniAppLogger.d("🔑 Secure Storage for MiniApp ID: could not destroy storaged for \(miniAppId)")
+                throw MiniAppSecureStorageError.storageIOError
             }
         }
     }
