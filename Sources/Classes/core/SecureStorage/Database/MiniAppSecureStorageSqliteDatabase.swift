@@ -26,19 +26,28 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
         let databaseUrl = FileManager.getMiniAppFolderPath().appendingPathComponent(databasePath)
         do {
             let dbQueue = try DatabaseQueue(path: databaseUrl.path)
-            do {
-                try dbQueue.write { database in
-                    try database.create(table: "entries") { table in
-                        table.column("key", .text).primaryKey().notNull()
-                        table.column("value", .text).notNull()
-                    }
-                }
-                print("table created")
-            } catch {
-                print("table already exists")
-            }
             self.dbQueue = dbQueue
-            completion?(nil)
+            do {
+                let exists = try dbQueue.read { database in
+                    return try database.tableExists("entries")
+                }
+                if exists {
+                    MiniAppLogger.d("🔑 Secure Storage: entries table exists")
+                    completion?(nil)
+                } else {
+                    try dbQueue.write { database in
+                        try database.create(table: "entries") { table in
+                            table.column("key", .text).primaryKey().notNull()
+                            table.column("value", .text).notNull()
+                        }
+                    }
+                    MiniAppLogger.d("🔑 Secure Storage: entries table created")
+                    completion?(nil)
+                }
+            } catch {
+                MiniAppLogger.d("🔑 Secure Storage: entries table failed to create")
+                completion?(.storageIOError)
+            }
         } catch {
             print(error)
             completion?(.storageIOError)
