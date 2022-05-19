@@ -74,12 +74,15 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     func clear(completion: ((Swift.Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         MiniAppLogger.d("🔑 Secure Storage: clear")
-        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
+        guard let dbQueue = dbQueue else {
+            completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
+            return
+        }
         do {
             try Entry.deleteAll(database: dbQueue)
-            completion(.success(true))
+            completion?(.success(true))
         } catch {
-            completion(.failure(.storageIOError))
+            completion?(.failure(.storageIOError))
         }
     }
 
