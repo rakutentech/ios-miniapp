@@ -132,6 +132,7 @@
 		F760F64A28338E4D00535843 /* MiniAppSecureStorageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760F64928338E4D00535843 /* MiniAppSecureStorageSize.swift */; };
 		F760F64D28338F2300535843 /* MiniAppSecureStorageSqliteDatabase+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760F64C28338F2300535843 /* MiniAppSecureStorageSqliteDatabase+Model.swift */; };
 		F760F64F2834D96600535843 /* MiniAppSecureStorageSqliteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760F64E2834D96500535843 /* MiniAppSecureStorageSqliteDatabase.swift */; };
+		F760F6542835F3DC00535843 /* SQLite.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F760F6532835F3DC00535843 /* SQLite.xcframework */; };
 		F79023D128125749000A8A4C /* MiniAppSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */; };
 /* End PBXBuildFile section */
 
@@ -151,19 +152,6 @@
 			remoteInfo = Other;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		31FA5F5E27608D3F0070B611 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		313C0ED82770412D00C76614 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
@@ -325,6 +313,7 @@
 		F760F64928338E4D00535843 /* MiniAppSecureStorageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageSize.swift; sourceTree = "<group>"; };
 		F760F64C28338F2300535843 /* MiniAppSecureStorageSqliteDatabase+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniAppSecureStorageSqliteDatabase+Model.swift"; sourceTree = "<group>"; };
 		F760F64E2834D96500535843 /* MiniAppSecureStorageSqliteDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageSqliteDatabase.swift; sourceTree = "<group>"; };
+		F760F6532835F3DC00535843 /* SQLite.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SQLite.xcframework; path = ../../Carthage/Build/SQLite.xcframework; sourceTree = "<group>"; };
 		F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -340,6 +329,7 @@
 				317AA31C276265560037180D /* GoogleUtilities.xcframework in Frameworks */,
 				317AA312276265560037180D /* nanopb.xcframework in Frameworks */,
 				317AA319276265560037180D /* UserMessagingPlatform.xcframework in Frameworks */,
+				F760F6542835F3DC00535843 /* SQLite.xcframework in Frameworks */,
 				317AA31B276265560037180D /* GoogleAppMeasurement.xcframework in Frameworks */,
 				317AA317276265560037180D /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */,
 			);
@@ -420,6 +410,7 @@
 		317AA31D276265C00037180D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F760F6532835F3DC00535843 /* SQLite.xcframework */,
 				317AA31F276266140037180D /* TrustKit.xcframework */,
 				317AA31E276266140037180D /* ZIPFoundation.xcframework */,
 				317AA305276265560037180D /* gadsdk */,
@@ -816,7 +807,6 @@
 				31FA5E5027608A450070B611 /* Sources */,
 				31FA5E5127608A450070B611 /* Frameworks */,
 				31FA5E5227608A450070B611 /* Resources */,
-				31FA5F5E27608D3F0070B611 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
