@@ -7,6 +7,7 @@ public protocol MiniAppSecureStorageDatabase: AnyObject {
 
     static var storageFullName: String {get}
 
+    func setup() throws
     func load(completion: ((MiniAppSecureStorageError?) -> Void)?)
     func unload() throws
     func get(key: String) throws -> String?

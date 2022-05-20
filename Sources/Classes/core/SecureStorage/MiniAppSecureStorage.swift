@@ -12,9 +12,6 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     /// state if the storage is currently loading
     var isStoreLoading: Bool = false
 
-    /// storage is busy with set, remove etc
-    var isBusy: Bool = false
-
     static var storageName: String { return "securestorage" }
 
     let database: MiniAppSecureStorageDatabase
@@ -60,14 +57,6 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             completion?(.failure(.storageUnvailable))
             return
         }
-        guard database.isStoreAvailable else {
-            completion?(.failure(.storageUnvailable))
-            return
-        }
-        guard !isBusy else {
-            completion?(.failure(.storageBusy))
-            return
-        }
 
         do {
             try validateAvailableSpace(for: dict)
@@ -78,22 +67,17 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             return
         }
 
-        isBusy = true
-
         do {
             try database.set(dict: dict)
-            try database.save(completion: { [weak self] result in
+            try database.save(completion: { result in
                 switch result {
                 case .success:
-                    self?.isBusy = false
                     completion?(.success(true))
                 case let .failure(error):
-                    self?.isBusy = false
                     completion?(.failure(error))
                 }
             })
         } catch {
-            isBusy = false
             completion?(.failure(.storageIOError))
             return
         }
@@ -104,27 +88,18 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
             return
         }
-        guard !isBusy else {
-            completion?(.failure(MiniAppSecureStorageError.storageBusy))
-            return
-        }
-
-        isBusy = true
 
         do {
             try database.remove(keys: keys)
-            try database.save(completion: { [weak self] result in
+            try database.save(completion: { result in
                 switch result {
                 case .success:
-                    self?.isBusy = false
                     completion?(.success(true))
                 case let .failure(error):
-                    self?.isBusy = false
                     completion?(.failure(error))
                 }
             })
         } catch let error {
-            isBusy = false
             completion?(.failure((error as? MiniAppSecureStorageError) ?? .storageIOError))
         }
     }

@@ -17,24 +17,45 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     var storageFullName: String { return Self.storageFullName }
 
+    var storagePath: String {
+        let databasePath = "/\(appId)/\(MiniAppSecureStorageSqliteDatabase.storageFullName)"
+        let databaseUrl = FileManager.getMiniAppFolderPath().appendingPathComponent(databasePath)
+        let databaseUrlPath = databaseUrl.path
+        return databaseUrlPath
+    }
+    var storageExists: Bool {
+        return FileManager.default.fileExists(atPath: storagePath)
+    }
+
     init(appId: String) {
         self.appId = appId
     }
 
-    func load(completion: ((MiniAppSecureStorageError?) -> Void)?) {
-        let databasePath = "/\(appId)/\(MiniAppSecureStorageSqliteDatabase.storageFullName)"
-        let databaseUrl = FileManager.getMiniAppFolderPath().appendingPathComponent(databasePath)
+    func setup() throws {
         do {
-            let dbQueue = try Connection(databaseUrl.path)
+            let dbQueue = try Connection(storagePath)
             self.dbQueue = dbQueue
             do {
                 try Entry.migrate(database: dbQueue)
                 MiniAppLogger.d("🔑 Secure Storage: entries table created")
-                completion?(nil)
             } catch {
                 MiniAppLogger.d("🔑 Secure Storage: entries table exists")
-                completion?(nil)
             }
+        } catch {
+            MiniAppLogger.d("🔑 Secure Storage: connection failed")
+            throw error
+        }
+    }
+
+    func load(completion: ((MiniAppSecureStorageError?) -> Void)?) {
+        guard storageExists else {
+            completion?(.storageUnvailable)
+            return
+        }
+        do {
+            let dbQueue = try Connection(storagePath)
+            self.dbQueue = dbQueue
+            completion?(nil)
         } catch {
             print(error)
             completion?(.storageIOError)
@@ -59,6 +80,9 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     }
 
     func set(dict: [String: String]) throws {
+        if !storageExists {
+            try setup()
+        }
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
         for (key, value) in dict {
             try Entry.upsert(database: dbQueue, key: key, value: value)

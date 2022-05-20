@@ -5,7 +5,6 @@ public enum MiniAppSecureStorageError: MiniAppErrorProtocol, Equatable {
     case storageFullError
     case storageIOError
     case storageUnvailable
-    case storageBusy
 
     var name: String {
         switch self {
@@ -15,8 +14,6 @@ public enum MiniAppSecureStorageError: MiniAppErrorProtocol, Equatable {
             return "SecureStorageIOError"
         case .storageUnvailable:
             return "SecureStorageUnavailableError"
-        case .storageBusy:
-            return "SecureStorageBusyError"
         }
     }
 
@@ -25,11 +22,9 @@ public enum MiniAppSecureStorageError: MiniAppErrorProtocol, Equatable {
         case .storageFullError:
             return "Storage size exceeded"
         case .storageIOError:
-            return "IO or unknown error occured"
+            return "IO Error"
         case .storageUnvailable:
-            return "StorageUnavailable"
-        case .storageBusy:
-            return "UnavailableItem"
+            return "Storage not available"
         }
     }
 }
