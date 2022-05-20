@@ -129,7 +129,7 @@ class MiniAppStorageTests: QuickSpec {
                     expect(failedToLoad).to(beTrue())
                 }
             }
-            
+
             context("storage read/write") {
                 it("will set some values") {
                     let storage = MiniAppSecureStorage(appId: miniAppId)
