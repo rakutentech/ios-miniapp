@@ -259,6 +259,46 @@ class MiniAppStorageTests: QuickSpec {
                     expect(FileManager.default.fileExists(atPath: secureStorageUrl.path)).to(beFalse())
                 }
             }
+
+            context("error") {
+                it("should throw secure storage unvailable error") {
+                    let storage = MiniAppSecureStorage(appId: miniAppId)
+                    do {
+                        _ = try storage.get(key: "test1")
+                    } catch let error {
+                        guard let error = error as? MiniAppSecureStorageError else {
+                            fail("should be a secure storage error")
+                            return
+                        }
+                        expect(error.name).to(equal(MiniAppSecureStorageError.storageUnvailable.name))
+                        expect(error.description).to(equal(MiniAppSecureStorageError.storageUnvailable.description))
+                    }
+                }
+                it("should throw secure storage full error") {
+                    let storage = MiniAppSecureStorage(appId: miniAppId, storageMaxSizeInBytes: 0)
+                    storage.set(dict: ["test1": "value1"], completion: { result in
+                        switch result {
+                        case .success:
+                            fail("should not succeed")
+                        case let .failure(error):
+                            expect(error.name).to(equal(MiniAppSecureStorageError.storageFullError.name))
+                            expect(error.description).to(equal(MiniAppSecureStorageError.storageFullError.description))
+                        }
+                    })
+                }
+                it("should throw secure storage io error") {
+                    do {
+                        try MiniAppSecureStorageSqliteDatabase.wipe(for: "test-123456")
+                    } catch let error {
+                        guard let error = error as? MiniAppSecureStorageError else {
+                            fail("should be a secure storage error")
+                            return
+                        }
+                        expect(error.name).to(equal(MiniAppSecureStorageError.storageIOError.name))
+                        expect(error.description).to(equal(MiniAppSecureStorageError.storageIOError.description))
+                    }
+                }
+            }
         }
     }
 }
