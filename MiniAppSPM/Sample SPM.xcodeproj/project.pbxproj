@@ -71,6 +71,7 @@
 		3105761627EE387800D93B06 /* Config-test-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3105761127EE387800D93B06 /* Config-test-debug.xcconfig */; };
 		31A7169B27EF0800003770E9 /* MiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169A27EF0800003770E9 /* MiniApp */; };
 		31A7169D27EF0800003770E9 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169C27EF0800003770E9 /* AppCenterCrashes */; };
+		F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +141,7 @@
 		3105761027EE387800D93B06 /* Config-common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
 		3105761127EE387800D93B06 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		31A7169827EF0428003770E9 /* MiniApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MiniApp; path = ..; sourceTree = "<group>"; };
+		F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,7 +181,6 @@
 		3105756427EE213400D93B06 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				3105756527EE213400D93B06 /* Storyboards */,
 				3105756C27EE213400D93B06 /* Utils */,
 				3105757E27EE213400D93B06 /* Models */,
 				3105758127EE213400D93B06 /* AppDelegate.swift */,
@@ -193,16 +194,10 @@
 			path = ../Example;
 			sourceTree = "<group>";
 		};
-		3105756527EE213400D93B06 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Storyboards;
-			sourceTree = "<group>";
-		};
 		3105756C27EE213400D93B06 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */,
 				3105756D27EE213400D93B06 /* ImageCache.swift */,
 				3105756E27EE213400D93B06 /* UIImageView+Extensions.swift */,
 				3105756F27EE213400D93B06 /* String+MiniApp.swift */,
@@ -489,6 +484,7 @@
 			files = (
 				310575DB27EE213400D93B06 /* GeneralTableViewController.swift in Sources */,
 				310575D227EE213400D93B06 /* UserSettingsTableViewController.swift in Sources */,
+				F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */,
 				310575E727EE213400D93B06 /* MiniAppCell.swift in Sources */,
 				310575C627EE213400D93B06 /* MiniApp+UIImage.swift in Sources */,
 				310575BE27EE213400D93B06 /* Array+MiniApp.swift in Sources */,
