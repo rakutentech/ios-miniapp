@@ -109,13 +109,11 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     internal static func wipeSecureStorages() throws {
         MiniAppLogger.d("🔑 Secure Storage: destroy")
         try MiniAppSecureStorageSqliteDatabase.wipe()
-        try MiniAppSecureStoragePlistDatabase.wipe()
     }
 
     // MARK: Wipe storage for MiniApp ID
     internal static func wipeSecureStorage(for miniAppId: String) throws {
         try MiniAppSecureStorageSqliteDatabase.wipe(for: miniAppId)
-        try MiniAppSecureStoragePlistDatabase.wipe(for: miniAppId)
     }
 
     func clearSecureStorage() throws {
