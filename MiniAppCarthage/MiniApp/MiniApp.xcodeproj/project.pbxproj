@@ -435,15 +435,14 @@
 		31FA5E4A27608A450070B611 = {
 			isa = PBXGroup;
 			children = (
-				319164F927683FB9004B540A /* Package.swift */,
-				31A716AB27EF0E19003770E9 /* scripts */,
-				313C0EE52770415100C76614 /* Config */,
+				F74AA097283B6B9300087718 /* Deployment */,
 				313C0EDD2770412D00C76614 /* Documentation */,
-				317AA31D276265C00037180D /* Frameworks */,
-				31FA5E5827608A450070B611 /* Info.plist */,
-				31FA60362761A6DA0070B611 /* Javascript */,
+				31A716AB27EF0E19003770E9 /* scripts */,
 				31FA5E5627608A450070B611 /* MiniApp */,
-				31FA60192761945A0070B611 /* Localization */,
+				313C0EE52770415100C76614 /* Config */,
+				31FA60362761A6DA0070B611 /* Javascript */,
+				317AA31D276265C00037180D /* Frameworks */,
+				F74AA098283B6BA900087718 /* Resources */,
 				31FA5E5527608A450070B611 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -755,6 +754,23 @@
 			);
 			name = Javascript;
 			path = "../../Sources/Classes/js-miniapp";
+			sourceTree = "<group>";
+		};
+		F74AA097283B6B9300087718 /* Deployment */ = {
+			isa = PBXGroup;
+			children = (
+				319164F927683FB9004B540A /* Package.swift */,
+			);
+			name = Deployment;
+			sourceTree = "<group>";
+		};
+		F74AA098283B6BA900087718 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				31FA60192761945A0070B611 /* Localization */,
+				31FA5E5827608A450070B611 /* Info.plist */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
