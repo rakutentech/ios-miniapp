@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F74AA09C283C64D600087718"
-               BuildableName = "Tests.xctest"
+               BuildableName = "MiniApp_Tests.xctest"
                BlueprintName = "MiniApp_Tests"
                ReferencedContainer = "container:Sample SPM.xcodeproj">
             </BuildableReference>

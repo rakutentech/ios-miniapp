@@ -277,9 +277,9 @@
 			isa = PBXGroup;
 			children = (
 				31A7169527EF0184003770E9 /* Packages */,
-				3105760C27EE387700D93B06 /* Config-SPM */,
 				3105756427EE213400D93B06 /* Example */,
 				F74AA0A6283C651300087718 /* Tests */,
+				3105760C27EE387700D93B06 /* Config-SPM */,
 				3105754927EE1FA600D93B06 /* Products */,
 				310575F627EE2F1D00D93B06 /* Frameworks */,
 			);
