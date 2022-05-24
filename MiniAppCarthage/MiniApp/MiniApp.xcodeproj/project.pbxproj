@@ -170,7 +170,7 @@
 		313C0EF42770415200C76614 /* .jazzy.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .jazzy.yaml; path = ../../.jazzy.yaml; sourceTree = "<group>"; };
 		313C0EF52770415200C76614 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = ../../.swiftlint.yml; sourceTree = "<group>"; };
 		313C0EF62770415200C76614 /* Dangerfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Dangerfile; path = ../../Dangerfile; sourceTree = "<group>"; };
-		313C0F03277042AE00C76614 /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = MiniApp.podspec; path = ../../MiniApp.podspec; sourceTree = "<group>"; };
+		313C0F03277042AE00C76614 /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = MiniApp.podspec; path = ../../MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		317AA306276265560037180D /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
 		317AA308276265560037180D /* Promises-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Promises-LICENSE"; sourceTree = "<group>"; };
 		317AA309276265560037180D /* NanoPB-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "NanoPB-LICENSE"; sourceTree = "<group>"; };
@@ -313,6 +313,9 @@
 		31FA60382761B06B0070B611 /* bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bridge.js; sourceTree = "<group>"; };
 		F74AA116283C692200087718 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cartfile; path = ../../Cartfile; sourceTree = "<group>"; };
 		F74AA117283C692C00087718 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../../Podfile; sourceTree = "<group>"; };
+		F783FD95283C7885008BC743 /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = swiftlint.yml; path = ../../.github/workflows/swiftlint.yml; sourceTree = "<group>"; };
+		F783FD96283C7885008BC743 /* build_documentation.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = build_documentation.yml; path = ../../.github/workflows/build_documentation.yml; sourceTree = "<group>"; };
+		F783FD97283C7885008BC743 /* fastlane.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = fastlane.yml; path = ../../.github/workflows/fastlane.yml; sourceTree = "<group>"; };
 		F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -357,7 +360,6 @@
 				313C0ED92770412D00C76614 /* USERGUIDE.md */,
 				313C0EDA2770412D00C76614 /* CHANGELOG.md */,
 				313C0EDB2770412D00C76614 /* DEV.md */,
-				313C0EDC2770412D00C76614 /* LICENSE */,
 			);
 			name = Documentation;
 			sourceTree = "<group>";
@@ -437,6 +439,7 @@
 		31FA5E4A27608A450070B611 = {
 			isa = PBXGroup;
 			children = (
+				F783FD94283C7861008BC743 /* Workflows */,
 				F74AA097283B6B9300087718 /* Deployment */,
 				313C0EDD2770412D00C76614 /* Documentation */,
 				31FA5E5627608A450070B611 /* MiniApp */,
@@ -764,6 +767,7 @@
 				F74AA117283C692C00087718 /* Podfile */,
 				F74AA116283C692200087718 /* Cartfile */,
 				319164F927683FB9004B540A /* Package.swift */,
+				313C0EDC2770412D00C76614 /* LICENSE */,
 			);
 			name = Deployment;
 			sourceTree = "<group>";
@@ -775,6 +779,16 @@
 				31FA5E5827608A450070B611 /* Info.plist */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		F783FD94283C7861008BC743 /* Workflows */ = {
+			isa = PBXGroup;
+			children = (
+				F783FD96283C7885008BC743 /* build_documentation.yml */,
+				F783FD97283C7885008BC743 /* fastlane.yml */,
+				F783FD95283C7885008BC743 /* swiftlint.yml */,
+			);
+			name = Workflows;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
