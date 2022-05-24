@@ -311,6 +311,8 @@
 		31FA60342761A4370070B611 /* MiniApp.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FA60372761B06B0070B611 /* log.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = log.js; sourceTree = "<group>"; };
 		31FA60382761B06B0070B611 /* bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bridge.js; sourceTree = "<group>"; };
+		F74AA116283C692200087718 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cartfile; path = ../../Cartfile; sourceTree = "<group>"; };
+		F74AA117283C692C00087718 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../../Podfile; sourceTree = "<group>"; };
 		F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -759,6 +761,8 @@
 		F74AA097283B6B9300087718 /* Deployment */ = {
 			isa = PBXGroup;
 			children = (
+				F74AA117283C692C00087718 /* Podfile */,
+				F74AA116283C692200087718 /* Cartfile */,
 				319164F927683FB9004B540A /* Package.swift */,
 			);
 			name = Deployment;
