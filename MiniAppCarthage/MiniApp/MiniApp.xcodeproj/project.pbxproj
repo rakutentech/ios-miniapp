@@ -170,7 +170,7 @@
 		313C0EF42770415200C76614 /* .jazzy.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .jazzy.yaml; path = ../../.jazzy.yaml; sourceTree = "<group>"; };
 		313C0EF52770415200C76614 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = ../../.swiftlint.yml; sourceTree = "<group>"; };
 		313C0EF62770415200C76614 /* Dangerfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Dangerfile; path = ../../Dangerfile; sourceTree = "<group>"; };
-		313C0F03277042AE00C76614 /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = MiniApp.podspec; path = ../../MiniApp.podspec; sourceTree = "<group>"; };
+		313C0F03277042AE00C76614 /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = MiniApp.podspec; path = ../../MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		317AA306276265560037180D /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = nanopb.xcframework; sourceTree = "<group>"; };
 		317AA308276265560037180D /* Promises-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Promises-LICENSE"; sourceTree = "<group>"; };
 		317AA309276265560037180D /* NanoPB-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "NanoPB-LICENSE"; sourceTree = "<group>"; };
@@ -188,17 +188,6 @@
 		317AA325276274F40037180D /* bundles.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = bundles.xcconfig; sourceTree = "<group>"; };
 		317AA32A2762D0740037180D /* MiniAppSharePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSharePreviewViewController.swift; sourceTree = "<group>"; };
 		319164F927683FB9004B540A /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../../Package.swift; sourceTree = "<group>"; };
-		31A716AC27EF0E19003770E9 /* build-framework.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-framework.sh"; sourceTree = "<group>"; };
-		31A716AD27EF0E19003770E9 /* release-candidate.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "release-candidate.sh"; sourceTree = "<group>"; };
-		31A716AE27EF0E19003770E9 /* build-doc.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-doc.sh"; sourceTree = "<group>"; };
-		31A716AF27EF0E19003770E9 /* extract-version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "extract-version.sh"; sourceTree = "<group>"; };
-		31A716B027EF0E19003770E9 /* release-prod-branch.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "release-prod-branch.sh"; sourceTree = "<group>"; };
-		31A716B127EF0E19003770E9 /* configure-secrets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "configure-secrets.sh"; sourceTree = "<group>"; };
-		31A716B227EF0E19003770E9 /* downloadLibs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = downloadLibs.sh; sourceTree = "<group>"; };
-		31A716B327EF0E19003770E9 /* deploy-to-app-center.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "deploy-to-app-center.sh"; sourceTree = "<group>"; };
-		31A716B427EF0E19003770E9 /* release-docs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "release-docs.sh"; sourceTree = "<group>"; };
-		31A716B527EF0E19003770E9 /* generate-ssh-pin.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "generate-ssh-pin.sh"; sourceTree = "<group>"; };
-		31A716B627EF0E19003770E9 /* release-cocoapods.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "release-cocoapods.sh"; sourceTree = "<group>"; };
 		31C2B4052786CD5B00A03B66 /* sdk.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = sdk.xcconfig; sourceTree = "<group>"; };
 		31FA5E5427608A450070B611 /* MiniApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MiniApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FA5E5727608A450070B611 /* MiniApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MiniApp.h; sourceTree = SOURCE_ROOT; };
@@ -311,6 +300,23 @@
 		31FA60342761A4370070B611 /* MiniApp.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FA60372761B06B0070B611 /* log.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = log.js; sourceTree = "<group>"; };
 		31FA60382761B06B0070B611 /* bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bridge.js; sourceTree = "<group>"; };
+		F74AA116283C692200087718 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cartfile; path = ../../Cartfile; sourceTree = "<group>"; };
+		F74AA117283C692C00087718 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../../Podfile; sourceTree = "<group>"; };
+		F783FD95283C7885008BC743 /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = swiftlint.yml; path = ../../.github/workflows/swiftlint.yml; sourceTree = "<group>"; };
+		F783FD96283C7885008BC743 /* build_documentation.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = build_documentation.yml; path = ../../.github/workflows/build_documentation.yml; sourceTree = "<group>"; };
+		F783FD97283C7885008BC743 /* fastlane.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = fastlane.yml; path = ../../.github/workflows/fastlane.yml; sourceTree = "<group>"; };
+		F783FD98283C7A29008BC743 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Fastfile; path = ../../fastlane/Fastfile; sourceTree = "<group>"; };
+		F783FD9A283C7B7E008BC743 /* release-cocoapods.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "release-cocoapods.sh"; path = "../../scripts/release-cocoapods.sh"; sourceTree = "<group>"; };
+		F783FD9B283C7B7E008BC743 /* release-docs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "release-docs.sh"; path = "../../scripts/release-docs.sh"; sourceTree = "<group>"; };
+		F783FD9C283C7B7E008BC743 /* extract-version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "extract-version.sh"; path = "../../scripts/extract-version.sh"; sourceTree = "<group>"; };
+		F783FD9D283C7B7E008BC743 /* deploy-to-app-center.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "deploy-to-app-center.sh"; path = "../../scripts/deploy-to-app-center.sh"; sourceTree = "<group>"; };
+		F783FD9E283C7B7E008BC743 /* configure-secrets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "configure-secrets.sh"; path = "../../scripts/configure-secrets.sh"; sourceTree = "<group>"; };
+		F783FD9F283C7B7E008BC743 /* release-candidate.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "release-candidate.sh"; path = "../../scripts/release-candidate.sh"; sourceTree = "<group>"; };
+		F783FDA0283C7B7E008BC743 /* release-prod-branch.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "release-prod-branch.sh"; path = "../../scripts/release-prod-branch.sh"; sourceTree = "<group>"; };
+		F783FDA1283C7B7E008BC743 /* build-doc.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "build-doc.sh"; path = "../../scripts/build-doc.sh"; sourceTree = "<group>"; };
+		F783FDA2283C7B7E008BC743 /* build-framework.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "build-framework.sh"; path = "../../scripts/build-framework.sh"; sourceTree = "<group>"; };
+		F783FDA3283C7B7E008BC743 /* generate-ssh-pin.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "generate-ssh-pin.sh"; path = "../../scripts/generate-ssh-pin.sh"; sourceTree = "<group>"; };
+		F783FDA4283C7B7E008BC743 /* downloadLibs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = downloadLibs.sh; path = ../../scripts/downloadLibs.sh; sourceTree = "<group>"; };
 		F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -355,7 +361,6 @@
 				313C0ED92770412D00C76614 /* USERGUIDE.md */,
 				313C0EDA2770412D00C76614 /* CHANGELOG.md */,
 				313C0EDB2770412D00C76614 /* DEV.md */,
-				313C0EDC2770412D00C76614 /* LICENSE */,
 			);
 			name = Documentation;
 			sourceTree = "<group>";
@@ -413,37 +418,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		31A716AB27EF0E19003770E9 /* scripts */ = {
-			isa = PBXGroup;
-			children = (
-				31A716AC27EF0E19003770E9 /* build-framework.sh */,
-				31A716AD27EF0E19003770E9 /* release-candidate.sh */,
-				31A716AE27EF0E19003770E9 /* build-doc.sh */,
-				31A716AF27EF0E19003770E9 /* extract-version.sh */,
-				31A716B027EF0E19003770E9 /* release-prod-branch.sh */,
-				31A716B127EF0E19003770E9 /* configure-secrets.sh */,
-				31A716B227EF0E19003770E9 /* downloadLibs.sh */,
-				31A716B327EF0E19003770E9 /* deploy-to-app-center.sh */,
-				31A716B427EF0E19003770E9 /* release-docs.sh */,
-				31A716B527EF0E19003770E9 /* generate-ssh-pin.sh */,
-				31A716B627EF0E19003770E9 /* release-cocoapods.sh */,
-			);
-			name = scripts;
-			path = ../../scripts;
-			sourceTree = "<group>";
-		};
 		31FA5E4A27608A450070B611 = {
 			isa = PBXGroup;
 			children = (
-				319164F927683FB9004B540A /* Package.swift */,
-				31A716AB27EF0E19003770E9 /* scripts */,
-				313C0EE52770415100C76614 /* Config */,
+				F783FD94283C7861008BC743 /* Workflows */,
+				F74AA097283B6B9300087718 /* Deployment */,
 				313C0EDD2770412D00C76614 /* Documentation */,
-				317AA31D276265C00037180D /* Frameworks */,
-				31FA5E5827608A450070B611 /* Info.plist */,
-				31FA60362761A6DA0070B611 /* Javascript */,
+				F783FD99283C7B66008BC743 /* Scripts */,
 				31FA5E5627608A450070B611 /* MiniApp */,
-				31FA60192761945A0070B611 /* Localization */,
+				31FA60362761A6DA0070B611 /* Javascript */,
+				313C0EE52770415100C76614 /* Config */,
+				317AA31D276265C00037180D /* Frameworks */,
+				F74AA098283B6BA900087718 /* Resources */,
 				31FA5E5527608A450070B611 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -755,6 +741,55 @@
 			);
 			name = Javascript;
 			path = "../../Sources/Classes/js-miniapp";
+			sourceTree = "<group>";
+		};
+		F74AA097283B6B9300087718 /* Deployment */ = {
+			isa = PBXGroup;
+			children = (
+				F74AA117283C692C00087718 /* Podfile */,
+				F74AA116283C692200087718 /* Cartfile */,
+				319164F927683FB9004B540A /* Package.swift */,
+				F783FD98283C7A29008BC743 /* Fastfile */,
+				313C0EDC2770412D00C76614 /* LICENSE */,
+			);
+			name = Deployment;
+			sourceTree = "<group>";
+		};
+		F74AA098283B6BA900087718 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				31FA60192761945A0070B611 /* Localization */,
+				31FA5E5827608A450070B611 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		F783FD94283C7861008BC743 /* Workflows */ = {
+			isa = PBXGroup;
+			children = (
+				F783FD96283C7885008BC743 /* build_documentation.yml */,
+				F783FD97283C7885008BC743 /* fastlane.yml */,
+				F783FD95283C7885008BC743 /* swiftlint.yml */,
+			);
+			name = Workflows;
+			sourceTree = "<group>";
+		};
+		F783FD99283C7B66008BC743 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				F783FDA1283C7B7E008BC743 /* build-doc.sh */,
+				F783FDA2283C7B7E008BC743 /* build-framework.sh */,
+				F783FD9E283C7B7E008BC743 /* configure-secrets.sh */,
+				F783FD9D283C7B7E008BC743 /* deploy-to-app-center.sh */,
+				F783FDA4283C7B7E008BC743 /* downloadLibs.sh */,
+				F783FD9C283C7B7E008BC743 /* extract-version.sh */,
+				F783FDA3283C7B7E008BC743 /* generate-ssh-pin.sh */,
+				F783FD9F283C7B7E008BC743 /* release-candidate.sh */,
+				F783FD9A283C7B7E008BC743 /* release-cocoapods.sh */,
+				F783FD9B283C7B7E008BC743 /* release-docs.sh */,
+				F783FDA0283C7B7E008BC743 /* release-prod-branch.sh */,
+			);
+			name = Scripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

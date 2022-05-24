@@ -1,5 +1,6 @@
 import Quick
 import Nimble
+import Foundation
 @testable import MiniApp
 
 // swiftlint:disable function_body_length
@@ -17,17 +18,17 @@ class MiniAppSdkConfigTests: QuickSpec {
                     expect(config.rasProjectId).to(equal("mini-app-project-id"))
                     expect(config.subscriptionKey).to(equal("mini-app-sub-key"))
                     expect(config.hostAppVersion).to(equal("1.0"))
-                    expect(config.isPreviewMode).to(be(false))
-                    expect(config.analyticsConfigList).notTo(be(nil))
-                    expect(config.analyticsConfigList?[0].acc).to(be(mockRATAcc))
-                    expect(config.analyticsConfigList?[0].aid).to(be(mockRATAid))
-                    expect(config.requireMiniAppSignatureVerification).to(be(true))
+                    expect(config.isPreviewMode).to(equal(false))
+                    expect(config.analyticsConfigList).notTo(beNil())
+                    expect(config.analyticsConfigList?[0].acc).to(equal(mockRATAcc))
+                    expect(config.analyticsConfigList?[0].aid).to(equal(mockRATAid))
+                    expect(config.requireMiniAppSignatureVerification).to(beTrue())
                     expect(env.baseUrl?.absoluteString).to(equal(config.baseUrl))
                     expect(env.projectId).to(equal(config.rasProjectId))
                     expect(env.subscriptionKey).to(equal(config.subscriptionKey))
                     expect(env.appVersion).to(equal(config.hostAppVersion))
-                    expect(env.isPreviewMode).to(be(config.isPreviewMode))
-                    expect(env.requireMiniAppSignatureVerification).to(be(config.requireMiniAppSignatureVerification))
+                    expect(env.isPreviewMode).to(equal(config.isPreviewMode))
+                    expect(env.requireMiniAppSignatureVerification).to(equal(config.requireMiniAppSignatureVerification))
                 }
             }
             context("when MiniAppSdkConfig is initialized with default constructor") {
@@ -45,10 +46,10 @@ class MiniAppSdkConfigTests: QuickSpec {
                     expect(config.projectId).toNot(beNil())
                     expect(config.subscriptionKey).toNot(beNil())
                     expect(config.appVersion).toNot(beNil())
-                    expect(config.isPreviewMode).to(be(true))
+                    expect(config.isPreviewMode).to(beTrue())
                     expect(config.sslKeyHash).to(beNil())
                     expect(config.sslKeyHashBackup).to(beNil())
-                    expect(config.requireMiniAppSignatureVerification).to(be(false))
+                    expect(config.requireMiniAppSignatureVerification).to(beFalse())
                 }
             }
             context("when MiniAppSdkConfig is initialized with default constructor and value is set later") {
@@ -69,19 +70,19 @@ class MiniAppSdkConfigTests: QuickSpec {
                     expect(config.rasProjectId).to(equal("mini-app-host-id"))
                     expect(config.subscriptionKey).to(equal("mini-app-sub-key"))
                     expect(config.hostAppVersion).to(equal("1.0"))
-                    expect(config.isPreviewMode).to(be(false))
-                    expect(config.analyticsConfigList).notTo(be(nil))
-                    expect(config.analyticsConfigList?[0].acc).to(be(mockRATAcc))
-                    expect(config.analyticsConfigList?[0].aid).to(be(mockRATAid))
-                    expect(config.requireMiniAppSignatureVerification).to(be(true))
+                    expect(config.isPreviewMode).to(beFalse())
+                    expect(config.analyticsConfigList).notTo(beNil())
+                    expect(config.analyticsConfigList?[0].acc).to(equal(mockRATAcc))
+                    expect(config.analyticsConfigList?[0].aid).to(equal(mockRATAid))
+                    expect(config.requireMiniAppSignatureVerification).to(beTrue())
                     expect(config.sslKeyHash?.pin).to(equal("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB="))
                     expect(config.sslKeyHash?.backupPin).to(equal("AABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB="))
                     expect(env.baseUrl?.absoluteString).to(equal(config.baseUrl))
                     expect(env.projectId).to(equal(config.rasProjectId))
                     expect(env.subscriptionKey).to(equal(config.subscriptionKey))
                     expect(env.appVersion).to(equal(config.hostAppVersion))
-                    expect(env.isPreviewMode).to(be(config.isPreviewMode))
-                    expect(env.requireMiniAppSignatureVerification).to(be(config.requireMiniAppSignatureVerification))
+                    expect(env.isPreviewMode).to(equal(config.isPreviewMode))
+                    expect(env.requireMiniAppSignatureVerification).to(equal(config.requireMiniAppSignatureVerification))
                     expect(env.sslKeyHash).to(equal(config.sslKeyHash?.pin))
                     expect(env.sslKeyHashBackup).to(equal(config.sslKeyHash?.backupPin))
                 }

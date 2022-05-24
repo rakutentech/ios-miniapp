@@ -99,19 +99,19 @@ class RealMiniAppViewTests: QuickSpec {
                                 screenHeight: 300
                             )
                         )
-                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppKeyboardEvent.keyboardShown.rawValue))
                 }
                 it("will send keyboard shown event via RealMiniApp") {
                     let realMiniApp = RealMiniApp()
                     realMiniApp.keyboardShown(navigationBarHeight: 100, screenHeight: 200, keyboardheight: 300)
-                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppKeyboardEvent.keyboardShown.rawValue))
                 }
                 it("will send keyboard shown event via MiniApp") {
                     miniAppView.messageBodies = []
                     MiniApp.shared().keyboardShown(navigationBarHeight: 100, screenHeight: 200, keyboardheight: 300)
-                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppKeyboardEvent.keyboardShown.rawValue))
                 }
                 it("will send keyboard hidden events") {
@@ -125,28 +125,28 @@ class RealMiniAppViewTests: QuickSpec {
                                 screenHeight: 300
                             )
                         )
-                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppKeyboardEvent.keyboardHidden.rawValue))
                 }
                 it("will send keyboard hidden event via RealMiniApp") {
                     let realMiniApp = RealMiniApp()
                     realMiniApp.keyboardHidden(navigationBarHeight: 100, screenHeight: 200, keyboardheight: 300)
-                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppKeyboardEvent.keyboardHidden.rawValue))
                 }
                 it("will send keyboard hidden event via MiniApp") {
                     miniAppView.messageBodies = []
                     MiniApp.shared().keyboardHidden(navigationBarHeight: 100, screenHeight: 200, keyboardheight: 300)
-                    expect(miniAppView.messageBodies.count).toEventually(be(1))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppKeyboardEvent.keyboardHidden.rawValue))
                 }
                 it("will send keyboard event without data") {
                     NotificationCenter.default.post(name: MiniAppKeyboardEvent.notificationName, object: nil)
-                    expect(miniAppView.messageBodies.count).toEventually(be(0))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(0))
                 }
                 it("will send unrelated notification as keyboard event") {
                     miniAppView.sendKeyboardEvent(notification: NSNotification(name: UIApplication.willResignActiveNotification, object: nil))
-                    expect(miniAppView.messageBodies.count).toEventually(be(0))
+                    expect(miniAppView.messageBodies.count).toEventually(equal(0))
                 }
             }
 
