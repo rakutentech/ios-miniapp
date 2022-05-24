@@ -1,5 +1,6 @@
 import Quick
 import Nimble
+import Foundation
 @testable import MiniApp
 
 // swiftlint:disable function_body_length
@@ -324,7 +325,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.appVersion).to(equal(testVersion))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(testKey))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
-                    expect(miniAppClient.environment.isPreviewMode).to(be(true))
+                    expect(miniAppClient.environment.isPreviewMode).to(beTrue())
                 }
             }
 
@@ -348,7 +349,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.appVersion).to(equal("newversion"))
                     expect(miniAppClient.environment.subscriptionKey).to(equal("key2"))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(mockHost))
-                    expect(miniAppClient.environment.isPreviewMode).to(be(false))
+                    expect(miniAppClient.environment.isPreviewMode).to(beFalse())
                 }
             }
 
@@ -376,7 +377,7 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.appVersion).to(equal(testVersion))
                     expect(miniAppClient.environment.subscriptionKey).to(equal(testKey))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(testURL))
-                    expect(miniAppClient.environment.isPreviewMode).to(be(true))
+                    expect(miniAppClient.environment.isPreviewMode).to(beTrue())
                 }
             }
 
