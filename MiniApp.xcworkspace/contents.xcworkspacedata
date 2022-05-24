@@ -5,9 +5,9 @@
       location = "group:MiniAppCarthage/MiniApp/MiniApp.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:Sample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Sample.xcodeproj">
+      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
