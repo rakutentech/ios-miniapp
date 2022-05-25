@@ -46,7 +46,7 @@ class MiniAppAdDisplayerTests: QuickSpec {
                     self.response = nil
                     let mockMessage = MockWKScriptMessage(name: "loadAd", body: "{\"action\": \"loadAd\", \"param\": { \"adType\": 0, \"adUnitId\": \"testAdId\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(self.response).to(be(self.errorText))
+                    expect(self.response).to(equal(self.errorText))
                 }
             }
             context("receives a successful reward request") {
@@ -64,7 +64,7 @@ class MiniAppAdDisplayerTests: QuickSpec {
                     self.response = nil
                     let mockMessage = MockWKScriptMessage(name: "loadAd", body: "{\"action\": \"loadAd\", \"param\": { \"adType\": 1, \"adUnitId\": \"testAdId\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(self.response).to(be(self.errorText))
+                    expect(self.response).to(equal(self.errorText))
                 }
             }
             context("receives a successful interstitial display request") {
@@ -82,7 +82,7 @@ class MiniAppAdDisplayerTests: QuickSpec {
                     self.response = nil
                     let mockMessage = MockWKScriptMessage(name: "loadAd", body: "{\"action\": \"showAd\", \"param\": { \"adType\": 0, \"adUnitId\": \"testAdId\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(self.response).to(be(self.errorText))
+                    expect(self.response).to(equal(self.errorText))
                 }
             }
             context("receives a successful reward display request") {
@@ -100,7 +100,7 @@ class MiniAppAdDisplayerTests: QuickSpec {
                     self.response = nil
                     let mockMessage = MockWKScriptMessage(name: "loadAd", body: "{\"action\": \"showAd\", \"param\": { \"adType\": 1, \"adUnitId\": \"testAdId\"}, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(self.response).to(be(self.errorText))
+                    expect(self.response).to(equal(self.errorText))
                 }
             }
         }

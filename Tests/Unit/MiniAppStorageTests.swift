@@ -1,5 +1,6 @@
 import Quick
 import Nimble
+import Foundation
 @testable import MiniApp
 
 // swiftlint:disable function_body_length cyclomatic_complexity

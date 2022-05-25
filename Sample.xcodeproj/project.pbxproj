@@ -150,9 +150,6 @@
 		2AFDE8E927B1221000B7B340 /* MiniAppVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppVersionTests.swift; sourceTree = "<group>"; };
 		2AFDE8EB27B1222A00B7B340 /* MiniAppManifestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppManifestTests.swift; sourceTree = "<group>"; };
 		31070C61258C550700BED77C /* MiniApp-Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "MiniApp-Secrets.xcconfig"; path = "../../../MiniApp-Secrets.xcconfig"; sourceTree = "<group>"; };
-		31070C62258C552F00BED77C /* USERGUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USERGUIDE.md; sourceTree = "<group>"; };
-		31070C63258C554500BED77C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		31070C64258C554500BED77C /* DEV.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEV.md; sourceTree = "<group>"; };
 		31462834260DE15B0015AD98 /* .codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .codecov.yml; sourceTree = SOURCE_ROOT; };
 		31462839260DE24E0015AD98 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		31553D3525B6C6800091EE50 /* Config-common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
@@ -165,7 +162,6 @@
 		31AB8EE225CA43E40046F694 /* Dangerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dangerfile; sourceTree = SOURCE_ROOT; };
 		31AB8EE325CA43FC0046F694 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; };
 		31B2FDDF26F242140032A6DA /* SSL-pinning.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SSL-pinning.xcconfig"; sourceTree = SOURCE_ROOT; };
-		31B2FDE02701B9450032A6DA /* workflows */ = {isa = PBXFileReference; lastKnownFileType = folder; name = workflows; path = .github/workflows; sourceTree = "<group>"; };
 		31BE315B25CB00B70022C948 /* .jazzy.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .jazzy.yaml; sourceTree = SOURCE_ROOT; };
 		31CC3B4526DF97F200441154 /* SignatureSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureSettingsTableViewController.swift; sourceTree = "<group>"; };
 		31CFFA4F261B7E7300CDD537 /* ChatContactsSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContactsSelectorViewController.swift; sourceTree = "<group>"; };
@@ -245,13 +241,11 @@
 		7501924AE42A5A88FF5CFB12 /* Config-test-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-release.xcconfig"; sourceTree = "<group>"; };
 		75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppAdDisplayerTests.swift; sourceTree = "<group>"; };
 		7501986FB5D52F78E841069D /* ViewController+ChatDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+ChatDelegate.swift"; sourceTree = "<group>"; };
-		7FB3A4D3F3350D35AED2F43D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A13C249726A15048003ADC6D /* UserPointsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointsModel.swift; sourceTree = "<group>"; };
 		A1FDEABF26A141CC00E48831 /* PointsSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsSettingsTableViewController.swift; sourceTree = "<group>"; };
-		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = MiniApp.podspec; sourceTree = "<group>"; };
+		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D07452302567B72A00B6E842 /* MASDKErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKErrorTests.swift; sourceTree = "<group>"; };
 		D0CACE25281A68D700E39920 /* Base64UriHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
-		D85784C7998D04CE64578236 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F7C8804526D8974800B828C6 /* UITableView+EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+EmptyView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -361,18 +355,6 @@
 				2AFDE8EB27B1222A00B7B340 /* MiniAppManifestTests.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		31070C65258C557D00BED77C /* Documentation */ = {
-			isa = PBXGroup;
-			children = (
-				D85784C7998D04CE64578236 /* README.md */,
-				31070C62258C552F00BED77C /* USERGUIDE.md */,
-				31070C63258C554500BED77C /* CHANGELOG.md */,
-				31070C64258C554500BED77C /* DEV.md */,
-				7FB3A4D3F3350D35AED2F43D /* LICENSE */,
-			);
-			name = Documentation;
 			sourceTree = "<group>";
 		};
 		31AB8EE025CA438D0046F694 /* Fastlane */ = {
@@ -554,8 +536,6 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				31B2FDE02701B9450032A6DA /* workflows */,
-				31070C65258C557D00BED77C /* Documentation */,
 				607FACD21AFB9204008FA782 /* Example for MiniApp */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				183AF07724CE63FA000ABCBF /* Config */,
