@@ -705,6 +705,9 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     func setMiniAppCloseAlert(with callbackId: String, parameters: RequestParameters?) {
         if let alertInfo = parameters?.closeAlertInfo {
             miniAppManageDelegate?.setMiniAppCloseAlertInfo(alertInfo: alertInfo)
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "SUCCESS")
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
         }
     }
 
