@@ -15,6 +15,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
             let mockMessageInterface = MockMessageInterface()
             let mockAdsDelegate =  MockAdsDisplayer()
             let mockSecureStorageDelegate =  MockMiniAppSecureStorage()
+            let mockMiniAppManageInterface = MockManageDelegateInterface()
             let mockMiniAppTitle = "Mini App"
 
             let scriptMessageHandler = MiniAppScriptMessageHandler(
@@ -22,6 +23,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                 hostAppMessageDelegate: mockMessageInterface,
                 adsDisplayer: mockAdsDelegate,
                 secureStorageDelegate: mockSecureStorageDelegate,
+                miniAppManageDelegate: mockMiniAppManageInterface,
                 miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
             )
             beforeEach {
@@ -70,6 +72,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     let requestParam = RequestParameters(
@@ -89,7 +92,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         headers: nil,
                         secureStorageKey: nil,
                         secureStorageItems: nil,
-                        secureStorageKeyList: nil
+                        secureStorageKeyList: nil,
+                        closeAlertInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -115,7 +119,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         headers: nil,
                         secureStorageKey: nil,
                         secureStorageItems: nil,
-                        secureStorageKeyList: nil
+                        secureStorageKeyList: nil,
+                        closeAlertInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -141,7 +146,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         headers: nil,
                         secureStorageKey: nil,
                         secureStorageItems: nil,
-                        secureStorageKeyList: nil
+                        secureStorageKeyList: nil,
+                        closeAlertInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMessagingUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -167,7 +173,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         headers: nil,
                         secureStorageKey: nil,
                         secureStorageItems: nil,
-                        secureStorageKeyList: nil
+                        secureStorageKeyList: nil,
+                        closeAlertInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMauid", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -197,6 +204,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.locationAllowed = false
@@ -213,6 +221,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.locationAllowed = false
@@ -229,6 +238,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.locationAllowed = false
@@ -245,6 +255,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .deviceLocation, status: .allowed)
@@ -333,6 +344,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.customPermissions = true
@@ -351,6 +363,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id,
                         miniAppTitle: mockMiniAppTitle
                     )
@@ -369,6 +382,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id,
                         miniAppTitle: mockMiniAppTitle
                     )
@@ -388,6 +402,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
@@ -406,6 +421,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
@@ -423,6 +439,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .denied)
@@ -441,6 +458,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
@@ -457,6 +475,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
@@ -472,6 +491,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .denied)
@@ -489,6 +509,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: "Mini App"
                     )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
@@ -504,6 +525,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                        hostAppMessageDelegate: mockMessageInterface,
                        adsDisplayer: mockAdsDelegate,
                        secureStorageDelegate: mockSecureStorageDelegate,
+                       miniAppManageDelegate: mockMiniAppManageInterface,
                        miniAppId: mockMiniAppInfo.id, miniAppTitle: "Mini App"
                     )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .denied)
@@ -522,6 +544,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = "MOCK_ACCESS_TOKEN"
@@ -542,6 +565,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = "MOCK_ACCESS_TOKEN"
@@ -562,6 +586,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = "MOCK_ACCESS_TOKEN"
@@ -582,6 +607,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = "MOCK_ACCESS_TOKEN"
@@ -601,6 +627,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = ""
@@ -620,6 +647,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.mockAccessToken = ""
@@ -639,6 +667,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.messageContentAllowed = false
@@ -656,6 +685,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.messageContentAllowed = false
@@ -673,6 +703,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.messageContentAllowed = true
@@ -703,6 +734,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.messageContentAllowed = false
@@ -733,6 +765,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.messageContentAllowed = true
@@ -766,6 +799,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.messageContentAllowed = false
@@ -824,6 +858,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.messageContentAllowed = false
@@ -857,6 +892,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         hostAppMessageDelegate: mockMessageInterface,
                         adsDisplayer: mockAdsDelegate,
                         secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
                         miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                     )
                     mockMessageInterface.messageContentAllowed = false
@@ -881,6 +917,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                         )
                         mockMessageInterface.messageContentAllowed = false
@@ -928,6 +965,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                         )
                         let command = """
@@ -952,6 +990,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                         )
                         let command = """
@@ -977,6 +1016,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                         )
                         let command = """
@@ -1001,6 +1041,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                         )
                         let command = """
@@ -1031,6 +1072,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id,
                             miniAppTitle: mockMiniAppTitle
                         )
@@ -1064,6 +1106,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                         )
                         scriptMessageHandler.execKeyboardEventsCallback(with: .keyboardShown, message: "keyboard shown", navigationBarHeight: 100, screenHeight: 200, keyboardHeight: 300)
@@ -1078,6 +1121,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                             hostAppMessageDelegate: mockMessageInterface,
                             adsDisplayer: mockAdsDelegate,
                             secureStorageDelegate: mockSecureStorageDelegate,
+                            miniAppManageDelegate: mockMiniAppManageInterface,
                             miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
                         )
                         scriptMessageHandler.execKeyboardEventsCallback(with: .keyboardHidden, message: "keyboard hidden", navigationBarHeight: 100, screenHeight: 200, keyboardHeight: 300)
