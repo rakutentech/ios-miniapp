@@ -707,7 +707,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             miniAppManageDelegate?.setMiniAppCloseAlertInfo(alertInfo: alertInfo)
             executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "SUCCESS")
         } else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
         }
     }
 
