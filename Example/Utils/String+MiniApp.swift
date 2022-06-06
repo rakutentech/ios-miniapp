@@ -62,19 +62,16 @@ extension String {
                            + "-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])").evaluate(with: self)
     }
 
-    var ns: NSString
-    {
+    var nsString: NSString {
         self as NSString
     }
 
-    var stringByDeletingPathExtension: String
-    {
-        ns.deletingPathExtension
+    var stringByDeletingPathExtension: String {
+        nsString.deletingPathExtension
     }
 
-    var pathExtension: String
-    {
-        ns.pathExtension
+    var pathExtension: String {
+        nsString.pathExtension
     }
 }
 
