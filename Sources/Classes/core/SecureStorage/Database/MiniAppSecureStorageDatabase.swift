@@ -72,13 +72,13 @@ extension MiniAppSecureStorageDatabase {
 
     var storageFileSize: UInt64 {
         let fileSize = storagePath(appId: appId).fileSize
-        MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")
+        MiniAppLogger.d("🔑 Secure Storage: File size -> \(fileSize)")
         return fileSize
     }
 
     func storageSize(for miniAppId: String) -> UInt64 {
         let fileSize = storagePath(appId: miniAppId).fileSize
-        MiniAppLogger.d("🔑 Secure Storage: size -> \(fileSize)")
+        MiniAppLogger.d("🔑 Secure Storage: File size -> \(fileSize)")
         return fileSize
     }
 }
