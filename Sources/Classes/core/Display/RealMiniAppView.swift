@@ -316,14 +316,6 @@ internal class RealMiniAppView: UIView {
     internal func presentAlert(alertController: UIAlertController) {
         UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
     }
-
-    func wipeAllSecureStorageForMiniApps() {
-        try? MiniAppSecureStorage.wipeSecureStorages()
-    }
-
-    func clearSecureStorage(for miniAppId: String) {
-        try? MiniAppSecureStorage.wipeSecureStorage(for: miniAppId)
-    }
 }
 
 extension RealMiniAppView: MiniAppDisplayDelegate {
