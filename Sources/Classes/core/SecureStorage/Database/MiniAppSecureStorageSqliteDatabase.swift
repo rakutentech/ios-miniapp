@@ -23,7 +23,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
         let databaseUrlPath = databaseUrl.path
         return databaseUrlPath
     }
-    var storageExists: Bool {
+    var doesStoragePathExist: Bool {
         return FileManager.default.fileExists(atPath: storagePath)
     }
 
@@ -48,7 +48,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     }
 
     func load(completion: ((MiniAppSecureStorageError?) -> Void)?) {
-        guard storageExists else {
+        guard doesStoragePathExist else {
             completion?(.storageUnavailable)
             return
         }
@@ -80,7 +80,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     }
 
     func set(dict: [String: String]) throws {
-        if !storageExists {
+        if !doesStoragePathExist {
             try setup()
         }
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnavailable }
