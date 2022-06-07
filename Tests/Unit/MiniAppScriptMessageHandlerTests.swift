@@ -909,226 +909,286 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(5))
                 }
-                context("when MiniAppScriptMessageHandler receives sendMessageToContactId command") {
-                    it("will return contact Id") {
-                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
-                        let scriptMessageHandler = MiniAppScriptMessageHandler(
-                            delegate: mockCallbackProtocol,
-                            hostAppMessageDelegate: mockMessageInterface,
-                            adsDisplayer: mockAdsDelegate,
-                            secureStorageDelegate: mockSecureStorageDelegate,
-                            miniAppManageDelegate: mockMiniAppManageInterface,
-                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
-                        )
-                        mockMessageInterface.messageContentAllowed = false
-                        let command = """
-                        {
-                            "action" : "sendMessageToContactId",
-                            "id" : "4.1141101534045745",
-                            "param" : {
-                                "contactId" : "\(mockMiniAppInfo.id)",
-                                "messageToContact" : null
-                            }
+            }
+            context("when MiniAppScriptMessageHandler receives sendMessageToContactId command") {
+                it("will return contact Id") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    mockMessageInterface.messageContentAllowed = false
+                    let command = """
+                    {
+                        "action" : "sendMessageToContactId",
+                        "id" : "4.1141101534045745",
+                        "param" : {
+                            "contactId" : "\(mockMiniAppInfo.id)",
+                            "messageToContact" : null
                         }
-                        """
-                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .sendMessage, status: .allowed)
-                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
+                    }
+                    """
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .sendMessage, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
 
-                        let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
-                        scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                        expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(5))
-                    }
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(5))
                 }
-                context("when MiniAppScriptMessageHandler receives sendMessageToMultipleContacts command") {
-                    it("will return list of contact Ids") {
-                        mockMessageInterface.messageContentAllowed = false
-                        let command = """
-                        {
-                            "action" : "sendMessageToMultipleContacts",
-                            "id" : "5.1141101534045745",
-                            "param" : {
-                                "messageToContact" : null
-                        }
-                        """
-                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .sendMessage, status: .allowed)
-                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
-                        let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
-                        scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                        expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(5))
+            }
+            context("when MiniAppScriptMessageHandler receives sendMessageToMultipleContacts command") {
+                it("will return list of contact Ids") {
+                    mockMessageInterface.messageContentAllowed = false
+                    let command = """
+                    {
+                        "action" : "sendMessageToMultipleContacts",
+                        "id" : "5.1141101534045745",
+                        "param" : {
+                            "messageToContact" : null
                     }
+                    """
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .sendMessage, status: .allowed)
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue), timeout: .seconds(5))
                 }
-                context("when MiniAppScriptMessageHandler receives getPoints command and permission is denied") {
-                    it("will error") {
-                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
-                        let scriptMessageHandler = MiniAppScriptMessageHandler(
-                            delegate: mockCallbackProtocol,
-                            hostAppMessageDelegate: mockMessageInterface,
-                            adsDisplayer: mockAdsDelegate,
-                            secureStorageDelegate: mockSecureStorageDelegate,
-                            miniAppManageDelegate: mockMiniAppManageInterface,
-                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
-                        )
-                        let command = """
-                        {
-                            "action" : "getPoints",
-                            "id" : "5.1141101534045745",
-                            "param" : null
-                        }
-                        """
-                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .points, status: .denied)
-                        let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
-                        scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                        expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
+            }
+            context("when MiniAppScriptMessageHandler receives getPoints command and permission is denied") {
+                it("will error") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "getPoints",
+                        "id" : "5.1141101534045745",
+                        "param" : null
+                    }
+                    """
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .points, status: .denied)
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
 
-                    }
                 }
-                context("when MiniAppScriptMessageHandler receives getPoints command and permission is allowed") {
-                    it("will return list of contact Ids") {
-                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
-                        let scriptMessageHandler = MiniAppScriptMessageHandler(
-                            delegate: mockCallbackProtocol,
-                            hostAppMessageDelegate: mockMessageInterface,
-                            adsDisplayer: mockAdsDelegate,
-                            secureStorageDelegate: mockSecureStorageDelegate,
-                            miniAppManageDelegate: mockMiniAppManageInterface,
-                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
-                        )
-                        let command = """
-                        {
-                            "action" : "getPoints",
-                            "id" : "5.1141101534045745",
-                            "param" : null
-                        }
-                        """
-                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .points, status: .allowed)
-                        mockMessageInterface.mockPointsInterface = false
-                        let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
-                        scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                        expect(mockCallbackProtocol.errorMessage).toEventually(contain("Failed to retrieve Points details"), timeout: .seconds(10))
+            }
+            context("when MiniAppScriptMessageHandler receives getPoints command and permission is allowed") {
+                it("will return list of contact Ids") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "getPoints",
+                        "id" : "5.1141101534045745",
+                        "param" : null
+                    }
+                    """
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .points, status: .allowed)
+                    mockMessageInterface.mockPointsInterface = false
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain("Failed to retrieve Points details"), timeout: .seconds(10))
 
-                    }
                 }
-                context("when MiniAppScriptMessageHandler receives getPoints command and permission is allowed") {
-                    it("will return list of contact Ids") {
-                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
-                        let scriptMessageHandler = MiniAppScriptMessageHandler(
-                            delegate: mockCallbackProtocol,
-                            hostAppMessageDelegate: mockMessageInterface,
-                            adsDisplayer: mockAdsDelegate,
-                            secureStorageDelegate: mockSecureStorageDelegate,
-                            miniAppManageDelegate: mockMiniAppManageInterface,
-                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
-                        )
-                        let command = """
-                        {
-                            "action" : "getPoints",
-                            "id" : "5.1141101534045745",
-                            "param" : null
-                        }
-                        """
-                        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .points, status: .allowed)
-                        mockMessageInterface.mockPointsInterface = true
-                        let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
-                        scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                        expect(mockCallbackProtocol.response).toEventually(contain("standard"), timeout: .seconds(10))
+            }
+            context("when MiniAppScriptMessageHandler receives getPoints command and permission is allowed") {
+                it("will return list of contact Ids") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "getPoints",
+                        "id" : "5.1141101534045745",
+                        "param" : null
                     }
+                    """
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .points, status: .allowed)
+                    mockMessageInterface.mockPointsInterface = true
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(contain("standard"), timeout: .seconds(10))
                 }
-                context("when MiniAppScriptMessageHandler receives getHostEnvironmentInfo command") {
-                    it("will return ") {
-                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
-                        let scriptMessageHandler = MiniAppScriptMessageHandler(
-                            delegate: mockCallbackProtocol,
-                            hostAppMessageDelegate: mockMessageInterface,
-                            adsDisplayer: mockAdsDelegate,
-                            secureStorageDelegate: mockSecureStorageDelegate,
-                            miniAppManageDelegate: mockMiniAppManageInterface,
-                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
-                        )
-                        let command = """
-                        {
-                            "action" : "getHostEnvironmentInfo",
-                            "id" : "5.1141101534045745",
-                            "param" : null
-                        }
-                        """
-                        mockMessageInterface.mockEnvironmentInfo = true
-                        let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
-                        scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                        guard let responseData: Data = mockCallbackProtocol.response?.data(using: .utf8) else {
-                            fail("MiniAppScriptMessageHandler - getHostEnvironmentInfo failed")
-                            return
-                        }
-                        let environmentInfo = ResponseDecoder.decode(decodeType: MAHostEnvironmentInfo.self, data: responseData)
+            }
+            context("when MiniAppScriptMessageHandler receives getHostEnvironmentInfo command") {
+                it("will return ") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "getHostEnvironmentInfo",
+                        "id" : "5.1141101534045745",
+                        "param" : null
+                    }
+                    """
+                    mockMessageInterface.mockEnvironmentInfo = true
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    guard let responseData: Data = mockCallbackProtocol.response?.data(using: .utf8) else {
+                        fail("MiniAppScriptMessageHandler - getHostEnvironmentInfo failed")
+                        return
+                    }
+                    let environmentInfo = ResponseDecoder.decode(decodeType: MAHostEnvironmentInfo.self, data: responseData)
                         expect(environmentInfo?.sdkVersion).toEventually(equal("4.2.0"))
-                        expect(environmentInfo?.hostVersion).toEventually(equal(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String))
-                        expect(environmentInfo?.hostLocale).toEventually(equal("en-US"))
-                    }
+                    expect(environmentInfo?.hostVersion).toEventually(equal(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String))
+                    expect(environmentInfo?.hostLocale).toEventually(equal("en-US"))
                 }
-                context("when MiniAppScriptMessageHandler receives downloadFile command") {
-                    it("will return ") {
-                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
-                        let scriptMessageHandler = MiniAppScriptMessageHandler(
-                            delegate: mockCallbackProtocol,
-                            hostAppMessageDelegate: mockMessageInterface,
-                            adsDisplayer: mockAdsDelegate,
-                            secureStorageDelegate: mockSecureStorageDelegate,
-                            miniAppManageDelegate: mockMiniAppManageInterface,
-                            miniAppId: mockMiniAppInfo.id,
-                            miniAppTitle: mockMiniAppTitle
-                        )
-                        let command = """
-                        {
-                            "action" : "downloadFile",
-                            "id" : "5.1141101534045745",
-                            "param": {
-                                "filename" : "sample.jpg",
-                                "url" : "https://rakuten.co.jp/sample.jpg",
-                                "headers" : { "token": "test" }
+            }
+            context("when MiniAppScriptMessageHandler receives downloadFile command") {
+                it("will return ") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id,
+                        miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "downloadFile",
+                        "id" : "5.1141101534045745",
+                        "param": {
+                            "filename" : "sample.jpg",
+                            "url" : "https://rakuten.co.jp/sample.jpg",
+                            "headers" : { "token": "test" }
+                        }
+                    }
+                    """
+                    updateCustomPermissionStatus(
+                        miniAppId: mockMiniAppInfo.id,
+                        permissionType: .fileDownload,
+                        status: .allowed
+                    )
+                    mockMessageInterface.mockDownloadFile = true
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(equal("sample.jpg"))
+                }
+            }
+            context("when MiniAppScriptMessageHandler executes keyboard events") {
+                it("keyboard shown succeeds") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    scriptMessageHandler.execKeyboardEventsCallback(with: .keyboardShown, message: "keyboard shown", navigationBarHeight: 100, screenHeight: 200, keyboardHeight: 300)
+                    expect(mockCallbackProtocol.navBarHeight).to(equal(100))
+                    expect(mockCallbackProtocol.screenHeight).to(equal(200))
+                    expect(mockCallbackProtocol.keyboardHeight).to(equal(300))
+                }
+                it("keyboard hidden succeeds") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    scriptMessageHandler.execKeyboardEventsCallback(with: .keyboardHidden, message: "keyboard hidden", navigationBarHeight: 100, screenHeight: 200, keyboardHeight: 300)
+                    expect(mockCallbackProtocol.navBarHeight).to(equal(100))
+                    expect(mockCallbackProtocol.screenHeight).to(equal(200))
+                    expect(mockCallbackProtocol.keyboardHeight).to(equal(300))
+                }
+            }
+            context("when MiniAppScriptMessageHandler receives setCloseAlert command") {
+                it("will set the Mini app close alert info in the SDK") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id,
+                        miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "setCloseAlert",
+                        "id" : "5.114110153404574",
+                        "param": {
+                            "closeAlertInfo": {
+                                "shouldDisplay" : true,
+                                "title" : "Info",
+                                "description" : "Would you like to close the mini-app?"
                             }
                         }
-                        """
-                        updateCustomPermissionStatus(
-                            miniAppId: mockMiniAppInfo.id,
-                            permissionType: .fileDownload,
-                            status: .allowed
-                        )
-                        mockMessageInterface.mockDownloadFile = true
-                        let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
-                        scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                        expect(mockCallbackProtocol.response).toEventually(equal("sample.jpg"))
                     }
+                    """
+                    mockMessageInterface.mockDownloadFile = true
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(equal("SUCCESS"))
                 }
-                context("when MiniAppScriptMessageHandler executes keyboard events") {
-                    it("keyboard shown succeeds") {
-                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
-                        let scriptMessageHandler = MiniAppScriptMessageHandler(
-                            delegate: mockCallbackProtocol,
-                            hostAppMessageDelegate: mockMessageInterface,
-                            adsDisplayer: mockAdsDelegate,
-                            secureStorageDelegate: mockSecureStorageDelegate,
-                            miniAppManageDelegate: mockMiniAppManageInterface,
-                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
-                        )
-                        scriptMessageHandler.execKeyboardEventsCallback(with: .keyboardShown, message: "keyboard shown", navigationBarHeight: 100, screenHeight: 200, keyboardHeight: 300)
-                        expect(mockCallbackProtocol.navBarHeight).to(equal(100))
-                        expect(mockCallbackProtocol.screenHeight).to(equal(200))
-                        expect(mockCallbackProtocol.keyboardHeight).to(equal(300))
+                it("received wrong params then it will throw error") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id,
+                        miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "setCloseAlert",
+                        "id" : "5.114110153404574",
+                        "param": {
+                            "closeAlertInfo": {
+                                "shouldDisplay" : "true",
+                                "title" : "Info",
+                                "description" : "Would you like to close the mini-app?"
+                            }
+                        }
                     }
-                    it("keyboard hidden succeeds") {
-                        let mockCallbackProtocol = MockMiniAppCallbackProtocol()
-                        let scriptMessageHandler = MiniAppScriptMessageHandler(
-                            delegate: mockCallbackProtocol,
-                            hostAppMessageDelegate: mockMessageInterface,
-                            adsDisplayer: mockAdsDelegate,
-                            secureStorageDelegate: mockSecureStorageDelegate,
-                            miniAppManageDelegate: mockMiniAppManageInterface,
-                            miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
-                        )
-                        scriptMessageHandler.execKeyboardEventsCallback(with: .keyboardHidden, message: "keyboard hidden", navigationBarHeight: 100, screenHeight: 200, keyboardHeight: 300)
-                        expect(mockCallbackProtocol.navBarHeight).to(equal(100))
-                        expect(mockCallbackProtocol.screenHeight).to(equal(200))
-                        expect(mockCallbackProtocol.keyboardHeight).to(equal(300))
-                    }
+                    """
+                    mockMessageInterface.mockDownloadFile = true
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
                 }
             }
         }
