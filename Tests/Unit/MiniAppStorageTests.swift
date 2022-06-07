@@ -271,8 +271,8 @@ class MiniAppStorageTests: QuickSpec {
                             fail("should be a secure storage error")
                             return
                         }
-                        expect(error.name).to(equal(MiniAppSecureStorageError.storageUnvailable.name))
-                        expect(error.description).to(equal(MiniAppSecureStorageError.storageUnvailable.description))
+                        expect(error.name).to(equal(MiniAppSecureStorageError.storageUnavailable.name))
+                        expect(error.description).to(equal(MiniAppSecureStorageError.storageUnavailable.description))
                     }
                 }
                 it("should throw secure storage full error") {

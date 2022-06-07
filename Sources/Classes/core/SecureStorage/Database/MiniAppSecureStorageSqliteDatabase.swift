@@ -57,7 +57,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
             self.dbQueue = dbQueue
             completion?(nil)
         } catch {
-            MiniAppLogger.d(error)
+            MiniAppLogger.d(error.localizedDescription)
             completion?(.storageIOError)
         }
     }
