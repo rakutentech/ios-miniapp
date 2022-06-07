@@ -27,14 +27,16 @@ extension MiniAppSecureStorageSqliteDatabase {
             return nil
         }
 
-        static func upsert(database: Connection, key: String, value: String) throws {
+        static func upsert(database: Connection, key: String, value: String) throws -> Int64 {
             let upsert = entries.upsert(Self.key <- key, Self.value <- value, onConflictOf: Self.key)
-            _ = try database.run(upsert)
+            let result = try database.run(upsert)
+            return result
         }
 
-        static func delete(database: Connection, key: String) throws {
+        static func delete(database: Connection, key: String) throws -> Int {
             let delete = entries.filter(Self.key == key).delete()
-            _ = try database.run(delete)
+            let result = try database.run(delete)
+            return result
         }
 
         static func deleteAll(database: Connection) throws {

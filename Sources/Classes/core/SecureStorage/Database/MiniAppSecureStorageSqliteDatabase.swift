@@ -85,14 +85,16 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
         }
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
         for (key, value) in dict {
-            try Entry.upsert(database: dbQueue, key: key, value: value)
+            let upsertResult = try Entry.upsert(database: dbQueue, key: key, value: value)
+            MiniAppLogger.d("🔑 Secure Storage: upsert -> \(upsertResult)")
         }
     }
 
     func remove(keys: [String]) throws {
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
         for key in keys {
-            try Entry.delete(database: dbQueue, key: key)
+            let deleteResult = try Entry.delete(database: dbQueue, key: key)
+            MiniAppLogger.d("🔑 Secure Storage: delete -> \(deleteResult)")
         }
     }
 
