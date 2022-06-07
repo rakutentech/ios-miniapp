@@ -26,6 +26,7 @@ enum MiniAppJSActionCommand: String {
     case removeSecureStorageItems
     case clearSecureStorage
     case getSecureStorageSize
+    case setCloseAlert
 }
 
 enum JavaScriptExecResult: String {

@@ -21,6 +21,7 @@ internal class RealMiniAppView: UIView {
     internal var messageBodies: [String] = []
     internal var onExternalWebviewResponse: ((URL) -> Void)?
     internal var onExternalWebviewClose: ((URL) -> Void)?
+    internal var closeAlertInfo: CloseAlertInfo?
 
     internal weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     internal weak var navigationDelegate: MiniAppNavigationDelegate?
@@ -135,7 +136,8 @@ internal class RealMiniAppView: UIView {
                                                                                    adsDisplayer: adsDisplayer,
                                                                                    secureStorageDelegate: self,
                                                                                    miniAppId: miniAppId,
-                                                                                   miniAppTitle: self.miniAppTitle)
+                                                                                   miniAppTitle: self.miniAppTitle,
+                                                                                   miniAppManageDelegate: self)
         webView.configuration.userContentController.addBridgingJavaScript()
         webView.uiDelegate = self
         self.navigationDelegate = navigationDelegate
@@ -364,6 +366,10 @@ extension RealMiniAppView: MiniAppCallbackDelegate {
 }
 
 extension RealMiniAppView: MiniAppNavigationBarDelegate {
+    func miniAppShouldClose() -> CloseAlertInfo? {
+        return self.closeAlertInfo
+    }
+
     func miniAppNavigationBar(didTriggerAction action: MiniAppNavigationAction) -> Bool {
         let canDo: Bool
         switch action {
@@ -424,5 +430,11 @@ extension RealMiniAppView: MiniAppSecureStorageDelegate {
 
     func clearSecureStorage() throws {
         try secureStorage.clearSecureStorage()
+    }
+}
+
+extension RealMiniAppView: MiniAppManageDelegate {
+    func setMiniAppCloseAlertInfo(alertInfo: CloseAlertInfo?) {
+        self.closeAlertInfo = alertInfo
     }
 }

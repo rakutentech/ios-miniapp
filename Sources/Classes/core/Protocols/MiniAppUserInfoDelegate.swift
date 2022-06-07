@@ -72,18 +72,6 @@ public extension MiniAppUserInfoDelegate {
     }
 }
 
-public class MATokenInfo: Codable {
-    let token: String
-    let validUntil: Int
-    let scopes: MASDKAccessTokenScopes
-
-    public init(accessToken: String, expirationDate: Date, scopes: MASDKAccessTokenScopes?) {
-        self.token = accessToken
-        self.validUntil = expirationDate.dateToNumber()
-        self.scopes = scopes ?? MASDKAccessTokenScopes(audience: "UNDEFINED", scopes: [])!
-    }
-}
-
 /// Contact Object of a User
 public class MAContact: Codable, Equatable, Hashable {
     /// Contact ID
@@ -107,24 +95,5 @@ public class MAContact: Codable, Equatable, Hashable {
         hasher.combine(id)
         hasher.combine(name)
         hasher.combine(email)
-    }
-}
-
-extension Date {
-    func dateToNumber() -> Int {
-        let timeSince1970 = self.timeIntervalSince1970
-        return Int(timeSince1970 * 1000)
-    }
-}
-
-public class MAPoints: Codable {
-    let standard: Int
-    let term: Int
-    let cash: Int
-
-    public init(standard: Int, term: Int, cash: Int) {
-        self.standard = standard
-        self.term = term
-        self.cash = cash
     }
 }

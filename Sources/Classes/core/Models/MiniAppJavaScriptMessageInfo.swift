@@ -22,6 +22,7 @@ struct RequestParameters: Decodable {
     let secureStorageKey: String?
     let secureStorageItems: [String: String]?
     let secureStorageKeyList: [String]?
+    let closeAlertInfo: CloseAlertInfo?
 }
 
 struct LocationOptions: Decodable {
@@ -43,4 +44,10 @@ struct MiniAppCustomPermissionsResponse: Codable {
 
 struct MiniAppCustomPermissionsListResponse: Codable {
     let name, status: String
+}
+
+public struct CloseAlertInfo: Codable {
+    public let shouldDisplay: Bool?
+    public let title: String?
+    public let description: String?
 }

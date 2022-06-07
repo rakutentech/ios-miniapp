@@ -527,6 +527,10 @@ class MockMessageInterface: MiniAppMessageDelegate {
     }
 }
 
+class MockManageDelegateInterface: MiniAppManageDelegate {
+    func setMiniAppCloseAlertInfo(alertInfo: CloseAlertInfo?) { }
+}
+
 var mockMiniAppInfo: MiniAppInfo {
     let mockVersion = Version(versionTag: "Dev", versionId: "ver-id-test")
     let info = MiniAppInfo.init(id: "app-id-test", displayName: "Mini App Title", icon: URL(string: "\(mockHost)/icon.png")!, version: mockVersion)
