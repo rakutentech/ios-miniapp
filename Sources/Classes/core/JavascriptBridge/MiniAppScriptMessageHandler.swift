@@ -17,6 +17,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     weak var hostAppMessageDelegate: MiniAppMessageDelegate?
     weak var adsDelegate: MiniAppAdDisplayDelegate?
     weak var secureStorageDelegate: MiniAppSecureStorageDelegate?
+    weak var miniAppManageDelegate: MiniAppManageDelegate?
     var miniAppId: String
     var miniAppTitle: String
     var userAlreadyRespondedRequestList = [MASDKCustomPermissionModel]()
@@ -28,6 +29,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         hostAppMessageDelegate: MiniAppMessageDelegate,
         adsDisplayer: MiniAppAdDisplayer?,
         secureStorageDelegate: MiniAppSecureStorageDelegate,
+        miniAppManageDelegate: MiniAppManageDelegate?,
         miniAppId: String,
         miniAppTitle: String
     ) {
@@ -37,6 +39,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         self.miniAppTitle = miniAppTitle
         self.adsDelegate = adsDisplayer
         self.secureStorageDelegate = secureStorageDelegate
+        self.miniAppManageDelegate = miniAppManageDelegate
         super.init()
     }
 
@@ -115,6 +118,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             clearSecureStorage(with: callbackId, parameters: requestParam)
         case .getSecureStorageSize:
             getSecureStorageSize(with: callbackId, parameters: requestParam)
+        case .setCloseAlert:
+            setMiniAppCloseAlert(with: callbackId, parameters: requestParam)
         }
     }
 
@@ -695,6 +700,15 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             messageId: callbackId,
             response: encodedSize
         )
+    }
+
+    func setMiniAppCloseAlert(with callbackId: String, parameters: RequestParameters?) {
+        if let alertInfo = parameters?.closeAlertInfo {
+            miniAppManageDelegate?.setMiniAppCloseAlertInfo(alertInfo: alertInfo)
+            executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "SUCCESS")
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
+        }
     }
 
     private func sendScopeError(callbackId: String, type: MASDKAccessTokenError) {
