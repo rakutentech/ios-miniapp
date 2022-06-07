@@ -49,7 +49,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     func load(completion: ((MiniAppSecureStorageError?) -> Void)?) {
         guard storageExists else {
-            completion?(.storageUnvailable)
+            completion?(.storageUnavailable)
             return
         }
         do {
@@ -67,7 +67,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     }
 
     func find(for key: String) throws -> Entry? {
-        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
+        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnavailable }
         return try Entry.find(database: dbQueue, key: key)
     }
 
@@ -83,7 +83,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
         if !storageExists {
             try setup()
         }
-        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
+        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnavailable }
         for (key, value) in dict {
             let upsertResult = try Entry.upsert(database: dbQueue, key: key, value: value)
             MiniAppLogger.d("🔑 Secure Storage: upsert -> \(upsertResult)")
@@ -91,7 +91,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     }
 
     func remove(keys: [String]) throws {
-        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnvailable }
+        guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnavailable }
         for key in keys {
             let deleteResult = try Entry.delete(database: dbQueue, key: key)
             MiniAppLogger.d("🔑 Secure Storage: delete -> \(deleteResult)")
@@ -101,7 +101,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     func clear(completion: ((Swift.Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         MiniAppLogger.d("🔑 Secure Storage: clear")
         guard let dbQueue = dbQueue else {
-            completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
+            completion?(.failure(MiniAppSecureStorageError.storageUnavailable))
             return
         }
         do {

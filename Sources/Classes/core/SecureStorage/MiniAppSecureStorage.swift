@@ -54,7 +54,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         guard (try? getInMemoryStorageFileSize(dict: dict)) != nil else {
-            completion?(.failure(.storageUnvailable))
+            completion?(.failure(.storageUnavailable))
             return
         }
 
@@ -85,7 +85,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
         guard database.isStoreAvailable else {
-            completion?(.failure(MiniAppSecureStorageError.storageUnvailable))
+            completion?(.failure(MiniAppSecureStorageError.storageUnavailable))
             return
         }
 
@@ -139,7 +139,7 @@ extension MiniAppSecureStorage {
         guard
             let storageSize = try? PropertyListEncoder().encode(dict)
         else {
-            throw MiniAppSecureStorageError.storageUnvailable
+            throw MiniAppSecureStorageError.storageUnavailable
         }
         let size = storageSize.count
         MiniAppLogger.d("🔑 Secure Storage: memory size -> \(size)")
