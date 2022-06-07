@@ -123,6 +123,12 @@ public protocol MiniAppNavigationBarDelegate: AnyObject {
     /// Returns if action has been triggered or not
     @discardableResult
     func miniAppNavigationBar(didTriggerAction action: MiniAppNavigationAction) -> Bool
+
+    /// Method to check before closing the miniapp. This makes sure whether we need to display alert to the user before closing the mini-app
+    /// - Returns: CloseAlertInfo:
+    /// @discardableResult
+    func miniAppShouldClose() -> CloseAlertInfo?
+
 }
 
 // MARK: - Enums

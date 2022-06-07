@@ -36,7 +36,14 @@ class DisplayController: RATViewController {
     }
 
     @IBAction func done(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
+        if let alertInfo = navBarDelegate?.miniAppShouldClose(), alertInfo.shouldDisplay ?? false {
+            let alertController = UIAlertController(title: alertInfo.title, message: alertInfo.description, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: MASDKLocale.localize(.ok), style: .default, handler: { (_) in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            alertController.addAction(UIAlertAction(title: MASDKLocale.localize(.cancel), style: .cancel, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 
     func refreshNavigationBarButtons(backButtonEnabled: Bool, forwardButtonEnabled: Bool) {

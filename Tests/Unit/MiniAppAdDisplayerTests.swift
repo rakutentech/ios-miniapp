@@ -28,6 +28,7 @@ class MiniAppAdDisplayerTests: QuickSpec {
                     hostAppMessageDelegate: MockMessageInterface(),
                     adsDisplayer: adsDisplayer,
                     secureStorageDelegate: MockMiniAppSecureStorage(),
+                    miniAppManageDelegate: nil,
                     miniAppId: "mockMiniAppID",
                     miniAppTitle: "mockMiniAppTitle"
             )
