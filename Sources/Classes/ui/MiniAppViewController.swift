@@ -291,13 +291,25 @@ public class MiniAppViewController: UIViewController {
     @objc
     /// Method that is called when mini app is closed
     public func closePressed() {
+        if let alertInfo = navBarDelegate?.miniAppShouldClose(), alertInfo.shouldDisplay ?? false {
+            let alertController = UIAlertController(title: alertInfo.title, message: alertInfo.description, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: MASDKLocale.localize(.ok), style: .default, handler: { (_) in
+                self.closeMiniApp()
+            }))
+            alertController.addAction(UIAlertAction(title: MASDKLocale.localize(.cancel), style: .cancel, handler: nil))
+            UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
+        } else {
+            self.closeMiniApp()
+        }
+    }
+
+    func closeMiniApp() {
         if miniAppUiDelegate == nil {
             dismiss(animated: true, completion: nil)
         } else {
             miniAppUiDelegate?.onClose()
         }
     }
-
     /// Method that is called when navigation buttons need to be refreshed
     public func refreshNavigationBarButtons(backButtonEnabled: Bool, forwardButtonEnabled: Bool) {
         backButton.isEnabled = backButtonEnabled

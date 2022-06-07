@@ -16,7 +16,8 @@ extension WKUserContentController {
         adsDisplayer: MiniAppAdDisplayer?,
         secureStorageDelegate: MiniAppSecureStorageDelegate,
         miniAppId: String,
-        miniAppTitle: String
+        miniAppTitle: String,
+        miniAppManageDelegate: MiniAppManageDelegate
     ) {
         [Constants.JavaScript.interfaceName,
          Constants.JavaScript.logHandler].forEach { (name) in
@@ -25,6 +26,7 @@ extension WKUserContentController {
                     hostAppMessageDelegate: hostAppMessageDelegate,
                     adsDisplayer: adsDisplayer,
                     secureStorageDelegate: secureStorageDelegate,
+                    miniAppManageDelegate: miniAppManageDelegate,
                     miniAppId: miniAppId,
                     miniAppTitle: miniAppTitle
             ), name: name)
