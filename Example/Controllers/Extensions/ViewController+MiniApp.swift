@@ -39,7 +39,7 @@ extension ViewController: MiniAppNavigationDelegate {
             activityItem = base64Data
         }
         guard let wrappedActivityItem = activityItem else { return }
-        let activityViewController = UIActivityViewController(activityItems: [wrappedActivityItem], applicationActivities: nil)
+        let activityViewController = MiniAppActivityController(activityItems: [wrappedActivityItem], applicationActivities: nil)
         activityViewController.completionWithItemsHandler = { [weak self] (_, completed, _, _) in
             guard completed else { return }
             let controller = UIAlertController(title: "Nice", message: "Successfully shared!", preferredStyle: .alert)

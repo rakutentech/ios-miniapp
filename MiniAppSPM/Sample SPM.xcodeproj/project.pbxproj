@@ -119,6 +119,7 @@
 		F74AA10D283C651400087718 /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */; };
 		F74AA112283C65AB00087718 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA111283C65AB00087718 /* Nimble */; };
 		F74AA115283C65E300087718 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA114283C65E300087718 /* Quick */; };
+		F781DC1C284F0B010096A21A /* ViewController+Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F781DC1B284F0B010096A21A /* ViewController+Activity.swift */; };
 		F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -246,6 +247,7 @@
 		F74AA0D9283C651300087718 /* MiniAppSdkConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSdkConfigTests.swift; sourceTree = "<group>"; };
 		F74AA0DA283C651300087718 /* MiniAppKeyChainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppKeyChainTests.swift; sourceTree = "<group>"; };
 		F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
+		F781DC1B284F0B010096A21A /* ViewController+Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Activity.swift"; sourceTree = "<group>"; };
 		F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -398,6 +400,7 @@
 				3105759F27EE213400D93B06 /* ViewController+MiniAppUserInfoProtocol.swift */,
 				310575A027EE213400D93B06 /* ViewController+MiniApp.swift */,
 				310575A127EE213400D93B06 /* ViewController+ChatDelegate.swift */,
+				F781DC1B284F0B010096A21A /* ViewController+Activity.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -759,6 +762,7 @@
 				310575ED27EE213400D93B06 /* RATNotificationCenter.swift in Sources */,
 				310575C327EE213400D93B06 /* Progress+UIViewController.swift in Sources */,
 				310575C227EE213400D93B06 /* UITextField.swift in Sources */,
+				F781DC1C284F0B010096A21A /* ViewController+Activity.swift in Sources */,
 				310575C427EE213400D93B06 /* Print+MiniApp.swift in Sources */,
 				310575CB27EE213400D93B06 /* AppDelegate.swift in Sources */,
 				310575E427EE213400D93B06 /* ViewController+ChatDelegate.swift in Sources */,

@@ -110,6 +110,7 @@
 		A1FDEAC026A141CC00E48831 /* PointsSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FDEABF26A141CC00E48831 /* PointsSettingsTableViewController.swift */; };
 		D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07452302567B72A00B6E842 /* MASDKErrorTests.swift */; };
 		D0CACE26281A68D700E39920 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CACE25281A68D700E39920 /* Base64UriHelper.swift */; };
+		F781DC21284F3F600096A21A /* ViewController+Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F781DC20284F3F600096A21A /* ViewController+Activity.swift */; };
 		F7C8804626D8974800B828C6 /* UITableView+EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8804526D8974800B828C6 /* UITableView+EmptyView.swift */; };
 /* End PBXBuildFile section */
 
@@ -246,6 +247,7 @@
 		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D07452302567B72A00B6E842 /* MASDKErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKErrorTests.swift; sourceTree = "<group>"; };
 		D0CACE25281A68D700E39920 /* Base64UriHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
+		F781DC20284F3F600096A21A /* ViewController+Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Activity.swift"; sourceTree = "<group>"; };
 		F7C8804526D8974800B828C6 /* UITableView+EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+EmptyView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -465,6 +467,7 @@
 		38920AED251D9C57004C5DDD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F781DC20284F3F600096A21A /* ViewController+Activity.swift */,
 				38920AEF251D9C57004C5DDD /* ViewController+MiniApp.swift */,
 				38920AEE251D9C57004C5DDD /* ViewController+MiniAppMessageProtocol.swift */,
 				38D04803252CAA4400133E1D /* ViewController+MiniAppUserInfoProtocol.swift */,
@@ -753,6 +756,7 @@
 				2AE218D7269CAB1400F9D1E7 /* DeeplinkErrorViewController.swift in Sources */,
 				38480100251DB4E00079D6EB /* CustomPermissionsListViewController.swift in Sources */,
 				38920B07251D9C57004C5DDD /* DisplayController.swift in Sources */,
+				F781DC21284F3F600096A21A /* ViewController+Activity.swift in Sources */,
 				38480101251DB4E00079D6EB /* ManageCustomPermissionsViewController.swift in Sources */,
 				38920B09251D9C57004C5DDD /* FirstLaunchViewController.swift in Sources */,
 				2AE218F0269D46DA00F9D1E7 /* UITextView+MiniApp.swift in Sources */,
