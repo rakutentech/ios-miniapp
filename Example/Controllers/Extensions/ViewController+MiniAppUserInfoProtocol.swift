@@ -62,16 +62,19 @@ extension ViewController: MiniAppUserInfoDelegate {
     }
 
     func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
-        let fileNameParts = fileName.split(separator: ".")
-        let fileName = String(fileNameParts[0])
-        let fileExtension = String(fileNameParts[1])
-        download(url: url, headers: headers) { [weak self] result in
+        guard let downloadUrl = URL(string: url) else {
+            completionHandler(.failure(.invalidUrl))
+            return
+        }
+        download(url: downloadUrl.absoluteString, headers: headers) { [weak self] result in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
                     guard
-                        let savedUrl = self.saveTemporaryFile(data: data, resourceName: fileName, fileExtension: fileExtension)
+                        let savedUrl = self.saveTemporaryFile(data: data,
+                                                              resourceName: fileName.stringByDeletingPathExtension,
+                                                              fileExtension: fileName.pathExtension)
                     else {
                         completionHandler(.failure(MASDKDownloadFileError.saveTemporarilyFailed))
                         return
