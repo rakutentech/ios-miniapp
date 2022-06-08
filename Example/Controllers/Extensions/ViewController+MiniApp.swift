@@ -72,10 +72,14 @@ extension ViewController: MiniAppNavigationDelegate {
                 case .failure(let error):
                     print(error.localizedDescription)
                     if !inBackground {
-                        self.displayAlert(
-                            title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
-                            message: MASDKLocale.localize("miniapp.sdk.ios.error.message.list"),
-                            dismissController: true)
+                        if error.isQPSLimitError() {
+                            self.displayQPSError()
+                        } else {
+                            self.displayAlert(
+                                title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
+                                message: MASDKLocale.localize("miniapp.sdk.ios.error.message.list"),
+                                dismissController: true)
+                        }
                     }
                 }
                 if !inBackground {
@@ -164,6 +168,8 @@ extension ViewController: MiniAppNavigationDelegate {
             self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize(.signatureFailed), dismissController: true) { _ in
                 self.fetchAppList(inBackground: true)
             }
+        case .miniAppTooManyRequestsError:
+            self.displayQPSError()
         default:
             self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize(.downloadFailed), dismissController: true) { _ in
                 self.fetchAppList(inBackground: true)
@@ -186,6 +192,13 @@ extension ViewController: MiniAppNavigationDelegate {
                 self.fetchMiniAppMetaData(miniAppInfo: miniAppInfo, config: Config.current())
             }
         }
+    }
+
+    func displayQPSError() {
+        self.displayAlert(
+            title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
+            message: MASDKLocale.localize(.miniAppTooManyRequestsError),
+            dismissController: true)
     }
 }
 

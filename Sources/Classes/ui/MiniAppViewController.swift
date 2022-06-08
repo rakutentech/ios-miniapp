@@ -212,11 +212,16 @@ public class MiniAppViewController: UIViewController {
                         self.miniAppUiDelegate?.miniApp(self, didLoadWith: nil)
                         self.state = .success
                     case .failure(let error):
-                        if self.loadFromCacheIfFailed {
-                            self.loadFromCache(navSettings: navSettings, messageDelegate: messageDelegate)
-                        } else {
+                        if error.isQPSLimitError() {
                             self.miniAppUiDelegate?.miniApp(self, didLoadWith: error)
                             self.state = .error
+                        } else {
+                            if self.loadFromCacheIfFailed {
+                                self.loadFromCache(navSettings: navSettings, messageDelegate: messageDelegate)
+                            } else {
+                                self.miniAppUiDelegate?.miniApp(self, didLoadWith: error)
+                                self.state = .error
+                            }
                         }
                     }
                 },

@@ -54,12 +54,25 @@ public enum MASDKError: Error {
     ///     - description: The description from the original NSError
     case unknownError(domain: String, code: Int, description: String)
 
+    case miniAppTooManyRequestsError
+
     /// Checks if the error is due to the Internet availability, returns true if yes
     /// - Returns: Bool value - returns true if there is there error contains code from offlineErrorCodeList
     public func isDeviceOfflineDownloadError() -> Bool {
         switch self {
         case .unknownError(_, let code, _):
             return offlineErrorCodeList.contains(code)
+        default:
+            return false
+        }
+    }
+
+    /// Method to know if MASDKerror is because of exceeding QPS limit set on the platfom side
+    /// - Returns: Bool value - True if it exceeded the limit
+    public func isQPSLimitError() -> Bool {
+        switch self {
+        case .miniAppTooManyRequestsError:
+            return true
         default:
             return false
         }
@@ -98,6 +111,8 @@ extension MASDKError: LocalizedError {
 
         case .unknownError(let domain, let code, let description):
             return String(format: MASDKLocale.localize(.unknownError), domain, "\(code)", description)
+        case .miniAppTooManyRequestsError:
+            return MASDKLocale.localize(.miniAppTooManyRequestsError)
         }
     }
 

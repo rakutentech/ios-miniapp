@@ -31,7 +31,7 @@ class MiniAppDownloader {
     }
 
     fileprivate func cleanApp(_ appId: String, for version: String) {
-        miniAppStorage.cleanVersions(for: appId, differentFrom: version, status: miniAppStatus)
+        MiniAppStorage.cleanVersions(for: appId, differentFrom: version, status: miniAppStatus)
     }
 
     func verifyAndDownload(appId: String, versionId: String, completionHandler: @escaping (Result<URL, MASDKError>) -> Void) {
@@ -69,6 +69,9 @@ class MiniAppDownloader {
                     }
                 }
             case .failure(let error):
+                if error.isQPSLimitError() {
+                    MiniAppStorage.cleanVersions(for: appId)
+                }
                 completionHandler(.failure(error))
             }
         }
