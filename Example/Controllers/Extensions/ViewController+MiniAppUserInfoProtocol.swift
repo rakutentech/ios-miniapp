@@ -79,7 +79,7 @@ extension ViewController: MiniAppUserInfoDelegate {
                         completionHandler(.failure(MASDKDownloadFileError.saveTemporarilyFailed))
                         return
                     }
-                    let activityVc = UIActivityViewController(activityItems: [savedUrl], applicationActivities: nil)
+                    let activityVc = MiniAppActivityController(activityItems: [savedUrl], applicationActivities: nil)
                     self.presentedViewController?.present(activityVc, animated: true, completion: nil)
                     completionHandler(.success(fileName))
                 case .failure(let error):
