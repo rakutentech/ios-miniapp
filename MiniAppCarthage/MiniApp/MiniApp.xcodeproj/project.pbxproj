@@ -125,7 +125,14 @@
 		31FA603E2761B8660070B611 /* MiniApp.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31FA5EC727608D1A0070B611 /* MiniApp.xcassets */; };
 		31FA60452761F71A0070B611 /* Localization.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 31FA60182761945A0070B611 /* Localization.bundle */; };
 		31FA60462761F71A0070B611 /* MiniApp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 31FA60342761A4370070B611 /* MiniApp.bundle */; };
-		F79023D128125749000A8A4C /* MiniAppSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */; };
+		F75593D3283DD70F009D5833 /* MiniAppSecureStorageDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593CC283DD70F009D5833 /* MiniAppSecureStorageDatabase.swift */; };
+		F75593D4283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593CD283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase.swift */; };
+		F75593D5283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593CE283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase+Model.swift */; };
+		F75593D6283DD70F009D5833 /* MiniAppSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593CF283DD70F009D5833 /* MiniAppSecureStorage.swift */; };
+		F75593D7283DD70F009D5833 /* MiniAppSecureStorageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593D0283DD70F009D5833 /* MiniAppSecureStorageSize.swift */; };
+		F75593D8283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593D1283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift */; };
+		F75593D9283DD70F009D5833 /* MiniAppSecureStorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593D2283DD70F009D5833 /* MiniAppSecureStorageError.swift */; };
+		F75593DB283DD729009D5833 /* SQLite.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75593DA283DD729009D5833 /* SQLite.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,19 +151,6 @@
 			remoteInfo = Other;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		31FA5F5E27608D3F0070B611 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		313C0ED82770412D00C76614 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
@@ -302,6 +296,14 @@
 		31FA60382761B06B0070B611 /* bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bridge.js; sourceTree = "<group>"; };
 		F74AA116283C692200087718 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cartfile; path = ../../Cartfile; sourceTree = "<group>"; };
 		F74AA117283C692C00087718 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../../Podfile; sourceTree = "<group>"; };
+		F75593CC283DD70F009D5833 /* MiniAppSecureStorageDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageDatabase.swift; sourceTree = "<group>"; };
+		F75593CD283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageSqliteDatabase.swift; sourceTree = "<group>"; };
+		F75593CE283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MiniAppSecureStorageSqliteDatabase+Model.swift"; sourceTree = "<group>"; };
+		F75593CF283DD70F009D5833 /* MiniAppSecureStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorage.swift; sourceTree = "<group>"; };
+		F75593D0283DD70F009D5833 /* MiniAppSecureStorageSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageSize.swift; sourceTree = "<group>"; };
+		F75593D1283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MiniAppSecureStorage+Delegate.swift"; sourceTree = "<group>"; };
+		F75593D2283DD70F009D5833 /* MiniAppSecureStorageError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageError.swift; sourceTree = "<group>"; };
+		F75593DA283DD729009D5833 /* SQLite.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SQLite.xcframework; path = ../../Carthage/Build/SQLite.xcframework; sourceTree = "<group>"; };
 		F783FD95283C7885008BC743 /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = swiftlint.yml; path = ../../.github/workflows/swiftlint.yml; sourceTree = "<group>"; };
 		F783FD96283C7885008BC743 /* build_documentation.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = build_documentation.yml; path = ../../.github/workflows/build_documentation.yml; sourceTree = "<group>"; };
 		F783FD97283C7885008BC743 /* fastlane.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = fastlane.yml; path = ../../.github/workflows/fastlane.yml; sourceTree = "<group>"; };
@@ -317,7 +319,6 @@
 		F783FDA2283C7B7E008BC743 /* build-framework.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "build-framework.sh"; path = "../../scripts/build-framework.sh"; sourceTree = "<group>"; };
 		F783FDA3283C7B7E008BC743 /* generate-ssh-pin.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "generate-ssh-pin.sh"; path = "../../scripts/generate-ssh-pin.sh"; sourceTree = "<group>"; };
 		F783FDA4283C7B7E008BC743 /* downloadLibs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = downloadLibs.sh; path = ../../scripts/downloadLibs.sh; sourceTree = "<group>"; };
-		F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,6 +328,7 @@
 			files = (
 				317AA318276265560037180D /* PromisesObjC.xcframework in Frameworks */,
 				317AA31A276265560037180D /* GoogleMobileAds.xcframework in Frameworks */,
+				F75593DB283DD729009D5833 /* SQLite.xcframework in Frameworks */,
 				317AA321276266140037180D /* TrustKit.xcframework in Frameworks */,
 				317AA320276266140037180D /* ZIPFoundation.xcframework in Frameworks */,
 				317AA31C276265560037180D /* GoogleUtilities.xcframework in Frameworks */,
@@ -411,6 +413,7 @@
 		317AA31D276265C00037180D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F75593DA283DD729009D5833 /* SQLite.xcframework */,
 				317AA31F276266140037180D /* TrustKit.xcframework */,
 				317AA31E276266140037180D /* ZIPFoundation.xcframework */,
 				317AA305276265560037180D /* gadsdk */,
@@ -488,6 +491,7 @@
 				31FA5E7827608D1A0070B611 /* Downloader */,
 				31FA5E8027608D1A0070B611 /* Models */,
 				31FA5E8A27608D1A0070B611 /* Storage */,
+				F75593CA283DD70F009D5833 /* SecureStorage */,
 				31FA5E9327608D1A0070B611 /* Extensions */,
 				31FA5EA527608D1A0070B611 /* Utilities */,
 				31FA5EAC27608D1A0070B611 /* MASDKError.swift */,
@@ -543,7 +547,6 @@
 				31FA5E9027608D1A0070B611 /* MAManifestStorage.swift */,
 				31FA5E9127608D1A0070B611 /* MiniAppKeyChain.swift */,
 				31FA5E9227608D1A0070B611 /* MiniAppCacheVerifier.swift */,
-				F79023D028125749000A8A4C /* MiniAppSecureStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -764,6 +767,28 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		F75593CA283DD70F009D5833 /* SecureStorage */ = {
+			isa = PBXGroup;
+			children = (
+				F75593CB283DD70F009D5833 /* Database */,
+				F75593CF283DD70F009D5833 /* MiniAppSecureStorage.swift */,
+				F75593D0283DD70F009D5833 /* MiniAppSecureStorageSize.swift */,
+				F75593D1283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift */,
+				F75593D2283DD70F009D5833 /* MiniAppSecureStorageError.swift */,
+			);
+			path = SecureStorage;
+			sourceTree = "<group>";
+		};
+		F75593CB283DD70F009D5833 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				F75593CC283DD70F009D5833 /* MiniAppSecureStorageDatabase.swift */,
+				F75593CD283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase.swift */,
+				F75593CE283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase+Model.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		F783FD94283C7861008BC743 /* Workflows */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,7 +839,6 @@
 				31FA5E5027608A450070B611 /* Sources */,
 				31FA5E5127608A450070B611 /* Frameworks */,
 				31FA5E5227608A450070B611 /* Resources */,
-				31FA5F5E27608D3F0070B611 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -959,11 +983,14 @@
 				31FA5F2E27608D1B0070B611 /* MiniAppNavigationBar.swift in Sources */,
 				31FA5F3527608D1B0070B611 /* URLSchemeHandler.swift in Sources */,
 				31FA5F1127608D1B0070B611 /* NotificationCenter+MiniApp.swift in Sources */,
+				F75593D7283DD70F009D5833 /* MiniAppSecureStorageSize.swift in Sources */,
 				31FA5F0E27608D1B0070B611 /* MiniAppCacheVerifier.swift in Sources */,
 				31FA5F1827608D1B0070B611 /* UIWindow+MiniApp.swift in Sources */,
 				31FA5F3427608D1B0070B611 /* MACustomPermissionCell.swift in Sources */,
 				31FA5F3D27608D1B0070B611 /* MiniAppDownloaderProtocol.swift in Sources */,
+				F75593D6283DD70F009D5833 /* MiniAppSecureStorage.swift in Sources */,
 				31FA5F3927608D1B0070B611 /* MimeTypes.swift in Sources */,
+				F75593D4283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase.swift in Sources */,
 				31FA5F1427608D1B0070B611 /* WKUserContentController+MiniApp.swift in Sources */,
 				31FA5F4A27608D1B0070B611 /* MiniAppJavaScriptEnumerations.swift in Sources */,
 				31FA5F0727608D1B0070B611 /* MiniAppVersion.swift in Sources */,
@@ -973,6 +1000,7 @@
 				31FA5F4127608D1B0070B611 /* MiniAppAdDisplayDelegate.swift in Sources */,
 				31FA5F0D27608D1B0070B611 /* MiniAppKeyChain.swift in Sources */,
 				31FA5F5027608D1B0070B611 /* SignatureAPI.swift in Sources */,
+				F75593D3283DD70F009D5833 /* MiniAppSecureStorageDatabase.swift in Sources */,
 				31FA5F0527608D1B0070B611 /* APIResponse.swift in Sources */,
 				31FA5F4827608D1B0070B611 /* MiniAppJavaScriptPermissionManager.swift in Sources */,
 				31FA5EEE27608D1A0070B611 /* MiniAppUI.swift in Sources */,
@@ -980,6 +1008,7 @@
 				31FA5F3827608D1B0070B611 /* MiniAppNavigationConfig.swift in Sources */,
 				31FA5F4427608D1B0070B611 /* MiniAppMessageModels.swift in Sources */,
 				31FA5F0F27608D1B0070B611 /* URL+MiniApp.swift in Sources */,
+				F75593D5283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase+Model.swift in Sources */,
 				31FA5F4F27608D1B0070B611 /* Data+MiniApp.swift in Sources */,
 				31FA5EF227608D1B0070B611 /* MiniAppSdkConfig.swift in Sources */,
 				31FA5F4627608D1B0070B611 /* MessageToContact.swift in Sources */,
@@ -1018,6 +1047,7 @@
 				31FA5EFD27608D1B0070B611 /* ManifestDownloader.swift in Sources */,
 				31FA5EF627608D1B0070B611 /* MiniAppSSLConfig.swift in Sources */,
 				31FA5F5227608D1B0070B611 /* SessionType.swift in Sources */,
+				F75593D9283DD70F009D5833 /* MiniAppSecureStorageError.swift in Sources */,
 				31FA5EEF27608D1A0070B611 /* MiniAppViewController+Fallback.swift in Sources */,
 				31FA5F4327608D1B0070B611 /* MiniAppShareContentDelegate.swift in Sources */,
 				31FA5F2227608D1B0070B611 /* MiniAppExternalUrlLoader.swift in Sources */,
@@ -1027,7 +1057,6 @@
 				31FA5F0127608D1B0070B611 /* ManifestResponse.swift in Sources */,
 				31FA5F4E27608D1B0070B611 /* SignatureVerifier.swift in Sources */,
 				31FA5F3227608D1B0070B611 /* CustomPermissionsRequestViewController.swift in Sources */,
-				F79023D128125749000A8A4C /* MiniAppSecureStorage.swift in Sources */,
 				31FA5EFB27608D1B0070B611 /* MiniAppInfoFetcher.swift in Sources */,
 				31FA5EF827608D1B0070B611 /* MiniAppClient.swift in Sources */,
 				31FA5F2327608D1B0070B611 /* MASDKLocale.swift in Sources */,
@@ -1035,6 +1064,7 @@
 				31FA5EF527608D1B0070B611 /* MiniAppAnalytics.swift in Sources */,
 				31FA5F2127608D1B0070B611 /* UrlParser.swift in Sources */,
 				31FA5F4527608D1B0070B611 /* MAJavascriptErrorHandler.swift in Sources */,
+				F75593D8283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift in Sources */,
 				31FA5EF927608D1B0070B611 /* DownloadOperation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

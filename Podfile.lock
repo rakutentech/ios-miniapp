@@ -47,6 +47,7 @@ PODS:
     - Google-Mobile-Ads-SDK (~> 8.0)
     - MiniApp/Core
   - MiniApp/Core (4.2.0):
+    - SQLite.swift (~> 0.13.3)
     - TrustKit (~> 2.0)
     - ZIPFoundation (= 0.9.12)
   - MiniApp/Signature (4.2.0):
@@ -62,6 +63,9 @@ PODS:
   - PromisesObjC (2.1.0)
   - Quick (4.0.0)
   - RAnalytics (9.3.0)
+  - SQLite.swift (0.13.3):
+    - SQLite.swift/standard (= 0.13.3)
+  - SQLite.swift/standard (0.13.3)
   - TrustKit (2.0.0)
   - ZIPFoundation (0.9.12)
 
@@ -87,6 +91,7 @@ SPEC REPOS:
     - Nimble
     - PromisesObjC
     - Quick
+    - SQLite.swift
     - TrustKit
     - ZIPFoundation
 
@@ -100,15 +105,16 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 4c19f031220c72464d460c9daa1fb5d1acce958e
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
-  MiniApp: 4482027f0afc1a1882f3ece48d2b43938a06c94c
+  MiniApp: 3afaec43d38ff22e61f9ad3039a148e0d2542223
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   RAnalytics: f57f6b62a259b87afca24e41f20eb257ec5a932f
+  SQLite.swift: 903bfa3bc9ab06345fdfbb578e34f47cfcf417da
   TrustKit: 610b8c71c07914756dd74c380040a3408a747798
   ZIPFoundation: e27423c004a5a1410c15933407747374e7c6cb6e
 
 PODFILE CHECKSUM: 7ded8017a25a70915cb528199b51b20102679669
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.3

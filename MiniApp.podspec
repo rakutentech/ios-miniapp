@@ -31,6 +31,7 @@ Pod::Spec.new do |miniapp|
     }
     core.dependency 'ZIPFoundation', '0.9.12'
     core.dependency 'TrustKit', '~>2.0'
+    core.dependency 'SQLite.swift', '~> 0.13.3'
   end
 
   miniapp.subspec 'UI' do |ui|

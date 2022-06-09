@@ -1,2 +1,3 @@
 github "weichsel/ZIPFoundation" ~> 0.9
 github "datatheorem/TrustKit"
+github "stephencelis/SQLite.swift" ~> 0.13.3
