@@ -8,6 +8,7 @@
 - **Fix:** Updated error type names for `MASDKDownloadFileError` so that they are correctly parsed by JS SDK.
 - **Feature:** Added `MiniAppSecureStorage` for MiniApps to store data safely. `MiniAppSdkConfig` was extended by `storageMaxSizeInBytes` to set the maximum available space in bytes for secure storage.
 - **Feature:** Added `miniAppShouldClose` interface in `MiniAppNavigationBarDelegate` which would help the host app to check if any alert need to displayed before closing the MiniApp
+- **Enhancement:** Replaced Secure Storage from a file storage solution to store data in a sqlite database
 
 **Sample app**
 - **Enhancement:** Added `GET MESSAGING UNIQUE ID` and `GET MAUID` for retrieving the ID's. (Messaging Unique ID for now will return the same as Unique ID)
