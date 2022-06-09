@@ -10,8 +10,7 @@ class MiniAppStorageTests: QuickSpec {
         describe("mini app storage") {
             context("when there is an error cleaning storage") {
                 it("it won't crash") {
-                    let storage = MiniAppStorage()
-                    storage.cleanVersions(for: "test", differentFrom: "test", status: MiniAppStatus())
+                    MiniAppStorage.cleanVersions(for: "test", differentFrom: "test", status: MiniAppStatus())
                 }
             }
             context("when there is an error saving in storage") {
