@@ -4,7 +4,7 @@ import UIKit
 public class MiniAppActivityController: UIActivityViewController {
     public override init(activityItems: [Any], applicationActivities: [UIActivity]?) {
         super.init(activityItems: activityItems, applicationActivities: applicationActivities)
-        completionWithItemsHandler = { (activityType, completed: Bool, returnedItems:[Any]?, error: Error?) in
+        completionWithItemsHandler = { (_, completed: Bool, _, _) in
             if !completed {
                 super.dismiss(animated: true, completion: nil)
             }
