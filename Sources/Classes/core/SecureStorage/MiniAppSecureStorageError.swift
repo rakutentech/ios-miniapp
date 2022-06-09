@@ -1,6 +1,6 @@
 import Foundation
 
-public enum MiniAppSecureStorageError: MiniAppErrorProtocol, Equatable {
+enum MiniAppSecureStorageError: MiniAppErrorProtocol, Equatable {
 
     case storageFullError
     case storageIOError

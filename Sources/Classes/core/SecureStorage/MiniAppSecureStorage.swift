@@ -1,7 +1,7 @@
 import Foundation
 import CryptoKit
 
-public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
+class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     /// miniapp id related to the store
     let appId: String
@@ -16,7 +16,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     let database: MiniAppSecureStorageDatabase
 
-    public init(
+    init(
         appId: String,
         storageMaxSizeInBytes: UInt64? = nil,
         database: MiniAppSecureStorageDatabase? = nil
@@ -31,7 +31,7 @@ public class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     // MARK: - Load/Unload
-    public func loadStorage(completion: ((Bool) -> Void)? = nil) {
+    func loadStorage(completion: ((Bool) -> Void)? = nil) {
         isStoreLoading = true
         database.load(completion: { [weak self] error in
             self?.isStoreLoading = false

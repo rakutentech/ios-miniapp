@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol MiniAppSecureStorageDatabase: AnyObject {
+protocol MiniAppSecureStorageDatabase: AnyObject {
     var appId: String {get set}
     var isStoreAvailable: Bool {get}
     var storageFullName: String {get}
