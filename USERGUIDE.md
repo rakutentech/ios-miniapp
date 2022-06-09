@@ -566,6 +566,8 @@ It's necessary to allow the `File Download` custom permission to make file downl
 
 Allows MiniApps to store data safely in a key/value store.
 
+Secure Storage will be initalized when `MiniAppSecureStorage.set` is called the first time. After initialization the storage will be automatically lazy loaded when the MiniApp is opened.
+
 You can specify the max storage file size in `MiniAppSdkConfig.storageMaxSizeInBytes` when creating a MiniApp.
 When no maximum storage size is set the default value will be 2_000_000 (2Mb). Exceeding the file size limit will
 throw an error `MiniAppSecureStorageError.storageFullError` when setting new values into the storage.

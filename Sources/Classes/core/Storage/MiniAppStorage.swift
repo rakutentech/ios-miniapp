@@ -14,12 +14,15 @@ class MiniAppStorage {
         }
     }
 
-    // swiftlint:disable line_length
     internal func cleanVersions(for appId: String, differentFrom versionId: String, status: MiniAppStatus) {
         let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId)
         do {
             let directoryContents = try FileManager.default.contentsOfDirectory(at: miniAppStoragePath, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants)
-            for path in directoryContents where (path.lastPathComponent != versionId && path.lastPathComponent != MAManifestStorage.fileName && path.lastPathComponent != MiniAppSecureStorage.storageFullName) {
+            for path in directoryContents where (
+                path.lastPathComponent != versionId &&
+                path.lastPathComponent != MAManifestStorage.fileName &&
+                !path.lastPathComponent.starts(with: MiniAppSecureStorage.storageName)
+            ) {
                 try FileManager.default.removeItem(at: path)
                 status.setDownloadStatus(false, appId: appId, versionId: path.lastPathComponent)
             }
