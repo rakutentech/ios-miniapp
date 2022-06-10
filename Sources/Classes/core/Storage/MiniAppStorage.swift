@@ -14,7 +14,6 @@ class MiniAppStorage {
         }
     }
 
-    // swiftlint:disable line_length
     static func cleanVersions(for appId: String, differentFrom versionId: String? = "", status: MiniAppStatus? = nil) {
         let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId)
         do {
