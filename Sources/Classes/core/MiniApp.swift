@@ -194,13 +194,13 @@ public class MiniApp: NSObject {
 
     /// Method which will delete/clears the Secure storage files for all the mini-apps that is downloaded
     public func clearAllSecureStorage() {
-        MiniAppSecureStorage.wipeSecureStorages()
+        try? MiniAppSecureStorage.wipeSecureStorages()
     }
 
     /// Method which will delete/clear secure storage for a specific MiniAppID
     /// - Parameter miniAppId: MiniApp ID
     public func clearSecureStorage(for miniAppId: String) {
-        MiniAppSecureStorage.wipeSecureStorage(for: miniAppId)
+        try? MiniAppSecureStorage.wipeSecureStorage(for: miniAppId)
     }
 
 }
