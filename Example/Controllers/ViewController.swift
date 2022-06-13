@@ -96,8 +96,12 @@ class ViewController: RATViewControllerWithTableView {
                 self.dismissProgressIndicator {
                     self.displayFirstTimeLaunchScreen(manifest: manifestData, miniAppInfo: miniAppInfo)
                 }
-            case .failure:
-                self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.single"), dismissController: true)
+            case .failure(let error):
+                if error.isQPSLimitError() {
+                    self.displayQPSError()
+                } else {
+                    self.displayAlert(title: MASDKLocale.localize("miniapp.sdk.ios.error.title"), message: MASDKLocale.localize("miniapp.sdk.ios.error.message.single"), dismissController: true)
+                }
             }
         }
     }
