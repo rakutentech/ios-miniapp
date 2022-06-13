@@ -41,6 +41,8 @@ public struct MASDKLocale {
         case signatureFailed                        = "miniapp.sdk.ios.error.message.signature_failed"
         /// Localizable key for displaying error if Mini app is corrupted
         case miniAppCorrupted                       = "miniapp.sdk.ios.error.message.miniapp_corrupted"
+        /// QPS Limit Exceeded
+        case miniAppTooManyRequestsError            = "miniapp.sdk.ios.error.message.miniapp_too_many_requests_error"
         /// Localizable key for displaying error if no published version of mini app is found
         case noPublishedVersion                     = "miniapp.sdk.ios.error.message.no_published_version"
         /// Localizable key for displaying error if provided mini app ID is not found in platform
