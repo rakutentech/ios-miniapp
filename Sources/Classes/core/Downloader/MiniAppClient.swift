@@ -198,6 +198,8 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
                 return MASDKError.unknownError(domain: error.domain, code: error.code, description: error.description)
             }
             message = "\(errorModel.error): \(errorModel.errorDescription)"
+        case 429:
+            return .miniAppTooManyRequestsError
         default:
             guard let errorModel = ResponseDecoder.decode(decodeType: ErrorData.self, data: responseData) else {
                 let error = NSError.unknownServerError(httpResponse: httpResponse)

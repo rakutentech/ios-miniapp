@@ -9,6 +9,7 @@
 - **Feature:** Added `MiniAppSecureStorage` for MiniApps to store data safely. `MiniAppSdkConfig` was extended by `storageMaxSizeInBytes` to set the maximum available space in bytes for secure storage.
 - **Feature:** Added `miniAppShouldClose` interface in `MiniAppNavigationBarDelegate` which would help the host app to check if any alert need to displayed before closing the MiniApp
 - **Enhancement:** Replaced Secure Storage from a file storage solution to store data in a sqlite database
+- **Feature:** Added `miniAppTooManyRequestsError` error in MASDKError. This error will be thrown from SDK if any API from platform sends `429` status code. This could clear specific cached mini-app if `429` is received
 
 **Sample app**
 - **Enhancement:** Added `GET MESSAGING UNIQUE ID` and `GET MAUID` for retrieving the ID's. (Messaging Unique ID for now will return the same as Unique ID)
@@ -16,6 +17,7 @@
 - **Enhancement:** Added `GET MESSAGING UNIQUE ID` and `GET MAUID` for retrieving the ID's. (Messaging Unique ID for now will return the same as Unique ID)
 - **Feature:** Added support for Mini Apps to download Base64 `data:` URIs with the `MiniApp.downloadFile` feature.
 - **Bugfix:** Replaced UIActivityController with a custom one that overrides the `dimiss` function so only the activity will be closed.
+- **Feature:** Added support to display error `miniAppTooManyRequestsError` type.
 
 ### 4.1.0 (2022-04-11)
 

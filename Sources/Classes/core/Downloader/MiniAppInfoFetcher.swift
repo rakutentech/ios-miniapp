@@ -37,6 +37,9 @@ internal class MiniAppInfoFetcher {
                 }
                 return completionHandler(.failure(.invalidResponseData))
             case .failure(let error):
+                if error.isQPSLimitError() {
+                    MiniAppStorage.cleanVersions(for: miniAppId)
+                }
                 return completionHandler(.failure(error))
             }
         }

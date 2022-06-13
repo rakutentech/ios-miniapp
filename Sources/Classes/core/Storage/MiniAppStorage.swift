@@ -14,7 +14,7 @@ class MiniAppStorage {
         }
     }
 
-    internal func cleanVersions(for appId: String, differentFrom versionId: String, status: MiniAppStatus) {
+    static func cleanVersions(for appId: String, differentFrom versionId: String? = "", status: MiniAppStatus? = nil) {
         let miniAppStoragePath = FileManager.getMiniAppDirectory(with: appId)
         do {
             let directoryContents = try FileManager.default.contentsOfDirectory(at: miniAppStoragePath, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants)
@@ -24,7 +24,7 @@ class MiniAppStorage {
                 !path.lastPathComponent.starts(with: MiniAppSecureStorage.storageName)
             ) {
                 try FileManager.default.removeItem(at: path)
-                status.setDownloadStatus(false, appId: appId, versionId: path.lastPathComponent)
+                status?.setDownloadStatus(false, appId: appId, versionId: path.lastPathComponent)
             }
         } catch {
              MiniAppLogger.w("MiniAppDownloader could not delete previously downloaded versions for appId \(appId) (\(error))")

@@ -23,6 +23,7 @@
 "miniapp.sdk.ios.error.message.no_published_version"            = "Server returned no published versions for the provided Mini App ID.";
 "miniapp.sdk.ios.error.message.miniapp_id_not_found"            = "Server could not find the provided Mini App ID.";
 "miniapp.sdk.ios.error.message.miniapp_corrupted"               = "Mini app is not downloaded properly or corrupted";
+"miniapp.sdk.ios.error.message.miniapp_too_many_requests_error" = "Mini app is requested too many times";
 
 /* MASDKUI */
 "miniapp.sdk.ios.ui.nav.button.close"                           = "Close";

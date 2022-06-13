@@ -120,20 +120,23 @@ class SettingsTableViewController: RATTableViewController {
                         self.saveCustomConfiguration(responseData: responseData)
                     }
                 case .failure(let error):
-                    let errorInfo = error as NSError
-                    if errorInfo.code != 200 {
-                        print(error.localizedDescription)
-                        self.displayAlert(
-                            title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
-                            message: MASDKLocale.localize("miniapp.sdk.ios.error.message.list"),
-                            dismissController: true)
+                    if error.isQPSLimitError() {
                     } else {
-                        DispatchQueue.main.async {
+                        let errorInfo = error as NSError
+                        if errorInfo.code != 200 {
+                            print(error.localizedDescription)
                             self.displayAlert(
-                                title: MASDKLocale.localize("Information"),
-                                message: MASDKLocale.localize("miniapp.sdk.ios.error.message.no_miniapp_found"), dismissController: true) { _ in
-                                self.saveCustomConfiguration(responseData: nil)
-                                self.dismiss(animated: true, completion: nil)
+                                title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
+                                message: MASDKLocale.localize("miniapp.sdk.ios.error.message.list"),
+                                dismissController: true)
+                        } else {
+                            DispatchQueue.main.async {
+                                self.displayAlert(
+                                    title: MASDKLocale.localize("Information"),
+                                    message: MASDKLocale.localize("miniapp.sdk.ios.error.message.no_miniapp_found"), dismissController: true) { _ in
+                                    self.saveCustomConfiguration(responseData: nil)
+                                    self.dismiss(animated: true, completion: nil)
+                                }
                             }
                         }
                     }
@@ -323,6 +326,13 @@ class SettingsTableViewController: RATTableViewController {
                                        pageName: self.pageName,
                                        siteSection: self.siteSection,
                                        componentName: segue.identifier, elementType: "TableCell")
+    }
+
+    func displayQPSError() {
+        self.displayAlert(
+            title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
+            message: MASDKLocale.localize("miniapp.sdk.ios.error.message.miniapp_too_many_requests_error"),
+            dismissController: true)
     }
 }
 
