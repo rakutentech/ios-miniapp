@@ -17,10 +17,14 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     var storageFullName: String { return Self.storageFullName }
 
-    var storagePath: String {
+    var storageUrl: URL {
         let databasePath = "/\(appId)/\(MiniAppSecureStorageSqliteDatabase.storageFullName)"
         let databaseUrl = FileManager.getMiniAppFolderPath().appendingPathComponent(databasePath)
-        let databaseUrlPath = databaseUrl.path
+        return databaseUrl
+    }
+
+    var storagePath: String {
+        let databaseUrlPath = storageUrl.path
         return databaseUrlPath
     }
     var doesStoragePathExist: Bool {
@@ -35,6 +39,10 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
         do {
             let dbQueue = try Connection(storagePath)
             self.dbQueue = dbQueue
+
+            try (storageUrl as NSURL)
+                 .setResourceValue(URLFileProtection.complete, forKey: .fileProtectionKey)
+
             do {
                 try Entry.migrate(database: dbQueue)
                 MiniAppLogger.d("🔑 Secure Storage: entries table created")
