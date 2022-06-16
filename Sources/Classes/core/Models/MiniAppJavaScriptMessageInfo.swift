@@ -43,7 +43,8 @@ struct MiniAppCustomPermissionsResponse: Codable {
 }
 
 struct MiniAppCustomPermissionsListResponse: Codable {
-    let name, status: String
+    let name: String
+    let status: String
 }
 
 public struct CloseAlertInfo: Codable {

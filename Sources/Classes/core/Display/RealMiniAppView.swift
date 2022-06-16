@@ -79,7 +79,7 @@ internal class RealMiniAppView: UIView {
         storageMaxSizeInBytes: UInt64? = nil,
         shouldAutoLoadSecureStorage: Bool = true) {
 
-        let miniAppId = "custom\(Int32.random(in: 0...Int32.max))" // some id is needed to handle permissions
+        let randomMiniAppId = "custom\(Int32.random(in: 0...Int32.max))" // some id is needed to handle permissions
         self.miniAppTitle = miniAppTitle
         self.miniAppURL = miniAppURL
         self.initialLoadCallback = initialLoadCallback
@@ -88,10 +88,10 @@ internal class RealMiniAppView: UIView {
         navBarVisibility = displayNavBar
         supportedMiniAppOrientation = []
         self.analyticsConfig = analyticsConfig
-        self.secureStorage = MiniAppSecureStorage(appId: miniAppId, storageMaxSizeInBytes: storageMaxSizeInBytes)
+        self.secureStorage = MiniAppSecureStorage(appId: randomMiniAppId, storageMaxSizeInBytes: storageMaxSizeInBytes)
         self.shouldAutoLoadSecureStorage = shouldAutoLoadSecureStorage
         super.init(frame: .zero)
-        commonInit(miniAppId: miniAppId,
+        commonInit(miniAppId: randomMiniAppId,
                    hostAppMessageDelegate: hostAppMessageDelegate,
                    adsDisplayer: adsDisplayer,
                    navigationDelegate: navigationDelegate,
@@ -211,17 +211,13 @@ internal class RealMiniAppView: UIView {
 
     @objc
     func sendKeyboardEvent(notification: NSNotification) {
-        switch notification.name {
-        case MiniAppKeyboardEvent.notificationName:
+        if notification.name == MiniAppKeyboardEvent.notificationName {
             if let event = notification.object as? MiniAppKeyboardEvent.Event {
                 didReceiveKeyboardEvent(event.type, message: event.comment, navigationBarHeight: event.navigationBarHeight, screenHeight: event.screenHeight, keyboardHeight: event.keyboardHeight)
             } else {
                 MiniAppLogger.w("MiniAppEvent not present in notification")
             }
-        default:
-            ()
         }
-
     }
 
     func refreshNavBar() {
@@ -247,8 +243,8 @@ internal class RealMiniAppView: UIView {
                 if navBarVisibility != .never {
                     addSubview(nav)
                     nav.translatesAutoresizingMaskIntoConstraints = false
-                    webViewBottomConstraintStandalone?.isActive = false || isNavBarCustom
-                    webViewBottomConstraintWithNavBar?.isActive = true && !isNavBarCustom
+                    webViewBottomConstraintStandalone?.isActive = isNavBarCustom
+                    webViewBottomConstraintWithNavBar?.isActive = !isNavBarCustom
                     nav.layoutAttachBottom()
                     nav.layoutAttachLeading()
                     nav.layoutAttachTrailing()

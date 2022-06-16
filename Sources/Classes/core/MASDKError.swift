@@ -59,23 +59,19 @@ public enum MASDKError: Error {
     /// Checks if the error is due to the Internet availability, returns true if yes
     /// - Returns: Bool value - returns true if there is there error contains code from offlineErrorCodeList
     public func isDeviceOfflineDownloadError() -> Bool {
-        switch self {
-        case .unknownError(_, let code, _):
+        if case .unknownError(_, let code, _) = self {
             return offlineErrorCodeList.contains(code)
-        default:
-            return false
         }
+        return false
     }
 
     /// Method to know if MASDKerror is because of exceeding QPS limit set on the platfom side
     /// - Returns: Bool value - True if it exceeded the limit
     public func isQPSLimitError() -> Bool {
-        switch self {
-        case .miniAppTooManyRequestsError:
+        if case .miniAppTooManyRequestsError = self {
             return true
-        default:
-            return false
         }
+        return false
     }
 }
 
