@@ -44,10 +44,9 @@ public extension MiniAppUserInfoDelegate {
         let semaphore = DispatchSemaphore(value: 0)
         var contacts: [MAContact]?
         getContacts { result in
-            switch result {
-            case .success(let listContacts):
+            if case .success(let listContacts) = result {
                 contacts = listContacts
-            default:
+            } else {
                 contacts = nil
             }
             semaphore.signal()
