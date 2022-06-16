@@ -94,7 +94,7 @@ public enum MiniAppCustomPermissionGrantedStatus: String, Codable {
     case permissionNotAvailable = "PERMISSION_NOT_AVAILABLE"
 
     public var boolValue: Bool {
-        return self == .allowed ? true : false
+        return self == .allowed
     }
 }
 
