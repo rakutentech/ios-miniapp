@@ -46,7 +46,9 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let messageBody = message.body as? String {
             MiniAppLogger.d(messageBody, "♨️️")
-            if message.name == Constants.JavaScript.logHandler { return }
+            if message.name == Constants.JavaScript.logHandler {
+                return
+            }
             let bodyData: Data = messageBody.data(using: .utf8)!
             let responseJson = ResponseDecoder.decode(decodeType: MiniAppJavaScriptMessageInfo.self, data: bodyData)
             handleBridgeMessage(responseJson: responseJson)

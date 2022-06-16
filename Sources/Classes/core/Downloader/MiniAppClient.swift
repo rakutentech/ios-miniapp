@@ -237,7 +237,9 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
             let requireMiniAppSignatureVerification = environment.requireMiniAppSignatureVerification
             if let versionId = ids?.1, let data = try? Data(contentsOf: location) {
                 verifySignature(version: versionId, signature: signatures[versionId]?.1 ?? "", keyId: signatures[versionId]?.0 ?? "", data: data) { [weak self] isVerified in
-                    if !isVerified { MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: versionId) }
+                    if !isVerified {
+                        MiniAppAnalytics.sendAnalytics(event: .signatureFailure, miniAppId: ids?.0, miniAppVersion: versionId)
+                    }
                     let shouldPassTest =  isVerified || !requireMiniAppSignatureVerification // if verification is not required, the test should pass even is the signature is not verified
                     self?.delegate?.fileDownloaded(at: location, downloadedURL: originalURLString, signatureChecked: shouldPassTest)
                     self?.isSignatureVerified = true
@@ -295,7 +297,9 @@ internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
 
     /// Deleting the temporary directory that is created after downloading the mini-app file.
     func cleanUpTmpFolder(tmpDirectory: String) {
-        if tmpDirectory.isEmpty { return }
+        if tmpDirectory.isEmpty {
+            return
+        }
         do {
             try FileManager.default.removeItem(at: FileManager.default.temporaryDirectory.appendingPathComponent(tmpDirectory))
         } catch let err {

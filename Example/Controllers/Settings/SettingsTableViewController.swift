@@ -121,6 +121,7 @@ class SettingsTableViewController: RATTableViewController {
                     }
                 case .failure(let error):
                     if error.isQPSLimitError() {
+                        self.displayQPSError()
                     } else {
                         let errorInfo = error as NSError
                         if errorInfo.code != 200 {
