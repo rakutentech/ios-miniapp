@@ -95,12 +95,15 @@ public extension MiniAppNavigationDelegate {
     }
 
     func miniAppNavigation(canUse actions: [MiniAppNavigationAction]) {
+        // default implementation
     }
 
     func miniAppNavigation(delegate: MiniAppNavigationBarDelegate) {
+        // default implementation
     }
 
     func miniAppNavigationCanGo(back: Bool, forward: Bool) {
+        // default implementation
     }
 
     func checkWebsiteSecurity(url: URL, with responseHandler: @escaping (Bool) -> Void) {
