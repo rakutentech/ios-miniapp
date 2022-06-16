@@ -11,11 +11,26 @@ let package = Package(
         .library(name: "MiniApp", targets: ["MiniApp"])
     ],
     dependencies: [
-        .package(url: "https://github.com/weichsel/ZIPFoundation.git", .upToNextMajor(from: "0.9.0")),
-        .package(url: "https://github.com/datatheorem/TrustKit.git", .upToNextMajor(from: "2.0.0")),
-        .package(name: "GoogleMobileAds-SPM", url: "https://github.com/rakutentech/GoogleMobileAds-SPM.git", .upToNextMajor(from: "8.0.0")),
-        .package(url: "https://github.com/rakutentech/ios-analytics-framework.git", .upToNextMajor(from: "8.0.0")),
-        .package(url: "https://github.com/stephencelis/SQLite.swift", .upToNextMajor(from: "0.13.3"))
+        .package(
+            url: "https://github.com/weichsel/ZIPFoundation.git",
+            .upToNextMajor(from: "0.9.0")
+        ),
+        .package(
+            url: "https://github.com/datatheorem/TrustKit.git",
+            .upToNextMajor(from: "2.0.0")
+        ),
+        .package(
+            url: "https://github.com/rakutentech/ios-analytics-framework.git",
+            .upToNextMajor(from: "9.1.0")
+        ),
+        .package(
+            url: "https://github.com/stephencelis/SQLite.swift",
+            .upToNextMajor(from: "0.13.3")
+        ),
+        .package(
+            name: "GoogleMobileAds-SPM",
+            url: "https://github.com/rakutentech/GoogleMobileAds-SPM.git", .upToNextMajor(from: "8.0.0")
+        )
     ],
     targets: [
         .target(
