@@ -37,14 +37,14 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     func setup() throws {
         do {
-            let dbQueue = try Connection(storagePath)
-            self.dbQueue = dbQueue
+            let queue = try Connection(storagePath)
+            self.dbQueue = queue
 
             try (storageUrl as NSURL)
                  .setResourceValue(URLFileProtection.complete, forKey: .fileProtectionKey)
 
             do {
-                try Entry.migrate(database: dbQueue)
+                try Entry.migrate(database: queue)
                 MiniAppLogger.d("🔑 Secure Storage: entries table created")
             } catch {
                 MiniAppLogger.d("🔑 Secure Storage: entries table exists")
@@ -61,8 +61,8 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
             return
         }
         do {
-            let dbQueue = try Connection(storagePath)
-            self.dbQueue = dbQueue
+            let queue = try Connection(storagePath)
+            self.dbQueue = queue
             completion?(nil)
         } catch {
             MiniAppLogger.d(error.localizedDescription)
