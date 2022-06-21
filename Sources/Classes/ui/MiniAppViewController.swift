@@ -162,6 +162,7 @@ public class MiniAppViewController: UIViewController {
             fallbackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             fallbackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        navigationController?.navigationBar.backgroundColor = .systemBackground
         backButton.isEnabled = false
         forwardButton.isEnabled = false
 

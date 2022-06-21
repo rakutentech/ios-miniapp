@@ -117,14 +117,7 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     func clearSecureStorage() throws {
-        database.clear { result in
-            switch result {
-            case .success:
-                MiniAppLogger.d("🔑 Secure Storage: cleared")
-            case .failure:
-                MiniAppLogger.d("🔑 Secure Storage: clear failed")
-            }
-        }
+        try MiniAppSecureStorage.wipeSecureStorage(for: appId)
     }
 
     // MARK: - Size

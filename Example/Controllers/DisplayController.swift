@@ -43,6 +43,8 @@ class DisplayController: RATViewController {
             }))
             alertController.addAction(UIAlertAction(title: MASDKLocale.localize(.cancel), style: .cancel, handler: nil))
             self.present(alertController, animated: true, completion: nil)
+        } else {
+            dismiss(animated: true, completion: nil)
         }
     }
 
