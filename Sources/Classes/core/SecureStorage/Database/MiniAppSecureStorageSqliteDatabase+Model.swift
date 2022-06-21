@@ -42,7 +42,7 @@ extension MiniAppSecureStorageSqliteDatabase {
         static func deleteAll(database: Connection) throws {
             let delete = entries.delete()
             _ = try database.run(delete)
-            _ = try database.run("VACUUM")
+            _ = try database.vacuum()
         }
     }
 
