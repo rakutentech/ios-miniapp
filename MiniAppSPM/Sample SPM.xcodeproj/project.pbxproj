@@ -119,6 +119,7 @@
 		F74AA10D283C651400087718 /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */; };
 		F74AA112283C65AB00087718 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA111283C65AB00087718 /* Nimble */; };
 		F74AA115283C65E300087718 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA114283C65E300087718 /* Quick */; };
+		F796AC8C2860204900A75DA8 /* RAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F796AC8B2860204900A75DA8 /* RAnalytics */; };
 		F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -256,6 +257,7 @@
 			files = (
 				31A7169B27EF0800003770E9 /* MiniApp in Frameworks */,
 				310575FD27EE321900D93B06 /* UIKit.framework in Frameworks */,
+				F796AC8C2860204900A75DA8 /* RAnalytics in Frameworks */,
 				310575FF27EE322300D93B06 /* Foundation.framework in Frameworks */,
 				31A7169D27EF0800003770E9 /* AppCenterCrashes in Frameworks */,
 			);
@@ -600,6 +602,7 @@
 			packageProductDependencies = (
 				31A7169A27EF0800003770E9 /* MiniApp */,
 				31A7169C27EF0800003770E9 /* AppCenterCrashes */,
+				F796AC8B2860204900A75DA8 /* RAnalytics */,
 			);
 			productName = "Sample SPM";
 			productReference = 3105754827EE1FA600D93B06 /* Sample SPM.app */;
@@ -660,6 +663,7 @@
 				31A7169927EF05C3003770E9 /* XCRemoteSwiftPackageReference "appcenter-sdk-apple" */,
 				F74AA110283C65AB00087718 /* XCRemoteSwiftPackageReference "Nimble" */,
 				F74AA113283C65E300087718 /* XCRemoteSwiftPackageReference "Quick" */,
+				F796AC8A2860204800A75DA8 /* XCRemoteSwiftPackageReference "ios-analytics-framework" */,
 			);
 			productRefGroup = 3105754927EE1FA600D93B06 /* Products */;
 			projectDirPath = "";
@@ -1177,6 +1181,14 @@
 				minimumVersion = 5.0.1;
 			};
 		};
+		F796AC8A2860204800A75DA8 /* XCRemoteSwiftPackageReference "ios-analytics-framework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rakutentech/ios-analytics-framework.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1198,6 +1210,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F74AA113283C65E300087718 /* XCRemoteSwiftPackageReference "Quick" */;
 			productName = Quick;
+		};
+		F796AC8B2860204900A75DA8 /* RAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F796AC8A2860204800A75DA8 /* XCRemoteSwiftPackageReference "ios-analytics-framework" */;
+			productName = RAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
