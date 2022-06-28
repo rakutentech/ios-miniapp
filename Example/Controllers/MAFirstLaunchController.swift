@@ -56,7 +56,7 @@ class MAFirstLaunchController: RATViewController {
 
     func setupUI() {
         miniAppMetaInfoContainer.roundCorners(radius: 10)
-        acceptButton.roundedCornerButton()
+        acceptButton.roundedCornerButton(color: tintColor)
         closeButton.roundedCornerButton(color: tintColor)
         miniAppName.text = miniAppInfo?.displayName
         miniAppVersion.text = "Version: " + (miniAppInfo?.version.versionTag)!
