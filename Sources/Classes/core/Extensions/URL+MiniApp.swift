@@ -42,7 +42,7 @@ extension URL {
         do {
             return try FileManager.default.attributesOfItem(atPath: path)
         } catch let error as NSError {
-            print("FileAttribute error: \(error)")
+            MiniAppLogger.d("FileAttribute error: \(error)")
         }
         return nil
     }
