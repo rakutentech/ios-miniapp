@@ -4,6 +4,7 @@ import SQLite
 class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     var appId: String
+    var fileSizeLimit: UInt64
 
     static let storageName: String = MiniAppSecureStorage.storageName
     static let storageNameExtension: String = "sqlite"
@@ -31,8 +32,9 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
         return FileManager.default.fileExists(atPath: storagePath)
     }
 
-    init(appId: String) {
+    init(appId: String, fileSizeLimit: UInt64) {
         self.appId = appId
+        self.fileSizeLimit = fileSizeLimit
     }
 
     func setup() throws {
@@ -92,8 +94,15 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
             try setup()
         }
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnavailable }
-        for (key, value) in dict {
-            let upsertResult = try Entry.upsert(database: dbQueue, key: key, value: value)
+
+        let limiter = determineBatchSetLimiter(count: dict.count)
+        for (index, pair) in dict.enumerated() {
+            if index % limiter == 0 {
+                guard storageFileSize < fileSizeLimit else {
+                    throw MiniAppSecureStorageError.storageFullError
+                }
+            }
+            let upsertResult = try Entry.upsert(database: dbQueue, key: pair.key, value: pair.value)
             MiniAppLogger.d("🔑 Secure Storage: upsert -> \(upsertResult)")
         }
     }
@@ -114,9 +123,31 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
         }
         do {
             try Entry.deleteAll(database: dbQueue)
+            try dbQueue.vacuum()
             completion?(.success(true))
         } catch {
             completion?(.failure(.storageIOError))
+        }
+    }
+
+    func determineBatchSetLimiter(count: Int) -> Int {
+        switch count {
+        case 0..<100:
+            return 1
+        case 100..<5_000:
+            return 25
+        case 5_000..<25_000:
+            return 100
+        case 25_000..<50_000:
+            return 200
+        case 50_000..<100_000:
+            return 250
+        case 100_000..<1_000_000:
+            return 500
+        case let num where num > 1_000_000:
+            return 1000
+        default:
+            return 1
         }
     }
 }
