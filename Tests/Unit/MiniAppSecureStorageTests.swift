@@ -41,7 +41,7 @@ class MiniAppSecureStorageTests: XCTestCase {
     // MARK: - Setup
     func testSetup_LoadStorage() {
         let expectation = XCTestExpectation(description: #function)
-        
+
         let storage = MiniAppSecureStorage(appId: miniAppId)
         do {
             try storage.database.setup()
@@ -287,7 +287,7 @@ class MiniAppSecureStorageTests: XCTestCase {
     func testClear_ClearData() throws {
         let expectation = XCTestExpectation(description: #function)
         let storage = try setupStorage()
-        
+
         storage.set(dict: [
             "test1": "value1"
         ]) { result in
