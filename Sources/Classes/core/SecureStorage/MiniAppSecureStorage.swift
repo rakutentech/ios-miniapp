@@ -67,19 +67,21 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             return
         }
 
-        do {
-            try database.set(dict: dict)
-            try database.save(completion: { result in
-                switch result {
-                case .success:
-                    completion?(.success(true))
-                case let .failure(error):
-                    completion?(.failure(error))
-                }
-            })
-        } catch {
-            completion?(.failure(.storageIOError))
-            return
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try self.database.set(dict: dict)
+                try self.database.save(completion: { result in
+                    switch result {
+                    case .success:
+                        completion?(.success(true))
+                    case let .failure(error):
+                        completion?(.failure(error))
+                    }
+                })
+            } catch {
+                completion?(.failure(.storageIOError))
+                return
+            }
         }
     }
 
