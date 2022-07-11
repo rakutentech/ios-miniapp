@@ -162,11 +162,20 @@ public class MiniAppViewController: UIViewController {
             fallbackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             fallbackView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        updateNavigationBar()
         backButton.isEnabled = false
         forwardButton.isEnabled = false
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardShown), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    func updateNavigationBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemBackground
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
     }
 
     @objc
