@@ -511,6 +511,7 @@
 				F74AA0D1283C651300087718 /* MetaDataAPITests.swift */,
 				F74AA0D2283C651300087718 /* RealMiniAppView+Mock.swift */,
 				F74AA0D3283C651300087718 /* MiniAppStorageTests.swift */,
+				F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */,
 				F74AA0D4283C651300087718 /* MessageInterfaceExtensionTests.swift */,
 				F74AA0D5283C651300087718 /* UrlParserTests.swift */,
 				F74AA0D6283C651300087718 /* MiniApp+StringTests.swift */,
@@ -518,7 +519,6 @@
 				F74AA0D8283C651300087718 /* MiniAppStatusTests.swift */,
 				F74AA0D9283C651300087718 /* MiniAppSdkConfigTests.swift */,
 				F74AA0DA283C651300087718 /* MiniAppKeyChainTests.swift */,
-				F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */,
 				F74AA0DB283C651300087718 /* UIModule */,
 			);
 			path = Unit;

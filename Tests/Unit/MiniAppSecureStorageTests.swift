@@ -1,10 +1,3 @@
-//
-//  MiniAppSecureStorageTests.swift
-//  MiniApp_Tests
-//
-//  Created by Timotheus Laubengaier on 2022/07/11.
-//
-
 import XCTest
 @testable import MiniApp
 
