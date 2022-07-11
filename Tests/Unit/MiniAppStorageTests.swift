@@ -3,7 +3,6 @@ import Nimble
 import Foundation
 @testable import MiniApp
 
-// swiftlint:disable function_body_length cyclomatic_complexity
 class MiniAppStorageTests: QuickSpec {
 
     override func spec() {

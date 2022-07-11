@@ -2,23 +2,23 @@ import XCTest
 @testable import MiniApp
 
 class MiniAppSecureStorageTests: XCTestCase {
-    
+
     enum TestError: Error {
         case storageShouldNotExist
     }
-    
+
     let miniAppId = "test-1234"
-    
+
     var miniAppPath: URL {
         let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         let path = cachePath.appendingPathComponent("/MiniApp").appendingPathComponent("/\(miniAppId)")
         return path
     }
-    
+
     override class func setUp() {
         super.setUp()
     }
-    
+
     override func setUpWithError() throws {
         try super.setUpWithError()
         do {
@@ -31,13 +31,13 @@ class MiniAppSecureStorageTests: XCTestCase {
             throw TestError.storageShouldNotExist
         }
     }
-    
+
     func setupStorage(storageMaxSizeInBytes: UInt64? = nil) throws -> MiniAppSecureStorage {
         let storage = MiniAppSecureStorage(appId: miniAppId, storageMaxSizeInBytes: storageMaxSizeInBytes)
         try storage.database.setup()
         return storage
     }
-    
+
     // MARK: - Setup
     func testSetup_LoadStorage() {
         let expectation = XCTestExpectation(description: #function)
@@ -54,15 +54,15 @@ class MiniAppSecureStorageTests: XCTestCase {
             didLoadStorage = success
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 3.0)
-        
+
         XCTAssertTrue(didLoadStorage)
     }
-    
+
     func testSetup_LoadStorage_WithSet() {
         let expectation = XCTestExpectation(description: #function)
-        
+
         let storage = MiniAppSecureStorage(appId: miniAppId)
 
         var didLoadStorage = false
@@ -77,16 +77,16 @@ class MiniAppSecureStorageTests: XCTestCase {
                 XCTFail(error.localizedDescription)
             }
         }
-        
+
         wait(for: [expectation], timeout: 3.0)
-        
+
         XCTAssertTrue(didLoadStorage)
     }
 
     // MARK: - Unload Storage
     func testSetup_UnloadStorage() throws {
         let expectation = XCTestExpectation(description: #function)
-        
+
         let storage = try setupStorage()
 
         var didLoadStorage = false
@@ -102,17 +102,17 @@ class MiniAppSecureStorageTests: XCTestCase {
                 }
             }
         }
-        
+
         wait(for: [expectation], timeout: 3.0)
-        
+
         XCTAssertEqual(didLoadStorage, true)
         let testValue = try? storage.get(key: "test1")
         XCTAssertNil(testValue)
     }
-    
+
     func testSetup_UnloadedStorage_Remove() {
         let expectation = XCTestExpectation(description: #function)
-        
+
         let storage = MiniAppSecureStorage(appId: miniAppId)
 
         let testValue = try? storage.get(key: "test1")
@@ -128,23 +128,23 @@ class MiniAppSecureStorageTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        
+
         wait(for: [expectation], timeout: 3.0)
-        
+
         XCTAssertNotNil(removeError)
     }
 
     func testSetup_UnloadedStorage_WithoutSetup() {
         let expectation = XCTestExpectation(description: #function)
         let storage = MiniAppSecureStorage(appId: miniAppId)
-        var didLoadStorage: Bool? = nil
+        var didLoadStorage: Bool?
         storage.loadStorage { success in
             didLoadStorage = success
             expectation.fulfill()
         }
         XCTAssertEqual(didLoadStorage, false)
     }
-    
+
     // MARK: - Set Values
     func testData_SetValues() throws {
         let expectation = XCTestExpectation(description: #function)
@@ -164,9 +164,9 @@ class MiniAppSecureStorageTests: XCTestCase {
                 }
             }
         }
-        
+
         wait(for: [expectation], timeout: 3.0)
-        
+
         let test1 = try? storage.get(key: "test1")
         XCTAssertEqual(test1, "test1Value")
         let test2 = try? storage.get(key: "test2")
@@ -192,14 +192,14 @@ class MiniAppSecureStorageTests: XCTestCase {
                 }
             }
         }
-        
+
         wait(for: [setExpectation], timeout: 3.0)
-        
+
         let setTest1 = try? storage.get(key: "test1")
         XCTAssertEqual(setTest1, "test1Value")
         let setTest2 = try? storage.get(key: "test2")
         XCTAssertEqual(setTest2, "test2Value")
-        
+
         let removeExpectation = XCTestExpectation(description: #function + "remove")
         storage.remove(keys: ["test1", "test2"], completion: { removeResult in
             switch removeResult {
@@ -209,9 +209,9 @@ class MiniAppSecureStorageTests: XCTestCase {
                 XCTFail(error.localizedDescription)
             }
         })
-        
+
         wait(for: [removeExpectation], timeout: 3.0)
-        
+
         let test1 = try? storage.get(key: "test1")
         XCTAssertNil(test1)
         let test2 = try? storage.get(key: "test2")
@@ -221,7 +221,7 @@ class MiniAppSecureStorageTests: XCTestCase {
     func testData_SetValues_10k() throws {
         let expectation = XCTestExpectation(description: #function)
         let storage = try setupStorage()
-        
+
         var dict: [String: String] = [:]
         (0..<10_000).forEach({ dict[String($0)] = String($0) })
 
@@ -243,7 +243,7 @@ class MiniAppSecureStorageTests: XCTestCase {
         XCTAssertEqual(Int((try? storage.get(key: "100")) ?? ""), 100)
         XCTAssertEqual(Int((try? storage.get(key: "5000")) ?? ""), 5000)
     }
-    
+
     // MARK: - Size
     func testSize() throws {
         let expectation = XCTestExpectation(description: #function)
@@ -282,7 +282,7 @@ class MiniAppSecureStorageTests: XCTestCase {
         }
         XCTAssertEqual(resultError, MiniAppSecureStorageError.storageFullError)
     }
-    
+
     // MARK: - Clear
     func testClear_ClearData() throws {
         let expectation = XCTestExpectation(description: #function)
@@ -298,20 +298,20 @@ class MiniAppSecureStorageTests: XCTestCase {
                 XCTFail("set should be successful; \(error.localizedDescription)")
             }
         }
-        
+
         wait(for: [expectation], timeout: 3.0)
-        
+
         let valueBefore = try? storage.get(key: "test1")
         XCTAssertEqual(valueBefore, "value1")
-        
+
         try? storage.clearSecureStorage()
-        
+
         let valueAfter = try? storage.get(key: "test1")
         XCTAssertNil(valueAfter)
     }
-    
+
     func testClear_Wipe() throws {
-        let _ = try setupStorage()
+        _ = try setupStorage()
         let secureStorageUrl = FileManager.getMiniAppDirectory(with: miniAppId).appendingPathComponent("/securestorage.sqlite")
         try? MiniAppSecureStorage.wipeSecureStorages()
         XCTAssertEqual(FileManager.default.fileExists(atPath: secureStorageUrl.path), false)
