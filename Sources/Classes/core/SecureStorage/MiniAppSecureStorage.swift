@@ -78,7 +78,8 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
                         completion?(.failure(error))
                     }
                 })
-            } catch {
+            } catch let error {
+                MiniAppLogger.d(error.localizedDescription)
                 completion?(.failure(.storageIOError))
                 return
             }
