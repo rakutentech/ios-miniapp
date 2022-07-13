@@ -1,7 +1,7 @@
 import XCTest
 @testable import MiniApp
 
-// swiftlint:disable:next file_length
+// swiftlint:disable file_length
 class MiniAppSecureStorageTests: XCTestCase {
 
     enum TestError: Error {
