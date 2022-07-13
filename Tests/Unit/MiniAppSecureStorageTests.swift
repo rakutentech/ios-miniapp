@@ -19,6 +19,9 @@ class MiniAppSecureStorageTests: XCTestCase {
 
     override class func setUp() {
         super.setUp()
+        // running tests from scratch need an existing miniapp folder
+        let miniAppUrl = FileManager.getMiniAppFolderPath().appendingPathComponent("test-1234")
+        try? FileManager.default.createDirectory(at: miniAppUrl, withIntermediateDirectories: false)
     }
 
     override func setUpWithError() throws {
