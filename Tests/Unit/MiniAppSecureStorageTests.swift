@@ -218,12 +218,12 @@ class MiniAppSecureStorageTests: XCTestCase {
         XCTAssertNil(test2)
     }
 
-    func testData_SetValues_10k() throws {
+    func testData_SetValues_5k() throws {
         let expectation = XCTestExpectation(description: #function)
         let storage = try setupStorage()
 
         var dict: [String: String] = [:]
-        (0..<10_000).forEach({ dict[String($0)] = String($0) })
+        (1...5_000).forEach({ dict[String($0)] = String($0) })
 
         storage.loadStorage { success in
             storage.set(dict: dict) { result in
@@ -238,10 +238,110 @@ class MiniAppSecureStorageTests: XCTestCase {
 
         wait(for: [expectation], timeout: 10.0)
 
-        XCTAssertGreaterThan(storage.size().used, 250_000)
+        XCTAssertGreaterThan(storage.size().used, 125_000)
         XCTAssertEqual(Int((try? storage.get(key: "1")) ?? ""), 1)
         XCTAssertEqual(Int((try? storage.get(key: "100")) ?? ""), 100)
         XCTAssertEqual(Int((try? storage.get(key: "5000")) ?? ""), 5000)
+    }
+
+    func testData_SetThenRemoveValues_5k() throws {
+        let setExpectation = XCTestExpectation(description: #function)
+        let storage = try setupStorage()
+
+        var dict: [String: String] = [:]
+        (1...5_000).forEach({ dict[String($0)] = String($0) })
+
+        storage.loadStorage { success in
+            storage.set(dict: dict) { result in
+                switch result {
+                case .success:
+                    setExpectation.fulfill()
+                case let .failure(error):
+                    XCTFail(error.localizedDescription)
+                }
+            }
+        }
+
+        wait(for: [setExpectation], timeout: 10.0)
+
+        XCTAssertEqual(Int((try? storage.get(key: "1")) ?? ""), 1)
+        XCTAssertEqual(Int((try? storage.get(key: "100")) ?? ""), 100)
+        XCTAssertEqual(Int((try? storage.get(key: "5000")) ?? ""), 5000)
+        
+        let removeExpectation = XCTestExpectation(description: #function)
+        storage.remove(keys: dict.keys.map({ $0 })) { result in
+            switch result {
+            case .success:
+                removeExpectation.fulfill()
+            case let .failure(error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        
+        wait(for: [removeExpectation], timeout: 10.0)
+        
+        XCTAssertNil(try? storage.get(key: "1"))
+        XCTAssertNil(try? storage.get(key: "100"))
+        XCTAssertNil(try? storage.get(key: "5000"))
+    }
+
+    func testData_RepeatingUpdates_Size() throws {
+        let expectation = XCTestExpectation(description: #function)
+        let storage = try setupStorage()
+
+        var firstInsertSize: UInt64 = 0
+
+        var dict: [String: String] = [:]
+        (1...1_000).forEach({ dict[String($0)] = "1_\($0)" })
+
+        storage.loadStorage { success in
+            storage.set(dict: dict) { result in
+                switch result {
+                case .success:
+                    firstInsertSize = storage.size().used
+                    expectation.fulfill()
+                case let .failure(error):
+                    XCTFail(error.localizedDescription)
+                }
+            }
+        }
+
+        wait(for: [expectation], timeout: 10.0)
+        XCTAssertEqual(storage.size().used, firstInsertSize)
+
+        let expectation2 = XCTestExpectation(description: #function)
+
+        var dict2: [String: String] = [:]
+        (1...1_000).forEach({ dict2[String($0)] = "2_\($0)" })
+
+        storage.set(dict: dict2) { result in
+            switch result {
+            case .success:
+                expectation2.fulfill()
+            case let .failure(error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+
+        wait(for: [expectation2], timeout: 10.0)
+        XCTAssertEqual(storage.size().used, firstInsertSize)
+
+        let expectation3 = XCTestExpectation(description: #function)
+
+        var dict3: [String: String] = [:]
+        (1...1_000).forEach({ dict3[String($0)] = "3_\($0)" })
+
+        storage.set(dict: dict3) { result in
+            switch result {
+            case .success:
+                expectation3.fulfill()
+            case let .failure(error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+
+        wait(for: [expectation3], timeout: 10.0)
+        XCTAssertEqual(storage.size().used, firstInsertSize)
     }
 
     // MARK: - Size
