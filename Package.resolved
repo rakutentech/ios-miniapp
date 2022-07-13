@@ -38,15 +38,6 @@
         }
       },
       {
-        "package": "RAnalytics",
-        "repositoryURL": "https://github.com/rakutentech/ios-analytics-framework.git",
-        "state": {
-          "branch": null,
-          "revision": "f24b551dbd438120a3637d0f31200bec338c6250",
-          "version": "8.3.0"
-        }
-      },
-      {
         "package": "nanopb",
         "repositoryURL": "https://github.com/firebase/nanopb.git",
         "state": {
