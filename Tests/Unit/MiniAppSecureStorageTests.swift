@@ -284,6 +284,8 @@ class MiniAppSecureStorageTests: XCTestCase {
         XCTAssertNil(try? storage.get(key: "1"))
         XCTAssertNil(try? storage.get(key: "100"))
         XCTAssertNil(try? storage.get(key: "5000"))
+
+        XCTAssertEqual(storage.size().used, 12_288)
     }
 
     func testData_RepeatingUpdates_Size() throws {
@@ -416,6 +418,32 @@ class MiniAppSecureStorageTests: XCTestCase {
         let secureStorageUrl = FileManager.getMiniAppDirectory(with: miniAppId).appendingPathComponent("/securestorage.sqlite")
         try? MiniAppSecureStorage.wipeSecureStorages()
         XCTAssertEqual(FileManager.default.fileExists(atPath: secureStorageUrl.path), false)
+    }
+
+    func testClear_ClearData_Size() throws {
+        let expectation = XCTestExpectation(description: #function)
+        let storage = try setupStorage()
+
+        var dict: [String: String] = [:]
+        (1...1_000).forEach({ dict[String($0)] = String($0) })
+
+        storage.loadStorage { success in
+            storage.set(dict: dict) { result in
+                switch result {
+                case .success:
+                    expectation.fulfill()
+                case let .failure(error):
+                    XCTFail(error.localizedDescription)
+                }
+            }
+        }
+
+        wait(for: [expectation], timeout: 10.0)
+        XCTAssertGreaterThan(storage.size().used, 12_288)
+
+        try? storage.clearSecureStorage()
+
+        XCTAssertEqual(storage.size().used, 12_288)
     }
 
     // MARK: - Error

@@ -15,6 +15,7 @@ protocol MiniAppSecureStorageDatabase: AnyObject {
     func remove(keys: [String]) throws
     func save(completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) throws
     func clear(completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?)
+    func vacuum() throws
 
     static func wipe() throws
     static func wipe(for miniAppId: String) throws

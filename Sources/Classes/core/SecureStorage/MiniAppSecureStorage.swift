@@ -98,6 +98,7 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
                 try self?.database.save(completion: { result in
                     switch result {
                     case .success:
+                        try? self?.database.vacuum()
                         completion?(.success(true))
                     case let .failure(error):
                         completion?(.failure(error))
