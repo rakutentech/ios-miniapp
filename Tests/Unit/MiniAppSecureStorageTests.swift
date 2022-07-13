@@ -1,6 +1,7 @@
 import XCTest
 @testable import MiniApp
 
+// swiftlint:disable:file_length
 class MiniAppSecureStorageTests: XCTestCase {
 
     enum TestError: Error {
@@ -267,7 +268,7 @@ class MiniAppSecureStorageTests: XCTestCase {
         XCTAssertEqual(Int((try? storage.get(key: "1")) ?? ""), 1)
         XCTAssertEqual(Int((try? storage.get(key: "100")) ?? ""), 100)
         XCTAssertEqual(Int((try? storage.get(key: "5000")) ?? ""), 5000)
-        
+
         let removeExpectation = XCTestExpectation(description: #function)
         storage.remove(keys: dict.keys.map({ $0 })) { result in
             switch result {
@@ -277,9 +278,9 @@ class MiniAppSecureStorageTests: XCTestCase {
                 XCTFail(error.localizedDescription)
             }
         }
-        
+
         wait(for: [removeExpectation], timeout: 10.0)
-        
+
         XCTAssertNil(try? storage.get(key: "1"))
         XCTAssertNil(try? storage.get(key: "100"))
         XCTAssertNil(try? storage.get(key: "5000"))
