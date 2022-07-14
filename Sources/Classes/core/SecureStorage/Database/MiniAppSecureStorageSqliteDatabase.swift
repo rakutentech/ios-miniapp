@@ -119,4 +119,8 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
             completion?(.failure(.storageIOError))
         }
     }
+
+    func vacuum() throws {
+        try dbQueue?.vacuum()
+    }
 }

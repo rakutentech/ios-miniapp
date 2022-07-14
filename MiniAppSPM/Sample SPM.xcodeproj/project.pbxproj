@@ -71,6 +71,7 @@
 		3105761627EE387800D93B06 /* Config-test-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3105761127EE387800D93B06 /* Config-test-debug.xcconfig */; };
 		31A7169B27EF0800003770E9 /* MiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169A27EF0800003770E9 /* MiniApp */; };
 		31A7169D27EF0800003770E9 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169C27EF0800003770E9 /* AppCenterCrashes */; };
+		F7370A8A287BD21C00090032 /* MiniAppSecureStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */; };
 		F74AA0E0283C651300087718 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */; };
 		F74AA0E1283C651300087718 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */; };
 		F74AA0E2283C651300087718 /* MiniAppJavascriptErrorInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0AB283C651300087718 /* MiniAppJavascriptErrorInfoTests.swift */; };
@@ -200,6 +201,7 @@
 		3105761027EE387800D93B06 /* Config-common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
 		3105761127EE387800D93B06 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		31A7169827EF0428003770E9 /* MiniApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MiniApp; path = ..; sourceTree = "<group>"; };
+		F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageTests.swift; sourceTree = "<group>"; };
 		F74AA09D283C64D600087718 /* MiniApp_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewTests.swift; sourceTree = "<group>"; };
 		F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSchemeHandlerTests.swift; sourceTree = "<group>"; };
@@ -509,6 +511,7 @@
 				F74AA0D1283C651300087718 /* MetaDataAPITests.swift */,
 				F74AA0D2283C651300087718 /* RealMiniAppView+Mock.swift */,
 				F74AA0D3283C651300087718 /* MiniAppStorageTests.swift */,
+				F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */,
 				F74AA0D4283C651300087718 /* MessageInterfaceExtensionTests.swift */,
 				F74AA0D5283C651300087718 /* UrlParserTests.swift */,
 				F74AA0D6283C651300087718 /* MiniApp+StringTests.swift */,
@@ -809,6 +812,7 @@
 				F74AA0ED283C651300087718 /* RealSignatureVerifierTests.swift in Sources */,
 				F74AA10B283C651400087718 /* MiniAppSdkConfigTests.swift in Sources */,
 				F74AA103283C651400087718 /* MetaDataAPITests.swift in Sources */,
+				F7370A8A287BD21C00090032 /* MiniAppSecureStorageTests.swift in Sources */,
 				F74AA101283C651400087718 /* MiniAppAdDisplayerTests.swift in Sources */,
 				F74AA100283C651400087718 /* MiniApp+NSErrorTests.swift in Sources */,
 				F74AA0FA283C651400087718 /* ManifestAPITests.swift in Sources */,
