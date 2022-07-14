@@ -150,4 +150,8 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
             return 1
         }
     }
+
+    func vacuum() throws {
+        try dbQueue?.vacuum()
+    }
 }
