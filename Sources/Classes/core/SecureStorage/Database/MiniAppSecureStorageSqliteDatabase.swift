@@ -121,7 +121,7 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     func remove(keys: [String]) throws {
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnavailable }
-        if keys.count == 1 && let key = keys.first {
+        if keys.count == 1, let key = keys.first {
             let deleteResult = try Entry.delete(database: dbQueue, key: key)
             guard deleteResult == 1 else { throw MiniAppSecureStorageError.storageIOError }
             MiniAppLogger.d("🔑 Secure Storage: delete -> \(deleteResult == 0 ? false : true)")
