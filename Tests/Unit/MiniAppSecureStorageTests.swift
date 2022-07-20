@@ -288,7 +288,7 @@ class MiniAppSecureStorageTests: XCTestCase {
         XCTAssertNil(try? storage.get(key: "1"))
         XCTAssertNil(try? storage.get(key: "100"))
         XCTAssertNil(try? storage.get(key: "5000"))
-        
+
         // auto vacuum clean should end up around 16kb after remove
         XCTAssertLessThan(storage.size().used, 170_000)
 
