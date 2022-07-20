@@ -123,7 +123,8 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnavailable }
         for key in keys {
             let deleteResult = try Entry.delete(database: dbQueue, key: key)
-            MiniAppLogger.d("🔑 Secure Storage: delete -> \(deleteResult)")
+            guard deleteResult == 1 else { throw MiniAppSecureStorageError.storageIOError }
+            MiniAppLogger.d("🔑 Secure Storage: delete -> \(deleteResult == 0 ? false : true)")
         }
     }
 
