@@ -1,5 +1,6 @@
 import Foundation
 import SQLite
+import SQLite3
 
 class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
@@ -33,6 +34,10 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     init(appId: String) {
         self.appId = appId
+    }
+
+    deinit {
+        MiniAppLogger.d("🔑 Secure Storage Database: deinit")
     }
 
     func setup() throws {
@@ -71,7 +76,14 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     }
 
     func unload() throws {
-        dbQueue = nil
+        guard let dbQueue = dbQueue else { return }
+        let closeResult = sqlite3_close(dbQueue.handle)
+        if closeResult != SQLITE_OK {
+            MiniAppLogger.d("🔑 Could not close datbase connection - \(closeResult)")
+        } else {
+            MiniAppLogger.d("🔑 Closed datbase connection")
+        }
+        self.dbQueue = nil
     }
 
     func find(for key: String) throws -> Entry? {
