@@ -71,16 +71,20 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             do {
                 try self?.database.set(dict: dict)
                 try self?.database.save(completion: { result in
-                    switch result {
-                    case .success:
-                        completion?(.success(true))
-                    case let .failure(error):
-                        completion?(.failure(error))
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success:
+                            completion?(.success(true))
+                        case let .failure(error):
+                            completion?(.failure(error))
+                        }
                     }
                 })
             } catch let error {
-                MiniAppLogger.d(error.localizedDescription)
-                completion?(.failure(.storageIOError))
+                DispatchQueue.main.async {
+                    MiniAppLogger.d(error.localizedDescription)
+                    completion?(.failure(.storageIOError))
+                }
                 return
             }
         }
