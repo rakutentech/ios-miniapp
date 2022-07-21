@@ -290,11 +290,7 @@ class MiniAppSecureStorageTests: XCTestCase {
         XCTAssertNil(try? storage.get(key: "5000"))
 
         // auto vacuum clean should end up around 16kb after remove
-        XCTAssertLessThan(storage.size().used, 170_000)
-
-        try? storage.database.vacuum()
-
-        XCTAssertEqual(storage.size().used, 12_288)
+        XCTAssertLessThan(storage.size().used, 17_000)
     }
 
     func testData_RepeatingUpdates_Size() throws {
@@ -367,7 +363,7 @@ class MiniAppSecureStorageTests: XCTestCase {
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 3.0)
-        XCTAssertEqual(storageSize, 12_288)
+        XCTAssertEqual(storageSize, 16_384)
     }
 
     func testSize_ExceedStorage() throws {
@@ -452,7 +448,7 @@ class MiniAppSecureStorageTests: XCTestCase {
 
         try? storage.clearSecureStorage()
 
-        XCTAssertEqual(storage.size().used, 12_288)
+        XCTAssertEqual(storage.size().used, 16384)
     }
 
     // MARK: - Error
