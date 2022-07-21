@@ -1,5 +1,6 @@
 import Foundation
 import SQLite
+import SQLite3
 
 class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
@@ -35,6 +36,10 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     init(appId: String, fileSizeLimit: UInt64) {
         self.appId = appId
         self.fileSizeLimit = fileSizeLimit
+    }
+
+    deinit {
+        MiniAppLogger.d("🔑 Secure Storage Database: deinit")
     }
 
     func setup() throws {
@@ -73,7 +78,14 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     }
 
     func unload() throws {
-        dbQueue = nil
+        guard let dbQueue = dbQueue else { return }
+        let closeResult = sqlite3_close(dbQueue.handle)
+        if closeResult != SQLITE_OK {
+            MiniAppLogger.d("🔑 Could not close datbase connection - \(closeResult)")
+        } else {
+            MiniAppLogger.d("🔑 Closed datbase connection")
+        }
+        self.dbQueue = nil
     }
 
     func find(for key: String) throws -> Entry? {
@@ -109,9 +121,16 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
 
     func remove(keys: [String]) throws {
         guard let dbQueue = dbQueue else { throw MiniAppSecureStorageError.storageUnavailable }
-        for key in keys {
+        if keys.count == 1 {
+            guard let key = keys.first else { throw MiniAppSecureStorageError.storageIOError }
             let deleteResult = try Entry.delete(database: dbQueue, key: key)
+            guard deleteResult == 1 else { throw MiniAppSecureStorageError.storageIOError }
             MiniAppLogger.d("🔑 Secure Storage: delete -> \(deleteResult)")
+        } else {
+            for key in keys {
+                let deleteResult = try Entry.delete(database: dbQueue, key: key)
+                MiniAppLogger.d("🔑 Secure Storage: delete -> \(deleteResult)")
+            }
         }
     }
 
