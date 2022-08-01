@@ -1,10 +1,3 @@
-//
-//  MiniAppView.swift
-//  
-//
-//  Created by Timotheus Laubengaier on 2022/07/15.
-//
-
 import Foundation
 import WebKit
 
