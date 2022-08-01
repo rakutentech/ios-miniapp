@@ -131,9 +131,12 @@ extension ViewController: MiniAppNavigationDelegate {
                 enableSharePreview: true,
                 loadFromCacheIfFailed: true
             )
-            MiniAppUI
-                .shared()
-                .launch(base: self, params: uiparams, delegate: self)
+//            MiniAppUI
+//                .shared()
+//                .launch(base: self, params: uiparams, delegate: self)
+            let vc = NewMiniAppViewController(appId: appInfo.id)
+            let nvc = UINavigationController(rootViewController: vc)
+            self.present(nvc, animated: true)
         }
     }
 

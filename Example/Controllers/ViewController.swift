@@ -347,3 +347,106 @@ extension ViewController: UISearchBarDelegate {
         }
     }
 }
+
+class NewMiniAppViewController: UIViewController {
+    
+    let miniAppId: String
+    
+    init(appId: String) {
+        self.miniAppId = appId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) { return nil }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "New MiniApp"
+        view.backgroundColor = .systemBackground
+
+        let closeBarButton = UIBarButtonItem(systemItem: .close, primaryAction: UIAction(handler: { _ in
+            self.dismiss(animated: true)
+        }), menu: nil)
+        navigationItem.setLeftBarButton(closeBarButton, animated: true)
+
+        let delegator = MiniAppMessageDelegator1()
+        let config = MiniAppNewConfig(config: Config.current(), adsDisplayer: nil, messageInterface: delegator)
+        let miniAppView = MiniAppView(config: config, appId: miniAppId)
+        miniAppView.translatesAutoresizingMaskIntoConstraints = false
+        miniAppView.backgroundColor = UIColor.systemRed
+        view.addSubview(miniAppView)
+        NSLayoutConstraint.activate([
+            miniAppView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            miniAppView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            miniAppView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            //miniAppView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        miniAppView.load { result in
+            print(result)
+        }
+
+        // always loads the sample app
+        let delegator2 = MiniAppMessageDelegator2()
+        let config2 = MiniAppNewConfig(config: Config.current(), adsDisplayer: nil, messageInterface: delegator2)
+        let miniAppView2 = MiniAppView(config: config2, appId: "404e46b4-263d-4768-b2ec-8a423224bead")
+        miniAppView2.translatesAutoresizingMaskIntoConstraints = false
+        miniAppView2.backgroundColor = .systemOrange
+        view.addSubview(miniAppView2)
+        NSLayoutConstraint.activate([
+            miniAppView2.topAnchor.constraint(equalTo: miniAppView.bottomAnchor),
+            miniAppView2.heightAnchor.constraint(equalTo: miniAppView.heightAnchor),
+            miniAppView2.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            miniAppView2.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            miniAppView2.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        miniAppView2.load { result in
+            print(result)
+        }
+    }
+}
+
+extension NewMiniAppViewController {
+    class MiniAppMessageDelegator1: MiniAppMessageDelegate {
+        func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+            completionHandler(.success("TestNew"))
+        }
+
+        func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
+            //
+        }
+
+        func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+            //
+        }
+
+        func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+            //
+        }
+
+        func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
+            //
+        }
+    }
+
+    class MiniAppMessageDelegator2: MiniAppMessageDelegate {
+        func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+            completionHandler(.success("TestNew2"))
+        }
+
+        func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
+            //
+        }
+
+        func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+            //
+        }
+
+        func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+            //
+        }
+
+        func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
+            //
+        }
+    }
+}
