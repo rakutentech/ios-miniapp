@@ -18,6 +18,8 @@ extension MiniAppSecureStorageSqliteDatabase {
                 table.column(key, primaryKey: true)
                 table.column(value)
             })
+            try database.execute("PRAGMA auto_vacuum = FULL")
+            try database.vacuum()
         }
 
         static func find(database: Connection, key: String) throws -> Entry? {

@@ -23,7 +23,7 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     ) {
         self.appId = appId
         self.fileSizeLimit = storageMaxSizeInBytes ?? 2_000_000
-        self.database = database ?? MiniAppSecureStorageSqliteDatabase(appId: appId)
+        self.database = database ?? MiniAppSecureStorageSqliteDatabase(appId: appId, fileSizeLimit: fileSizeLimit)
     }
 
     deinit {
@@ -53,33 +53,31 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     }
 
     func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)? = nil) {
-        guard (try? getInMemoryStorageFileSize(dict: dict)) != nil else {
-            completion?(.failure(.storageUnavailable))
+        guard database.storageFileSize < fileSizeLimit else {
+            completion?(.failure(.storageFullError))
             return
         }
 
-        do {
-            try validateAvailableSpace(for: dict)
-            MiniAppLogger.d("🔑 Secure Storage: sufficient space for insert available")
-        } catch let error {
-            let storageError = error as? MiniAppSecureStorageError
-            completion?(.failure(storageError ?? .storageIOError))
-            return
-        }
-
-        do {
-            try database.set(dict: dict)
-            try database.save(completion: { result in
-                switch result {
-                case .success:
-                    completion?(.success(true))
-                case let .failure(error):
-                    completion?(.failure(error))
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            do {
+                try self?.database.set(dict: dict)
+                try self?.database.save(completion: { result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success:
+                            completion?(.success(true))
+                        case let .failure(error):
+                            completion?(.failure(error))
+                        }
+                    }
+                })
+            } catch let error {
+                DispatchQueue.main.async {
+                    MiniAppLogger.d(error.localizedDescription)
+                    completion?(.failure(.storageIOError))
                 }
-            })
-        } catch {
-            completion?(.failure(.storageIOError))
-            return
+                return
+            }
         }
     }
 
@@ -89,18 +87,24 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
             return
         }
 
-        do {
-            try database.remove(keys: keys)
-            try database.save(completion: { result in
-                switch result {
-                case .success:
-                    completion?(.success(true))
-                case let .failure(error):
-                    completion?(.failure(error))
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            do {
+                try self?.database.remove(keys: keys)
+                try self?.database.save(completion: { result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success:
+                            completion?(.success(true))
+                        case let .failure(error):
+                            completion?(.failure(error))
+                        }
+                    }
+                })
+            } catch let error {
+                DispatchQueue.main.async {
+                    completion?(.failure((error as? MiniAppSecureStorageError) ?? .storageIOError))
                 }
-            })
-        } catch let error {
-            completion?(.failure((error as? MiniAppSecureStorageError) ?? .storageIOError))
+            }
         }
     }
 
@@ -130,34 +134,6 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     // MARK: - Size
     func size() -> MiniAppSecureStorageSize {
         return MiniAppSecureStorageSize(used: database.storageFileSize, max: fileSizeLimit)
-    }
-}
-
-// MARK: - Space
-extension MiniAppSecureStorage {
-    func getInMemoryStorageFileSize(dict: [String: String]) throws -> UInt64 {
-        guard
-            let storageSize = try? PropertyListEncoder().encode(dict)
-        else {
-            throw MiniAppSecureStorageError.storageUnavailable
-        }
-        let size = storageSize.count
-        MiniAppLogger.d("🔑 Secure Storage: memory size -> \(size)")
-        return UInt64(size)
-    }
-
-    func validateAvailableSpace(for dict: [String: String]) throws {
-        guard
-            let dictData = try? PropertyListEncoder().encode(dict),
-            let memorySize = try? getInMemoryStorageFileSize(dict: dict)
-        else {
-            throw MiniAppSecureStorageError.storageIOError
-        }
-        let estimatedAddSize = UInt64(dictData.count)
-        let estimatedFinalSize = memorySize + estimatedAddSize
-        guard estimatedFinalSize <= fileSizeLimit else {
-            throw MiniAppSecureStorageError.storageFullError
-        }
     }
 }
 
