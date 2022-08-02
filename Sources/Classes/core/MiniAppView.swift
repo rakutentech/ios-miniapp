@@ -3,6 +3,7 @@ import WebKit
 
 // swiftlint:disable file_length
 
+// MARK: - Defintions
 enum MiniAppViewState {
     case none
     case loading
@@ -32,94 +33,12 @@ protocol MiniAppViewable {
     var appId: String {get set}
 }
 
-public class MiniAppViewShield: UIView {
-
-    let miniAppHandler: MiniAppView
-
-    internal var activityIndicatorView: UIActivityIndicatorView = {
-        let view = UIActivityIndicatorView(style: .medium)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    internal var activityLabel: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "-"
-        view.textAlignment = .center
-        view.font = UIFont.systemFont(ofSize: 12, weight: .bold)
-        return view
-    }()
-
-    public init(
-        config: MiniAppNewConfig,
-        type: MiniAppType,
-        appId: String,
-        version: String? = nil,
-        queryParams: String? = nil
-    ) {
-        self.miniAppHandler = MiniAppView(
-            config: config,
-            appId: appId,
-            version: version,
-            queryParams: queryParams
-        )
-        super.init(frame: .zero)
-    }
-
-    deinit {
-        MiniAppLogger.d("MiniApp was deallocated")
-    }
-
-    required init?(coder: NSCoder) { return nil }
-
-    public func load(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
-        //
-    }
-
-    public func load() async throws {
-        //
-    }
-}
-
+// MARK: - MiniAppView
 public class MiniAppView: UIView {
 
-    internal var webView: WKWebView?
+    internal var miniAppHandler: MiniAppViewHandler
 
-    internal let miniAppClient: MiniAppClient
-    internal let miniAppDownloader: MiniAppDownloader
-    internal let miniAppStatus: MiniAppStatus
-    internal let manifestDownloader: ManifestDownloader
-    internal let miniAppInfoFetcher: MiniAppInfoFetcher
-    internal let miniAppManifestStorage: MAManifestStorage
-    internal var metaDataDownloader: MetaDataDownloader
-    internal var miniAppPermissionStorage: MiniAppPermissionsStorage
-    internal let secureStorage: MiniAppSecureStorage
-
-    internal var activityIndicatorView: UIActivityIndicatorView = {
-        let view = UIActivityIndicatorView(style: .medium)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    internal var activityLabel: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "-"
-        view.textAlignment = .center
-        view.font = UIFont.systemFont(ofSize: 12, weight: .bold)
-        view.numberOfLines = 5
-        return view
-    }()
-
-    // internal var miniAppManager: MiniAppManager
-
-    var appId: String
-    var version: String?
-    var queryParams: String?
-    var messageInterface: MiniAppMessageDelegate
-
-    var state: MiniAppViewState = .none {
+    internal var state: MiniAppViewState = .none {
         didSet {
             DispatchQueue.main.async {
                 switch self.state {
@@ -137,6 +56,113 @@ public class MiniAppView: UIView {
             }
         }
     }
+
+    internal var activityIndicatorView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    internal var activityLabel: UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.text = "-"
+        view.textAlignment = .center
+        view.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        view.numberOfLines = 5
+        return view
+    }()
+
+    public init(
+        config: MiniAppNewConfig,
+        type: MiniAppType,
+        appId: String,
+        version: String? = nil,
+        queryParams: String? = nil
+    ) {
+        self.miniAppHandler = MiniAppViewHandler(
+            config: config,
+            appId: appId,
+            version: version,
+            queryParams: queryParams
+        )
+        super.init(frame: .zero)
+        setupInterface()
+    }
+
+    deinit {
+        MiniAppLogger.d("deallocated MiniAppView")
+    }
+
+    required init?(coder: NSCoder) { return nil }
+
+    func setupInterface() {
+        backgroundColor = .white
+
+        self.addSubview(activityIndicatorView)
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
+        activityIndicatorView.startAnimating()
+
+        self.addSubview(activityLabel)
+        NSLayoutConstraint.activate([
+            activityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
+            activityLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
+            activityLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 30)
+        ])
+    }
+
+    func setupWebView(webView: MiniAppWebView) {
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(webView)
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: self.topAnchor),
+            webView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
+
+    public func load(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
+        state = .loading
+        miniAppHandler.load { [weak self] result in
+            switch result {
+            case let .success(webView):
+                self?.setupWebView(webView: webView)
+            case let .failure(error):
+                self?.state = .error(error)
+            }
+        }
+    }
+
+    public func load() async throws {
+        //
+    }
+}
+
+// MARK: - MiniAppViewHandler
+class MiniAppViewHandler: NSObject {
+
+    internal var webView: WKWebView?
+
+    internal let miniAppClient: MiniAppClient
+    internal let miniAppDownloader: MiniAppDownloader
+    internal let miniAppStatus: MiniAppStatus
+    internal let manifestDownloader: ManifestDownloader
+    internal let miniAppInfoFetcher: MiniAppInfoFetcher
+    internal let miniAppManifestStorage: MAManifestStorage
+    internal var metaDataDownloader: MetaDataDownloader
+    internal var miniAppPermissionStorage: MiniAppPermissionsStorage
+    internal let secureStorage: MiniAppSecureStorage
+
+    var appId: String
+    var version: String?
+    var queryParams: String?
+    weak var messageInterface: MiniAppMessageDelegate?
+    internal var projectId: String?
+    internal var analyticsConfig: [MAAnalyticsConfig]?
 
     // -
     internal var miniAppURL: URL?
@@ -156,9 +182,12 @@ public class MiniAppView: UIView {
     internal var onExternalWebviewResponse: ((URL) -> Void)?
     internal var onExternalWebviewClose: ((URL) -> Void)?
 
-    var shouldAutoLoadSecureStorage: Bool = false
+    var canGoBackObservation: NSKeyValueObservation?
+    var canGoForwardObservation: NSKeyValueObservation?
 
-    public init(
+    internal var shouldAutoLoadSecureStorage: Bool = false
+
+    init(
         config: MiniAppNewConfig,
         appId: String,
         version: String? = nil,
@@ -193,65 +222,67 @@ public class MiniAppView: UIView {
         self.queryParams = queryParams
         self.messageInterface = config.messageInterface
 
-        super.init(frame: .zero)
-
-        // view
-        backgroundColor = .white
-
-        self.addSubview(activityIndicatorView)
-        NSLayoutConstraint.activate([
-            activityIndicatorView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-        ])
-        activityIndicatorView.startAnimating()
-
-        self.addSubview(activityLabel)
-        NSLayoutConstraint.activate([
-            activityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
-            activityLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
-            activityLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 30)
-        ])
+        super.init()
     }
 
     deinit {
-        MiniAppLogger.d("MiniApp was deallocated")
+        MiniAppLogger.d("deallocate MiniAppHandler")
+        canGoBackObservation?.invalidate()
+        canGoForwardObservation?.invalidate()
+        MiniAppAnalytics.sendAnalytics(
+            event: .close,
+            miniAppId: appId,
+            miniAppVersion: version,
+            projectId: projectId,
+            analyticsConfig: analyticsConfig
+        )
+        MiniApp.MAOrientationLock = []
+        UIViewController.attemptRotationToDeviceOrientation()
+        webView?.configuration.userContentController.removeMessageHandler()
+        NotificationCenter.default.removeObserver(self)
+        secureStorage.unloadStorage()
     }
 
     required init?(coder: NSCoder) { return nil }
 
-    public func load() async throws {
+    func load() async throws {
         // download
-        state = .loading
         _ = try await download()
     }
 
-    public func load(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
-        state = .loading
-        getMiniAppInfo(miniAppId: appId) { result in
+    func load(completion: @escaping ((Result<MiniAppWebView, MASDKError>) -> Void)) {
+        getMiniAppInfo(miniAppId: appId) { [weak self] result in
+            guard let self = self else {
+                completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp download failed")))
+                return
+            }
             switch result {
             case .success(let info):
-                self.downloadMiniApp(
-                    appInfo: info,
-                    queryParams: self.queryParams
-                ) { result in
-                        switch result {
-                        case let .success(state):
-                            MiniAppLogger.d("MiniApp loaded with state: \(state)")
-                            self.state = .none
-                            DispatchQueue.main.async {
-                                self.loadWebView(
+                self.downloadMiniApp(appInfo: info, queryParams: self.queryParams) { result in
+                    switch result {
+                    case let .success(state):
+                        guard state else {
+                            completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp download failed")))
+                            return
+                        }
+                        MiniAppLogger.d("MiniApp loaded with state: \(state)")
+                        DispatchQueue.main.async {
+                            guard let webView = self.loadWebView(
                                     miniAppId: self.appId,
                                     versionId: info.version.versionId,
                                     queryParams: self.queryParams
                                 )
+                            else {
+                                completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
+                                return
                             }
-                        case let .failure(error):
-                            self.state = .error(error)
-                            completion(.failure(error))
+                            completion(.success(webView))
                         }
+                    case let .failure(error):
+                        completion(.failure(error))
                     }
+                }
             case .failure(let error):
-                self.state = .error(error)
                 completion(.failure(error))
             }
         }
@@ -278,21 +309,17 @@ public class MiniAppView: UIView {
         versionId: String,
         queryParams: String? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil
-    ) {
+    ) -> MiniAppWebView? {
+        guard let messageInterface = messageInterface else {
+            return nil
+        }
+
         let webView = MiniAppWebView(
             miniAppId: miniAppId,
             versionId: versionId,
             queryParams: queryParams
         )
         self.webView = webView
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(webView)
-        NSLayoutConstraint.activate([
-            webView.topAnchor.constraint(equalTo: self.topAnchor),
-            webView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            webView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
 
 //        webView.navigationDelegate = self
 
@@ -340,6 +367,7 @@ public class MiniAppView: UIView {
                 }
             }
         }
+        return webView
     }
 
     static func preload(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
@@ -368,7 +396,7 @@ public class MiniAppView: UIView {
 }
 
 // MARK: - Info
-extension MiniAppView {
+extension MiniAppViewHandler {
     func getMiniAppInfo(
         miniAppId: String,
         miniAppVersion: String? = nil,
@@ -384,7 +412,7 @@ extension MiniAppView {
 }
 
 // MARK: - Download
-extension MiniAppView {
+extension MiniAppViewHandler {
     /// Download Mini app for a given Mini app info object
     /// - Parameters:
     ///   - appInfo: Miniapp Info object
@@ -414,7 +442,7 @@ extension MiniAppView {
 }
 
 // MARK: - Get
-extension MiniAppView {
+extension MiniAppViewHandler {
     func getMiniAppView(
         appInfo: MiniAppInfo,
         queryParams: String? = nil,
@@ -570,7 +598,7 @@ extension MiniAppView {
 }
 
 // MARK: - RealMiniApp
-extension MiniAppView: MiniAppNavigationBarDelegate {
+extension MiniAppViewHandler: MiniAppNavigationBarDelegate {
     public func miniAppShouldClose() -> CloseAlertInfo? {
         return self.closeAlertInfo
     }
@@ -591,8 +619,8 @@ extension MiniAppView: MiniAppNavigationBarDelegate {
 }
 
 // MARK: WKNavigationDelegate
-extension MiniAppView: WKNavigationDelegate {
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+extension MiniAppViewHandler: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let requestUrl = navigationAction.request.url {
             MiniAppLogger.d("navigation type for \(navigationAction.request.url?.absoluteString ?? "---"): \(navigationAction.navigationType.rawValue)")
             validateScheme(requestURL: requestUrl, navigationAction: navigationAction, decisionHandler: decisionHandler)
@@ -601,17 +629,17 @@ extension MiniAppView: WKNavigationDelegate {
         }
     }
 
-    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         refreshNavBar()
     }
 
-    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         MiniAppLogger.e("Couldn't load Miniapp URL", error)
         initialLoadCallback?(false)
         initialLoadCallback = nil
     }
 
-    public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         initialLoadCallback?(true)
         initialLoadCallback = nil
     }
@@ -697,21 +725,14 @@ extension MiniAppView: WKNavigationDelegate {
 }
 
 // MARK: - MiniAppDisplayDelegate
-extension MiniAppView: MiniAppDisplayDelegate {
-    public func getMiniAppView() -> UIView {
-        self
-    }
-}
-
-// MARK: - MiniAppDisplayDelegate
-extension MiniAppView: MiniAppManageDelegate {
+extension MiniAppViewHandler: MiniAppManageDelegate {
     func setMiniAppCloseAlertInfo(alertInfo: CloseAlertInfo?) {
         self.closeAlertInfo = alertInfo
     }
 }
 
 // MARK: - MiniAppCallbackDelegate
-extension MiniAppView: MiniAppCallbackDelegate {
+extension MiniAppViewHandler: MiniAppCallbackDelegate {
     func didReceiveScriptMessageResponse(messageId: String, response: String) {
         let messageBody = Constants.JavaScript.successCallback + "('\(messageId)'," + "'\(response)')"
         messageBodies.append(messageBody)
@@ -751,7 +772,7 @@ extension MiniAppView: MiniAppCallbackDelegate {
 }
 
 // MARK: - MiniAppSecureStorageDelegate
-extension MiniAppView: MiniAppSecureStorageDelegate {
+extension MiniAppViewHandler: MiniAppSecureStorageDelegate {
     func get(key: String) throws -> String? {
         return try secureStorage.get(key: key)
     }
