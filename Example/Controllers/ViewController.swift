@@ -379,7 +379,7 @@ class NewMiniAppViewController: UIViewController {
         let config = MiniAppNewConfig(config: Config.current(), adsDisplayer: nil, messageInterface: self)
         let miniAppView = MiniAppView(config: config, type: .miniapp, appId: miniAppId)
         miniAppView.translatesAutoresizingMaskIntoConstraints = false
-        miniAppView.backgroundColor = UIColor.systemRed
+//        miniAppView.backgroundColor = UIColor.systemRed
         view.addSubview(miniAppView)
         NSLayoutConstraint.activate([
             miniAppView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -394,9 +394,9 @@ class NewMiniAppViewController: UIViewController {
         // always loads the sample app
         
         let config2 = MiniAppNewConfig(config: Config.current(), adsDisplayer: nil, messageInterface: delegator2)
-        let miniAppView2 = MiniAppView(config: config2, type: .miniapp, appId: "404e46b4-263d-4768-b2ec-8a423224bead")
+        let miniAppView2: MiniAppViewable = MiniAppView(config: config2, type: .widget, appId: "404e46b4-263d-4768-b2ec-8a423224bead")
         miniAppView2.translatesAutoresizingMaskIntoConstraints = false
-        miniAppView2.backgroundColor = .systemOrange
+//        miniAppView2.backgroundColor = .systemOrange
         view.addSubview(miniAppView2)
         NSLayoutConstraint.activate([
             miniAppView2.topAnchor.constraint(equalTo: miniAppView.bottomAnchor),

@@ -3,178 +3,6 @@ import WebKit
 
 // swiftlint:disable file_length
 
-// MARK: - Defintions
-enum MiniAppViewState {
-    case none
-    case loading
-    case active
-    case inactive
-    case error(Error)
-}
-
-public enum MiniAppType {
-    case miniapp
-    case widget
-}
-
-public struct MiniAppNewConfig {
-    let config: MiniAppSdkConfig?
-    let adsDisplayer: AdMobDisplayer?
-    let messageInterface: MiniAppMessageDelegate
-
-    public init(config: MiniAppSdkConfig?, adsDisplayer: AdMobDisplayer?, messageInterface: MiniAppMessageDelegate) {
-        self.config = config
-        self.adsDisplayer = adsDisplayer
-        self.messageInterface = messageInterface
-    }
-}
-
-protocol MiniAppViewable {
-    var appId: String {get set}
-}
-
-// MARK: - MiniAppView
-public class MiniAppView: UIView {
-
-    internal var miniAppHandler: MiniAppViewHandler
-
-    internal var webView: MiniAppWebView?
-
-    internal var state: MiniAppViewState = .none {
-        didSet {
-            DispatchQueue.main.async {
-                switch self.state {
-                case .none:
-                    self.activityLabel.text = ""
-                case .loading:
-                    self.activityLabel.text = "Loading..."
-                case .active:
-                    self.activityLabel.text = "Active"
-                case .inactive:
-                    self.activityLabel.text = "Inactive"
-                case .error(let error):
-                    self.activityLabel.text = error.localizedDescription
-                }
-            }
-        }
-    }
-
-    internal var activityIndicatorView: UIActivityIndicatorView = {
-        let view = UIActivityIndicatorView(style: .medium)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    internal var activityLabel: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "-"
-        view.textAlignment = .center
-        view.font = UIFont.systemFont(ofSize: 12, weight: .bold)
-        view.numberOfLines = 5
-        return view
-    }()
-
-    public init(
-        config: MiniAppNewConfig,
-        type: MiniAppType,
-        appId: String,
-        version: String? = nil,
-        queryParams: String? = nil
-    ) {
-        self.miniAppHandler = MiniAppViewHandler(
-            config: config,
-            appId: appId,
-            version: version,
-            queryParams: queryParams
-        )
-        super.init(frame: .zero)
-        setupInterface()
-    }
-
-    deinit {
-        MiniAppLogger.d("deallocated MiniAppView")
-    }
-
-    required init?(coder: NSCoder) { return nil }
-
-    internal func setupInterface() {
-        backgroundColor = .white
-
-        self.addSubview(activityIndicatorView)
-        NSLayoutConstraint.activate([
-            activityIndicatorView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-        ])
-        activityIndicatorView.startAnimating()
-
-        self.addSubview(activityLabel)
-        NSLayoutConstraint.activate([
-            activityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
-            activityLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
-            activityLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 30)
-        ])
-    }
-
-    internal func setupWebView(webView: MiniAppWebView) {
-        self.webView = webView
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(webView)
-        NSLayoutConstraint.activate([
-            webView.topAnchor.constraint(equalTo: self.topAnchor),
-            webView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            webView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
-    }
-
-    // MARK: - Public
-
-    /// Loads the MiniApp (getInfo, download etc) and initialized the webview.
-    /// After load is complete it will display the loaded MiniApp or an error.
-    ///
-    /// - Parameters:
-    ///     -   completion: Completes with an optional MiniAppWebView that will be added onto the View or throws an MASDKError
-    public func load(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
-        guard webView == nil else {
-            completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp already loaded")))
-            return
-        }
-        state = .loading
-        miniAppHandler.load { [weak self] result in
-            switch result {
-            case let .success(webView):
-                self?.setupWebView(webView: webView)
-                completion(.success(true))
-            case let .failure(error):
-                self?.state = .error(error)
-                completion(.failure(error))
-            }
-        }
-    }
-
-    /// Loads the MiniApp async (getInfo, download etc) and initialized the webview
-    /// After load is complete it will display the loaded MiniApp or an error.
-    ///
-    public func load() async throws -> AsyncThrowingStream<Void, Error> {
-        guard webView == nil else {
-            throw MASDKError.unknownError(domain: "", code: 0, description: "miniapp already loaded")
-        }
-        AsyncThrowingStream { continuation in
-            self.miniAppHandler.load { [weak self] result in
-                switch result {
-                case let .success(webView):
-                    self?.setupWebView(webView: webView)
-                    continuation.yield(())
-                case let .failure(error):
-                    self?.state = .error(error)
-                    continuation.yield(with: .failure(error))
-                }
-            }
-        }
-    }
-}
-
 // MARK: - MiniAppViewHandler
 class MiniAppViewHandler: NSObject {
 
@@ -278,9 +106,9 @@ class MiniAppViewHandler: NSObject {
 
     required init?(coder: NSCoder) { return nil }
 
-    func load() async throws {
+    func load() async throws -> MiniAppWebView? {
         // download
-        _ = try await download()
+        return nil
     }
 
     func load(completion: @escaping ((Result<MiniAppWebView, MASDKError>) -> Void)) {
@@ -319,22 +147,6 @@ class MiniAppViewHandler: NSObject {
                 completion(.failure(error))
             }
         }
-    }
-
-    func loadSuccess() {
-        //
-    }
-
-    func loadFailure() {
-        //
-    }
-
-    func reload() {
-        //
-    }
-
-    private func download() async throws {
-        //
     }
 
     func loadWebView(
