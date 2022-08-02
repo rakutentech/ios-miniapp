@@ -38,6 +38,8 @@ public class MiniAppView: UIView {
 
     internal var miniAppHandler: MiniAppViewHandler
 
+    internal var webView: MiniAppWebView?
+
     internal var state: MiniAppViewState = .none {
         didSet {
             DispatchQueue.main.async {
@@ -115,6 +117,7 @@ public class MiniAppView: UIView {
     }
 
     internal func setupWebView(webView: MiniAppWebView) {
+        self.webView = webView
         webView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(webView)
         NSLayoutConstraint.activate([
@@ -127,25 +130,36 @@ public class MiniAppView: UIView {
 
     // MARK: - Public
 
-    /// Loads the MiniApp (getInfo, download etc) and initialized the webview
+    /// Loads the MiniApp (getInfo, download etc) and initialized the webview.
+    /// After load is complete it will display the loaded MiniApp or an error.
     ///
     /// - Parameters:
     ///     -   completion: Completes with an optional MiniAppWebView that will be added onto the View or throws an MASDKError
     public func load(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
+        guard webView == nil else {
+            completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp already loaded")))
+            return
+        }
         state = .loading
         miniAppHandler.load { [weak self] result in
             switch result {
             case let .success(webView):
                 self?.setupWebView(webView: webView)
+                completion(.success(true))
             case let .failure(error):
                 self?.state = .error(error)
+                completion(.failure(error))
             }
         }
     }
 
     /// Loads the MiniApp async (getInfo, download etc) and initialized the webview
+    /// After load is complete it will display the loaded MiniApp or an error.
     ///
     public func load() async throws -> AsyncThrowingStream<Void, Error> {
+        guard webView == nil else {
+            throw MASDKError.unknownError(domain: "", code: 0, description: "miniapp already loaded")
+        }
         AsyncThrowingStream { continuation in
             self.miniAppHandler.load { [weak self] result in
                 switch result {
