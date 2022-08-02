@@ -328,10 +328,11 @@ extension ViewController: UISearchBarDelegate {
         defer {
             tableView.reloadData()
             searchBar.reloadInputViews()
-            if tableView.numberOfSections > 0
+            if tableView.numberOfSections > 0 {
                 tableView.restore()
-            else
+            } else {
                 tableView.setEmptyMessage("No MiniApps found!")
+            }
         }
         searchBar.returnKeyType = .done
 
