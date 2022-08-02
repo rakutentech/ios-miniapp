@@ -405,8 +405,8 @@ class NewMiniAppViewController: UIViewController {
             miniAppView2.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             miniAppView2.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        miniAppView2.load { result in
-            print(result)
+        Task.init {
+            try await miniAppView2.load()
         }
     }
 }

@@ -96,7 +96,7 @@ public class MiniAppView: UIView {
 
     required init?(coder: NSCoder) { return nil }
 
-    func setupInterface() {
+    internal func setupInterface() {
         backgroundColor = .white
 
         self.addSubview(activityIndicatorView)
@@ -114,7 +114,7 @@ public class MiniAppView: UIView {
         ])
     }
 
-    func setupWebView(webView: MiniAppWebView) {
+    internal func setupWebView(webView: MiniAppWebView) {
         webView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(webView)
         NSLayoutConstraint.activate([
@@ -125,6 +125,12 @@ public class MiniAppView: UIView {
         ])
     }
 
+    // MARK: - Public
+
+    /// Loads the MiniApp (getInfo, download etc) and initialized the webview
+    ///
+    /// - Parameters:
+    ///     -   completion: Completes with an optional MiniAppWebView that will be added onto the View or throws an MASDKError
     public func load(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
         state = .loading
         miniAppHandler.load { [weak self] result in
@@ -137,8 +143,21 @@ public class MiniAppView: UIView {
         }
     }
 
-    public func load() async throws {
-        //
+    /// Loads the MiniApp async (getInfo, download etc) and initialized the webview
+    ///
+    public func load() async throws -> AsyncThrowingStream<Void, Error> {
+        AsyncThrowingStream { continuation in
+            self.miniAppHandler.load { [weak self] result in
+                switch result {
+                case let .success(webView):
+                    self?.setupWebView(webView: webView)
+                    continuation.yield(())
+                case let .failure(error):
+                    self?.state = .error(error)
+                    continuation.yield(with: .failure(error))
+                }
+            }
+        }
     }
 }
 
