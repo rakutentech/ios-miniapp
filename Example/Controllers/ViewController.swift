@@ -1,6 +1,7 @@
 import UIKit
 import MiniApp
 import CoreLocation
+import SwiftUI
 
 class ViewController: RATViewControllerWithTableView {
 
@@ -46,6 +47,13 @@ class ViewController: RATViewControllerWithTableView {
         self.tableView.refreshControl = refreshControl
         locationManager.delegate = self
         self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
+        let widgetListBarButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "circle.hexagongrid"), primaryAction: UIAction(handler: { _ in
+            let miniAppList = (self.miniApps?.compactMap({ $0.value.first?.id }) ?? [])
+            let widgetListVc = UIHostingController(rootView: WidgetListView(miniAppIds: miniAppList ))
+            let nvc = UINavigationController(rootViewController: widgetListVc)
+            self.present(nvc, animated: true)
+        }), menu: nil)
+        self.navigationItem.setLeftBarButton(widgetListBarButton, animated: true)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -374,7 +382,6 @@ class NewMiniAppViewController: UIViewController {
             self?.dismiss(animated: true)
         }), menu: nil)
         navigationItem.setLeftBarButton(closeBarButton, animated: true)
-
         
         let config = MiniAppNewConfig(config: Config.current(), adsDisplayer: nil, messageInterface: self)
         let miniAppView = MiniAppView(config: config, type: .miniapp, appId: miniAppId)
@@ -392,7 +399,7 @@ class NewMiniAppViewController: UIViewController {
         }
 
         // always loads the sample app
-        
+
         let config2 = MiniAppNewConfig(config: Config.current(), adsDisplayer: nil, messageInterface: delegator2)
         let miniAppView2: MiniAppViewable = MiniAppView(config: config2, type: .widget, appId: "404e46b4-263d-4768-b2ec-8a423224bead")
         miniAppView2.translatesAutoresizingMaskIntoConstraints = false
@@ -433,37 +440,31 @@ extension NewMiniAppViewController: MiniAppMessageDelegate {
     }
 }
 
-extension NewMiniAppViewController {
-    class MiniAppMessageDelegator: MiniAppMessageDelegate {
-        
-        var miniAppId: String
-        
-        init(miniAppId: String) {
-            self.miniAppId = miniAppId
-        }
-        
-        func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-            completionHandler(.success("TestNew"))
-        }
-
-        func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
-            //
-        }
-
-        func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-            //
-        }
-
-        func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-            //
-        }
-
-        func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
-            //
-        }
+class MiniAppMessageDelegator: MiniAppMessageDelegate {
+    
+    var miniAppId: String
+    
+    init(miniAppId: String) {
+        self.miniAppId = miniAppId
+    }
+    
+    func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success("TestNew"))
     }
 
-//    class MiniAppMessageDelegator2: MiniAppMessageDelegate {
-//
-//    }
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
+        //
+    }
+
+    func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        //
+    }
+
+    func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        //
+    }
+
+    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
+        //
+    }
 }
