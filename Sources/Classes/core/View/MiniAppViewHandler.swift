@@ -82,6 +82,7 @@ class MiniAppViewHandler: NSObject {
         self.version = version
         self.queryParams = queryParams
         self.messageInterface = config.messageInterface
+        self.navigationDelegate = config.navigationDelegate
 
         super.init()
     }
@@ -149,6 +150,55 @@ class MiniAppViewHandler: NSObject {
         }
     }
 
+    func loadFromCache(completion: @escaping ((Result<MiniAppWebView, MASDKError>) -> Void)) {
+        if appId.isEmpty {
+            return completion(.failure(.invalidAppId))
+        }
+        guard
+            !miniAppClient.environment.isPreviewMode
+        else {
+            return completion(.failure(.unknownError(domain: "", code: 0, description: "MiniApp is not in preview mode")))
+        }
+        guard
+            let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: appId, versionId: version ?? "")
+        else {
+            return completion(.failure(.miniAppNotFound))
+        }
+        if miniAppDownloader.isCacheSecure(appId: appId, versionId: cachedVersion) {
+            /// Retrieving Cached Manifest Data to get the display name
+            //let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId)
+            let cachedMetaData = miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
+            verifyRequiredPermissions(
+                appId: appId,
+                miniAppManifest: cachedMetaData,
+                completionHandler: { (result) in
+                switch result {
+                case .success(let permissionsAgreed):
+                    if permissionsAgreed {
+                        DispatchQueue.main.async {
+                            guard let webView = self.loadWebView(
+                                    miniAppId: self.appId,
+                                    versionId: cachedVersion,
+                                    queryParams: self.queryParams
+                                )
+                            else {
+                                completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
+                                return
+                            }
+                            completion(.success(webView))
+                        }
+                    } else {
+                        completion(.failure(.metaDataFailure))
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+        } else {
+            completion(.failure(.miniAppCorrupted))
+        }
+    }
+
     func loadWebView(
         miniAppId: String,
         versionId: String,
@@ -166,7 +216,7 @@ class MiniAppViewHandler: NSObject {
         )
         self.webView = webView
 
-//        webView.navigationDelegate = self
+        webView.navigationDelegate = self
 
         if navBarVisibility != .never {
             if let nav = navigationView {
@@ -187,21 +237,20 @@ class MiniAppViewHandler: NSObject {
             miniAppManageDelegate: self
         )
         webView.configuration.userContentController.addBridgingJavaScript()
-//        webView.uiDelegate = self
-//        self.navigationDelegate = navigationDelegate
+
 //        if !isNavBarCustom {
 //            webViewBottomConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
 //            webViewBottomConstraintStandalone?.isActive = false
 //        }
-//        MiniAppAnalytics.sendAnalytics(
-//            event: .open,
-//            miniAppId: miniAppId,
-//            miniAppVersion: miniAppVersion,
-//            projectId: projectId,
-//            analyticsConfig: analyticsConfig
-//        )
-//        initExternalWebViewClosures()
-//        observeWebView()
+        MiniAppAnalytics.sendAnalytics(
+            event: .open,
+            miniAppId: miniAppId,
+            miniAppVersion: version,
+            projectId: projectId,
+            analyticsConfig: analyticsConfig
+        )
+        initExternalWebViewClosures()
+        observeWebView()
 
         if shouldAutoLoadSecureStorage {
             secureStorage.loadStorage { success in
@@ -213,30 +262,6 @@ class MiniAppViewHandler: NSObject {
             }
         }
         return webView
-    }
-
-    static func preload(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
-//        getMiniAppInfo(miniAppId: appId) { result in
-//            switch result {
-//            case .success(let info):
-//                self.downloadMiniApp(
-//                    appInfo: info,
-//                    queryParams: self.queryParams
-//                ) { result in
-//                        switch result {
-//                        case let .success(state):
-//                            self.state = .none
-//                            completion(.success(state))
-//                        case let .failure(error):
-//                            self.state = .none
-//                            completion(.failure(error))
-//                        }
-//                    }
-//            case .failure(let error):
-//                self.state = .none
-//                completion(.failure(error))
-//            }
-//        }
     }
 }
 
@@ -566,6 +591,71 @@ extension MiniAppViewHandler: WKNavigationDelegate {
 //                webViewBottomConstraintStandalone?.isActive = true
 //            }
 //        }
+    }
+}
+
+extension MiniAppViewHandler {
+    fileprivate func initExternalWebViewClosures() {
+        onExternalWebviewResponse = { [weak self] (url) in
+            self?.webView?.load(URLRequest(url: url))
+        }
+        onExternalWebviewClose = { [weak self] (url) in
+            self?.didReceiveEvent(.externalWebViewClosed, message: url.absoluteString)
+            NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp close external webview"))
+        }
+    }
+
+    func observeWebView() {
+        canGoBackObservation = webView?.observe(\.canGoBack, options: .initial) { [weak self] (webView, _) in
+            self?.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
+        }
+        canGoForwardObservation = webView?.observe(\.canGoForward) { [weak self] (webView, _) in
+            self?.navigationDelegate?.miniAppNavigationCanGo(back: webView.canGoBack, forward: webView.canGoForward)
+        }
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendCustomEvent(notification:)),
+                                               name: MiniAppEvent.notificationName,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendCustomEvent(notification:)),
+                                               name: UIApplication.willResignActiveNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendCustomEvent(notification:)),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+        // keyboard events
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendKeyboardEvent(notification:)),
+                                               name: MiniAppKeyboardEvent.notificationName,
+                                               object: nil)
+    }
+
+    @objc
+    func sendCustomEvent(notification: NSNotification) {
+        switch notification.name {
+        case UIApplication.willResignActiveNotification:
+            didReceiveEvent(.pause, message: "Host app will resign active")
+        case UIApplication.didBecomeActiveNotification:
+            didReceiveEvent(.resume, message: "Host app did become active")
+        default:
+            if let event = notification.object as? MiniAppEvent.Event {
+                didReceiveEvent(event.type, message: event.comment)
+            } else {
+                MiniAppLogger.w("MiniAppEvent not present in notification")
+            }
+        }
+    }
+
+    @objc
+    func sendKeyboardEvent(notification: NSNotification) {
+        if notification.name == MiniAppKeyboardEvent.notificationName {
+            if let event = notification.object as? MiniAppKeyboardEvent.Event {
+                didReceiveKeyboardEvent(event.type, message: event.comment, navigationBarHeight: event.navigationBarHeight, screenHeight: event.screenHeight, keyboardHeight: event.keyboardHeight)
+            } else {
+                MiniAppLogger.w("MiniAppEvent not present in notification")
+            }
+        }
     }
 }
 

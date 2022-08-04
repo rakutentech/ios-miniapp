@@ -75,6 +75,7 @@ public class MiniApp: NSObject {
     ///         -   MASDKError: MASDKError details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
+    @available(*, deprecated, message: "Use `MiniAppView` instead")
     public func create(appId: String,
                        version: String? = nil,
                        queryParams: String? = nil,
@@ -220,6 +221,7 @@ public extension MiniApp {
     //    - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
     /// - Returns: MiniAppDisplayProtocol: Protocol that helps the hosting application to communicate with the displayer module of the mini app. More like an interface for host app
     ///                         to interact with View component of mini app.
+    @available(*, deprecated, message: "Use `MiniAppView` instead")
     func create(url: URL, queryParams: String? = nil,
                 errorHandler: @escaping (MASDKError) -> Void,
                 messageInterface: MiniAppMessageDelegate,

@@ -120,6 +120,7 @@
 		F74AA10D283C651400087718 /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */; };
 		F74AA112283C65AB00087718 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA111283C65AB00087718 /* Nimble */; };
 		F74AA115283C65E300087718 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA114283C65E300087718 /* Quick */; };
+		F74EDE102898F06200D53BA8 /* WidgetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74EDE0F2898F06200D53BA8 /* WidgetListView.swift */; };
 		F796AC8C2860204900A75DA8 /* RAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F796AC8B2860204900A75DA8 /* RAnalytics */; };
 		F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */; };
 /* End PBXBuildFile section */
@@ -249,6 +250,7 @@
 		F74AA0D9283C651300087718 /* MiniAppSdkConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSdkConfigTests.swift; sourceTree = "<group>"; };
 		F74AA0DA283C651300087718 /* MiniAppKeyChainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppKeyChainTests.swift; sourceTree = "<group>"; };
 		F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
+		F74EDE0F2898F06200D53BA8 /* WidgetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetListView.swift; sourceTree = "<group>"; };
 		F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -361,6 +363,7 @@
 				3105759D27EE213400D93B06 /* Extensions */,
 				310575A227EE213400D93B06 /* DisplayNavigationController.swift */,
 				310575A327EE213400D93B06 /* Deeplink */,
+				F74EDE0F2898F06200D53BA8 /* WidgetListView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -777,6 +780,7 @@
 				310575D427EE213400D93B06 /* ContactsListSettingsTableViewController.swift in Sources */,
 				310575EE27EE213400D93B06 /* DemoAppAnalytics.swift in Sources */,
 				310575EC27EE213400D93B06 /* Swizzling.swift in Sources */,
+				F74EDE102898F06200D53BA8 /* WidgetListView.swift in Sources */,
 				310575EF27EE213400D93B06 /* RATController.swift in Sources */,
 				310575BD27EE213400D93B06 /* Number+MiniApp.swift in Sources */,
 				310575B927EE213400D93B06 /* UIImageView+Extensions.swift in Sources */,

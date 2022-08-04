@@ -17,10 +17,17 @@ public struct MiniAppNewConfig {
     let config: MiniAppSdkConfig?
     let adsDisplayer: AdMobDisplayer?
     let messageInterface: MiniAppMessageDelegate
+    let navigationDelegate: MiniAppNavigationDelegate?
 
-    public init(config: MiniAppSdkConfig?, adsDisplayer: AdMobDisplayer?, messageInterface: MiniAppMessageDelegate) {
+    public init(
+        config: MiniAppSdkConfig?,
+        adsDisplayer: AdMobDisplayer?,
+        messageInterface: MiniAppMessageDelegate,
+        navigationDelegate: MiniAppNavigationDelegate? = nil
+    ) {
         self.config = config
         self.adsDisplayer = adsDisplayer
         self.messageInterface = messageInterface
+        self.navigationDelegate = navigationDelegate
     }
 }

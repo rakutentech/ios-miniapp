@@ -90,7 +90,8 @@ public class MiniAppView: UIView, MiniAppViewable {
 
         // just for testing purpose
         switch type {
-        case .miniapp: self.layer.borderWidth = 0
+        case .miniapp:
+            self.layer.borderWidth = 0
         case .widget:
             self.layer.cornerRadius = 10
             self.clipsToBounds = true
@@ -141,46 +142,123 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     // MARK: - Public
 
-    public func load(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
+    public func load(fromCache: Bool = false, completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
         guard webView == nil else {
             completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp already loaded")))
             return
         }
         state = .loading
-        miniAppHandler.load { [weak self] result in
-            switch result {
-            case let .success(webView):
-                self?.state = .active
-                self?.setupWebView(webView: webView)
-                completion(.success(true))
-            case let .failure(error):
-                self?.state = .error(error)
-                completion(.failure(error))
-            }
-        }
-    }
-
-    public func load() async throws -> AsyncThrowingStream<Void, Error> {
-        guard webView == nil else {
-            throw MASDKError.unknownError(domain: "", code: 0, description: "miniapp already loaded")
-        }
-        state = .loading
-        return AsyncThrowingStream { continuation in
-            self.miniAppHandler.load { [weak self] result in
+        if fromCache {
+            miniAppHandler.loadFromCache { [weak self] result in
                 switch result {
                 case let .success(webView):
                     self?.state = .active
                     self?.setupWebView(webView: webView)
-                    continuation.yield(())
+                    completion(.success(true))
                 case let .failure(error):
                     self?.state = .error(error)
-                    continuation.yield(with: .failure(error))
+                    completion(.failure(error))
+                }
+            }
+        } else {
+            miniAppHandler.load { [weak self] result in
+                switch result {
+                case let .success(webView):
+                    self?.state = .active
+                    self?.setupWebView(webView: webView)
+                    completion(.success(true))
+                case let .failure(error):
+                    self?.state = .error(error)
+                    completion(.failure(error))
                 }
             }
         }
     }
+
+    public func load(fromCache: Bool = false) async throws -> AsyncThrowingStream<Void, Error> {
+        guard webView == nil else {
+            throw MASDKError.unknownError(domain: "", code: 0, description: "miniapp already loaded")
+        }
+        state = .loading
+        if fromCache {
+            return AsyncThrowingStream { continuation in
+                self.miniAppHandler.load { [weak self] result in
+                    switch result {
+                    case let .success(webView):
+                        self?.state = .active
+                        self?.setupWebView(webView: webView)
+                        continuation.yield(())
+                    case let .failure(error):
+                        self?.state = .error(error)
+                        continuation.yield(with: .failure(error))
+                    }
+                }
+            }
+        } else {
+            return AsyncThrowingStream { continuation in
+                self.miniAppHandler.loadFromCache { [weak self] result in
+                    switch result {
+                    case let .success(webView):
+                        self?.state = .active
+                        self?.setupWebView(webView: webView)
+                        continuation.yield(())
+                    case let .failure(error):
+                        self?.state = .error(error)
+                        continuation.yield(with: .failure(error))
+                    }
+                }
+            }
+        }
+    }
+
+    public var alertInfo: CloseAlertInfo? {
+        return miniAppHandler.miniAppShouldClose()
+    }
 }
 
+// MARK: - MiniAppViewCollectionCell
+public class MiniAppViewCollectionCell: UICollectionViewCell {
+
+    var miniAppView: MiniAppView?
+
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.backgroundColor = .systemOrange
+    }
+
+    required init?(coder: NSCoder) {
+        return nil
+    }
+
+    func setup(config: MiniAppNewConfig, type: MiniAppType, appId: String) {
+        guard miniAppView != nil else { return }
+        let view = MiniAppView(config: config, type: type, appId: appId)
+        self.miniAppView = view
+        self.addSubview(view)
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: contentView.topAnchor),
+            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+        view.load { result in
+            switch result {
+            case .success(let succeeded):
+                print(succeeded)
+            case .failure(let error):
+                MiniAppLogger.e("error: ", error)
+            }
+        }
+    }
+
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        miniAppView?.constraints.forEach({ contentView.removeConstraint($0) })
+        miniAppView?.removeFromSuperview()
+    }
+}
+
+// MARK: - MiniAppSUView
 public struct MiniAppSUView: UIViewRepresentable {
 
     var config: MiniAppNewConfig

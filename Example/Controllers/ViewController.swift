@@ -2,6 +2,7 @@ import UIKit
 import MiniApp
 import CoreLocation
 import SwiftUI
+import Combine
 
 class ViewController: RATViewControllerWithTableView {
 
@@ -38,6 +39,7 @@ class ViewController: RATViewControllerWithTableView {
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
     var displayController: DisplayNavigationController?
+    var bag = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,11 +49,20 @@ class ViewController: RATViewControllerWithTableView {
         self.tableView.refreshControl = refreshControl
         locationManager.delegate = self
         self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
-        let widgetListBarButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "circle.hexagongrid"), primaryAction: UIAction(handler: { _ in
-            let miniAppList = (self.miniApps?.compactMap({ $0.value.first?.id }) ?? [])
-            let widgetListVc = UIHostingController(rootView: WidgetListView(miniAppIds: miniAppList ))
+        let widgetListBarButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "circle.hexagongrid"), primaryAction: UIAction(handler: { [weak self] _ in
+            guard let self = self else { return }
+            let miniAppList = (self.miniApps?.compactMap({ $0.value.first?.id }) ?? []).sorted(by: { $0 > $1 })
+            let widgetsListView = WidgetListView(miniAppIds: miniAppList )
+            let widgetListVc = UIHostingController(rootView: widgetsListView)
             let nvc = UINavigationController(rootViewController: widgetListVc)
             self.present(nvc, animated: true)
+            widgetsListView
+                .dismiss
+                .sink(receiveCompletion: { _ in
+                    //
+                }) { _ in
+                    nvc.dismiss(animated: true)
+                }.store(in: &self.bag)
         }), menu: nil)
         self.navigationItem.setLeftBarButton(widgetListBarButton, animated: true)
     }
@@ -353,118 +364,5 @@ extension ViewController: UISearchBarDelegate {
         if decodeResponse?.isEmpty == true && !searchText.isEmpty {
             searchBar.returnKeyType = .go // load by ID or URL
         }
-    }
-}
-
-class NewMiniAppViewController: UIViewController {
-    
-    let miniAppId: String
-    
-    let delegator2 = MiniAppMessageDelegator(miniAppId: "404e46b4-263d-4768-b2ec-8a423224bead")
-    
-    init(appId: String) {
-        self.miniAppId = appId
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) { return nil }
-
-    deinit {
-        print("NewMiniAppViewController deallocated")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "New MiniApp"
-        view.backgroundColor = .systemBackground
-
-        let closeBarButton = UIBarButtonItem(systemItem: .close, primaryAction: UIAction(handler: { [weak self] _ in
-            self?.dismiss(animated: true)
-        }), menu: nil)
-        navigationItem.setLeftBarButton(closeBarButton, animated: true)
-        
-        let config = MiniAppNewConfig(config: Config.current(), adsDisplayer: nil, messageInterface: self)
-        let miniAppView = MiniAppView(config: config, type: .miniapp, appId: miniAppId)
-        miniAppView.translatesAutoresizingMaskIntoConstraints = false
-//        miniAppView.backgroundColor = UIColor.systemRed
-        view.addSubview(miniAppView)
-        NSLayoutConstraint.activate([
-            miniAppView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            miniAppView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            miniAppView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            //miniAppView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        miniAppView.load { result in
-            print(result)
-        }
-
-        // always loads the sample app
-
-        let config2 = MiniAppNewConfig(config: Config.current(), adsDisplayer: nil, messageInterface: delegator2)
-        let miniAppView2: MiniAppViewable = MiniAppView(config: config2, type: .widget, appId: "404e46b4-263d-4768-b2ec-8a423224bead")
-        miniAppView2.translatesAutoresizingMaskIntoConstraints = false
-//        miniAppView2.backgroundColor = .systemOrange
-        view.addSubview(miniAppView2)
-        NSLayoutConstraint.activate([
-            miniAppView2.topAnchor.constraint(equalTo: miniAppView.bottomAnchor),
-            miniAppView2.heightAnchor.constraint(equalTo: miniAppView.heightAnchor),
-            miniAppView2.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            miniAppView2.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            miniAppView2.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        Task.init {
-            try await miniAppView2.load()
-        }
-    }
-}
-
-extension NewMiniAppViewController: MiniAppMessageDelegate {
-    func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.success("TestNew2"))
-    }
-
-    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
-        //
-    }
-
-    func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        //
-    }
-
-    func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        //
-    }
-
-    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
-        //
-    }
-}
-
-class MiniAppMessageDelegator: MiniAppMessageDelegate {
-    
-    var miniAppId: String
-    
-    init(miniAppId: String) {
-        self.miniAppId = miniAppId
-    }
-    
-    func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.success("TestNew"))
-    }
-
-    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
-        //
-    }
-
-    func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        //
-    }
-
-    func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        //
-    }
-
-    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
-        //
     }
 }
