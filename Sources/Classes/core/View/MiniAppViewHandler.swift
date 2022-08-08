@@ -52,7 +52,10 @@ class MiniAppViewHandler: NSObject {
         config: MiniAppNewConfig,
         appId: String,
         version: String? = nil,
-        queryParams: String? = nil
+        queryParams: String? = nil,
+        analyticsConfig: [MAAnalyticsConfig]? = [],
+        storageMaxSizeInBytes: UInt64? = nil,
+        shouldAutoLoadSecureStorage: Bool = true
     ) {
         manifestDownloader = ManifestDownloader()
         miniAppStatus = MiniAppStatus()
@@ -87,6 +90,56 @@ class MiniAppViewHandler: NSObject {
         super.init()
     }
 
+    init(
+        config: MiniAppNewConfig,
+        url: URL,
+        queryParams: String? = nil,
+        initialLoadCallback: ((Bool) -> Void)? = nil,
+        analyticsConfig: [MAAnalyticsConfig]? = [],
+        storageMaxSizeInBytes: UInt64? = nil,
+        shouldAutoLoadSecureStorage: Bool = true
+    ) {
+        manifestDownloader = ManifestDownloader()
+        miniAppStatus = MiniAppStatus()
+        miniAppInfoFetcher = MiniAppInfoFetcher()
+        miniAppManifestStorage = MAManifestStorage()
+        metaDataDownloader = MetaDataDownloader()
+        miniAppPermissionStorage = MiniAppPermissionsStorage()
+
+        miniAppClient = MiniAppClient(
+            baseUrl: config.config?.baseUrl,
+            rasProjectId: config.config?.rasProjectId,
+            subscriptionKey: config.config?.subscriptionKey,
+            hostAppVersion: config.config?.hostAppVersion,
+            isPreviewMode: config.config?.isPreviewMode
+        )
+
+        adsDisplayer = config.adsDisplayer
+
+        miniAppDownloader = MiniAppDownloader(
+            apiClient: miniAppClient,
+            manifestDownloader: manifestDownloader,
+            status: miniAppStatus
+        )
+
+        self.queryParams = queryParams
+        self.messageInterface = config.messageInterface
+        self.navigationDelegate = config.navigationDelegate
+
+        let randomMiniAppId = "custom\(Int32.random(in: 0...Int32.max))" // some id is needed to handle permissions
+        self.appId = randomMiniAppId
+        // self.miniAppTitle = miniAppTitle
+        self.miniAppURL = url
+        self.initialLoadCallback = initialLoadCallback
+        webView = MiniAppWebView(miniAppURL: url)
+
+        // navBarVisibility = displayNavBar
+        supportedMiniAppOrientation = []
+        self.analyticsConfig = analyticsConfig
+        self.secureStorage = MiniAppSecureStorage(appId: randomMiniAppId, storageMaxSizeInBytes: storageMaxSizeInBytes)
+        self.shouldAutoLoadSecureStorage = shouldAutoLoadSecureStorage
+    }
+
     deinit {
         MiniAppLogger.d("deallocate MiniAppHandler")
         canGoBackObservation?.invalidate()
@@ -113,6 +166,25 @@ class MiniAppViewHandler: NSObject {
     }
 
     func load(completion: @escaping ((Result<MiniAppWebView, MASDKError>) -> Void)) {
+        if let miniAppUrl = miniAppURL {
+            DispatchQueue.main.async {
+                let webView = MiniAppWebView(miniAppURL: miniAppUrl)
+                self.webView = webView
+                do {
+                    try self.loadWebView(
+                        webView: webView,
+                        miniAppId: self.appId,
+                        versionId: "",
+                        queryParams: self.queryParams
+                    )
+                } catch {
+                    completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
+                }
+                completion(.success(webView))
+            }
+            return
+        }
+
         getMiniAppInfo(miniAppId: appId) { [weak self] result in
             guard let self = self else {
                 completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp download failed")))
@@ -129,14 +201,21 @@ class MiniAppViewHandler: NSObject {
                         }
                         MiniAppLogger.d("MiniApp loaded with state: \(state)")
                         DispatchQueue.main.async {
-                            guard let webView = self.loadWebView(
+                            let webView = MiniAppWebView(
+                                miniAppId: self.appId,
+                                versionId: info.version.versionId,
+                                queryParams: self.queryParams
+                            )
+                            self.webView = webView
+                            do {
+                                try self.loadWebView(
+                                    webView: webView,
                                     miniAppId: self.appId,
                                     versionId: info.version.versionId,
                                     queryParams: self.queryParams
                                 )
-                            else {
+                            } catch {
                                 completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
-                                return
                             }
                             completion(.success(webView))
                         }
@@ -166,7 +245,7 @@ class MiniAppViewHandler: NSObject {
         }
         if miniAppDownloader.isCacheSecure(appId: appId, versionId: cachedVersion) {
             /// Retrieving Cached Manifest Data to get the display name
-            //let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId)
+            // let miniAppInfo = self.miniAppStatus.getMiniAppInfo(appId: appId)
             let cachedMetaData = miniAppManifestStorage.getManifestInfo(forMiniApp: appId)
             verifyRequiredPermissions(
                 appId: appId,
@@ -176,14 +255,21 @@ class MiniAppViewHandler: NSObject {
                 case .success(let permissionsAgreed):
                     if permissionsAgreed {
                         DispatchQueue.main.async {
-                            guard let webView = self.loadWebView(
+                            let webView = MiniAppWebView(
+                                miniAppId: self.appId,
+                                versionId: cachedVersion,
+                                queryParams: self.queryParams
+                            )
+                            self.webView = webView
+                            do {
+                                try self.loadWebView(
+                                    webView: webView,
                                     miniAppId: self.appId,
                                     versionId: cachedVersion,
                                     queryParams: self.queryParams
                                 )
-                            else {
+                            } catch {
                                 completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
-                                return
                             }
                             completion(.success(webView))
                         }
@@ -200,21 +286,15 @@ class MiniAppViewHandler: NSObject {
     }
 
     func loadWebView(
+        webView: MiniAppWebView,
         miniAppId: String,
         versionId: String,
         queryParams: String? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil
-    ) -> MiniAppWebView? {
+    ) throws {
         guard let messageInterface = messageInterface else {
-            return nil
+            throw MASDKError.unknownError(domain: "", code: 0, description: "no message interface provided")
         }
-
-        let webView = MiniAppWebView(
-            miniAppId: miniAppId,
-            versionId: versionId,
-            queryParams: queryParams
-        )
-        self.webView = webView
 
         webView.navigationDelegate = self
 
@@ -261,7 +341,10 @@ class MiniAppViewHandler: NSObject {
                 }
             }
         }
-        return webView
+    }
+
+    func loadWebView(url: URL) {
+        
     }
 }
 

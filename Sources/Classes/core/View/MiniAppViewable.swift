@@ -20,7 +20,7 @@ public protocol MiniAppViewable: UIView {
     var alertInfo: CloseAlertInfo? { get }
 }
 
-extension MiniAppViewable {
+public extension MiniAppViewable {
     func load(fromCache: Bool = false, completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
         load(fromCache: fromCache, completion: completion)
     }

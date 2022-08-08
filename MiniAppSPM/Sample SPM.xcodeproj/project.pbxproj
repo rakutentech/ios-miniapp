@@ -71,6 +71,13 @@
 		3105761627EE387800D93B06 /* Config-test-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3105761127EE387800D93B06 /* Config-test-debug.xcconfig */; };
 		31A7169B27EF0800003770E9 /* MiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169A27EF0800003770E9 /* MiniApp */; };
 		31A7169D27EF0800003770E9 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169C27EF0800003770E9 /* AppCenterCrashes */; };
+		F733C85B289BA047008FBF9A /* MiniAppFeatureListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C85A289BA047008FBF9A /* MiniAppFeatureListView.swift */; };
+		F733C85D289BA843008FBF9A /* MiniAppSingleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C85C289BA843008FBF9A /* MiniAppSingleView.swift */; };
+		F733C85F289BA984008FBF9A /* MiniAppTrippleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C85E289BA984008FBF9A /* MiniAppTrippleView.swift */; };
+		F733C861289BABE5008FBF9A /* MiniAppUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C860289BABE5008FBF9A /* MiniAppUrlView.swift */; };
+		F733C863289BBF81008FBF9A /* MiniAppFeatureConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C862289BBF81008FBF9A /* MiniAppFeatureConfigView.swift */; };
+		F733C885289CD165008FBF9A /* MiniAppWidgetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C884289CD165008FBF9A /* MiniAppWidgetStore.swift */; };
+		F733C887289CDEB3008FBF9A /* MiniAppListPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C886289CDEB3008FBF9A /* MiniAppListPickerView.swift */; };
 		F7370A8A287BD21C00090032 /* MiniAppSecureStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */; };
 		F74AA0E0283C651300087718 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */; };
 		F74AA0E1283C651300087718 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */; };
@@ -122,6 +129,8 @@
 		F74AA115283C65E300087718 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA114283C65E300087718 /* Quick */; };
 		F74EDE102898F06200D53BA8 /* WidgetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74EDE0F2898F06200D53BA8 /* WidgetListView.swift */; };
 		F796AC8C2860204900A75DA8 /* RAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F796AC8B2860204900A75DA8 /* RAnalytics */; };
+		F7C7B004289D09EC003667AE /* MiniAppSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C7B003289D09EC003667AE /* MiniAppSegmentedView.swift */; };
+		F7C7B01428A0CD67003667AE /* MiniAppViewDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C7B01328A0CD67003667AE /* MiniAppViewDelegator.swift */; };
 		F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -202,6 +211,13 @@
 		3105761027EE387800D93B06 /* Config-common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
 		3105761127EE387800D93B06 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		31A7169827EF0428003770E9 /* MiniApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MiniApp; path = ..; sourceTree = "<group>"; };
+		F733C85A289BA047008FBF9A /* MiniAppFeatureListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureListView.swift; sourceTree = "<group>"; };
+		F733C85C289BA843008FBF9A /* MiniAppSingleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSingleView.swift; sourceTree = "<group>"; };
+		F733C85E289BA984008FBF9A /* MiniAppTrippleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppTrippleView.swift; sourceTree = "<group>"; };
+		F733C860289BABE5008FBF9A /* MiniAppUrlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppUrlView.swift; sourceTree = "<group>"; };
+		F733C862289BBF81008FBF9A /* MiniAppFeatureConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureConfigView.swift; sourceTree = "<group>"; };
+		F733C884289CD165008FBF9A /* MiniAppWidgetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppWidgetStore.swift; sourceTree = "<group>"; };
+		F733C886289CDEB3008FBF9A /* MiniAppListPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppListPickerView.swift; sourceTree = "<group>"; };
 		F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageTests.swift; sourceTree = "<group>"; };
 		F74AA09D283C64D600087718 /* MiniApp_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewTests.swift; sourceTree = "<group>"; };
@@ -251,6 +267,8 @@
 		F74AA0DA283C651300087718 /* MiniAppKeyChainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppKeyChainTests.swift; sourceTree = "<group>"; };
 		F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
 		F74EDE0F2898F06200D53BA8 /* WidgetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetListView.swift; sourceTree = "<group>"; };
+		F7C7B003289D09EC003667AE /* MiniAppSegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSegmentedView.swift; sourceTree = "<group>"; };
+		F7C7B01328A0CD67003667AE /* MiniAppViewDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewDelegator.swift; sourceTree = "<group>"; };
 		F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -353,6 +371,7 @@
 		3105758227EE213400D93B06 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F733C888289D093C008FBF9A /* SwiftUI */,
 				3105758327EE213400D93B06 /* Storyboards */,
 				3105758B27EE213400D93B06 /* Settings */,
 				3105759827EE213400D93B06 /* ViewController.swift */,
@@ -363,7 +382,6 @@
 				3105759D27EE213400D93B06 /* Extensions */,
 				310575A227EE213400D93B06 /* DisplayNavigationController.swift */,
 				310575A327EE213400D93B06 /* Deeplink */,
-				F74EDE0F2898F06200D53BA8 /* WidgetListView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -476,6 +494,31 @@
 			name = Packages;
 			sourceTree = "<group>";
 		};
+		F733C888289D093C008FBF9A /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				F7C7B01228A0CD52003667AE /* Helper */,
+				F733C889289D094F008FBF9A /* Store */,
+				F733C85A289BA047008FBF9A /* MiniAppFeatureListView.swift */,
+				F74EDE0F2898F06200D53BA8 /* WidgetListView.swift */,
+				F733C85C289BA843008FBF9A /* MiniAppSingleView.swift */,
+				F733C85E289BA984008FBF9A /* MiniAppTrippleView.swift */,
+				F733C860289BABE5008FBF9A /* MiniAppUrlView.swift */,
+				F733C862289BBF81008FBF9A /* MiniAppFeatureConfigView.swift */,
+				F733C886289CDEB3008FBF9A /* MiniAppListPickerView.swift */,
+				F7C7B003289D09EC003667AE /* MiniAppSegmentedView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		F733C889289D094F008FBF9A /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				F733C884289CD165008FBF9A /* MiniAppWidgetStore.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
 		F74AA0A6283C651300087718 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,6 +628,14 @@
 				F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */,
 			);
 			path = UIModule;
+			sourceTree = "<group>";
+		};
+		F7C7B01228A0CD52003667AE /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				F7C7B01328A0CD67003667AE /* MiniAppViewDelegator.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -756,6 +807,8 @@
 			files = (
 				310575DB27EE213400D93B06 /* GeneralTableViewController.swift in Sources */,
 				310575D227EE213400D93B06 /* UserSettingsTableViewController.swift in Sources */,
+				F7C7B004289D09EC003667AE /* MiniAppSegmentedView.swift in Sources */,
+				F733C887289CDEB3008FBF9A /* MiniAppListPickerView.swift in Sources */,
 				F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */,
 				310575E727EE213400D93B06 /* MiniAppCell.swift in Sources */,
 				310575C627EE213400D93B06 /* MiniApp+UIImage.swift in Sources */,
@@ -764,6 +817,7 @@
 				310575D527EE213400D93B06 /* DeeplinkListViewController.swift in Sources */,
 				310575DA27EE213400D93B06 /* ManageCustomPermissionsViewController.swift in Sources */,
 				310575E327EE213400D93B06 /* ViewController+MiniApp.swift in Sources */,
+				F733C85F289BA984008FBF9A /* MiniAppTrippleView.swift in Sources */,
 				310575BB27EE213400D93B06 /* UITableView+EmptyView.swift in Sources */,
 				310575C027EE213400D93B06 /* Config.swift in Sources */,
 				310575ED27EE213400D93B06 /* RATNotificationCenter.swift in Sources */,
@@ -771,6 +825,7 @@
 				310575C227EE213400D93B06 /* UITextField.swift in Sources */,
 				310575C427EE213400D93B06 /* Print+MiniApp.swift in Sources */,
 				310575CB27EE213400D93B06 /* AppDelegate.swift in Sources */,
+				F733C863289BBF81008FBF9A /* MiniAppFeatureConfigView.swift in Sources */,
 				310575E427EE213400D93B06 /* ViewController+ChatDelegate.swift in Sources */,
 				310575D927EE213400D93B06 /* SignatureSettingsTableViewController.swift in Sources */,
 				310575E527EE213400D93B06 /* DisplayNavigationController.swift in Sources */,
@@ -778,6 +833,7 @@
 				310575CA27EE213400D93B06 /* UserProfileModel.swift in Sources */,
 				310575DC27EE213400D93B06 /* ViewController.swift in Sources */,
 				310575D427EE213400D93B06 /* ContactsListSettingsTableViewController.swift in Sources */,
+				F733C85B289BA047008FBF9A /* MiniAppFeatureListView.swift in Sources */,
 				310575EE27EE213400D93B06 /* DemoAppAnalytics.swift in Sources */,
 				310575EC27EE213400D93B06 /* Swizzling.swift in Sources */,
 				F74EDE102898F06200D53BA8 /* WidgetListView.swift in Sources */,
@@ -785,10 +841,14 @@
 				310575BD27EE213400D93B06 /* Number+MiniApp.swift in Sources */,
 				310575B927EE213400D93B06 /* UIImageView+Extensions.swift in Sources */,
 				310575D127EE213400D93B06 /* QASettingsTableViewController.swift in Sources */,
+				F733C885289CD165008FBF9A /* MiniAppWidgetStore.swift in Sources */,
 				310575DE27EE213400D93B06 /* DisplayController.swift in Sources */,
+				F733C85D289BA843008FBF9A /* MiniAppSingleView.swift in Sources */,
 				310575D827EE213400D93B06 /* QueryParamViewController.swift in Sources */,
 				310575E127EE213400D93B06 /* ViewController+MiniAppMessageProtocol.swift in Sources */,
+				F733C861289BABE5008FBF9A /* MiniAppUrlView.swift in Sources */,
 				310575E227EE213400D93B06 /* ViewController+MiniAppUserInfoProtocol.swift in Sources */,
+				F7C7B01428A0CD67003667AE /* MiniAppViewDelegator.swift in Sources */,
 				310575E627EE213400D93B06 /* DeeplinkErrorViewController.swift in Sources */,
 				310575E027EE213400D93B06 /* FirstLaunchViewController.swift in Sources */,
 				310575B827EE213400D93B06 /* ImageCache.swift in Sources */,

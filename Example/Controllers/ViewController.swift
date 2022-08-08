@@ -52,11 +52,11 @@ class ViewController: RATViewControllerWithTableView {
         let widgetListBarButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "circle.hexagongrid"), primaryAction: UIAction(handler: { [weak self] _ in
             guard let self = self else { return }
             let miniAppList = (self.miniApps?.compactMap({ $0.value.first?.id }) ?? []).sorted(by: { $0 > $1 })
-            let widgetsListView = WidgetListView(miniAppIds: miniAppList )
-            let widgetListVc = UIHostingController(rootView: widgetsListView)
-            let nvc = UINavigationController(rootViewController: widgetListVc)
+            let featureListView = MiniAppFeatureListView(miniAppIds: miniAppList )
+            let featureListVc = UIHostingController(rootView: featureListView)
+            let nvc = UINavigationController(rootViewController: featureListVc)
             self.present(nvc, animated: true)
-            widgetsListView
+            featureListView
                 .dismiss
                 .sink(receiveCompletion: { _ in
                     //

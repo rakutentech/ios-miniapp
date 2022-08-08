@@ -1,10 +1,3 @@
-//
-//  WidgetListView.swift
-//  Sample SPM
-//
-//  Created by Timotheus Laubengaier on 2022/08/02.
-//
-
 import SwiftUI
 import MiniApp
 import Combine
@@ -14,35 +7,26 @@ struct WidgetListView: View {
     let delegator = MiniAppWidgetsDelegator()
     
     var miniAppIds: [String]
-    
-    let dismiss = PassthroughSubject<Void, Error>()
-    
+
     var body: some View {
         List {
             ForEach(miniAppIds, id: \.self) { id in
-                MiniAppSUView(
-                    config: MiniAppNewConfig(
-                        config: Config.current(),
-                        adsDisplayer: nil,
-                        messageInterface: delegator
-                    ),
-                    type: .widget,
-                    appId: id
+                MiniAppSUView(params:
+                    MiniAppViewDefaultParams(
+                        config: MiniAppNewConfig(
+                            config: Config.current(),
+                            adsDisplayer: nil,
+                            messageInterface: delegator
+                        ),
+                        type: .widget,
+                        appId: id
+                    )
                 )
                 .frame(height: 250)
             }
         }
         .listStyle(PlainListStyle())
         .navigationTitle("Widgets")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading, content: {
-                Button(action: {
-                    dismiss.send(())
-                }, label: {
-                    Image(systemName: "xmark")
-                })
-            })
-        }
     }
 }
 
