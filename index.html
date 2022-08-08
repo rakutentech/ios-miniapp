@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 4.1.0 Docs
+          MiniApp 4.3.0 Docs
         </a>
-         (77% documented)
+         (75% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -88,6 +88,9 @@
                 <a class="nav-group-task-link" href="Classes/MiniApp.html">MiniApp</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppActivityController.html">MiniAppActivityController</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a>
               </li>
               <li class="nav-group-task">
@@ -95,6 +98,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppAnalyticsLoader.html">MiniAppAnalyticsLoader</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppCustomNavigationController.html">MiniAppCustomNavigationController</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
@@ -162,13 +168,13 @@
                 <a class="nav-group-task-link" href="Enums/MiniAppEvent.html">MiniAppEvent</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/MiniAppEvent.html#/s:7MiniApp0aB5EventO0C0V">– Event</a>
+                <a class="nav-group-task-link" href="Enums/MiniAppEvent/Event.html">– Event</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppKeyboardEvent.html">MiniAppKeyboardEvent</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/MiniAppKeyboardEvent.html#/s:7MiniApp0aB13KeyboardEventO0D0V">– Event</a>
+                <a class="nav-group-task-link" href="Enums/MiniAppKeyboardEvent/Event.html">– Event</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
@@ -183,6 +189,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Extensions/Bundle.html">Bundle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/NotificationCenter.html">NotificationCenter</a>
               </li>
             </ul>
           </li>
@@ -224,6 +233,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/CloseAlertInfo.html">CloseAlertInfo</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/Host.html">Host</a>
               </li>
@@ -445,6 +457,7 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
 <li><a href="#send-message-to-contacts">Send message to contacts</a></li>
 <li><a href="#retrieve-points">Retrieve points</a></li>
 <li><a href="#file-download">File Download</a></li>
+<li><a href="#secure-storage">Secure Storage</a></li>
 </ul></li>
 <li><a href="#load-miniapp-list">Load the Mini App list</a></li>
 <li><a href="#get-mini-appinfo">Get a MiniAppInfo</a></li>
@@ -931,6 +944,27 @@ Three methods can be triggered by the Mini App, and here are the recommended beh
 
 <p>Support to download files of base64 urls.<br>
 It&rsquo;s necessary to allow the <code>File Download</code> custom permission to make file downloads available.</p>
+
+<p><a id="secure-storage"></a></p>
+<h6 id='secure-storage' class='heading'>Secure Storage</h6>
+
+<p>Allows MiniApps to store data safely in a key/value store.</p>
+
+<p>Secure Storage will be initalized when <code>MiniAppSecureStorage.set</code> is called the first time. After initialization the storage will be automatically lazy loaded when the MiniApp is opened.</p>
+
+<p>You can specify the max storage file size in <code><a href="Classes/MiniAppSdkConfig.html#/s:7MiniApp0aB9SdkConfigC21storageMaxSizeInBytess6UInt64VSgvp">MiniAppSdkConfig.storageMaxSizeInBytes</a></code> when creating a MiniApp.
+When no maximum storage size is set the default value will be 2_000_000 (2Mb). Exceeding the file size limit will
+throw an error <code>MiniAppSecureStorageError.storageFullError</code> when setting new values into the storage.</p>
+<pre class="highlight swift"><code><span class="kt">MiniAppSdkConfig</span><span class="p">(</span>
+    <span class="c1">//...</span>
+    <span class="c1">// set the max size to 5 Mb</span>
+    <span class="nv">storageMaxSizeInBytes</span><span class="p">:</span> <span class="mi">5_000_000</span>
+<span class="p">)</span>
+</code></pre>
+
+<p>Use <code>wipeSecureStorages</code> to delete all secure storages stored on the device.</p>
+<pre class="highlight swift"><code><span class="kt">MiniAppSecureStorage</span><span class="o">.</span><span class="nf">wipeSecureStorages</span><span class="p">()</span>
+</code></pre>
 
 <p><a id="load-miniapp-list"></a></p>
 <h3 id='load-the-code-miniapp-code-list' class='heading'>Load the <code><a href="Classes/MiniApp.html">MiniApp</a></code> list:</h3>
@@ -1587,7 +1621,7 @@ NOTE: Using the above approach will never retrieve/query latest version of the m
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-04-11)</p>
+      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-08-08)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>

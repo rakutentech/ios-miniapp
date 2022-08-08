@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 4.1.0 Docs
+          MiniApp 4.3.0 Docs
         </a>
-         (77% documented)
+         (75% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -88,6 +88,9 @@
                 <a class="nav-group-task-link" href="Classes/MiniApp.html">MiniApp</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppActivityController.html">MiniAppActivityController</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppAdDisplayer.html">MiniAppAdDisplayer</a>
               </li>
               <li class="nav-group-task">
@@ -95,6 +98,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppAnalyticsLoader.html">MiniAppAnalyticsLoader</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppCustomNavigationController.html">MiniAppCustomNavigationController</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppExternalUrlLoader.html">MiniAppExternalUrlLoader</a>
@@ -162,13 +168,13 @@
                 <a class="nav-group-task-link" href="Enums/MiniAppEvent.html">MiniAppEvent</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/MiniAppEvent.html#/s:7MiniApp0aB5EventO0C0V">– Event</a>
+                <a class="nav-group-task-link" href="Enums/MiniAppEvent/Event.html">– Event</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppKeyboardEvent.html">MiniAppKeyboardEvent</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/MiniAppKeyboardEvent.html#/s:7MiniApp0aB13KeyboardEventO0D0V">– Event</a>
+                <a class="nav-group-task-link" href="Enums/MiniAppKeyboardEvent/Event.html">– Event</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppNavigationAction.html">MiniAppNavigationAction</a>
@@ -183,6 +189,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Extensions/Bundle.html">Bundle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/NotificationCenter.html">NotificationCenter</a>
               </li>
             </ul>
           </li>
@@ -224,6 +233,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/CloseAlertInfo.html">CloseAlertInfo</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/Host.html">Host</a>
               </li>
@@ -290,6 +302,37 @@
           <div class="section-content top-matter">
             
             <h2 id='changelog' class='heading'>CHANGELOG</h2>
+<h3 id='4-3-0-2022-08-08' class='heading'>4.3.0 (2022-08-08)</h3>
+
+<p><strong>SDK</strong></p>
+
+<ul>
+<li><strong>Fix:</strong> Secure storage feature bug fixes</li>
+</ul>
+<h3 id='4-2-0-2022-06-24' class='heading'>4.2.0 (2022-06-24)</h3>
+
+<p><strong>SDK</strong></p>
+
+<ul>
+<li><strong>Feature:</strong> Added a new interface <code>getMessagingUnique</code> in <code><a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></code> for future support of MAUID v2 and another interface <code>getMauid</code> in <code><a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></code> for retrieving the MAUID</li>
+<li><strong>Feature:</strong> Added file download error type for HTTP errors: <code>MASDKDownloadFileError.downloadHttpError</code>.</li>
+<li><strong>Fix:</strong> Updated error type names for <code><a href="Enums/MASDKDownloadFileError.html">MASDKDownloadFileError</a></code> so that they are correctly parsed by JS SDK.</li>
+<li><strong>Feature:</strong> Added <code>MiniAppSecureStorage</code> for MiniApps to store data safely. <code><a href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a></code> was extended by <code>storageMaxSizeInBytes</code> to set the maximum available space in bytes for secure storage.</li>
+<li><strong>Feature:</strong> Added <code>miniAppShouldClose</code> interface in <code><a href="Protocols/MiniAppNavigationBarDelegate.html">MiniAppNavigationBarDelegate</a></code> which would help the host app to check if any alert need to displayed before closing the MiniApp</li>
+<li><strong>Enhancement:</strong> Replaced Secure Storage from a file storage solution to store data in a sqlite database</li>
+<li><strong>Feature:</strong> Added <code>miniAppTooManyRequestsError</code> error in MASDKError. This error will be thrown from SDK if any API from platform sends <code>429</code> status code. This could clear specific cached mini-app if <code>429</code> is received</li>
+</ul>
+
+<p><strong>Sample app</strong></p>
+
+<ul>
+<li><strong>Enhancement:</strong> Added <code>GET MESSAGING UNIQUE ID</code> and <code>GET MAUID</code> for retrieving the ID&rsquo;s. (Messaging Unique ID for now will return the same as Unique ID)</li>
+<li><strong>Enhancement:</strong> Added a <code>Wipe Secure Storages</code> button to Settings/QA to remove all secure storages</li>
+<li><strong>Enhancement:</strong> Added <code>GET MESSAGING UNIQUE ID</code> and <code>GET MAUID</code> for retrieving the ID&rsquo;s. (Messaging Unique ID for now will return the same as Unique ID)</li>
+<li><strong>Feature:</strong> Added support for Mini Apps to download Base64 <code>data:</code> URIs with the <code>MiniApp.downloadFile</code> feature.</li>
+<li><strong>Bugfix:</strong> Replaced UIActivityController with a custom one that overrides the <code>dimiss</code> function so only the activity will be closed.</li>
+<li><strong>Feature:</strong> Added support to display error <code>miniAppTooManyRequestsError</code> type.</li>
+</ul>
 <h3 id='4-1-0-2022-04-11' class='heading'>4.1.0 (2022-04-11)</h3>
 
 <p><strong>SDK</strong></p>
@@ -746,7 +789,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-04-11)</p>
+      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-08-08)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
