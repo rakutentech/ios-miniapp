@@ -29,18 +29,16 @@ struct MiniAppSegmentedView: View {
             TabView(selection: $segment) {
                 ForEach(MiniAppSegment.allCases, id: \.self) { segment in
                     let miniAppId = getMiniAppId(segment: segment)
-                    MiniAppSUView(params: MiniAppViewDefaultParams(
-                        config: MiniAppNewConfig(
-                            config: Config.current(),
-                            messageInterface: MiniAppViewDelegator(miniAppId: miniAppId)
-                        ),
-                        type: .miniapp,
-                        appId: miniAppId)
+                    let version = getMiniAppVersion(segment: segment)
+                    MiniAppWithTermsView(
+                        miniAppId: .constant(miniAppId),
+                        miniAppVersion: .constant(version),
+                        miniAppType: .miniapp
                     )
                     .tag(segment)
                 }
             }
-            .tabViewStyle(PageTabViewStyle())
+            .tabViewStyle(.page(indexDisplayMode: .never))
 
             Spacer()
                 .frame(height: 40)
@@ -60,6 +58,19 @@ struct MiniAppSegmentedView: View {
             miniAppId = store.miniAppIdentifierTrippleThird
         }
         return miniAppId
+    }
+
+    func getMiniAppVersion(segment: MiniAppSegment) -> String {
+        var version: String = ""
+        switch segment {
+        case .one:
+            version = store.miniAppVersionTrippleFirst
+        case .two:
+            version = store.miniAppVersionTrippleSecond
+        case .three:
+            version = store.miniAppVersionTrippleThird
+        }
+        return version
     }
 }
 

@@ -51,12 +51,11 @@ class ViewController: RATViewControllerWithTableView {
         self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
         let widgetListBarButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "circle.hexagongrid"), primaryAction: UIAction(handler: { [weak self] _ in
             guard let self = self else { return }
-            let miniAppList = (self.miniApps?.compactMap({ $0.value.first?.id }) ?? []).sorted(by: { $0 > $1 })
-            let featureListView = MiniAppFeatureListView(miniAppIds: miniAppList )
-            let featureListVc = UIHostingController(rootView: featureListView)
-            let nvc = UINavigationController(rootViewController: featureListVc)
+            let dashboardView = MiniAppDashboardView()
+            let dashboardVc = UIHostingController(rootView: dashboardView)
+            let nvc = UINavigationController(rootViewController: dashboardVc)
             self.present(nvc, animated: true)
-            featureListView
+            dashboardView
                 .dismiss
                 .sink(receiveCompletion: { _ in
                     //

@@ -48,4 +48,8 @@ class MiniAppViewDelegator: MiniAppMessageDelegate {
     func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
         completionHandler(.success(MAPoints(standard: 0, term: 0, cash: 0)))
     }
+
+    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], miniAppTitle: String, completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
+        completionHandler(.failure(.userDenied))
+    }
 }

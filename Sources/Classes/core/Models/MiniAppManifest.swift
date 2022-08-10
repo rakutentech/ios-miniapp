@@ -183,11 +183,13 @@ public struct MiniAppManifest: Codable, Equatable {
              versionId
     }
 
-    init(requiredPermissions: [MASDKCustomPermissionModel]?,
-         optionalPermissions: [MASDKCustomPermissionModel]?,
-         customMetaData: [String: String]?,
-         accessTokenPermissions: [MASDKAccessTokenScopes]?,
-         versionId: String?) {
+    public init(
+        requiredPermissions: [MASDKCustomPermissionModel]?,
+        optionalPermissions: [MASDKCustomPermissionModel]?,
+        customMetaData: [String: String]?,
+        accessTokenPermissions: [MASDKAccessTokenScopes]?,
+        versionId: String?
+    ) {
         self.requiredPermissions = requiredPermissions
         self.optionalPermissions = optionalPermissions
         self.customMetaData = customMetaData
