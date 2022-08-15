@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 4.3.0 (2022-08-08)
+**SDK**
+- **Fix:** Secure storage feature bug fixes
+
 ### 4.2.0 (2022-06-24)
 
 **SDK**
