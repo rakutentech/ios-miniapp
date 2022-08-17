@@ -71,7 +71,6 @@
 		3105761627EE387800D93B06 /* Config-test-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3105761127EE387800D93B06 /* Config-test-debug.xcconfig */; };
 		31A7169B27EF0800003770E9 /* MiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169A27EF0800003770E9 /* MiniApp */; };
 		31A7169D27EF0800003770E9 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169C27EF0800003770E9 /* AppCenterCrashes */; };
-		F71FAD9F28A21E3900B58AF1 /* MiniAppPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71FAD9E28A21E3900B58AF1 /* MiniAppPermissionView.swift */; };
 		F71FADA128A2415600B58AF1 /* MiniAppPermissionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71FADA028A2415600B58AF1 /* MiniAppPermissionStore.swift */; };
 		F71FADD728A3643200B58AF1 /* MiniAppDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71FADD628A3643200B58AF1 /* MiniAppDashboardView.swift */; };
 		F71FADD928A366D600B58AF1 /* MiniAppListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71FADD828A366D600B58AF1 /* MiniAppListView.swift */; };
@@ -219,7 +218,6 @@
 		3105761027EE387800D93B06 /* Config-common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
 		3105761127EE387800D93B06 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		31A7169827EF0428003770E9 /* MiniApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MiniApp; path = ..; sourceTree = "<group>"; };
-		F71FAD9E28A21E3900B58AF1 /* MiniAppPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppPermissionView.swift; sourceTree = "<group>"; };
 		F71FADA028A2415600B58AF1 /* MiniAppPermissionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppPermissionStore.swift; sourceTree = "<group>"; };
 		F71FADD628A3643200B58AF1 /* MiniAppDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppDashboardView.swift; sourceTree = "<group>"; };
 		F71FADD828A366D600B58AF1 /* MiniAppListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppListView.swift; sourceTree = "<group>"; };
@@ -517,7 +515,6 @@
 				F7C7B01228A0CD52003667AE /* Helper */,
 				F733C889289D094F008FBF9A /* Store */,
 				F7455CBB28A3997E001354D0 /* Features */,
-				F71FAD9E28A21E3900B58AF1 /* MiniAppPermissionView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -952,7 +949,6 @@
 				310575C827EE213400D93B06 /* UITextView+MiniApp.swift in Sources */,
 				310575D627EE213400D93B06 /* AccessTokenViewController.swift in Sources */,
 				310575C527EE213400D93B06 /* UIViewController+MiniApp.swift in Sources */,
-				F71FAD9F28A21E3900B58AF1 /* MiniAppPermissionView.swift in Sources */,
 				310575BA27EE213400D93B06 /* String+MiniApp.swift in Sources */,
 				310575C127EE213400D93B06 /* UIView+MiniApp.swift in Sources */,
 				310575BF27EE213400D93B06 /* UIColor+MiniApp.swift in Sources */,

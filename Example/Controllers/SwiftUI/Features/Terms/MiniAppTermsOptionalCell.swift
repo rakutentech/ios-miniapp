@@ -32,6 +32,21 @@ struct MiniAppTermsOptionalCell: View {
 
 struct MiniAppTermsOptionalCell_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppTermsOptionalCell(name: "Contacts", description: "Enter a description here...", isAccepted: .constant(true))
+        Group {
+            MiniAppTermsOptionalCell(
+                name: "Contacts",
+                description: "Enter a description here...",
+                isAccepted: .constant(true)
+            )
+            .previewLayout(.fixed(width: 400, height: 60))
+            
+            MiniAppTermsOptionalCell(
+                name: "Contacts",
+                description: "Enter a description here...",
+                isAccepted: .constant(true)
+            )
+            .preferredColorScheme(.dark)
+            .previewLayout(.fixed(width: 400, height: 60))
+        }
     }
 }

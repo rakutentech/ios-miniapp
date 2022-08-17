@@ -13,6 +13,7 @@ struct MiniAppSingleView: View {
     @State var isPermissionPresented: Bool = false
     
     @State var didAcceptTerms: Bool = false
+    @State var didAcceptSettingsTerms: Bool = false
     
     var body: some View {
         VStack {
@@ -61,12 +62,29 @@ struct MiniAppSingleView: View {
             load()
         })
         .sheet(isPresented: $isPermissionPresented, content: {
-            MiniAppPermissionView(request: $permissionRequest, isPresented: $isPermissionPresented)
-                .environmentObject(store)
+            if let permissionRequest = permissionRequest {
+                NavigationView {
+                    MiniAppTermsView(didAccept: $didAcceptSettingsTerms, request: permissionRequest)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button {
+                                isPermissionPresented = false
+                            } label: {
+                                Text("Cancel")
+                            }
+                        }
+                    }
+                }
+            }
         })
         .onChange(of: didAcceptTerms, perform: { accepted in
             if accepted {
                 store.viewState = .success
+            }
+        })
+        .onChange(of: didAcceptSettingsTerms, perform: { accepted in
+            if accepted {
+                load()
             }
         })
         .onChange(of: store.viewState) { state in
@@ -74,10 +92,6 @@ struct MiniAppSingleView: View {
             switch state {
             case .success:
                 self.isPermissionPresented = false
-            case let .permissionRequested(info, manifest):
-                ()
-//                permissionRequest = MiniAppPermissionRequest(info: info, manifest: manifest)
-//                isPermissionPresented = true
             default:
                 ()
             }

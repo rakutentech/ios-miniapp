@@ -28,6 +28,20 @@ struct MiniAppTermsRequiredCell: View {
 
 struct MiniAppTermsRequiredCell_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppTermsRequiredCell(name: "User Name", description: "Enter a description here...")
+        Group {
+            MiniAppTermsRequiredCell(
+                name: "User Name",
+                description: "Enter a description here..."
+            )
+            .previewLayout(.fixed(width: 400, height: 60))
+            
+            MiniAppTermsRequiredCell(
+                name: "User Name",
+                description: "Enter a description here..."
+            )
+            .preferredColorScheme(.dark)
+            .previewLayout(.fixed(width: 400, height: 60))
+        }
+
     }
 }

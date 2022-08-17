@@ -2,15 +2,13 @@ import SwiftUI
 import Combine
 
 struct MiniAppDashboardView: View {
-    
+
     @StateObject var store = MiniAppWidgetStore()
     @StateObject var permissionStore = MiniAppPermissionStore()
-    
+
     @State var sampleMiniAppId: String = "404e46b4-263d-4768-b2ec-8a423224bead"
     @State var sampleMiniAppVersion: String = "206ca5bb-da16-4736-bc87-7c5890a50347"
-    
-    let dismiss = PassthroughSubject<Void, Error>()
-    
+
     @State var selection: Int = 0
     
     var body: some View {
@@ -23,7 +21,7 @@ struct MiniAppDashboardView: View {
 
             MiniAppFeatureListView(store: store, permStore: permissionStore)
             .tabItem {
-                Label("Features", systemImage: "star")
+                Label("Features", systemImage: "menucard")
             }
             .tag(1)
 
@@ -33,7 +31,7 @@ struct MiniAppDashboardView: View {
                 miniAppType: .miniapp
             )
             .tabItem {
-                Label("Sample", systemImage: "app")
+                Label("Sample", systemImage: "cube")
             }
             .tag(2)
 
@@ -44,15 +42,6 @@ struct MiniAppDashboardView: View {
             .tag(3)
         }
         .navigationTitle(navigationTitle)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading, content: {
-                Button(action: {
-                    dismiss.send(())
-                }, label: {
-                    Image(systemName: "xmark")
-                })
-            })
-        }
         .onAppear {
             store.load()
         }
@@ -61,11 +50,11 @@ struct MiniAppDashboardView: View {
     var navigationTitle: String {
         switch selection {
         case 0:
-            return "List"
+            return "MiniApp List"
         case 1:
-            return "Features"
+            return "MiniApp Features"
         case 2:
-            return "Sample"
+            return "MiniApp Sample"
         case 3:
             return "Settings"
         default:

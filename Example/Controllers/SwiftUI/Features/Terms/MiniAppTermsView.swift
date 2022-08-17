@@ -61,7 +61,7 @@ struct MiniAppTermsView: View {
                     }
                     
                     if let permissionString = getAccessTokenPermissionString() {
-                        Section("Tokens") {
+                        Section("Access Tokens") {
                             Text(permissionString)
                             .font(.system(size: 12))
                             .foregroundColor(Color(.secondaryLabel))

@@ -39,7 +39,6 @@ class ViewController: RATViewControllerWithTableView {
     var permissionHandlerObj: PermissionCompletionHandler?
     var currentMiniAppTitle: String?
     var displayController: DisplayNavigationController?
-    var bag = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,13 +54,6 @@ class ViewController: RATViewControllerWithTableView {
             let dashboardVc = UIHostingController(rootView: dashboardView)
             let nvc = UINavigationController(rootViewController: dashboardVc)
             self.present(nvc, animated: true)
-            dashboardView
-                .dismiss
-                .sink(receiveCompletion: { _ in
-                    //
-                }) { _ in
-                    nvc.dismiss(animated: true)
-                }.store(in: &self.bag)
         }), menu: nil)
         self.navigationItem.setLeftBarButton(widgetListBarButton, animated: true)
     }
