@@ -4,7 +4,6 @@ import Combine
 struct MiniAppFeatureListView: View {
     
     @ObservedObject var store = MiniAppWidgetStore()
-    @ObservedObject var permStore = MiniAppPermissionStore()
 
     @State var isSingleMiniAppActive: Bool = false
     

@@ -1,19 +1,78 @@
 import SwiftUI
 import MiniApp
 
+@MainActor
+class MiniAppWithTermsViewModel: ObservableObject {
+
+    let permissionService = MiniAppPermissionService()
+    
+    @Published var viewState: MiniAppPermissionService.ViewState = .none
+    
+    @Published var miniAppId: String
+    @Published var miniAppVersion: String?
+    @Published var miniAppType: MiniAppType
+
+    init(
+        miniAppId: String,
+        miniAppVersion: String? = nil,
+        miniAppType: MiniAppType = .miniapp
+    ) {
+        self.miniAppId = miniAppId
+        self.miniAppVersion = miniAppVersion
+        self.miniAppType = miniAppType
+        self.load()
+    }
+
+    func load() {
+        viewState = .loading
+        permissionService
+        .checkPermissions(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { [weak self] result in
+            switch result {
+            case .success(let permState):
+                switch permState {
+                case .permissionGranted:
+                    self?.viewState = .success
+                case let .permissionRequested(info, manifest):
+                    self?.viewState = .permissionRequested(info: info, manifest: manifest)
+                }
+            case .failure(let error):
+                self?.viewState = .error(error)
+            }
+        }
+    }
+
+    func fetchPermissionRequest(completion: @escaping ((Result<MiniAppPermissionRequest, Error>) -> Void)) {
+        guard
+            let manifest = permissionService.getCachedManifest(miniAppId: miniAppId)
+        else {
+            return
+        }
+        permissionService.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { result in
+            switch result {
+            case .success(let info):
+                completion(.success(MiniAppPermissionRequest(info: info, manifest: manifest)))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+}
+
 struct MiniAppWithTermsView: View {
     
-    @StateObject var store: MiniAppPermissionStore = MiniAppPermissionStore()
+    @ObservedObject var viewModel: MiniAppWithTermsViewModel
 
-    @Binding var miniAppId: String
-    @Binding var miniAppVersion: String?
-    @State var miniAppType: MiniAppType
+    @State private var didAcceptTerms: Bool = false
     
-    @State var didAcceptTerms: Bool = false
-    
+//    init(miniAppId: String, miniAppVersion: String? = nil, miniAppType: MiniAppType = .miniapp) {
+//        _viewModel = StateObject(wrappedValue:
+//            MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: miniAppVersion, miniAppType: miniAppType)
+//        )
+//    }
+
     var body: some View {
         VStack {
-            switch store.viewState {
+            switch viewModel.viewState {
             case .none:
                 EmptyView()
             case .loading:
@@ -33,37 +92,25 @@ struct MiniAppWithTermsView: View {
                         config: MiniAppNewConfig(
                             config: Config.current(),
                             adsDisplayer: nil,
-                            messageInterface: MiniAppViewDelegator(miniAppId: _miniAppId.wrappedValue)
+                            messageInterface: MiniAppViewDelegator(miniAppId: viewModel.miniAppId)
                         ),
-                        type: miniAppType,
-                        appId: miniAppId,
-                        version: miniAppVersion
+                        type: viewModel.miniAppType,
+                        appId: viewModel.miniAppId,
+                        version: viewModel.miniAppVersion
                     )
                 )
             }
         }
-        .onAppear(perform: {
-            load()
-        })
         .onChange(of: didAcceptTerms, perform: { accepted in
             if accepted {
-                store.viewState = .success
+                viewModel.viewState = .success
             }
         })
-    }
-
-    func load() {
-        DispatchQueue.main.async {
-            store.checkPermissions(
-                miniAppId: miniAppId,
-                miniAppVersion: miniAppVersion ?? ""
-            )
-        }
     }
 }
 
 struct MiniAppWithTermsView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppWithTermsView(miniAppId: .constant(""), miniAppVersion: .constant(""), miniAppType: .miniapp)
+        MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: ""))
     }
 }

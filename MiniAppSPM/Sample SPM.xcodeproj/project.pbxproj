@@ -71,7 +71,6 @@
 		3105761627EE387800D93B06 /* Config-test-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3105761127EE387800D93B06 /* Config-test-debug.xcconfig */; };
 		31A7169B27EF0800003770E9 /* MiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169A27EF0800003770E9 /* MiniApp */; };
 		31A7169D27EF0800003770E9 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169C27EF0800003770E9 /* AppCenterCrashes */; };
-		F71FADA128A2415600B58AF1 /* MiniAppPermissionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71FADA028A2415600B58AF1 /* MiniAppPermissionStore.swift */; };
 		F71FADD728A3643200B58AF1 /* MiniAppDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71FADD628A3643200B58AF1 /* MiniAppDashboardView.swift */; };
 		F71FADD928A366D600B58AF1 /* MiniAppListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71FADD828A366D600B58AF1 /* MiniAppListView.swift */; };
 		F71FADDB28A37D3600B58AF1 /* MiniAppTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71FADDA28A37D3600B58AF1 /* MiniAppTermsView.swift */; };
@@ -86,6 +85,7 @@
 		F7455CBA28A38F82001354D0 /* MiniAppWithTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455CB928A38F82001354D0 /* MiniAppWithTermsView.swift */; };
 		F7455CBE28A399B4001354D0 /* MiniAppTermsRequiredCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455CBD28A399B4001354D0 /* MiniAppTermsRequiredCell.swift */; };
 		F7455CC028A399BF001354D0 /* MiniAppTermsOptionalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455CBF28A399BF001354D0 /* MiniAppTermsOptionalCell.swift */; };
+		F7455D9728AC9557001354D0 /* MiniAppPermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455D9628AC9557001354D0 /* MiniAppPermissionService.swift */; };
 		F74AA0E0283C651300087718 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */; };
 		F74AA0E1283C651300087718 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */; };
 		F74AA0E2283C651300087718 /* MiniAppJavascriptErrorInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0AB283C651300087718 /* MiniAppJavascriptErrorInfoTests.swift */; };
@@ -218,7 +218,6 @@
 		3105761027EE387800D93B06 /* Config-common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
 		3105761127EE387800D93B06 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		31A7169827EF0428003770E9 /* MiniApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MiniApp; path = ..; sourceTree = "<group>"; };
-		F71FADA028A2415600B58AF1 /* MiniAppPermissionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppPermissionStore.swift; sourceTree = "<group>"; };
 		F71FADD628A3643200B58AF1 /* MiniAppDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppDashboardView.swift; sourceTree = "<group>"; };
 		F71FADD828A366D600B58AF1 /* MiniAppListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppListView.swift; sourceTree = "<group>"; };
 		F71FADDA28A37D3600B58AF1 /* MiniAppTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppTermsView.swift; sourceTree = "<group>"; };
@@ -233,6 +232,7 @@
 		F7455CB928A38F82001354D0 /* MiniAppWithTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppWithTermsView.swift; sourceTree = "<group>"; };
 		F7455CBD28A399B4001354D0 /* MiniAppTermsRequiredCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppTermsRequiredCell.swift; sourceTree = "<group>"; };
 		F7455CBF28A399BF001354D0 /* MiniAppTermsOptionalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppTermsOptionalCell.swift; sourceTree = "<group>"; };
+		F7455D9628AC9557001354D0 /* MiniAppPermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppPermissionService.swift; sourceTree = "<group>"; };
 		F74AA09D283C64D600087718 /* MiniApp_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewTests.swift; sourceTree = "<group>"; };
 		F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSchemeHandlerTests.swift; sourceTree = "<group>"; };
@@ -523,7 +523,7 @@
 			isa = PBXGroup;
 			children = (
 				F733C884289CD165008FBF9A /* MiniAppWidgetStore.swift */,
-				F71FADA028A2415600B58AF1 /* MiniAppPermissionStore.swift */,
+				F7455D9628AC9557001354D0 /* MiniAppPermissionService.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -903,6 +903,7 @@
 				310575C727EE213400D93B06 /* Bundle+MiniApp.swift in Sources */,
 				310575D527EE213400D93B06 /* DeeplinkListViewController.swift in Sources */,
 				310575DA27EE213400D93B06 /* ManageCustomPermissionsViewController.swift in Sources */,
+				F7455D9728AC9557001354D0 /* MiniAppPermissionService.swift in Sources */,
 				310575E327EE213400D93B06 /* ViewController+MiniApp.swift in Sources */,
 				F71FADD728A3643200B58AF1 /* MiniAppDashboardView.swift in Sources */,
 				F733C85F289BA984008FBF9A /* MiniAppTrippleView.swift in Sources */,
@@ -942,7 +943,6 @@
 				F7C7B01428A0CD67003667AE /* MiniAppViewDelegator.swift in Sources */,
 				310575E627EE213400D93B06 /* DeeplinkErrorViewController.swift in Sources */,
 				310575E027EE213400D93B06 /* FirstLaunchViewController.swift in Sources */,
-				F71FADA128A2415600B58AF1 /* MiniAppPermissionStore.swift in Sources */,
 				310575B827EE213400D93B06 /* ImageCache.swift in Sources */,
 				310575C927EE213400D93B06 /* UserPointsModel.swift in Sources */,
 				310575DF27EE213400D93B06 /* MAFirstLaunchController.swift in Sources */,

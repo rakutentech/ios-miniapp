@@ -30,10 +30,8 @@ struct MiniAppSegmentedView: View {
                 ForEach(MiniAppSegment.allCases, id: \.self) { segment in
                     let miniAppId = getMiniAppId(segment: segment)
                     let version = getMiniAppVersion(segment: segment)
-                    MiniAppWithTermsView(
-                        miniAppId: .constant(miniAppId),
-                        miniAppVersion: .constant(version),
-                        miniAppType: .miniapp
+                    MiniAppWithTermsView(viewModel:
+                        MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: version, miniAppType: .miniapp)
                     )
                     .tag(segment)
                 }

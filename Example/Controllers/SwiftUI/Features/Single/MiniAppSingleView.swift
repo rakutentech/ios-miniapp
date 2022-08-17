@@ -2,52 +2,39 @@ import SwiftUI
 import MiniApp
 
 struct MiniAppSingleView: View {
-
-    @StateObject var store: MiniAppPermissionStore = MiniAppPermissionStore()
-
+    
+    @StateObject var viewModel: MiniAppWithTermsViewModel
+    
     @Binding var miniAppId: String
     @Binding var miniAppVersion: String?
     @State var miniAppType: MiniAppType
     
-    @State var permissionRequest: MiniAppPermissionRequest? = nil
-    @State var isPermissionPresented: Bool = false
+    @State private var permissionRequest: MiniAppPermissionRequest? = nil
+    @State private var isPermissionPresented: Bool = false
+    @State private var didAcceptTerms: Bool = false
+    @State private var didAcceptSettingsTerms: Bool = false
     
-    @State var didAcceptTerms: Bool = false
-    @State var didAcceptSettingsTerms: Bool = false
+    init(miniAppId: Binding<String>, miniAppVersion: Binding<String?>, miniAppType: MiniAppType) {
+        _viewModel = StateObject(wrappedValue: MiniAppWithTermsViewModel(miniAppId: miniAppId.wrappedValue, miniAppVersion: miniAppVersion.wrappedValue, miniAppType: .miniapp))
+        _miniAppId = miniAppId
+        _miniAppVersion = miniAppVersion
+        _miniAppType = State(wrappedValue: miniAppType)
+    }
     
     var body: some View {
         VStack {
-            switch store.viewState {
-            case .none:
-                EmptyView()
-            case .loading:
-                ProgressView()
-            case let .permissionRequested(info, manifest):
-                MiniAppTermsView(didAccept: $didAcceptTerms, request: MiniAppPermissionRequest(info: info, manifest: manifest))
-            case .error(let error):
-                Text(error.localizedDescription)
-                    .font(.system(size: 14, weight: .medium))
-                    .padding(.horizontal, 40)
-            case .success:
-                MiniAppSUView(params:
-                    MiniAppViewDefaultParams(
-                        config: MiniAppNewConfig(
-                            config: Config.current(),
-                            adsDisplayer: nil,
-                            messageInterface: MiniAppViewDelegator(miniAppId: _miniAppId.wrappedValue)
-                        ),
-                        type: miniAppType,
-                        appId: miniAppId,
-                        version: miniAppVersion
-                    )
-                )
-            }
+            MiniAppWithTermsView(viewModel: viewModel)
+//            MiniAppWithTermsView(
+//                miniAppId: miniAppId,
+//                miniAppVersion: miniAppVersion,
+//                miniAppType: miniAppType
+//            )
         }
         .navigationTitle("MiniApp")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if store.viewState == .success {
+                if viewModel.viewState == .success {
                     Button {
                         openPermissionSettings()
                     } label: {
@@ -57,9 +44,6 @@ struct MiniAppSingleView: View {
                     EmptyView()
                 }
             }
-        })
-        .onAppear(perform: {
-            load()
         })
         .sheet(isPresented: $isPermissionPresented, content: {
             if let permissionRequest = permissionRequest {
@@ -77,17 +61,13 @@ struct MiniAppSingleView: View {
                 }
             }
         })
-        .onChange(of: didAcceptTerms, perform: { accepted in
-            if accepted {
-                store.viewState = .success
-            }
-        })
         .onChange(of: didAcceptSettingsTerms, perform: { accepted in
             if accepted {
-                load()
+                viewModel.load()
+                didAcceptSettingsTerms = false
             }
         })
-        .onChange(of: store.viewState) { state in
+        .onChange(of: viewModel.viewState) { state in
             print("State Change: ", state)
             switch state {
             case .success:
@@ -98,28 +78,14 @@ struct MiniAppSingleView: View {
         }
     }
 
-    func load() {
-        DispatchQueue.main.async {
-            store.checkPermissions(
-                miniAppId: miniAppId,
-                miniAppVersion: miniAppVersion ?? ""
-            )
-        }
-    }
-    
     func openPermissionSettings() {
-        guard
-            let manifest = store.getCachedManifest(miniAppId: miniAppId)
-        else {
-            return
-        }
-        store.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { result in
+        viewModel.fetchPermissionRequest { result in
             switch result {
-            case .success(let info):
-                permissionRequest = MiniAppPermissionRequest(info: info, manifest: manifest)
+            case .success(let request):
+                permissionRequest = request
                 isPermissionPresented = true
             case .failure(let error):
-                store.viewState = .error(error)
+                viewModel.viewState = .error(error)
             }
         }
     }

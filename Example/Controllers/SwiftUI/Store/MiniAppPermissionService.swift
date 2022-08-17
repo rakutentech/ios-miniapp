@@ -1,16 +1,18 @@
+//
+//  MiniAppPermissionService.swift
+//  Sample SPM
+//
+//  Created by Timotheus Laubengaier on 2022/08/17.
+//
+
 import Foundation
-import SwiftUI
-import Combine
 import MiniApp
 
 @MainActor
-final class MiniAppPermissionStore: ObservableObject {
+final class MiniAppPermissionService {
     
     let config: MiniAppSdkConfig = Config.current()
 
-    @Published
-    var viewState: ViewState = .none
-    
     init() {
         
     }
@@ -33,51 +35,55 @@ final class MiniAppPermissionStore: ObservableObject {
     }
 
     // MARK: - Check Permissions
-    func checkPermissions(config: MiniAppSdkConfig = Config.current(), miniAppId: String, miniAppVersion: String) {
+    func checkPermissions(
+        config: MiniAppSdkConfig = Config.current(),
+        miniAppId: String,
+        miniAppVersion: String,
+        completion: @escaping ((Result<PermissionState, Error>) -> Void)
+    ) {
         MiniApp.shared(with: config).info(miniAppId: miniAppId, miniAppVersion: miniAppVersion) { [weak self] result in
             switch result {
             case .success(let info):
                 self?.checkPermissions(
                     config: config,
-                    miniAppInfo: info
+                    miniAppInfo: info,
+                    completion: completion
                 )
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.viewState = .error(error)
-                }
+                completion(.failure(error))
             }
         }
     }
 
-    func checkPermissions(config: MiniAppSdkConfig = Config.current(), miniAppInfo: MiniAppInfo) {
-        DispatchQueue.main.async {
-            self.viewState = .loading
-        }
-        
+    func checkPermissions(
+        config: MiniAppSdkConfig = Config.current(),
+        miniAppInfo: MiniAppInfo,
+        completion: @escaping ((Result<PermissionState, Error>) -> Void)
+    ) {
         if let cachedManifest = MiniApp.shared(with: config).getDownloadedManifest(miniAppId: miniAppInfo.id) {
-            compareMiniAppManifest(config: config, info: miniAppInfo, manifest: cachedManifest) { [weak self] result in
+            compareMiniAppManifest(config: config, info: miniAppInfo, manifest: cachedManifest) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let isManifestSame):
                         if isManifestSame {
-                            self?.viewState = .success
+                            completion(.success(.permissionGranted))
                         } else {
-                            self?.viewState = .permissionRequested(info: miniAppInfo, manifest: cachedManifest)
+                            completion(.success(.permissionRequested(info: miniAppInfo, manifest: cachedManifest)))
                         }
                     case .failure(let error):
-                        self?.viewState = .error(error)
+                        completion(.failure(error))
                     }
                 }
             }
         } else {
             // show permission screen
-            fetchMetaData(config: config, miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { [weak self] result in
+            fetchMetaData(config: config, miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let manifest):
-                        self?.viewState = .permissionRequested(info: miniAppInfo, manifest: manifest)
+                        completion(.success(.permissionRequested(info: miniAppInfo, manifest: manifest)))
                     case .failure(let error):
-                        self?.viewState = .error(error)
+                        completion(.failure(error))
                     }
                 }
             }
@@ -155,7 +161,7 @@ final class MiniAppPermissionStore: ObservableObject {
     }
 }
 
-extension MiniAppPermissionStore {
+extension MiniAppPermissionService {
     enum ViewState: Equatable {
         static func == (lhs: ViewState, rhs: ViewState) -> Bool {
             switch (lhs, rhs) {
@@ -180,9 +186,14 @@ extension MiniAppPermissionStore {
         case error(Error)
         case success
     }
+
+    enum PermissionState {
+        case permissionRequested(info: MiniAppInfo, manifest: MiniAppManifest)
+        case permissionGranted
+    }
 }
 
-extension MiniAppPermissionStore {
+extension MiniAppPermissionService {
     struct MiniAppViewError: Error {
         let title: String
         let message: String

@@ -1,9 +1,18 @@
 import SwiftUI
 import MiniApp
 
+@MainActor
+class MiniAppTermsViewModel: ObservableObject {
+    let service = MiniAppPermissionService()
+    
+    func updatePermissions(miniAppId: String, manifest: MiniAppManifest) {
+        service.updatePermissions(miniAppId: miniAppId, manifest: manifest)
+    }
+}
+
 struct MiniAppTermsView: View {
     
-    @StateObject var store = MiniAppPermissionStore()
+    @StateObject var viewModel = MiniAppTermsViewModel()
     
     @Binding var didAccept: Bool
     @State var didCancel: Bool = false
@@ -83,9 +92,9 @@ struct MiniAppTermsView: View {
                 Spacer()
                 VStack {
                     Button {
-                        store.updatePermissions(miniAppId: request.info.id, manifest: request.manifest)
+                        viewModel.updatePermissions(miniAppId: request.info.id, manifest: request.manifest)
                         didAccept = true
-                        store.viewState = .success
+                        //store.viewState = .success
                     } label: {
                         Text("Accept")
                             .font(.system(size: 15, weight: .bold))
@@ -119,7 +128,6 @@ struct MiniAppTermsView: View {
 struct MiniAppTermsView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppTermsView(
-            store: MiniAppPermissionStore(),
             didAccept: .constant(false),
             request: MiniAppPermissionRequest(info:
                 MiniAppInfo(

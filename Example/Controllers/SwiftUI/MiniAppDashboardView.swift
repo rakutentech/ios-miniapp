@@ -4,7 +4,6 @@ import Combine
 struct MiniAppDashboardView: View {
 
     @StateObject var store = MiniAppWidgetStore()
-    @StateObject var permissionStore = MiniAppPermissionStore()
 
     @State var sampleMiniAppId: String = "404e46b4-263d-4768-b2ec-8a423224bead"
     @State var sampleMiniAppVersion: String = "206ca5bb-da16-4736-bc87-7c5890a50347"
@@ -19,7 +18,7 @@ struct MiniAppDashboardView: View {
             }
             .tag(0)
 
-            MiniAppFeatureListView(store: store, permStore: permissionStore)
+            MiniAppFeatureListView(store: store)
             .tabItem {
                 Label("Features", systemImage: "menucard")
             }
