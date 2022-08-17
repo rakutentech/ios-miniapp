@@ -5,8 +5,8 @@ struct MiniAppDashboardView: View {
 
     @StateObject var store = MiniAppWidgetStore()
 
-    @State var sampleMiniAppId: String = "404e46b4-263d-4768-b2ec-8a423224bead"
-    @State var sampleMiniAppVersion: String = "206ca5bb-da16-4736-bc87-7c5890a50347"
+    @State var sampleMiniAppId: String = ""
+    @State var sampleMiniAppVersion: String = ""
 
     @State var selection: Int = 0
     
