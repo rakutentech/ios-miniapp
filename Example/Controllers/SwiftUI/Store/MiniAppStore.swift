@@ -21,11 +21,11 @@ extension EnvironmentValues {
 }
 
 class MiniAppStore: ObservableObject {
-    
+
     static let shared = MiniAppStore()
-    
+
     var testString: String = "lul"
-    
+
     @AppStorage(Constants.miniAppIdentifierSingle.rawValue) var miniAppIdentifierSingle = ""
     @AppStorage(Constants.miniAppVersionSingle.rawValue) var miniAppVersionSingle = ""
 
@@ -34,16 +34,16 @@ class MiniAppStore: ObservableObject {
 
     @AppStorage(Constants.miniAppIdentifierTrippleSecond.rawValue) var miniAppIdentifierTrippleSecond = ""
     @AppStorage(Constants.miniAppVersionTrippleSecond.rawValue) var miniAppVersionTrippleSecond = ""
-    
+
     @AppStorage(Constants.miniAppIdentifierTrippleThird.rawValue) var miniAppIdentifierTrippleThird = ""
     @AppStorage(Constants.miniAppVersionTrippleThird.rawValue) var miniAppVersionTrippleThird = ""
-    
+
     @Published
     var miniAppInfoList: [MiniAppInfo] = []
-    
+
     @Published
     var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
-    
+
     init() {
         load()
     }
@@ -54,7 +54,7 @@ class MiniAppStore: ObservableObject {
                 switch result {
                 case let .success(infos):
                     self.miniAppInfoList = infos
-                    
+
                     let ids = Set<String>(infos.map({ $0.id }))
                     for id in ids {
                         self.indexedMiniAppInfoList[id] = infos.filter({ $0.id == id })
@@ -65,7 +65,7 @@ class MiniAppStore: ObservableObject {
             }
         }
     }
-    
+
     static func empty() -> MiniAppStore {
         return MiniAppStore()
     }

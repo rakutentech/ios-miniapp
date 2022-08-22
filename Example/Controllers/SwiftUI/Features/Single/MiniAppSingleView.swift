@@ -2,25 +2,25 @@ import SwiftUI
 import MiniApp
 
 struct MiniAppSingleView: View {
-    
+
     @StateObject var viewModel: MiniAppWithTermsViewModel
-    
+
     @State var miniAppId: String
     @State var miniAppVersion: String?
     @State var miniAppType: MiniAppType
-    
-    @State private var permissionRequest: MiniAppPermissionRequest? = nil
+
+    @State private var permissionRequest: MiniAppPermissionRequest?
     @State private var isPermissionPresented: Bool = false
     @State private var didAcceptTerms: Bool = false
     @State private var didAcceptSettingsTerms: Bool = false
-    
+
     init(miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
         _viewModel = StateObject(wrappedValue: MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: miniAppVersion, miniAppType: .miniapp))
         _miniAppId = State(wrappedValue: miniAppId)
         _miniAppVersion = State(wrappedValue: miniAppVersion)
         _miniAppType = State(wrappedValue: miniAppType)
     }
-    
+
     var body: some View {
         VStack {
             MiniAppWithTermsView(viewModel: viewModel)
@@ -82,7 +82,6 @@ struct MiniAppSingleView: View {
             switch result {
             case .success(let request):
                 permissionRequest = request
-                //isPermissionPresented = true
             case .failure(let error):
                 viewModel.viewState = .error(error)
             }

@@ -27,7 +27,7 @@ public struct MiniAppInfo: Codable, Hashable {
         promotionalImageUrl,
         promotionalText
     }
-    
+
     public init(
         id: String,
         displayName: String? = nil,

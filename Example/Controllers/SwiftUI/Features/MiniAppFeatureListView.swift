@@ -2,11 +2,11 @@ import SwiftUI
 import Combine
 
 struct MiniAppFeatureListView: View {
-    
+
     @StateObject var store: MiniAppStore
 
     @State var isSingleMiniAppActive: Bool = false
-    
+
     var body: some View {
         List {
             Section("MiniApp") {
@@ -25,7 +25,7 @@ struct MiniAppFeatureListView: View {
                         active: true
                     )
                 })
-                
+
                 NavigationLink(destination: MiniAppSegmentedView(), label: {
                     MiniAppFeatureListCell(
                         title: "Segmented",
@@ -74,7 +74,7 @@ struct MiniAppFeatureListView: View {
                     )
                 }
             }
-            
+
             Section("Testing") {
                 NavigationLink(destination: MiniAppUrlView(), label: {
                     MiniAppFeatureListCell(
@@ -95,16 +95,15 @@ struct MiniAppFeatureListView: View {
 struct MiniAppFeatureListView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppFeatureListView(store: MiniAppStore.empty())
-            
     }
 }
 
 struct MiniAppFeatureListCell: View {
-    
+
     @State var title: String
     @State var subTitle: String
     @State var active: Bool
-    
+
     var body: some View {
         VStack {
             HStack {

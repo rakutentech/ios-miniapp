@@ -1,7 +1,7 @@
 import Foundation
 import WebKit
 
-// swiftlint:disable file_length
+// swiftlint:disable file_length function_body_length
 
 // MARK: - MiniAppViewHandler
 class MiniAppViewHandler: NSObject {
@@ -344,7 +344,7 @@ class MiniAppViewHandler: NSObject {
     }
 
     func loadWebView(url: URL) {
-        
+        // load
     }
 }
 

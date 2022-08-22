@@ -2,13 +2,13 @@ import SwiftUI
 import MiniApp
 
 struct MiniAppUrlView: View {
-    
+
     let delegator = MiniAppUrlViewDelegator()
-    
+
     @State var url: String = ""
     @State var currentUrl: String = ""
     @State var isMiniAppLoading: Bool = false
-    
+
     var body: some View {
         VStack {
             HStack(spacing: 20) {
@@ -20,13 +20,12 @@ struct MiniAppUrlView: View {
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .font(.system(size: 13))
-                
+
                 Button(action: {
                     currentUrl = ""
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250), execute: {
                         currentUrl = url
                     })
-                    
                 }, label: {
                     Image(systemName: "goforward")
                 })
@@ -68,13 +67,13 @@ struct MiniAppUrlView_Previews: PreviewProvider {
 }
 
 class MiniAppUrlViewDelegator: MiniAppMessageDelegate {
-    
+
     var miniAppId: String
-    
+
     init(miniAppId: String = "") {
         self.miniAppId = miniAppId
     }
-    
+
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.success("TestNew"))
     }

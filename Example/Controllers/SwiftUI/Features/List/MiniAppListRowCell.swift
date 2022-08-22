@@ -6,7 +6,7 @@ struct MiniAppListRowCell: View {
     @State var displayName: String
     @State var versionTag: String
     @State var versionId: String
-    
+
     var body: some View {
         HStack {
             VStack {
@@ -23,7 +23,6 @@ struct MiniAppListRowCell: View {
                 })
                 Spacer()
             }
-
 
             VStack(spacing: 3) {
                 HStack {

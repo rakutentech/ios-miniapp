@@ -1,20 +1,13 @@
-//
-//  MiniAppPermissionService.swift
-//  Sample SPM
-//
-//  Created by Timotheus Laubengaier on 2022/08/17.
-//
-
 import Foundation
 import MiniApp
 
 @MainActor
 final class MiniAppPermissionService {
-    
+
     let config: MiniAppSdkConfig = Config.current()
 
     init() {
-        
+        // init
     }
 
     func getInfo(miniAppId: String, miniAppVersion: String, completion: @escaping ((Result<MiniAppInfo, MASDKError>) -> Void)) {
@@ -193,7 +186,7 @@ extension MiniAppPermissionService {
                 return false
             }
         }
-        
+
         case none
         case loading
         case permissionRequested(info: MiniAppInfo, manifest: MiniAppManifest)

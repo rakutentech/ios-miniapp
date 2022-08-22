@@ -1,13 +1,13 @@
 import SwiftUI
 
 struct MiniAppListPickerView: View {
-    
+
     @ObservedObject var store: MiniAppStore
-    
+
     @Binding var isPresented: Bool
     @Binding var miniAppId: String
     @Binding var version: String
-    
+
     var body: some View {
         NavigationView {
             List {
@@ -28,7 +28,6 @@ struct MiniAppListPickerView: View {
                                     })
                                     Spacer()
                                 }
-
 
                                 VStack(spacing: 3) {
                                     HStack {

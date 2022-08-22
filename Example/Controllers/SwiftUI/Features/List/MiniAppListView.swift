@@ -2,11 +2,11 @@ import SwiftUI
 import MiniApp
 
 struct MiniAppListView: View {
-    
+
     @StateObject var viewModel = MiniAppListViewModel()
 
-    @State private var miniAppInfo: MiniAppSingleViewRequest? = nil
-    
+    @State private var miniAppInfo: MiniAppSingleViewRequest?
+
     var body: some View {
         ZStack {
             if viewModel.indexedMiniAppInfoList.isEmpty {

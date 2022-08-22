@@ -2,17 +2,17 @@ import Foundation
 import MiniApp
 
 class MiniAppViewDelegator: MiniAppMessageDelegate {
-    
+
     var miniAppId: String
     var miniAppVersion: String?
 
     var onSendMessage: (() -> Void)?
-    
+
     init(miniAppId: String = "", miniAppVersion: String? = nil) {
         self.miniAppId = miniAppId
         self.miniAppVersion = miniAppVersion
     }
-    
+
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.success("MAUID-\(miniAppId.prefix(8))-\((miniAppVersion ?? "").prefix(8))"))
     }
