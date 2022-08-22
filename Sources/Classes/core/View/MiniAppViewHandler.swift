@@ -579,7 +579,7 @@ extension MiniAppViewHandler: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        refreshNavBar()
+        // refreshNavBar()
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
