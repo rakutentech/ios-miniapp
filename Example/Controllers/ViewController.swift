@@ -48,7 +48,13 @@ class ViewController: RATViewControllerWithTableView {
         self.tableView.refreshControl = refreshControl
         locationManager.delegate = self
         self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
-        let widgetListBarButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "circle.hexagongrid"), primaryAction: UIAction(handler: { [weak self] _ in
+        var widgetListImage: UIImage?
+        if #available(iOS 15, *) {
+            widgetListImage = UIImage(systemName: "circle.hexagongrid")
+        } else {
+            widgetListImage = UIImage(systemName: "circle.circle")
+        }
+        let widgetListBarButton = UIBarButtonItem(title: nil, image: widgetListImage, primaryAction: UIAction(handler: { [weak self] _ in
             guard let self = self else { return }
             let dashboardView = MiniAppDashboardView()
             let dashboardVc = UIHostingController(rootView: dashboardView)

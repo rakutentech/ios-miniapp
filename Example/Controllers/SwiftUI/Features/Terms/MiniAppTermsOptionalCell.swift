@@ -25,7 +25,7 @@ struct MiniAppTermsOptionalCell: View {
                     }
                 }
         })
-        .tint(.red)
+        .toggleStyle(SwitchToggleStyle(tint: Color.red)) // .tint(.red)
         .padding(5)
     }
 }

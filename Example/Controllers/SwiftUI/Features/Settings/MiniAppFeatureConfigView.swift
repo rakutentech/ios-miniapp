@@ -74,7 +74,7 @@ struct MiniAppFeatureConfigIdCell: View {
                 Image(systemName: "list.dash")
             }
             .frame(width: 50, height: 50)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color(uiColor: .secondarySystemBackground)))
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color(.secondarySystemBackground)))
             .sheet(isPresented: $isPickerPresented, content: {
                 MiniAppListPickerView(
                     store: store,

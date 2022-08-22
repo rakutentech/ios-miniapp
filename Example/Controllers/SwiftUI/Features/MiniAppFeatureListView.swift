@@ -9,7 +9,7 @@ struct MiniAppFeatureListView: View {
 
     var body: some View {
         List {
-            Section("MiniApp") {
+            Section(header: Text("MiniApp")) {
                 NavigationLink(
                     destination: {
                         MiniAppSingleView(
@@ -35,7 +35,7 @@ struct MiniAppFeatureListView: View {
                 })
             }
 
-            Section("Widgets") {
+            Section(header: Text("Widgets")) {
                 NavigationLink {
                     MiniAppSingleView(
                         miniAppId: store.miniAppIdentifierSingle,
@@ -75,7 +75,7 @@ struct MiniAppFeatureListView: View {
                 }
             }
 
-            Section("Testing") {
+            Section(header: Text("Testing")) {
                 NavigationLink(destination: MiniAppUrlView(), label: {
                     MiniAppFeatureListCell(
                         title: "URL",
@@ -108,7 +108,7 @@ struct MiniAppFeatureListCell: View {
         VStack {
             HStack {
                 Text(title)
-                    .foregroundColor(Color(uiColor: UIColor.label))
+                    .foregroundColor(Color(UIColor.label))
                     .fontWeight(.bold)
                 Spacer()
             }

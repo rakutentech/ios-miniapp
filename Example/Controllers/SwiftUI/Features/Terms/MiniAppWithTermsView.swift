@@ -44,10 +44,13 @@ struct MiniAppWithTermsView: View {
                 )
             }
         }
-        .alert("Message sent", isPresented: $showMessageAlert) {
-            Button("Ok", role: .cancel) {
-                viewModel.showMessageAlert.send(false)
-            }
+        .alert(isPresented: $showMessageAlert) {
+            Alert(
+                title: Text("Info"),
+                message: Text("Message sent!"),
+                dismissButton: Alert.Button.cancel(Text("Ok"), action: {
+                    viewModel.showMessageAlert.send(false)
+            }))
         }
         .onChange(of: didAcceptTerms, perform: { accepted in
             if accepted {

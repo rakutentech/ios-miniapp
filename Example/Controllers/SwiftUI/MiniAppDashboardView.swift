@@ -20,7 +20,11 @@ struct MiniAppDashboardView: View {
 
             MiniAppFeatureListView(store: store)
             .tabItem {
-                Label("Features", systemImage: "menucard")
+                if #available(iOS 15, *) {
+                    Label("Features", systemImage: "menucard")
+                } else {
+                    Label("Features", systemImage: "flag")
+                }
             }
             .tag(1)
 

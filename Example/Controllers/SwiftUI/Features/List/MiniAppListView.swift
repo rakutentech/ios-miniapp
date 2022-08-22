@@ -14,7 +14,7 @@ struct MiniAppListView: View {
             } else {
                 List {
                     ForEach(viewModel.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
-                        Section(key) {
+                        Section(header: Text(key)) {
                             ForEach(viewModel.indexedMiniAppInfoList[key]!, id: \.version) { (info) in
                                 MiniAppListRowCell(
                                     iconUrl: info.icon,

@@ -12,20 +12,25 @@ struct MiniAppListPickerView: View {
         NavigationView {
             List {
                 ForEach(store.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
-                    Section(key) {
+                    Section(header: Text(key)) {
                         ForEach(store.indexedMiniAppInfoList[key]!, id: \.version) { (info) in
                             HStack {
                                 VStack {
                                     Spacer()
-                                    AsyncImage(url: info.icon, content: { image in
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 40, height: 40, alignment: .center)
-                                    }, placeholder: {
-                                        Circle()
-                                            .frame(width: 40, height: 40, alignment: .center)
-                                    })
+                                    if #available(iOS 15.0, *) {
+                                        AsyncImage(url: info.icon, content: { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 40, height: 40, alignment: .center)
+                                        }, placeholder: {
+                                            Circle()
+                                                .frame(width: 40, height: 40, alignment: .center)
+                                        })
+                                    } else {
+                                        RemoteImageView(urlString: info.icon.absoluteString)
+                                            .frame(width: 60, height: 40, alignment: .center)
+                                    }
                                     Spacer()
                                 }
 

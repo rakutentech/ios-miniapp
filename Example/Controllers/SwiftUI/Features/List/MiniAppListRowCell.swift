@@ -11,16 +11,21 @@ struct MiniAppListRowCell: View {
         HStack {
             VStack {
                 Spacer()
-                AsyncImage(url: iconUrl, content: { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 40, height: 40, alignment: .center)
-                }, placeholder: {
-                    Rectangle()
-                        .fill(Color(.systemGray3))
-                        .frame(width: 40, height: 40, alignment: .center)
-                })
+                if #available(iOS 15.0, *) {
+                    AsyncImage(url: iconUrl, content: { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 40, height: 40, alignment: .center)
+                    }, placeholder: {
+                        Rectangle()
+                            .fill(Color(.systemGray3))
+                            .frame(width: 40, height: 40, alignment: .center)
+                    })
+                } else {
+                    RemoteImageView(urlString: iconUrl?.absoluteString ?? "")
+                        .frame(width: 60, height: 40, alignment: .center)
+                }
                 Spacer()
             }
 

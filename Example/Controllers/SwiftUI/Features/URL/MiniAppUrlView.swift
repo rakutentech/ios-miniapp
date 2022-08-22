@@ -15,9 +15,9 @@ struct MiniAppUrlView: View {
                 TextField("http://localhost:1337", text: $url)
                     .frame(height: 50)
                     .background(
-                        RoundedRectangle(cornerRadius: 10).fill(Color(uiColor: UIColor.secondarySystemBackground)).padding(.horizontal, -10)
+                        RoundedRectangle(cornerRadius: 10).fill(Color(UIColor.secondarySystemBackground)).padding(.horizontal, -10)
                     )
-                    .textInputAutocapitalization(.never)
+                    .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .font(.system(size: 13))
 
@@ -31,7 +31,7 @@ struct MiniAppUrlView: View {
                 })
                 .frame(width: 50, height: 50)
                 .background(
-                    RoundedRectangle(cornerRadius: 10).fill(Color(uiColor: UIColor.secondarySystemBackground))
+                    RoundedRectangle(cornerRadius: 10).fill(Color(UIColor.secondarySystemBackground))
                 )
             }
             .padding(.horizontal, 40)
@@ -41,7 +41,7 @@ struct MiniAppUrlView: View {
                 Spacer()
                 Text("No MiniApp Loaded")
                     .font(.system(size: 15))
-                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                    .foregroundColor(Color(UIColor.secondaryLabel))
                 Spacer()
             } else {
                 MiniAppSUView(params:

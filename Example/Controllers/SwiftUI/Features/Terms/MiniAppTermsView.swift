@@ -55,16 +55,21 @@ struct MiniAppTermsView: View {
         ZStack {
             VStack {
                 VStack {
-                    AsyncImage(url: viewModel.info.icon, content: { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
+                    if #available(iOS 15.0, *) {
+                        AsyncImage(url: viewModel.info.icon, content: { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 60, height: 60, alignment: .center)
+                        }, placeholder: {
+                            Rectangle()
+                                .fill(Color(.secondarySystemBackground))
+                                .frame(width: 60, height: 60, alignment: .center)
+                        })
+                    } else {
+                        RemoteImageView(urlString: viewModel.info.icon.absoluteString)
                             .frame(width: 60, height: 60, alignment: .center)
-                    }, placeholder: {
-                        Rectangle()
-                            .fill(Color(.secondarySystemBackground))
-                            .frame(width: 60, height: 60, alignment: .center)
-                    })
+                    }
 
                     VStack(spacing: 4) {
                         Text(viewModel.info.displayName ?? "")
@@ -75,7 +80,7 @@ struct MiniAppTermsView: View {
                 }
 
                 List {
-                    Section("Permissions (\(viewModel.totalPermissionCount))") {
+                    Section(header: Text("Permissions (\(viewModel.totalPermissionCount))")) {
                         ForEach((viewModel.requiredPermissions), id: \.permissionName) { perm in
                             MiniAppTermsRequiredCell(name: perm.permissionName.title, description: perm.permissionDescription)
                         }
@@ -94,14 +99,14 @@ struct MiniAppTermsView: View {
                     }
 
                     if let permissionString = viewModel.accessTokenPermissionString {
-                        Section("Access Tokens") {
+                        Section(header: Text("Access Tokens")) {
                             Text(permissionString)
                             .font(.system(size: 12))
                             .foregroundColor(Color(.secondaryLabel))
                         }
                     }
 
-                    Section("Metadata") {
+                    Section(header: Text("Metadata")) {
                         Text(viewModel.manifest.customMetaData.JSONString)
                         .font(.system(size: 12))
                         .foregroundColor(Color(.secondaryLabel))
@@ -125,7 +130,7 @@ struct MiniAppTermsView: View {
                             .frame(maxWidth: .infinity)
                             .padding(15)
                     }
-                    .tint(.white)
+                    .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 10).fill(.red))
                 }
                 .padding(.horizontal, 20)
