@@ -22,7 +22,6 @@ class ImageLoaderService: ObservableObject {
         }
         task.resume()
     }
-    
 }
 
 struct RemoteImageView: View {
