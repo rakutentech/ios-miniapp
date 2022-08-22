@@ -303,7 +303,7 @@
 		31FA60382761B06B0070B611 /* bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bridge.js; sourceTree = "<group>"; };
 		F74A776A28531170009A1419 /* MiniAppUI+Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniAppUI+Activity.swift"; sourceTree = "<group>"; };
 		F74AA116283C692200087718 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cartfile; path = ../../Cartfile; sourceTree = "<group>"; };
-		F74AA117283C692C00087718 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../../Podfile; sourceTree = "<group>"; };
+		F74AA117283C692C00087718 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F75593CC283DD70F009D5833 /* MiniAppSecureStorageDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageDatabase.swift; sourceTree = "<group>"; };
 		F75593CD283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageSqliteDatabase.swift; sourceTree = "<group>"; };
 		F75593CE283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MiniAppSecureStorageSqliteDatabase+Model.swift"; sourceTree = "<group>"; };
