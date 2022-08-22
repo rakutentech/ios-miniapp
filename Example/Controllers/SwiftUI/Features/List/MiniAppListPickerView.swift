@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MiniAppListPickerView: View {
     
-    @ObservedObject var store: MiniAppWidgetStore
+    @ObservedObject var store: MiniAppStore
     
     @Binding var isPresented: Bool
     @Binding var miniAppId: String
@@ -74,7 +74,7 @@ struct MiniAppListPickerView: View {
 struct MiniAppListPickerView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppListPickerView(
-            store: MiniAppWidgetStore(),
+            store: MiniAppStore.empty(),
             isPresented: .constant(false),
             miniAppId: .constant(""),
             version: .constant("")

@@ -2,37 +2,27 @@ import SwiftUI
 import MiniApp
 
 struct MiniAppSegmentedView: View {
+    
+    @StateObject var viewModel = MiniAppSegmentedViewModel()
 
-    @EnvironmentObject var store: MiniAppWidgetStore
-
-    enum MiniAppSegment: String, CaseIterable {
-        case one
-        case two
-        case three
-    }
-
-    @State var segment: MiniAppSegment = .one
-
+    @State var segment: MiniAppSegmentedViewModel.MiniAppSegment = .one
+    
     var body: some View {
         VStack {
             Picker("MiniApp", selection: $segment) {
-                ForEach(MiniAppSegment.allCases, id: \.self) { segment in
+                ForEach(MiniAppSegmentedViewModel.MiniAppSegment.allCases, id: \.self) { segment in
                     Text(segment.rawValue).tag(segment)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal, 20)
-            
+
             Spacer()
                 .frame(height: 20)
 
             TabView(selection: $segment) {
-                ForEach(MiniAppSegment.allCases, id: \.self) { segment in
-                    let miniAppId = getMiniAppId(segment: segment)
-                    let version = getMiniAppVersion(segment: segment)
-                    MiniAppWithTermsView(viewModel:
-                        MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: version, miniAppType: .miniapp)
-                    )
+                ForEach(MiniAppSegmentedViewModel.MiniAppSegment.allCases, id: \.self) { segment in
+                    MiniAppWithTermsView(viewModel: viewModel.termsViewModel(segment: segment))
                     .tag(segment)
                 }
             }
@@ -43,32 +33,6 @@ struct MiniAppSegmentedView: View {
         }
         .navigationTitle("Segmented")
         .navigationBarTitleDisplayMode(.inline)
-    }
-
-    func getMiniAppId(segment: MiniAppSegment) -> String {
-        var miniAppId: String = ""
-        switch segment {
-        case .one:
-            miniAppId = store.miniAppIdentifierTrippleFirst
-        case .two:
-            miniAppId = store.miniAppIdentifierTrippleSecond
-        case .three:
-            miniAppId = store.miniAppIdentifierTrippleThird
-        }
-        return miniAppId
-    }
-
-    func getMiniAppVersion(segment: MiniAppSegment) -> String {
-        var version: String = ""
-        switch segment {
-        case .one:
-            version = store.miniAppVersionTrippleFirst
-        case .two:
-            version = store.miniAppVersionTrippleSecond
-        case .three:
-            version = store.miniAppVersionTrippleThird
-        }
-        return version
     }
 }
 

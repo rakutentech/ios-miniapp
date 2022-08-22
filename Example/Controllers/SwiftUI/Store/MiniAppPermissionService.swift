@@ -159,6 +159,20 @@ final class MiniAppPermissionService {
         let permissionsCollection = (manifest.requiredPermissions ?? []) + (manifest.optionalPermissions ?? [])
         MiniApp.shared(with: Config.current()).setCustomPermissions(forMiniApp: miniAppId, permissionList: permissionsCollection)
     }
+
+    func updatePermissions(miniAppId: String, permissionList: [MASDKCustomPermissionModel]) {
+        MiniApp.shared(with: Config.current()).setCustomPermissions(forMiniApp: miniAppId, permissionList: permissionList)
+    }
+
+    func updatePermissionsWithCache(miniAppId: String, permissions: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {
+        let cachedPermissions = MiniApp.shared().getCustomPermissions(forMiniApp: miniAppId)
+        for permission in permissions {
+            if let cachedPerm = cachedPermissions.first(where: { $0.permissionName == permission.permissionName }) {
+                permission.isPermissionGranted = cachedPerm.isPermissionGranted
+            }
+        }
+        return permissions
+    }
 }
 
 extension MiniAppPermissionService {

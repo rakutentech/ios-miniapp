@@ -3,16 +3,16 @@ import Combine
 
 struct MiniAppDashboardView: View {
 
-    @StateObject var store = MiniAppWidgetStore()
+    @StateObject var store = MiniAppStore()
 
     @State var sampleMiniAppId: String = ""
     @State var sampleMiniAppVersion: String = ""
 
     @State var selection: Int = 0
-    
+
     var body: some View {
         TabView(selection: $selection) {
-            MiniAppListView(store: store)
+            MiniAppListView()
             .tabItem {
                 Label("List", systemImage: "list.bullet")
             }
@@ -25,8 +25,8 @@ struct MiniAppDashboardView: View {
             .tag(1)
 
             MiniAppSingleView(
-                miniAppId: $sampleMiniAppId,
-                miniAppVersion: Binding<String?>(get: { sampleMiniAppVersion }, set: { _ in }),
+                miniAppId: sampleMiniAppId,
+                miniAppVersion: sampleMiniAppVersion,
                 miniAppType: .miniapp
             )
             .tabItem {
@@ -44,6 +44,7 @@ struct MiniAppDashboardView: View {
         .onAppear {
             store.load()
         }
+        //.environment(\.appStore, .shared)
     }
     
     var navigationTitle: String {

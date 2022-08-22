@@ -205,7 +205,7 @@ public class MiniAppViewController: UIViewController {
         let miniAppView: MiniAppViewable = MiniAppView(
             config: MiniAppNewConfig(
                 config: config,
-                adsDisplayer: nil,
+                adsDisplayer: adsDisplayer,
                 messageInterface: messageDelegate,
                 navigationDelegate: navDelegate
             ),

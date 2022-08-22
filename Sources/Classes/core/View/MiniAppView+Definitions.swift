@@ -15,13 +15,13 @@ public enum MiniAppType {
 
 public struct MiniAppNewConfig {
     let config: MiniAppSdkConfig?
-    let adsDisplayer: AdMobDisplayer?
+    let adsDisplayer: MiniAppAdDisplayer?
     let messageInterface: MiniAppMessageDelegate
     let navigationDelegate: MiniAppNavigationDelegate?
 
     public init(
         config: MiniAppSdkConfig?,
-        adsDisplayer: AdMobDisplayer? = nil,
+        adsDisplayer: MiniAppAdDisplayer? = nil,
         messageInterface: MiniAppMessageDelegate,
         navigationDelegate: MiniAppNavigationDelegate? = nil
     ) {

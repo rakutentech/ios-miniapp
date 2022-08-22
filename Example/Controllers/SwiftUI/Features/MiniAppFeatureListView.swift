@@ -3,7 +3,7 @@ import Combine
 
 struct MiniAppFeatureListView: View {
     
-    @ObservedObject var store = MiniAppWidgetStore()
+    @StateObject var store: MiniAppStore
 
     @State var isSingleMiniAppActive: Bool = false
     
@@ -13,8 +13,8 @@ struct MiniAppFeatureListView: View {
                 NavigationLink(
                     destination: {
                         MiniAppSingleView(
-                            miniAppId: store.$miniAppIdentifierSingle,
-                            miniAppVersion: Binding<String?>(get: { store.miniAppVersionSingle }, set: { _ in }),
+                            miniAppId: store.miniAppIdentifierSingle,
+                            miniAppVersion: store.miniAppVersionSingle,
                             miniAppType: .miniapp
                         )
                     },
@@ -26,57 +26,60 @@ struct MiniAppFeatureListView: View {
                     )
                 })
                 
-                NavigationLink(destination: MiniAppSegmentedView().environmentObject(store), label: {
+                NavigationLink(destination: MiniAppSegmentedView(), label: {
                     MiniAppFeatureListCell(
                         title: "Segmented",
                         subTitle: "Open segmented miniapps",
                         active: true
                     )
                 })
-
-                NavigationLink(destination: MiniAppUrlView(), label: {
-                    MiniAppFeatureListCell(
-                        title: "URL",
-                        subTitle: "Open a miniapp via url",
-                        active: true
-                    )
-                })
             }
 
             Section("Widgets") {
-                
-                NavigationLink(
-                    destination: {
-                        MiniAppSingleView(
-                            miniAppId: store.$miniAppIdentifierSingle,
-                            miniAppVersion: Binding<String?>(get: { store.miniAppVersionSingle }, set: { _ in }),
-                            miniAppType: .widget
-                        )
-                            .environmentObject(store)
-                    },
-                    label: {
+                NavigationLink {
+                    MiniAppSingleView(
+                        miniAppId: store.miniAppIdentifierSingle,
+                        miniAppVersion: store.miniAppVersionSingle,
+                        miniAppType: .widget
+                    )
+                } label: {
                     MiniAppFeatureListCell(
                         title: "Widget",
                         subTitle: "Displays a single Widget",
                         active: true
                     )
-                })
-                
-                NavigationLink(destination: MiniAppTrippleView(
-                    miniAppIdFirst: store.miniAppVersionTrippleFirst,
-                    miniAppIdSecond: store.miniAppVersionTrippleSecond,
-                    miniAppIdThird: store.miniAppVersionTrippleThird
-                ).environmentObject(store), label: {
+                }
+
+                NavigationLink {
+                    WidgetTrippleView(
+                        miniAppIdFirst: store.miniAppIdentifierTrippleFirst,
+                        miniAppIdSecond: store.miniAppIdentifierTrippleSecond,
+                        miniAppIdThird: store.miniAppIdentifierTrippleThird
+                    )
+                } label: {
                     MiniAppFeatureListCell(
                         title: "Three Widgets",
                         subTitle: "Displays three Widgets",
                         active: true
                     )
-                })
-                NavigationLink(destination: WidgetListView(miniAppIds: store.miniAppInfoList.map({ $0.id })), label: {
+                }
+
+                NavigationLink {
+                    WidgetListView(miniAppIds: store.miniAppInfoList.map({ $0.id }))
+                } label: {
                     MiniAppFeatureListCell(
                         title: "Widget List",
                         subTitle: "A list with multiple miniapps as widgets",
+                        active: true
+                    )
+                }
+            }
+            
+            Section("Testing") {
+                NavigationLink(destination: MiniAppUrlView(), label: {
+                    MiniAppFeatureListCell(
+                        title: "URL",
+                        subTitle: "Open a miniapp via url",
                         active: true
                     )
                 })
@@ -91,7 +94,7 @@ struct MiniAppFeatureListView: View {
 
 struct MiniAppFeatureListView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppFeatureListView()
+        MiniAppFeatureListView(store: MiniAppStore.empty())
             
     }
 }

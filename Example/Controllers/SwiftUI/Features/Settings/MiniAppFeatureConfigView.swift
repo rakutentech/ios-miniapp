@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MiniAppFeatureConfigView: View {
     
-    @ObservedObject var store: MiniAppWidgetStore
+    @ObservedObject var store: MiniAppStore
 
     @State var isPickerPresented: Bool = false
     
@@ -44,14 +44,14 @@ struct MiniAppFeatureConfigView: View {
 
 struct MiniAppFeatureConfigView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppFeatureConfigView(store: MiniAppWidgetStore())
+        MiniAppFeatureConfigView(store: MiniAppStore.empty())
             .environmentObject(MiniAppWidgetStore())
     }
 }
 
 struct MiniAppFeatureConfigIdCell: View {
     
-    @ObservedObject var store: MiniAppWidgetStore
+    @ObservedObject var store: MiniAppStore
     
     @State var placeholder: String
     @Binding var miniAppId: String

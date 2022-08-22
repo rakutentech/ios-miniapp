@@ -4,13 +4,17 @@ import MiniApp
 class MiniAppViewDelegator: MiniAppMessageDelegate {
     
     var miniAppId: String
+    var miniAppVersion: String?
+
+    var onSendMessage: (() -> Void)?
     
-    init(miniAppId: String = "") {
+    init(miniAppId: String = "", miniAppVersion: String? = nil) {
         self.miniAppId = miniAppId
+        self.miniAppVersion = miniAppVersion
     }
     
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.success("MAUID-\(miniAppId.prefix(8))"))
+        completionHandler(.success("MAUID-\(miniAppId.prefix(8))-\((miniAppVersion ?? "").prefix(8))"))
     }
 
     func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
@@ -18,7 +22,7 @@ class MiniAppViewDelegator: MiniAppMessageDelegate {
     }
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        //
+        onSendMessage?()
     }
 
     func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
@@ -26,7 +30,7 @@ class MiniAppViewDelegator: MiniAppMessageDelegate {
     }
 
     func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
-        //
+        onSendMessage?()
     }
 
     func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {

@@ -27,7 +27,7 @@ class MiniAppViewHandler: NSObject {
 
     // -
     internal var miniAppURL: URL?
-    internal var adsDisplayer: AdMobDisplayer?
+    internal var adsDisplayer: MiniAppAdDisplayer?
     internal var messageBodies: [String] = []
 
     internal var navBar: (UIView & MiniAppNavigationDelegate)?

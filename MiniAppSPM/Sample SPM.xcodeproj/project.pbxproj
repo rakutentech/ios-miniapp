@@ -76,7 +76,6 @@
 		F71FADDB28A37D3600B58AF1 /* MiniAppTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71FADDA28A37D3600B58AF1 /* MiniAppTermsView.swift */; };
 		F733C85B289BA047008FBF9A /* MiniAppFeatureListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C85A289BA047008FBF9A /* MiniAppFeatureListView.swift */; };
 		F733C85D289BA843008FBF9A /* MiniAppSingleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C85C289BA843008FBF9A /* MiniAppSingleView.swift */; };
-		F733C85F289BA984008FBF9A /* MiniAppTrippleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C85E289BA984008FBF9A /* MiniAppTrippleView.swift */; };
 		F733C861289BABE5008FBF9A /* MiniAppUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C860289BABE5008FBF9A /* MiniAppUrlView.swift */; };
 		F733C863289BBF81008FBF9A /* MiniAppFeatureConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C862289BBF81008FBF9A /* MiniAppFeatureConfigView.swift */; };
 		F733C885289CD165008FBF9A /* MiniAppWidgetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C884289CD165008FBF9A /* MiniAppWidgetStore.swift */; };
@@ -86,6 +85,13 @@
 		F7455CBE28A399B4001354D0 /* MiniAppTermsRequiredCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455CBD28A399B4001354D0 /* MiniAppTermsRequiredCell.swift */; };
 		F7455CC028A399BF001354D0 /* MiniAppTermsOptionalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455CBF28A399BF001354D0 /* MiniAppTermsOptionalCell.swift */; };
 		F7455D9728AC9557001354D0 /* MiniAppPermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455D9628AC9557001354D0 /* MiniAppPermissionService.swift */; };
+		F7455D9928ACDA78001354D0 /* MiniAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455D9828ACDA78001354D0 /* MiniAppStore.swift */; };
+		F7455D9D28ADF484001354D0 /* WidgetTrippleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455D9C28ADF484001354D0 /* WidgetTrippleView.swift */; };
+		F7455D9F28AE0289001354D0 /* MiniAppSegmentedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455D9E28AE0289001354D0 /* MiniAppSegmentedViewModel.swift */; };
+		F7455DA128AE0796001354D0 /* MiniAppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455DA028AE0795001354D0 /* MiniAppListViewModel.swift */; };
+		F7455DA328AE07E3001354D0 /* MiniAppListRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455DA228AE07E3001354D0 /* MiniAppListRowCell.swift */; };
+		F7455DA528AE16AE001354D0 /* MiniAppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455DA428AE16AE001354D0 /* MiniAppSettingsViewModel.swift */; };
+		F7455DA828AE1F4D001354D0 /* MiniAppWithTermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455DA728AE1F4D001354D0 /* MiniAppWithTermsViewModel.swift */; };
 		F74AA0E0283C651300087718 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */; };
 		F74AA0E1283C651300087718 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */; };
 		F74AA0E2283C651300087718 /* MiniAppJavascriptErrorInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0AB283C651300087718 /* MiniAppJavascriptErrorInfoTests.swift */; };
@@ -223,7 +229,6 @@
 		F71FADDA28A37D3600B58AF1 /* MiniAppTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppTermsView.swift; sourceTree = "<group>"; };
 		F733C85A289BA047008FBF9A /* MiniAppFeatureListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureListView.swift; sourceTree = "<group>"; };
 		F733C85C289BA843008FBF9A /* MiniAppSingleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSingleView.swift; sourceTree = "<group>"; };
-		F733C85E289BA984008FBF9A /* MiniAppTrippleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppTrippleView.swift; sourceTree = "<group>"; };
 		F733C860289BABE5008FBF9A /* MiniAppUrlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppUrlView.swift; sourceTree = "<group>"; };
 		F733C862289BBF81008FBF9A /* MiniAppFeatureConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureConfigView.swift; sourceTree = "<group>"; };
 		F733C884289CD165008FBF9A /* MiniAppWidgetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppWidgetStore.swift; sourceTree = "<group>"; };
@@ -233,6 +238,13 @@
 		F7455CBD28A399B4001354D0 /* MiniAppTermsRequiredCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppTermsRequiredCell.swift; sourceTree = "<group>"; };
 		F7455CBF28A399BF001354D0 /* MiniAppTermsOptionalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppTermsOptionalCell.swift; sourceTree = "<group>"; };
 		F7455D9628AC9557001354D0 /* MiniAppPermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppPermissionService.swift; sourceTree = "<group>"; };
+		F7455D9828ACDA78001354D0 /* MiniAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppStore.swift; sourceTree = "<group>"; };
+		F7455D9C28ADF484001354D0 /* WidgetTrippleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetTrippleView.swift; sourceTree = "<group>"; };
+		F7455D9E28AE0289001354D0 /* MiniAppSegmentedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSegmentedViewModel.swift; sourceTree = "<group>"; };
+		F7455DA028AE0795001354D0 /* MiniAppListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppListViewModel.swift; sourceTree = "<group>"; };
+		F7455DA228AE07E3001354D0 /* MiniAppListRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppListRowCell.swift; sourceTree = "<group>"; };
+		F7455DA428AE16AE001354D0 /* MiniAppSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSettingsViewModel.swift; sourceTree = "<group>"; };
+		F7455DA728AE1F4D001354D0 /* MiniAppWithTermsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppWithTermsViewModel.swift; sourceTree = "<group>"; };
 		F74AA09D283C64D600087718 /* MiniApp_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewTests.swift; sourceTree = "<group>"; };
 		F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSchemeHandlerTests.swift; sourceTree = "<group>"; };
@@ -522,6 +534,7 @@
 		F733C889289D094F008FBF9A /* Store */ = {
 			isa = PBXGroup;
 			children = (
+				F7455D9828ACDA78001354D0 /* MiniAppStore.swift */,
 				F733C884289CD165008FBF9A /* MiniAppWidgetStore.swift */,
 				F7455D9628AC9557001354D0 /* MiniAppPermissionService.swift */,
 			);
@@ -546,6 +559,7 @@
 		F7455CBC28A3998A001354D0 /* Terms */ = {
 			isa = PBXGroup;
 			children = (
+				F7455DA728AE1F4D001354D0 /* MiniAppWithTermsViewModel.swift */,
 				F7455CB928A38F82001354D0 /* MiniAppWithTermsView.swift */,
 				F71FADDA28A37D3600B58AF1 /* MiniAppTermsView.swift */,
 				F7455CBD28A399B4001354D0 /* MiniAppTermsRequiredCell.swift */,
@@ -557,7 +571,9 @@
 		F7455CC128A39BAC001354D0 /* List */ = {
 			isa = PBXGroup;
 			children = (
+				F7455DA028AE0795001354D0 /* MiniAppListViewModel.swift */,
 				F71FADD828A366D600B58AF1 /* MiniAppListView.swift */,
+				F7455DA228AE07E3001354D0 /* MiniAppListRowCell.swift */,
 				F733C886289CDEB3008FBF9A /* MiniAppListPickerView.swift */,
 			);
 			path = List;
@@ -574,6 +590,7 @@
 		F7455CC328A39BD7001354D0 /* Segmented */ = {
 			isa = PBXGroup;
 			children = (
+				F7455D9E28AE0289001354D0 /* MiniAppSegmentedViewModel.swift */,
 				F7C7B003289D09EC003667AE /* MiniAppSegmentedView.swift */,
 			);
 			path = Segmented;
@@ -591,7 +608,7 @@
 			isa = PBXGroup;
 			children = (
 				F74EDE0F2898F06200D53BA8 /* WidgetListView.swift */,
-				F733C85E289BA984008FBF9A /* MiniAppTrippleView.swift */,
+				F7455D9C28ADF484001354D0 /* WidgetTrippleView.swift */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
@@ -599,6 +616,7 @@
 		F7455CC628A39C41001354D0 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				F7455DA428AE16AE001354D0 /* MiniAppSettingsViewModel.swift */,
 				F733C862289BBF81008FBF9A /* MiniAppFeatureConfigView.swift */,
 			);
 			path = Settings;
@@ -895,9 +913,11 @@
 				F7C7B004289D09EC003667AE /* MiniAppSegmentedView.swift in Sources */,
 				F733C887289CDEB3008FBF9A /* MiniAppListPickerView.swift in Sources */,
 				F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */,
+				F7455D9D28ADF484001354D0 /* WidgetTrippleView.swift in Sources */,
 				F71FADDB28A37D3600B58AF1 /* MiniAppTermsView.swift in Sources */,
 				310575E727EE213400D93B06 /* MiniAppCell.swift in Sources */,
 				310575C627EE213400D93B06 /* MiniApp+UIImage.swift in Sources */,
+				F7455DA528AE16AE001354D0 /* MiniAppSettingsViewModel.swift in Sources */,
 				310575BE27EE213400D93B06 /* Array+MiniApp.swift in Sources */,
 				F7455CBE28A399B4001354D0 /* MiniAppTermsRequiredCell.swift in Sources */,
 				310575C727EE213400D93B06 /* Bundle+MiniApp.swift in Sources */,
@@ -906,7 +926,6 @@
 				F7455D9728AC9557001354D0 /* MiniAppPermissionService.swift in Sources */,
 				310575E327EE213400D93B06 /* ViewController+MiniApp.swift in Sources */,
 				F71FADD728A3643200B58AF1 /* MiniAppDashboardView.swift in Sources */,
-				F733C85F289BA984008FBF9A /* MiniAppTrippleView.swift in Sources */,
 				310575BB27EE213400D93B06 /* UITableView+EmptyView.swift in Sources */,
 				310575C027EE213400D93B06 /* Config.swift in Sources */,
 				310575ED27EE213400D93B06 /* RATNotificationCenter.swift in Sources */,
@@ -923,6 +942,8 @@
 				310575CA27EE213400D93B06 /* UserProfileModel.swift in Sources */,
 				310575DC27EE213400D93B06 /* ViewController.swift in Sources */,
 				310575D427EE213400D93B06 /* ContactsListSettingsTableViewController.swift in Sources */,
+				F7455DA128AE0796001354D0 /* MiniAppListViewModel.swift in Sources */,
+				F7455DA828AE1F4D001354D0 /* MiniAppWithTermsViewModel.swift in Sources */,
 				F733C85B289BA047008FBF9A /* MiniAppFeatureListView.swift in Sources */,
 				310575EE27EE213400D93B06 /* DemoAppAnalytics.swift in Sources */,
 				310575EC27EE213400D93B06 /* Swizzling.swift in Sources */,
@@ -935,6 +956,8 @@
 				310575D127EE213400D93B06 /* QASettingsTableViewController.swift in Sources */,
 				F733C885289CD165008FBF9A /* MiniAppWidgetStore.swift in Sources */,
 				310575DE27EE213400D93B06 /* DisplayController.swift in Sources */,
+				F7455D9928ACDA78001354D0 /* MiniAppStore.swift in Sources */,
+				F7455DA328AE07E3001354D0 /* MiniAppListRowCell.swift in Sources */,
 				F733C85D289BA843008FBF9A /* MiniAppSingleView.swift in Sources */,
 				310575D827EE213400D93B06 /* QueryParamViewController.swift in Sources */,
 				310575E127EE213400D93B06 /* ViewController+MiniAppMessageProtocol.swift in Sources */,
@@ -953,6 +976,7 @@
 				310575C127EE213400D93B06 /* UIView+MiniApp.swift in Sources */,
 				310575BF27EE213400D93B06 /* UIColor+MiniApp.swift in Sources */,
 				310575BC27EE213400D93B06 /* Encodable+MiniApp.swift in Sources */,
+				F7455D9F28AE0289001354D0 /* MiniAppSegmentedViewModel.swift in Sources */,
 				310575D027EE213400D93B06 /* SettingsTableViewController.swift in Sources */,
 				310575D727EE213400D93B06 /* CustomPermissionsListViewController.swift in Sources */,
 				310575D327EE213400D93B06 /* PointsSettingsTableViewController.swift in Sources */,

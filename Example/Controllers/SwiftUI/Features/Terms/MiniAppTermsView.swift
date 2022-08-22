@@ -5,33 +5,57 @@ import MiniApp
 class MiniAppTermsViewModel: ObservableObject {
     let service = MiniAppPermissionService()
     
-    func updatePermissions(miniAppId: String, manifest: MiniAppManifest) {
-        service.updatePermissions(miniAppId: miniAppId, manifest: manifest)
+    @Published var info: MiniAppInfo
+    @Published var manifest: MiniAppManifest
+    @Published var requiredPermissions: [MASDKCustomPermissionModel]
+    @Published var optionalPermissions: [MASDKCustomPermissionModel]
+    
+    init(info: MiniAppInfo, manifest: MiniAppManifest) {
+        self.info = info
+        self.manifest = manifest
+        self.requiredPermissions = manifest.requiredPermissions ?? []
+        let optionalPermissions = service.updatePermissionsWithCache(miniAppId: info.id, permissions: manifest.optionalPermissions ?? [])
+        self.optionalPermissions = optionalPermissions
+    }
+    
+    func updatePermissions() {
+        service.updatePermissions(miniAppId: info.id, permissionList: requiredPermissions + optionalPermissions)
+    }
+    
+    var totalPermissionCount: Int {
+        requiredPermissionCount + optionalPermissionCount
+    }
+
+    var requiredPermissionCount: Int {
+        requiredPermissions.count
+    }
+    
+    var optionalPermissionCount: Int {
+        optionalPermissions.count
+    }
+    
+    var accessTokenPermissionString: String? {
+        manifest.accessTokenPermissions?.filter({ $0.audience == "rae" }).first?.scopes.joined(separator: ", ")
     }
 }
 
 struct MiniAppTermsView: View {
     
-    @StateObject var viewModel = MiniAppTermsViewModel()
+    @StateObject var viewModel: MiniAppTermsViewModel
     
     @Binding var didAccept: Bool
     @State var didCancel: Bool = false
-    
-    var request: MiniAppPermissionRequest
-    
-    var requiredPermissionCount: Int {
-        request.manifest.requiredPermissions?.count ?? 0
-    }
-    
-    var optionalPermissionCount: Int {
-        request.manifest.optionalPermissions?.count ?? 0
+
+    init(didAccept: Binding<Bool>, request: MiniAppPermissionRequest) {
+        _didAccept = didAccept
+        _viewModel = StateObject(wrappedValue: MiniAppTermsViewModel(info: request.info, manifest: request.manifest))
     }
 
     var body: some View {
         ZStack {
             VStack {
                 VStack {
-                    AsyncImage(url: request.info.icon, content: { image in
+                    AsyncImage(url: viewModel.info.icon, content: { image in
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -43,20 +67,20 @@ struct MiniAppTermsView: View {
                     })
                     
                     VStack(spacing: 4) {
-                        Text(request.info.displayName ?? "")
-                        Text(request.info.version.versionTag)
+                        Text(viewModel.info.displayName ?? "")
+                        Text(viewModel.info.version.versionTag)
                             .font(.system(size: 12))
                             .foregroundColor(Color(.secondaryLabel))
                     }
                 }
 
                 List {
-                    Section("Permissions (\(requiredPermissionCount + optionalPermissionCount))") {
-                        ForEach((request.manifest.requiredPermissions ?? []), id: \.permissionName) { perm in
+                    Section("Permissions (\(viewModel.totalPermissionCount))") {
+                        ForEach((viewModel.requiredPermissions), id: \.permissionName) { perm in
                             MiniAppTermsRequiredCell(name: perm.permissionName.title, description: perm.permissionDescription)
                         }
-                        if optionalPermissionCount > 0 {
-                            ForEach((request.manifest.optionalPermissions ?? []), id: \.permissionName) { perm in
+                        if viewModel.optionalPermissionCount > 0 {
+                            ForEach((viewModel.optionalPermissions), id: \.permissionName) { perm in
                                 MiniAppTermsOptionalCell(
                                     name: perm.permissionName.title,
                                     description: perm.permissionDescription,
@@ -69,7 +93,7 @@ struct MiniAppTermsView: View {
                         }
                     }
                     
-                    if let permissionString = getAccessTokenPermissionString() {
+                    if let permissionString = viewModel.accessTokenPermissionString {
                         Section("Access Tokens") {
                             Text(permissionString)
                             .font(.system(size: 12))
@@ -78,7 +102,7 @@ struct MiniAppTermsView: View {
                     }
 
                     Section("Metadata") {
-                        Text(request.manifest.customMetaData.JSONString)
+                        Text(viewModel.manifest.customMetaData.JSONString)
                         .font(.system(size: 12))
                         .foregroundColor(Color(.secondaryLabel))
                     }
@@ -92,7 +116,7 @@ struct MiniAppTermsView: View {
                 Spacer()
                 VStack {
                     Button {
-                        viewModel.updatePermissions(miniAppId: request.info.id, manifest: request.manifest)
+                        viewModel.updatePermissions()
                         didAccept = true
                         //store.viewState = .success
                     } label: {
@@ -103,25 +127,11 @@ struct MiniAppTermsView: View {
                     }
                     .tint(.white)
                     .background(RoundedRectangle(cornerRadius: 10).fill(.red))
-
-//                    Button {
-//                        didCancel = false
-//                    } label: {
-//                        Text("Cancel")
-//                            .font(.system(size: 15, weight: .bold))
-//                            .frame(maxWidth: .infinity)
-//                            .padding(15)
-//                    }
-//                    .background(RoundedRectangle(cornerRadius: 10).fill(Color(.secondarySystemBackground)))
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
             }
         }
-    }
-    
-    func getAccessTokenPermissionString() -> String? {
-        request.manifest.accessTokenPermissions?.filter({ $0.audience == "rae" }).first?.scopes.joined(separator: ", ")
     }
 }
 

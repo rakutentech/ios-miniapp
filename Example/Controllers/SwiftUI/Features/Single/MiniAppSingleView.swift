@@ -5,8 +5,8 @@ struct MiniAppSingleView: View {
     
     @StateObject var viewModel: MiniAppWithTermsViewModel
     
-    @Binding var miniAppId: String
-    @Binding var miniAppVersion: String?
+    @State var miniAppId: String
+    @State var miniAppVersion: String?
     @State var miniAppType: MiniAppType
     
     @State private var permissionRequest: MiniAppPermissionRequest? = nil
@@ -14,10 +14,10 @@ struct MiniAppSingleView: View {
     @State private var didAcceptTerms: Bool = false
     @State private var didAcceptSettingsTerms: Bool = false
     
-    init(miniAppId: Binding<String>, miniAppVersion: Binding<String?>, miniAppType: MiniAppType) {
-        _viewModel = StateObject(wrappedValue: MiniAppWithTermsViewModel(miniAppId: miniAppId.wrappedValue, miniAppVersion: miniAppVersion.wrappedValue, miniAppType: .miniapp))
-        _miniAppId = miniAppId
-        _miniAppVersion = miniAppVersion
+    init(miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
+        _viewModel = StateObject(wrappedValue: MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: miniAppVersion, miniAppType: .miniapp))
+        _miniAppId = State(wrappedValue: miniAppId)
+        _miniAppVersion = State(wrappedValue: miniAppVersion)
         _miniAppType = State(wrappedValue: miniAppType)
     }
     
@@ -45,17 +45,16 @@ struct MiniAppSingleView: View {
                 }
             }
         })
-        .sheet(isPresented: $isPermissionPresented, content: {
-            if let permissionRequest = permissionRequest {
-                NavigationView {
-                    MiniAppTermsView(didAccept: $didAcceptSettingsTerms, request: permissionRequest)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                isPermissionPresented = false
-                            } label: {
-                                Text("Cancel")
-                            }
+        .sheet(item: $permissionRequest, content: { request in
+            NavigationView {
+                MiniAppTermsView(didAccept: $didAcceptSettingsTerms, request: request)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            permissionRequest = nil
+                        } label: {
+                            Text("Cancel")
                         }
                     }
                 }
@@ -71,7 +70,7 @@ struct MiniAppSingleView: View {
             print("State Change: ", state)
             switch state {
             case .success:
-                self.isPermissionPresented = false
+                self.permissionRequest = nil
             default:
                 ()
             }
@@ -83,7 +82,7 @@ struct MiniAppSingleView: View {
             switch result {
             case .success(let request):
                 permissionRequest = request
-                isPermissionPresented = true
+                //isPermissionPresented = true
             case .failure(let error):
                 viewModel.viewState = .error(error)
             }
@@ -94,8 +93,8 @@ struct MiniAppSingleView: View {
 struct MiniAppSingleView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppSingleView(
-            miniAppId: .constant(""),
-            miniAppVersion: .constant(""),
+            miniAppId: "",
+            miniAppVersion: "",
             miniAppType: .miniapp
         )
     }
