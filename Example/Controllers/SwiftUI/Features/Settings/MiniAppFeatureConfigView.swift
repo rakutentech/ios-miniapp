@@ -45,7 +45,6 @@ struct MiniAppFeatureConfigView: View {
 struct MiniAppFeatureConfigView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppFeatureConfigView(store: MiniAppStore.empty())
-            .environmentObject(MiniAppWidgetStore())
     }
 }
 
