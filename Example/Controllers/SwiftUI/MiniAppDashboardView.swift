@@ -44,9 +44,8 @@ struct MiniAppDashboardView: View {
         .onAppear {
             store.load()
         }
-        //.environment(\.appStore, .shared)
     }
-    
+
     var navigationTitle: String {
         switch selection {
         case 0:

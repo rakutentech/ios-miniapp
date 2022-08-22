@@ -2,7 +2,7 @@ import SwiftUI
 import MiniApp
 
 struct MiniAppWithTermsView: View {
-    
+
     @ObservedObject var viewModel: MiniAppWithTermsViewModel
 
     @State private var didAcceptTerms: Bool = false

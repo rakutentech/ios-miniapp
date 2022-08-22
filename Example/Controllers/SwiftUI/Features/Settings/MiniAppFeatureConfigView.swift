@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct MiniAppFeatureConfigView: View {
-    
+
     @ObservedObject var store: MiniAppStore
 
     @State var isPickerPresented: Bool = false
-    
+
     var body: some View {
         Form {
             Section(header: Text("Single")) {
@@ -50,14 +50,14 @@ struct MiniAppFeatureConfigView_Previews: PreviewProvider {
 }
 
 struct MiniAppFeatureConfigIdCell: View {
-    
+
     @ObservedObject var store: MiniAppStore
-    
+
     @State var placeholder: String
     @Binding var miniAppId: String
     @Binding var version: String
     @State var isPickerPresented: Bool = false
-    
+
     var body: some View {
         HStack(spacing: 10) {
             VStack {
@@ -68,7 +68,7 @@ struct MiniAppFeatureConfigIdCell: View {
                     .frame(height: 30)
                     .frame(maxWidth: .infinity)
             }
-            
+
             Button {
                 isPickerPresented = true
             } label: {

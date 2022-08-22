@@ -2,11 +2,11 @@ import SwiftUI
 import MiniApp
 
 struct MiniAppSegmentedView: View {
-    
+
     @StateObject var viewModel = MiniAppSegmentedViewModel()
 
     @State var segment: MiniAppSegmentedViewModel.MiniAppSegment = .one
-    
+
     var body: some View {
         VStack {
             Picker("MiniApp", selection: $segment) {

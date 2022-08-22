@@ -4,12 +4,12 @@ import MiniApp
 @MainActor
 class MiniAppTermsViewModel: ObservableObject {
     let service = MiniAppPermissionService()
-    
+
     @Published var info: MiniAppInfo
     @Published var manifest: MiniAppManifest
     @Published var requiredPermissions: [MASDKCustomPermissionModel]
     @Published var optionalPermissions: [MASDKCustomPermissionModel]
-    
+
     init(info: MiniAppInfo, manifest: MiniAppManifest) {
         self.info = info
         self.manifest = manifest
@@ -17,11 +17,11 @@ class MiniAppTermsViewModel: ObservableObject {
         let optionalPermissions = service.updatePermissionsWithCache(miniAppId: info.id, permissions: manifest.optionalPermissions ?? [])
         self.optionalPermissions = optionalPermissions
     }
-    
+
     func updatePermissions() {
         service.updatePermissions(miniAppId: info.id, permissionList: requiredPermissions + optionalPermissions)
     }
-    
+
     var totalPermissionCount: Int {
         requiredPermissionCount + optionalPermissionCount
     }
@@ -29,20 +29,20 @@ class MiniAppTermsViewModel: ObservableObject {
     var requiredPermissionCount: Int {
         requiredPermissions.count
     }
-    
+
     var optionalPermissionCount: Int {
         optionalPermissions.count
     }
-    
+
     var accessTokenPermissionString: String? {
         manifest.accessTokenPermissions?.filter({ $0.audience == "rae" }).first?.scopes.joined(separator: ", ")
     }
 }
 
 struct MiniAppTermsView: View {
-    
+
     @StateObject var viewModel: MiniAppTermsViewModel
-    
+
     @Binding var didAccept: Bool
     @State var didCancel: Bool = false
 
@@ -65,7 +65,7 @@ struct MiniAppTermsView: View {
                             .fill(Color(.secondarySystemBackground))
                             .frame(width: 60, height: 60, alignment: .center)
                     })
-                    
+
                     VStack(spacing: 4) {
                         Text(viewModel.info.displayName ?? "")
                         Text(viewModel.info.version.versionTag)
@@ -92,7 +92,7 @@ struct MiniAppTermsView: View {
                             }
                         }
                     }
-                    
+
                     if let permissionString = viewModel.accessTokenPermissionString {
                         Section("Access Tokens") {
                             Text(permissionString)
@@ -111,14 +111,14 @@ struct MiniAppTermsView: View {
             }
             .padding(.top, 20)
             .padding(.bottom, 80)
-            
+
             VStack {
                 Spacer()
                 VStack {
                     Button {
                         viewModel.updatePermissions()
                         didAccept = true
-                        //store.viewState = .success
+                        // store.viewState = .success
                     } label: {
                         Text("Accept")
                             .font(.system(size: 15, weight: .bold))

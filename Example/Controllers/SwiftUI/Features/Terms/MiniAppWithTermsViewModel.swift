@@ -6,14 +6,14 @@ import Combine
 class MiniAppWithTermsViewModel: ObservableObject {
 
     let permissionService = MiniAppPermissionService()
-    
+
     @Published var viewState: MiniAppPermissionService.ViewState = .none
-    
+
     var miniAppId: String
     var miniAppVersion: String?
     var miniAppType: MiniAppType
     var messageInterface: MiniAppMessageDelegate
-    
+
     var showMessageAlert: CurrentValueSubject<Bool, Never> = .init(false)
 
     init(

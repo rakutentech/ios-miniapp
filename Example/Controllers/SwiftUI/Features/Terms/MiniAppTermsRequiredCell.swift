@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct MiniAppTermsRequiredCell: View {
-    
+
     @State var name: String
     @State var description: String?
-    
+
     var body: some View {
         VStack(spacing: 5) {
             HStack(spacing: 5) {
@@ -34,7 +34,7 @@ struct MiniAppTermsRequiredCell_Previews: PreviewProvider {
                 description: "Enter a description here..."
             )
             .previewLayout(.fixed(width: 400, height: 60))
-            
+
             MiniAppTermsRequiredCell(
                 name: "User Name",
                 description: "Enter a description here..."

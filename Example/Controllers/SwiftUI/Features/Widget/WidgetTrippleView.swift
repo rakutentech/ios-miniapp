@@ -2,13 +2,13 @@ import SwiftUI
 import MiniApp
 
 class WidgetTrippleViewModel: ObservableObject {
-    
+
     var interfaces: [String: MiniAppMessageDelegate] = [:]
-    
+
     @Published var first: String
     @Published var second: String
     @Published var third: String
-    
+
     init(first: String, second: String, third: String) {
         self.first = first
         self.second = second
@@ -17,14 +17,14 @@ class WidgetTrippleViewModel: ObservableObject {
         interfaces[second] = MiniAppViewDelegator(miniAppId: second)
         interfaces[third] = MiniAppViewDelegator(miniAppId: third)
     }
-    
+
     func messageInterface(for miniAppId: String) -> MiniAppMessageDelegate {
         return interfaces[miniAppId] ?? MiniAppViewDelegator()
     }
 }
 
 struct WidgetTrippleView: View {
-    
+
     let viewModel: WidgetTrippleViewModel
 
     init(miniAppIdFirst: String = "", miniAppIdSecond: String = "", miniAppIdThird: String = "") {

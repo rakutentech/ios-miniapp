@@ -5,7 +5,7 @@ import Combine
 struct WidgetListView: View {
 
     let delegator = MiniAppWidgetsDelegator()
-    
+
     var miniAppIds: [String]
 
     var body: some View {
@@ -37,13 +37,13 @@ struct WidgetListView_Previews: PreviewProvider {
 }
 
 class MiniAppWidgetsDelegator: MiniAppMessageDelegate {
-    
+
     var miniAppId: String
-    
+
     init(miniAppId: String = "") {
         self.miniAppId = miniAppId
     }
-    
+
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.success("TestNew"))
     }

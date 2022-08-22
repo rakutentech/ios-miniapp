@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct MiniAppTermsOptionalCell: View {
-    
+
     @State var name: String
     @State var description: String?
     @Binding var isAccepted: Bool
-    
+
     var body: some View {
         Toggle(
             isOn: $isAccepted,
@@ -39,7 +39,7 @@ struct MiniAppTermsOptionalCell_Previews: PreviewProvider {
                 isAccepted: .constant(true)
             )
             .previewLayout(.fixed(width: 400, height: 60))
-            
+
             MiniAppTermsOptionalCell(
                 name: "Contacts",
                 description: "Enter a description here...",

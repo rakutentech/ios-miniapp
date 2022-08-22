@@ -3,9 +3,9 @@ import MiniApp
 
 @MainActor
 class MiniAppSegmentedViewModel: ObservableObject {
-    
+
     let store = MiniAppStore.shared
-    
+
     var interfaces: [String: MiniAppMessageDelegate] = [:]
 
     init() {
@@ -19,7 +19,7 @@ class MiniAppSegmentedViewModel: ObservableObject {
         interfaces[second] = MiniAppViewDelegator(miniAppId: second, miniAppVersion: vsecond)
         interfaces[third] = MiniAppViewDelegator(miniAppId: third, miniAppVersion: vthird)
     }
-    
+
     func messageInterface(for segment: MiniAppSegment) -> MiniAppMessageDelegate {
         return interfaces[getMiniAppId(segment: segment)] ?? MiniAppViewDelegator()
     }
@@ -58,7 +58,7 @@ class MiniAppSegmentedViewModel: ObservableObject {
             messageInterface: messageInterface(for: segment)
         )
     }
-    
+
     enum MiniAppSegment: String, CaseIterable {
         case one
         case two
