@@ -78,7 +78,6 @@
 		F733C85D289BA843008FBF9A /* MiniAppSingleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C85C289BA843008FBF9A /* MiniAppSingleView.swift */; };
 		F733C861289BABE5008FBF9A /* MiniAppUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C860289BABE5008FBF9A /* MiniAppUrlView.swift */; };
 		F733C863289BBF81008FBF9A /* MiniAppFeatureConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C862289BBF81008FBF9A /* MiniAppFeatureConfigView.swift */; };
-		F733C885289CD165008FBF9A /* MiniAppWidgetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C884289CD165008FBF9A /* MiniAppWidgetStore.swift */; };
 		F733C887289CDEB3008FBF9A /* MiniAppListPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F733C886289CDEB3008FBF9A /* MiniAppListPickerView.swift */; };
 		F7370A8A287BD21C00090032 /* MiniAppSecureStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */; };
 		F7455CBA28A38F82001354D0 /* MiniAppWithTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7455CB928A38F82001354D0 /* MiniAppWithTermsView.swift */; };
@@ -231,7 +230,6 @@
 		F733C85C289BA843008FBF9A /* MiniAppSingleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSingleView.swift; sourceTree = "<group>"; };
 		F733C860289BABE5008FBF9A /* MiniAppUrlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppUrlView.swift; sourceTree = "<group>"; };
 		F733C862289BBF81008FBF9A /* MiniAppFeatureConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureConfigView.swift; sourceTree = "<group>"; };
-		F733C884289CD165008FBF9A /* MiniAppWidgetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppWidgetStore.swift; sourceTree = "<group>"; };
 		F733C886289CDEB3008FBF9A /* MiniAppListPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppListPickerView.swift; sourceTree = "<group>"; };
 		F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageTests.swift; sourceTree = "<group>"; };
 		F7455CB928A38F82001354D0 /* MiniAppWithTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppWithTermsView.swift; sourceTree = "<group>"; };
@@ -535,7 +533,6 @@
 			isa = PBXGroup;
 			children = (
 				F7455D9828ACDA78001354D0 /* MiniAppStore.swift */,
-				F733C884289CD165008FBF9A /* MiniAppWidgetStore.swift */,
 				F7455D9628AC9557001354D0 /* MiniAppPermissionService.swift */,
 			);
 			path = Store;
@@ -954,7 +951,6 @@
 				F7455CC028A399BF001354D0 /* MiniAppTermsOptionalCell.swift in Sources */,
 				F71FADD928A366D600B58AF1 /* MiniAppListView.swift in Sources */,
 				310575D127EE213400D93B06 /* QASettingsTableViewController.swift in Sources */,
-				F733C885289CD165008FBF9A /* MiniAppWidgetStore.swift in Sources */,
 				310575DE27EE213400D93B06 /* DisplayController.swift in Sources */,
 				F7455D9928ACDA78001354D0 /* MiniAppStore.swift in Sources */,
 				F7455DA328AE07E3001354D0 /* MiniAppListRowCell.swift in Sources */,

@@ -168,19 +168,19 @@ class MiniAppViewHandler: NSObject {
     func load(completion: @escaping ((Result<MiniAppWebView, MASDKError>) -> Void)) {
         if let miniAppUrl = miniAppURL {
             DispatchQueue.main.async {
-                let webView = MiniAppWebView(miniAppURL: miniAppUrl)
-                self.webView = webView
+                let newWebView = MiniAppWebView(miniAppURL: miniAppUrl)
+                self.webView = newWebView
                 do {
                     try self.loadWebView(
-                        webView: webView,
+                        webView: newWebView,
                         miniAppId: self.appId,
                         versionId: "",
                         queryParams: self.queryParams
                     )
                 } catch {
-                    completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
+                    completion(.failure(.unknownError(domain: "", code: 0, description: "internal error: could not load the miniapp")))
                 }
-                completion(.success(webView))
+                completion(.success(newWebView))
             }
             return
         }
@@ -201,15 +201,15 @@ class MiniAppViewHandler: NSObject {
                         }
                         MiniAppLogger.d("MiniApp loaded with state: \(state)")
                         DispatchQueue.main.async {
-                            let webView = MiniAppWebView(
+                            let newWebView = MiniAppWebView(
                                 miniAppId: self.appId,
                                 versionId: info.version.versionId,
                                 queryParams: self.queryParams
                             )
-                            self.webView = webView
+                            self.webView = newWebView
                             do {
                                 try self.loadWebView(
-                                    webView: webView,
+                                    webView: newWebView,
                                     miniAppId: self.appId,
                                     versionId: info.version.versionId,
                                     queryParams: self.queryParams
@@ -217,7 +217,7 @@ class MiniAppViewHandler: NSObject {
                             } catch {
                                 completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
                             }
-                            completion(.success(webView))
+                            completion(.success(newWebView))
                         }
                     case let .failure(error):
                         completion(.failure(error))
@@ -255,15 +255,15 @@ class MiniAppViewHandler: NSObject {
                 case .success(let permissionsAgreed):
                     if permissionsAgreed {
                         DispatchQueue.main.async {
-                            let webView = MiniAppWebView(
+                            let newWebView = MiniAppWebView(
                                 miniAppId: self.appId,
                                 versionId: cachedVersion,
                                 queryParams: self.queryParams
                             )
-                            self.webView = webView
+                            self.webView = newWebView
                             do {
                                 try self.loadWebView(
-                                    webView: webView,
+                                    webView: newWebView,
                                     miniAppId: self.appId,
                                     versionId: cachedVersion,
                                     queryParams: self.queryParams
@@ -271,7 +271,7 @@ class MiniAppViewHandler: NSObject {
                             } catch {
                                 completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
                             }
-                            completion(.success(webView))
+                            completion(.success(newWebView))
                         }
                     } else {
                         completion(.failure(.metaDataFailure))
@@ -318,10 +318,6 @@ class MiniAppViewHandler: NSObject {
         )
         webView.configuration.userContentController.addBridgingJavaScript()
 
-//        if !isNavBarCustom {
-//            webViewBottomConstraintWithNavBar = navBar?.layoutAttachTop(to: webView)
-//            webViewBottomConstraintStandalone?.isActive = false
-//        }
         MiniAppAnalytics.sendAnalytics(
             event: .open,
             miniAppId: miniAppId,
@@ -638,42 +634,6 @@ extension MiniAppViewHandler: WKNavigationDelegate {
             }
         }
         decisionHandler(.cancel)
-    }
-
-    func refreshNavBar() {
-//        var actionsAvailable = [MiniAppNavigationAction]()
-//        if webView.canGoBack || navBarVisibility == .always {
-//            actionsAvailable.append(.back)
-//        }
-//        if webView.canGoForward || navBarVisibility == .always {
-//            actionsAvailable.append(.forward)
-//        }
-//        navigationDelegate?.miniAppNavigation(canUse: actionsAvailable)
-//        if actionsAvailable.count == 0 && navBarVisibility != .never {
-//            webViewBottomConstraintStandalone?.isActive = navBarVisibility == .auto
-//            webViewBottomConstraintWithNavBar?.isActive = navBarVisibility == .always
-//            navBar?.removeFromSuperview()
-//        } else {
-//            if let nav = navBar {
-//                let navDelegate = navigationDelegate as? UIView
-//                if navDelegate == nil || navDelegate != nav {
-//                    nav.miniAppNavigation(canUse: actionsAvailable)
-//                }
-//
-//                if navBarVisibility != .never {
-//                    addSubview(nav)
-//                    nav.translatesAutoresizingMaskIntoConstraints = false
-//                    webViewBottomConstraintStandalone?.isActive = isNavBarCustom
-//                    webViewBottomConstraintWithNavBar?.isActive = !isNavBarCustom
-//                    nav.layoutAttachBottom()
-//                    nav.layoutAttachLeading()
-//                    nav.layoutAttachTrailing()
-//                }
-//            } else {
-//                webViewBottomConstraintWithNavBar?.isActive = false
-//                webViewBottomConstraintStandalone?.isActive = true
-//            }
-//        }
     }
 }
 
