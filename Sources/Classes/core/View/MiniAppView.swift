@@ -10,7 +10,7 @@ public class MiniAppView: UIView, MiniAppViewable {
     internal var webView: MiniAppWebView?
 
     internal var type: MiniAppType
-    internal var state: MiniAppViewState = .none {
+    var state: MiniAppViewState = .none {
         didSet { updateViewState(state: state) }
     }
 
@@ -191,86 +191,64 @@ public class MiniAppView: UIView, MiniAppViewable {
         }
     }
 
-    public func load(fromCache: Bool = false) async throws -> AsyncThrowingStream<Void, Error> {
+    public func loadAsync(fromCache: Bool = false) async throws -> LoadStatus {
         guard webView == nil else {
             throw MASDKError.unknownError(domain: "", code: 0, description: "miniapp already loaded")
         }
         state = .loading
-        if fromCache {
-            return AsyncThrowingStream { continuation in
-                self.miniAppHandler.load { [weak self] result in
-                    switch result {
-                    case let .success(webView):
-                        self?.state = .active
-                        self?.setupWebView(webView: webView)
-                        continuation.yield(())
-                    case let .failure(error):
-                        self?.state = .error(error)
-                        continuation.yield(with: .failure(error))
-                    }
-                }
-            }
-        } else {
-            return AsyncThrowingStream { continuation in
-                self.miniAppHandler.loadFromCache { [weak self] result in
-                    switch result {
-                    case let .success(webView):
-                        self?.state = .active
-                        self?.setupWebView(webView: webView)
-                        continuation.yield(())
-                    case let .failure(error):
-                        self?.state = .error(error)
-                        continuation.yield(with: .failure(error))
-                    }
+        return try await withCheckedThrowingContinuation { continutation in
+            self.miniAppHandler.load { [weak self] result in
+                switch result {
+                case let .success(webView):
+                    self?.state = .active
+                    self?.setupWebView(webView: webView)
+                    continutation.resume(returning: .success)
+                case let .failure(error):
+                    continutation.resume(throwing: error)
                 }
             }
         }
+
+        // might throw more than one error so keeping this for now
+//        if fromCache {
+//            return AsyncThrowingStream { continuation in
+//                self.miniAppHandler.load { [weak self] result in
+//                    switch result {
+//                    case let .success(webView):
+//                        self?.state = .active
+//                        self?.setupWebView(webView: webView)
+//                        continuation.yield(.success)
+//                        continuation.finish()
+//                    case let .failure(error):
+//                        self?.state = .error(error)
+//                        continuation.yield(with: .failure(error))
+//                    }
+//                }
+//            }
+//        } else {
+//            return AsyncThrowingStream { continuation in
+//                self.miniAppHandler.loadFromCache { [weak self] result in
+//                    switch result {
+//                    case let .success(webView):
+//                        self?.state = .active
+//                        self?.setupWebView(webView: webView)
+//                        continuation.yield(.success)
+//                        continuation.finish()
+//                    case let .failure(error):
+//                        self?.state = .error(error)
+//                        continuation.yield(with: .failure(error))
+//                    }
+//                }
+//            }
+//        }
     }
 
     public var alertInfo: CloseAlertInfo? {
         return miniAppHandler.miniAppShouldClose()
     }
-}
 
-// MARK: - MiniAppViewCollectionCell
-public class MiniAppViewCollectionCell: UICollectionViewCell {
-
-    var miniAppView: MiniAppView?
-
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        contentView.backgroundColor = .systemOrange
-    }
-
-    required init?(coder: NSCoder) {
-        return nil
-    }
-
-    func setup(config: MiniAppNewConfig, type: MiniAppType, appId: String) {
-        guard miniAppView != nil else { return }
-        let view = MiniAppView(config: config, type: type, appId: appId)
-        self.miniAppView = view
-        self.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: contentView.topAnchor),
-            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
-        view.load { result in
-            switch result {
-            case .success(let succeeded):
-                print(succeeded)
-            case .failure(let error):
-                MiniAppLogger.e("error: ", error)
-            }
-        }
-    }
-
-    public override func prepareForReuse() {
-        super.prepareForReuse()
-        miniAppView?.constraints.forEach({ contentView.removeConstraint($0) })
-        miniAppView?.removeFromSuperview()
+    public enum LoadStatus {
+        case success
     }
 }
 

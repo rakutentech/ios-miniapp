@@ -13,7 +13,8 @@ public protocol MiniAppViewable: UIView {
     /// Loads the MiniApp async (getInfo, download etc) and initialized the webview
     /// After load is complete it will display the loaded MiniApp or an error.
     ///
-    func load(fromCache: Bool) async throws -> AsyncThrowingStream<Void, Error>
+    func loadAsync(fromCache: Bool) async throws -> MiniAppView.LoadStatus
+    // func loadAsync(fromCache: Bool) async throws -> AsyncThrowingStream<MiniAppView.LoadStatus, Error>
 
     /// Alert Info when closing the MiniApp
     ///
@@ -24,7 +25,7 @@ public extension MiniAppViewable {
     func load(fromCache: Bool = false, completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
         load(fromCache: fromCache, completion: completion)
     }
-    func load(fromCache: Bool = false) async throws -> AsyncThrowingStream<Void, Error> {
-        try await load(fromCache: fromCache)
-    }
+//    func loadAsync(fromCache: Bool = false) -> AsyncThrowingStream<MiniAppView.LoadStatus, Error> {
+//        loadAsync(fromCache: fromCache)
+//    }
 }

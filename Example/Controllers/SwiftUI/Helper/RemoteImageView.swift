@@ -1,11 +1,3 @@
-//
-//  RemoteImageView.swift
-//  MiniApp_Example
-//
-//  Created by Timotheus Laubengaier on 2022/08/22.
-//  Copyright © 2022 Rakuten Group, Inc. All rights reserved.
-//
-
 import SwiftUI
 
 class ImageLoaderService: ObservableObject {

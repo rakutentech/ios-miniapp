@@ -1,10 +1,3 @@
-//
-//  MiniAppStore.swift
-//  Sample SPM
-//
-//  Created by Timotheus Laubengaier on 2022/08/17.
-//
-
 import Foundation
 import SwiftUI
 import MiniApp
