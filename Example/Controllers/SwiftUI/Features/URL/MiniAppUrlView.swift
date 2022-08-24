@@ -44,7 +44,7 @@ struct MiniAppUrlView: View {
                     .foregroundColor(Color(UIColor.secondaryLabel))
                 Spacer()
             } else {
-                MiniAppSUView(params:
+                MiniAppSUIView(params:
                     MiniAppViewUrlParams(
                         config: MiniAppConfig(
                             config: Config.current(),

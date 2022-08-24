@@ -30,7 +30,7 @@ struct MiniAppWithTermsView: View {
                     .font(.system(size: 14, weight: .medium))
                     .padding(.horizontal, 40)
             case .success:
-                MiniAppSUView(params:
+                MiniAppSUIView(params:
                     MiniAppViewDefaultParams(
                         config: MiniAppConfig(
                             config: Config.current(),

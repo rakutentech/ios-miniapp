@@ -9,6 +9,10 @@ class MiniAppViewTests: XCTestCase {
         updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
     }
 
+    override class func tearDown() {
+        deleteMockMiniApp(appId: mockMiniAppInfo.id, versionId: mockMiniAppInfo.version.versionId)
+    }
+
     // MARK: - Async
     func test_miniappview_load_async_should_fail() async throws {
         let messageDelegate = MockMessageInterface()
@@ -77,6 +81,57 @@ class MiniAppViewTests: XCTestCase {
                 XCTFail("should not succeed")
             case let .failure(error):
                 XCTAssertTrue(!error.localizedDescription.isEmpty)
+            }
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
+
+    func test_miniappview_load_from_cache() {
+        let downloadedExpectation = XCTestExpectation(description: "download")
+
+        let delegate = MockMessageInterface()
+        let mockHandler = makeMockViewHandler(messageDelegate: delegate)
+
+        mockHandler.miniAppDownloader.verifyAndDownload(
+            appId: mockMiniAppInfo.id,
+            versionId: mockMiniAppInfo.version.versionId
+        ) { (result) in
+            switch result {
+            case .success(let url):
+                MiniAppLogger.d(url.absoluteString)
+                downloadedExpectation.fulfill()
+            case .failure(let error):
+                MiniAppLogger.e("error", error)
+                XCTFail(error.localizedDescription)
+            }
+        }
+
+        wait(for: [downloadedExpectation], timeout: 10.0)
+
+        let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: mockMiniAppInfo.id, and: mockMiniAppInfo.version.versionId)
+        XCTAssertEqual(miniAppDirectory.pathComponents.last, mockMiniAppInfo.version.versionId)
+
+
+        let expectation = XCTestExpectation(description: #function)
+
+        let view = MiniAppView(
+            config: MiniAppConfig(
+                config: nil,
+                messageInterface: delegate
+            ),
+            type: .miniapp,
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+        view.miniAppHandler = mockHandler
+
+        view.load(fromCache: true) { result in
+            switch result {
+            case .success:
+                XCTAssertTrue(true)
+            case let .failure(error):
+                XCTFail(error.localizedDescription)
             }
             expectation.fulfill()
         }

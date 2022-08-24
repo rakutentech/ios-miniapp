@@ -11,7 +11,7 @@ struct WidgetListView: View {
     var body: some View {
         List {
             ForEach(miniAppIds, id: \.self) { id in
-                MiniAppSUView(params:
+                MiniAppSUIView(params:
                     MiniAppViewDefaultParams(
                         config: MiniAppConfig(
                             config: Config.current(),
