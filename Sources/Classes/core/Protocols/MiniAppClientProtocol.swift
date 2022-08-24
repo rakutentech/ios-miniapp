@@ -13,23 +13,54 @@ internal protocol MiniAppClientProtocol {
 
     func updateSSLPinConfig()
     func updateEnvironment(with config: MiniAppSdkConfig?)
-    func getMiniAppsList(completionHandler: @escaping MiniAppClient.MAResponseDataHandler)
-    func getMiniApp(_ miniAppId: String, completionHandler: @escaping MiniAppClient.MAResponseDataHandler)
+
+    func getMiniAppsList(
+        completionHandler: @escaping MiniAppClient.MAResponseDataHandler
+    )
+
+    func getMiniApp(
+        _ miniAppId: String,
+        completionHandler: @escaping MiniAppClient.MAResponseDataHandler
+    )
+
     func getAppManifest(
         appId: String,
         versionId: String,
         completionHandler: @escaping MiniAppClient.MAResponseDataHandler
     )
+
     func getMiniAppMetaData(
         appId: String,
         versionId: String,
         languageCode: String,
         completionHandler: @escaping MiniAppClient.MAResponseDataHandler
     )
-    func download(url: String, miniAppId: String, miniAppVersion: String)
-    func getPreviewMiniAppInfo(using token: String,
-                               completionHandler: @escaping MiniAppClient.MAResponseDataHandler)
-    func requestDataFromServer(urlRequest: URLRequest, retry500: Int, completionHandler: @escaping MiniAppClient.MAResponseDataHandler)
-    func handleHttpErrorResponse(responseData: Data, httpResponse: HTTPURLResponse) -> MASDKError
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL)
+
+    func download(
+        url: String,
+        miniAppId: String,
+        miniAppVersion: String
+    )
+
+    func getPreviewMiniAppInfo(
+        using token: String,
+        completionHandler: @escaping MiniAppClient.MAResponseDataHandler
+    )
+
+    func requestDataFromServer(
+        urlRequest: URLRequest,
+        retry500: Int,
+        completionHandler: @escaping MiniAppClient.MAResponseDataHandler
+    )
+
+    func handleHttpErrorResponse(
+        responseData: Data,
+        httpResponse: HTTPURLResponse
+    ) -> MASDKError
+
+    func urlSession(
+        _ session: URLSession,
+        downloadTask: URLSessionDownloadTask,
+        didFinishDownloadingTo location: URL
+    )
 }
