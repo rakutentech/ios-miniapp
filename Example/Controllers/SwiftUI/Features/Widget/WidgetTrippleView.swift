@@ -35,7 +35,7 @@ struct WidgetTrippleView: View {
         VStack {
             MiniAppSUView(params:
                 MiniAppViewDefaultParams(
-                    config: MiniAppNewConfig(
+                    config: MiniAppConfig(
                         config: Config.current(),
                         messageInterface: viewModel.messageInterface(for: viewModel.first)
                     ),
@@ -45,7 +45,7 @@ struct WidgetTrippleView: View {
             )
             MiniAppSUView(params:
                 MiniAppViewDefaultParams(
-                    config: MiniAppNewConfig(
+                    config: MiniAppConfig(
                         config: Config.current(),
                         messageInterface: viewModel.messageInterface(for: viewModel.second)
                     ),
@@ -55,7 +55,7 @@ struct WidgetTrippleView: View {
             )
             MiniAppSUView(params:
                 MiniAppViewDefaultParams(
-                    config: MiniAppNewConfig(
+                    config: MiniAppConfig(
                         config: Config.current(),
                         messageInterface: viewModel.messageInterface(for: viewModel.third)
                     ),

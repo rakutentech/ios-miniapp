@@ -13,7 +13,7 @@ struct WidgetListView: View {
             ForEach(miniAppIds, id: \.self) { id in
                 MiniAppSUView(params:
                     MiniAppViewDefaultParams(
-                        config: MiniAppNewConfig(
+                        config: MiniAppConfig(
                             config: Config.current(),
                             adsDisplayer: nil,
                             messageInterface: delegator

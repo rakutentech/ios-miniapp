@@ -46,7 +46,7 @@ struct MiniAppUrlView: View {
             } else {
                 MiniAppSUView(params:
                     MiniAppViewUrlParams(
-                        config: MiniAppNewConfig(
+                        config: MiniAppConfig(
                             config: Config.current(),
                             messageInterface: delegator
                         ),

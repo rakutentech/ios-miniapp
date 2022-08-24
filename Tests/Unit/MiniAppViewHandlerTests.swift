@@ -18,7 +18,7 @@ class MiniAppViewHandlerTests: XCTestCase {
         let messageDelegate = MockMessageInterface()
 
         let viewHandler = MiniAppViewHandler(
-            config: MiniAppNewConfig(
+            config: MiniAppConfig(
                 config: nil,
                 messageInterface: messageDelegate
             ),
@@ -86,7 +86,7 @@ class MiniAppViewHandlerTests: XCTestCase {
         mockedClient.data = infoJsonData
 
         let viewHandler = MiniAppViewHandler(
-            config: MiniAppNewConfig(
+            config: MiniAppConfig(
                 config: nil,
                 messageInterface: messageDelegate
             ),
@@ -114,7 +114,7 @@ class MiniAppViewHandlerTests: XCTestCase {
         let messageDelegate = MockMessageInterface()
 
         let viewHandler = MiniAppViewHandler(
-            config: MiniAppNewConfig(
+            config: MiniAppConfig(
                 config: nil,
                 messageInterface: messageDelegate
             ),

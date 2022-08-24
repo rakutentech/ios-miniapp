@@ -203,7 +203,7 @@ public class MiniAppViewController: UIViewController {
         guard let messageDelegate = messageDelegate else { return }
 
         let miniAppView: MiniAppViewable = MiniAppView(
-            config: MiniAppNewConfig(
+            config: MiniAppConfig(
                 config: config,
                 adsDisplayer: adsDisplayer,
                 messageInterface: messageDelegate,

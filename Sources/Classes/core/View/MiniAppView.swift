@@ -39,7 +39,7 @@ public class MiniAppView: UIView, MiniAppViewable {
     }()
 
     public init(
-        config: MiniAppNewConfig,
+        config: MiniAppConfig,
         type: MiniAppType,
         appId: String,
         version: String? = nil,
@@ -57,7 +57,7 @@ public class MiniAppView: UIView, MiniAppViewable {
     }
 
     public init(
-        config: MiniAppNewConfig,
+        config: MiniAppConfig,
         type: MiniAppType,
         url: URL,
         queryParams: String? = nil
@@ -222,7 +222,7 @@ public class MiniAppView: UIView, MiniAppViewable {
 // MARK: - MiniAppSUView
 public struct MiniAppSUView: UIViewRepresentable {
 
-    var config: MiniAppNewConfig
+    var config: MiniAppConfig
     var type: MiniAppType
     var appId: String?
     var version: String?

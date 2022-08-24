@@ -49,7 +49,7 @@ class MiniAppViewHandler: NSObject {
     internal var shouldAutoLoadSecureStorage: Bool = false
 
     init(
-        config: MiniAppNewConfig,
+        config: MiniAppConfig,
         appId: String,
         version: String? = nil,
         queryParams: String? = nil,
@@ -91,7 +91,7 @@ class MiniAppViewHandler: NSObject {
     }
 
     init(
-        config: MiniAppNewConfig,
+        config: MiniAppConfig,
         url: URL,
         queryParams: String? = nil,
         initialLoadCallback: ((Bool) -> Void)? = nil,

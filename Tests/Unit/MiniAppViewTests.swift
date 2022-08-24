@@ -9,12 +9,12 @@ class MiniAppViewTests: XCTestCase {
         updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
     }
 
-    // MARK: - Setup
+    // MARK: - Async
     func test_miniappview_load_async_should_fail() async throws {
         let messageDelegate = MockMessageInterface()
 
         let view = await MiniAppView(
-            config: MiniAppNewConfig(
+            config: MiniAppConfig(
                 config: nil,
                 messageInterface: messageDelegate
             ),
@@ -29,6 +29,7 @@ class MiniAppViewTests: XCTestCase {
         }
     }
 
+    // MARK: - Closure
     func test_miniappview_load() {
         let expectation = XCTestExpectation(description: #function)
 
@@ -36,7 +37,7 @@ class MiniAppViewTests: XCTestCase {
         let mockHandler = makeMockViewHandler(messageDelegate: delegate)
 
         let view = MiniAppView(
-            config: MiniAppNewConfig(
+            config: MiniAppConfig(
                 config: nil,
                 messageInterface: delegate
             ),
@@ -63,7 +64,7 @@ class MiniAppViewTests: XCTestCase {
         let messageDelegate = MockMessageInterface()
 
         let view = MiniAppView(
-            config: MiniAppNewConfig(
+            config: MiniAppConfig(
                 config: nil,
                 messageInterface: messageDelegate
             ),
@@ -87,7 +88,7 @@ class MiniAppViewTests: XCTestCase {
         let messageDelegate = MockMessageInterface()
 
         let view = MiniAppView(
-            config: MiniAppNewConfig(
+            config: MiniAppConfig(
                 config: nil,
                 messageInterface: messageDelegate
             ),
@@ -111,7 +112,7 @@ class MiniAppViewTests: XCTestCase {
         let messageDelegate = MockMessageInterface()
 
         let view = MiniAppView(
-            config: MiniAppNewConfig(
+            config: MiniAppConfig(
                 config: nil,
                 messageInterface: messageDelegate
             ),
@@ -126,10 +127,9 @@ class MiniAppViewTests: XCTestCase {
 }
 
 extension MiniAppViewTests {
-
     func makeMockViewHandler(messageDelegate: MiniAppMessageDelegate) -> MiniAppViewHandler {
         let viewHandler = MiniAppViewHandler(
-            config: MiniAppNewConfig(
+            config: MiniAppConfig(
                 config: nil,
                 messageInterface: messageDelegate
             ),

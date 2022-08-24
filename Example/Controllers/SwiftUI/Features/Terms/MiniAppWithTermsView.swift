@@ -32,7 +32,7 @@ struct MiniAppWithTermsView: View {
             case .success:
                 MiniAppSUView(params:
                     MiniAppViewDefaultParams(
-                        config: MiniAppNewConfig(
+                        config: MiniAppConfig(
                             config: Config.current(),
                             adsDisplayer: nil,
                             messageInterface: viewModel.messageInterface

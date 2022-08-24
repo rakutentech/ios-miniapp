@@ -13,7 +13,7 @@ public enum MiniAppType {
     case widget
 }
 
-public struct MiniAppNewConfig {
+public struct MiniAppConfig {
     let config: MiniAppSdkConfig?
     let adsDisplayer: MiniAppAdDisplayer?
     let messageInterface: MiniAppMessageDelegate
@@ -33,14 +33,14 @@ public struct MiniAppNewConfig {
 }
 
 public struct MiniAppViewDefaultParams {
-    let config: MiniAppNewConfig
+    let config: MiniAppConfig
     let type: MiniAppType
     let appId: String
     let version: String?
     let queryParams: String?
 
     public init(
-        config: MiniAppNewConfig,
+        config: MiniAppConfig,
         type: MiniAppType,
         appId: String,
         version: String? = nil,
@@ -55,12 +55,12 @@ public struct MiniAppViewDefaultParams {
 }
 
 public struct MiniAppViewUrlParams {
-    let config: MiniAppNewConfig
+    let config: MiniAppConfig
     let type: MiniAppType
     let url: URL
     let queryParams: String?
 
-    public init(config: MiniAppNewConfig, type: MiniAppType, url: URL, queryParams: String? = nil) {
+    public init(config: MiniAppConfig, type: MiniAppType, url: URL, queryParams: String? = nil) {
         self.config = config
         self.type = type
         self.url = url
