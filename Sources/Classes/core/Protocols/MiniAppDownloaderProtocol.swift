@@ -9,3 +9,10 @@ protocol MiniAppDownloaderProtocol: AnyObject {
     func downloadFileTaskCompleted(url: String, error: MASDKError?)
     func moveFileToTempLocation(from sourcePath: URL, to tempLocation: String?) -> URL?
 }
+
+protocol MiniAppDownloaderInterface: MiniAppDownloaderProtocol {
+    func verifyAndDownload(appId: String, versionId: String, completionHandler: @escaping (Result<URL, MASDKError>) -> Void)
+    func isMiniAppAlreadyDownloaded(appId: String, versionId: String) -> Bool
+    func getCachedMiniAppVersion(appId: String, versionId: String) -> String?
+    func isCacheSecure(appId: String, versionId: String) -> Bool
+}

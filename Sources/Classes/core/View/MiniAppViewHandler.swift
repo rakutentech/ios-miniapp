@@ -8,15 +8,15 @@ class MiniAppViewHandler: NSObject {
 
     internal var webView: WKWebView?
 
-    internal let miniAppClient: MiniAppClient
-    internal let miniAppDownloader: MiniAppDownloader
-    internal let miniAppStatus: MiniAppStatus
-    internal let manifestDownloader: ManifestDownloader
-    internal let miniAppInfoFetcher: MiniAppInfoFetcher
-    internal let miniAppManifestStorage: MAManifestStorage
+    internal var miniAppClient: MiniAppClientProtocol
+    internal var miniAppDownloader: MiniAppDownloaderInterface
+    internal var miniAppStatus: MiniAppStatus
+    internal var manifestDownloader: ManifestDownloader
+    internal var miniAppInfoFetcher: MiniAppInfoFetcherInterface
+    internal var miniAppManifestStorage: MAManifestStorage
     internal var metaDataDownloader: MetaDataDownloader
     internal var miniAppPermissionStorage: MiniAppPermissionsStorage
-    internal let secureStorage: MiniAppSecureStorage
+    internal var secureStorage: MiniAppSecureStorage
 
     var appId: String
     var version: String?

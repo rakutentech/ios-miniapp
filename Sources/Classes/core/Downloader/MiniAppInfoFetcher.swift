@@ -1,6 +1,18 @@
-internal class MiniAppInfoFetcher {
+import Foundation
 
-    func fetchList(apiClient: MiniAppClient, completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
+protocol MiniAppInfoFetcherInterface {
+    func fetchList(apiClient: MiniAppClientProtocol, completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void)
+    func getInfo(miniAppId: String, miniAppVersion: String?, apiClient: MiniAppClientProtocol, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void)
+}
+extension MiniAppInfoFetcherInterface {
+    func getInfo(miniAppId: String, miniAppVersion: String? = nil, apiClient: MiniAppClientProtocol, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
+        getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion, apiClient: apiClient, completionHandler: completionHandler)
+    }
+}
+
+internal class MiniAppInfoFetcher: MiniAppInfoFetcherInterface {
+
+    func fetchList(apiClient: MiniAppClientProtocol, completionHandler: @escaping (Result<[MiniAppInfo], MASDKError>) -> Void) {
 
         apiClient.getMiniAppsList { (result) in
             switch result {
@@ -15,7 +27,7 @@ internal class MiniAppInfoFetcher {
         }
     }
 
-    func getInfo(miniAppId: String, miniAppVersion: String? = nil, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
+    func getInfo(miniAppId: String, miniAppVersion: String? = nil, apiClient: MiniAppClientProtocol, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
 
         apiClient.getMiniApp(miniAppId) { (result) in
             switch result {

@@ -2,19 +2,21 @@ import Foundation
 import XCTest
 @testable import MiniApp
 
-
 class MiniAppViewTests: XCTestCase {
 
-    enum TestError: Error {
-        case storageShouldNotExist
+    override class func setUp() {
+        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .userName, status: .allowed)
+        updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .profilePhoto, status: .allowed)
     }
 
     // MARK: - Setup
     func test_miniappview_load_async_should_fail() async throws {
+        let messageDelegate = MockMessageInterface()
+
         let view = await MiniAppView(
             config: MiniAppNewConfig(
                 config: nil,
-                messageInterface: makeMockMessageDelegate(miniAppId: "miniapp-1234", miniAppVersion: nil)
+                messageInterface: messageDelegate
             ),
             type: .miniapp,
             appId: "miniapp-1234"
@@ -27,13 +29,43 @@ class MiniAppViewTests: XCTestCase {
         }
     }
 
-    func test_miniappview_load_should_fail() {
+    func test_miniappview_load() {
         let expectation = XCTestExpectation(description: #function)
-        
+
+        let delegate = MockMessageInterface()
+        let mockHandler = makeMockViewHandler(messageDelegate: delegate)
+
         let view = MiniAppView(
             config: MiniAppNewConfig(
                 config: nil,
-                messageInterface: makeMockMessageDelegate(miniAppId: "miniapp-1234", miniAppVersion: nil)
+                messageInterface: delegate
+            ),
+            type: .miniapp,
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+        view.miniAppHandler = mockHandler
+        view.load { result in
+            switch result {
+            case let .success(success):
+                XCTAssertTrue(success)
+                expectation.fulfill()
+            case let .failure(error):
+                XCTFail(error.localizedDescription)
+            }
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
+
+    func test_miniappview_load_should_fail() {
+        let expectation = XCTestExpectation(description: #function)
+        let messageDelegate = MockMessageInterface()
+
+        let view = MiniAppView(
+            config: MiniAppNewConfig(
+                config: nil,
+                messageInterface: messageDelegate
             ),
             type: .miniapp,
             appId: "miniapp-1234"
@@ -52,11 +84,12 @@ class MiniAppViewTests: XCTestCase {
 
     func test_miniappview_load_from_cache_should_fail() {
         let expectation = XCTestExpectation(description: #function)
-        
+        let messageDelegate = MockMessageInterface()
+
         let view = MiniAppView(
             config: MiniAppNewConfig(
                 config: nil,
-                messageInterface: makeMockMessageDelegate(miniAppId: "miniapp-1234", miniAppVersion: nil)
+                messageInterface: messageDelegate
             ),
             type: .miniapp,
             appId: "miniapp-1234"
@@ -75,16 +108,17 @@ class MiniAppViewTests: XCTestCase {
 
     func test_miniappview_load_from_url() {
         let expectation = XCTestExpectation(description: #function)
-        
+        let messageDelegate = MockMessageInterface()
+
         let view = MiniAppView(
             config: MiniAppNewConfig(
                 config: nil,
-                messageInterface: makeMockMessageDelegate(miniAppId: "miniapp-1234", miniAppVersion: nil)
+                messageInterface: messageDelegate
             ),
             type: .miniapp,
             url: URL(string: "http://localhost:1337")!
         )
-        view.load { result in
+        view.load { _ in
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10.0)
@@ -93,62 +127,53 @@ class MiniAppViewTests: XCTestCase {
 
 extension MiniAppViewTests {
 
-    func makeMockMessageDelegate(miniAppId: String, miniAppVersion: String? = nil) -> MiniAppMessageDelegate {
-        return MockDelegate(miniAppId: miniAppId, miniAppVersion: miniAppVersion)
-    }
-    class MockDelegate: MiniAppMessageDelegate {
-        var miniAppId: String
-        var miniAppVersion: String?
+    func makeMockViewHandler(messageDelegate: MiniAppMessageDelegate) -> MiniAppViewHandler {
+        let viewHandler = MiniAppViewHandler(
+            config: MiniAppNewConfig(
+                config: nil,
+                messageInterface: messageDelegate
+            ),
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
 
-        var onSendMessage: (() -> Void)?
+        let mockBundle = MockBundle()
+        mockBundle.mockPreviewMode = false
+        let environment = Environment(bundle: mockBundle)
 
-        init(miniAppId: String = "", miniAppVersion: String? = nil) {
-            self.miniAppId = miniAppId
-            self.miniAppVersion = miniAppVersion
-        }
+        let mockedClient = MockAPIClient()
+        mockedClient.environment = environment
 
-        func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-            completionHandler(.success("MAUID-\(miniAppId.prefix(8))-\((miniAppVersion ?? "").prefix(8))"))
-        }
+        let mockManifestDownloader = MockManifestDownloader()
 
-        func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
-            //
-        }
+        let status = MiniAppStatus()
+        let mockDownloader = MiniAppDownloader(apiClient: mockedClient, manifestDownloader: mockManifestDownloader, status: status)
 
-        func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-            onSendMessage?()
-        }
+        viewHandler.miniAppClient = mockedClient
+        viewHandler.manifestDownloader = mockManifestDownloader
+        viewHandler.miniAppDownloader = mockDownloader
 
-        func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-            //
-        }
-
-        func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
-            onSendMessage?()
-        }
-
-        func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
-            if miniAppId.starts(with: "404") {
-                completionHandler(.success([
-                    MAContact(id: "1", name: "John Doe", email: "joh@doe.com")
-                ]))
-                return
-            } else if miniAppId.starts(with: "21f") {
-                completionHandler(.success([
-                    MAContact(id: "1", name: "Steve Jops", email: "steve@appl.com")
-                ]))
-                return
+        let responseString = """
+        [{
+            "id": "\(mockMiniAppInfo.id)",
+            "displayName": "Test",
+            "icon": "https://test.com",
+            "version": {
+                "versionTag": "1.0.0",
+                "versionId": "\(mockMiniAppInfo.version.versionId)",
             }
-            completionHandler(.failure(.unknownError(domain: "", code: 0, description: "no contacts")))
-            return
-        }
+          }]
+        """
+        let manifestResponse = """
+          {
+            "manifest": ["\(mockHost)/map-published-v2/min-abc/ver-abc/HelloWorld.txt"]
+          }
+        """
 
-        func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
-            completionHandler(.success(MAPoints(standard: 0, term: 0, cash: 0)))
-        }
+        mockedClient.data = responseString.data(using: .utf8)
+        mockedClient.metaData = mockMetaDataString.data(using: .utf8)
+        mockedClient.manifestData = manifestResponse.data(using: .utf8)
 
-        func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], miniAppTitle: String, completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
-            completionHandler(.failure(.userDenied))
-        }
+        return viewHandler
     }
 }
