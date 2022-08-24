@@ -112,7 +112,6 @@ class MiniAppViewTests: XCTestCase {
         let miniAppDirectory = FileManager.getMiniAppVersionDirectory(with: mockMiniAppInfo.id, and: mockMiniAppInfo.version.versionId)
         XCTAssertEqual(miniAppDirectory.pathComponents.last, mockMiniAppInfo.version.versionId)
 
-
         let expectation = XCTestExpectation(description: #function)
 
         let view = MiniAppView(
