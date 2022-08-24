@@ -137,6 +137,7 @@
 		F75593D8283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593D1283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift */; };
 		F75593D9283DD70F009D5833 /* MiniAppSecureStorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593D2283DD70F009D5833 /* MiniAppSecureStorageError.swift */; };
 		F75593DB283DD729009D5833 /* SQLite.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75593DA283DD729009D5833 /* SQLite.xcframework */; };
+		F77586A628B5CE4100B460F3 /* MiniAppClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77586A528B5CE4100B460F3 /* MiniAppClientProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -312,6 +313,7 @@
 		F75593D1283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MiniAppSecureStorage+Delegate.swift"; sourceTree = "<group>"; };
 		F75593D2283DD70F009D5833 /* MiniAppSecureStorageError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageError.swift; sourceTree = "<group>"; };
 		F75593DA283DD729009D5833 /* SQLite.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SQLite.xcframework; path = ../../Carthage/Build/SQLite.xcframework; sourceTree = "<group>"; };
+		F77586A528B5CE4100B460F3 /* MiniAppClientProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppClientProtocol.swift; sourceTree = "<group>"; };
 		F783FD95283C7885008BC743 /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = swiftlint.yml; path = ../../.github/workflows/swiftlint.yml; sourceTree = "<group>"; };
 		F783FD96283C7885008BC743 /* build_documentation.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = build_documentation.yml; path = ../../.github/workflows/build_documentation.yml; sourceTree = "<group>"; };
 		F783FD97283C7885008BC743 /* fastlane.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = fastlane.yml; path = ../../.github/workflows/fastlane.yml; sourceTree = "<group>"; };
@@ -658,6 +660,7 @@
 		31FA5EC827608D1A0070B611 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				F77586A528B5CE4100B460F3 /* MiniAppClientProtocol.swift */,
 				2A0FEE01286950C100935226 /* MiniAppManageDelegate.swift */,
 				31FA5EC927608D1A0070B611 /* MiniAppDownloaderProtocol.swift */,
 				31FA5ECA27608D1A0070B611 /* MiniAppDisplayProtocol.swift */,
@@ -1037,6 +1040,7 @@
 				31FA5F0B27608D1B0070B611 /* MiniAppVerificationStorage.swift in Sources */,
 				31FA5F1727608D1B0070B611 /* UIView+MiniApp.swift in Sources */,
 				31FA5F2927608D1B0070B611 /* MetaDataAPI.swift in Sources */,
+				F77586A628B5CE4100B460F3 /* MiniAppClientProtocol.swift in Sources */,
 				31FA5F2F27608D1B0070B611 /* MiniAppExternalWebViewController.swift in Sources */,
 				31FA5EFF27608D1B0070B611 /* MiniAppJavascriptErrorInfo.swift in Sources */,
 				31FA5F2827608D1B0070B611 /* ListingAPI.swift in Sources */,
