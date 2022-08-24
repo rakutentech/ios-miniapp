@@ -208,39 +208,6 @@ public class MiniAppView: UIView, MiniAppViewable {
                 }
             }
         }
-
-        // might throw more than one error so keeping this for now
-//        if fromCache {
-//            return AsyncThrowingStream { continuation in
-//                self.miniAppHandler.load { [weak self] result in
-//                    switch result {
-//                    case let .success(webView):
-//                        self?.state = .active
-//                        self?.setupWebView(webView: webView)
-//                        continuation.yield(.success)
-//                        continuation.finish()
-//                    case let .failure(error):
-//                        self?.state = .error(error)
-//                        continuation.yield(with: .failure(error))
-//                    }
-//                }
-//            }
-//        } else {
-//            return AsyncThrowingStream { continuation in
-//                self.miniAppHandler.loadFromCache { [weak self] result in
-//                    switch result {
-//                    case let .success(webView):
-//                        self?.state = .active
-//                        self?.setupWebView(webView: webView)
-//                        continuation.yield(.success)
-//                        continuation.finish()
-//                    case let .failure(error):
-//                        self?.state = .error(error)
-//                        continuation.yield(with: .failure(error))
-//                    }
-//                }
-//            }
-//        }
     }
 
     public var alertInfo: CloseAlertInfo? {

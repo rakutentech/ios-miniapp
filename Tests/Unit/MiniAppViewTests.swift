@@ -19,7 +19,7 @@ class MiniAppViewTests: XCTestCase {
                 messageInterface: messageDelegate
             ),
             type: .miniapp,
-            appId: "miniapp-1234"
+            appId: mockMiniAppInfo.id
         )
         do {
             _ = try await view.loadAsync()
@@ -68,7 +68,7 @@ class MiniAppViewTests: XCTestCase {
                 messageInterface: messageDelegate
             ),
             type: .miniapp,
-            appId: "miniapp-1234"
+            appId: mockMiniAppInfo.id
         )
         view.load { result in
             switch result {
@@ -92,7 +92,7 @@ class MiniAppViewTests: XCTestCase {
                 messageInterface: messageDelegate
             ),
             type: .miniapp,
-            appId: "miniapp-1234"
+            appId: mockMiniAppInfo.id
         )
         view.load(fromCache: true) { result in
             switch result {
