@@ -104,13 +104,13 @@ public class MiniAppView: UIView, MiniAppViewable {
             stateImageView.heightAnchor.constraint(equalToConstant: 25)
         ])
 
-        // just for testing purpose
         switch type {
         case .miniapp:
             self.layer.borderWidth = 0
         case .widget:
             self.layer.cornerRadius = 10
             self.clipsToBounds = true
+            self.isUserInteractionEnabled = false
         }
     }
 
@@ -191,7 +191,7 @@ public class MiniAppView: UIView, MiniAppViewable {
         }
     }
 
-    public func loadAsync(fromCache: Bool = false) async throws -> LoadStatus {
+    public func loadAsync(fromCache: Bool = false) async throws -> MiniAppLoadStatus {
         guard webView == nil else {
             throw MASDKError.unknownError(domain: "", code: 0, description: "miniapp already loaded")
         }
@@ -214,7 +214,7 @@ public class MiniAppView: UIView, MiniAppViewable {
         return miniAppHandler.miniAppShouldClose()
     }
 
-    public enum LoadStatus {
+    public enum MiniAppLoadStatus {
         case success
     }
 }

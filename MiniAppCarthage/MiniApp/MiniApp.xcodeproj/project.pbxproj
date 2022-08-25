@@ -128,6 +128,11 @@
 		31FA603E2761B8660070B611 /* MiniApp.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31FA5EC727608D1A0070B611 /* MiniApp.xcassets */; };
 		31FA60452761F71A0070B611 /* Localization.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 31FA60182761945A0070B611 /* Localization.bundle */; };
 		31FA60462761F71A0070B611 /* MiniApp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 31FA60342761A4370070B611 /* MiniApp.bundle */; };
+		F70178A828B71783002B4D17 /* MiniAppViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70178A428B71783002B4D17 /* MiniAppViewHandler.swift */; };
+		F70178A928B71783002B4D17 /* MiniAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70178A528B71783002B4D17 /* MiniAppView.swift */; };
+		F70178AA28B71783002B4D17 /* MiniAppViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70178A628B71783002B4D17 /* MiniAppViewable.swift */; };
+		F70178AB28B71783002B4D17 /* MiniAppView+Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70178A728B71783002B4D17 /* MiniAppView+Definitions.swift */; };
+		F70178AD28B717F9002B4D17 /* MiniAppSUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70178AC28B717F9002B4D17 /* MiniAppSUIView.swift */; };
 		F74A776B28531170009A1419 /* MiniAppUI+Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74A776A28531170009A1419 /* MiniAppUI+Activity.swift */; };
 		F75593D3283DD70F009D5833 /* MiniAppSecureStorageDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593CC283DD70F009D5833 /* MiniAppSecureStorageDatabase.swift */; };
 		F75593D4283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75593CD283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase.swift */; };
@@ -302,6 +307,11 @@
 		31FA60342761A4370070B611 /* MiniApp.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FA60372761B06B0070B611 /* log.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = log.js; sourceTree = "<group>"; };
 		31FA60382761B06B0070B611 /* bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bridge.js; sourceTree = "<group>"; };
+		F70178A428B71783002B4D17 /* MiniAppViewHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewHandler.swift; sourceTree = "<group>"; };
+		F70178A528B71783002B4D17 /* MiniAppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppView.swift; sourceTree = "<group>"; };
+		F70178A628B71783002B4D17 /* MiniAppViewable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewable.swift; sourceTree = "<group>"; };
+		F70178A728B71783002B4D17 /* MiniAppView+Definitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MiniAppView+Definitions.swift"; sourceTree = "<group>"; };
+		F70178AC28B717F9002B4D17 /* MiniAppSUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSUIView.swift; sourceTree = "<group>"; };
 		F74A776A28531170009A1419 /* MiniAppUI+Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniAppUI+Activity.swift"; sourceTree = "<group>"; };
 		F74AA116283C692200087718 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cartfile; path = ../../Cartfile; sourceTree = "<group>"; };
 		F74AA117283C692C00087718 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -487,6 +497,7 @@
 				31FA5E7027608D1A0070B611 /* MiniAppViewController.swift */,
 				31FA5E7127608D1A0070B611 /* MiniAppViewController+ViewState.swift */,
 				F74A776A28531170009A1419 /* MiniAppUI+Activity.swift */,
+				F70178AC28B717F9002B4D17 /* MiniAppSUIView.swift */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -510,6 +521,7 @@
 				31FA5EB327608D1A0070B611 /* MiniApp.swift */,
 				31FA5EB427608D1A0070B611 /* MiniAppLogger.swift */,
 				31FA5EB527608D1A0070B611 /* Display */,
+				F70178A328B71783002B4D17 /* View */,
 				31FA5EC627608D1A0070B611 /* Assets */,
 				31FA5EC827608D1A0070B611 /* Protocols */,
 				31FA5ED127608D1A0070B611 /* JavascriptBridge */,
@@ -761,6 +773,17 @@
 			path = "../../Sources/Classes/js-miniapp";
 			sourceTree = "<group>";
 		};
+		F70178A328B71783002B4D17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F70178A428B71783002B4D17 /* MiniAppViewHandler.swift */,
+				F70178A528B71783002B4D17 /* MiniAppView.swift */,
+				F70178A628B71783002B4D17 /* MiniAppViewable.swift */,
+				F70178A728B71783002B4D17 /* MiniAppView+Definitions.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		F74AA097283B6B9300087718 /* Deployment */ = {
 			isa = PBXGroup;
 			children = (
@@ -975,6 +998,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F70178AB28B71783002B4D17 /* MiniAppView+Definitions.swift in Sources */,
+				F70178AD28B717F9002B4D17 /* MiniAppSUIView.swift in Sources */,
 				31FA5F1D27608D1B0070B611 /* UIApplication.swift in Sources */,
 				31FA5F4D27608D1B0070B611 /* Verifier.swift in Sources */,
 				31FA5F3E27608D1B0070B611 /* MiniAppDisplayProtocol.swift in Sources */,
@@ -1002,6 +1027,7 @@
 				31FA5F0E27608D1B0070B611 /* MiniAppCacheVerifier.swift in Sources */,
 				31FA5F1827608D1B0070B611 /* UIWindow+MiniApp.swift in Sources */,
 				31FA5F3427608D1B0070B611 /* MACustomPermissionCell.swift in Sources */,
+				F70178AA28B71783002B4D17 /* MiniAppViewable.swift in Sources */,
 				31FA5F3D27608D1B0070B611 /* MiniAppDownloaderProtocol.swift in Sources */,
 				F75593D6283DD70F009D5833 /* MiniAppSecureStorage.swift in Sources */,
 				31FA5F3927608D1B0070B611 /* MimeTypes.swift in Sources */,
@@ -1065,6 +1091,7 @@
 				31FA5EF627608D1B0070B611 /* MiniAppSSLConfig.swift in Sources */,
 				31FA5F5227608D1B0070B611 /* SessionType.swift in Sources */,
 				F75593D9283DD70F009D5833 /* MiniAppSecureStorageError.swift in Sources */,
+				F70178A828B71783002B4D17 /* MiniAppViewHandler.swift in Sources */,
 				31FA5EEF27608D1A0070B611 /* MiniAppViewController+Fallback.swift in Sources */,
 				F74A776B28531170009A1419 /* MiniAppUI+Activity.swift in Sources */,
 				31FA5F4327608D1B0070B611 /* MiniAppShareContentDelegate.swift in Sources */,
@@ -1083,6 +1110,7 @@
 				31FA5F2D27608D1B0070B611 /* MiniAppLogger.swift in Sources */,
 				31FA5EF527608D1B0070B611 /* MiniAppAnalytics.swift in Sources */,
 				31FA5F2127608D1B0070B611 /* UrlParser.swift in Sources */,
+				F70178A928B71783002B4D17 /* MiniAppView.swift in Sources */,
 				31FA5F4527608D1B0070B611 /* MAJavascriptErrorHandler.swift in Sources */,
 				F75593D8283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift in Sources */,
 				31FA5EF927608D1B0070B611 /* DownloadOperation.swift in Sources */,
