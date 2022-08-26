@@ -120,6 +120,29 @@
 		F74AA10D283C651400087718 /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */; };
 		F74AA112283C65AB00087718 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA111283C65AB00087718 /* Nimble */; };
 		F74AA115283C65E300087718 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA114283C65E300087718 /* Quick */; };
+		F775543228B8890B00B0CDFA /* MiniAppDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775541128B8890B00B0CDFA /* MiniAppDashboardView.swift */; };
+		F775543328B8890B00B0CDFA /* MiniAppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775541428B8890B00B0CDFA /* MiniAppSettingsViewModel.swift */; };
+		F775543428B8890B00B0CDFA /* MiniAppFeatureConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775541528B8890B00B0CDFA /* MiniAppFeatureConfigView.swift */; };
+		F775543528B8890B00B0CDFA /* WidgetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775541728B8890B00B0CDFA /* WidgetListView.swift */; };
+		F775543628B8890B00B0CDFA /* WidgetTrippleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775541828B8890B00B0CDFA /* WidgetTrippleView.swift */; };
+		F775543728B8890B00B0CDFA /* MiniAppSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775541A28B8890B00B0CDFA /* MiniAppSegmentedView.swift */; };
+		F775543828B8890B00B0CDFA /* MiniAppSegmentedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775541B28B8890B00B0CDFA /* MiniAppSegmentedViewModel.swift */; };
+		F775543928B8890B00B0CDFA /* MiniAppFeatureListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775541C28B8890B00B0CDFA /* MiniAppFeatureListView.swift */; };
+		F775543A28B8890B00B0CDFA /* MiniAppTermsOptionalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775541E28B8890B00B0CDFA /* MiniAppTermsOptionalCell.swift */; };
+		F775543B28B8890B00B0CDFA /* MiniAppTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775541F28B8890B00B0CDFA /* MiniAppTermsView.swift */; };
+		F775543C28B8890B00B0CDFA /* MiniAppWithTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542028B8890B00B0CDFA /* MiniAppWithTermsView.swift */; };
+		F775543D28B8890B00B0CDFA /* MiniAppWithTermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542128B8890B00B0CDFA /* MiniAppWithTermsViewModel.swift */; };
+		F775543E28B8890B00B0CDFA /* MiniAppTermsRequiredCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542228B8890B00B0CDFA /* MiniAppTermsRequiredCell.swift */; };
+		F775543F28B8890B00B0CDFA /* MiniAppSingleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542428B8890B00B0CDFA /* MiniAppSingleView.swift */; };
+		F775544028B8890B00B0CDFA /* MiniAppUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542628B8890B00B0CDFA /* MiniAppUrlView.swift */; };
+		F775544128B8890B00B0CDFA /* MiniAppListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542828B8890B00B0CDFA /* MiniAppListView.swift */; };
+		F775544228B8890B00B0CDFA /* MiniAppListRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542928B8890B00B0CDFA /* MiniAppListRowCell.swift */; };
+		F775544328B8890B00B0CDFA /* MiniAppListPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542A28B8890B00B0CDFA /* MiniAppListPickerView.swift */; };
+		F775544428B8890B00B0CDFA /* MiniAppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542B28B8890B00B0CDFA /* MiniAppListViewModel.swift */; };
+		F775544528B8890B00B0CDFA /* RemoteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542D28B8890B00B0CDFA /* RemoteImageView.swift */; };
+		F775544628B8890B00B0CDFA /* MiniAppViewDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775542E28B8890B00B0CDFA /* MiniAppViewDelegator.swift */; };
+		F775544728B8890B00B0CDFA /* MiniAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775543028B8890B00B0CDFA /* MiniAppStore.swift */; };
+		F775544828B8890B00B0CDFA /* MiniAppPermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F775543128B8890B00B0CDFA /* MiniAppPermissionService.swift */; };
 		F796AC8C2860204900A75DA8 /* RAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F796AC8B2860204900A75DA8 /* RAnalytics */; };
 		F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */; };
 /* End PBXBuildFile section */
@@ -249,6 +272,29 @@
 		F74AA0D9283C651300087718 /* MiniAppSdkConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSdkConfigTests.swift; sourceTree = "<group>"; };
 		F74AA0DA283C651300087718 /* MiniAppKeyChainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppKeyChainTests.swift; sourceTree = "<group>"; };
 		F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
+		F775541128B8890B00B0CDFA /* MiniAppDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppDashboardView.swift; sourceTree = "<group>"; };
+		F775541428B8890B00B0CDFA /* MiniAppSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSettingsViewModel.swift; sourceTree = "<group>"; };
+		F775541528B8890B00B0CDFA /* MiniAppFeatureConfigView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureConfigView.swift; sourceTree = "<group>"; };
+		F775541728B8890B00B0CDFA /* WidgetListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetListView.swift; sourceTree = "<group>"; };
+		F775541828B8890B00B0CDFA /* WidgetTrippleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetTrippleView.swift; sourceTree = "<group>"; };
+		F775541A28B8890B00B0CDFA /* MiniAppSegmentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSegmentedView.swift; sourceTree = "<group>"; };
+		F775541B28B8890B00B0CDFA /* MiniAppSegmentedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSegmentedViewModel.swift; sourceTree = "<group>"; };
+		F775541C28B8890B00B0CDFA /* MiniAppFeatureListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureListView.swift; sourceTree = "<group>"; };
+		F775541E28B8890B00B0CDFA /* MiniAppTermsOptionalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppTermsOptionalCell.swift; sourceTree = "<group>"; };
+		F775541F28B8890B00B0CDFA /* MiniAppTermsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppTermsView.swift; sourceTree = "<group>"; };
+		F775542028B8890B00B0CDFA /* MiniAppWithTermsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppWithTermsView.swift; sourceTree = "<group>"; };
+		F775542128B8890B00B0CDFA /* MiniAppWithTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppWithTermsViewModel.swift; sourceTree = "<group>"; };
+		F775542228B8890B00B0CDFA /* MiniAppTermsRequiredCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppTermsRequiredCell.swift; sourceTree = "<group>"; };
+		F775542428B8890B00B0CDFA /* MiniAppSingleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSingleView.swift; sourceTree = "<group>"; };
+		F775542628B8890B00B0CDFA /* MiniAppUrlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppUrlView.swift; sourceTree = "<group>"; };
+		F775542828B8890B00B0CDFA /* MiniAppListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppListView.swift; sourceTree = "<group>"; };
+		F775542928B8890B00B0CDFA /* MiniAppListRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppListRowCell.swift; sourceTree = "<group>"; };
+		F775542A28B8890B00B0CDFA /* MiniAppListPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppListPickerView.swift; sourceTree = "<group>"; };
+		F775542B28B8890B00B0CDFA /* MiniAppListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppListViewModel.swift; sourceTree = "<group>"; };
+		F775542D28B8890B00B0CDFA /* RemoteImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImageView.swift; sourceTree = "<group>"; };
+		F775542E28B8890B00B0CDFA /* MiniAppViewDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewDelegator.swift; sourceTree = "<group>"; };
+		F775543028B8890B00B0CDFA /* MiniAppStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppStore.swift; sourceTree = "<group>"; };
+		F775543128B8890B00B0CDFA /* MiniAppPermissionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppPermissionService.swift; sourceTree = "<group>"; };
 		F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -351,6 +397,7 @@
 		3105758227EE213400D93B06 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F775541028B8890B00B0CDFA /* SwiftUI */,
 				3105758327EE213400D93B06 /* Storyboards */,
 				3105758B27EE213400D93B06 /* Settings */,
 				3105759827EE213400D93B06 /* ViewController.swift */,
@@ -584,6 +631,116 @@
 			path = UIModule;
 			sourceTree = "<group>";
 		};
+		F775541028B8890B00B0CDFA /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				F775541128B8890B00B0CDFA /* MiniAppDashboardView.swift */,
+				F775541228B8890B00B0CDFA /* Features */,
+				F775542C28B8890B00B0CDFA /* Helper */,
+				F775542F28B8890B00B0CDFA /* Store */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		F775541228B8890B00B0CDFA /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				F775542728B8890B00B0CDFA /* List */,
+				F775541C28B8890B00B0CDFA /* MiniAppFeatureListView.swift */,
+				F775541928B8890B00B0CDFA /* Segmented */,
+				F775541328B8890B00B0CDFA /* Settings */,
+				F775542328B8890B00B0CDFA /* Single */,
+				F775541D28B8890B00B0CDFA /* Terms */,
+				F775542528B8890B00B0CDFA /* URL */,
+				F775541628B8890B00B0CDFA /* Widget */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		F775541328B8890B00B0CDFA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F775541428B8890B00B0CDFA /* MiniAppSettingsViewModel.swift */,
+				F775541528B8890B00B0CDFA /* MiniAppFeatureConfigView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		F775541628B8890B00B0CDFA /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				F775541728B8890B00B0CDFA /* WidgetListView.swift */,
+				F775541828B8890B00B0CDFA /* WidgetTrippleView.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		F775541928B8890B00B0CDFA /* Segmented */ = {
+			isa = PBXGroup;
+			children = (
+				F775541A28B8890B00B0CDFA /* MiniAppSegmentedView.swift */,
+				F775541B28B8890B00B0CDFA /* MiniAppSegmentedViewModel.swift */,
+			);
+			path = Segmented;
+			sourceTree = "<group>";
+		};
+		F775541D28B8890B00B0CDFA /* Terms */ = {
+			isa = PBXGroup;
+			children = (
+				F775541E28B8890B00B0CDFA /* MiniAppTermsOptionalCell.swift */,
+				F775541F28B8890B00B0CDFA /* MiniAppTermsView.swift */,
+				F775542028B8890B00B0CDFA /* MiniAppWithTermsView.swift */,
+				F775542128B8890B00B0CDFA /* MiniAppWithTermsViewModel.swift */,
+				F775542228B8890B00B0CDFA /* MiniAppTermsRequiredCell.swift */,
+			);
+			path = Terms;
+			sourceTree = "<group>";
+		};
+		F775542328B8890B00B0CDFA /* Single */ = {
+			isa = PBXGroup;
+			children = (
+				F775542428B8890B00B0CDFA /* MiniAppSingleView.swift */,
+			);
+			path = Single;
+			sourceTree = "<group>";
+		};
+		F775542528B8890B00B0CDFA /* URL */ = {
+			isa = PBXGroup;
+			children = (
+				F775542628B8890B00B0CDFA /* MiniAppUrlView.swift */,
+			);
+			path = URL;
+			sourceTree = "<group>";
+		};
+		F775542728B8890B00B0CDFA /* List */ = {
+			isa = PBXGroup;
+			children = (
+				F775542828B8890B00B0CDFA /* MiniAppListView.swift */,
+				F775542928B8890B00B0CDFA /* MiniAppListRowCell.swift */,
+				F775542A28B8890B00B0CDFA /* MiniAppListPickerView.swift */,
+				F775542B28B8890B00B0CDFA /* MiniAppListViewModel.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		F775542C28B8890B00B0CDFA /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				F775542E28B8890B00B0CDFA /* MiniAppViewDelegator.swift */,
+				F775542D28B8890B00B0CDFA /* RemoteImageView.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		F775542F28B8890B00B0CDFA /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				F775543028B8890B00B0CDFA /* MiniAppStore.swift */,
+				F775543128B8890B00B0CDFA /* MiniAppPermissionService.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -755,9 +912,11 @@
 				310575D227EE213400D93B06 /* UserSettingsTableViewController.swift in Sources */,
 				F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */,
 				310575E727EE213400D93B06 /* MiniAppCell.swift in Sources */,
+				F775543D28B8890B00B0CDFA /* MiniAppWithTermsViewModel.swift in Sources */,
 				310575C627EE213400D93B06 /* MiniApp+UIImage.swift in Sources */,
 				310575BE27EE213400D93B06 /* Array+MiniApp.swift in Sources */,
 				310575C727EE213400D93B06 /* Bundle+MiniApp.swift in Sources */,
+				F775543628B8890B00B0CDFA /* WidgetTrippleView.swift in Sources */,
 				310575D527EE213400D93B06 /* DeeplinkListViewController.swift in Sources */,
 				310575DA27EE213400D93B06 /* ManageCustomPermissionsViewController.swift in Sources */,
 				310575E327EE213400D93B06 /* ViewController+MiniApp.swift in Sources */,
@@ -766,25 +925,42 @@
 				310575ED27EE213400D93B06 /* RATNotificationCenter.swift in Sources */,
 				310575C327EE213400D93B06 /* Progress+UIViewController.swift in Sources */,
 				310575C227EE213400D93B06 /* UITextField.swift in Sources */,
+				F775543328B8890B00B0CDFA /* MiniAppSettingsViewModel.swift in Sources */,
 				310575C427EE213400D93B06 /* Print+MiniApp.swift in Sources */,
 				310575CB27EE213400D93B06 /* AppDelegate.swift in Sources */,
 				310575E427EE213400D93B06 /* ViewController+ChatDelegate.swift in Sources */,
 				310575D927EE213400D93B06 /* SignatureSettingsTableViewController.swift in Sources */,
+				F775543C28B8890B00B0CDFA /* MiniAppWithTermsView.swift in Sources */,
+				F775544328B8890B00B0CDFA /* MiniAppListPickerView.swift in Sources */,
+				F775544728B8890B00B0CDFA /* MiniAppStore.swift in Sources */,
+				F775544228B8890B00B0CDFA /* MiniAppListRowCell.swift in Sources */,
+				F775544628B8890B00B0CDFA /* MiniAppViewDelegator.swift in Sources */,
+				F775544528B8890B00B0CDFA /* RemoteImageView.swift in Sources */,
 				310575E527EE213400D93B06 /* DisplayNavigationController.swift in Sources */,
 				310575DD27EE213400D93B06 /* ChatContactsSelectorViewController.swift in Sources */,
 				310575CA27EE213400D93B06 /* UserProfileModel.swift in Sources */,
 				310575DC27EE213400D93B06 /* ViewController.swift in Sources */,
+				F775543428B8890B00B0CDFA /* MiniAppFeatureConfigView.swift in Sources */,
 				310575D427EE213400D93B06 /* ContactsListSettingsTableViewController.swift in Sources */,
 				310575EE27EE213400D93B06 /* DemoAppAnalytics.swift in Sources */,
 				310575EC27EE213400D93B06 /* Swizzling.swift in Sources */,
 				310575EF27EE213400D93B06 /* RATController.swift in Sources */,
+				F775543928B8890B00B0CDFA /* MiniAppFeatureListView.swift in Sources */,
+				F775544128B8890B00B0CDFA /* MiniAppListView.swift in Sources */,
 				310575BD27EE213400D93B06 /* Number+MiniApp.swift in Sources */,
+				F775543F28B8890B00B0CDFA /* MiniAppSingleView.swift in Sources */,
+				F775543A28B8890B00B0CDFA /* MiniAppTermsOptionalCell.swift in Sources */,
+				F775543228B8890B00B0CDFA /* MiniAppDashboardView.swift in Sources */,
 				310575B927EE213400D93B06 /* UIImageView+Extensions.swift in Sources */,
 				310575D127EE213400D93B06 /* QASettingsTableViewController.swift in Sources */,
 				310575DE27EE213400D93B06 /* DisplayController.swift in Sources */,
 				310575D827EE213400D93B06 /* QueryParamViewController.swift in Sources */,
 				310575E127EE213400D93B06 /* ViewController+MiniAppMessageProtocol.swift in Sources */,
 				310575E227EE213400D93B06 /* ViewController+MiniAppUserInfoProtocol.swift in Sources */,
+				F775544828B8890B00B0CDFA /* MiniAppPermissionService.swift in Sources */,
+				F775544028B8890B00B0CDFA /* MiniAppUrlView.swift in Sources */,
+				F775544428B8890B00B0CDFA /* MiniAppListViewModel.swift in Sources */,
+				F775543B28B8890B00B0CDFA /* MiniAppTermsView.swift in Sources */,
 				310575E627EE213400D93B06 /* DeeplinkErrorViewController.swift in Sources */,
 				310575E027EE213400D93B06 /* FirstLaunchViewController.swift in Sources */,
 				310575B827EE213400D93B06 /* ImageCache.swift in Sources */,
@@ -795,11 +971,15 @@
 				310575C527EE213400D93B06 /* UIViewController+MiniApp.swift in Sources */,
 				310575BA27EE213400D93B06 /* String+MiniApp.swift in Sources */,
 				310575C127EE213400D93B06 /* UIView+MiniApp.swift in Sources */,
+				F775543828B8890B00B0CDFA /* MiniAppSegmentedViewModel.swift in Sources */,
 				310575BF27EE213400D93B06 /* UIColor+MiniApp.swift in Sources */,
 				310575BC27EE213400D93B06 /* Encodable+MiniApp.swift in Sources */,
 				310575D027EE213400D93B06 /* SettingsTableViewController.swift in Sources */,
 				310575D727EE213400D93B06 /* CustomPermissionsListViewController.swift in Sources */,
+				F775543728B8890B00B0CDFA /* MiniAppSegmentedView.swift in Sources */,
 				310575D327EE213400D93B06 /* PointsSettingsTableViewController.swift in Sources */,
+				F775543528B8890B00B0CDFA /* WidgetListView.swift in Sources */,
+				F775543E28B8890B00B0CDFA /* MiniAppTermsRequiredCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
