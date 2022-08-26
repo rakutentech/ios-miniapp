@@ -1,8 +1,6 @@
 import UIKit
 import MiniApp
 import CoreLocation
-import SwiftUI
-import Combine
 
 class ViewController: RATViewControllerWithTableView {
 
