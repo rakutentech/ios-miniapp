@@ -7,7 +7,7 @@ Mini App SDK also facilitates communication between a Mini App and the host app 
 
 - Load MiniApp list
 - Load MiniApp metadata
-- Create a MiniApp view
+- Create a MiniAppView
 - Facilitate communication between host app and Mini App
 
 And much more features which you can find them in [Usage](#usage).
@@ -330,10 +330,10 @@ When you chose to implement Google Ads support for your Mini Apps (see [configur
 Be careful when declaring your variable, as Mini App SDK does not keep a strong reference to it, it is preferable to declare it as a global variable or in most cases it will become nil once your method called.
 
 ```swift
-let adsDelegate = AdMobDisplayer() // This is just declared here as a convenience for the example.
+let adsDisplayer = AdMobDisplayer() // This is just declared here as a convenience for the example.
 
 // notice the new parameter for ads delegation
-let config = MiniAppConfig(config: Config.current(), adsDisplayer: adsDelegate, messageInterface: self)
+let config = MiniAppConfig(config: Config.current(), adsDisplayer: adsDisplayer, messageInterface: self)
 let miniAppView = MiniAppView(config, "your-miniapp-id")
 ```
 
@@ -345,11 +345,11 @@ For the same reasons mentioned in `AdMobDisplayer` section above, prefer declari
 
 ```swift
 class ViewController: UIViewController {
-    let adsDelegate: MiniAppAdDisplayer 
+    let adsDisplayer: MiniAppAdDisplayer 
     
     override func viewDidLoad() {
       super.viewDidLoad()
-      adsDelegate = MiniAppAdDisplayer(with: self) // you must provide your ads displayer a MiniAppAdDisplayDelegate
+      adsDisplayer = MiniAppAdDisplayer(with: self) // you must provide your ads displayer a MiniAppAdDisplayDelegate
     }
 
 }
@@ -391,7 +391,7 @@ extension ViewController: MiniAppAdDisplayDelegate {
 Once the delegate implemented, don't forget to provide it when you call a Mini App creation with the parameter `adsDelegate`:
 
 ```swift
-MiniAppConfig(config: Config.current(), adsDisplayer: adsDelegate, messageInterface: self)
+MiniAppConfig(config: Config.current(), adsDisplayer: adsDisplayer, messageInterface: self)
 ```
 <a id="retrieve-user-profile-details"></a>
 
@@ -992,9 +992,7 @@ Load Mini-app from cache directly using the following approach,
 
 ```swift
 let config = MiniAppConfig(config: Config.current(), messageInterface: self)
-let miniAppView = MiniAppView(config: config, queryParams: "param1=value1&param2=value2")
-self.view.addSubview(miniAppView)
-miniAppView.frame = self.view.bounds
+let miniAppView = MiniAppView(config: config)
 miniAppView.load(fromCache: true) { success in 
     // ...
 }
