@@ -40,7 +40,7 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     public init(
         config: MiniAppConfig,
-        type: MiniAppType,
+        type: MiniAppType = .miniapp,
         appId: String,
         version: String? = nil,
         queryParams: String? = nil
@@ -58,7 +58,7 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     public init(
         config: MiniAppConfig,
-        type: MiniAppType,
+        type: MiniAppType = .miniapp,
         url: URL,
         queryParams: String? = nil
     ) {

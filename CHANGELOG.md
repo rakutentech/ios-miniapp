@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 5.0.0 (TBD)
+**SDK**
+- **Feature:** Support for showing multiple MiniApps at the same time. Added `MiniAppView` which will replace `MiniApp.shared().create()`. From now on `create` will be deprecated. Added `load` and `loadAsync` (async/await) to `MiniAppView` load the MiniApp.
+- **Feature:** Added new config `MiniAppConfig` for `MiniAppView` and a new initializer to load MiniApps from URL for local testing. `MiniAppView(..., url)`
+
 ### 4.3.0 (2022-08-08)
 **SDK**
 - **Fix:** Secure storage feature bug fixes
