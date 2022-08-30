@@ -2,20 +2,20 @@
 
 ### 5.0.0 (TBD)
 **SDK**
-- **Feature:** Support for showing multiple MiniApps at the same time. Added `MiniAppView` which will replace `MiniApp.shared().create()`. From now on `create` will be deprecated. `load` and `loadAsync` (async/await) to `MiniAppView` load the MiniApp.
+- **Feature:** Support for showing multiple MiniApps at the same time. Added `MiniAppView` which will replace `MiniApp.shared().create()`. From now on `create` will be deprecated.
 ```swift
 let config = MiniAppConfig(config: Config.current(), messageInterface: self)
 let miniAppView = MiniAppView(config, "your-miniapp-id")
 self.view.addSubview(miniAppView)
 miniAppView.frame = self.view.bounds
 
-// load the miniapp
+// load the miniapp (default)
 miniAppView.load { _ in
   //...
 }
 ```
 
-- **Feature:** Async/Await Support with `MiniAppView`'s `loadAsync` that will load the MiniApp.
+- **Feature:** Async/Await Support with `MiniAppView`'s `loadAsync` that will load the MiniApp. 
 ```swift
 let config = MiniAppConfig(config: Config.current(), messageInterface: self)
 let miniAppView = MiniAppView(config, "your-miniapp-id")
@@ -39,11 +39,13 @@ Task {
 }
 ```
 
-- **Feature:** Added new config `MiniAppConfig` for `MiniAppView` and a new initializer to load MiniApps from URL for local testing. `MiniAppView(..., url)`
+- **Feature:** Added new config `MiniAppConfig` that is used to initialize `MiniAppView` 
 ```swift
-// new config
 let config = MiniAppConfig(config: Config.current(), messageInterface: self)
+```
 
+- **Feature:** Added a new additional initializer to load MiniApps from URL for local testing.
+```swift
 // with url
 let localTestUrl = URL(string: "http://localhost:3000")!
 let miniAppView = MiniAppView(config, url: localTestUrl)
