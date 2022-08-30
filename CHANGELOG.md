@@ -22,11 +22,12 @@ let miniAppView = MiniAppView(config, "your-miniapp-id")
 
 // using closure
 miniAppView.load { success in
-  if success {
+  switch result {
+    case .success:
     // miniAppView is loaded
-  } else {
-    print("error: miniapp failed to load")
-  }
+    case let .failure(error):
+        print("error: \(error.localizedDescription)")
+  } 
 }
 
 // using async/await
