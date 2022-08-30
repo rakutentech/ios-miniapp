@@ -24,9 +24,9 @@ let miniAppView = MiniAppView(config, "your-miniapp-id")
 miniAppView.load { success in
   switch result {
     case .success:
-    // miniAppView is loaded
+      // miniAppView is loaded
     case let .failure(error):
-        print("error: \(error.localizedDescription)")
+      print("error: \(error.localizedDescription)")
   } 
 }
 
