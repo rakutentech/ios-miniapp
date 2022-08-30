@@ -193,6 +193,8 @@ miniAppView.frame = self.view.bounds
 miniAppView.load { success in
   if success {
     // miniAppView is loaded
+  } else {
+    print("error: miniapp failed to load")
   }
 }
 ```

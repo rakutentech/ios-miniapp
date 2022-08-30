@@ -4,6 +4,7 @@
 **SDK**
 - **Feature:** Support for showing multiple MiniApps at the same time. Added `MiniAppView` which will replace `MiniApp.shared().create()`. From now on `create` will be deprecated. Added `load` and `loadAsync` (async/await) to `MiniAppView` load the MiniApp.
 - **Feature:** Added new config `MiniAppConfig` for `MiniAppView` and a new initializer to load MiniApps from URL for local testing. `MiniAppView(..., url)`
+- **Feature:** Support for SwiftUI. Added `MiniAppSUIView` to the UI module that conforms to `UIViewRepresentable` and will autoload when added.
 
 ### 4.3.0 (2022-08-08)
 **SDK**
