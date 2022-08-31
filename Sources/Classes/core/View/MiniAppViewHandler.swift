@@ -46,7 +46,7 @@ class MiniAppViewHandler: NSObject {
     var canGoBackObservation: NSKeyValueObservation?
     var canGoForwardObservation: NSKeyValueObservation?
 
-    internal var shouldAutoLoadSecureStorage: Bool = false
+    internal var shouldAutoLoadSecureStorage: Bool = true
 
     init(
         config: MiniAppConfig,
@@ -683,7 +683,13 @@ extension MiniAppViewHandler {
             didReceiveEvent(.resume, message: "Host app did become active")
         default:
             if let event = notification.object as? MiniAppEvent.Event {
-                didReceiveEvent(event.type, message: event.comment)
+                if event.type == .secureStorageReady {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
+                        self.didReceiveEvent(event.type, message: event.comment)
+                    }
+                } else {
+                    didReceiveEvent(event.type, message: event.comment)
+                }
             } else {
                 MiniAppLogger.w("MiniAppEvent not present in notification")
             }
