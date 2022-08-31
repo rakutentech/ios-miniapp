@@ -215,6 +215,7 @@ public class MiniAppViewController: UIViewController {
             queryParams: queryParams
         )
         self.miniAppView = miniAppView
+        self.navBarDelegate = miniAppView
 
         miniAppView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(miniAppView)

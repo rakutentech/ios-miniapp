@@ -218,3 +218,13 @@ public class MiniAppView: UIView, MiniAppViewable {
         case success
     }
 }
+
+extension MiniAppView: MiniAppNavigationBarDelegate {
+    public func miniAppNavigationBar(didTriggerAction action: MiniAppNavigationAction) -> Bool {
+        miniAppHandler.miniAppNavigationBar(didTriggerAction: action)
+    }
+
+    public func miniAppShouldClose() -> CloseAlertInfo? {
+        miniAppHandler.closeAlertInfo
+    }
+}

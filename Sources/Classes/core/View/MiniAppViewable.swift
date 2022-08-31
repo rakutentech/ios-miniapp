@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-public protocol MiniAppViewable: UIView {
+public protocol MiniAppViewable: UIView, MiniAppNavigationBarDelegate {
 
     /// Loads the MiniApp (getInfo, download etc) and initialized the webview.
     /// After load is complete it will display the loaded MiniApp or an error.
