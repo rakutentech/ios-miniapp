@@ -47,7 +47,6 @@ public struct MiniAppConfig {
 public enum MiniAppViewParameters {
     case `default`(MiniAppView.DefaultParams)
     case url(MiniAppView.UrlParams)
-    case info(MiniAppView.InfoParams) // check with munir
 }
 
 public extension MiniAppView {
@@ -110,34 +109,6 @@ public extension MiniAppView {
             self.config = config
             self.type = type
             self.url = url
-            self.queryParams = queryParams
-        }
-    }
-
-    struct InfoParams {
-        let config: MiniAppConfig
-        let type: MiniAppType
-        let info: MiniAppInfo
-        let queryParams: String?
-
-        /**
-        Initializes url parameters for MiniAppView
-
-        - Parameters:
-            - config: MiniAppConfig that defines the basic config necessary for MiniAppView
-            - type: The type of the MiniApp
-            - info: The MiniAppInfo used to load the MiniApp
-            - queryParams: The query parameters of the MiniApp (optional)
-         */
-        public init(
-            config: MiniAppConfig,
-            type: MiniAppType,
-            info: MiniAppInfo,
-            queryParams: String? = nil
-        ) {
-            self.config = config
-            self.type = type
-            self.info = info
             self.queryParams = queryParams
         }
     }
