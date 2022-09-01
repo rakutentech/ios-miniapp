@@ -18,6 +18,7 @@ public protocol MiniAppViewable: UIView, MiniAppNavigationBarDelegate {
     /// - Parameters:
     ///     - fromCache: Load the MiniApp from Cache (default is false)
     /// - Returns: The MiniAppLoadStatus which indicates `loadAsync` was sucessful
+    @discardableResult
     func loadAsync(fromCache: Bool) async throws -> MiniAppView.MiniAppLoadStatus
 
     /// Alert Info when closing the MiniApp
@@ -30,6 +31,8 @@ public extension MiniAppViewable {
     func load(fromCache: Bool = false, completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
         load(fromCache: fromCache, completion: completion)
     }
+
+    @discardableResult
     func loadAsync(fromCache: Bool = false) async throws -> MiniAppView.MiniAppLoadStatus {
         try await loadAsync(fromCache: fromCache)
     }
