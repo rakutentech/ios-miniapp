@@ -17,14 +17,17 @@ class MiniAppViewTests: XCTestCase {
     func test_miniappview_load_async_should_fail() async throws {
         let messageDelegate = MockMessageInterface()
 
-        let view = await MiniAppView(
-            config: MiniAppConfig(
-                config: nil,
-                messageInterface: messageDelegate
-            ),
-            type: .miniapp,
-            appId: mockMiniAppInfo.id
+        let params = MiniAppViewParameters.default(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                appId: mockMiniAppInfo.id
+            )
         )
+        let view = await MiniAppView(params: params)
         do {
             _ = try await view.loadAsync()
             XCTFail("should not load with invalid miniapp id")
@@ -40,15 +43,18 @@ class MiniAppViewTests: XCTestCase {
         let delegate = MockMessageInterface()
         let mockHandler = makeMockViewHandler(messageDelegate: delegate)
 
-        let view = MiniAppView(
-            config: MiniAppConfig(
-                config: nil,
-                messageInterface: delegate
-            ),
-            type: .miniapp,
-            appId: mockMiniAppInfo.id,
-            version: mockMiniAppInfo.version.versionId
+        let params = MiniAppViewParameters.default(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: delegate
+                ),
+                type: .miniapp,
+                appId: mockMiniAppInfo.id,
+                version: mockMiniAppInfo.version.versionId
+            )
         )
+        let view = MiniAppView(params: params)
         view.miniAppHandler = mockHandler
         view.load { result in
             switch result {
@@ -67,14 +73,17 @@ class MiniAppViewTests: XCTestCase {
         let expectation = XCTestExpectation(description: #function)
         let messageDelegate = MockMessageInterface()
 
-        let view = MiniAppView(
-            config: MiniAppConfig(
-                config: nil,
-                messageInterface: messageDelegate
-            ),
-            type: .miniapp,
-            appId: mockMiniAppInfo.id
+        let params = MiniAppViewParameters.default(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                appId: mockMiniAppInfo.id
+            )
         )
+        let view = MiniAppView(params: params)
         view.load { result in
             switch result {
             case .success:
@@ -114,15 +123,18 @@ class MiniAppViewTests: XCTestCase {
 
         let expectation = XCTestExpectation(description: #function)
 
-        let view = MiniAppView(
-            config: MiniAppConfig(
-                config: nil,
-                messageInterface: delegate
-            ),
-            type: .miniapp,
-            appId: mockMiniAppInfo.id,
-            version: mockMiniAppInfo.version.versionId
+        let params = MiniAppViewParameters.default(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: delegate
+                ),
+                type: .miniapp,
+                appId: mockMiniAppInfo.id,
+                version: mockMiniAppInfo.version.versionId
+            )
         )
+        let view = MiniAppView(params: params)
         view.miniAppHandler = mockHandler
 
         view.load(fromCache: true) { result in
@@ -141,14 +153,17 @@ class MiniAppViewTests: XCTestCase {
         let expectation = XCTestExpectation(description: #function)
         let messageDelegate = MockMessageInterface()
 
-        let view = MiniAppView(
-            config: MiniAppConfig(
-                config: nil,
-                messageInterface: messageDelegate
-            ),
-            type: .miniapp,
-            appId: mockMiniAppInfo.id
+        let params = MiniAppViewParameters.default(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                appId: mockMiniAppInfo.id
+            )
         )
+        let view = MiniAppView(params: params)
         view.load(fromCache: true) { result in
             switch result {
             case .success:
@@ -165,14 +180,17 @@ class MiniAppViewTests: XCTestCase {
         let expectation = XCTestExpectation(description: #function)
         let messageDelegate = MockMessageInterface()
 
-        let view = MiniAppView(
-            config: MiniAppConfig(
-                config: nil,
-                messageInterface: messageDelegate
-            ),
-            type: .miniapp,
-            url: URL(string: "http://localhost:1337")!
+        let params = MiniAppViewParameters.url(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                url: URL(string: "http://localhost:1337")!
+            )
         )
+        let view = MiniAppView(params: params)
         view.load { _ in
             expectation.fulfill()
         }
@@ -185,7 +203,7 @@ extension MiniAppViewTests {
         let viewHandler = MiniAppViewHandler(
             config: MiniAppConfig(
                 config: nil,
-                messageInterface: messageDelegate
+                messageDelegate: messageDelegate
             ),
             appId: mockMiniAppInfo.id,
             version: mockMiniAppInfo.version.versionId

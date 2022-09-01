@@ -20,7 +20,7 @@ class MiniAppViewHandlerTests: XCTestCase {
         let viewHandler = MiniAppViewHandler(
             config: MiniAppConfig(
                 config: nil,
-                messageInterface: messageDelegate
+                messageDelegate: messageDelegate
             ),
             appId: mockMiniAppInfo.id,
             version: mockMiniAppInfo.version.versionId
@@ -88,7 +88,7 @@ class MiniAppViewHandlerTests: XCTestCase {
         let viewHandler = MiniAppViewHandler(
             config: MiniAppConfig(
                 config: nil,
-                messageInterface: messageDelegate
+                messageDelegate: messageDelegate
             ),
             appId: mockMiniAppInfo.id,
             version: mockMiniAppInfo.version.versionId
@@ -116,7 +116,7 @@ class MiniAppViewHandlerTests: XCTestCase {
         let viewHandler = MiniAppViewHandler(
             config: MiniAppConfig(
                 config: nil,
-                messageInterface: messageDelegate
+                messageDelegate: messageDelegate
             ),
             appId: mockMiniAppInfo.id,
             version: mockMiniAppInfo.version.versionId
