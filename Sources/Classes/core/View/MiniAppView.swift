@@ -55,14 +55,6 @@ public class MiniAppView: UIView, MiniAppViewable {
                 url: urlParams.url,
                 queryParams: urlParams.queryParams
             )
-        case let .info(infoParams):
-            self.type = infoParams.type
-            self.miniAppHandler = MiniAppViewHandler(
-                config: infoParams.config,
-                appId: infoParams.info.id,
-                version: infoParams.info.version.versionId,
-                queryParams: infoParams.queryParams
-            )
         }
         super.init(frame: .zero)
         setupInterface()
