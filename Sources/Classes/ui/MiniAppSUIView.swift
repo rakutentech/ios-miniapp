@@ -5,12 +5,8 @@ public struct MiniAppSUIView: UIViewRepresentable {
 
     var params: MiniAppViewParameters
 
-    public init(params: MiniAppView.DefaultParams) {
-        self.params = .default(params)
-    }
-
-    public init(urlParams: MiniAppView.UrlParams) {
-        self.params = .url(urlParams)
+    public init(params: MiniAppViewParameters) {
+        self.params = params
     }
 
     public func makeUIView(context: Context) -> MiniAppView {

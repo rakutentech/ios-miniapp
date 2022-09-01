@@ -45,11 +45,11 @@ public struct MiniAppConfig {
 }
 
 public enum MiniAppViewParameters {
-    case `default`(MiniAppView.DefaultParams)
-    case url(MiniAppView.UrlParams)
+    case `default`(DefaultParams)
+    case url(UrlParams)
 }
 
-public extension MiniAppView {
+public extension MiniAppViewParameters {
 
     /// MiniAppView default parameters
     struct DefaultParams {

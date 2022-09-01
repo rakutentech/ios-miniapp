@@ -40,7 +40,7 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     public init(params: MiniAppViewParameters) {
         switch params {
-        case .default(let params):
+        case let .default(params):
             self.type = params.type
             self.miniAppHandler = MiniAppViewHandler(
                 config: params.config,
@@ -48,7 +48,7 @@ public class MiniAppView: UIView, MiniAppViewable {
                 version: params.version,
                 queryParams: params.queryParams
             )
-        case .url(let urlParams):
+        case let .url(urlParams):
             self.type = urlParams.type
             self.miniAppHandler = MiniAppViewHandler(
                 config: urlParams.config,
