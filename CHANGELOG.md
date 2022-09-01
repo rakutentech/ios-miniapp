@@ -5,6 +5,7 @@
 - **Feature:** Support for showing multiple MiniApps at the same time. Added `MiniAppView` which will replace `MiniApp.shared().create()`. From now on `create` will be deprecated.
 <details>
 <summary>Show code</summary>
+
 ```swift
 let params = MiniAppParameters.default(
     config: MiniAppConfig(config: Config.current(), messageInterface: self),
@@ -19,6 +20,7 @@ miniAppView.load { _ in
   //...
 }
 ```
+
 </details>
 
 - **Feature:** Async/Await Support with `MiniAppView`'s `loadAsync` that will load the MiniApp. 
