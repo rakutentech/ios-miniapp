@@ -38,36 +38,32 @@ public class MiniAppView: UIView, MiniAppViewable {
         return view
     }()
 
-    public init(
-        config: MiniAppConfig,
-        type: MiniAppType = .miniapp,
-        appId: String,
-        version: String? = nil,
-        queryParams: String? = nil
-    ) {
-        self.type = type
-        self.miniAppHandler = MiniAppViewHandler(
-            config: config,
-            appId: appId,
-            version: version,
-            queryParams: queryParams
-        )
-        super.init(frame: .zero)
-        setupInterface()
-    }
-
-    public init(
-        config: MiniAppConfig,
-        type: MiniAppType = .miniapp,
-        url: URL,
-        queryParams: String? = nil
-    ) {
-        self.type = type
-        self.miniAppHandler = MiniAppViewHandler(
-            config: config,
-            url: url,
-            queryParams: queryParams
-        )
+    public init(params: MiniAppViewParameters) {
+        switch params {
+        case .default(let params):
+            self.type = params.type
+            self.miniAppHandler = MiniAppViewHandler(
+                config: params.config,
+                appId: params.appId,
+                version: params.version,
+                queryParams: params.queryParams
+            )
+        case .url(let urlParams):
+            self.type = urlParams.type
+            self.miniAppHandler = MiniAppViewHandler(
+                config: urlParams.config,
+                url: urlParams.url,
+                queryParams: urlParams.queryParams
+            )
+        case let .info(infoParams):
+            self.type = infoParams.type
+            self.miniAppHandler = MiniAppViewHandler(
+                config: infoParams.config,
+                appId: infoParams.info.id,
+                version: infoParams.info.version.versionId,
+                queryParams: infoParams.queryParams
+            )
+        }
         super.init(frame: .zero)
         setupInterface()
     }

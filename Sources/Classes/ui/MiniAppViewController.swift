@@ -1,6 +1,8 @@
 import Foundation
 import UIKit
 
+// swiftlint:disable function_body_length
+
 /// Protocol to track Miniapp loading/Close status
 public protocol MiniAppUIDelegate: AnyObject {
     /// Interface that is used to get controller and config
@@ -197,23 +199,26 @@ public class MiniAppViewController: UIViewController {
     }
 
     func setupMiniApp() {
-
         state = .loading
 
         guard let messageDelegate = messageDelegate else { return }
 
-        let miniAppView: MiniAppViewable = MiniAppView(
-            config: MiniAppConfig(
-                config: config,
-                adsDisplayer: adsDisplayer,
-                messageInterface: messageDelegate,
-                navigationDelegate: navDelegate
-            ),
-            type: .miniapp,
-            appId: appId,
-            version: version,
-            queryParams: queryParams
+        let miniAppParams = MiniAppViewParameters.default(
+            .init(
+                config: MiniAppConfig(
+                    config: config,
+                    adsDisplayer: adsDisplayer,
+                    messageDelegate: messageDelegate,
+                    navigationDelegate: navDelegate
+                ),
+                type: .miniapp,
+                appId: appId,
+                version: version,
+                queryParams: queryParams
+            )
         )
+
+        let miniAppView: MiniAppViewable = MiniAppView(params: miniAppParams)
         self.miniAppView = miniAppView
         self.navBarDelegate = miniAppView
 

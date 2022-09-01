@@ -8,6 +8,7 @@ class MiniAppViewHandler: NSObject {
 
     internal var webView: WKWebView?
 
+    // Services
     internal var miniAppClient: MiniAppClientProtocol
     internal var miniAppDownloader: MiniAppDownloaderInterface
     internal var miniAppStatus: MiniAppStatus
@@ -18,11 +19,13 @@ class MiniAppViewHandler: NSObject {
     internal var miniAppPermissionStorage: MiniAppPermissionsStorage
     internal var secureStorage: MiniAppSecureStorage
 
+    internal var projectId: String?
+
     var appId: String
     var version: String?
     var queryParams: String?
-    weak var messageInterface: MiniAppMessageDelegate?
-    internal var projectId: String?
+
+    weak var messageDelegate: MiniAppMessageDelegate?
     internal var analyticsConfig: [MAAnalyticsConfig]?
 
     // -
@@ -33,12 +36,12 @@ class MiniAppViewHandler: NSObject {
     internal var navBar: (UIView & MiniAppNavigationDelegate)?
     internal var navBarVisibility: MiniAppNavigationVisibility = .never
     internal var isNavBarCustom = false
+    internal weak var navigationDelegate: MiniAppNavigationDelegate?
 
     internal var supportedMiniAppOrientation: UIInterfaceOrientationMask = .portrait
 
     internal var initialLoadCallback: ((Bool) -> Void)?
     internal var closeAlertInfo: CloseAlertInfo?
-    internal weak var navigationDelegate: MiniAppNavigationDelegate?
 
     internal var onExternalWebviewResponse: ((URL) -> Void)?
     internal var onExternalWebviewClose: ((URL) -> Void)?
@@ -84,7 +87,7 @@ class MiniAppViewHandler: NSObject {
         self.appId = appId
         self.version = version
         self.queryParams = queryParams
-        self.messageInterface = config.messageInterface
+        self.messageDelegate = config.messageDelegate
         self.navigationDelegate = config.navigationDelegate
 
         super.init()
@@ -123,7 +126,7 @@ class MiniAppViewHandler: NSObject {
         )
 
         self.queryParams = queryParams
-        self.messageInterface = config.messageInterface
+        self.messageDelegate = config.messageDelegate
         self.navigationDelegate = config.navigationDelegate
 
         let randomMiniAppId = "custom\(Int32.random(in: 0...Int32.max))" // some id is needed to handle permissions
@@ -292,7 +295,7 @@ class MiniAppViewHandler: NSObject {
         queryParams: String? = nil,
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil
     ) throws {
-        guard let messageInterface = messageInterface else {
+        guard let messageInterface = messageDelegate else {
             throw MASDKError.unknownError(domain: "", code: 0, description: "no message interface provided")
         }
 

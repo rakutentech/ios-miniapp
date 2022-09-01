@@ -3,9 +3,14 @@
 ### 5.0.0 (TBD)
 **SDK**
 - **Feature:** Support for showing multiple MiniApps at the same time. Added `MiniAppView` which will replace `MiniApp.shared().create()`. From now on `create` will be deprecated.
+<details>
+<summary>Show code</summary>
 ```swift
-let config = MiniAppConfig(config: Config.current(), messageInterface: self)
-let miniAppView = MiniAppView(config, "your-miniapp-id")
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), messageInterface: self),
+    appId: "your-miniapp-id"
+)
+let miniAppView = MiniAppView(params: params)
 self.view.addSubview(miniAppView)
 miniAppView.frame = self.view.bounds
 
@@ -14,12 +19,12 @@ miniAppView.load { _ in
   //...
 }
 ```
+</details>
 
 - **Feature:** Async/Await Support with `MiniAppView`'s `loadAsync` that will load the MiniApp. 
+<details>
+<summary>Show code</summary>
 ```swift
-let config = MiniAppConfig(config: Config.current(), messageInterface: self)
-let miniAppView = MiniAppView(config, "your-miniapp-id")
-
 // using closure
 miniAppView.load { success in
   switch result {
@@ -39,33 +44,41 @@ Task {
     }
 }
 ```
+</details>
 
-- **Feature:** Added new config `MiniAppConfig` that is used to initialize `MiniAppView` 
+- **Feature:** Added new config `MiniAppConfig` that is used to initialize `MiniAppView`
+<details>
+<summary>Show code</summary> 
 ```swift
 let config = MiniAppConfig(config: Config.current(), messageInterface: self)
 ```
+</details>
 
 - **Feature:** Added a new additional initializer to load MiniApps from URL for local testing.
+<details>
+<summary>Show code</summary>
 ```swift
 // with url
 let localTestUrl = URL(string: "http://localhost:3000")!
 let miniAppView = MiniAppView(config, url: localTestUrl)
 ```
+</details>
 
 - **Feature:** Support for SwiftUI. Added `MiniAppSUIView` to the UI module that conforms to `UIViewRepresentable` and will autoload when added.
+<details>
+<summary>Show code</summary>
 ```swift
 struct Content: View {
 
-  var miniAppConfig: MiniAppConfig
-  var miniAppId: String
-  var miniAppVersion: String?
+  var params: MiniAppParameters
 
   var body: some View {
-    MiniAppSUIView(config: config, appId: miniAppId, version: miniAppVersion)
+    MiniAppSUIView(params: params)
   }
 
 }
 ```
+</details>
 
 ### 4.3.0 (2022-08-08)
 **SDK**
