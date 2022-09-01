@@ -26,6 +26,7 @@ miniAppView.load { _ in
 - **Feature:** Async/Await Support with `MiniAppView`'s `loadAsync` that will load the MiniApp. 
 <details>
 <summary>Show code</summary>
+
 ```swift
 // using closure
 miniAppView.load { success in
@@ -46,29 +47,35 @@ Task {
     }
 }
 ```
+
 </details>
 
 - **Feature:** Added new config `MiniAppConfig` that is used to initialize `MiniAppView`
 <details>
-<summary>Show code</summary> 
+<summary>Show code</summary>
+
 ```swift
 let config = MiniAppConfig(config: Config.current(), messageInterface: self)
 ```
+
 </details>
 
 - **Feature:** Added a new additional initializer to load MiniApps from URL for local testing.
 <details>
 <summary>Show code</summary>
+
 ```swift
 // with url
 let localTestUrl = URL(string: "http://localhost:3000")!
 let miniAppView = MiniAppView(config, url: localTestUrl)
 ```
+
 </details>
 
 - **Feature:** Support for SwiftUI. Added `MiniAppSUIView` to the UI module that conforms to `UIViewRepresentable` and will autoload when added.
 <details>
 <summary>Show code</summary>
+
 ```swift
 struct Content: View {
 
@@ -80,6 +87,7 @@ struct Content: View {
 
 }
 ```
+
 </details>
 
 ### 4.3.0 (2022-08-08)
