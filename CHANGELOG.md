@@ -42,6 +42,7 @@ miniAppView.load { success in
 Task {
     do {
         let result = try await miniAppView.loadAsync()
+        //...
     } catch {
         print("error: \(error.localizedDescription)")
     }
@@ -50,12 +51,16 @@ Task {
 
 </details>
 
-- **Feature:** Added new config `MiniAppConfig` that is used to initialize `MiniAppView`
+- **Feature:** Added `MiniAppParameters` and a new config `MiniAppConfig` that is used to initialize `MiniAppView`
 <details>
 <summary>Show code</summary>
 
 ```swift
 let config = MiniAppConfig(config: Config.current(), messageInterface: self)
+let params = MiniAppParameters.default(
+    config: config,
+    appId: "your-miniapp-id"
+)
 ```
 
 </details>
