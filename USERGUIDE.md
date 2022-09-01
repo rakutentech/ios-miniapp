@@ -184,8 +184,11 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 The following is a simplified example:
 
 ```swift
-let config = MiniAppConfig(config: Config.current(), messageInterface: self)
-let miniAppView = MiniAppView(config, "your-miniapp-id")
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), messageInterface: self),
+    appId: "your-miniapp-id"
+)
+let miniAppView = MiniAppView(params: params)
 self.view.addSubview(miniAppView)
 miniAppView.frame = self.view.bounds
 
@@ -335,8 +338,11 @@ Be careful when declaring your variable, as Mini App SDK does not keep a strong 
 let adsDisplayer = AdMobDisplayer() // This is just declared here as a convenience for the example.
 
 // notice the new parameter for ads delegation
-let config = MiniAppConfig(config: Config.current(), adsDisplayer: adsDisplayer, messageInterface: self)
-let miniAppView = MiniAppView(config, "your-miniapp-id")
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), adsDisplayer: adsDisplayer, messageInterface: self),
+    appId: "your-miniapp-id"
+)
+let miniAppView = MiniAppView(params: params)
 ```
 
 ###### Custom ads displayer
@@ -393,7 +399,10 @@ extension ViewController: MiniAppAdDisplayDelegate {
 Once the delegate implemented, don't forget to provide it when you call a Mini App creation with the parameter `adsDelegate`:
 
 ```swift
-MiniAppConfig(config: Config.current(), adsDisplayer: adsDisplayer, messageInterface: self)
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), adsDisplayer: adsDisplayer, messageInterface: self),
+    //...
+)
 ```
 <a id="retrieve-user-profile-details"></a>
 
@@ -947,8 +956,12 @@ While creating a Mini App, you can pass the optional query parameter as well. Th
 For eg.,
 
 ```swift
-let config = MiniAppConfig(config: Config.current(), messageInterface: self)
-let miniAppView = MiniAppView(config: config, queryParams: "param1=value1&param2=value2")
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), messageInterface: self),
+    appId: "your-miniapp-id",
+    queryParams: "param1=value1&param2=value2"
+)
+let miniAppView = MiniAppView(params: params)
 self.view.addSubview(miniAppView)
 miniAppView.frame = self.view.bounds
 miniAppView.load { success in 
@@ -993,8 +1006,7 @@ Mini App SDK allows MiniApps to react to several events triggered by host app. T
 Load Mini-app from cache directly using the following approach,
 
 ```swift
-let config = MiniAppConfig(config: Config.current(), messageInterface: self)
-let miniAppView = MiniAppView(config: config)
+let miniAppView = MiniAppView(params: params)
 miniAppView.load(fromCache: true) { success in 
     // ...
 }
