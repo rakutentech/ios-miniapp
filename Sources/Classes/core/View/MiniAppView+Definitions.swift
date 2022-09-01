@@ -44,8 +44,11 @@ public struct MiniAppConfig {
     }
 }
 
+// MiniAppViewParameters used to initalize MiniAppView
 public enum MiniAppViewParameters {
+    /// The default init config which uses `appId` and `version` to initalize the MiniApp
     case `default`(DefaultParams)
+    /// The url config which uses `url` to initalize the MiniApp
     case url(UrlParams)
 }
 

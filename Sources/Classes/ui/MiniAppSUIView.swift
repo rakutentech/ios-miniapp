@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 
+/// MiniAppView's convenience SwiftUI view wrapper
 public struct MiniAppSUIView: UIViewRepresentable {
 
     var params: MiniAppViewParameters
