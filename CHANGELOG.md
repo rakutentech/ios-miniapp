@@ -66,8 +66,11 @@ let config = MiniAppConfig(config: Config.current(), messageInterface: self)
 
 ```swift
 // with url
-let localTestUrl = URL(string: "http://localhost:3000")!
-let miniAppView = MiniAppView(config, url: localTestUrl)
+let urlParams = MiniAppParameters.url(
+    config: MiniAppConfig(config: Config.current(), messageInterface: self),
+    url: URL(string: "http://localhost:3000")!
+)
+let miniAppView = MiniAppView(params: urlParams)
 ```
 
 </details>
