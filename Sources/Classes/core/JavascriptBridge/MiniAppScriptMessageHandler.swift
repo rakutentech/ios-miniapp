@@ -203,9 +203,12 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                 switch result {
                 case .success(let location):
                     self?.getCurrentPosition(callbackId: callbackId, location: location)
-                case .failure(let error): self?.executeJavaScriptCallback(responseStatus: .onError,
-                                                                          messageId: callbackId,
-                                                                          response: prepareMAJSGeolocationError(error: error))
+                case .failure(let error):
+                    self?.executeJavaScriptCallback(
+                        responseStatus: .onError,
+                        messageId: callbackId,
+                        response: prepareMAJSGeolocationError(error: error)
+                    )
                 }
             }
         } else {

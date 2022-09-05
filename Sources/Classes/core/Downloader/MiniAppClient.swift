@@ -9,7 +9,7 @@ protocol SessionProtocol {
     func startDownloadTask(downloadUrl: URL)
 }
 
-internal class MiniAppClient: NSObject, URLSessionDownloadDelegate {
+internal class MiniAppClient: NSObject, MiniAppClientProtocol, URLSessionDownloadDelegate {
 
     let listingApi: ListingApi
     let manifestApi: ManifestApi

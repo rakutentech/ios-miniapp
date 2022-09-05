@@ -27,6 +27,22 @@ public struct MiniAppInfo: Codable, Hashable {
         promotionalImageUrl,
         promotionalText
     }
+
+    public init(
+        id: String,
+        displayName: String? = nil,
+        icon: URL,
+        version: Version,
+        promotionalImageUrl: String? = nil,
+        promotionalText: String? = nil
+    ) {
+        self.id = id
+        self.displayName = displayName
+        self.icon = icon
+        self.version = version
+        self.promotionalImageUrl = promotionalImageUrl
+        self.promotionalText = promotionalText
+    }
 }
 
 /// Miniapp version information
@@ -39,5 +55,10 @@ public struct Version: Codable, Hashable {
     private enum CodingKeys: String, CodingKey {
         case versionTag,
         versionId
+    }
+
+    public init(versionTag: String, versionId: String) {
+        self.versionTag = versionTag
+        self.versionId = versionId
     }
 }

@@ -29,7 +29,7 @@ class MiniAppSecureStorageTests: XCTestCase {
         do {
             try MiniAppSecureStorage.wipeSecureStorages()
         } catch {
-            print("could not wipe storages")
+            MiniAppLogger.d("could not wipe storages")
         }
         guard FileManager.default.fileExists(atPath: miniAppPath.appendingPathComponent("securestorage.sqlite").path) == false
         else {

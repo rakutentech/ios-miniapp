@@ -1,10 +1,11 @@
 import Foundation
 
-class MiniAppDownloader {
+class MiniAppDownloader: MiniAppDownloaderInterface {
     enum MiniAppArchiveError: Error {
         case noRoot
     }
-    private var miniAppClient: MiniAppClient
+
+    private var miniAppClient: MiniAppClientProtocol
     private var miniAppStorage: MiniAppStorage
     private var manifestDownloader: ManifestDownloader
     private var urlToDirectoryMap = [String: DownloadOperation]()
@@ -21,7 +22,7 @@ class MiniAppDownloader {
         return operationQueue
     }()
 
-    init(apiClient: MiniAppClient, manifestDownloader: ManifestDownloader, status: MiniAppStatus) {
+    init(apiClient: MiniAppClientProtocol, manifestDownloader: ManifestDownloader, status: MiniAppStatus) {
         self.miniAppClient = apiClient
         self.miniAppStorage = MiniAppStorage()
         self.manifestDownloader = manifestDownloader
