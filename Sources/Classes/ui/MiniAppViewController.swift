@@ -219,6 +219,7 @@ public class MiniAppViewController: UIViewController {
         )
 
         let miniAppView: MiniAppViewable = MiniAppView(params: miniAppParams)
+        miniAppView.progressStateView = MiniAppProgressView()
         self.miniAppView = miniAppView
         self.navBarDelegate = miniAppView
 

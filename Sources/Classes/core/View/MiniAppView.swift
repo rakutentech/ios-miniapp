@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import WebKit
+import Combine
 
 // MARK: - MiniAppView
 public class MiniAppView: UIView, MiniAppViewable {
@@ -10,33 +11,25 @@ public class MiniAppView: UIView, MiniAppViewable {
     internal var webView: MiniAppWebView?
 
     internal var type: MiniAppType
-    var state: MiniAppViewState = .none {
-        didSet { updateViewState(state: state) }
+
+    public let state = PassthroughSubject<MiniAppViewState, Never>()
+    public var progressStateView: MiniAppProgressViewable? {
+        didSet {
+            oldValue?.removeFromSuperview()
+            oldValue?.constraints.forEach({ self.removeConstraint($0) })
+            guard let progressStateView = progressStateView else {
+                return
+            }
+            self.addSubview(progressStateView)
+            NSLayoutConstraint.activate([
+                progressStateView.topAnchor.constraint(equalTo: self.topAnchor),
+                progressStateView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                progressStateView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                progressStateView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            ])
+        }
     }
-
-    internal var stateImageView: UIImageView = {
-        let view = UIImageView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    internal var activityIndicatorView: UIActivityIndicatorView = {
-        let view = UIActivityIndicatorView(style: .medium)
-        view.color = .systemGray2
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    internal var activityLabel: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "-"
-        view.textAlignment = .center
-        view.textColor = .systemGray
-        view.font = UIFont.systemFont(ofSize: 12, weight: .bold)
-        view.numberOfLines = 5
-        return view
-    }()
+    var cancellables = Set<AnyCancellable>()
 
     public init(params: MiniAppViewParameters) {
         switch params {
@@ -55,9 +48,18 @@ public class MiniAppView: UIView, MiniAppViewable {
                 url: urlParams.url,
                 queryParams: urlParams.queryParams
             )
+        case let .info(infoParams):
+            self.type = infoParams.type
+            self.miniAppHandler = MiniAppViewHandler(
+                config: infoParams.config,
+                appId: infoParams.info.id,
+                version: infoParams.info.version.versionId,
+                queryParams: infoParams.queryParams
+            )
         }
         super.init(frame: .zero)
         setupInterface()
+        setupObservers()
     }
 
     deinit {
@@ -71,27 +73,6 @@ public class MiniAppView: UIView, MiniAppViewable {
     internal func setupInterface() {
         backgroundColor = .systemBackground
 
-        self.addSubview(activityIndicatorView)
-        NSLayoutConstraint.activate([
-            activityIndicatorView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -30)
-        ])
-
-        self.addSubview(activityLabel)
-        NSLayoutConstraint.activate([
-            activityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
-            activityLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
-            activityLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-        ])
-
-        self.addSubview(stateImageView)
-        NSLayoutConstraint.activate([
-            stateImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            stateImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -30),
-            stateImageView.widthAnchor.constraint(equalToConstant: 25),
-            stateImageView.heightAnchor.constraint(equalToConstant: 25)
-        ])
-
         switch type {
         case .miniapp:
             self.layer.borderWidth = 0
@@ -100,6 +81,15 @@ public class MiniAppView: UIView, MiniAppViewable {
             self.clipsToBounds = true
             self.isUserInteractionEnabled = false
         }
+    }
+
+    internal func setupObservers() {
+        state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.progressStateView?.updateViewState(state: state)
+            }
+            .store(in: &cancellables)
     }
 
     internal func setupWebView(webView: MiniAppWebView) {
@@ -114,36 +104,6 @@ public class MiniAppView: UIView, MiniAppViewable {
         ])
     }
 
-    internal func updateViewState(state: MiniAppViewState) {
-        DispatchQueue.main.async {
-            switch self.state {
-            case .none: self.activityLabel.text = ""
-            case .loading: self.activityLabel.text = "Loading..."
-            case .active: self.activityLabel.text = "Active"
-            case .inactive: self.activityLabel.text = "Inactive"
-            case .error(let error): self.activityLabel.text = error.localizedDescription
-            }
-
-            switch self.state {
-            case .none, .active, .inactive, .error:
-                self.activityIndicatorView.stopAnimating()
-            case .loading:
-                self.activityIndicatorView.startAnimating()
-            }
-
-            switch self.state {
-            case .active:
-                self.stateImageView.image = UIImage(systemName: "checkmark.circle")
-                self.stateImageView.tintColor = .systemGreen
-            case .error:
-                self.stateImageView.image = UIImage(systemName: "xmark.circle")
-                self.stateImageView.tintColor = .systemRed
-            default:
-                self.stateImageView.image = nil
-            }
-        }
-    }
-
     // MARK: - Public
 
     public func load(fromCache: Bool = false, completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
@@ -151,16 +111,16 @@ public class MiniAppView: UIView, MiniAppViewable {
             completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp already loaded")))
             return
         }
-        state = .loading
+        state.send(.loading)
         if fromCache {
             miniAppHandler.loadFromCache { [weak self] result in
                 switch result {
                 case let .success(webView):
-                    self?.state = .active
+                    self?.state.send(.active)
                     self?.setupWebView(webView: webView)
                     completion(.success(true))
                 case let .failure(error):
-                    self?.state = .error(error)
+                    self?.state.send(.error(error))
                     completion(.failure(error))
                 }
             }
@@ -168,11 +128,11 @@ public class MiniAppView: UIView, MiniAppViewable {
             miniAppHandler.load { [weak self] result in
                 switch result {
                 case let .success(webView):
-                    self?.state = .active
+                    self?.state.send(.active)
                     self?.setupWebView(webView: webView)
                     completion(.success(true))
                 case let .failure(error):
-                    self?.state = .error(error)
+                    self?.state.send(.error(error))
                     completion(.failure(error))
                 }
             }
@@ -183,15 +143,16 @@ public class MiniAppView: UIView, MiniAppViewable {
         guard webView == nil else {
             throw MASDKError.unknownError(domain: "", code: 0, description: "miniapp already loaded")
         }
-        state = .loading
+        state.send(.loading)
         return try await withCheckedThrowingContinuation { continutation in
             self.miniAppHandler.load { [weak self] result in
                 switch result {
                 case let .success(webView):
-                    self?.state = .active
+                    self?.state.send(.active)
                     self?.setupWebView(webView: webView)
                     continutation.resume(returning: .success)
                 case let .failure(error):
+                    self?.state.send(.error(error))
                     continutation.resume(throwing: error)
                 }
             }

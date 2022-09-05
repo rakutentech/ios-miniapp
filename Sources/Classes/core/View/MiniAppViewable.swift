@@ -1,8 +1,16 @@
 import Foundation
 import UIKit
+import Combine
 
 /// Public protocol for MiniAppView
 public protocol MiniAppViewable: UIView, MiniAppNavigationBarDelegate {
+
+    /// The state of the MiniApp (eg. loading, active, error)
+    var state: PassthroughSubject<MiniAppViewState, Never> {get}
+
+    /// ProgressView that can be displayed on top of MiniAppView
+    /// When using the `UI` module `MiniAppProgressView` can be used as default
+    var progressStateView: MiniAppProgressViewable? {get set}
 
     /// Loads the MiniApp (getInfo, download etc) and initialized the webview.
     /// After load is complete it will display the loaded MiniApp or an error.
