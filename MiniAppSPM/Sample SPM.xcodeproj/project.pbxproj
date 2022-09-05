@@ -120,7 +120,11 @@
 		F74AA10D283C651400087718 /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */; };
 		F74AA112283C65AB00087718 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA111283C65AB00087718 /* Nimble */; };
 		F74AA115283C65E300087718 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA114283C65E300087718 /* Quick */; };
+		F791AF8B28B363C0008C01BA /* MiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F791AF8A28B363C0008C01BA /* MiniAppViewTests.swift */; };
+		F791AF9328B49499008C01BA /* MiniAppViewHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F791AF9228B49499008C01BA /* MiniAppViewHandlerTests.swift */; };
 		F796AC8C2860204900A75DA8 /* RAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F796AC8B2860204900A75DA8 /* RAnalytics */; };
+		F7B7B00D28B71FC8009C5EA6 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = F7B7B00B28B71FC8009C5EA6 /* SmallMA.zip */; };
+		F7B7B00E28B71FC8009C5EA6 /* SmallMAerror.zip in Resources */ = {isa = PBXBuildFile; fileRef = F7B7B00C28B71FC8009C5EA6 /* SmallMAerror.zip */; };
 		F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -249,6 +253,10 @@
 		F74AA0D9283C651300087718 /* MiniAppSdkConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSdkConfigTests.swift; sourceTree = "<group>"; };
 		F74AA0DA283C651300087718 /* MiniAppKeyChainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppKeyChainTests.swift; sourceTree = "<group>"; };
 		F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
+		F791AF8A28B363C0008C01BA /* MiniAppViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewTests.swift; sourceTree = "<group>"; };
+		F791AF9228B49499008C01BA /* MiniAppViewHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewHandlerTests.swift; sourceTree = "<group>"; };
+		F7B7B00B28B71FC8009C5EA6 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
+		F7B7B00C28B71FC8009C5EA6 /* SmallMAerror.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMAerror.zip; sourceTree = "<group>"; };
 		F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -476,6 +484,7 @@
 		F74AA0A6283C651300087718 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				F7B7B00A28B71FB3009C5EA6 /* Supporting Files */,
 				F74AA0A8283C651300087718 /* Unit */,
 			);
 			name = Tests;
@@ -485,41 +494,43 @@
 		F74AA0A8283C651300087718 /* Unit */ = {
 			isa = PBXGroup;
 			children = (
-				F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */,
-				F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */,
-				F74AA0AB283C651300087718 /* MiniAppJavascriptErrorInfoTests.swift */,
 				F74AA0AC283C651300087718 /* core */,
-				F74AA0B9283C651300087718 /* Signature */,
-				F74AA0BF283C651300087718 /* MASDKLocaleTests.swift */,
-				F74AA0C0283C651300087718 /* MiniAppClientTests.swift */,
-				F74AA0C1283C651300087718 /* RealMiniAppTests.swift */,
-				F74AA0C2283C651300087718 /* MiniAppExternalUrlLoaderTests.swift */,
-				F74AA0C3283C651300087718 /* MiniAppScriptMessageHandlerTests.swift */,
-				F74AA0C4283C651300087718 /* Helpers.swift */,
-				F74AA0C5283C651300087718 /* MiniAppTests.swift */,
-				F74AA0C6283C651300087718 /* RealMiniAppTests+Permissions.swift */,
-				F74AA0C7283C651300087718 /* EnvironmentTests.swift */,
-				F74AA0C8283C651300087718 /* ManifestAPITests.swift */,
-				F74AA0C9283C651300087718 /* MiniAppJavascriptEnumerationTests.swift */,
-				F74AA0CA283C651300087718 /* MimeTypesTests.swift */,
 				F74AA0CB283C651300087718 /* DisplayerTests.swift */,
-				F74AA0CC283C651300087718 /* MiniApp+URLRequestTests.swift */,
+				F74AA0C7283C651300087718 /* EnvironmentTests.swift */,
+				F74AA0C4283C651300087718 /* Helpers.swift */,
 				F74AA0CD283C651300087718 /* ListingAPITests.swift */,
-				F74AA0CE283C651300087718 /* MiniApp+NSErrorTests.swift */,
-				F74AA0CF283C651300087718 /* MiniAppAdDisplayerTests.swift */,
-				F74AA0D0283C651300087718 /* MiniAppLoggerTests.swift */,
-				F74AA0D1283C651300087718 /* MetaDataAPITests.swift */,
-				F74AA0D2283C651300087718 /* RealMiniAppView+Mock.swift */,
-				F74AA0D3283C651300087718 /* MiniAppStorageTests.swift */,
-				F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */,
-				F74AA0D4283C651300087718 /* MessageInterfaceExtensionTests.swift */,
-				F74AA0D5283C651300087718 /* UrlParserTests.swift */,
-				F74AA0D6283C651300087718 /* MiniApp+StringTests.swift */,
+				F74AA0C8283C651300087718 /* ManifestAPITests.swift */,
 				F74AA0D7283C651300087718 /* MASDKErrorTests.swift */,
-				F74AA0D8283C651300087718 /* MiniAppStatusTests.swift */,
-				F74AA0D9283C651300087718 /* MiniAppSdkConfigTests.swift */,
+				F74AA0BF283C651300087718 /* MASDKLocaleTests.swift */,
+				F74AA0D4283C651300087718 /* MessageInterfaceExtensionTests.swift */,
+				F74AA0D1283C651300087718 /* MetaDataAPITests.swift */,
+				F74AA0CA283C651300087718 /* MimeTypesTests.swift */,
+				F74AA0CE283C651300087718 /* MiniApp+NSErrorTests.swift */,
+				F74AA0D6283C651300087718 /* MiniApp+StringTests.swift */,
+				F74AA0CC283C651300087718 /* MiniApp+URLRequestTests.swift */,
+				F74AA0CF283C651300087718 /* MiniAppAdDisplayerTests.swift */,
+				F74AA0C0283C651300087718 /* MiniAppClientTests.swift */,
+				F74AA0C2283C651300087718 /* MiniAppExternalUrlLoaderTests.swift */,
+				F74AA0C9283C651300087718 /* MiniAppJavascriptEnumerationTests.swift */,
+				F74AA0AB283C651300087718 /* MiniAppJavascriptErrorInfoTests.swift */,
 				F74AA0DA283C651300087718 /* MiniAppKeyChainTests.swift */,
+				F74AA0D0283C651300087718 /* MiniAppLoggerTests.swift */,
+				F74AA0C3283C651300087718 /* MiniAppScriptMessageHandlerTests.swift */,
+				F74AA0D9283C651300087718 /* MiniAppSdkConfigTests.swift */,
+				F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */,
+				F74AA0D8283C651300087718 /* MiniAppStatusTests.swift */,
+				F74AA0D3283C651300087718 /* MiniAppStorageTests.swift */,
+				F74AA0C5283C651300087718 /* MiniAppTests.swift */,
+				F791AF8A28B363C0008C01BA /* MiniAppViewTests.swift */,
+				F791AF9228B49499008C01BA /* MiniAppViewHandlerTests.swift */,
+				F74AA0C1283C651300087718 /* RealMiniAppTests.swift */,
+				F74AA0C6283C651300087718 /* RealMiniAppTests+Permissions.swift */,
+				F74AA0D2283C651300087718 /* RealMiniAppView+Mock.swift */,
+				F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */,
+				F74AA0B9283C651300087718 /* Signature */,
 				F74AA0DB283C651300087718 /* UIModule */,
+				F74AA0D5283C651300087718 /* UrlParserTests.swift */,
+				F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -527,9 +538,9 @@
 		F74AA0AC283C651300087718 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				F74AA0B6283C651300087718 /* Display */,
 				F74AA0AD283C651300087718 /* Downloader */,
 				F74AA0B3283C651300087718 /* Models */,
-				F74AA0B6283C651300087718 /* Display */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -582,6 +593,15 @@
 				F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */,
 			);
 			path = UIModule;
+			sourceTree = "<group>";
+		};
+		F7B7B00A28B71FB3009C5EA6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F7B7B00B28B71FC8009C5EA6 /* SmallMA.zip */,
+				F7B7B00C28B71FC8009C5EA6 /* SmallMAerror.zip */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -702,6 +722,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7B7B00E28B71FC8009C5EA6 /* SmallMAerror.zip in Resources */,
+				F7B7B00D28B71FC8009C5EA6 /* SmallMA.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -815,6 +837,7 @@
 				F7370A8A287BD21C00090032 /* MiniAppSecureStorageTests.swift in Sources */,
 				F74AA101283C651400087718 /* MiniAppAdDisplayerTests.swift in Sources */,
 				F74AA100283C651400087718 /* MiniApp+NSErrorTests.swift in Sources */,
+				F791AF9328B49499008C01BA /* MiniAppViewHandlerTests.swift in Sources */,
 				F74AA0FA283C651400087718 /* ManifestAPITests.swift in Sources */,
 				F74AA0E1283C651300087718 /* URLSchemeHandlerTests.swift in Sources */,
 				F74AA0E4283C651300087718 /* ManifestDownloaderTests.swift in Sources */,
@@ -852,6 +875,7 @@
 				F74AA0F1283C651300087718 /* MASDKLocaleTests.swift in Sources */,
 				F74AA10D283C651400087718 /* AdMobDisplayerTests.swift in Sources */,
 				F74AA108283C651400087718 /* MiniApp+StringTests.swift in Sources */,
+				F791AF8B28B363C0008C01BA /* MiniAppViewTests.swift in Sources */,
 				F74AA0E3283C651300087718 /* MiniAppDownloaderTests.swift in Sources */,
 				F74AA0E0283C651300087718 /* RealMiniAppViewTests.swift in Sources */,
 			);

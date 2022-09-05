@@ -216,7 +216,7 @@ class MockMiniAppInfoFetcher: MiniAppInfoFetcher {
     var data: Data?
     var error: MASDKError?
 
-    override func getInfo(miniAppId: String, miniAppVersion: String? = nil, apiClient: MiniAppClient, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
+    override func getInfo(miniAppId: String, miniAppVersion: String? = nil, apiClient: MiniAppClientProtocol, completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void) {
 
         if error != nil {
             return completionHandler(.failure(error ?? .invalidResponseData))
@@ -242,7 +242,7 @@ class MockMetaDataDownloader: MetaDataDownloader {
 
     override func getMiniAppMetaInfo(miniAppId: String,
                                      miniAppVersion: String,
-                                     apiClient: MiniAppClient,
+                                     apiClient: MiniAppClientProtocol,
                                      languageCode: String,
                                      completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         if error != nil {
@@ -273,7 +273,7 @@ class MockManifestDownloader: ManifestDownloader {
     var request: URLRequest?
     var headers: [String: String]?
 
-    override func fetchManifest(apiClient: MiniAppClient, appId: String, versionId: String, completionHandler: @escaping (Result<ManifestResponse, MASDKError>) -> Void) {
+    override func fetchManifest(apiClient: MiniAppClientProtocol, appId: String, versionId: String, completionHandler: @escaping (Result<ManifestResponse, MASDKError>) -> Void) {
 
         if error != nil {
             return completionHandler(.failure(error ?? .invalidResponseData))
