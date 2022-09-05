@@ -31,16 +31,16 @@ struct MiniAppWithTermsView: View {
                     .padding(.horizontal, 40)
             case .success:
                 MiniAppSUIView(params:
-                    MiniAppViewDefaultParams(
+                    .default(.init(
                         config: MiniAppConfig(
                             config: Config.current(),
                             adsDisplayer: nil,
-                            messageInterface: viewModel.messageInterface
+                            messageDelegate: viewModel.messageInterface
                         ),
                         type: viewModel.miniAppType,
                         appId: viewModel.miniAppId,
                         version: viewModel.miniAppVersion
-                    )
+                    ))
                 )
             }
         }

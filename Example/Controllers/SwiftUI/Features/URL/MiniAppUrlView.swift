@@ -45,14 +45,14 @@ struct MiniAppUrlView: View {
                 Spacer()
             } else {
                 MiniAppSUIView(params:
-                    MiniAppViewUrlParams(
+                    .url(.init(
                         config: MiniAppConfig(
                             config: Config.current(),
-                            messageInterface: delegator
+                            messageDelegate: delegator
                         ),
                         type: .miniapp,
                         url: URL(string: url)!
-                    )
+                    ))
                 )
             }
         }

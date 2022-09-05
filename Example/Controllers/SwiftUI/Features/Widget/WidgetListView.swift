@@ -12,15 +12,15 @@ struct WidgetListView: View {
         List {
             ForEach(miniAppIds, id: \.self) { id in
                 MiniAppSUIView(params:
-                    MiniAppViewDefaultParams(
+                    .default(.init(
                         config: MiniAppConfig(
                             config: Config.current(),
                             adsDisplayer: nil,
-                            messageInterface: delegator
+                            messageDelegate: delegator
                         ),
                         type: .widget,
                         appId: id
-                    )
+                    ))
                 )
                 .frame(height: 250)
             }
