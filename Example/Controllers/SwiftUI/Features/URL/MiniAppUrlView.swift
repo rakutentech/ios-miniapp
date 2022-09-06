@@ -44,15 +44,15 @@ struct MiniAppUrlView: View {
                     .foregroundColor(Color(UIColor.secondaryLabel))
                 Spacer()
             } else {
-                MiniAppSUIView(params:
-                    .url(.init(
+                MiniAppSUIView(urlParams:
+                    .init(
                         config: MiniAppConfig(
                             config: Config.current(),
                             messageDelegate: delegator
                         ),
                         type: .miniapp,
                         url: URL(string: url)!
-                    ))
+                    )
                 )
             }
         }

@@ -9,71 +9,71 @@ struct MiniAppFeatureListView: View {
 
     var body: some View {
         List {
-            Section(header: Text("MiniApp")) {
-                NavigationLink(
-                    destination: {
-                        MiniAppSingleView(
-                            miniAppId: store.miniAppIdentifierSingle,
-                            miniAppVersion: store.miniAppVersionSingle,
-                            miniAppType: .miniapp
-                        )
-                    },
-                    label: {
-                    MiniAppFeatureListCell(
-                        title: "Miniapp",
-                        subTitle: "Displays a single MiniApp",
-                        active: true
-                    )
-                })
-
-                NavigationLink(destination: MiniAppSegmentedView(), label: {
-                    MiniAppFeatureListCell(
-                        title: "Segmented",
-                        subTitle: "Open segmented miniapps",
-                        active: true
-                    )
-                })
-            }
-
-            Section(header: Text("Widgets")) {
-                NavigationLink {
-                    MiniAppSingleView(
-                        miniAppId: store.miniAppIdentifierSingle,
-                        miniAppVersion: store.miniAppVersionSingle,
-                        miniAppType: .widget
-                    )
-                } label: {
-                    MiniAppFeatureListCell(
-                        title: "Widget",
-                        subTitle: "Displays a single Widget",
-                        active: true
-                    )
-                }
-
-                NavigationLink {
-                    WidgetTrippleView(
-                        miniAppIdFirst: store.miniAppIdentifierTrippleFirst,
-                        miniAppIdSecond: store.miniAppIdentifierTrippleSecond,
-                        miniAppIdThird: store.miniAppIdentifierTrippleThird
-                    )
-                } label: {
-                    MiniAppFeatureListCell(
-                        title: "Three Widgets",
-                        subTitle: "Displays three Widgets",
-                        active: true
-                    )
-                }
-
-                NavigationLink {
-                    WidgetListView(miniAppIds: store.miniAppInfoList.map({ $0.id }))
-                } label: {
-                    MiniAppFeatureListCell(
-                        title: "Widget List",
-                        subTitle: "A list with multiple miniapps as widgets",
-                        active: true
-                    )
-                }
-            }
+//            Section(header: Text("MiniApp")) {
+//                NavigationLink(
+//                    destination: {
+//                        MiniAppSingleView(
+//                            miniAppId: store.miniAppIdentifierSingle,
+//                            miniAppVersion: store.miniAppVersionSingle,
+//                            miniAppType: .miniapp
+//                        )
+//                    },
+//                    label: {
+//                    MiniAppFeatureListCell(
+//                        title: "Miniapp",
+//                        subTitle: "Displays a single MiniApp",
+//                        active: true
+//                    )
+//                })
+//
+//                NavigationLink(destination: MiniAppSegmentedView(), label: {
+//                    MiniAppFeatureListCell(
+//                        title: "Segmented",
+//                        subTitle: "Open segmented miniapps",
+//                        active: true
+//                    )
+//                })
+//            }
+//
+//            Section(header: Text("Widgets")) {
+//                NavigationLink {
+//                    MiniAppSingleView(
+//                        miniAppId: store.miniAppIdentifierSingle,
+//                        miniAppVersion: store.miniAppVersionSingle,
+//                        miniAppType: .widget
+//                    )
+//                } label: {
+//                    MiniAppFeatureListCell(
+//                        title: "Widget",
+//                        subTitle: "Displays a single Widget",
+//                        active: true
+//                    )
+//                }
+//
+//                NavigationLink {
+//                    WidgetTrippleView(
+//                        miniAppIdFirst: store.miniAppIdentifierTrippleFirst,
+//                        miniAppIdSecond: store.miniAppIdentifierTrippleSecond,
+//                        miniAppIdThird: store.miniAppIdentifierTrippleThird
+//                    )
+//                } label: {
+//                    MiniAppFeatureListCell(
+//                        title: "Three Widgets",
+//                        subTitle: "Displays three Widgets",
+//                        active: true
+//                    )
+//                }
+//
+//                NavigationLink {
+//                    WidgetListView(miniAppIds: store.miniAppInfoList.map({ $0.id }))
+//                } label: {
+//                    MiniAppFeatureListCell(
+//                        title: "Widget List",
+//                        subTitle: "A list with multiple miniapps as widgets",
+//                        active: true
+//                    )
+//                }
+//            }
 
             Section(header: Text("Testing")) {
                 NavigationLink(destination: MiniAppUrlView(), label: {

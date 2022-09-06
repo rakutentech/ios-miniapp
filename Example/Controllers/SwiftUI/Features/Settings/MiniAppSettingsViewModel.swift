@@ -1,3 +1,4 @@
+import Foundation
 import MiniApp
 import Combine
 
@@ -16,5 +17,21 @@ class MiniAppSettingsViewModel: ObservableObject {
                 self?.indexedMiniAppInfoList = list
             }
             .store(in: &bag)
+    }
+
+    func getBuildVersionText() -> String {
+        var versionText = ""
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            versionText.append("Build Version: \(version) - ")
+
+        }
+        if let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            versionText.append("(\(build))")
+        }
+        return versionText
+    }
+
+    func save(config: MiniAppSettingsView.SettingsConfig) {
+        print(config)
     }
 }

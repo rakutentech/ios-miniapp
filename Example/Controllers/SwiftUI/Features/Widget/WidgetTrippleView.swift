@@ -34,34 +34,34 @@ struct WidgetTrippleView: View {
     var body: some View {
         VStack {
             MiniAppSUIView(params:
-                .default(.init(
+                .init(
                         config: MiniAppConfig(
                             config: Config.current(),
                             messageDelegate: viewModel.messageInterface(for: viewModel.first)
                         ),
                         type: .widget,
                         appId: viewModel.first
-                ))
+                )
             )
             MiniAppSUIView(params:
-                .default(.init(
+                .init(
                     config: MiniAppConfig(
                         config: Config.current(),
                         messageDelegate: viewModel.messageInterface(for: viewModel.second)
                     ),
                     type: .widget,
                     appId: viewModel.second
-                ))
+                )
             )
             MiniAppSUIView(params:
-                .default(.init(
+                .init(
                     config: MiniAppConfig(
                         config: Config.current(),
                         messageDelegate: viewModel.messageInterface(for: viewModel.third)
                     ),
                     type: .widget,
                     appId: viewModel.third
-                ))
+                )
             )
         }
         .padding(20)

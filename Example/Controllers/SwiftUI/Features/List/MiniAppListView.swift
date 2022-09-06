@@ -5,26 +5,37 @@ struct MiniAppListView: View {
 
     @StateObject var viewModel = MiniAppListViewModel()
 
+    @State var title: String
     @State private var miniAppInfo: MiniAppSingleViewRequest?
 
     var body: some View {
         ZStack {
-            if viewModel.indexedMiniAppInfoList.isEmpty {
+            switch viewModel.state {
+            case .none, .loading:
                 ProgressView()
-            } else {
+            case .success:
                 List {
                     ForEach(viewModel.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
                         Section(header: Text(key)) {
                             ForEach(viewModel.indexedMiniAppInfoList[key]!, id: \.version) { (info) in
-                                MiniAppListRowCell(
-                                    iconUrl: info.icon,
-                                    displayName: info.displayName ?? "",
-                                    versionTag: info.version.versionTag,
-                                    versionId: info.version.versionId
-                                )
-                                .onTapGesture {
-                                    miniAppInfo = MiniAppSingleViewRequest(info: info)
+                                NavigationLink {
+                                    MiniAppSingleView(
+                                        miniAppId: info.id,
+                                        miniAppVersion: info.version.versionId,
+                                        miniAppType: .miniapp
+                                    )
+                                } label: {
+                                    MiniAppListRowCell(
+                                        iconUrl: info.icon,
+                                        displayName: info.displayName ?? "",
+                                        versionTag: info.version.versionTag,
+                                        versionId: info.version.versionId
+                                    )
                                 }
+
+                                //.onTapGesture {
+                                //    miniAppInfo = MiniAppSingleViewRequest(info: info)
+                                //}
                             }
                         }
                     }
@@ -32,8 +43,8 @@ struct MiniAppListView: View {
                 .listStyle(GroupedListStyle())
             }
         }
-        .navigationTitle("MiniApp List")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(title)
+        //.navigationBarTitleDisplayMode(.inline)
         .sheet(item: $miniAppInfo) { request in
             NavigationView {
                 MiniAppSingleView(
@@ -57,7 +68,7 @@ struct MiniAppListView: View {
 
 struct MiniAppListView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppListView()
+        MiniAppListView(title: "List I")
     }
 }
 

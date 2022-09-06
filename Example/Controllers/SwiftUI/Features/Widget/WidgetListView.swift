@@ -12,7 +12,7 @@ struct WidgetListView: View {
         List {
             ForEach(miniAppIds, id: \.self) { id in
                 MiniAppSUIView(params:
-                    .default(.init(
+                    .init(
                         config: MiniAppConfig(
                             config: Config.current(),
                             adsDisplayer: nil,
@@ -20,7 +20,7 @@ struct WidgetListView: View {
                         ),
                         type: .widget,
                         appId: id
-                    ))
+                    )
                 )
                 .frame(height: 250)
             }

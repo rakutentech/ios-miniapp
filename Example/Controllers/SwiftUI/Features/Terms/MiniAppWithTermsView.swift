@@ -31,7 +31,7 @@ struct MiniAppWithTermsView: View {
                     .padding(.horizontal, 40)
             case .success:
                 MiniAppSUIView(params:
-                    .default(.init(
+                    .init(
                         config: MiniAppConfig(
                             config: Config.current(),
                             adsDisplayer: nil,
@@ -40,7 +40,7 @@ struct MiniAppWithTermsView: View {
                         type: viewModel.miniAppType,
                         appId: viewModel.miniAppId,
                         version: viewModel.miniAppVersion
-                    ))
+                    )
                 )
             }
         }

@@ -12,13 +12,25 @@ struct MiniAppDashboardView: View {
 
     var body: some View {
         TabView(selection: $selection) {
-            MiniAppListView()
+            NavigationView {
+                MiniAppListView(title: "List I")
+            }
             .tabItem {
-                Label("List", systemImage: "list.bullet")
+                Label("List I", systemImage: "list.bullet")
             }
             .tag(0)
+            
+            NavigationView {
+                MiniAppListView(title: "List II")
+            }
+            .tabItem {
+                Label("List II", systemImage: "list.bullet")
+            }
+            .tag(1)
 
-            MiniAppFeatureListView(store: store)
+            NavigationView {
+                MiniAppFeatureListView(store: store)
+            }
             .tabItem {
                 if #available(iOS 15, *) {
                     Label("Features", systemImage: "menucard")
@@ -26,23 +38,26 @@ struct MiniAppDashboardView: View {
                     Label("Features", systemImage: "flag")
                 }
             }
-            .tag(1)
-
-            MiniAppSingleView(
-                miniAppId: sampleMiniAppId,
-                miniAppVersion: sampleMiniAppVersion,
-                miniAppType: .miniapp
-            )
-            .tabItem {
-                Label("Sample", systemImage: "cube")
-            }
             .tag(2)
 
-            MiniAppFeatureConfigView(store: store)
+//            MiniAppSingleView(
+//                miniAppId: sampleMiniAppId,
+//                miniAppVersion: sampleMiniAppVersion,
+//                miniAppType: .miniapp
+//            )
+//            .tabItem {
+//                Label("Sample", systemImage: "cube")
+//            }
+//            .tag(3)
+
+            NavigationView {
+                MiniAppSettingsView(store: store)
+            }
+            .navigationViewStyle(.stack)
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
-            .tag(3)
+            .tag(4)
         }
         .navigationTitle(navigationTitle)
         .onAppear {
@@ -53,12 +68,14 @@ struct MiniAppDashboardView: View {
     var navigationTitle: String {
         switch selection {
         case 0:
-            return "MiniApp List"
+            return "MiniApp List I"
         case 1:
-            return "MiniApp Features"
+            return "MiniApp List II"
         case 2:
-            return "MiniApp Sample"
+            return "MiniApp Features"
         case 3:
+            return "MiniApp Sample"
+        case 4:
             return "Settings"
         default:
             return "Unknown"
