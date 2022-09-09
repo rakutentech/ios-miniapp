@@ -79,7 +79,7 @@ extension MiniAppSettingsView {
 
     enum MenuItem: CaseIterable {
         case general
-        case qa
+        case qaSecureStorage
         case profile
         case contacts
         case accessToken
@@ -90,7 +90,7 @@ extension MiniAppSettingsView {
             switch self {
             case .general:
                 return "General"
-            case .qa:
+            case .qaSecureStorage:
                 return "QA"
             case .profile:
                 return "Profile"
@@ -109,7 +109,7 @@ extension MiniAppSettingsView {
             switch self {
             case .general:
                 return Image(systemName: "gear")
-            case .qa:
+            case .qaSecureStorage:
                 return Image(systemName: "person.2")
             case .profile:
                 return Image(systemName: "person.crop.circle.fill")

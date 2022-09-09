@@ -12,7 +12,7 @@ struct MiniAppListView: View {
         _viewModel = StateObject(wrappedValue: MiniAppListViewModel(type: type))
         _title = State(wrappedValue: title)
     }
-    
+
     var body: some View {
         ZStack {
             switch viewModel.state {

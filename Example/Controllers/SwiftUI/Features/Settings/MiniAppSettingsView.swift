@@ -105,7 +105,7 @@ struct MiniAppSettingsView: View {
                         NavigationLink(destination: MiniAppSettingsGeneralView(viewModel: viewModel, parameters: $config.queryParameters)) {
                             MiniAppSettingsListCellView(text: item.name, image: item.icon)
                         }
-                    case .qa:
+                    case .qaSecureStorage:
                         NavigationLink(destination: MiniAppSettingsQAView(viewModel: viewModel)) {
                             MiniAppSettingsListCellView(text: item.name, image: item.icon)
                         }

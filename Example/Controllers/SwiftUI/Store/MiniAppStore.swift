@@ -105,7 +105,7 @@ class MiniAppStore: ObservableObject {
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(infos):
-                        //self.miniAppInfoList = infos
+                        // self.miniAppInfoList = infos
 
                         let ids = Set<String>(infos.map({ $0.id }))
                         for id in ids {
