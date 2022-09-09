@@ -65,7 +65,6 @@ struct MiniAppListView: View {
             }
         }
         .navigationTitle(title)
-        //.navigationBarTitleDisplayMode(.inline)
         .sheet(item: $miniAppInfo) { request in
             NavigationView {
                 MiniAppSingleView(
@@ -86,7 +85,7 @@ struct MiniAppListView: View {
         }
         .onAppear {
             viewModel.checkSetup()
-            if viewModel.store.miniAppSetupCompleted {
+            if viewModel.store.miniAppSetupCompleted && viewModel.indexedMiniAppInfoList.isEmpty {
                 viewModel.load()
             }
         }
