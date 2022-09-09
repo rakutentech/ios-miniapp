@@ -26,12 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.deepLinkToMiniApp(using: components.path.replacingOccurrences(of: "/preview/", with: ""))
             })
         }
-        
+
         let dashboardView = MiniAppDashboardView()
         let dashboardVc = UIHostingController(rootView: dashboardView)
         window?.rootViewController = dashboardVc
         window?.makeKeyAndVisible()
-        
+
         return true
     }
 
