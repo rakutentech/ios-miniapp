@@ -40,6 +40,8 @@ class MiniAppTermsViewModel: ObservableObject {
 }
 
 struct MiniAppTermsView: View {
+    
+    @Environment(\.colorScheme) var colorScheme
 
     @StateObject var viewModel: MiniAppTermsViewModel
 
@@ -137,6 +139,11 @@ struct MiniAppTermsView: View {
                 .padding(.bottom, 20)
             }
         }
+        .background(
+            Color(colorScheme == .light ? .secondarySystemBackground : .systemBackground)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea()
+        )
     }
 }
 

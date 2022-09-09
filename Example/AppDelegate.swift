@@ -5,6 +5,7 @@ import GoogleMobileAds
 import AppCenter
 import AppCenterCrashes
 import RAnalytics
+import SwiftUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.deepLinkToMiniApp(using: components.path.replacingOccurrences(of: "/preview/", with: ""))
             })
         }
+        
+        let dashboardView = MiniAppDashboardView()
+        let dashboardVc = UIHostingController(rootView: dashboardView)
+        window?.rootViewController = dashboardVc
+        window?.makeKeyAndVisible()
+        
         return true
     }
 

@@ -1,16 +1,60 @@
 import UIKit
 import MiniApp
 
+// main or general suite
+// version, isPreviewMode, requireMiniAppSignatureVerification, sslKeyHash
+
+// com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings.prod | stg
+// projectId, subscriptionKey, endpoint
+
 class Config: NSObject {
+    
+    enum Env: String {
+        case production
+        case staging
+        
+        var suiteName: String {
+            switch self {
+            case .production:
+                return "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings.prod"
+            case .staging:
+                return "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings.stg"
+            }
+        }
+    }
+    
+    enum NewKey: String {
+        case appId = "RASApplicationIdentifier"
+        case version = "CFBundleShortVersionString"
+        case isPreviewMode = "RMAIsPreviewMode"
+        case signatureVerification = "RMARequireMiniAppSignatureVerification"
+        case sslKeyHash = "RMASSLKeyHash"
+        case endpoint = "RMAAPIEndpoint"
+    }
+    
+    enum NewProjetKey: String {
+        case projectId = "RASProjectId"
+        case subscriptionKey = "RASProjectSubscriptionKey"
+
+        case projectIdList2 = "RASProjectIdList2"
+        case subscriptionKeyList2 = "RASProjectSubscriptionKeyList2"
+    }
+    
     enum Key: String {
         case applicationIdentifier               = "RASApplicationIdentifier",
-             projectId                           = "RASProjectId",
              version                             = "CFBundleShortVersionString",
+             
+             projectId                           = "RASProjectId",
              subscriptionKey                     = "RASProjectSubscriptionKey",
              endpoint                            = "RMAAPIEndpoint",
+
              stagingProjectId                    = "RASStagingProjectId",
              stagingSubscriptionKey              = "RASStagingProjectSubscriptionKey",
              stagingEndpoint                     = "RMAAPIStagingEndpoint",
+             
+             projectIdList2                      = "RASProjectIdList2",
+             subscriptionKeyList2                = "RASProjectSubscriptionKeyList2",
+
              isPreviewMode                       = "RMAIsPreviewMode",
              requireMiniAppSignatureVerification = "RMARequireMiniAppSignatureVerification",
              sslKeyHash                          = "RMASSLKeyHash"
@@ -30,6 +74,48 @@ class Config: NSObject {
 
     static var userDefaults: UserDefaults? {
         return getUserDefaults(isProd: isProd)
+    }
+    
+    // main bundle
+    class func string(_ key: NewProjetKey) -> String? {
+        let userDefaults = UserDefaults.standard
+        return userDefaults.string(forKey: key.rawValue)
+    }
+
+    // suits
+    class func setString(_ env: Env, key: NewProjetKey, value: String) {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        userDefaults?.set(value, forKey: key.rawValue)
+        userDefaults?.synchronize()
+    }
+    
+    class func string(_ env: Env, key: NewProjetKey) -> String? {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        return userDefaults?.string(forKey: key.rawValue)
+    }
+    
+    class func string(_ env: Env, key: NewProjetKey, withFallback: Bool) -> String? {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        return userDefaults?.string(forKey: key.rawValue) ?? getInfoString(key: key)
+    }
+
+    class func bool(_ env: Env, key: NewProjetKey) -> Bool? {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        return userDefaults?.value(forKey: key.rawValue) as? Bool
+    }
+
+    class func value(_ env: Env, key: NewProjetKey) -> Any? {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        return userDefaults?.value(forKey: key.rawValue)
+    }
+
+    class func exists(_ env: Env, key: NewProjetKey) -> Bool {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        return userDefaults?.value(forKey: key.rawValue) != nil
+    }
+    
+    class func getInfoString(key: NewProjetKey) -> String? {
+        return Bundle.main.infoDictionary?[key.rawValue] as? String
     }
 
     // swiftlint:disable:next todo
@@ -86,6 +172,17 @@ class Config: NSObject {
         }
     }
 
+    class func getUserDefaultsString(isProd: Bool, key: Key) -> String? {
+        return getUserDefaults(isProd: isProd)?.string(forKey: key.rawValue)
+    }
+
+    class func getUserDefaultsBool(key: Key) -> Bool? {
+        guard let value = userDefaults?.string(forKey: key.rawValue), !value.isEmpty else {
+            return nil
+        }
+        return userDefaults?.bool(forKey: key.rawValue)
+    }
+
     class func setUserDefaultsString(key: Key, value: String?) {
         guard let value = value else {
             userDefaults?.set(nil, forKey: key.rawValue)
@@ -101,6 +198,11 @@ class Config: NSObject {
         default:
             userDefaults?.set(value, forKey: key.rawValue)
         }
+        userDefaults?.synchronize()
+    }
+
+    class func setUserDefaultsBool(key: Key, value: Bool?) {
+        userDefaults?.set(value, forKey: key.rawValue)
         userDefaults?.synchronize()
     }
 

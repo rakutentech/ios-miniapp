@@ -70,7 +70,7 @@ struct MiniAppListPickerView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear(perform: {
-            self.store.load()
+            //self.store.load()
         })
     }
 }

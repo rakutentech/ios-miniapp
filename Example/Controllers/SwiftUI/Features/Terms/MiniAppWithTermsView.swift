@@ -39,7 +39,8 @@ struct MiniAppWithTermsView: View {
                         ),
                         type: viewModel.miniAppType,
                         appId: viewModel.miniAppId,
-                        version: viewModel.miniAppVersion
+                        version: viewModel.miniAppVersion,
+                        queryParams: getQueryParam()
                     )
                 )
             }

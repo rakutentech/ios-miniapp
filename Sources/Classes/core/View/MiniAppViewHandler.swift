@@ -66,7 +66,7 @@ class MiniAppViewHandler: NSObject {
         miniAppManifestStorage = MAManifestStorage()
         metaDataDownloader = MetaDataDownloader()
         miniAppPermissionStorage = MiniAppPermissionsStorage()
-        secureStorage = MiniAppSecureStorage(appId: appId, storageMaxSizeInBytes: 2_000_000)
+        secureStorage = MiniAppSecureStorage(appId: appId, storageMaxSizeInBytes: config.config?.storageMaxSizeInBytes ?? 2_000_000)
 
         miniAppClient = MiniAppClient(
             baseUrl: config.config?.baseUrl,

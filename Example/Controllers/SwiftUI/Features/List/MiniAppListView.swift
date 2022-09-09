@@ -3,16 +3,37 @@ import MiniApp
 
 struct MiniAppListView: View {
 
-    @StateObject var viewModel = MiniAppListViewModel()
+    @StateObject var viewModel: MiniAppListViewModel
 
     @State var title: String
     @State private var miniAppInfo: MiniAppSingleViewRequest?
 
+    init(type: MiniAppListViewType, title: String) {
+        _viewModel = StateObject(wrappedValue: MiniAppListViewModel(type: type))
+        _title = State(wrappedValue: title)
+    }
+    
     var body: some View {
         ZStack {
             switch viewModel.state {
             case .none, .loading:
                 ProgressView()
+            case .awaitsSetup:
+                VStack(spacing: 5) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .foregroundColor(.orange)
+                        .font(.system(size: 18, weight: .medium))
+                    Text("Setup necessary")
+                        .multilineTextAlignment(.center)
+                        .font(.system(size: 18, weight: .medium))
+                    Text("Go to settings and save your RAS configuration")
+                        .multilineTextAlignment(.center)
+                        .font(.system(size: 13))
+                }
+                .padding(.vertical, 20)
+                .padding(.horizontal, 20)
+                .background(RoundedRectangle(cornerRadius: 10).fill(Color(.secondarySystemBackground)))
+                .padding(.horizontal, 40)
             case .success:
                 List {
                     ForEach(viewModel.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
@@ -63,12 +84,18 @@ struct MiniAppListView: View {
                 }
             }
         }
+        .onAppear {
+            viewModel.checkSetup()
+            if viewModel.store.miniAppSetupCompleted {
+                viewModel.load()
+            }
+        }
     }
 }
 
 struct MiniAppListView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppListView(title: "List I")
+        MiniAppListView(type: .listI, title: "List I")
     }
 }
 

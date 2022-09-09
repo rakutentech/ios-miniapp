@@ -33,27 +33,50 @@ class MiniAppViewDelegator: MiniAppMessageDelegate {
         onSendMessage?()
     }
 
+    func getUserName(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success(getProfileSettings()?.displayName))
+    }
+
+    func getProfilePhoto(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success(getProfileSettings()?.profileImageURI))
+    }
+
     func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
-        if miniAppId.starts(with: "404") {
-            completionHandler(.success([
-                MAContact(id: "1", name: "John Doe", email: "joh@doe.com")
-            ]))
-            return
-        } else if miniAppId.starts(with: "21f") {
-            completionHandler(.success([
-                MAContact(id: "1", name: "Steve Jops", email: "steve@appl.com")
-            ]))
-            return
-        }
-        completionHandler(.failure(.unknownError(domain: "", code: 0, description: "no contacts")))
+        completionHandler(.success(getContactList()))
         return
     }
 
     func getPoints(completionHandler: @escaping (Result<MAPoints, MASDKPointError>) -> Void) {
-        completionHandler(.success(MAPoints(standard: 0, term: 0, cash: 0)))
+        if let points = getUserPoints() {
+            completionHandler(.success(
+                MAPoints(
+                    standard: points.standardPoints ?? 0,
+                    term: points.termPoints ?? 0,
+                    cash: points.cashPoints ?? 0
+                )
+            ))
+        } else {
+            completionHandler(.success(MAPoints(standard: 0, term: 0, cash: 0)))
+        }
     }
 
     func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], miniAppTitle: String, completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
         completionHandler(.failure(.userDenied))
+    }
+
+    func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
+        if let info = getTokenInfo() {
+            completionHandler(
+                .success(
+                    MATokenInfo(
+                        accessToken: info.tokenString,
+                        expirationDate: info.expiryDate,
+                        scopes: MASDKAccessTokenScopes(audience: "rae", scopes: info.scopes ?? [])
+                    )
+                )
+            )
+        } else {
+            completionHandler(.failure(.failedToConformToProtocol))
+        }
     }
 }
