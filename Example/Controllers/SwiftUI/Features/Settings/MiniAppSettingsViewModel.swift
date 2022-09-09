@@ -14,13 +14,7 @@ class MiniAppSettingsViewModel: ObservableObject {
     var bag = Set<AnyCancellable>()
 
     init() {
-        print(Config.string(.production, key: .subscriptionKeyList2, withFallback: true) ?? "")
-        print("-")
-//        store.$indexedMiniAppInfoList
-//            .sink { [weak self] list in
-//                self?.indexedMiniAppInfoList = list
-//            }
-//            .store(in: &bag)
+        //
     }
 
     func getBuildVersionText() -> String {
@@ -79,29 +73,24 @@ class MiniAppSettingsViewModel: ObservableObject {
 
     func persistConfig(config: MiniAppSettingsView.SettingsConfig) {
         if !store.miniAppSetupCompleted {
-            _ = saveUserPoints(pointsModel: UserPointsModel(standardPoints: 10, termPoints: 20, cashPoints: 30))
             store.miniAppSetupCompleted = true
         }
         //Config.userDefaults?.set(config.previewMode == .previewable, forKey: Config.Key.isPreviewMode.rawValue)
-        
+
         Config.setUserDefaultsBool(key: .isPreviewMode, value: config.previewMode == .previewable)
         Config.changeEnvironment(isStaging: config.environmentMode == .staging)
-        
+
+        // list 1
         Config.setString(.production, key: .projectId, value: config.listIProjectId)
         Config.setString(.production, key: .subscriptionKey, value: config.listISubscriptionKey)
         Config.setString(.staging, key: .projectId, value: config.listIStagingProjectId)
         Config.setString(.staging, key: .subscriptionKey, value: config.listIStagingSubscriptionKey)
-        
+
+        // list 2
         Config.setString(.production, key: .projectIdList2, value: config.listIIProjectId)
         Config.setString(.production, key: .subscriptionKeyList2, value: config.listIISubscriptionKey)
         Config.setString(.staging, key: .projectIdList2, value: config.listIStagingProjectId)
         Config.setString(.staging, key: .subscriptionKeyList2, value: config.listIIStagingSubscriptionKey)
-        
-        
-//        Config.setUserDefaultsString(key: .projectId, value: config.listIProjectId)
-//        Config.setUserDefaultsString(key: .subscriptionKey, value: config.listISubscriptionKey)
-//        Config.setUserDefaultsString(key: .projectIdList2, value: config.listIIProjectId)
-//        Config.setUserDefaultsString(key: .subscriptionKeyList2, value: config.listIISubscriptionKey)
     }
     
     // MARK: - General
@@ -131,15 +120,6 @@ class MiniAppSettingsViewModel: ObservableObject {
     func setSecureStorageLimit(maxSize: String) -> Result<String, MiniAppStore.StoreError> {
         store.setSecureStorageLimit(maxSize: maxSize)
     }
-
-//    var secureStorageLimit: String {
-//        get {
-//            store.getSecureStorageLimitString()
-//        }
-//        set {
-//            store.setSecureStorageLimit(maxSize: 0)
-//        }
-//    }
 
     // MARK: - Profile
     
@@ -192,7 +172,7 @@ class MiniAppSettingsViewModel: ObservableObject {
     }
 
     func savePoints(model: UserPointsModel) {
-        saveUserPoints(pointsModel: model)
+        _ = saveUserPoints(pointsModel: model)
     }
 }
 

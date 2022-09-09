@@ -61,10 +61,6 @@ struct MiniAppSettingsProfileView: View {
             .padding(.vertical, 15)
             
             VStack {
-//                HStack {
-//                    Text("Name")
-//                    Spacer()
-//                }
                 TextField("Name", text: $name)
             }
             
