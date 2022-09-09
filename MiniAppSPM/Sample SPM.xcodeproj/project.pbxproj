@@ -675,7 +675,6 @@
 				F75D49BD28C5B83A0053F74E /* Features */,
 				F75D49D728C5B83A0053F74E /* Helper */,
 				F75D49DA28C5B83A0053F74E /* Store */,
-				F75D4A0828C9D3B00053F74E /* ImagePicker.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -772,6 +771,7 @@
 				F75D49D928C5B83A0053F74E /* MiniAppViewDelegator.swift */,
 				F75D4A0A28CAF2A90053F74E /* TextFieldStyle+MiniApp.swift */,
 				F75D4A1028CAF7750053F74E /* Binding+Optional.swift */,
+				F75D4A0828C9D3B00053F74E /* ImagePicker.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";

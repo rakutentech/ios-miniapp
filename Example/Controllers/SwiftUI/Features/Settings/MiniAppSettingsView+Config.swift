@@ -6,7 +6,7 @@ extension MiniAppSettingsView {
     struct SettingsConfig: Hashable {
         var previewMode: PreviewMode =
         (Config.getUserDefaultsBool(key: .isPreviewMode) ?? true) ? .previewable : .published
-        //var previewMode: PreviewMode = (Bundle.main.infoDictionary?[Config.Key.isPreviewMode.rawValue] as? Bool) ?? true ? .previewable : .published
+        // var previewMode: PreviewMode = (Bundle.main.infoDictionary?[Config.Key.isPreviewMode.rawValue] as? Bool) ?? true ? .previewable : .published
         var environmentMode: EnvironmentMode = Config.isProd ? .production : .staging
 
         var listIProjectIdPlaceholder: String = Config.getInfoPlistString(key: .projectId) ?? ""
@@ -31,7 +31,7 @@ extension MiniAppSettingsView {
         var secureStorageLimit: String = ""
 
         init() {
-            //secureStorageLimit = viewModel.store.getSecureStorageLimitString()
+            // secureStorageLimit = viewModel.store.getSecureStorageLimitString()
         }
     }
 

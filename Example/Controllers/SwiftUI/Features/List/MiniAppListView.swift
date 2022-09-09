@@ -53,10 +53,6 @@ struct MiniAppListView: View {
                                         versionId: info.version.versionId
                                     )
                                 }
-
-                                //.onTapGesture {
-                                //    miniAppInfo = MiniAppSingleViewRequest(info: info)
-                                //}
                             }
                         }
                     }

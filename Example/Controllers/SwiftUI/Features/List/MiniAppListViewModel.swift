@@ -21,13 +21,13 @@ class MiniAppListViewModel: ObservableObject {
     init(type: MiniAppListViewType) {
         self.type = type
     }
-    
+
     func checkSetup() {
         if !store.miniAppSetupCompleted {
             state = .awaitsSetup
         }
     }
-    
+
     func load() {
         state = .loading
 
@@ -49,7 +49,7 @@ class MiniAppListViewModel: ObservableObject {
                 }
                 .store(in: &bag)
         }
-        
+
         store.load(type: type)
     }
 }

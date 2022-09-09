@@ -75,7 +75,7 @@ class MiniAppSettingsViewModel: ObservableObject {
         if !store.miniAppSetupCompleted {
             store.miniAppSetupCompleted = true
         }
-        //Config.userDefaults?.set(config.previewMode == .previewable, forKey: Config.Key.isPreviewMode.rawValue)
+        // Config.userDefaults?.set(config.previewMode == .previewable, forKey: Config.Key.isPreviewMode.rawValue)
 
         Config.setUserDefaultsBool(key: .isPreviewMode, value: config.previewMode == .previewable)
         Config.changeEnvironment(isStaging: config.environmentMode == .staging)

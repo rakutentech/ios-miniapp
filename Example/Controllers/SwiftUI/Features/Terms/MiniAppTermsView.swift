@@ -40,7 +40,7 @@ class MiniAppTermsViewModel: ObservableObject {
 }
 
 struct MiniAppTermsView: View {
-    
+
     @Environment(\.colorScheme) var colorScheme
 
     @StateObject var viewModel: MiniAppTermsViewModel

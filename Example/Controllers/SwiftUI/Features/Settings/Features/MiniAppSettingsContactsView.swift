@@ -57,7 +57,7 @@ struct MiniAppSettingsContactsView_Previews: PreviewProvider {
 
 extension MiniAppSettingsContactsView {
     struct ContactCellView: View {
-    
+
         @Binding var name: String
         @Binding var contactId: String
         @Binding var email: String

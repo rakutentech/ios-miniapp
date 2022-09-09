@@ -18,7 +18,7 @@ class MiniAppStore: ObservableObject {
     static let shared = MiniAppStore()
 
     var testString: String = "lul"
-    
+
     @AppStorage("MiniApp.FirstLaunch") var miniAppFirstLaunch = false
     @AppStorage("MiniApp.SetupCompleted") var miniAppSetupCompleted = false
 
@@ -33,16 +33,16 @@ class MiniAppStore: ObservableObject {
 
     @AppStorage(Constants.miniAppIdentifierTrippleThird.rawValue) var miniAppIdentifierTrippleThird = ""
     @AppStorage(Constants.miniAppVersionTrippleThird.rawValue) var miniAppVersionTrippleThird = ""
-    
+
     @AppStorage(wrappedValue: "", Constants.miniAppIdentifierSingle.rawValue, store: UserDefaults(suiteName: ""))
     var miniAppProdProjectId: String
-    
+
     @AppStorage(wrappedValue: "", Constants.miniAppIdentifierSingle.rawValue, store: UserDefaults(suiteName: ""))
     var miniAppProdSubscriptionKey: String
-    
+
     @AppStorage(wrappedValue: "", Constants.miniAppIdentifierSingle.rawValue, store: UserDefaults(suiteName: ""))
     var miniAppProdProjectIdList2: String
-    
+
     @AppStorage(wrappedValue: "", Constants.miniAppIdentifierSingle.rawValue, store: UserDefaults(suiteName: ""))
     var miniAppProdSubscriptionKeyList2: String
 
@@ -51,7 +51,7 @@ class MiniAppStore: ObservableObject {
 
     @Published
     var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
-    
+
     @Published
     var indexedMiniAppInfoList2: [String: [MiniAppInfo]] = [:]
 
@@ -65,14 +65,14 @@ class MiniAppStore: ObservableObject {
     func setupUserDefaults() {
         // points
         _ = saveUserPoints(pointsModel: UserPointsModel(standardPoints: 10, termPoints: 20, cashPoints: 30))
-        
+
         // contacts
         let randomList: [MAContact] = (0..<10).map({ _ in
             let fakeName = Self.randomFakeName()
             return MAContact(id: UUID().uuidString, name: fakeName, email: Self.fakeMail(with: fakeName))
         })
         updateContactList(list: randomList)
-        
+
         // profile
         let defaultImage = UIImage(named: "default_profile_picture")?.dataURI()
         _ = setProfileSettings(userDisplayName: "MiniAppUser", profileImageURI: defaultImage)
@@ -151,7 +151,7 @@ class MiniAppStore: ObservableObject {
     func getSecureStorageLimit() -> UInt64 {
         return UInt64(UserDefaults.standard.integer(forKey: Config.LocalKey.maxSecureStorageFileLimit.rawValue))
     }
-    
+
     func getSecureStorageLimitString() -> String {
         let maxSecureStorageLimit = UserDefaults.standard.integer(forKey: Config.LocalKey.maxSecureStorageFileLimit.rawValue)
         if maxSecureStorageLimit > 0 {
@@ -182,7 +182,7 @@ class MiniAppStore: ObservableObject {
         numberFormatter.decimalSeparator = "."
         return numberFormatter
     }()
-    
+
     // random generator
     class func fakeMail(with name: String?) -> String {
         name != nil ? name!.replacingOccurrences(of: " ", with: ".", options: .literal, range: nil).lowercased() + "@example.com" : ""
@@ -219,14 +219,14 @@ extension MiniAppStore {
         case miniAppIdentifierTrippleThird = "kMiniAppIdentifierTrippleThird"
         case miniAppVersionTrippleThird = "kMiniAppVersionTrippleThird"
     }
-    
+
     enum StoreError: Error {
         case invalidFormat
-        
+
         var title: String {
             return "Error"
         }
-        
+
         var message: String {
             switch self {
             case .invalidFormat:

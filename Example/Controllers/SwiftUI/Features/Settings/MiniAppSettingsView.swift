@@ -2,6 +2,8 @@ import SwiftUI
 import UIKit
 import MiniApp
 
+// swiftlint:disable line_length
+
 struct MiniAppSettingsView: View {
 
     @ObservedObject var store: MiniAppStore
@@ -17,7 +19,7 @@ struct MiniAppSettingsView: View {
 
     var body: some View {
         Form {
-            
+
             if !store.miniAppSetupCompleted {
                 HStack {
                     VStack {
@@ -31,7 +33,6 @@ struct MiniAppSettingsView: View {
                             .font(.system(size: 15, weight: .bold))
                         Text("Start by entering the RAS credentials. You can enter the ProjectId and SubscriptionKey for List I and/or for List II and tap Save. Additional details can be configured in the list below the \"RAS\" Section.")
                     }
-                    
                 }
                 .padding(.vertical, 15)
             }
@@ -45,7 +46,7 @@ struct MiniAppSettingsView: View {
                 .pickerStyle(.segmented)
                 .padding(.vertical, 15)
             }
-            
+
             Section(header: Text("Environment")) {
                 Picker("Environment", selection: $config.environmentMode) {
                     ForEach(EnvironmentMode.allCases, id: \.self) { mode in
@@ -55,7 +56,7 @@ struct MiniAppSettingsView: View {
                 .pickerStyle(.segmented)
                 .padding(.vertical, 15)
             }
-            
+
             Section(header: Text("RAS")) {
                 Picker("List Config", selection: $selectedListConfig) {
                     ForEach(ListConfig.allCases, id: \.self) { config in
@@ -64,7 +65,7 @@ struct MiniAppSettingsView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.vertical, 15)
-                
+
                 switch config.environmentMode {
                 case .production:
                     switch selectedListConfig {
@@ -95,10 +96,10 @@ struct MiniAppSettingsView: View {
                 }
 
             }
-            
+
             Section {
                 ForEach(MenuItem.allCases, id: \.self) { item in
-                    
+
                     switch item {
                     case .general:
                         NavigationLink(destination: MiniAppSettingsGeneralView(viewModel: viewModel, parameters: $config.queryParameters)) {

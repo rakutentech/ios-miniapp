@@ -16,7 +16,6 @@ struct MiniAppSettingsSignatureView: View {
                 .padding(.vertical, 15)
             }
         }
-        
     }
 }
 
