@@ -29,16 +29,16 @@ extension MiniAppSettingsView {
         var queryParameters: String = ""
 
         var secureStorageLimit: String = ""
-        
+
         init() {
             //secureStorageLimit = viewModel.store.getSecureStorageLimitString()
         }
     }
-    
+
     enum PreviewMode: CaseIterable {
         case previewable
         case published
-        
+
         var name: String {
             switch self {
             case .previewable:
@@ -52,7 +52,7 @@ extension MiniAppSettingsView {
     enum EnvironmentMode: CaseIterable {
         case production
         case staging
-        
+
         var name: String {
             switch self {
             case .production:
@@ -66,7 +66,7 @@ extension MiniAppSettingsView {
     enum ListConfig: CaseIterable {
         case listI
         case listII
-        
+
         var name: String {
             switch self {
             case .listI:
@@ -85,7 +85,7 @@ extension MiniAppSettingsView {
         case accessToken
         case points
         case signature
-        
+
         var name: String {
             switch self {
             case .general:
@@ -104,7 +104,7 @@ extension MiniAppSettingsView {
                 return "Signature"
             }
         }
-    
+
         var icon: Image {
             switch self {
             case .general:

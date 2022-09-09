@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MiniAppSettingsAccessTokenView: View {
-    
+
     @ObservedObject var viewModel: MiniAppSettingsViewModel
 
     @State private var accessTokenErrorBehavior: ErrorBehavior = .normal
@@ -9,10 +9,10 @@ struct MiniAppSettingsAccessTokenView: View {
     @State private var accessTokenString: String = "ACCESS_TOKEN"
     @State private var expiryDate: Date = Date()
     @State private var alertMessage: MiniAppAlertMessage?
-    
+
     var body: some View {
         List {
-            
+
             Section(header: Text("Access Token Error Behavior")) {
                 VStack {
                     Picker("Error Behavior", selection: $accessTokenErrorBehavior) {
@@ -21,18 +21,18 @@ struct MiniAppSettingsAccessTokenView: View {
                         }
                     }
                     .pickerStyle(.segmented)
-                    
+
                     TextField("Custom error message", text: $accessTokenErrorString)
                     .textFieldStyle(MiniAppTextFieldStyle())
                 }
                 .padding(.vertical, 15)
             }
-            
+
             Section(header: Text("Access Token / Expiry")) {
                 VStack(alignment: .leading) {
                     TextField("Access Token", text: $accessTokenString)
                         .textFieldStyle(MiniAppTextFieldStyle())
-                    
+
                     Spacer().frame(height: 5)
 
                     DatePicker("Expiry", selection: $expiryDate, displayedComponents: .date)
@@ -78,7 +78,7 @@ extension MiniAppSettingsAccessTokenView {
         case normal
         case authorization
         case unknown
-        
+
         var name: String {
             switch self {
             case .normal:

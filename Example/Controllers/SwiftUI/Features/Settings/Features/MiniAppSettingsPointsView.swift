@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct MiniAppSettingsPointsView: View {
-    
+
     @Environment(\.dismiss) var dismiss
-    
+
     @ObservedObject var viewModel: MiniAppSettingsViewModel
 
     @State var pointsStandard: String = "10"

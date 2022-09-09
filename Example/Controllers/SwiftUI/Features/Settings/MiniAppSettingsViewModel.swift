@@ -29,15 +29,15 @@ class MiniAppSettingsViewModel: ObservableObject {
     }
 
     func save(config: MiniAppSettingsView.SettingsConfig, completion: @escaping (() -> Void)) {
-        
+
         state = .loading
-        
+
         let sdkConfig = MiniAppSdkConfig(
             rasProjectId: config.listIProjectId,
             subscriptionKey: config.listISubscriptionKey,
             isPreviewMode: config.previewMode == .previewable
         )
-        
+
         MiniApp.shared(with: sdkConfig).list { [weak self] (result) in
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
                 switch result {
@@ -51,13 +51,13 @@ class MiniAppSettingsViewModel: ObservableObject {
                 completion()
             }
         }
-        
+
         let sdkConfig2 = MiniAppSdkConfig(
             rasProjectId: config.listIIProjectId,
             subscriptionKey: config.listIISubscriptionKey,
             isPreviewMode: config.previewMode == .previewable
         )
-        
+
         MiniApp.shared(with: sdkConfig2).list { [weak self] (result) in
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
                 switch result {
@@ -92,9 +92,9 @@ class MiniAppSettingsViewModel: ObservableObject {
         Config.setString(.staging, key: .projectIdList2, value: config.listIStagingProjectId)
         Config.setString(.staging, key: .subscriptionKeyList2, value: config.listIIStagingSubscriptionKey)
     }
-    
+
     // MARK: - General
-    
+
     func getDeepLinkList() -> [String] {
         return getDeepLinksList()
     }
@@ -102,13 +102,13 @@ class MiniAppSettingsViewModel: ObservableObject {
     func saveDeepLinkList(list: [String]) {
         setDeepLinksList(deeplinksList: list)
     }
-    
+
     // MARK: - QA
 
     func getSecureStorageMaxSize() -> String {
         store.getSecureStorageLimitString()
     }
-    
+
     func clearSecureStorages() {
         store.clearSecureStorages()
     }
@@ -122,7 +122,7 @@ class MiniAppSettingsViewModel: ObservableObject {
     }
 
     // MARK: - Profile
-    
+
     func getContacts() -> [MAContact] {
         getContactList() ?? []
     }
@@ -130,7 +130,7 @@ class MiniAppSettingsViewModel: ObservableObject {
     func saveContactList(contacts: [MAContact]) {
         updateContactList(list: contacts)
     }
-    
+
     func setUserDetails(name: String?, imageUrl: String?) -> Bool {
         return setProfileSettings(userDisplayName: name, profileImageURI: imageUrl)
     }
@@ -143,7 +143,7 @@ class MiniAppSettingsViewModel: ObservableObject {
         let fakeName = MiniAppStore.randomFakeName()
         return MAContact(id: UUID().uuidString, name: fakeName, email: MiniAppStore.fakeMail(with: fakeName))
     }
-    
+
     // MARK: - Access Token
     func retrieveAccessTokenInfo() -> AccessTokenInfo {
         guard let tokenInfo = getTokenInfo() else {
@@ -165,7 +165,7 @@ class MiniAppSettingsViewModel: ObservableObject {
         )
         return saveStatus
     }
-    
+
     // MARK: - Points
     func getPoints() -> UserPointsModel? {
         getUserPoints()

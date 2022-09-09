@@ -2,14 +2,14 @@ import SwiftUI
 import PhotosUI
 
 struct MiniAppSettingsProfileView: View {
-    
+
     @ObservedObject var viewModel: MiniAppSettingsViewModel
-    
+
     @State private var name: String = ""
     @State private var image: UIImage?
     @State private var showImagePicker = false
     @State private var alertMessage: MiniAppAlertMessage?
-    
+
     var body: some View {
         List {
             VStack {
@@ -59,11 +59,10 @@ struct MiniAppSettingsProfileView: View {
             }
             .buttonStyle(.plain)
             .padding(.vertical, 15)
-            
+
             VStack {
                 TextField("Name", text: $name)
             }
-            
         }
         .navigationTitle("Profile")
         .listStyle(.plain)
@@ -71,9 +70,9 @@ struct MiniAppSettingsProfileView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     if viewModel.setUserDetails(name: name, imageUrl: image?.dataURI()) {
-                        
+                        //
                     } else {
-                        
+                        //
                     }
                 } label: {
                     Text("Save")

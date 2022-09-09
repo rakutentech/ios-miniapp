@@ -20,7 +20,7 @@ struct MiniAppDashboardView: View {
                     Label("List I", systemImage: "list.bullet")
                 }
                 .tag(0)
-                
+
                 NavigationView {
                     MiniAppListView(type: .listII, title: "List II")
                 }

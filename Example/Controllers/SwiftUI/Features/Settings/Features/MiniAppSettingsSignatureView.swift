@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MiniAppSettingsSignatureView: View {
-    
+
     @State var signatureMode: SignatureMode = .plist
 
     var body: some View {
@@ -31,7 +31,7 @@ extension MiniAppSettingsSignatureView {
         case plist
         case optional
         case mandatory
-        
+
         var name: String {
             switch self {
             case .plist:

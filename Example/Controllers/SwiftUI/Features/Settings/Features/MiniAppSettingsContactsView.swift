@@ -2,13 +2,12 @@ import SwiftUI
 import MiniApp
 
 struct MiniAppSettingsContactsView: View {
-    
-    @ObservedObject var viewModel: MiniAppSettingsViewModel
-    
-    @State var contacts: [MAContact] = []
 
+    @ObservedObject var viewModel: MiniAppSettingsViewModel
+
+    @State var contacts: [MAContact] = []
     @State var newContact: MAContact?
-    
+
     var body: some View {
         ZStack {
             List {
@@ -29,9 +28,9 @@ struct MiniAppSettingsContactsView: View {
                 .sheet(item: $newContact, content: { contact in
                     NavigationView {
                         ContactFormView(
-                            name: Binding<String>(get: { contact.name ?? "" }, set: { n in newContact?.name = n }),
-                            contactId: Binding<String>(get: { contact.id }, set: { n in newContact?.id = n }),
-                            email: Binding<String>(get: { contact.email ?? "" }, set: { n in newContact?.email = n }),
+                            name: Binding<String>(get: { contact.name ?? "" }, set: { new in newContact?.name = new }),
+                            contactId: Binding<String>(get: { contact.id }, set: { new in newContact?.id = new }),
+                            email: Binding<String>(get: { contact.email ?? "" }, set: { new in newContact?.email = new }),
                             onSave: {
                                 if let contact = newContact {
                                     contacts.insert(contact, at: 0)
@@ -58,11 +57,11 @@ struct MiniAppSettingsContactsView_Previews: PreviewProvider {
 
 extension MiniAppSettingsContactsView {
     struct ContactCellView: View {
-        
+    
         @Binding var name: String
         @Binding var contactId: String
         @Binding var email: String
-        
+
         var body: some View {
             HStack {
                 Circle()
@@ -81,15 +80,15 @@ extension MiniAppSettingsContactsView {
             .padding(.vertical, 10)
         }
     }
-    
+
     struct ContactFormView: View {
-        
+
         @Binding var name: String
         @Binding var contactId: String
         @Binding var email: String
-        
+
         var onSave: () -> Void
-        
+
         var body: some View {
             List {
                 TextField("Name", text: $name)

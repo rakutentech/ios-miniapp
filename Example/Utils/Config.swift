@@ -1,18 +1,12 @@
 import UIKit
 import MiniApp
 
-// main or general suite
-// version, isPreviewMode, requireMiniAppSignatureVerification, sslKeyHash
-
-// com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings.prod | stg
-// projectId, subscriptionKey, endpoint
-
 class Config: NSObject {
-    
+
     enum Env: String {
         case production
         case staging
-        
+
         var suiteName: String {
             switch self {
             case .production:
@@ -22,7 +16,7 @@ class Config: NSObject {
             }
         }
     }
-    
+
     enum NewKey: String {
         case appId = "RASApplicationIdentifier"
         case version = "CFBundleShortVersionString"
@@ -31,7 +25,7 @@ class Config: NSObject {
         case sslKeyHash = "RMASSLKeyHash"
         case endpoint = "RMAAPIEndpoint"
     }
-    
+
     enum NewProjetKey: String {
         case projectId = "RASProjectId"
         case subscriptionKey = "RASProjectSubscriptionKey"
@@ -39,11 +33,11 @@ class Config: NSObject {
         case projectIdList2 = "RASProjectIdList2"
         case subscriptionKeyList2 = "RASProjectSubscriptionKeyList2"
     }
-    
+
     enum Key: String {
         case applicationIdentifier               = "RASApplicationIdentifier",
              version                             = "CFBundleShortVersionString",
-             
+
              projectId                           = "RASProjectId",
              subscriptionKey                     = "RASProjectSubscriptionKey",
              endpoint                            = "RMAAPIEndpoint",
@@ -51,7 +45,7 @@ class Config: NSObject {
              stagingProjectId                    = "RASStagingProjectId",
              stagingSubscriptionKey              = "RASStagingProjectSubscriptionKey",
              stagingEndpoint                     = "RMAAPIStagingEndpoint",
-             
+
              projectIdList2                      = "RASProjectIdList2",
              subscriptionKeyList2                = "RASProjectSubscriptionKeyList2",
 
@@ -75,7 +69,7 @@ class Config: NSObject {
     static var userDefaults: UserDefaults? {
         return getUserDefaults(isProd: isProd)
     }
-    
+
     // main bundle
     class func string(_ key: NewProjetKey) -> String? {
         let userDefaults = UserDefaults.standard
@@ -88,12 +82,12 @@ class Config: NSObject {
         userDefaults?.set(value, forKey: key.rawValue)
         userDefaults?.synchronize()
     }
-    
+
     class func string(_ env: Env, key: NewProjetKey) -> String? {
         let userDefaults = UserDefaults(suiteName: env.suiteName)
         return userDefaults?.string(forKey: key.rawValue)
     }
-    
+
     class func string(_ env: Env, key: NewProjetKey, withFallback: Bool) -> String? {
         let userDefaults = UserDefaults(suiteName: env.suiteName)
         return userDefaults?.string(forKey: key.rawValue) ?? getInfoString(key: key)
@@ -113,7 +107,7 @@ class Config: NSObject {
         let userDefaults = UserDefaults(suiteName: env.suiteName)
         return userDefaults?.value(forKey: key.rawValue) != nil
     }
-    
+
     class func getInfoString(key: NewProjetKey) -> String? {
         return Bundle.main.infoDictionary?[key.rawValue] as? String
     }

@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct MiniAppSettingsGeneralView: View {
-    
+
     @ObservedObject var viewModel: MiniAppSettingsViewModel
-    
+
     @Binding var parameters: String
-    
+
     var body: some View {
         Form {
             NavigationLink {
@@ -33,7 +33,7 @@ struct MiniAppSettingsGeneralView_Previews: PreviewProvider {
 extension MiniAppSettingsGeneralView {
 
     struct QueryParametersView: View {
-        
+
         @Environment(\.dismiss) var dismiss
 
         @Binding var parameters: String
@@ -67,12 +67,12 @@ extension MiniAppSettingsGeneralView {
                 parameters = getQueryParam()
             }
         }
-        
+
         func save() {
             if saveQueryParam(queryParam: parameters) {
                 dismiss.callAsFunction()
             } else {
-                
+                //
             }
         }
 
@@ -81,13 +81,13 @@ extension MiniAppSettingsGeneralView {
     struct DeepLinkView: View {
 
         @ObservedObject var viewModel: MiniAppSettingsViewModel
-        
+
         @State var deepLinks: [String] = []
-        
+
         @State private var newDeepLinkText: String = ""
         @State private var isAddPresented: Bool = false
         @State private var isDetailPresented: Bool = false
-        
+
         var body: some View {
             List {
                 ForEach($deepLinks, id: \.self) { deeplink in
@@ -166,7 +166,7 @@ extension MiniAppSettingsGeneralView {
                 deepLinks = getDeepLinksList()
             }
         }
-        
+
         func save() {
             viewModel.saveDeepLinkList(list: deepLinks)
         }

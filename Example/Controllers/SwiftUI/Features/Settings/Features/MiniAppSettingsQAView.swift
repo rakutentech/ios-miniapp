@@ -2,12 +2,12 @@ import SwiftUI
 import MiniApp
 
 struct MiniAppSettingsQAView: View {
-    
+
     @ObservedObject var viewModel: MiniAppSettingsViewModel
 
     @State private var miniAppWipeAppId = ""
     @State private var miniAppMaxStorageSize = ""
-    
+
     @State private var alertMessage: MiniAppAlertMessage?
 
     var body: some View {
@@ -24,7 +24,7 @@ struct MiniAppSettingsQAView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
-                    
+
                     HStack {
                         TextField("MiniApp ID", text: $miniAppWipeAppId)
                             .frame(height: 50)
@@ -39,7 +39,7 @@ struct MiniAppSettingsQAView: View {
                         .foregroundColor(.red)
                         .disabled(miniAppWipeAppId.isEmpty)
                     }
-                    
+
                     HStack {
                         TextField("Max Storage Limit (Bytes)", text: $miniAppMaxStorageSize)
                             .frame(height: 50)
