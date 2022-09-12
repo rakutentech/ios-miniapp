@@ -3,6 +3,8 @@ import MiniApp
 
 struct MiniAppWithTermsView: View {
 
+    @StateObject var keyboardHelper = KeyboardNotificationHelper()
+
     @ObservedObject var viewModel: MiniAppWithTermsViewModel
 
     @State private var didAcceptTerms: Bool = false
@@ -61,25 +63,14 @@ struct MiniAppWithTermsView: View {
         .onReceive(viewModel.showMessageAlert) {
             showMessageAlert = $0
         }
+        .onDisappear {
+            
+        }
     }
 }
 
 struct MiniAppWithTermsView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: ""))
-    }
-}
-
-public extension ShapeStyle where Self == Color {
-    static var debug: Color {
-    #if DEBUG
-        return Color(
-            red: .random(in: 0...1),
-            green: .random(in: 0...1),
-            blue: .random(in: 0...1)
-        ).opacity(0.7)
-    #else
-        return Color(.clear)
-    #endif
     }
 }
