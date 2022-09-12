@@ -34,7 +34,7 @@ struct MiniAppWithTermsView: View {
                     .init(
                         config: MiniAppConfig(
                             config: Config.current(),
-                            adsDisplayer: nil,
+                            adsDisplayer: AdMobDisplayer(),
                             messageDelegate: viewModel.messageInterface
                         ),
                         type: viewModel.miniAppType,
