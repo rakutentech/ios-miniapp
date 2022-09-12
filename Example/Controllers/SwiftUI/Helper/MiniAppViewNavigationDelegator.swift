@@ -7,7 +7,6 @@ class MiniAppViewNavigationDelegator: MiniAppNavigationDelegate {
     var onShouldOpenUrl: ((URL, MiniAppNavigationResponseHandler?, MiniAppNavigationResponseHandler?) -> Void)?
 
     func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler, onClose closeHandler: MiniAppNavigationResponseHandler?) {
-        //onShouldOpenUrl?(url, responseHandler, closeHandler)
         if url.absoluteString.starts(with: "data:") {
             navigateForBase64(url: url)
         } else {

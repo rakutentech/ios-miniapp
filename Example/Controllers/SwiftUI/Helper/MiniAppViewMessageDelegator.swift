@@ -4,7 +4,7 @@ import CoreLocation
 import UIKit
 
 class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
-    
+
     let locationManager = LocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
 
@@ -74,7 +74,7 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
             case .notDetermined:
                 locationManager.requestPermission()
             case .denied:
-                //displayLocationDisabledAlert()
+                // displayLocationDisabledAlert()
                 completionHandler(.failure(.denied))
             case .authorizedAlways, .authorizedWhenInUse:
                 completionHandler(.success(.allowed))
@@ -248,4 +248,3 @@ extension MiniAppViewMessageDelegator: CLLocationManagerDelegate {
         }
     }
 }
-

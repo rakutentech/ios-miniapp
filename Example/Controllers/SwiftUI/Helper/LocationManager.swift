@@ -6,11 +6,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var lastSeenLocation: CLLocation?
 
     private let locationManager: CLLocationManager
-    
+
     override init() {
         locationManager = CLLocationManager()
         authorizationStatus = locationManager.authorizationStatus
-        
+
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -21,7 +21,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func requestPermission() {
         locationManager.requestWhenInUseAuthorization()
-        //locationManager.requestAlwaysAuthorization()
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
