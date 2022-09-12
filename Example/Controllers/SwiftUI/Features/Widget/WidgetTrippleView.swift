@@ -13,13 +13,13 @@ class WidgetTrippleViewModel: ObservableObject {
         self.first = first
         self.second = second
         self.third = third
-        interfaces[first] = MiniAppViewDelegator(miniAppId: first)
-        interfaces[second] = MiniAppViewDelegator(miniAppId: second)
-        interfaces[third] = MiniAppViewDelegator(miniAppId: third)
+        interfaces[first] = MiniAppViewMessageDelegator(miniAppId: first)
+        interfaces[second] = MiniAppViewMessageDelegator(miniAppId: second)
+        interfaces[third] = MiniAppViewMessageDelegator(miniAppId: third)
     }
 
     func messageInterface(for miniAppId: String) -> MiniAppMessageDelegate {
-        return interfaces[miniAppId] ?? MiniAppViewDelegator()
+        return interfaces[miniAppId] ?? MiniAppViewMessageDelegator()
     }
 }
 

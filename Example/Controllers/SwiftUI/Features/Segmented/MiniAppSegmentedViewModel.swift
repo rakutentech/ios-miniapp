@@ -15,13 +15,13 @@ class MiniAppSegmentedViewModel: ObservableObject {
         let vsecond = store.miniAppVersionTrippleSecond
         let third = store.miniAppIdentifierTrippleThird
         let vthird = store.miniAppVersionTrippleThird
-        interfaces[first] = MiniAppViewDelegator(miniAppId: first, miniAppVersion: vfirst)
-        interfaces[second] = MiniAppViewDelegator(miniAppId: second, miniAppVersion: vsecond)
-        interfaces[third] = MiniAppViewDelegator(miniAppId: third, miniAppVersion: vthird)
+        interfaces[first] = MiniAppViewMessageDelegator(miniAppId: first, miniAppVersion: vfirst)
+        interfaces[second] = MiniAppViewMessageDelegator(miniAppId: second, miniAppVersion: vsecond)
+        interfaces[third] = MiniAppViewMessageDelegator(miniAppId: third, miniAppVersion: vthird)
     }
 
     func messageInterface(for segment: MiniAppSegment) -> MiniAppMessageDelegate {
-        return interfaces[getMiniAppId(segment: segment)] ?? MiniAppViewDelegator()
+        return interfaces[getMiniAppId(segment: segment)] ?? MiniAppViewMessageDelegator()
     }
 
     func getMiniAppId(segment: MiniAppSegment) -> String {

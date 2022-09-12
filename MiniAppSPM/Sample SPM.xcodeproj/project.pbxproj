@@ -140,7 +140,6 @@
 		F75D49EE28C5B83A0053F74E /* MiniAppListPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49D528C5B83A0053F74E /* MiniAppListPickerView.swift */; };
 		F75D49EF28C5B83A0053F74E /* MiniAppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49D628C5B83A0053F74E /* MiniAppListViewModel.swift */; };
 		F75D49F028C5B83A0053F74E /* RemoteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49D828C5B83A0053F74E /* RemoteImageView.swift */; };
-		F75D49F128C5B83A0053F74E /* MiniAppViewDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49D928C5B83A0053F74E /* MiniAppViewDelegator.swift */; };
 		F75D49F228C5B83A0053F74E /* MiniAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49DB28C5B83A0053F74E /* MiniAppStore.swift */; };
 		F75D49F328C5B83A0053F74E /* MiniAppPermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49DC28C5B83A0053F74E /* MiniAppPermissionService.swift */; };
 		F75D49F528C5E11C0053F74E /* MiniAppSettingsGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49F428C5E11C0053F74E /* MiniAppSettingsGeneralView.swift */; };
@@ -164,6 +163,7 @@
 		F7B7B00D28B71FC8009C5EA6 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = F7B7B00B28B71FC8009C5EA6 /* SmallMA.zip */; };
 		F7B7B00E28B71FC8009C5EA6 /* SmallMAerror.zip in Resources */ = {isa = PBXBuildFile; fileRef = F7B7B00C28B71FC8009C5EA6 /* SmallMAerror.zip */; };
 		F7C0BCEE28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0BCED28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift */; };
+		F7C0BCF028CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0BCEF28CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift */; };
 		F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -312,7 +312,6 @@
 		F75D49D528C5B83A0053F74E /* MiniAppListPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppListPickerView.swift; sourceTree = "<group>"; };
 		F75D49D628C5B83A0053F74E /* MiniAppListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppListViewModel.swift; sourceTree = "<group>"; };
 		F75D49D828C5B83A0053F74E /* RemoteImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImageView.swift; sourceTree = "<group>"; };
-		F75D49D928C5B83A0053F74E /* MiniAppViewDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewDelegator.swift; sourceTree = "<group>"; };
 		F75D49DB28C5B83A0053F74E /* MiniAppStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppStore.swift; sourceTree = "<group>"; };
 		F75D49DC28C5B83A0053F74E /* MiniAppPermissionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppPermissionService.swift; sourceTree = "<group>"; };
 		F75D49F428C5E11C0053F74E /* MiniAppSettingsGeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSettingsGeneralView.swift; sourceTree = "<group>"; };
@@ -335,6 +334,7 @@
 		F7B7B00B28B71FC8009C5EA6 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
 		F7B7B00C28B71FC8009C5EA6 /* SmallMAerror.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMAerror.zip; sourceTree = "<group>"; };
 		F7C0BCED28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewNavigationDelegator.swift; sourceTree = "<group>"; };
+		F7C0BCEF28CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewMessageDelegator.swift; sourceTree = "<group>"; };
 		F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -774,7 +774,7 @@
 			isa = PBXGroup;
 			children = (
 				F75D49D828C5B83A0053F74E /* RemoteImageView.swift */,
-				F75D49D928C5B83A0053F74E /* MiniAppViewDelegator.swift */,
+				F7C0BCEF28CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift */,
 				F7C0BCED28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift */,
 				F75D4A0A28CAF2A90053F74E /* TextFieldStyle+MiniApp.swift */,
 				F75D4A1028CAF7750053F74E /* Binding+Optional.swift */,
@@ -1019,10 +1019,10 @@
 				F75D49F228C5B83A0053F74E /* MiniAppStore.swift in Sources */,
 				F75D4A0728C9CADE0053F74E /* MiniAppSettingsView+Config.swift in Sources */,
 				F75D49ED28C5B83A0053F74E /* MiniAppListRowCell.swift in Sources */,
-				F75D49F128C5B83A0053F74E /* MiniAppViewDelegator.swift in Sources */,
 				F75D4A0D28CAF69D0053F74E /* MiniAppListPickerCellView.swift in Sources */,
 				F75D49F028C5B83A0053F74E /* RemoteImageView.swift in Sources */,
 				310575E527EE213400D93B06 /* DisplayNavigationController.swift in Sources */,
+				F7C0BCF028CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift in Sources */,
 				310575DD27EE213400D93B06 /* ChatContactsSelectorViewController.swift in Sources */,
 				310575CA27EE213400D93B06 /* UserProfileModel.swift in Sources */,
 				310575DC27EE213400D93B06 /* ViewController.swift in Sources */,

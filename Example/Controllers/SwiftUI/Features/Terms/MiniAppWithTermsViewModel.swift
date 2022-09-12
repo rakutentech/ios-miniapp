@@ -39,7 +39,7 @@ class MiniAppWithTermsViewModel: ObservableObject {
         if let messageInterface = messageInterface {
             self.messageInterface = messageInterface
         } else {
-            let delegator = MiniAppViewDelegator(miniAppId: miniAppId, miniAppVersion: miniAppVersion)
+            let delegator = MiniAppViewMessageDelegator(miniAppId: miniAppId, miniAppVersion: miniAppVersion)
             self.messageInterface = delegator
             delegator.onSendMessage = {
                 self.showMessageAlert.send(true)

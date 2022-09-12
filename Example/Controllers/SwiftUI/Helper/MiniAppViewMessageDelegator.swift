@@ -3,7 +3,7 @@ import MiniApp
 import CoreLocation
 import UIKit
 
-class MiniAppViewDelegator: NSObject, MiniAppMessageDelegate {
+class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
     
     let locationManager = LocationManager()
     var permissionHandlerObj: PermissionCompletionHandler?
@@ -166,7 +166,7 @@ class MiniAppViewDelegator: NSObject, MiniAppMessageDelegate {
     }
 }
 
-extension MiniAppViewDelegator {
+extension MiniAppViewMessageDelegator {
     func download(url: String, headers: DownloadHeaders, completion: ((Result<Data, MASDKDownloadFileError>) -> Void)? = nil) {
         if Base64UriHelper.isBase64String(text: url) {
             guard
@@ -232,7 +232,7 @@ extension MiniAppViewDelegator {
     }
 }
 
-extension MiniAppViewDelegator: CLLocationManagerDelegate {
+extension MiniAppViewMessageDelegator: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .denied:
