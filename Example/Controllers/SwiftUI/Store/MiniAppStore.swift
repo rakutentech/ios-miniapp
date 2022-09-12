@@ -17,10 +17,13 @@ class MiniAppStore: ObservableObject {
 
     static let shared = MiniAppStore()
 
-    var testString: String = "lul"
-
     @AppStorage("MiniApp.FirstLaunch") var miniAppFirstLaunch = false
     @AppStorage("MiniApp.SetupCompleted") var miniAppSetupCompleted = false
+
+    @AppStorage("QA_CUSTOM_ACCESS_TOKEN_ERROR_MESSAGE") var accessTokenErrorMessage = ""
+    @AppStorage("QA_CUSTOM_ACCESS_TOKEN_ERROR_TYPE") var accessTokenErrorBehavior = ""
+    
+    @AppStorage(Config.NewKey.signatureVerification.rawValue) var signatureVerification: Bool?
 
     @AppStorage(Constants.miniAppIdentifierSingle.rawValue) var miniAppIdentifierSingle = ""
     @AppStorage(Constants.miniAppVersionSingle.rawValue) var miniAppVersionSingle = ""

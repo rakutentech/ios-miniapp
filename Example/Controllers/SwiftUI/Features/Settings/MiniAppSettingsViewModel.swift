@@ -145,6 +145,22 @@ class MiniAppSettingsViewModel: ObservableObject {
     }
 
     // MARK: - Access Token
+    func getAccessTokenBehavior() -> MiniAppSettingsAccessTokenView.ErrorBehavior {
+        MiniAppSettingsAccessTokenView.ErrorBehavior(rawValue: store.accessTokenErrorBehavior) ?? .normal
+    }
+
+    func saveAccessTokenBehavior(behavior: MiniAppSettingsAccessTokenView.ErrorBehavior) {
+        store.accessTokenErrorBehavior = behavior.rawValue
+    }
+
+    func getAccessTokenError() -> String {
+        store.accessTokenErrorMessage
+    }
+
+    func saveAccessTokenErrorString(text: String) {
+        store.accessTokenErrorMessage = text
+    }
+    
     func retrieveAccessTokenInfo() -> AccessTokenInfo {
         guard let tokenInfo = getTokenInfo() else {
             return setDefaultTokenInfo()
@@ -173,6 +189,26 @@ class MiniAppSettingsViewModel: ObservableObject {
 
     func savePoints(model: UserPointsModel) {
         _ = saveUserPoints(pointsModel: model)
+    }
+
+    //  MARK: - Signature
+    func getSignature() -> MiniAppSettingsSignatureView.SignatureMode {
+        if let forceCheck = store.signatureVerification {
+            return forceCheck ? .mandatory : .optional
+        } else {
+            return .plist
+        }
+    }
+
+    func saveSignature(mode: MiniAppSettingsSignatureView.SignatureMode) {
+        switch mode {
+        case .plist:
+            store.signatureVerification = nil
+        case .optional:
+            store.signatureVerification = false
+        case .mandatory:
+            store.signatureVerification = true
+        }
     }
 }
 

@@ -126,7 +126,7 @@ struct MiniAppSettingsView: View {
                             MiniAppSettingsListCellView(text: item.name, image: item.icon)
                         }
                     case .signature:
-                        NavigationLink(destination: MiniAppSettingsSignatureView()) {
+                        NavigationLink(destination: MiniAppSettingsSignatureView(viewModel: viewModel)) {
                             MiniAppSettingsListCellView(text: item.name, image: item.icon)
                         }
                     }

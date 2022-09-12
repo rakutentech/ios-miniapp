@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MiniAppSettingsSignatureView: View {
+    
+    @ObservedObject var viewModel: MiniAppSettingsViewModel
 
     @State var signatureMode: SignatureMode = .plist
 
@@ -16,12 +18,19 @@ struct MiniAppSettingsSignatureView: View {
                 .padding(.vertical, 15)
             }
         }
+        .navigationTitle("demo.app.rat.page.name.custom.signature.verification")
+        .onAppear {
+            signatureMode = viewModel.getSignature()
+        }
+        .onChange(of: signatureMode) { newValue in
+            viewModel.saveSignature(mode: newValue)
+        }
     }
 }
 
 struct MiniAppSettingsSignatureView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppSettingsSignatureView()
+        MiniAppSettingsSignatureView(viewModel: MiniAppSettingsViewModel())
     }
 }
 

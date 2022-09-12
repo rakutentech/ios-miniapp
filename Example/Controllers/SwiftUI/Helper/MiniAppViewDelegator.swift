@@ -65,13 +65,34 @@ class MiniAppViewDelegator: MiniAppMessageDelegate {
     }
 
     func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
+        let store = MiniAppStore.shared
+        let errorBehavior = store.accessTokenErrorBehavior
+        if
+            !errorBehavior.isEmpty,
+            let errorMode = MiniAppSettingsAccessTokenView.ErrorBehavior(rawValue: errorBehavior)
+        {
+            let message = store.accessTokenErrorMessage
+            switch errorMode {
+            case .authorization:
+                let desc = "authorizationFailureError" + ( (!message.isEmpty) ? ": " + message : "" )
+                return completionHandler(
+                    .failure(.authorizationFailureError(description: desc))
+                )
+            default:
+                let desc = "Other error" + ( (!message.isEmpty) ? ": " + message : "" )
+                return completionHandler(
+                    .failure(.error(description: desc))
+                )
+            }
+        }
+
         if let info = getTokenInfo() {
             completionHandler(
                 .success(
                     MATokenInfo(
                         accessToken: info.tokenString,
                         expirationDate: info.expiryDate,
-                        scopes: MASDKAccessTokenScopes(audience: "rae", scopes: info.scopes ?? [])
+                        scopes: scopes
                     )
                 )
             )

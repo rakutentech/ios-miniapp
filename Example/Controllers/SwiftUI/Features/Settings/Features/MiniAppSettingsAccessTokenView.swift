@@ -46,6 +46,8 @@ struct MiniAppSettingsAccessTokenView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    viewModel.saveAccessTokenBehavior(behavior: accessTokenErrorBehavior)
+                    viewModel.saveAccessTokenErrorString(text: accessTokenErrorString)
                     if viewModel.saveTokenDetails(accessToken: accessTokenString, date: expiryDate) {
                         alertMessage = MiniAppAlertMessage(title: "Info", message: "Access Token info saved")
                     } else {
@@ -60,6 +62,9 @@ struct MiniAppSettingsAccessTokenView: View {
             }
         }
         .onAppear {
+            accessTokenErrorBehavior = viewModel.getAccessTokenBehavior()
+            accessTokenErrorString = viewModel.getAccessTokenError()
+
             let tokenInfo = viewModel.retrieveAccessTokenInfo()
             accessTokenString = tokenInfo.tokenString
             expiryDate = tokenInfo.expiryDate
@@ -74,10 +79,10 @@ struct MiniAppSettingsAccessTokenView_Previews: PreviewProvider {
 }
 
 extension MiniAppSettingsAccessTokenView {
-    enum ErrorBehavior: CaseIterable {
-        case normal
-        case authorization
-        case unknown
+    enum ErrorBehavior: String, CaseIterable {
+        case normal = ""
+        case authorization = "AUTHORIZATION"
+        case unknown = "OTHER"
 
         var name: String {
             switch self {
