@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import WebKit
+import SwiftUI
 
 public class MiniAppExternalWebViewController: UIViewController {
 
@@ -125,4 +126,20 @@ internal class MiniAppCloseNavigationController: UINavigationController {
     @objc public func close() {
         self.dismiss(animated: true)
     }
+}
+
+public struct MiniAppExternalWebView: UIViewControllerRepresentable {
+
+    public init() {
+        // init
+    }
+
+    public func makeUIViewController(context: Context) -> MiniAppExternalWebViewController {
+        return MiniAppExternalWebViewController()
+    }
+
+    public func updateUIViewController(_ uiViewController: MiniAppExternalWebViewController, context: Context) {
+        // update
+    }
+
 }

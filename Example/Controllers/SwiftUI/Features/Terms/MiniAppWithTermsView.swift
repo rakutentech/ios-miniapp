@@ -37,7 +37,8 @@ struct MiniAppWithTermsView: View {
                         config: MiniAppConfig(
                             config: Config.current(),
                             adsDisplayer: AdMobDisplayer(),
-                            messageDelegate: viewModel.messageInterface
+                            messageDelegate: viewModel.messageInterface,
+                            navigationDelegate: viewModel.navigationDelegate
                         ),
                         type: viewModel.miniAppType,
                         appId: viewModel.miniAppId,
@@ -45,6 +46,9 @@ struct MiniAppWithTermsView: View {
                         queryParams: getQueryParam()
                     )
                 )
+                .sheet(isPresented: $viewModel.shouldPresentExternalWebView) {
+                    MiniAppExternalWebView()
+                }
             }
         }
         .alert(isPresented: $showMessageAlert) {

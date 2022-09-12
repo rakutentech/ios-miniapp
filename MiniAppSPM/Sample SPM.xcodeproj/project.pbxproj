@@ -163,6 +163,7 @@
 		F796AC8C2860204900A75DA8 /* RAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F796AC8B2860204900A75DA8 /* RAnalytics */; };
 		F7B7B00D28B71FC8009C5EA6 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = F7B7B00B28B71FC8009C5EA6 /* SmallMA.zip */; };
 		F7B7B00E28B71FC8009C5EA6 /* SmallMAerror.zip in Resources */ = {isa = PBXBuildFile; fileRef = F7B7B00C28B71FC8009C5EA6 /* SmallMAerror.zip */; };
+		F7C0BCEE28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0BCED28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift */; };
 		F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -333,6 +334,7 @@
 		F791AF9228B49499008C01BA /* MiniAppViewHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewHandlerTests.swift; sourceTree = "<group>"; };
 		F7B7B00B28B71FC8009C5EA6 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
 		F7B7B00C28B71FC8009C5EA6 /* SmallMAerror.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMAerror.zip; sourceTree = "<group>"; };
+		F7C0BCED28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewNavigationDelegator.swift; sourceTree = "<group>"; };
 		F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -773,6 +775,7 @@
 			children = (
 				F75D49D828C5B83A0053F74E /* RemoteImageView.swift */,
 				F75D49D928C5B83A0053F74E /* MiniAppViewDelegator.swift */,
+				F7C0BCED28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift */,
 				F75D4A0A28CAF2A90053F74E /* TextFieldStyle+MiniApp.swift */,
 				F75D4A1028CAF7750053F74E /* Binding+Optional.swift */,
 				F75D4A0828C9D3B00053F74E /* ImagePicker.swift */,
@@ -1054,6 +1057,7 @@
 				310575C927EE213400D93B06 /* UserPointsModel.swift in Sources */,
 				F75D49FB28C6F3790053F74E /* MiniAppSettingsContactsView.swift in Sources */,
 				310575DF27EE213400D93B06 /* MAFirstLaunchController.swift in Sources */,
+				F7C0BCEE28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift in Sources */,
 				310575C827EE213400D93B06 /* UITextView+MiniApp.swift in Sources */,
 				310575D627EE213400D93B06 /* AccessTokenViewController.swift in Sources */,
 				F75D49F528C5E11C0053F74E /* MiniAppSettingsGeneralView.swift in Sources */,

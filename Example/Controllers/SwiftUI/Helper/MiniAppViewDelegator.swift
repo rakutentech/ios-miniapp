@@ -1,6 +1,7 @@
 import Foundation
 import MiniApp
 import CoreLocation
+import UIKit
 
 class MiniAppViewDelegator: NSObject, MiniAppMessageDelegate {
     
@@ -19,10 +20,6 @@ class MiniAppViewDelegator: NSObject, MiniAppMessageDelegate {
 
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.success("MAUID-\(miniAppId.prefix(8))-\((miniAppVersion ?? "").prefix(8))"))
-    }
-
-    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
-        //
     }
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
@@ -126,6 +123,113 @@ class MiniAppViewDelegator: NSObject, MiniAppMessageDelegate {
         }
     }
 
+    func getHostEnvironmentInfo(completionHandler: @escaping (Result<MAHostEnvironmentInfo, MASDKError>) -> Void) {
+        let locale = NSLocalizedString("miniapp.sdk.ios.locale", comment: "")
+        let info = MAHostEnvironmentInfo(hostLocale: locale)
+        completionHandler(.success(info))
+    }
+
+    var getEnvironmentInfo: (() -> (MAHostEnvironmentInfo))? {
+        let locale = NSLocalizedString("miniapp.sdk.ios.locale", comment: "")
+        let info = MAHostEnvironmentInfo(hostLocale: locale)
+        return { return info }
+    }
+
+    // MARK: - Download
+    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
+        guard let downloadUrl = URL(string: url) else {
+            completionHandler(.failure(.invalidUrl))
+            return
+        }
+        let topViewController = UIApplication.shared.keyWindow?.topController()
+        download(url: downloadUrl.absoluteString, headers: headers) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let data):
+                    guard
+                        let savedUrl = self.saveTemporaryFile(data: data,
+                                                              resourceName: fileName.stringByDeletingPathExtension,
+                                                              fileExtension: fileName.pathExtension)
+                    else {
+                        completionHandler(.failure(MASDKDownloadFileError.saveTemporarilyFailed))
+                        return
+                    }
+                    let activityVc = MiniAppActivityController(activityItems: [savedUrl], applicationActivities: nil)
+                    topViewController?.present(activityVc, animated: true, completion: nil)
+                    completionHandler(.success(fileName))
+                case .failure(let error):
+                    completionHandler(.failure(error))
+                }
+            }
+        }
+    }
+}
+
+extension MiniAppViewDelegator {
+    func download(url: String, headers: DownloadHeaders, completion: ((Result<Data, MASDKDownloadFileError>) -> Void)? = nil) {
+        if Base64UriHelper.isBase64String(text: url) {
+            guard
+                let data = Base64UriHelper.decodeBase64String(text: url)
+            else {
+                completion?(.failure(MASDKDownloadFileError.invalidUrl))
+                return
+            }
+
+            completion?(.success(data))
+        } else {
+            guard
+                let url = URL(string: url)
+            else {
+                completion?(.failure(MASDKDownloadFileError.invalidUrl))
+                return
+            }
+            let session = URLSession.shared
+            var request = URLRequest(url: url)
+            headers.forEach({ request.addValue($0.value, forHTTPHeaderField: $0.key) })
+            let task = session.downloadTask(with: request) { (tempFileUrl, response, error) in
+                if let error = error {
+                    completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: error.localizedDescription)))
+                    return
+                }
+                guard
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode
+                else {
+                    completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: "no status code")))
+                    return
+                }
+                guard
+                    statusCode >= 200 && statusCode <= 300
+                else {
+                    let reason = HTTPURLResponse.localizedString(forStatusCode: statusCode)
+                    completion?(.failure(MASDKDownloadFileError.downloadHttpError(code: statusCode, reason: reason)))
+                    return
+                }
+                guard
+                    let tempFileUrl = tempFileUrl,
+                        let data = try? Data(contentsOf: tempFileUrl)
+                else {
+                    completion?(.failure(MASDKDownloadFileError.downloadFailed(code: -1, reason: "could not load local data")))
+                    return
+                }
+
+                completion?(.success(data))
+            }
+            task.resume()
+        }
+    }
+
+    func saveTemporaryFile(data: Data, resourceName: String, fileExtension: String) -> URL? {
+        let tempDirectoryURL = URL.init(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        let targetURL = tempDirectoryURL.appendingPathComponent("\(resourceName).\(fileExtension)")
+        do {
+            try data.write(to: targetURL, options: .atomic)
+            return targetURL
+        } catch let error {
+            print("Unable to copy file: \(error)")
+        }
+        return nil
+    }
 }
 
 extension MiniAppViewDelegator: CLLocationManagerDelegate {
@@ -144,3 +248,4 @@ extension MiniAppViewDelegator: CLLocationManagerDelegate {
         }
     }
 }
+
