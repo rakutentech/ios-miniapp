@@ -9,11 +9,6 @@ struct MiniAppWithTermsView: View {
 
     @State private var didAcceptTerms: Bool = false
     @State private var showMessageAlert: Bool = false
-//    init(miniAppId: String, miniAppVersion: String? = nil, miniAppType: MiniAppType = .miniapp) {
-//        _viewModel = StateObject(wrappedValue:
-//            MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: miniAppVersion, miniAppType: miniAppType)
-//        )
-//    }
 
     var body: some View {
         VStack {
@@ -46,9 +41,6 @@ struct MiniAppWithTermsView: View {
                         queryParams: getQueryParam()
                     )
                 )
-                .sheet(isPresented: $viewModel.shouldPresentExternalWebView) {
-                    MiniAppExternalWebView()
-                }
             }
         }
         .alert(isPresented: $showMessageAlert) {
@@ -66,9 +58,6 @@ struct MiniAppWithTermsView: View {
         })
         .onReceive(viewModel.showMessageAlert) {
             showMessageAlert = $0
-        }
-        .onDisappear {
-            
         }
     }
 }

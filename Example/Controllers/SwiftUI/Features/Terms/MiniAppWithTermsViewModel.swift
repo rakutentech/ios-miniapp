@@ -16,8 +16,6 @@ class MiniAppWithTermsViewModel: ObservableObject {
     var navigationDelegate: MiniAppNavigationDelegate
 
     var showMessageAlert: CurrentValueSubject<Bool, Never> = .init(false)
-    
-    @Published var shouldPresentExternalWebView: Bool = false
 
     init(
         miniAppId: String,
@@ -47,12 +45,6 @@ class MiniAppWithTermsViewModel: ObservableObject {
         }
 
         self.load()
-        
-        if let navigationDelegator = self.navigationDelegate as? MiniAppViewNavigationDelegator {
-            navigationDelegator.onShouldOpenUrl = { [weak self] (url, response, close) in
-                self?.shouldPresentExternalWebView = true
-            }
-        }
     }
 
     func load() {

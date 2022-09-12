@@ -736,8 +736,8 @@
 			children = (
 				F75D49C928C5B83A0053F74E /* MiniAppTermsOptionalCell.swift */,
 				F75D49CA28C5B83A0053F74E /* MiniAppTermsView.swift */,
-				F75D49CB28C5B83A0053F74E /* MiniAppWithTermsView.swift */,
 				F75D49CC28C5B83A0053F74E /* MiniAppWithTermsViewModel.swift */,
+				F75D49CB28C5B83A0053F74E /* MiniAppWithTermsView.swift */,
 				F75D49CD28C5B83A0053F74E /* MiniAppTermsRequiredCell.swift */,
 			);
 			path = Terms;

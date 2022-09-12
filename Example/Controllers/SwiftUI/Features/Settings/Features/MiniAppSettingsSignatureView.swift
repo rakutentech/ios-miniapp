@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MiniAppSettingsSignatureView: View {
-    
+
     @ObservedObject var viewModel: MiniAppSettingsViewModel
 
     @State var signatureMode: SignatureMode = .plist

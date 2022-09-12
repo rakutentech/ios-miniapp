@@ -3,11 +3,9 @@ import UIKit
 import MiniApp
 
 class MiniAppViewNavigationDelegator: MiniAppNavigationDelegate {
-    
+
     var onShouldOpenUrl: ((URL, MiniAppNavigationResponseHandler?, MiniAppNavigationResponseHandler?) -> Void)?
-    //var externalLinkResponseHandler: MiniAppNavigationResponseHandler?
-    //var onCloseHandler: MiniAppNavigationResponseHandler?
-    
+
     func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler, onClose closeHandler: MiniAppNavigationResponseHandler?) {
         //onShouldOpenUrl?(url, responseHandler, closeHandler)
         if url.absoluteString.starts(with: "data:") {

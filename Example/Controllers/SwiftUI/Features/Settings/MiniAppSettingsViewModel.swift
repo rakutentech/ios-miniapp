@@ -160,7 +160,7 @@ class MiniAppSettingsViewModel: ObservableObject {
     func saveAccessTokenErrorString(text: String) {
         store.accessTokenErrorMessage = text
     }
-    
+
     func retrieveAccessTokenInfo() -> AccessTokenInfo {
         guard let tokenInfo = getTokenInfo() else {
             return setDefaultTokenInfo()
@@ -191,7 +191,7 @@ class MiniAppSettingsViewModel: ObservableObject {
         _ = saveUserPoints(pointsModel: model)
     }
 
-    //  MARK: - Signature
+    // MARK: - Signature
     func getSignature() -> MiniAppSettingsSignatureView.SignatureMode {
         if let forceCheck = store.signatureVerification {
             return forceCheck ? .mandatory : .optional
