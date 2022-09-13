@@ -14,6 +14,7 @@ struct MiniAppSingleView: View {
     @State private var isPermissionPresented: Bool = false
     @State private var didAcceptTerms: Bool = false
     @State private var didAcceptSettingsTerms: Bool = false
+    @State private var isSharePreviewPresented: Bool = false
 
     init(miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
         _viewModel = StateObject(wrappedValue: MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: miniAppVersion, miniAppType: .miniapp))
@@ -48,15 +49,26 @@ struct MiniAppSingleView: View {
             }
 
             ToolbarItem(placement: .navigationBarTrailing) {
-                if viewModel.viewState == .success {
-                    Button {
-                        openPermissionSettings()
-                    } label: {
-                        Image(systemName: "gearshape")
-                    }
-                } else {
-                    EmptyView()
+                Button {
+                    isSharePreviewPresented = true
+                } label: {
+                    Image(systemName: "square.and.arrow.down")
                 }
+                .sheet(isPresented: $isSharePreviewPresented, content: {
+                    NavigationView {
+                        MiniAppSharePreviewView(viewModel: viewModel)
+                    }
+                })
+                .disabled(!(viewModel.viewState == .success))
+            }
+
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    openPermissionSettings()
+                } label: {
+                    Image(systemName: "gearshape")
+                }
+                .disabled(!(viewModel.viewState == .success))
             }
         })
         .sheet(item: $permissionRequest, content: { request in
@@ -81,7 +93,6 @@ struct MiniAppSingleView: View {
             }
         })
         .onChange(of: viewModel.viewState) { state in
-            print("State Change: ", state)
             switch state {
             case .success:
                 self.permissionRequest = nil

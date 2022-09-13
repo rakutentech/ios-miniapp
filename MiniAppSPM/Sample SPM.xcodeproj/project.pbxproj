@@ -164,6 +164,7 @@
 		F7B7B00E28B71FC8009C5EA6 /* SmallMAerror.zip in Resources */ = {isa = PBXBuildFile; fileRef = F7B7B00C28B71FC8009C5EA6 /* SmallMAerror.zip */; };
 		F7C0BCEE28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0BCED28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift */; };
 		F7C0BCF028CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0BCEF28CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift */; };
+		F7C0BCF228D072A400C56C2E /* MiniAppSharePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0BCF128D072A400C56C2E /* MiniAppSharePreviewView.swift */; };
 		F7FD91F1283B68C400F105C1 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -335,6 +336,7 @@
 		F7B7B00C28B71FC8009C5EA6 /* SmallMAerror.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMAerror.zip; sourceTree = "<group>"; };
 		F7C0BCED28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewNavigationDelegator.swift; sourceTree = "<group>"; };
 		F7C0BCEF28CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewMessageDelegator.swift; sourceTree = "<group>"; };
+		F7C0BCF128D072A400C56C2E /* MiniAppSharePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSharePreviewView.swift; sourceTree = "<group>"; };
 		F7FD91F0283B68C400F105C1 /* Base64UriHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -747,6 +749,7 @@
 			isa = PBXGroup;
 			children = (
 				F75D49CF28C5B83A0053F74E /* MiniAppSingleView.swift */,
+				F7C0BCF128D072A400C56C2E /* MiniAppSharePreviewView.swift */,
 			);
 			path = Single;
 			sourceTree = "<group>";
@@ -996,6 +999,7 @@
 				310575C627EE213400D93B06 /* MiniApp+UIImage.swift in Sources */,
 				310575BE27EE213400D93B06 /* Array+MiniApp.swift in Sources */,
 				F75D49FF28C6F3B70053F74E /* MiniAppSettingsPointsView.swift in Sources */,
+				F7C0BCF228D072A400C56C2E /* MiniAppSharePreviewView.swift in Sources */,
 				310575C727EE213400D93B06 /* Bundle+MiniApp.swift in Sources */,
 				F75D49E128C5B83A0053F74E /* WidgetTrippleView.swift in Sources */,
 				F75D4A1528CEE2F90053F74E /* KeyboardNotificationHelper.swift in Sources */,

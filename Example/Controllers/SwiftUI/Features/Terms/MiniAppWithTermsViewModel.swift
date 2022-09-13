@@ -91,4 +91,15 @@ class MiniAppWithTermsViewModel: ObservableObject {
             }
         }
     }
+
+    func getInfo(completion: @escaping ((Result<MiniAppInfo, Error>) -> Void)) {
+        permissionService.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { result in
+            switch result {
+            case .success(let info):
+                completion(.success(info))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
