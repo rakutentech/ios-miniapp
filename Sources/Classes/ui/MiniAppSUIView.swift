@@ -39,7 +39,9 @@ public struct MiniAppSUIView: UIViewRepresentable {
         return view
     }
 
-    public func updateUIView(_ uiView: MiniAppView, context: Context) {}
+    public func updateUIView(_ uiView: MiniAppView, context: Context) {
+        // update view if necessary
+    }
 
     public func makeCoordinator() -> MiniAppSUIView.Coordinator {
         Coordinator(handler: handler)
