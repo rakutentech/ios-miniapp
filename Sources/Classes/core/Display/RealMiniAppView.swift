@@ -1,6 +1,6 @@
 import WebKit
 
-// swiftlint:disable file_length
+// swiftlint:disable file_length function_body_length
 internal class RealMiniAppView: UIView {
 
     internal var webView: WKWebView
