@@ -108,7 +108,14 @@ internal class RealMiniAppView: UIView {
         }
         onExternalWebviewClose = { [weak self] (url) in
             self?.didReceiveEvent(.externalWebViewClosed, message: url.absoluteString)
-            NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp close external webview"))
+            NotificationCenter.default.sendCustomEvent(
+                MiniAppEvent.Event(
+                    miniAppId: self?.miniAppId ?? "",
+                    miniAppVersion: self?.miniAppVersion ?? "",
+                    type: .resume,
+                    comment: "MiniApp close external webview"
+                )
+            )
         }
     }
 
@@ -158,9 +165,15 @@ internal class RealMiniAppView: UIView {
         if shouldAutoLoadSecureStorage {
             secureStorage.loadStorage { success in
                 if success {
-                    MiniAppSecureStorage.sendLoadStorageReady()
+                    MiniAppSecureStorage.sendLoadStorageReady(
+                        miniAppId: self.miniAppId ?? "",
+                        miniAppVersion: self.miniAppVersion ?? ""
+                    )
                 } else {
-                    MiniAppSecureStorage.sendLoadStorageError()
+                    MiniAppSecureStorage.sendLoadStorageError(
+                        miniAppId: self.miniAppId ?? "",
+                        miniAppVersion: self.miniAppVersion ?? ""
+                    )
                 }
             }
         }
@@ -298,10 +311,24 @@ internal class RealMiniAppView: UIView {
 
                     if let onResponse = onExternalWebviewResponse, let onClose = onExternalWebviewClose {
                         if let miniAppURL = miniAppURL {
-                            NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp opened external webview"))
+                            NotificationCenter.default.sendCustomEvent(
+                                MiniAppEvent.Event(
+                                    miniAppId: miniAppId ?? "",
+                                    miniAppVersion: miniAppVersion ?? "",
+                                    type: .pause,
+                                    comment: "MiniApp opened external webview"
+                                )
+                            )
                             navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose, customMiniAppURL: miniAppURL)
                         } else {
-                            NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp opened external webview"))
+                            NotificationCenter.default.sendCustomEvent(
+                                MiniAppEvent.Event(
+                                    miniAppId: miniAppId ?? "",
+                                    miniAppVersion: miniAppVersion ?? "",
+                                    type: .pause,
+                                    comment: "MiniApp opened external webview"
+                                )
+                            )
                             navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose)
                         }
                     }

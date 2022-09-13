@@ -334,9 +334,9 @@ class MiniAppViewHandler: NSObject {
         if shouldAutoLoadSecureStorage {
             secureStorage.loadStorage { success in
                 if success {
-                    MiniAppSecureStorage.sendLoadStorageReady()
+                    MiniAppSecureStorage.sendLoadStorageReady(miniAppId: self.appId, miniAppVersion: self.version ?? "")
                 } else {
-                    MiniAppSecureStorage.sendLoadStorageError()
+                    MiniAppSecureStorage.sendLoadStorageError(miniAppId: self.appId, miniAppVersion: self.version ?? "")
                 }
             }
         }
@@ -626,10 +626,24 @@ extension MiniAppViewHandler: WKNavigationDelegate {
 
                     if let onResponse = onExternalWebviewResponse, let onClose = onExternalWebviewClose {
                         if let miniAppURL = miniAppURL {
-                            NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp opened external webview"))
+                            NotificationCenter.default.sendCustomEvent(
+                                MiniAppEvent.Event(
+                                    miniAppId: appId,
+                                    miniAppVersion: version ?? "",
+                                    type: .pause,
+                                    comment: "MiniApp opened external webview"
+                                )
+                            )
                             navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose, customMiniAppURL: miniAppURL)
                         } else {
-                            NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp opened external webview"))
+                            NotificationCenter.default.sendCustomEvent(
+                                MiniAppEvent.Event(
+                                    miniAppId: appId,
+                                    miniAppVersion: version ?? "",
+                                    type: .pause,
+                                    comment: "MiniApp opened external webview"
+                                )
+                            )
                             navigationDelegate?.miniAppNavigation(shouldOpen: requestURL, with: onResponse, onClose: onClose)
                         }
                     }
@@ -647,7 +661,14 @@ extension MiniAppViewHandler {
         }
         onExternalWebviewClose = { [weak self] (url) in
             self?.didReceiveEvent(.externalWebViewClosed, message: url.absoluteString)
-            NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp close external webview"))
+            NotificationCenter.default.sendCustomEvent(
+                MiniAppEvent.Event(
+                    miniAppId: self?.appId ?? "",
+                    miniAppVersion: self?.version ?? "",
+                    type: .resume,
+                    comment: "MiniApp close external webview"
+                )
+            )
         }
     }
 
@@ -686,8 +707,15 @@ extension MiniAppViewHandler {
             didReceiveEvent(.resume, message: "Host app did become active")
         default:
             if let event = notification.object as? MiniAppEvent.Event {
+                guard
+                    event.miniAppId == appId,
+                    event.miniAppVersion == version
+                else {
+                    MiniAppLogger.w("MiniAppEvent discarded")
+                    return
+                }
                 if event.type == .secureStorageReady {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
                         self.didReceiveEvent(event.type, message: event.comment)
                     }
                 } else {

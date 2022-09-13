@@ -35,13 +35,14 @@ struct WidgetTrippleView: View {
         VStack {
             MiniAppSUIView(params:
                 .init(
-                        config: MiniAppConfig(
-                            config: Config.current(),
-                            messageDelegate: viewModel.messageInterface(for: viewModel.first)
-                        ),
-                        type: .widget,
-                        appId: viewModel.first
-                )
+                    config: MiniAppConfig(
+                        config: Config.current(),
+                        messageDelegate: viewModel.messageInterface(for: viewModel.first)
+                    ),
+                    type: .widget,
+                    appId: viewModel.first
+                ),
+                handler: MiniAppSUIViewHandler()
             )
             MiniAppSUIView(params:
                 .init(
@@ -51,7 +52,8 @@ struct WidgetTrippleView: View {
                     ),
                     type: .widget,
                     appId: viewModel.second
-                )
+                ),
+                handler: MiniAppSUIViewHandler()
             )
             MiniAppSUIView(params:
                 .init(
@@ -61,7 +63,8 @@ struct WidgetTrippleView: View {
                     ),
                     type: .widget,
                     appId: viewModel.third
-                )
+                ),
+                handler: MiniAppSUIViewHandler()
             )
         }
         .padding(20)

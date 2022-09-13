@@ -4,6 +4,7 @@ import MiniApp
 struct MiniAppSegmentedView: View {
 
     @StateObject var viewModel = MiniAppSegmentedViewModel()
+    @StateObject var handler = MiniAppSUIViewHandler()
 
     @State var segment: MiniAppSegmentedViewModel.MiniAppSegment = .one
 
@@ -22,7 +23,7 @@ struct MiniAppSegmentedView: View {
 
             TabView(selection: $segment) {
                 ForEach(MiniAppSegmentedViewModel.MiniAppSegment.allCases, id: \.self) { segment in
-                    MiniAppWithTermsView(viewModel: viewModel.termsViewModel(segment: segment))
+                    MiniAppWithTermsView(viewModel: viewModel.termsViewModel(segment: segment), handler: handler)
                     .tag(segment)
                 }
             }

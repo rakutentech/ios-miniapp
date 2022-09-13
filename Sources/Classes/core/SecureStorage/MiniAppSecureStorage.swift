@@ -139,15 +139,25 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
 // MARK: - Notifications
 extension MiniAppSecureStorage {
-    static func sendLoadStorageReady() {
+    static func sendLoadStorageReady(miniAppId: String, miniAppVersion: String) {
         NotificationCenter.default.sendCustomEvent(
-            MiniAppEvent.Event(type: .secureStorageReady, comment: "MiniApp Secure Storage Ready")
+            MiniAppEvent.Event(
+                miniAppId: miniAppId,
+                miniAppVersion: miniAppVersion,
+                type: .secureStorageReady,
+                comment: "MiniApp Secure Storage Ready"
+            )
         )
     }
 
-    static func sendLoadStorageError() {
+    static func sendLoadStorageError(miniAppId: String, miniAppVersion: String) {
         NotificationCenter.default.sendCustomEvent(
-            MiniAppEvent.Event(type: .secureStorageError, comment: "MiniApp Secure Storage Error")
+            MiniAppEvent.Event(
+                miniAppId: miniAppId,
+                miniAppVersion: miniAppVersion,
+                type: .secureStorageError,
+                comment: "MiniApp Secure Storage Error"
+            )
         )
     }
 }

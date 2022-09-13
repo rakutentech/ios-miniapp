@@ -20,7 +20,8 @@ struct WidgetListView: View {
                         ),
                         type: .widget,
                         appId: id
-                    )
+                    ),
+                    handler: MiniAppSUIViewHandler()
                 )
                 .frame(height: 250)
             }

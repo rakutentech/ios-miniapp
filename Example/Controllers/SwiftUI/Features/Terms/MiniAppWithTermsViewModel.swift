@@ -17,6 +17,9 @@ class MiniAppWithTermsViewModel: ObservableObject {
 
     var showMessageAlert: CurrentValueSubject<Bool, Never> = .init(false)
 
+    @Published var canGoBack: Bool = false
+    @Published var canGoForward: Bool = false
+
     init(
         miniAppId: String,
         miniAppVersion: String? = nil,
@@ -45,6 +48,13 @@ class MiniAppWithTermsViewModel: ObservableObject {
         }
 
         self.load()
+
+        if let navDelegate = self.navigationDelegate as? MiniAppViewNavigationDelegator {
+            navDelegate.onChangeCanGoBackForward = { [weak self] (back, forward) in
+                self?.canGoBack = back
+                self?.canGoForward = forward
+            }
+        }
     }
 
     func load() {

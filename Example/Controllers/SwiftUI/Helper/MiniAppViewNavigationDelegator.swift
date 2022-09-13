@@ -5,6 +5,7 @@ import MiniApp
 class MiniAppViewNavigationDelegator: MiniAppNavigationDelegate {
 
     var onShouldOpenUrl: ((URL, MiniAppNavigationResponseHandler?, MiniAppNavigationResponseHandler?) -> Void)?
+    var onChangeCanGoBackForward: ((_ back: Bool, _ forward: Bool) -> Void)?
 
     func miniAppNavigation(shouldOpen url: URL, with responseHandler: @escaping MiniAppNavigationResponseHandler, onClose closeHandler: MiniAppNavigationResponseHandler?) {
         if url.absoluteString.starts(with: "data:") {
@@ -49,5 +50,9 @@ class MiniAppViewNavigationDelegator: MiniAppNavigationDelegate {
             return true
         }
         return false
+    }
+
+    func miniAppNavigationCanGo(back: Bool, forward: Bool) {
+        onChangeCanGoBackForward?(back, forward)
     }
 }

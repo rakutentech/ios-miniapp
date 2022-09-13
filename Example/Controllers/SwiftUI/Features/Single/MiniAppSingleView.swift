@@ -4,6 +4,7 @@ import MiniApp
 struct MiniAppSingleView: View {
 
     @StateObject var viewModel: MiniAppWithTermsViewModel
+    @StateObject var handler = MiniAppSUIViewHandler()
 
     @State var miniAppId: String
     @State var miniAppVersion: String?
@@ -23,16 +24,29 @@ struct MiniAppSingleView: View {
 
     var body: some View {
         VStack {
-            MiniAppWithTermsView(viewModel: viewModel)
-//            MiniAppWithTermsView(
-//                miniAppId: miniAppId,
-//                miniAppVersion: miniAppVersion,
-//                miniAppType: miniAppType
-//            )
+            MiniAppWithTermsView(viewModel: viewModel, handler: handler)
         }
         .navigationTitle("MiniApp")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(content: {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    handler.action = .goBack
+                } label: {
+                    Image(systemName: "chevron.backward")
+                }
+                .disabled(!(viewModel.viewState == .success) || !viewModel.canGoBack)
+            }
+
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    handler.action = .goForward
+                } label: {
+                    Image(systemName: "chevron.forward")
+                }
+                .disabled(!(viewModel.viewState == .success) || !viewModel.canGoForward)
+            }
+
             ToolbarItem(placement: .navigationBarTrailing) {
                 if viewModel.viewState == .success {
                     Button {

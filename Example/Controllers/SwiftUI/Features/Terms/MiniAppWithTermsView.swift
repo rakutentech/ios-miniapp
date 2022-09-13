@@ -6,6 +6,7 @@ struct MiniAppWithTermsView: View {
     @StateObject var keyboardHelper = KeyboardNotificationHelper()
 
     @ObservedObject var viewModel: MiniAppWithTermsViewModel
+    @ObservedObject var handler = MiniAppSUIViewHandler()
 
     @State private var didAcceptTerms: Bool = false
     @State private var showMessageAlert: Bool = false
@@ -39,7 +40,8 @@ struct MiniAppWithTermsView: View {
                         appId: viewModel.miniAppId,
                         version: viewModel.miniAppVersion,
                         queryParams: getQueryParam()
-                    )
+                    ),
+                    handler: handler
                 )
             }
         }
