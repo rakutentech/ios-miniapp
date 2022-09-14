@@ -36,6 +36,9 @@ public struct MiniAppSUIView: UIViewRepresentable {
         context.coordinator.onGoForward = {
             _ = view.miniAppNavigationBar(didTriggerAction: .forward)
         }
+        handler.closeAlertInfo  = {
+            return view.alertInfo
+        }
         return view
     }
 
@@ -82,6 +85,8 @@ extension MiniAppSUIView {
 public class MiniAppSUIViewHandler: ObservableObject {
 
     @Published public var action: MiniAppSUIViewAction?
+
+    public var closeAlertInfo: (() -> CloseAlertInfo?)?
 
     public init() {}
 }

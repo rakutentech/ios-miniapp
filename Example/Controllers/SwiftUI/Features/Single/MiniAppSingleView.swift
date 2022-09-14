@@ -3,6 +3,8 @@ import MiniApp
 
 struct MiniAppSingleView: View {
 
+    @Environment(\.dismiss) var dismiss
+
     @StateObject var viewModel: MiniAppWithTermsViewModel
     @StateObject var handler = MiniAppSUIViewHandler()
 
@@ -15,6 +17,7 @@ struct MiniAppSingleView: View {
     @State private var didAcceptTerms: Bool = false
     @State private var didAcceptSettingsTerms: Bool = false
     @State private var isSharePreviewPresented: Bool = false
+    @State private var closeAlertMessage: MiniAppAlertMessage?
 
     init(miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
         _viewModel = StateObject(wrappedValue: MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: miniAppVersion, miniAppType: .miniapp))
@@ -29,8 +32,42 @@ struct MiniAppSingleView: View {
         }
         .navigationTitle("MiniApp")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
         .toolbar(content: {
-            ToolbarItem(placement: .navigationBarTrailing) {
+
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    if let closeInfo = handler.closeAlertInfo?(), closeInfo.shouldDisplay ?? true {
+                        closeAlertMessage = MiniAppAlertMessage(
+                            title: closeInfo.title ?? "",
+                            message: closeInfo.description ?? ""
+                        )
+                    } else {
+                        dismiss.callAsFunction()
+                    }
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(Color(.secondarySystemBackground))
+                            .frame(width: 30, height: 30, alignment: .center)
+                        Image(systemName: "xmark")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundColor(.secondary)
+                    }
+                    .contentShape(Circle())
+                }
+                .alert(item: $closeAlertMessage) { errorMessage in
+                    Alert(
+                        title: Text(errorMessage.title),
+                        message: Text(errorMessage.message),
+                        dismissButton: .default(Text("Ok"), action: {
+                            dismiss.callAsFunction()
+                        })
+                    )
+                }
+            }
+
+            ToolbarItem(placement: .navigationBarLeading) {
                 Button {
                     handler.action = .goBack
                 } label: {
@@ -39,7 +76,7 @@ struct MiniAppSingleView: View {
                 .disabled(!(viewModel.viewState == .success) || !viewModel.canGoBack)
             }
 
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .navigationBarLeading) {
                 Button {
                     handler.action = .goForward
                 } label: {
@@ -52,7 +89,7 @@ struct MiniAppSingleView: View {
                 Button {
                     isSharePreviewPresented = true
                 } label: {
-                    Image(systemName: "square.and.arrow.down")
+                    Image(systemName: "square.and.arrow.up")
                 }
                 .sheet(isPresented: $isSharePreviewPresented, content: {
                     NavigationView {
@@ -70,6 +107,7 @@ struct MiniAppSingleView: View {
                 }
                 .disabled(!(viewModel.viewState == .success))
             }
+
         })
         .sheet(item: $permissionRequest, content: { request in
             NavigationView {
