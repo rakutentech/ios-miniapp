@@ -28,7 +28,7 @@ public struct MiniAppSUIView: UIViewRepresentable {
         let view = MiniAppView(params: params)
         view.progressStateView = MiniAppProgressView()
         view.load { _ in
-            // load finished
+            self.handler.isActive = true
         }
         context.coordinator.onGoBack = {
             _ = view.miniAppNavigationBar(didTriggerAction: .back)
@@ -38,6 +38,9 @@ public struct MiniAppSUIView: UIViewRepresentable {
         }
         handler.closeAlertInfo  = {
             return view.alertInfo
+        }
+        handler.miniAppTitle  = {
+            return view.miniAppTitle
         }
         return view
     }
@@ -85,8 +88,11 @@ extension MiniAppSUIView {
 public class MiniAppSUIViewHandler: ObservableObject {
 
     @Published public var action: MiniAppSUIViewAction?
+    
+    @Published public var isActive: Bool = false
 
     public var closeAlertInfo: (() -> CloseAlertInfo?)?
+    public var miniAppTitle: (() -> String)?
 
     public init() {}
 }

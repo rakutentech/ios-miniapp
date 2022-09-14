@@ -21,6 +21,7 @@ class MiniAppViewHandler: NSObject {
 
     internal var projectId: String?
 
+    var title: String = ""
     var appId: String
     var version: String?
     var queryParams: String?
@@ -195,6 +196,8 @@ class MiniAppViewHandler: NSObject {
             }
             switch result {
             case .success(let info):
+                let miniAppTitle = info.displayName ?? "MiniApp"
+                self.title = miniAppTitle
                 self.downloadMiniApp(appInfo: info, queryParams: self.queryParams) { result in
                     switch result {
                     case let .success(state):
@@ -213,6 +216,7 @@ class MiniAppViewHandler: NSObject {
                             do {
                                 try self.loadWebView(
                                     webView: newWebView,
+                                    miniAppTitle: miniAppTitle,
                                     miniAppId: self.appId,
                                     versionId: info.version.versionId,
                                     queryParams: self.queryParams
@@ -290,6 +294,7 @@ class MiniAppViewHandler: NSObject {
 
     func loadWebView(
         webView: MiniAppWebView,
+        miniAppTitle: String = "MiniApp",
         miniAppId: String,
         versionId: String,
         queryParams: String? = nil,
@@ -316,10 +321,11 @@ class MiniAppViewHandler: NSObject {
             adsDisplayer: adsDisplayer,
             secureStorageDelegate: self,
             miniAppId: miniAppId,
-            miniAppTitle: miniAppId,
+            miniAppTitle: miniAppTitle,
             miniAppManageDelegate: self
         )
         webView.configuration.userContentController.addBridgingJavaScript()
+        webView.uiDelegate = self
 
         MiniAppAnalytics.sendAnalytics(
             event: .open,
@@ -806,5 +812,58 @@ extension MiniAppViewHandler: MiniAppSecureStorageDelegate {
 
     func clearSecureStorage() throws {
         try secureStorage.clearSecureStorage()
+    }
+}
+
+// MARK: - WKUIDelegate
+extension MiniAppViewHandler: WKUIDelegate {
+    func webView(_ webView: WKWebView,
+                 runJavaScriptAlertPanelWithMessage message: String,
+                 initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping () -> Void) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: MASDKLocale.localize(.ok), style: .default) { (_) in
+            completionHandler()
+        })
+        presentAlert(alertController: alertController)
+    }
+
+    func webView(_ webView: WKWebView,
+                 runJavaScriptConfirmPanelWithMessage message: String,
+                 initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping (Bool) -> Void) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: MASDKLocale.localize(.ok), style: .default, handler: { (_) in
+            completionHandler(true)
+        }))
+        alertController.addAction(UIAlertAction(title: MASDKLocale.localize(.cancel), style: .cancel, handler: { (_) in
+            completionHandler(false)
+        }))
+        presentAlert(alertController: alertController)
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String,
+                 defaultText: String?,
+                 initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping (String?) -> Void) {
+        let alertController = UIAlertController(title: title, message: prompt, preferredStyle: .alert)
+        alertController.addTextField { (textField) in
+            textField.text = defaultText
+        }
+        alertController.addAction(UIAlertAction(title: MASDKLocale.localize(.ok), style: .default, handler: { (_) in
+            if let text = alertController.textFields?.first?.text, text.count > 0 {
+                completionHandler(text)
+            } else {
+                completionHandler("")
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: MASDKLocale.localize(.cancel), style: .cancel, handler: { (_) in
+            completionHandler(nil)
+        }))
+        presentAlert(alertController: alertController)
+    }
+
+    internal func presentAlert(alertController: UIAlertController) {
+        UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
     }
 }

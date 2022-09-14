@@ -163,6 +163,10 @@ public class MiniAppView: UIView, MiniAppViewable {
         return miniAppHandler.miniAppShouldClose()
     }
 
+    public var miniAppTitle: String {
+        return miniAppHandler.title.isEmpty ? "MiniApp" : miniAppHandler.title
+    }
+
     public enum MiniAppLoadStatus {
         case success
     }
