@@ -8,6 +8,11 @@ struct MiniAppSingleView: View {
     @StateObject var viewModel: MiniAppWithTermsViewModel
     @StateObject var handler = MiniAppSUIViewHandler()
 
+    var listType: MiniAppSettingsView.ListConfig
+    var config: MiniAppSdkConfig {
+        MiniAppSettingsView.SettingsConfig().sdkConfig(list: listType)
+    }
+    
     @State var miniAppId: String
     @State var miniAppVersion: String?
     @State var miniAppType: MiniAppType
@@ -19,8 +24,12 @@ struct MiniAppSingleView: View {
     @State private var isSharePreviewPresented: Bool = false
     @State private var closeAlertMessage: MiniAppAlertMessage?
 
-    init(miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
-        _viewModel = StateObject(wrappedValue: MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: miniAppVersion, miniAppType: .miniapp))
+    init(listType: MiniAppSettingsView.ListConfig, miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
+        self.listType = listType
+        let sdkConfig = MiniAppSettingsView.SettingsConfig().sdkConfig(list: listType)
+        _viewModel = StateObject(wrappedValue:
+            MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: miniAppVersion, miniAppType: .miniapp, sdkConfig: sdkConfig)
+        )
         _miniAppId = State(wrappedValue: miniAppId)
         _miniAppVersion = State(wrappedValue: miniAppVersion)
         _miniAppType = State(wrappedValue: miniAppType)
@@ -155,6 +164,7 @@ struct MiniAppSingleView: View {
 struct MiniAppSingleView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppSingleView(
+            listType: .listI,
             miniAppId: "",
             miniAppVersion: "",
             miniAppType: .miniapp

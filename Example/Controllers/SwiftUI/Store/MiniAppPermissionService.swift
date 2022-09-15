@@ -4,10 +4,10 @@ import MiniApp
 @MainActor
 final class MiniAppPermissionService {
 
-    let config: MiniAppSdkConfig = Config.current()
+    let config: MiniAppSdkConfig
 
-    init() {
-        // init
+    init(config: MiniAppSdkConfig = Config.current()) {
+        self.config = config
     }
 
     func getInfo(miniAppId: String, miniAppVersion: String, completion: @escaping ((Result<MiniAppInfo, MASDKError>) -> Void)) {
@@ -29,7 +29,6 @@ final class MiniAppPermissionService {
 
     // MARK: - Check Permissions
     func checkPermissions(
-        config: MiniAppSdkConfig = Config.current(),
         miniAppId: String,
         miniAppVersion: String,
         completion: @escaping ((Result<PermissionState, Error>) -> Void)
@@ -38,7 +37,6 @@ final class MiniAppPermissionService {
             switch result {
             case .success(let info):
                 self?.checkPermissions(
-                    config: config,
                     miniAppInfo: info,
                     completion: completion
                 )
@@ -49,12 +47,11 @@ final class MiniAppPermissionService {
     }
 
     func checkPermissions(
-        config: MiniAppSdkConfig = Config.current(),
         miniAppInfo: MiniAppInfo,
         completion: @escaping ((Result<PermissionState, Error>) -> Void)
     ) {
         if let cachedManifest = MiniApp.shared(with: config).getDownloadedManifest(miniAppId: miniAppInfo.id) {
-            compareMiniAppManifest(config: config, info: miniAppInfo, manifest: cachedManifest) { result in
+            compareMiniAppManifest(info: miniAppInfo, manifest: cachedManifest) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let isManifestSame):
@@ -70,7 +67,7 @@ final class MiniAppPermissionService {
             }
         } else {
             // show permission screen
-            fetchMetaData(config: config, miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { result in
+            fetchMetaData(miniAppId: miniAppInfo.id, miniAppVersion: miniAppInfo.version.versionId) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let manifest):
@@ -84,7 +81,6 @@ final class MiniAppPermissionService {
     }
 
     func compareMiniAppManifest(
-        config: MiniAppSdkConfig,
         info: MiniAppInfo,
         manifest: MiniAppManifest,
         completion: @escaping ((Result<Bool, Error>) -> Void)
@@ -118,7 +114,6 @@ final class MiniAppPermissionService {
     }
 
     func fetchMetaData(
-        config: MiniAppSdkConfig,
         miniAppId: String,
         miniAppVersion: String,
         completion: @escaping ((Result<MiniAppManifest, Error>) -> Void)
@@ -150,11 +145,11 @@ final class MiniAppPermissionService {
     // MARK: - Change Permissions
     func updatePermissions(miniAppId: String, manifest: MiniAppManifest) {
         let permissionsCollection = (manifest.requiredPermissions ?? []) + (manifest.optionalPermissions ?? [])
-        MiniApp.shared(with: Config.current()).setCustomPermissions(forMiniApp: miniAppId, permissionList: permissionsCollection)
+        MiniApp.shared(with: config).setCustomPermissions(forMiniApp: miniAppId, permissionList: permissionsCollection)
     }
 
     func updatePermissions(miniAppId: String, permissionList: [MASDKCustomPermissionModel]) {
-        MiniApp.shared(with: Config.current()).setCustomPermissions(forMiniApp: miniAppId, permissionList: permissionList)
+        MiniApp.shared(with: config).setCustomPermissions(forMiniApp: miniAppId, permissionList: permissionList)
     }
 
     func updatePermissionsWithCache(miniAppId: String, permissions: [MASDKCustomPermissionModel]) -> [MASDKCustomPermissionModel] {

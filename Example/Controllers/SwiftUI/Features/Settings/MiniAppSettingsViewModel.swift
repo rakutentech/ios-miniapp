@@ -9,7 +9,14 @@ class MiniAppSettingsViewModel: ObservableObject {
 
     @Published var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
     @Published var state: State = .none
-    @Published var config = MiniAppSettingsView.SettingsConfig()
+    var config: MiniAppSettingsView.SettingsConfig {
+        get {
+            store.config
+        }
+        set {
+            store.config = newValue
+        }
+    }
 
     var bag = Set<AnyCancellable>()
 
@@ -28,57 +35,51 @@ class MiniAppSettingsViewModel: ObservableObject {
         return versionText
     }
 
-    func save(config: MiniAppSettingsView.SettingsConfig, completion: @escaping (() -> Void)) {
+    func save(completion: (() -> Void)? = nil) {
 
         state = .loading
 
-        let sdkConfig = MiniAppSdkConfig(
-            rasProjectId: config.listIProjectId,
-            subscriptionKey: config.listISubscriptionKey,
-            isPreviewMode: config.previewMode == .previewable
-        )
-
-        MiniApp.shared(with: sdkConfig).list { [weak self] (result) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
-                switch result {
-                case let .success(infos):
-                    self?.persistConfig(config: config)
-                    self?.store.update(type: .listI, infos: infos)
-                    self?.state = .success
-                case .failure(let error):
-                    self?.state = .error(error)
+        let configListI = config.sdkConfig(list: .listI)
+        MiniApp
+            .shared(with: configListI)
+            .list { [weak self] (result) in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
+                    switch result {
+                    case let .success(infos):
+                        self?.persistConfig()
+                        self?.store.update(type: .listI, infos: infos)
+                        self?.state = .success
+                    case .failure(let error):
+                        self?.state = .error(error)
+                    }
+                    completion?()
                 }
-                completion()
             }
-        }
 
-        let sdkConfig2 = MiniAppSdkConfig(
-            rasProjectId: config.listIIProjectId,
-            subscriptionKey: config.listIISubscriptionKey,
-            isPreviewMode: config.previewMode == .previewable
-        )
-
-        MiniApp.shared(with: sdkConfig2).list { [weak self] (result) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
-                switch result {
-                case let .success(infos):
-                    self?.store.update(type: .listII, infos: infos)
-                case .failure(let error):
-                    self?.state = .error(error)
+        let configListII: MiniAppSdkConfig = config.sdkConfig(list: .listII)
+        MiniApp
+            .shared(with: configListII)
+            .list { [weak self] (result) in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
+                    switch result {
+                    case let .success(infos):
+                        self?.persistConfig()
+                        self?.store.update(type: .listII, infos: infos)
+                    case .failure(let error):
+                        self?.state = .error(error)
+                    }
+                    completion?()
                 }
-                completion()
             }
-        }
     }
 
-    func persistConfig(config: MiniAppSettingsView.SettingsConfig) {
+    func persistConfig() {
         if !store.miniAppSetupCompleted {
             store.miniAppSetupCompleted = true
         }
-        // Config.userDefaults?.set(config.previewMode == .previewable, forKey: Config.Key.isPreviewMode.rawValue)
 
-        Config.setUserDefaultsBool(key: .isPreviewMode, value: config.previewMode == .previewable)
-        Config.changeEnvironment(isStaging: config.environmentMode == .staging)
+        Config.setValue(.isPreviewMode, value: config.previewMode == .previewable)
+        Config.setValue(.environment, value: config.environmentMode == .production)
 
         // list 1
         Config.setString(.production, key: .projectId, value: config.listIProjectId)
@@ -89,7 +90,7 @@ class MiniAppSettingsViewModel: ObservableObject {
         // list 2
         Config.setString(.production, key: .projectIdList2, value: config.listIIProjectId)
         Config.setString(.production, key: .subscriptionKeyList2, value: config.listIISubscriptionKey)
-        Config.setString(.staging, key: .projectIdList2, value: config.listIStagingProjectId)
+        Config.setString(.staging, key: .projectIdList2, value: config.listIIStagingProjectId)
         Config.setString(.staging, key: .subscriptionKeyList2, value: config.listIIStagingSubscriptionKey)
     }
 

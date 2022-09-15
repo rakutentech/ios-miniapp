@@ -123,10 +123,6 @@
 		F75D49DD28C5B83A0053F74E /* MiniAppDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49BC28C5B83A0053F74E /* MiniAppDashboardView.swift */; };
 		F75D49DE28C5B83A0053F74E /* MiniAppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49BF28C5B83A0053F74E /* MiniAppSettingsViewModel.swift */; };
 		F75D49DF28C5B83A0053F74E /* MiniAppSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49C028C5B83A0053F74E /* MiniAppSettingsView.swift */; };
-		F75D49E028C5B83A0053F74E /* WidgetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49C228C5B83A0053F74E /* WidgetListView.swift */; };
-		F75D49E128C5B83A0053F74E /* WidgetTrippleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49C328C5B83A0053F74E /* WidgetTrippleView.swift */; };
-		F75D49E228C5B83A0053F74E /* MiniAppSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49C528C5B83A0053F74E /* MiniAppSegmentedView.swift */; };
-		F75D49E328C5B83A0053F74E /* MiniAppSegmentedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49C628C5B83A0053F74E /* MiniAppSegmentedViewModel.swift */; };
 		F75D49E428C5B83A0053F74E /* MiniAppFeatureListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49C728C5B83A0053F74E /* MiniAppFeatureListView.swift */; };
 		F75D49E528C5B83A0053F74E /* MiniAppTermsOptionalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49C928C5B83A0053F74E /* MiniAppTermsOptionalCell.swift */; };
 		F75D49E628C5B83A0053F74E /* MiniAppTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49CA28C5B83A0053F74E /* MiniAppTermsView.swift */; };
@@ -137,7 +133,6 @@
 		F75D49EB28C5B83A0053F74E /* MiniAppUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49D128C5B83A0053F74E /* MiniAppUrlView.swift */; };
 		F75D49EC28C5B83A0053F74E /* MiniAppListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49D328C5B83A0053F74E /* MiniAppListView.swift */; };
 		F75D49ED28C5B83A0053F74E /* MiniAppListRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49D428C5B83A0053F74E /* MiniAppListRowCell.swift */; };
-		F75D49EE28C5B83A0053F74E /* MiniAppListPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49D528C5B83A0053F74E /* MiniAppListPickerView.swift */; };
 		F75D49EF28C5B83A0053F74E /* MiniAppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49D628C5B83A0053F74E /* MiniAppListViewModel.swift */; };
 		F75D49F028C5B83A0053F74E /* RemoteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49D828C5B83A0053F74E /* RemoteImageView.swift */; };
 		F75D49F228C5B83A0053F74E /* MiniAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49DB28C5B83A0053F74E /* MiniAppStore.swift */; };
@@ -152,7 +147,6 @@
 		F75D4A0728C9CADE0053F74E /* MiniAppSettingsView+Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A0628C9CADE0053F74E /* MiniAppSettingsView+Config.swift */; };
 		F75D4A0928C9D3B00053F74E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A0828C9D3B00053F74E /* ImagePicker.swift */; };
 		F75D4A0B28CAF2AA0053F74E /* TextFieldStyle+MiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A0A28CAF2A90053F74E /* TextFieldStyle+MiniApp.swift */; };
-		F75D4A0D28CAF69D0053F74E /* MiniAppListPickerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A0C28CAF69D0053F74E /* MiniAppListPickerCellView.swift */; };
 		F75D4A0F28CAF6ED0053F74E /* MiniAppSettingsListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A0E28CAF6ED0053F74E /* MiniAppSettingsListCellView.swift */; };
 		F75D4A1128CAF7750053F74E /* Binding+Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A1028CAF7750053F74E /* Binding+Optional.swift */; };
 		F75D4A1328CEDE5C0053F74E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A1228CEDE5C0053F74E /* LocationManager.swift */; };
@@ -296,10 +290,6 @@
 		F75D49BC28C5B83A0053F74E /* MiniAppDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppDashboardView.swift; sourceTree = "<group>"; };
 		F75D49BF28C5B83A0053F74E /* MiniAppSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSettingsViewModel.swift; sourceTree = "<group>"; };
 		F75D49C028C5B83A0053F74E /* MiniAppSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSettingsView.swift; sourceTree = "<group>"; };
-		F75D49C228C5B83A0053F74E /* WidgetListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetListView.swift; sourceTree = "<group>"; };
-		F75D49C328C5B83A0053F74E /* WidgetTrippleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetTrippleView.swift; sourceTree = "<group>"; };
-		F75D49C528C5B83A0053F74E /* MiniAppSegmentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSegmentedView.swift; sourceTree = "<group>"; };
-		F75D49C628C5B83A0053F74E /* MiniAppSegmentedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSegmentedViewModel.swift; sourceTree = "<group>"; };
 		F75D49C728C5B83A0053F74E /* MiniAppFeatureListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureListView.swift; sourceTree = "<group>"; };
 		F75D49C928C5B83A0053F74E /* MiniAppTermsOptionalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppTermsOptionalCell.swift; sourceTree = "<group>"; };
 		F75D49CA28C5B83A0053F74E /* MiniAppTermsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppTermsView.swift; sourceTree = "<group>"; };
@@ -310,7 +300,6 @@
 		F75D49D128C5B83A0053F74E /* MiniAppUrlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppUrlView.swift; sourceTree = "<group>"; };
 		F75D49D328C5B83A0053F74E /* MiniAppListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppListView.swift; sourceTree = "<group>"; };
 		F75D49D428C5B83A0053F74E /* MiniAppListRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppListRowCell.swift; sourceTree = "<group>"; };
-		F75D49D528C5B83A0053F74E /* MiniAppListPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppListPickerView.swift; sourceTree = "<group>"; };
 		F75D49D628C5B83A0053F74E /* MiniAppListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppListViewModel.swift; sourceTree = "<group>"; };
 		F75D49D828C5B83A0053F74E /* RemoteImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImageView.swift; sourceTree = "<group>"; };
 		F75D49DB28C5B83A0053F74E /* MiniAppStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppStore.swift; sourceTree = "<group>"; };
@@ -325,7 +314,6 @@
 		F75D4A0628C9CADE0053F74E /* MiniAppSettingsView+Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniAppSettingsView+Config.swift"; sourceTree = "<group>"; };
 		F75D4A0828C9D3B00053F74E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		F75D4A0A28CAF2A90053F74E /* TextFieldStyle+MiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextFieldStyle+MiniApp.swift"; sourceTree = "<group>"; };
-		F75D4A0C28CAF69D0053F74E /* MiniAppListPickerCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppListPickerCellView.swift; sourceTree = "<group>"; };
 		F75D4A0E28CAF6ED0053F74E /* MiniAppSettingsListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSettingsListCellView.swift; sourceTree = "<group>"; };
 		F75D4A1028CAF7750053F74E /* Binding+Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Optional.swift"; sourceTree = "<group>"; };
 		F75D4A1228CEDE5C0053F74E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -690,10 +678,8 @@
 		F75D49BD28C5B83A0053F74E /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				F75D49BE28C5B83A0053F74E /* Settings */,
-				F75D49C128C5B83A0053F74E /* Widget */,
-				F75D49C428C5B83A0053F74E /* Segmented */,
 				F75D49C728C5B83A0053F74E /* MiniAppFeatureListView.swift */,
+				F75D49BE28C5B83A0053F74E /* Settings */,
 				F75D49C828C5B83A0053F74E /* Terms */,
 				F75D49CE28C5B83A0053F74E /* Single */,
 				F75D49D028C5B83A0053F74E /* URL */,
@@ -708,29 +694,10 @@
 				F75D49BF28C5B83A0053F74E /* MiniAppSettingsViewModel.swift */,
 				F75D49C028C5B83A0053F74E /* MiniAppSettingsView.swift */,
 				F75D4A0628C9CADE0053F74E /* MiniAppSettingsView+Config.swift */,
-				F75D4A0C28CAF69D0053F74E /* MiniAppListPickerCellView.swift */,
 				F75D4A0E28CAF6ED0053F74E /* MiniAppSettingsListCellView.swift */,
 				F75D4A0428C864120053F74E /* Features */,
 			);
 			path = Settings;
-			sourceTree = "<group>";
-		};
-		F75D49C128C5B83A0053F74E /* Widget */ = {
-			isa = PBXGroup;
-			children = (
-				F75D49C228C5B83A0053F74E /* WidgetListView.swift */,
-				F75D49C328C5B83A0053F74E /* WidgetTrippleView.swift */,
-			);
-			path = Widget;
-			sourceTree = "<group>";
-		};
-		F75D49C428C5B83A0053F74E /* Segmented */ = {
-			isa = PBXGroup;
-			children = (
-				F75D49C528C5B83A0053F74E /* MiniAppSegmentedView.swift */,
-				F75D49C628C5B83A0053F74E /* MiniAppSegmentedViewModel.swift */,
-			);
-			path = Segmented;
 			sourceTree = "<group>";
 		};
 		F75D49C828C5B83A0053F74E /* Terms */ = {
@@ -768,7 +735,6 @@
 				F75D49D628C5B83A0053F74E /* MiniAppListViewModel.swift */,
 				F75D49D328C5B83A0053F74E /* MiniAppListView.swift */,
 				F75D49D428C5B83A0053F74E /* MiniAppListRowCell.swift */,
-				F75D49D528C5B83A0053F74E /* MiniAppListPickerView.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -1001,7 +967,6 @@
 				F75D49FF28C6F3B70053F74E /* MiniAppSettingsPointsView.swift in Sources */,
 				F7C0BCF228D072A400C56C2E /* MiniAppSharePreviewView.swift in Sources */,
 				310575C727EE213400D93B06 /* Bundle+MiniApp.swift in Sources */,
-				F75D49E128C5B83A0053F74E /* WidgetTrippleView.swift in Sources */,
 				F75D4A1528CEE2F90053F74E /* KeyboardNotificationHelper.swift in Sources */,
 				310575D527EE213400D93B06 /* DeeplinkListViewController.swift in Sources */,
 				310575DA27EE213400D93B06 /* ManageCustomPermissionsViewController.swift in Sources */,
@@ -1019,11 +984,9 @@
 				310575D927EE213400D93B06 /* SignatureSettingsTableViewController.swift in Sources */,
 				F75D49F728C6F3430053F74E /* MiniAppSettingsQAView.swift in Sources */,
 				F75D49E728C5B83A0053F74E /* MiniAppWithTermsView.swift in Sources */,
-				F75D49EE28C5B83A0053F74E /* MiniAppListPickerView.swift in Sources */,
 				F75D49F228C5B83A0053F74E /* MiniAppStore.swift in Sources */,
 				F75D4A0728C9CADE0053F74E /* MiniAppSettingsView+Config.swift in Sources */,
 				F75D49ED28C5B83A0053F74E /* MiniAppListRowCell.swift in Sources */,
-				F75D4A0D28CAF69D0053F74E /* MiniAppListPickerCellView.swift in Sources */,
 				F75D49F028C5B83A0053F74E /* RemoteImageView.swift in Sources */,
 				310575E527EE213400D93B06 /* DisplayNavigationController.swift in Sources */,
 				F7C0BCF028CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift in Sources */,
@@ -1069,14 +1032,11 @@
 				310575BA27EE213400D93B06 /* String+MiniApp.swift in Sources */,
 				310575C127EE213400D93B06 /* UIView+MiniApp.swift in Sources */,
 				F75D4A0F28CAF6ED0053F74E /* MiniAppSettingsListCellView.swift in Sources */,
-				F75D49E328C5B83A0053F74E /* MiniAppSegmentedViewModel.swift in Sources */,
 				310575BF27EE213400D93B06 /* UIColor+MiniApp.swift in Sources */,
 				310575BC27EE213400D93B06 /* Encodable+MiniApp.swift in Sources */,
 				310575D027EE213400D93B06 /* SettingsTableViewController.swift in Sources */,
 				310575D727EE213400D93B06 /* CustomPermissionsListViewController.swift in Sources */,
-				F75D49E228C5B83A0053F74E /* MiniAppSegmentedView.swift in Sources */,
 				310575D327EE213400D93B06 /* PointsSettingsTableViewController.swift in Sources */,
-				F75D49E028C5B83A0053F74E /* WidgetListView.swift in Sources */,
 				F75D49E928C5B83A0053F74E /* MiniAppTermsRequiredCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1310,7 +1270,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5J4GVGN58B;
+				DEVELOPMENT_TEAM = 2255UBWM66;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ../Example/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This will let you to take Photos";
@@ -1346,7 +1306,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5J4GVGN58B;
+				DEVELOPMENT_TEAM = 2255UBWM66;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ../Example/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This will let you to take Photos";

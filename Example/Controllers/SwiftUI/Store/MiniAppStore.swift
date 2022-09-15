@@ -16,6 +16,8 @@ extension EnvironmentValues {
 class MiniAppStore: ObservableObject {
 
     static let shared = MiniAppStore()
+    
+    @Published var config = MiniAppSettingsView.SettingsConfig()
 
     @AppStorage("MiniApp.FirstLaunch") var miniAppFirstLaunch = false
     @AppStorage("MiniApp.SetupCompleted") var miniAppSetupCompleted = false
@@ -25,40 +27,10 @@ class MiniAppStore: ObservableObject {
 
     @AppStorage(Config.NewKey.signatureVerification.rawValue) var signatureVerification: Bool?
 
-    @AppStorage(Constants.miniAppIdentifierSingle.rawValue) var miniAppIdentifierSingle = ""
-    @AppStorage(Constants.miniAppVersionSingle.rawValue) var miniAppVersionSingle = ""
+    @Published var miniAppInfoList: [MiniAppInfo] = []
+    @Published var miniAppInfoList2: [MiniAppInfo] = []
 
-    @AppStorage(Constants.miniAppIdentifierTrippleFirst.rawValue) var miniAppIdentifierTrippleFirst = ""
-    @AppStorage(Constants.miniAppVersionTrippleFirst.rawValue) var miniAppVersionTrippleFirst = ""
-
-    @AppStorage(Constants.miniAppIdentifierTrippleSecond.rawValue) var miniAppIdentifierTrippleSecond = ""
-    @AppStorage(Constants.miniAppVersionTrippleSecond.rawValue) var miniAppVersionTrippleSecond = ""
-
-    @AppStorage(Constants.miniAppIdentifierTrippleThird.rawValue) var miniAppIdentifierTrippleThird = ""
-    @AppStorage(Constants.miniAppVersionTrippleThird.rawValue) var miniAppVersionTrippleThird = ""
-
-    @AppStorage(wrappedValue: "", Constants.miniAppIdentifierSingle.rawValue, store: UserDefaults(suiteName: ""))
-    var miniAppProdProjectId: String
-
-    @AppStorage(wrappedValue: "", Constants.miniAppIdentifierSingle.rawValue, store: UserDefaults(suiteName: ""))
-    var miniAppProdSubscriptionKey: String
-
-    @AppStorage(wrappedValue: "", Constants.miniAppIdentifierSingle.rawValue, store: UserDefaults(suiteName: ""))
-    var miniAppProdProjectIdList2: String
-
-    @AppStorage(wrappedValue: "", Constants.miniAppIdentifierSingle.rawValue, store: UserDefaults(suiteName: ""))
-    var miniAppProdSubscriptionKeyList2: String
-
-    @Published
-    var miniAppInfoList: [MiniAppInfo] = []
-
-    @Published
-    var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
-
-    @Published
-    var indexedMiniAppInfoList2: [String: [MiniAppInfo]] = [:]
-
-    init() {
+    private init() {
         if !miniAppFirstLaunch {
             setupUserDefaults()
             miniAppFirstLaunch = true
@@ -81,61 +53,33 @@ class MiniAppStore: ObservableObject {
         _ = setProfileSettings(userDisplayName: "MiniAppUser", profileImageURI: defaultImage)
     }
 
-    func load(type: MiniAppListViewType) {
-        switch type {
-        case .listI:
-            MiniApp.shared().list { result in
+    func load(type: MiniAppSettingsView.ListConfig) {
+        let sdkConfig = config.sdkConfig(list: type)
+        MiniApp
+            .shared(with: sdkConfig)
+            .list { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(infos):
-                        self.miniAppInfoList = infos
-
-                        let ids = Set<String>(infos.map({ $0.id }))
-                        for id in ids {
-                            self.indexedMiniAppInfoList[id] = infos.filter({ $0.id == id })
+                        switch type {
+                        case .listI:
+                            self.miniAppInfoList = infos
+                        case .listII:
+                            self.miniAppInfoList2 = infos
                         }
                     case let .failure(error):
                         print(error)
                     }
                 }
             }
-        case .listII:
-            let list2Config = MiniAppSdkConfig(
-                rasProjectId: Config.getUserDefaultsString(key: .projectIdList2),
-                subscriptionKey: Config.getUserDefaultsString(key: .subscriptionKeyList2)
-            )
-            MiniApp.shared(with: list2Config).list { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case let .success(infos):
-                        // self.miniAppInfoList = infos
-
-                        let ids = Set<String>(infos.map({ $0.id }))
-                        for id in ids {
-                            self.indexedMiniAppInfoList2[id] = infos.filter({ $0.id == id })
-                        }
-                    case let .failure(error):
-                        print(error)
-                    }
-                }
-            }
-        }
     }
 
-    func update(type: MiniAppListViewType, infos: [MiniAppInfo]) {
+    func update(type: MiniAppSettingsView.ListConfig, infos: [MiniAppInfo]) {
         switch type {
         case .listI:
-            indexedMiniAppInfoList.removeAll()
-            let ids = Set<String>(infos.map({ $0.id }))
-            for id in ids {
-                self.indexedMiniAppInfoList[id] = infos.filter({ $0.id == id })
-            }
+            miniAppInfoList = infos
         case .listII:
-            indexedMiniAppInfoList2.removeAll()
-            let ids = Set<String>(infos.map({ $0.id }))
-            for id in ids {
-                self.indexedMiniAppInfoList2[id] = infos.filter({ $0.id == id })
-            }
+            miniAppInfoList2 = infos
         }
     }
 

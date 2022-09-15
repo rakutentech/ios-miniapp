@@ -31,7 +31,7 @@ struct MiniAppWithTermsView: View {
                 MiniAppSUIView(params:
                     .init(
                         config: MiniAppConfig(
-                            config: Config.current(),
+                            config: viewModel.sdkConfig,
                             adsDisplayer: AdMobDisplayer(),
                             messageDelegate: viewModel.messageInterface,
                             navigationDelegate: viewModel.navigationDelegate
@@ -66,6 +66,6 @@ struct MiniAppWithTermsView: View {
 
 struct MiniAppWithTermsView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: ""))
+        MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: Config.current()))
     }
 }

@@ -6,21 +6,18 @@ import MiniApp
 
 struct MiniAppSettingsView: View {
 
-    @ObservedObject var store: MiniAppStore
-
     @StateObject var viewModel = MiniAppSettingsViewModel()
 
     @Binding var showFullProgress: Bool
 
     @State private var isPickerPresented: Bool = false
     @State private var alertMessage: MiniAppAlertMessage?
-    @State private var config: SettingsConfig = SettingsConfig()
     @State private var selectedListConfig: ListConfig = .listI
-
+    
     var body: some View {
         Form {
 
-            if !store.miniAppSetupCompleted {
+            if !viewModel.store.miniAppSetupCompleted {
                 HStack {
                     VStack {
                         Image(systemName: "info.circle")
@@ -38,7 +35,7 @@ struct MiniAppSettingsView: View {
             }
 
             Section(header: Text("Preview Mode")) {
-                Picker("Published", selection: $config.previewMode) {
+                Picker("Published", selection: $viewModel.config.previewMode) {
                     ForEach(PreviewMode.allCases, id: \.self) { mode in
                         Text(mode.name).tag(mode)
                     }
@@ -48,8 +45,8 @@ struct MiniAppSettingsView: View {
             }
 
             Section(header: Text("Environment")) {
-                Picker("Environment", selection: $config.environmentMode) {
-                    ForEach(EnvironmentMode.allCases, id: \.self) { mode in
+                Picker("Environment", selection: $viewModel.config.environmentMode) {
+                    ForEach(Config.Env.allCases, id: \.self) { mode in
                         Text(mode.name).tag(mode)
                     }
                 }
@@ -66,31 +63,31 @@ struct MiniAppSettingsView: View {
                 .pickerStyle(.segmented)
                 .padding(.vertical, 15)
 
-                switch config.environmentMode {
+                switch viewModel.config.environmentMode {
                 case .production:
                     switch selectedListConfig {
                     case .listI:
-                        TextField(config.listIProjectIdPlaceholder, text: $config.listIProjectId)
+                        TextField(viewModel.config.listIProjectIdPlaceholder, text: $viewModel.config.listIProjectId)
                             .padding(.vertical, 15)
-                        TextField(config.listISubscriptionKeyPlaceholder, text: $config.listISubscriptionKey)
+                        TextField(viewModel.config.listISubscriptionKeyPlaceholder, text: $viewModel.config.listISubscriptionKey)
                             .padding(.vertical, 15)
                     case .listII:
-                        TextField(config.listIProjectIdPlaceholder, text: $config.listIIProjectId)
+                        TextField(viewModel.config.listIProjectIdPlaceholder, text: $viewModel.config.listIIProjectId)
                             .padding(.vertical, 15)
-                        TextField(config.listISubscriptionKeyPlaceholder, text: $config.listIISubscriptionKey)
+                        TextField(viewModel.config.listISubscriptionKeyPlaceholder, text: $viewModel.config.listIISubscriptionKey)
                             .padding(.vertical, 15)
                     }
                 case .staging:
                     switch selectedListConfig {
                     case .listI:
-                        TextField("Project Id", text: $config.listIStagingProjectId)
+                        TextField("Project Id", text: $viewModel.config.listIStagingProjectId)
                             .padding(.vertical, 15)
-                        TextField("Subscription Key", text: $config.listIStagingSubscriptionKey)
+                        TextField("Subscription Key", text: $viewModel.config.listIStagingSubscriptionKey)
                             .padding(.vertical, 15)
                     case .listII:
-                        TextField("Project Id", text: $config.listIIStagingProjectId)
+                        TextField("Project Id", text: $viewModel.config.listIIStagingProjectId)
                             .padding(.vertical, 15)
-                        TextField("Subscription Key", text: $config.listIIStagingSubscriptionKey)
+                        TextField("Subscription Key", text: $viewModel.config.listIIStagingSubscriptionKey)
                             .padding(.vertical, 15)
                     }
                 }
@@ -102,7 +99,7 @@ struct MiniAppSettingsView: View {
 
                     switch item {
                     case .general:
-                        NavigationLink(destination: MiniAppSettingsGeneralView(viewModel: viewModel, parameters: $config.queryParameters)) {
+                        NavigationLink(destination: MiniAppSettingsGeneralView(viewModel: viewModel)) {
                             MiniAppSettingsListCellView(text: item.name, image: item.icon)
                         }
                     case .qaSecureStorage:
@@ -143,11 +140,9 @@ struct MiniAppSettingsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
-                    viewModel.save(config: config) {
-//                        showFullProgress = false
-                    }
+                    viewModel.save()
                 }
-                .disabled((config.listIProjectId.isEmpty || config.listISubscriptionKey.isEmpty))
+                .disabled((viewModel.config.listIProjectId.isEmpty || viewModel.config.listISubscriptionKey.isEmpty))
             }
         }
         .alert(item: $alertMessage) { errorMessage in
@@ -187,6 +182,6 @@ struct MiniAppAlertMessage: Identifiable {
 
 struct MiniAppFeatureConfigView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppSettingsView(store: MiniAppStore.empty(), showFullProgress: .constant(false))
+        MiniAppSettingsView(showFullProgress: .constant(false))
     }
 }

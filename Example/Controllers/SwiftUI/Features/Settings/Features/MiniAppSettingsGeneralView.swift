@@ -4,12 +4,10 @@ struct MiniAppSettingsGeneralView: View {
 
     @ObservedObject var viewModel: MiniAppSettingsViewModel
 
-    @Binding var parameters: String
-
     var body: some View {
         Form {
             NavigationLink {
-                QueryParametersView(parameters: $parameters)
+                QueryParametersView()
             } label: {
                 Label("Query Parameters", systemImage: "questionmark.circle")
             }
@@ -26,7 +24,7 @@ struct MiniAppSettingsGeneralView: View {
 
 struct MiniAppSettingsGeneralView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppSettingsGeneralView(viewModel: MiniAppSettingsViewModel(), parameters: .constant("param1=test1"))
+        MiniAppSettingsGeneralView(viewModel: MiniAppSettingsViewModel())
     }
 }
 
@@ -36,7 +34,7 @@ extension MiniAppSettingsGeneralView {
 
         @Environment(\.dismiss) var dismiss
 
-        @Binding var parameters: String
+        @State var parameters: String = ""
 
         @State var alertMessage: MiniAppAlertMessage?
 

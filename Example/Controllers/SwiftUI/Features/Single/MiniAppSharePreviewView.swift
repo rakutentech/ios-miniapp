@@ -51,6 +51,6 @@ struct MiniAppSharePreviewView: View {
 
 struct MiniAppSharePreviewView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppSharePreviewView(viewModel: MiniAppWithTermsViewModel(miniAppId: ""))
+        MiniAppSharePreviewView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: Config.current()))
     }
 }

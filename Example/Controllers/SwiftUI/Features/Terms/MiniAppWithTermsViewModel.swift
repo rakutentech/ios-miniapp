@@ -4,8 +4,10 @@ import Combine
 
 @MainActor
 class MiniAppWithTermsViewModel: ObservableObject {
-
-    let permissionService = MiniAppPermissionService()
+    
+    let store = MiniAppStore.shared
+    let permissionService: MiniAppPermissionService
+    let sdkConfig: MiniAppSdkConfig
 
     @Published var viewState: MiniAppPermissionService.ViewState = .none
 
@@ -25,11 +27,14 @@ class MiniAppWithTermsViewModel: ObservableObject {
         miniAppVersion: String? = nil,
         miniAppType: MiniAppType = .miniapp,
         messageInterface: MiniAppMessageDelegate? = nil,
-        navigationDelegate: MiniAppNavigationDelegate? = nil
+        navigationDelegate: MiniAppNavigationDelegate? = nil,
+        sdkConfig: MiniAppSdkConfig
     ) {
         self.miniAppId = miniAppId
         self.miniAppVersion = miniAppVersion
         self.miniAppType = miniAppType
+        self.sdkConfig = sdkConfig
+        self.permissionService = MiniAppPermissionService(config: sdkConfig)
 
         if let navigationDelegate = navigationDelegate {
             self.navigationDelegate = navigationDelegate
@@ -60,7 +65,7 @@ class MiniAppWithTermsViewModel: ObservableObject {
     func load() {
         viewState = .loading
         permissionService
-        .checkPermissions(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { [weak self] result in
+            .checkPermissions(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { [weak self] result in
             switch result {
             case .success(let permState):
                 switch permState {

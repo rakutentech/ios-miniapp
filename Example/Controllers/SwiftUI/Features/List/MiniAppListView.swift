@@ -8,7 +8,7 @@ struct MiniAppListView: View {
     @State var title: String
     @State private var miniAppInfo: MiniAppSingleViewRequest?
 
-    init(type: MiniAppListViewType, title: String) {
+    init(type: MiniAppSettingsView.ListConfig, title: String) {
         _viewModel = StateObject(wrappedValue: MiniAppListViewModel(type: type))
         _title = State(wrappedValue: title)
     }
@@ -35,35 +35,42 @@ struct MiniAppListView: View {
                 .background(RoundedRectangle(cornerRadius: 10).fill(Color(.secondarySystemBackground)))
                 .padding(.horizontal, 40)
             case .success:
-                List {
-                    ForEach(viewModel.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
-                        Section(header: Text(key)) {
-                            ForEach(viewModel.indexedMiniAppInfoList[key]!, id: \.version) { (info) in
-                                NavigationLink {
-                                    MiniAppSingleView(
-                                        miniAppId: info.id,
-                                        miniAppVersion: info.version.versionId,
-                                        miniAppType: .miniapp
-                                    )
-                                } label: {
-                                    MiniAppListRowCell(
-                                        iconUrl: info.icon,
-                                        displayName: info.displayName ?? "",
-                                        versionTag: info.version.versionTag,
-                                        versionId: info.version.versionId
-                                    )
+                if viewModel.indexedMiniAppInfoList.isEmpty {
+                    Text("No MiniApps found")
+                        .foregroundColor(Color(.secondaryLabel))
+                } else {
+                    List {
+                        ForEach(viewModel.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
+                            Section(header: Text(key)) {
+                                ForEach(viewModel.indexedMiniAppInfoList[key]!, id: \.version) { (info) in
+                                    NavigationLink {
+                                        MiniAppSingleView(
+                                            listType: viewModel.type,
+                                            miniAppId: info.id,
+                                            miniAppVersion: info.version.versionId,
+                                            miniAppType: .miniapp
+                                        )
+                                    } label: {
+                                        MiniAppListRowCell(
+                                            iconUrl: info.icon,
+                                            displayName: info.displayName ?? "",
+                                            versionTag: info.version.versionTag,
+                                            versionId: info.version.versionId
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
+                    .listStyle(GroupedListStyle())
                 }
-                .listStyle(GroupedListStyle())
             }
         }
         .navigationTitle(title)
         .sheet(item: $miniAppInfo) { request in
             NavigationView {
                 MiniAppSingleView(
+                    listType: viewModel.type,
                     miniAppId: request.info.id,
                     miniAppVersion: request.info.version.versionId,
                     miniAppType: .miniapp
@@ -80,11 +87,12 @@ struct MiniAppListView: View {
             }
         }
         .onAppear {
-            viewModel.checkSetup()
-            if viewModel.store.miniAppSetupCompleted && viewModel.indexedMiniAppInfoList.isEmpty {
-                viewModel.load()
-            }
+            viewModel.checkInitialLoad()
         }
+    }
+
+    var config: MiniAppSdkConfig {
+        viewModel.config
     }
 }
 

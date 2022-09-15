@@ -1,9 +1,16 @@
 import SwiftUI
 import Combine
 
-struct MiniAppDashboardView: View {
+@MainActor
+class MiniAppDashboardViewModel: ObservableObject {
+    
+    let store = MiniAppStore.shared
 
-    @StateObject var store = MiniAppStore()
+}
+
+struct MiniAppDashboardView: View {
+    
+    @StateObject var viewModel = MiniAppDashboardViewModel()
 
     @State var sampleMiniAppId: String = ""
     @State var sampleMiniAppVersion: String = ""
@@ -30,7 +37,7 @@ struct MiniAppDashboardView: View {
                 .tag(1)
 
                 NavigationView {
-                    MiniAppFeatureListView(store: store)
+                    MiniAppFeatureListView()
                 }
                 .tabItem {
                     if #available(iOS 15, *) {
@@ -42,7 +49,7 @@ struct MiniAppDashboardView: View {
                 .tag(2)
 
                 NavigationView {
-                    MiniAppSettingsView(store: store, showFullProgress: $isPresentingFullProgress)
+                    MiniAppSettingsView(showFullProgress: $isPresentingFullProgress)
                 }
                 .navigationViewStyle(.stack)
                 .tabItem {
@@ -61,7 +68,7 @@ struct MiniAppDashboardView: View {
         }
         .navigationTitle(navigationTitle)
         .onAppear {
-            if !store.miniAppSetupCompleted {
+            if !viewModel.store.miniAppSetupCompleted {
                 selection = 3
             }
         }
