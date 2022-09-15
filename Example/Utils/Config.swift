@@ -3,52 +3,6 @@ import MiniApp
 
 class Config: NSObject {
 
-    enum Env: String, CaseIterable {
-        case production
-        case staging
-
-        var name: String {
-            switch self {
-            case .production:
-                return "Production"
-            case .staging:
-                return "Staging"
-            }
-        }
-
-        var suiteName: String {
-            switch self {
-            case .production:
-                return "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings.prod"
-            case .staging:
-                return "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings.stg"
-            }
-        }
-    }
-
-    enum NewKey: String {
-        case appId = "RASApplicationIdentifier"
-        case version = "CFBundleShortVersionString"
-        case isPreviewMode = "RMAIsPreviewMode"
-        case environment = "RMAEnvironment"
-        case signatureVerification = "RMARequireMiniAppSignatureVerification"
-        case sslKeyHash = "RMASSLKeyHash"
-        case endpoint = "RMAAPIEndpoint"
-        
-        // staging
-        case stagingEndpoint = "RMAAPIStagingEndpoint"
-    }
-
-    enum NewProjetKey: String {
-        case endpoint = "RMAAPIEndpoint"
-
-        case projectId = "RASProjectId"
-        case subscriptionKey = "RASProjectSubscriptionKey"
-
-        case projectIdList2 = "RASProjectIdList2"
-        case subscriptionKeyList2 = "RASProjectSubscriptionKeyList2"
-    }
-
     enum Key: String {
         case applicationIdentifier               = "RASApplicationIdentifier",
              version                             = "CFBundleShortVersionString",
@@ -83,92 +37,6 @@ class Config: NSObject {
 
     static var userDefaults: UserDefaults? {
         return getUserDefaults(isProd: isProd)
-    }
-
-    // main bundle
-    class func string(_ key: NewKey) -> String? {
-        let userDefaults = UserDefaults.standard
-        return userDefaults.string(forKey: key.rawValue)
-    }
-
-    class func bool(_ key: NewKey) -> Bool? {
-        let userDefaults = UserDefaults.standard
-        return userDefaults.value(forKey: key.rawValue) as? Bool
-    }
-
-    class func bool(_ key: NewKey, fallback: NewKey?) -> Bool? {
-        let userDefaults = UserDefaults.standard
-        if let fallback = fallback {
-            return userDefaults.value(forKey: key.rawValue) as? Bool ?? getInfoBool(key: fallback)
-        } else {
-            return userDefaults.value(forKey: key.rawValue) as? Bool
-        }
-    }
-
-    class func setValue(_ key: NewKey, value: Any?) {
-        let userDefaults = UserDefaults.standard
-        return userDefaults.set(value, forKey: key.rawValue)
-    }
-
-    // suits
-    class func setString(_ env: Env, key: NewProjetKey, value: String) {
-        let userDefaults = UserDefaults(suiteName: env.suiteName)
-        userDefaults?.set(value, forKey: key.rawValue)
-        userDefaults?.synchronize()
-    }
-
-    class func string(_ env: Env, key: NewProjetKey) -> String? {
-        let userDefaults = UserDefaults(suiteName: env.suiteName)
-        return userDefaults?.string(forKey: key.rawValue)
-    }
-
-    class func string(_ env: Env, key: NewProjetKey, withFallback: Bool) -> String? {
-        let userDefaults = UserDefaults(suiteName: env.suiteName)
-        if withFallback {
-            return userDefaults?.string(forKey: key.rawValue) ?? getInfoString(projectKey: key)
-        } else {
-            return userDefaults?.string(forKey: key.rawValue)
-        }
-    }
-
-    class func string(_ env: Env, key: NewProjetKey, fallbackKey: Key?) -> String? {
-        let userDefaults = UserDefaults(suiteName: env.suiteName)
-        if let withFallback = fallbackKey {
-            return userDefaults?.string(forKey: key.rawValue) ?? getInfoString(string: withFallback.rawValue)
-        } else {
-            return userDefaults?.string(forKey: key.rawValue)
-        }
-    }
-
-    class func bool(_ env: Env, key: NewProjetKey) -> Bool? {
-        let userDefaults = UserDefaults(suiteName: env.suiteName)
-        return userDefaults?.value(forKey: key.rawValue) as? Bool
-    }
-
-    class func value(_ env: Env, key: NewProjetKey) -> Any? {
-        let userDefaults = UserDefaults(suiteName: env.suiteName)
-        return userDefaults?.value(forKey: key.rawValue)
-    }
-
-    class func exists(_ env: Env, key: NewProjetKey) -> Bool {
-        let userDefaults = UserDefaults(suiteName: env.suiteName)
-        return userDefaults?.value(forKey: key.rawValue) != nil
-    }
-
-    class func getInfoString(projectKey: NewProjetKey) -> String? {
-        return Bundle.main.infoDictionary?[projectKey.rawValue] as? String
-    }
-
-    class func getInfoString(key: NewKey) -> String? {
-        return Bundle.main.infoDictionary?[key.rawValue] as? String
-    }
-
-    class func getInfoString(string: String) -> String? {
-        return Bundle.main.infoDictionary?[string] as? String
-    }
-
-    class func getInfoBool(key: NewKey) -> Bool? {
-        return Bundle.main.infoDictionary?[key.rawValue] as? Bool
     }
 
     // swiftlint:disable:next todo
@@ -282,4 +150,157 @@ class Config: NSObject {
             ()
         }
     }
+}
+
+class NewConfig {
+    
+    enum Environment: String, CaseIterable {
+        case production
+        case staging
+
+        var name: String {
+            switch self {
+            case .production:
+                return "Production"
+            case .staging:
+                return "Staging"
+            }
+        }
+
+        var suiteName: String {
+            switch self {
+            case .production:
+                return "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings.prod"
+            case .staging:
+                return "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings.stg"
+            }
+        }
+    }
+
+    enum GlobalKey: String {
+        case appId = "RASApplicationIdentifier"
+        case version = "CFBundleShortVersionString"
+        case isPreviewMode = "RMAIsPreviewMode"
+        case environment = "RMAEnvironment"
+        case signatureVerification = "RMARequireMiniAppSignatureVerification"
+        case sslKeyHash = "RMASSLKeyHash"
+        case endpoint = "RMAAPIEndpoint"
+        case stagingEndpoint = "RMAAPIStagingEndpoint"
+        case maxSecureStorageFileLimit = "MAMaxSecureStorageFileLimit"
+    }
+
+    enum ProjectKey: String {
+        case projectId = "RASProjectId"
+        case subscriptionKey = "RASProjectSubscriptionKey"
+
+        case projectIdList2 = "RASProjectIdList2"
+        case subscriptionKeyList2 = "RASProjectSubscriptionKeyList2"
+    }
+
+    enum FallbackKey: String {
+        case stagingProjectId = "RASStagingProjectId"
+        case stagingSubscriptionKey = "RASStagingProjectSubscriptionKey"
+    }
+    
+    
+    // main bundle
+    class func string(_ key: GlobalKey) -> String? {
+        let userDefaults = UserDefaults.standard
+        return userDefaults.string(forKey: key.rawValue)
+    }
+
+    class func bool(_ key: GlobalKey) -> Bool? {
+        let userDefaults = UserDefaults.standard
+        return userDefaults.value(forKey: key.rawValue) as? Bool
+    }
+
+    class func bool(_ key: GlobalKey, fallback: GlobalKey?) -> Bool? {
+        let userDefaults = UserDefaults.standard
+        if let fallback = fallback {
+            return userDefaults.value(forKey: key.rawValue) as? Bool ?? getInfoBool(key: fallback)
+        } else {
+            return userDefaults.value(forKey: key.rawValue) as? Bool
+        }
+    }
+
+    class func int(_ key: GlobalKey) -> Int? {
+        let userDefaults = UserDefaults.standard
+        return userDefaults.value(forKey: key.rawValue) as? Int
+    }
+
+    class func any(_ key: GlobalKey) -> Any? {
+        let userDefaults = UserDefaults.standard
+        return userDefaults.value(forKey: key.rawValue)
+    }
+
+    class func setValue(_ key: GlobalKey, value: Any?) {
+        let userDefaults = UserDefaults.standard
+        return userDefaults.set(value, forKey: key.rawValue)
+    }
+
+    // suits
+    class func setString(_ env: Environment, key: ProjectKey, value: String) {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        userDefaults?.set(value, forKey: key.rawValue)
+        userDefaults?.synchronize()
+    }
+
+    class func string(_ env: Environment, key: ProjectKey) -> String? {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        return userDefaults?.string(forKey: key.rawValue)
+    }
+
+    class func string(_ env: Environment, key: ProjectKey, withFallback: Bool) -> String? {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        if withFallback {
+            return userDefaults?.string(forKey: key.rawValue) ?? getInfoString(projectKey: key)
+        } else {
+            return userDefaults?.string(forKey: key.rawValue)
+        }
+    }
+
+    class func string(_ env: Environment, key: ProjectKey, fallbackKey: FallbackKey?) -> String? {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        if let withFallback = fallbackKey {
+            return userDefaults?.string(forKey: key.rawValue) ?? getInfoString(string: withFallback.rawValue)
+        } else {
+            return userDefaults?.string(forKey: key.rawValue)
+        }
+    }
+
+    class func bool(_ env: Environment, key: ProjectKey) -> Bool? {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        return userDefaults?.value(forKey: key.rawValue) as? Bool
+    }
+
+    class func value(_ env: Environment, key: ProjectKey) -> Any? {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        return userDefaults?.value(forKey: key.rawValue)
+    }
+
+    class func exists(_ env: Environment, key: ProjectKey) -> Bool {
+        let userDefaults = UserDefaults(suiteName: env.suiteName)
+        return userDefaults?.value(forKey: key.rawValue) != nil
+    }
+
+    class func getInfoAny(_ key: GlobalKey) -> Any? {
+        return Bundle.main.infoDictionary?[key.rawValue]
+    }
+
+    class func getInfoString(projectKey: ProjectKey) -> String? {
+        return Bundle.main.infoDictionary?[projectKey.rawValue] as? String
+    }
+
+    class func getInfoString(key: GlobalKey) -> String? {
+        return Bundle.main.infoDictionary?[key.rawValue] as? String
+    }
+
+    class func getInfoString(string: String) -> String? {
+        return Bundle.main.infoDictionary?[string] as? String
+    }
+
+    class func getInfoBool(key: GlobalKey) -> Bool? {
+        return Bundle.main.infoDictionary?[key.rawValue] as? Bool
+    }
+    
 }

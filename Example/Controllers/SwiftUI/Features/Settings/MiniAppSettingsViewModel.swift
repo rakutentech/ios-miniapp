@@ -78,20 +78,20 @@ class MiniAppSettingsViewModel: ObservableObject {
             store.miniAppSetupCompleted = true
         }
 
-        Config.setValue(.isPreviewMode, value: config.previewMode == .previewable)
-        Config.setValue(.environment, value: config.environmentMode == .production)
+        NewConfig.setValue(.isPreviewMode, value: config.previewMode == .previewable)
+        NewConfig.setValue(.environment, value: config.environmentMode == .production)
 
         // list 1
-        Config.setString(.production, key: .projectId, value: config.listIProjectId)
-        Config.setString(.production, key: .subscriptionKey, value: config.listISubscriptionKey)
-        Config.setString(.staging, key: .projectId, value: config.listIStagingProjectId)
-        Config.setString(.staging, key: .subscriptionKey, value: config.listIStagingSubscriptionKey)
+        NewConfig.setString(.production, key: .projectId, value: config.listIProjectId)
+        NewConfig.setString(.production, key: .subscriptionKey, value: config.listISubscriptionKey)
+        NewConfig.setString(.staging, key: .projectId, value: config.listIStagingProjectId)
+        NewConfig.setString(.staging, key: .subscriptionKey, value: config.listIStagingSubscriptionKey)
 
         // list 2
-        Config.setString(.production, key: .projectIdList2, value: config.listIIProjectId)
-        Config.setString(.production, key: .subscriptionKeyList2, value: config.listIISubscriptionKey)
-        Config.setString(.staging, key: .projectIdList2, value: config.listIIStagingProjectId)
-        Config.setString(.staging, key: .subscriptionKeyList2, value: config.listIIStagingSubscriptionKey)
+        NewConfig.setString(.production, key: .projectIdList2, value: config.listIIProjectId)
+        NewConfig.setString(.production, key: .subscriptionKeyList2, value: config.listIISubscriptionKey)
+        NewConfig.setString(.staging, key: .projectIdList2, value: config.listIIStagingProjectId)
+        NewConfig.setString(.staging, key: .subscriptionKeyList2, value: config.listIIStagingSubscriptionKey)
     }
 
     // MARK: - General

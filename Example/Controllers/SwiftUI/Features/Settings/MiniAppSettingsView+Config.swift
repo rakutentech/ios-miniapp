@@ -6,26 +6,26 @@ extension MiniAppSettingsView {
 
     struct SettingsConfig: Hashable {
 
-        var previewMode: PreviewMode = (Config.bool(.isPreviewMode, fallback: .isPreviewMode) ?? true) ? .previewable : .published
-        var environmentMode: Config.Env = (Config.bool(.environment) ?? true) ? .production : .staging
+        var previewMode: PreviewMode = (NewConfig.bool(.isPreviewMode, fallback: .isPreviewMode) ?? true) ? .previewable : .published
+        var environmentMode: NewConfig.Environment = (NewConfig.bool(.environment) ?? true) ? .production : .staging
 
         // list 1 placeholders
-        var listIProjectIdPlaceholder: String = Config.getInfoPlistString(key: .projectId) ?? ""
-        var listISubscriptionKeyPlaceholder: String = Config.getInfoPlistString(key: .subscriptionKey) ?? ""
+        var listIProjectIdPlaceholder: String = NewConfig.getInfoString(projectKey: .projectId) ?? ""
+        var listISubscriptionKeyPlaceholder: String = NewConfig.getInfoString(projectKey: .subscriptionKey) ?? ""
 
         // list 1 prod
-        var listIProjectId: String = Config.string(.production, key: .projectId, withFallback: true) ?? ""
-        var listISubscriptionKey: String = Config.string(.production, key: .subscriptionKey, withFallback: true) ?? ""
+        var listIProjectId: String = NewConfig.string(.production, key: .projectId, withFallback: true) ?? ""
+        var listISubscriptionKey: String = NewConfig.string(.production, key: .subscriptionKey, withFallback: true) ?? ""
         // list 1 stg
-        var listIStagingProjectId: String = Config.string(.staging, key: .projectId, fallbackKey: .stagingProjectId) ?? ""
-        var listIStagingSubscriptionKey: String = Config.string(.staging, key: .subscriptionKey, fallbackKey: .stagingSubscriptionKey) ?? ""
+        var listIStagingProjectId: String = NewConfig.string(.staging, key: .projectId, fallbackKey: .stagingProjectId) ?? ""
+        var listIStagingSubscriptionKey: String = NewConfig.string(.staging, key: .subscriptionKey, fallbackKey: .stagingSubscriptionKey) ?? ""
 
         // list 2 prod
-        var listIIProjectId: String = Config.string(.production, key: .projectIdList2, withFallback: true) ?? ""
-        var listIISubscriptionKey: String = Config.string(.production, key: .subscriptionKeyList2, withFallback: true) ?? ""
+        var listIIProjectId: String = NewConfig.string(.production, key: .projectIdList2, withFallback: true) ?? ""
+        var listIISubscriptionKey: String = NewConfig.string(.production, key: .subscriptionKeyList2, withFallback: true) ?? ""
         // list 2 stg
-        var listIIStagingProjectId: String = Config.string(.staging, key: .projectIdList2, withFallback: false) ?? ""
-        var listIIStagingSubscriptionKey: String = Config.string(.staging, key: .subscriptionKeyList2, withFallback: false) ?? ""
+        var listIIStagingProjectId: String = NewConfig.string(.staging, key: .projectIdList2, withFallback: false) ?? ""
+        var listIIStagingSubscriptionKey: String = NewConfig.string(.staging, key: .subscriptionKeyList2, withFallback: false) ?? ""
 
         init() {
             // init
@@ -46,7 +46,7 @@ extension MiniAppSettingsView {
         }
 
         var baseUrl: String? {
-            environmentMode == .production ? Config.getInfoString(key: .endpoint) : Config.getInfoString(key: .stagingEndpoint)
+            environmentMode == .production ? NewConfig.getInfoString(key: .endpoint) : NewConfig.getInfoString(key: .stagingEndpoint)
         }
 
         func projectId(list: ListConfig) -> String? {
@@ -68,17 +68,18 @@ extension MiniAppSettingsView {
         }
 
         var hostAppVersion: String? {
-            Config.string(.version)
+            NewConfig.string(.version)
         }
 
         var requiresSignatureVerification: Bool? {
-            Config.userDefaults?.value(forKey: Config.Key.requireMiniAppSignatureVerification.rawValue) as? Bool
+            NewConfig.bool(.signatureVerification)
         }
 
         func sslKey(enabled: Bool) -> MiniAppConfigSSLKeyHash? {
             var pinConf: MiniAppConfigSSLKeyHash?
-            if enabled, let keyHash = (Bundle.main.object(forInfoDictionaryKey: "RMASSLKeyHash") as? [String: Any?])?["main"] as? String {
-                pinConf = MiniAppConfigSSLKeyHash(pin: keyHash, backup: (Bundle.main.object(forInfoDictionaryKey: "RMASSLKeyHash") as? [String: Any?])?["backup"] as? String)
+            let sslKeyHash = NewConfig.getInfoAny(.sslKeyHash)
+            if enabled, let keyHash = (sslKeyHash as? [String: Any?])?["main"] as? String {
+                pinConf = MiniAppConfigSSLKeyHash(pin: keyHash, backup: (sslKeyHash as? [String: Any?])?["backup"] as? String)
             }
             return pinConf
         }
@@ -88,7 +89,7 @@ extension MiniAppSettingsView {
         }
 
         var storageMaxSizeInBytes: Int {
-            UserDefaults.standard.integer(forKey: Config.LocalKey.maxSecureStorageFileLimit.rawValue)
+            NewConfig.int(.maxSecureStorageFileLimit) ?? 5_000_000
         }
     }
 

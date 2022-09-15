@@ -46,7 +46,7 @@ struct MiniAppSettingsView: View {
 
             Section(header: Text("Environment")) {
                 Picker("Environment", selection: $viewModel.config.environmentMode) {
-                    ForEach(Config.Env.allCases, id: \.self) { mode in
+                    ForEach(NewConfig.Environment.allCases, id: \.self) { mode in
                         Text(mode.name).tag(mode)
                     }
                 }

@@ -25,7 +25,7 @@ class MiniAppStore: ObservableObject {
     @AppStorage("QA_CUSTOM_ACCESS_TOKEN_ERROR_MESSAGE") var accessTokenErrorMessage = ""
     @AppStorage("QA_CUSTOM_ACCESS_TOKEN_ERROR_TYPE") var accessTokenErrorBehavior = ""
 
-    @AppStorage(Config.NewKey.signatureVerification.rawValue) var signatureVerification: Bool?
+    @AppStorage(NewConfig.GlobalKey.signatureVerification.rawValue) var signatureVerification: Bool?
 
     @Published var miniAppInfoList: [MiniAppInfo] = []
     @Published var miniAppInfoList2: [MiniAppInfo] = []
