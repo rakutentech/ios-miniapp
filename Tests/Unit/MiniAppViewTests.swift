@@ -196,6 +196,41 @@ class MiniAppViewTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 10.0)
     }
+
+    func test_miniappview_get_title() {
+        let messageDelegate = MockMessageInterface()
+        let params = MiniAppViewParameters.url(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                url: URL(string: "http://localhost:1337")!
+            )
+        )
+        let view = MiniAppView(params: params)
+        XCTAssertEqual(view.miniAppTitle, "MiniApp")
+
+        view.miniAppHandler.title = "MiniApp (Test)"
+        XCTAssertEqual(view.miniAppTitle, "MiniApp (Test)")
+    }
+
+    func test_miniappview_should_close_empty() {
+        let messageDelegate = MockMessageInterface()
+        let params = MiniAppViewParameters.url(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                url: URL(string: "http://localhost:1337")!
+            )
+        )
+        let view = MiniAppView(params: params)
+        XCTAssertTrue(view.alertInfo == nil)
+    }
 }
 
 extension MiniAppViewTests {
