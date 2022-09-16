@@ -171,4 +171,175 @@ class MiniAppViewHandlerTests: XCTestCase {
 
         wait(for: [expectation], timeout: 10.0)
     }
+
+    func test_miniappviewhandler_validate_scheme() {
+        let messageDelegate = MockMessageInterface()
+
+        let viewHandler = MiniAppViewHandler(
+            config: MiniAppConfig(
+                config: nil,
+                messageDelegate: messageDelegate
+            ),
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+
+        let aboutExpectation = XCTestExpectation(description: #function + "_about")
+        var aboutPolicy: WKNavigationActionPolicy?
+        let aboutUrl = URL(string: "about://")!
+        viewHandler.validateScheme(requestURL: aboutUrl, navigationAction: WKNavigationAction()) { policy in
+            aboutPolicy = policy
+            aboutExpectation.fulfill()
+        }
+
+        wait(for: [aboutExpectation], timeout: 3.0)
+        XCTAssertEqual(aboutPolicy, .allow)
+
+        let telExpectation = XCTestExpectation(description: #function + "_tel")
+        var telPolicy: WKNavigationActionPolicy?
+        let telUrl = URL(string: "tel://")!
+        viewHandler.validateScheme(requestURL: telUrl, navigationAction: WKNavigationAction()) { policy in
+            telPolicy = policy
+            telExpectation.fulfill()
+        }
+        wait(for: [telExpectation], timeout: 3.0)
+        XCTAssertEqual(telPolicy, .cancel)
+
+        let schemeExpectation = XCTestExpectation(description: #function + "_mscheme")
+        var schemePolicy: WKNavigationActionPolicy?
+        let schemeUrl = URL(string: "mscheme.1234://")!
+        viewHandler.validateScheme(requestURL: schemeUrl, navigationAction: WKNavigationAction()) { policy in
+            schemePolicy = policy
+            schemeExpectation.fulfill()
+        }
+        wait(for: [schemeExpectation], timeout: 3.0)
+        XCTAssertEqual(schemePolicy, .allow)
+
+        let base64Expectation = XCTestExpectation(description: #function + "_base64")
+        var base64Policy: WKNavigationActionPolicy?
+        let base64Url = URL(string: getExampleBase64String())!
+        viewHandler.validateScheme(requestURL: base64Url, navigationAction: WKNavigationAction()) { policy in
+            base64Policy = policy
+            base64Expectation.fulfill()
+        }
+        wait(for: [base64Expectation], timeout: 3.0)
+        XCTAssertEqual(base64Policy, .cancel)
+
+
+        viewHandler.onExternalWebviewClose = { _ in }
+        viewHandler.onExternalWebviewResponse = { _ in }
+        let httpsExpectation = XCTestExpectation(description: #function + "_https")
+        var httpsPolicy: WKNavigationActionPolicy?
+        let httpsUrl = URL(string: "https://www.rakuten.co.jp")!
+        viewHandler.validateScheme(requestURL: httpsUrl, navigationAction: WKNavigationAction()) { policy in
+            httpsPolicy = policy
+            httpsExpectation.fulfill()
+        }
+        wait(for: [httpsExpectation], timeout: 3.0)
+        XCTAssertEqual(httpsPolicy, .cancel)
+    }
+
+    // MARK: - WKUIDelegate
+    func test_miniappviewhandler_window_alerts() {
+
+
+        let messageDelegate = MockMessageInterface()
+
+        let viewHandler = MiniAppViewHandler(
+            config: MiniAppConfig(
+                config: nil,
+                messageDelegate: messageDelegate
+            ),
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+
+        let miniAppWebView = MiniAppWebView()
+        do {
+            try viewHandler.loadWebView(
+                webView: miniAppWebView,
+                miniAppId: mockMiniAppInfo.id,
+                versionId: mockMiniAppInfo.version.versionId
+            )
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+
+        let expectation = XCTestExpectation(description: #function)
+        miniAppWebView.evaluateJavaScript("window.alert('This is window alert!');")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 3.0)
+    }
+
+    func test_miniappviewhandler_window_alerts_confirm() {
+        let expectation = XCTestExpectation(description: #function)
+
+        let messageDelegate = MockMessageInterface()
+
+        let viewHandler = MiniAppViewHandler(
+            config: MiniAppConfig(
+                config: nil,
+                messageDelegate: messageDelegate
+            ),
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+
+        let miniAppWebView = MiniAppWebView()
+        do {
+            try viewHandler.loadWebView(
+                webView: miniAppWebView,
+                miniAppId: mockMiniAppInfo.id,
+                versionId: mockMiniAppInfo.version.versionId
+            )
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+
+        miniAppWebView.evaluateJavaScript("window.confirm('This is window confirm!');")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 3.0)
+    }
+
+    func test_miniappviewhandler_window_alerts_prompt() {
+        let expectation = XCTestExpectation(description: #function)
+
+        let messageDelegate = MockMessageInterface()
+
+        let viewHandler = MiniAppViewHandler(
+            config: MiniAppConfig(
+                config: nil,
+                messageDelegate: messageDelegate
+            ),
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+
+        let miniAppWebView = MiniAppWebView()
+        do {
+            try viewHandler.loadWebView(
+                webView: miniAppWebView,
+                miniAppId: mockMiniAppInfo.id,
+                versionId: mockMiniAppInfo.version.versionId
+            )
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+
+        miniAppWebView.evaluateJavaScript("window.prompt('This is window prompt!', 'sure!');")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 3.0)
+    }
 }
