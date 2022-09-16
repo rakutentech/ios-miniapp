@@ -179,6 +179,76 @@ class RealMiniAppViewTests: QuickSpec {
                     expect(miniAppView.secureStorage.fileSizeLimit).to(equal(50))
                 }
             }
+
+            context("when validating events") {
+                it("https link will return cancel policy") {
+                    let customNav = MockNavigationView(frame: .zero)
+                    let mockMessageInterface = MockMessageInterface()
+                    let url = URL(string: "https://localhost:1337/")!
+
+                    let miniAppView = RealMiniAppView(
+                        miniAppURL: url,
+                        miniAppTitle: "",
+                        hostAppMessageDelegate: mockMessageInterface,
+                        displayNavBar: .never,
+                        navigationDelegate: customNav,
+                        navigationView: customNav,
+                        shouldAutoLoadSecureStorage: false
+                    )
+
+                    let actionUrl = URL(string: "http://local:1337/")!
+                    let action = WKNavigationAction()
+                    var returnedPolicy: WKNavigationActionPolicy?
+                    miniAppView.validateScheme(requestURL: actionUrl, navigationAction: action) { policy in
+                        returnedPolicy = policy
+                    }
+                    expect(returnedPolicy == .cancel).toEventually(beTrue(), timeout: .seconds(3))
+                }
+            }
+
+            context("when loading secure storage") {
+                beforeEach {
+                    let miniAppUrl = FileManager.getMiniAppFolderPath().appendingPathComponent("abcd-1234")
+                    try? FileManager.default.createDirectory(at: miniAppUrl, withIntermediateDirectories: true)
+                }
+                it("will succeed") {
+                    let customNav = MockNavigationView(frame: .zero)
+                    let mockMessageInterface = MockMessageInterface()
+
+                    let storage = MiniAppSecureStorage(appId: "abcd-1234")
+                    do {
+                        try storage.database.setup()
+                    } catch {
+                        fail(error.localizedDescription)
+                    }
+
+                    var storageSetCompleted = false
+                    storage.set(dict: ["test": "value"]) { result in
+                        switch result {
+                        case .success:
+                            storageSetCompleted = true
+                        case let .failure(error):
+                            fail(error.localizedDescription)
+                        }
+                    }
+
+                    expect(storageSetCompleted).toEventually(beTrue(), timeout: .seconds(3))
+
+                    let miniAppView = RealMiniAppView(
+                        miniAppId: "abcd-1234",
+                        versionId: "abcd-1234",
+                        projectId: "",
+                        miniAppTitle: "",
+                        hostAppMessageDelegate: mockMessageInterface,
+                        displayNavBar: .never,
+                        navigationDelegate: customNav,
+                        navigationView: customNav,
+                        shouldAutoLoadSecureStorage: true
+                    )
+
+                    expect(miniAppView.shouldAutoLoadSecureStorage).to(beTrue())
+                }
+            }
         }
     }
 }
