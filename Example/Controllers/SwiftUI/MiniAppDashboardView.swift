@@ -60,7 +60,7 @@ struct MiniAppDashboardView: View {
                 Color.black
                     .ignoresSafeArea()
                     .opacity(0.5)
-                    .overlay(ProgressView().tint(.white))
+                    .overlay(ProgressView().foregroundColor(.white))
                     .animation(.spring())
             }
         }

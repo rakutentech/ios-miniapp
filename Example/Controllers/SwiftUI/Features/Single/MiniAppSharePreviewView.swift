@@ -13,14 +13,19 @@ struct MiniAppSharePreviewView: View {
                 VStack(spacing: 20) {
                     Text(text)
                         .multilineTextAlignment(.center)
-                    AsyncImage(url: url, content: { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(10)
-                    }, placeholder: {
-                        Color.gray
-                    })
+                    if #available(iOS 15.0, *) {
+                        AsyncImage(url: url, content: { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .cornerRadius(10)
+                        }, placeholder: {
+                            Color.gray
+                        })
+                    } else {
+                        RemoteImageView(urlString: url.absoluteString)
+                            .frame(width: 60, height: 40, alignment: .center)
+                    }
                     Spacer()
                 }
                 .padding(.horizontal, 40)

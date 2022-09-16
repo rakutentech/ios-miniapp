@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MiniAppSettingsPointsView: View {
 
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.presentationMode) var presentationMode
 
     @ObservedObject var viewModel: MiniAppSettingsViewModel
 
@@ -47,7 +47,7 @@ struct MiniAppSettingsPointsView: View {
                         return
                     }
                     viewModel.savePoints(model: UserPointsModel(standardPoints: spoints, termPoints: tpoints, cashPoints: cpoints))
-                    dismiss.callAsFunction()
+                    presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Save")
                 }

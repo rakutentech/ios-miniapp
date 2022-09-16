@@ -3,7 +3,7 @@ import MiniApp
 
 struct MiniAppSingleView: View {
 
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.presentationMode) var presentationMode
 
     @StateObject var viewModel: MiniAppWithTermsViewModel
     @StateObject var handler = MiniAppSUIViewHandler()
@@ -52,7 +52,7 @@ struct MiniAppSingleView: View {
                             message: closeInfo.description ?? ""
                         )
                     } else {
-                        dismiss.callAsFunction()
+                        presentationMode.wrappedValue.dismiss()
                     }
                 } label: {
                     ZStack {
@@ -70,7 +70,7 @@ struct MiniAppSingleView: View {
                         title: Text(errorMessage.title),
                         message: Text(errorMessage.message),
                         dismissButton: .default(Text("Ok"), action: {
-                            dismiss.callAsFunction()
+                            presentationMode.wrappedValue.dismiss()
                         })
                     )
                 }

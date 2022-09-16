@@ -32,7 +32,7 @@ extension MiniAppSettingsGeneralView {
 
     struct QueryParametersView: View {
 
-        @Environment(\.dismiss) var dismiss
+        @Environment(\.presentationMode) var presentationMode
 
         @State var parameters: String = ""
 
@@ -68,7 +68,7 @@ extension MiniAppSettingsGeneralView {
 
         func save() {
             if saveQueryParam(queryParam: parameters) {
-                dismiss.callAsFunction()
+                presentationMode.wrappedValue.dismiss()
             } else {
                 //
             }

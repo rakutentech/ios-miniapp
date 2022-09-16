@@ -20,10 +20,12 @@ struct MiniAppSettingsQAView: View {
                         alertMessage = MiniAppAlertMessage(title: "Success", message: "All stores were wiped successfully!")
                     } label: {
                         Text("Wipe Secure Storages")
-                            .frame(height: 36)
+                            .font(.system(size: 15, weight: .bold))
+                            .frame(height: 50)
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .foregroundColor(.white)
+                    .background(Color("Crimson").cornerRadius(10))
 
                     HStack {
                         TextField("MiniApp ID", text: $miniAppWipeAppId)

@@ -42,15 +42,15 @@ class MiniAppSettingsViewModel: ObservableObject {
         let configListI = config.sdkConfig(list: .listI)
         MiniApp
             .shared(with: configListI)
-            .list { [weak self] (result) in
+            .list { (result) in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
                     switch result {
                     case let .success(infos):
-                        self?.persistConfig()
-                        self?.store.update(type: .listI, infos: infos)
-                        self?.state = .success
+                        self.persistConfig()
+                        self.store.update(type: .listI, infos: infos)
+                        self.state = .success
                     case .failure(let error):
-                        self?.state = .error(error)
+                        self.state = .error(error)
                     }
                     completion?()
                 }
@@ -59,14 +59,14 @@ class MiniAppSettingsViewModel: ObservableObject {
         let configListII: MiniAppSdkConfig = config.sdkConfig(list: .listII)
         MiniApp
             .shared(with: configListII)
-            .list { [weak self] (result) in
+            .list { (result) in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
                     switch result {
                     case let .success(infos):
-                        self?.persistConfig()
-                        self?.store.update(type: .listII, infos: infos)
+                        self.persistConfig()
+                        self.store.update(type: .listII, infos: infos)
                     case .failure(let error):
-                        self?.state = .error(error)
+                        self.state = .error(error)
                     }
                     completion?()
                 }
