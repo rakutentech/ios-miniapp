@@ -72,6 +72,7 @@
 		31A7169B27EF0800003770E9 /* MiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169A27EF0800003770E9 /* MiniApp */; };
 		31A7169D27EF0800003770E9 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169C27EF0800003770E9 /* AppCenterCrashes */; };
 		F7370A8A287BD21C00090032 /* MiniAppSecureStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */; };
+		F73D0E9328D41205002437DC /* MiniAppFeatureListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73D0E9228D41205002437DC /* MiniAppFeatureListCell.swift */; };
 		F74AA0E0283C651300087718 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */; };
 		F74AA0E1283C651300087718 /* URLSchemeHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */; };
 		F74AA0E2283C651300087718 /* MiniAppJavascriptErrorInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0AB283C651300087718 /* MiniAppJavascriptErrorInfoTests.swift */; };
@@ -240,6 +241,7 @@
 		3105761127EE387800D93B06 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		31A7169827EF0428003770E9 /* MiniApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MiniApp; path = ..; sourceTree = "<group>"; };
 		F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageTests.swift; sourceTree = "<group>"; };
+		F73D0E9228D41205002437DC /* MiniAppFeatureListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureListCell.swift; sourceTree = "<group>"; };
 		F74AA09D283C64D600087718 /* MiniApp_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealMiniAppViewTests.swift; sourceTree = "<group>"; };
 		F74AA0AA283C651300087718 /* URLSchemeHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSchemeHandlerTests.swift; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 			isa = PBXGroup;
 			children = (
 				F75D49C728C5B83A0053F74E /* MiniAppFeatureListView.swift */,
+				F73D0E9228D41205002437DC /* MiniAppFeatureListCell.swift */,
 				F75D49BE28C5B83A0053F74E /* Settings */,
 				F75D49C828C5B83A0053F74E /* Terms */,
 				F75D49CE28C5B83A0053F74E /* Single */,
@@ -984,6 +987,7 @@
 				310575D927EE213400D93B06 /* SignatureSettingsTableViewController.swift in Sources */,
 				F75D49F728C6F3430053F74E /* MiniAppSettingsQAView.swift in Sources */,
 				F75D49E728C5B83A0053F74E /* MiniAppWithTermsView.swift in Sources */,
+				F73D0E9328D41205002437DC /* MiniAppFeatureListCell.swift in Sources */,
 				F75D49F228C5B83A0053F74E /* MiniAppStore.swift in Sources */,
 				F75D4A0728C9CADE0053F74E /* MiniAppSettingsView+Config.swift in Sources */,
 				F75D49ED28C5B83A0053F74E /* MiniAppListRowCell.swift in Sources */,

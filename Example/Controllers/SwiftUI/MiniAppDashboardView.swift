@@ -3,13 +3,11 @@ import Combine
 
 @MainActor
 class MiniAppDashboardViewModel: ObservableObject {
-    
     let store = MiniAppStore.shared
-
 }
 
 struct MiniAppDashboardView: View {
-    
+
     @StateObject var viewModel = MiniAppDashboardViewModel()
 
     @State var sampleMiniAppId: String = ""

@@ -13,7 +13,7 @@ struct MiniAppSettingsView: View {
     @State private var isPickerPresented: Bool = false
     @State private var alertMessage: MiniAppAlertMessage?
     @State private var selectedListConfig: ListConfig = .listI
-    
+
     var body: some View {
         Form {
 

@@ -12,7 +12,7 @@ struct MiniAppSingleView: View {
     var config: MiniAppSdkConfig {
         MiniAppSettingsView.SettingsConfig().sdkConfig(list: listType)
     }
-    
+
     @State var miniAppId: String
     @State var miniAppVersion: String?
     @State var miniAppType: MiniAppType

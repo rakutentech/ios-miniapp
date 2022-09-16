@@ -153,7 +153,7 @@ class Config: NSObject {
 }
 
 class NewConfig {
-    
+
     enum Environment: String, CaseIterable {
         case production
         case staging
@@ -201,8 +201,7 @@ class NewConfig {
         case stagingProjectId = "RASStagingProjectId"
         case stagingSubscriptionKey = "RASStagingProjectSubscriptionKey"
     }
-    
-    
+
     // main bundle
     class func string(_ key: GlobalKey) -> String? {
         let userDefaults = UserDefaults.standard
@@ -302,5 +301,4 @@ class NewConfig {
     class func getInfoBool(key: GlobalKey) -> Bool? {
         return Bundle.main.infoDictionary?[key.rawValue] as? Bool
     }
-    
 }

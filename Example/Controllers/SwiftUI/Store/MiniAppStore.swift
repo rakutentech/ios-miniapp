@@ -16,7 +16,7 @@ extension EnvironmentValues {
 class MiniAppStore: ObservableObject {
 
     static let shared = MiniAppStore()
-    
+
     @Published var config = MiniAppSettingsView.SettingsConfig()
 
     @AppStorage("MiniApp.FirstLaunch") var miniAppFirstLaunch = false

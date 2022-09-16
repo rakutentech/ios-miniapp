@@ -4,7 +4,7 @@ import Combine
 
 @MainActor
 class MiniAppWithTermsViewModel: ObservableObject {
-    
+
     let store = MiniAppStore.shared
     let permissionService: MiniAppPermissionService
     let sdkConfig: MiniAppSdkConfig

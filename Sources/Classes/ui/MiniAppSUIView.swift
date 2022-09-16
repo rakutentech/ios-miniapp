@@ -88,7 +88,7 @@ extension MiniAppSUIView {
 public class MiniAppSUIViewHandler: ObservableObject {
 
     @Published public var action: MiniAppSUIViewAction?
-    
+
     @Published public var isActive: Bool = false
 
     public var closeAlertInfo: (() -> CloseAlertInfo?)?
