@@ -225,7 +225,6 @@ class MiniAppViewHandlerTests: XCTestCase {
         wait(for: [base64Expectation], timeout: 3.0)
         XCTAssertEqual(base64Policy, .cancel)
 
-
         viewHandler.onExternalWebviewClose = { _ in }
         viewHandler.onExternalWebviewResponse = { _ in }
         let httpsExpectation = XCTestExpectation(description: #function + "_https")
@@ -241,7 +240,6 @@ class MiniAppViewHandlerTests: XCTestCase {
 
     // MARK: - WKUIDelegate
     func test_miniappviewhandler_window_alerts() {
-
 
         let messageDelegate = MockMessageInterface()
 
