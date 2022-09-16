@@ -3,7 +3,7 @@ import Nimble
 @testable import MiniApp
 import WebKit
 
-// swiftlint:disable function_body_length
+// swiftlint:disable function_body_length file_length
 class RealMiniAppViewTests: QuickSpec {
     override func spec() {
 
