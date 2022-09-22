@@ -36,6 +36,6 @@ struct RemoteImageView: View {
 
 struct RemoteImageView_Previews: PreviewProvider {
     static var previews: some View {
-        RemoteImageView(urlString: "https://via.placeholder.com/300.png")
+        RemoteImageView(urlString: "https://developer.apple.com/swift/images/swift-logo.svg")
     }
 }
