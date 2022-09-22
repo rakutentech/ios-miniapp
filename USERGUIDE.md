@@ -7,7 +7,7 @@ Mini App SDK also facilitates communication between a Mini App and the host app 
 
 - Load MiniApp list
 - Load MiniApp metadata
-- Create a MiniApp view
+- Create a MiniAppView
 - Facilitate communication between host app and Mini App
 
 And much more features which you can find them in [Usage](#usage).
@@ -83,7 +83,7 @@ To integrate MiniApp SDK into your Xcode project using Swift Package Manager, ad
 
 ```ruby
 dependencies: [
-    .package(url: "https://github.com/rakutentech/ios-miniapp.git", .upToNextMajor(from: "4.1.0"))
+    .package(url: "https://github.com/rakutentech/ios-miniapp.git", .upToNextMajor(from: "5.0.0"))
 ]
 ``` 
 
@@ -171,32 +171,35 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ### Create a MiniApp for the given `MiniAppId` :
 ---
-**API Docs:** `MiniApp.create(appId:completionHandler:messageInterface:)`, `MiniAppDisplayDelegate`
+**API Docs:**
 
-`MiniApp.create` is used to create a `View` for displaying a specific Mini App. You must provide the Mini App ID which you wish to create (you can get the Mini App ID by [Loading the Mini App List](#load-miniapp-list) first). Calling `MiniApp.create` will do the following:
+`MiniAppView` is used to create a `View` for displaying a specific Mini App. You must provide the Mini App ID which you wish to create (you can get the Mini App ID by [Loading the Mini App List](#load-miniapp-list) first). Calling `MiniAppView`'s `load` method will do the following:
 
 - Checks with the platform what is the latest and published version of the Mini App.
 - Check if the latest version of the Mini App has been already downloaded 
     - If yes, return the already downloaded Mini App view.
-    - If not, download the latest version and then return the view
+    - If not, download the latest version and then display the view
 - If the device is disconnected from the internet and if the device already has a version of the Mini App downloaded, then the already downloaded version will be returned immediately.
-
-After calling `MiniApp.create`, you will obtain an instance of `MiniAppDisplayDelegate` which is the delegate of the Display module. You can call `MiniAppDisplayDelegate.getMiniAppView` to obtain a `View` for displaying the Mini App.
 
 The following is a simplified example:
 
 ```swift
-MiniApp.shared().create(appId: String, completionHandler: { (result) in
-	switch result {
-            case .success(let miniAppDisplay):
-                let view = miniAppDisplay.getMiniAppView()
-                view.frame = self.view.bounds
-                self.view.addSubview(view)
-            case .failure(let error):
-                print("Error: ", error.localizedDescription)
-            }
-}, messageInterface: self)
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), messageInterface: self),
+    appId: "your-miniapp-id"
+)
+let miniAppView = MiniAppView(params: params)
+self.view.addSubview(miniAppView)
+miniAppView.frame = self.view.bounds
 
+// load the miniapp
+miniAppView.load { success in
+  if success {
+    // miniAppView is loaded
+  } else {
+    print("error: miniapp failed to load")
+  }
+}
 ```
 
 <a id="mini-app-features"></a>
@@ -332,15 +335,14 @@ When you chose to implement Google Ads support for your Mini Apps (see [configur
 Be careful when declaring your variable, as Mini App SDK does not keep a strong reference to it, it is preferable to declare it as a global variable or in most cases it will become nil once your method called.
 
 ```swift
-let adsDelegate = AdMobDisplayer() // This is just declared here as a convenience for the example.
+let adsDisplayer = AdMobDisplayer() // This is just declared here as a convenience for the example.
 
-MiniApp.shared(with: Config.current(), navigationSettings: Config.getNavConfig(delegate: self))
-        .create(appId: appInfo.id, 
-                version: appInfo.version.versionId,
-                queryParams: getQueryParam(),
-                completionHandler: { (result) in }, // retrieve your Mini App view in the result success 
-                messageInterface: someMessageInterfaceDelegate, 
-                adsDelegate: adsDelegate) // notice the new parameter for ads delegation
+// notice the new parameter for ads delegation
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), adsDisplayer: adsDisplayer, messageInterface: self),
+    appId: "your-miniapp-id"
+)
+let miniAppView = MiniAppView(params: params)
 ```
 
 ###### Custom ads displayer
@@ -351,11 +353,11 @@ For the same reasons mentioned in `AdMobDisplayer` section above, prefer declari
 
 ```swift
 class ViewController: UIViewController {
-    let adsDelegate: MiniAppAdDisplayer 
+    let adsDisplayer: MiniAppAdDisplayer 
     
     override func viewDidLoad() {
       super.viewDidLoad()
-      adsDelegate = MiniAppAdDisplayer(with: self) // you must provide your ads displayer a MiniAppAdDisplayDelegate
+      adsDisplayer = MiniAppAdDisplayer(with: self) // you must provide your ads displayer a MiniAppAdDisplayDelegate
     }
 
 }
@@ -397,13 +399,10 @@ extension ViewController: MiniAppAdDisplayDelegate {
 Once the delegate implemented, don't forget to provide it when you call a Mini App creation with the parameter `adsDelegate`:
 
 ```swift
-MiniApp.shared(with: Config.current())
-            .create(appId: appInfo.id,
-                    version: appInfo.version.versionId,
-                    queryParams: getQueryParam(),
-                    completionHandler: { (result) in
-            // Some code to manage Mini App view creation callbacks
-        }, messageInterface: self, adsDelegate: self)
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), adsDisplayer: adsDisplayer, messageInterface: self),
+    //...
+)
 ```
 <a id="retrieve-user-profile-details"></a>
 
@@ -957,16 +956,17 @@ While creating a Mini App, you can pass the optional query parameter as well. Th
 For eg.,
 
 ```swift
-MiniApp.shared().create(appId: String, queryParams: "param1=value1&param2=value2", completionHandler: { (result) in
-	switch result {
-            case .success(let miniAppDisplay):
-                let view = miniAppDisplay.getMiniAppView()
-                view.frame = self.view.bounds
-                self.view.addSubview(view)
-            case .failure(let error):
-                print("Error: ", error.localizedDescription)
-            }
-}, messageInterface: self)
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), messageInterface: self),
+    appId: "your-miniapp-id",
+    queryParams: "param1=value1&param2=value2"
+)
+let miniAppView = MiniAppView(params: params)
+self.view.addSubview(miniAppView)
+miniAppView.frame = self.view.bounds
+miniAppView.load { success in 
+    // ...
+}
 ```
 
 And the Mini App will be loaded like the following scheme,
@@ -1006,16 +1006,10 @@ Mini App SDK allows MiniApps to react to several events triggered by host app. T
 Load Mini-app from cache directly using the following approach,
 
 ```swift
-MiniApp.shared().create(appId: String, completionHandler: { (result) in
-	switch result {
-            case .success(let miniAppDisplay):
-                let view = miniAppDisplay.getMiniAppView()
-                view.frame = self.view.bounds
-                self.view.addSubview(view)
-            case .failure(let error):
-                print("Error: ", error.localizedDescription)
-            }
-}, messageInterface: self, fromCache: true)
+let miniAppView = MiniAppView(params: params)
+miniAppView.load(fromCache: true) { success in 
+    // ...
+}
 
 ```
 

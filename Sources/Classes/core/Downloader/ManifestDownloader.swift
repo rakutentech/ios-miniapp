@@ -1,6 +1,6 @@
 internal class ManifestDownloader {
 
-    func fetchManifest(apiClient: MiniAppClient,
+    func fetchManifest(apiClient: MiniAppClientProtocol,
                        appId: String,
                        versionId: String,
                        completionHandler: @escaping (Result<ManifestResponse, MASDKError>) -> Void) {
