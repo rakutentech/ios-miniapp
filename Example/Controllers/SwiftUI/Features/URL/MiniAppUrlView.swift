@@ -3,8 +3,6 @@ import MiniApp
 
 struct MiniAppUrlView: View {
 
-    let delegator = MiniAppUrlViewDelegator()
-
     @State var url: String = ""
     @State var currentUrl: String = ""
     @State var isMiniAppLoading: Bool = false
@@ -48,7 +46,7 @@ struct MiniAppUrlView: View {
                     .init(
                         config: MiniAppConfig(
                             config: Config.current(),
-                            messageDelegate: delegator
+                            messageDelegate: MiniAppViewMessageDelegator()
                         ),
                         type: .miniapp,
                         url: URL(string: url)!
@@ -63,34 +61,5 @@ struct MiniAppUrlView: View {
 struct MiniAppUrlView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppUrlView()
-    }
-}
-
-class MiniAppUrlViewDelegator: MiniAppMessageDelegate {
-
-    var miniAppId: String
-
-    init(miniAppId: String = "") {
-        self.miniAppId = miniAppId
-    }
-
-    func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        completionHandler(.success("TestNew"))
-    }
-
-    func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
-        //
-    }
-
-    func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        //
-    }
-
-    func sendMessageToContactId(_ contactId: String, message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
-        //
-    }
-
-    func sendMessageToMultipleContacts(_ message: MessageToContact, completionHandler: @escaping (Result<[String]?, MASDKError>) -> Void) {
-        //
     }
 }

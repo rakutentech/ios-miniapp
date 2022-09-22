@@ -70,9 +70,9 @@ struct MiniAppSettingsProfileView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     if viewModel.setUserDetails(name: name, imageUrl: image?.dataURI()) {
-                        //
+                        alertMessage = MiniAppAlertMessage(title: "Success", message: "Profile saved successfully")
                     } else {
-                        //
+                        alertMessage = MiniAppAlertMessage(title: "Error", message: "Profile failed to save")
                     }
                 } label: {
                     Text("Save")

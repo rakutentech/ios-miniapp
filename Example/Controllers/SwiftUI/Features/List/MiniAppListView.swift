@@ -86,9 +86,6 @@ struct MiniAppListView: View {
                 }
             }
         }
-        .onAppear {
-            viewModel.checkInitialLoad()
-        }
     }
 
     var config: MiniAppSdkConfig {

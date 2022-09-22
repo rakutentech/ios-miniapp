@@ -23,13 +23,6 @@ class MiniAppListViewModel: ObservableObject {
         }
     }
 
-    func checkInitialLoad() {
-        // checkSetup()
-        // if store.miniAppSetupCompleted && indexedMiniAppInfoList.isEmpty {
-        //     load()
-        // }
-    }
-
     func setupObservers() {
         switch type {
         case .listI:

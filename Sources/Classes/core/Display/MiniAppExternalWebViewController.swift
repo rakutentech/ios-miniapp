@@ -127,19 +127,3 @@ internal class MiniAppCloseNavigationController: UINavigationController {
         self.dismiss(animated: true)
     }
 }
-
-public struct MiniAppExternalWebView: UIViewControllerRepresentable {
-
-    public init() {
-        // init
-    }
-
-    public func makeUIViewController(context: Context) -> MiniAppExternalWebViewController {
-        return MiniAppExternalWebViewController()
-    }
-
-    public func updateUIViewController(_ uiViewController: MiniAppExternalWebViewController, context: Context) {
-        // update
-    }
-
-}
