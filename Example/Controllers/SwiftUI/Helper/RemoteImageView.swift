@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 class ImageLoaderService: ObservableObject {
     @Published var image: UIImage = UIImage()
 
@@ -18,7 +19,7 @@ class ImageLoaderService: ObservableObject {
 
 struct RemoteImageView: View {
     var urlString: String
-    @ObservedObject var imageLoader = ImageLoaderService()
+    @StateObject var imageLoader = ImageLoaderService()
     @State var image: UIImage = UIImage()
 
     var body: some View {
@@ -36,6 +37,6 @@ struct RemoteImageView: View {
 
 struct RemoteImageView_Previews: PreviewProvider {
     static var previews: some View {
-        RemoteImageView(urlString: "https://developer.apple.com/swift/images/swift-logo.svg")
+        RemoteImageView(urlString: "https://avatars.githubusercontent.com/t/6292214")
     }
 }
