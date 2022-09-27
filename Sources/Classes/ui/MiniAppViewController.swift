@@ -127,13 +127,27 @@ public class MiniAppViewController: UIViewController {
     /// Overridden viewDidAppear to send analytics
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp view did appear"))
+        NotificationCenter.default.sendCustomEvent(
+            MiniAppEvent.Event(
+                miniAppId: appId,
+                miniAppVersion: version ?? "",
+                type: .resume,
+                comment: "MiniApp view did appear"
+            )
+        )
     }
 
     /// Overridden viewWillDisappear to send analytics
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp view will disappear"))
+        NotificationCenter.default.sendCustomEvent(
+            MiniAppEvent.Event(
+                miniAppId: appId,
+                miniAppVersion: version ?? "",
+                type: .pause,
+                comment: "MiniApp view will disappear"
+            )
+        )
     }
 
     func setupUI() {

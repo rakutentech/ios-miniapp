@@ -1,6 +1,7 @@
 import UIKit
 import MiniApp
 import CoreLocation
+import SwiftUI
 
 class ViewController: RATViewControllerWithTableView {
 
@@ -46,6 +47,20 @@ class ViewController: RATViewControllerWithTableView {
         self.tableView.refreshControl = refreshControl
         locationManager.delegate = self
         self.pageName = MASDKLocale.localize("demo.app.rat.page.name.home")
+        var widgetListImage: UIImage?
+        if #available(iOS 15, *) {
+            widgetListImage = UIImage(systemName: "circle.hexagongrid")
+        } else {
+            widgetListImage = UIImage(systemName: "circle.circle")
+        }
+        let widgetListBarButton = UIBarButtonItem(title: nil, image: widgetListImage, primaryAction: UIAction(handler: { [weak self] _ in
+            guard let self = self else { return }
+            let dashboardView = MiniAppDashboardView()
+            let dashboardVc = UIHostingController(rootView: dashboardView)
+            let nvc = UINavigationController(rootViewController: dashboardVc)
+            self.present(nvc, animated: true)
+        }), menu: nil)
+        self.navigationItem.setLeftBarButton(widgetListBarButton, animated: true)
     }
 
     override func viewDidAppear(_ animated: Bool) {

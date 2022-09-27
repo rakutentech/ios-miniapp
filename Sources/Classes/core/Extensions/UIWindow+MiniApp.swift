@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIWindow {
+public extension UIWindow {
     func topController() -> UIViewController? {
         if var topController = rootViewController {
             while let presentedViewController = topController.presentedViewController {

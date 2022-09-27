@@ -72,13 +72,13 @@ public extension MiniAppUserInfoDelegate {
 }
 
 /// Contact Object of a User
-public class MAContact: Codable, Equatable, Hashable {
+public class MAContact: Codable, Equatable, Hashable, Identifiable {
     /// Contact ID
-    public let id: String
+    public var id: String
     /// Contact Name
-    public let name: String?
+    public var name: String?
     /// Contact Email address
-    public let email: String?
+    public var email: String?
 
     public init(id: String, name: String? = nil, email: String? = nil) {
         self.id = id

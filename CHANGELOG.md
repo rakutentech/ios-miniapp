@@ -98,6 +98,9 @@ struct Content: View {
 
 </details>
 
+**Sample app**
+- **Feature:** New demo app interface with List I and List II (multiple miniapp support demo) and reworked with SwiftUI
+
 ### 4.3.0 (2022-08-08)
 **SDK**
 - **Fix:** Secure storage feature bug fixes
