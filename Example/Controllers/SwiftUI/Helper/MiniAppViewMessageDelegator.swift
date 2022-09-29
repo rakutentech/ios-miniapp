@@ -3,6 +3,8 @@ import MiniApp
 import CoreLocation
 import UIKit
 
+typealias PermissionCompletionHandler = (((Result<MASDKPermissionResponse, MASDKPermissionError>)) -> Void)
+
 class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
 
     let locationManager = LocationManager()

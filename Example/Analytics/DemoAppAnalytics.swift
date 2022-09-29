@@ -74,16 +74,17 @@ public class DemoAppAnalytics {
     }
 
     internal class func getComponentName(cell: UITableViewCell) -> String? {
-        guard let miniAppCell = cell as? MiniAppCell else {
-            guard let customPermissionCell = cell as? CustomPermissionCell else {
-                guard let customPermissionCell = cell as? FirstLaunchCustomPermissionCell else {
-                    return cell.textLabel?.text
-                }
-                return customPermissionCell.permissionTitle.text
-            }
-            return customPermissionCell.titleLabel?.text
-        }
-        return miniAppCell.titleLabel?.text
+//        guard let miniAppCell = cell as? MiniAppCell else {
+//            guard let customPermissionCell = cell as? CustomPermissionCell else {
+//                guard let customPermissionCell = cell as? FirstLaunchCustomPermissionCell else {
+//                    return cell.textLabel?.text
+//                }
+//                return customPermissionCell.permissionTitle.text
+//            }
+//            return customPermissionCell.titleLabel?.text
+//        }
+//        return miniAppCell.titleLabel?.text
+        return nil
     }
 
     internal class func getTargetElementString(component: String, element: String, action: DemoAppRATActionType) -> String {

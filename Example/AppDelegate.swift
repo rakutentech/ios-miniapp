@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         MiniApp.configure()
         AppCenter.start(withAppSecret: Bundle.main.value(for: "AppCenterSecret"), services: [Crashes.self])
+        self.window = UIWindow()
         self.window?.tintColor = UIColor.accent
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         AnalyticsManager.shared().set(loggingLevel: .debug)
@@ -61,11 +62,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func deepLinkToMiniApp(using token: String) {
         let rootController = window?.rootViewController as? UINavigationController
         guard let controllersStack = rootController?.viewControllers else { return }
-        if let homeViewController = controllersStack.first(where: { $0 is ViewController }) as? ViewController {
-            homeViewController.getMiniAppPreviewInfo(previewToken: token, config: Config.current(pinningEnabled: true))
-        } else if let firstLaunchController = controllersStack.first(where: { $0 is FirstLaunchViewController }) as? FirstLaunchViewController {
-            firstLaunchController.previewUsingQRToken = token
-        }
+//        if let homeViewController = controllersStack.first(where: { $0 is ViewController }) as? ViewController {
+//            homeViewController.getMiniAppPreviewInfo(previewToken: token, config: Config.current(pinningEnabled: true))
+//        } else if let firstLaunchController = controllersStack.first(where: { $0 is FirstLaunchViewController }) as? FirstLaunchViewController {
+//            firstLaunchController.previewUsingQRToken = token
+//        }
     }
 }
 
