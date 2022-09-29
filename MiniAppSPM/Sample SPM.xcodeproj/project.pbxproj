@@ -152,6 +152,7 @@
 		F75D4A1128CAF7750053F74E /* Binding+Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A1028CAF7750053F74E /* Binding+Optional.swift */; };
 		F75D4A1328CEDE5C0053F74E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A1228CEDE5C0053F74E /* LocationManager.swift */; };
 		F75D4A1528CEE2F90053F74E /* KeyboardNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A1428CEE2F90053F74E /* KeyboardNotificationHelper.swift */; };
+		F77F61AF28E54D1E00F55818 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F61AE28E54D1E00F55818 /* CloseButton.swift */; };
 		F791AF8B28B363C0008C01BA /* MiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F791AF8A28B363C0008C01BA /* MiniAppViewTests.swift */; };
 		F791AF9328B49499008C01BA /* MiniAppViewHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F791AF9228B49499008C01BA /* MiniAppViewHandlerTests.swift */; };
 		F796AC8C2860204900A75DA8 /* RAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F796AC8B2860204900A75DA8 /* RAnalytics */; };
@@ -320,6 +321,7 @@
 		F75D4A1028CAF7750053F74E /* Binding+Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Optional.swift"; sourceTree = "<group>"; };
 		F75D4A1228CEDE5C0053F74E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		F75D4A1428CEE2F90053F74E /* KeyboardNotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationHelper.swift; sourceTree = "<group>"; };
+		F77F61AE28E54D1E00F55818 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		F791AF8A28B363C0008C01BA /* MiniAppViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewTests.swift; sourceTree = "<group>"; };
 		F791AF9228B49499008C01BA /* MiniAppViewHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewHandlerTests.swift; sourceTree = "<group>"; };
 		F7B7B00B28B71FC8009C5EA6 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
@@ -753,6 +755,7 @@
 				F75D4A0828C9D3B00053F74E /* ImagePicker.swift */,
 				F75D4A1228CEDE5C0053F74E /* LocationManager.swift */,
 				F75D4A1428CEE2F90053F74E /* KeyboardNotificationHelper.swift */,
+				F77F61AE28E54D1E00F55818 /* CloseButton.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -998,6 +1001,7 @@
 				310575CA27EE213400D93B06 /* UserProfileModel.swift in Sources */,
 				310575DC27EE213400D93B06 /* ViewController.swift in Sources */,
 				F75D4A1128CAF7750053F74E /* Binding+Optional.swift in Sources */,
+				F77F61AF28E54D1E00F55818 /* CloseButton.swift in Sources */,
 				F75D49FD28C6F38B0053F74E /* MiniAppSettingsAccessTokenView.swift in Sources */,
 				F75D49DF28C5B83A0053F74E /* MiniAppSettingsView.swift in Sources */,
 				F75D4A0128C6F3BF0053F74E /* MiniAppSettingsSignatureView.swift in Sources */,
