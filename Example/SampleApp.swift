@@ -38,12 +38,15 @@ struct SampleApp: App {
                 } content: { deeplink in
                     switch deeplink {
                     case .miniapp(let info):
-                        MiniAppSingleView(
-                            listType: .listI,
-                            miniAppId: info.id,
-                            miniAppVersion: info.version.versionId,
-                            miniAppType: .miniapp
-                        )
+                        NavigationView {
+                            MiniAppSingleView(
+                                listType: .listI,
+                                miniAppId: info.id,
+                                miniAppVersion: info.version.versionId,
+                                miniAppType: .miniapp
+                            )
+                        }
+                        .accentColor(.red)
                     }
                 }
         }
