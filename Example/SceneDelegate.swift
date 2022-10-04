@@ -2,24 +2,8 @@ import UIKit
 import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
-    var window: UIWindow?
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        if let windowScene = scene as? UIWindowScene {
-            let dashboardView = MiniAppDashboardView()
-            let dashboardVc = UIHostingController(rootView: dashboardView)
-
-            self.window = UIWindow(windowScene: windowScene)
-            self.window?.rootViewController = dashboardVc
-            self.window?.makeKeyAndVisible()
-        }
-    }
-
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        let deeplinkManager = DeeplinkManager()
-        let deeplink = deeplinkManager.manage(url: URLContexts.map({ $0.url }).first!)
-        print("deeplink: \(deeplink)")
+        // scene implementation
     }
 }
 
@@ -27,27 +11,39 @@ class DeeplinkManager {
 
     class DeepLinkConstants {
         static let scheme = "miniappdemo"
+        static let host = "miniapp"
     }
 
     enum Path: String {
         case qrcode = "preview"
     }
 
-    enum Target: Equatable {
-        case notSupported
+    enum Target: Equatable, Identifiable {
+        case unknown
         case qrcode(code: String)
+
+        var id: String {
+            switch self {
+            case .unknown:
+                return "unknown"
+            case .qrcode(let code):
+                return code
+            }
+        }
     }
 
     func manage(url: URL) -> Target {
         guard url.scheme == DeepLinkConstants.scheme,
+              url.host == DeepLinkConstants.host,
               let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-              let host = components.host,
-              let path = Path(rawValue: host)
-        else { return .notSupported }
+              !url.pathComponents.isEmpty,
+              let path = Path(rawValue: url.pathComponents[1])
+        else { return .unknown }
 
         switch path {
         case .qrcode:
-            return .qrcode(code: "abcd")
+            guard url.pathComponents.count > 1 else { return .unknown }
+            return .qrcode(code: url.pathComponents[2])
         }
     }
 }

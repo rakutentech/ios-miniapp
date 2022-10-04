@@ -44,6 +44,8 @@
 		3105761627EE387800D93B06 /* Config-test-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3105761127EE387800D93B06 /* Config-test-debug.xcconfig */; };
 		31A7169B27EF0800003770E9 /* MiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169A27EF0800003770E9 /* MiniApp */; };
 		31A7169D27EF0800003770E9 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169C27EF0800003770E9 /* AppCenterCrashes */; };
+		A1B4E6E428E6C7E7009ED66F /* SampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B4E6E328E6C7E7009ED66F /* SampleApp.swift */; };
+		A1B4E6E628E6C80F009ED66F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B4E6E528E6C80F009ED66F /* ContentView.swift */; };
 		F7370A8A287BD21C00090032 /* MiniAppSecureStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */; };
 		F73D0E9328D41205002437DC /* MiniAppFeatureListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73D0E9228D41205002437DC /* MiniAppFeatureListCell.swift */; };
 		F74AA0E0283C651300087718 /* RealMiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74AA0A9283C651300087718 /* RealMiniAppViewTests.swift */; };
@@ -187,6 +189,8 @@
 		3105761027EE387800D93B06 /* Config-common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
 		3105761127EE387800D93B06 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		31A7169827EF0428003770E9 /* MiniApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MiniApp; path = ..; sourceTree = "<group>"; };
+		A1B4E6E328E6C7E7009ED66F /* SampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleApp.swift; sourceTree = "<group>"; };
+		A1B4E6E528E6C80F009ED66F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageTests.swift; sourceTree = "<group>"; };
 		F73D0E9228D41205002437DC /* MiniAppFeatureListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureListCell.swift; sourceTree = "<group>"; };
 		F74AA09D283C64D600087718 /* MiniApp_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -327,6 +331,7 @@
 		3105756427EE213400D93B06 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				A1B4E6E328E6C7E7009ED66F /* SampleApp.swift */,
 				3105758127EE213400D93B06 /* AppDelegate.swift */,
 				F77F61B328E58E0600F55818 /* SceneDelegate.swift */,
 				3105756C27EE213400D93B06 /* Utils */,
@@ -559,6 +564,7 @@
 		F75D49BB28C5B83A0053F74E /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				A1B4E6E528E6C80F009ED66F /* ContentView.swift */,
 				F75D49BC28C5B83A0053F74E /* MiniAppDashboardView.swift */,
 				F75D49BD28C5B83A0053F74E /* Features */,
 				F75D49D728C5B83A0053F74E /* Helper */,
@@ -854,6 +860,7 @@
 				F75D49FF28C6F3B70053F74E /* MiniAppSettingsPointsView.swift in Sources */,
 				F7C0BCF228D072A400C56C2E /* MiniAppSharePreviewView.swift in Sources */,
 				310575C727EE213400D93B06 /* Bundle+MiniApp.swift in Sources */,
+				A1B4E6E428E6C7E7009ED66F /* SampleApp.swift in Sources */,
 				F75D4A1528CEE2F90053F74E /* KeyboardNotificationHelper.swift in Sources */,
 				F75D49F928C6F3600053F74E /* MiniAppSettingsProfileView.swift in Sources */,
 				310575BB27EE213400D93B06 /* UITableView+EmptyView.swift in Sources */,
@@ -867,6 +874,7 @@
 				F77F61B428E58E0600F55818 /* SceneDelegate.swift in Sources */,
 				F75D49F728C6F3430053F74E /* MiniAppSettingsQAView.swift in Sources */,
 				F75D49E728C5B83A0053F74E /* MiniAppWithTermsView.swift in Sources */,
+				A1B4E6E628E6C80F009ED66F /* ContentView.swift in Sources */,
 				F73D0E9328D41205002437DC /* MiniAppFeatureListCell.swift in Sources */,
 				F75D49F228C5B83A0053F74E /* MiniAppStore.swift in Sources */,
 				F75D4A0728C9CADE0053F74E /* MiniAppSettingsView+Config.swift in Sources */,

@@ -7,7 +7,7 @@ import AppCenterCrashes
 import RAnalytics
 import SwiftUI
 
-@UIApplicationMain
+//@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -15,23 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         MiniApp.configure()
         AppCenter.start(withAppSecret: Bundle.main.value(for: "AppCenterSecret"), services: [Crashes.self])
-        self.window = UIWindow()
-        self.window?.tintColor = UIColor.accent
+
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         AnalyticsManager.shared().set(loggingLevel: .debug)
-        if let url = launchOptions?[.url] as? URL {
-            guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
-                return true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
-                self.deepLinkToMiniApp(using: components.path.replacingOccurrences(of: "/preview/", with: ""))
-            })
-        }
-
-        let dashboardView = MiniAppDashboardView()
-        let dashboardVc = UIHostingController(rootView: dashboardView)
-        window?.rootViewController = dashboardVc
-        window?.makeKeyAndVisible()
 
         return true
     }
