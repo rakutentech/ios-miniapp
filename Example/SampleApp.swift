@@ -1,13 +1,15 @@
 import SwiftUI
+import MiniApp
 
 @main
 struct SampleApp: App {
 
     @UIApplicationDelegateAdaptor var delegate: AppDelegate
 
+    let store = MiniAppStore.shared
     let deepLinkManager = DeeplinkManager()
     
-    @State var deepLink: DeeplinkManager.Target?
+    @State var deepLink: SampleAppDeeplink?
 
     var body: some Scene {
         WindowGroup {
@@ -18,20 +20,43 @@ struct SampleApp: App {
                     switch receivedDeepLink {
                     case .unknown:
                         return
-                    default:
-                        deepLink = receivedDeepLink
+                    case let .qrcode(code):
+                        Task {
+                            do {
+                                if let info = try await store.getMiniAppPreviewInfo(previewToken: code) {
+                                    print(info)
+                                    deepLink = .miniapp(info: info)
+                                }
+                            } catch {
+                                print(error)
+                            }
+                        }
                     }
                 }
                 .sheet(item: $deepLink) {
                     deepLink = nil
                 } content: { deeplink in
                     switch deeplink {
-                    case .unknown:
-                        Text("Invalid deeplink")
-                    case .qrcode(let code):
-                        Text(code)
+                    case .miniapp(let info):
+                        MiniAppSingleView(
+                            listType: .listI,
+                            miniAppId: info.id,
+                            miniAppVersion: info.version.versionId,
+                            miniAppType: .miniapp
+                        )
                     }
                 }
+        }
+    }
+}
+
+enum SampleAppDeeplink: Identifiable {
+    case miniapp(info: MiniAppInfo)
+    
+    var id: String {
+        switch self {
+        case .miniapp(let info):
+            return info.id + "_" + info.version.versionId
         }
     }
 }
