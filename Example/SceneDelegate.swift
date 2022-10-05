@@ -22,7 +22,7 @@ class DeeplinkManager {
         case unknown
         case qrcode(code: String)
 
-        var id: String {
+        var id: String {
             switch self {
             case .unknown:
                 return "unknown"
@@ -35,7 +35,6 @@ class DeeplinkManager {
     func manage(url: URL) -> Target {
         guard url.scheme == DeepLinkConstants.scheme,
               url.host == DeepLinkConstants.host,
-              let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
               !url.pathComponents.isEmpty,
               let path = Path(rawValue: url.pathComponents[1])
         else { return .unknown }
