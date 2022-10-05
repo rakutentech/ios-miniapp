@@ -133,7 +133,8 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
 
     // MARK: - Size
     func size() -> MiniAppSecureStorageSize {
-        return MiniAppSecureStorageSize(used: database.storageFileSize, max: fileSizeLimit)
+        let storageFileSize = database.storageFileSize >= fileSizeLimit ? fileSizeLimit : database.storageFileSize
+        return MiniAppSecureStorageSize(used: storageFileSize, max: fileSizeLimit)
     }
 }
 
