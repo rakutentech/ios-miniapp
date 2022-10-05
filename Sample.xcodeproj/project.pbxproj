@@ -80,6 +80,10 @@
 		38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC4652244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift */; };
 		750191FB804B88456CA24CA7 /* MiniAppAdDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */; };
 		A13C249826A15048003ADC6D /* UserPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13C249726A15048003ADC6D /* UserPointsModel.swift */; };
+		A15CC6B828ED2CB4009B328D /* SampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6B728ED2CB4009B328D /* SampleApp.swift */; };
+		A15CC6BA28ED2CC5009B328D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */; };
+		A15CC6BC28ED2CD4009B328D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6BB28ED2CD4009B328D /* ContentView.swift */; };
+		A15CC6C028ED307C009B328D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A15CC6BD28ED3042009B328D /* LaunchScreen.xib */; };
 		D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07452302567B72A00B6E842 /* MASDKErrorTests.swift */; };
 		D0CACE26281A68D700E39920 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CACE25281A68D700E39920 /* Base64UriHelper.swift */; };
 		F70DD8E728D417C4003EF1F1 /* MiniAppDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70DD8B928D417C3003EF1F1 /* MiniAppDashboardView.swift */; };
@@ -225,6 +229,10 @@
 		7501924AE42A5A88FF5CFB12 /* Config-test-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-release.xcconfig"; sourceTree = "<group>"; };
 		75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppAdDisplayerTests.swift; sourceTree = "<group>"; };
 		A13C249726A15048003ADC6D /* UserPointsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointsModel.swift; sourceTree = "<group>"; };
+		A15CC6B728ED2CB4009B328D /* SampleApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleApp.swift; sourceTree = "<group>"; };
+		A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A15CC6BB28ED2CD4009B328D /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A15CC6BE28ED3042009B328D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D07452302567B72A00B6E842 /* MASDKErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKErrorTests.swift; sourceTree = "<group>"; };
 		D0CACE25281A68D700E39920 /* Base64UriHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
@@ -514,7 +522,9 @@
 		607FACD21AFB9204008FA782 /* Example for MiniApp */ = {
 			isa = PBXGroup;
 			children = (
+				A15CC6B728ED2CB4009B328D /* SampleApp.swift */,
 				3878D4D123B44F85001E27F8 /* AppDelegate.swift */,
+				A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */,
 				2AA894B826D6893B0078B2F4 /* Analytics */,
 				38920ACA251D9C57004C5DDD /* Utils */,
 				38920AD4251D9C57004C5DDD /* Models */,
@@ -530,6 +540,7 @@
 			isa = PBXGroup;
 			children = (
 				3878D4D723B44F8E001E27F8 /* Info.plist */,
+				A15CC6BD28ED3042009B328D /* LaunchScreen.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -564,6 +575,7 @@
 		F70DD8B828D417C3003EF1F1 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				A15CC6BB28ED2CD4009B328D /* ContentView.swift */,
 				F70DD8B928D417C3003EF1F1 /* MiniAppDashboardView.swift */,
 				F70DD8BA28D417C3003EF1F1 /* Features */,
 				F70DD8DB28D417C3003EF1F1 /* Helper */,
@@ -777,6 +789,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A15CC6C028ED307C009B328D /* LaunchScreen.xib in Resources */,
 				38920AFE251D9C57004C5DDD /* Images.xcassets in Resources */,
 				38920AFD251D9C57004C5DDD /* Localizable.strings in Resources */,
 				31D1BBC3262041920040235C /* Colors.xcassets in Resources */,
@@ -840,8 +853,10 @@
 				F70DD90228D417C4003EF1F1 /* KeyboardNotificationHelper.swift in Sources */,
 				F70DD8FF28D417C4003EF1F1 /* MiniAppListViewModel.swift in Sources */,
 				3180E6BF2689A20900B6B590 /* Encodable+MiniApp.swift in Sources */,
+				A15CC6B828ED2CB4009B328D /* SampleApp.swift in Sources */,
 				F70DD8F328D417C4003EF1F1 /* MiniAppFeatureListView.swift in Sources */,
 				38920AF9251D9C57004C5DDD /* UIViewController+MiniApp.swift in Sources */,
+				A15CC6BC28ED2CD4009B328D /* ContentView.swift in Sources */,
 				F70DD8F928D417C4003EF1F1 /* MiniAppFeatureListCell.swift in Sources */,
 				F70DD90528D417C4003EF1F1 /* Binding+Optional.swift in Sources */,
 				F70DD8EC28D417C4003EF1F1 /* MiniAppSettingsQAView.swift in Sources */,
@@ -852,6 +867,7 @@
 				F70DD90728D417C4003EF1F1 /* MiniAppViewNavigationDelegator.swift in Sources */,
 				2AE218F0269D46DA00F9D1E7 /* UITextView+MiniApp.swift in Sources */,
 				F7C8804626D8974800B828C6 /* UITableView+EmptyView.swift in Sources */,
+				A15CC6BA28ED2CC5009B328D /* SceneDelegate.swift in Sources */,
 				38920AF6251D9C57004C5DDD /* Array+MiniApp.swift in Sources */,
 				F70DD8F028D417C4003EF1F1 /* MiniAppSettingsSignatureView.swift in Sources */,
 				38920AF7251D9C57004C5DDD /* Config.swift in Sources */,
@@ -957,6 +973,14 @@
 				38920ADB251D9C57004C5DDD /* en */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		A15CC6BD28ED3042009B328D /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A15CC6BE28ED3042009B328D /* Base */,
+			);
+			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
