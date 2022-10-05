@@ -8,7 +8,7 @@ struct SampleApp: App {
 
     let store = MiniAppStore.shared
     let deepLinkManager = DeeplinkManager()
-    
+
     @State var deepLink: SampleAppDeeplink?
 
     var body: some Scene {
@@ -55,7 +55,7 @@ struct SampleApp: App {
 
 enum SampleAppDeeplink: Identifiable {
     case miniapp(info: MiniAppInfo)
-    
+
     var id: String {
         switch self {
         case .miniapp(let info):

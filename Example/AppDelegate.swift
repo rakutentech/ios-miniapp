@@ -7,7 +7,6 @@ import AppCenterCrashes
 import RAnalytics
 import SwiftUI
 
-//@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -43,16 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     override init() {
         super.init()
         UIControl.swizzleSendAction()
-    }
-
-    func deepLinkToMiniApp(using token: String) {
-        let rootController = window?.rootViewController as? UINavigationController
-        guard let controllersStack = rootController?.viewControllers else { return }
-//        if let homeViewController = controllersStack.first(where: { $0 is ViewController }) as? ViewController {
-//            homeViewController.getMiniAppPreviewInfo(previewToken: token, config: Config.current(pinningEnabled: true))
-//        } else if let firstLaunchController = controllersStack.first(where: { $0 is FirstLaunchViewController }) as? FirstLaunchViewController {
-//            firstLaunchController.previewUsingQRToken = token
-//        }
     }
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
