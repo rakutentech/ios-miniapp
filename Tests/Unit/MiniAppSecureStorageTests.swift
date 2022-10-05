@@ -241,7 +241,7 @@ class MiniAppSecureStorageTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 30.0)
 
         XCTAssertGreaterThan(storage.size().used, 125_000)
         XCTAssertEqual(Int((try? storage.get(key: "1")) ?? ""), 1)

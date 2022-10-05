@@ -2,6 +2,8 @@ import SwiftUI
 
 struct MiniAppSharePreviewView: View {
 
+    @Environment(\.presentationMode) var presentationMode
+
     @ObservedObject var viewModel: MiniAppWithTermsViewModel
 
     @State var text: String = ""
@@ -38,6 +40,13 @@ struct MiniAppSharePreviewView: View {
         }
         .navigationTitle("Share Preview")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(content: {
+            ToolbarItem(placement: .navigationBarLeading) {
+                CloseButton {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+        })
         .onAppear {
             viewModel.getInfo { result in
                 switch result {
