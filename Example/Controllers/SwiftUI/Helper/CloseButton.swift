@@ -1,10 +1,3 @@
-//
-//  CloseButton.swift
-//  Sample SPM
-//
-//  Created by Timotheus Laubengaier on 2022/09/29.
-//
-
 import SwiftUI
 
 struct CloseButton: View {
