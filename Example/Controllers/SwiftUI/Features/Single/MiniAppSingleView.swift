@@ -45,7 +45,7 @@ struct MiniAppSingleView: View {
         .toolbar(content: {
 
             ToolbarItem(placement: .navigationBarLeading) {
-                Button {
+                CloseButton {
                     if let closeInfo = handler.closeAlertInfo?(), closeInfo.shouldDisplay ?? true {
                         closeAlertMessage = MiniAppAlertMessage(
                             title: closeInfo.title ?? "",
@@ -54,16 +54,6 @@ struct MiniAppSingleView: View {
                     } else {
                         presentationMode.wrappedValue.dismiss()
                     }
-                } label: {
-                    ZStack {
-                        Circle()
-                            .fill(Color(.secondarySystemBackground))
-                            .frame(width: 30, height: 30, alignment: .center)
-                        Image(systemName: "xmark")
-                            .font(.system(size: 12, weight: .bold, design: .rounded))
-                            .foregroundColor(.secondary)
-                    }
-                    .contentShape(Circle())
                 }
                 .alert(item: $closeAlertMessage) { errorMessage in
                     Alert(
