@@ -1191,6 +1191,132 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
                 }
             }
+            context("when MiniAppScriptMessageHandler receives SecureStorage commands") {
+                it("will set some items") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id,
+                        miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "setSecureStorageItems",
+                        "id" : "5.114110153404574",
+                        "param": {
+                            "secureStorageItems": {
+                                "test1" : "value1",
+                                "test2" : "value2",
+                                "test3" : "value3"
+                            }
+                        }
+                    }
+                    """
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(equal("success"))
+                }
+                it("will get an empty result for a non existing key") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id,
+                        miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "getSecureStorageItem",
+                        "id" : "5.114110153404574",
+                        "param": {
+                            "secureStorageKey": "test1"
+                        }
+                    }
+                    """
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(equal(""))
+                }
+                it("will remove a couple of keys") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id,
+                        miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "removeSecureStorageItems",
+                        "id" : "5.114110153404574",
+                        "param": {
+                            "secureStorageKeyList": [
+                                "test1",
+                                "test2",
+                                "test3"
+                            ]
+                        }
+                    }
+                    """
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(equal("success"))
+                }
+                it("will clear storages") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id,
+                        miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "clearSecureStorage",
+                        "id" : "5.114110153404574",
+                        "param": {}
+                    }
+                    """
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(equal("success"))
+                }
+                it("will get secure storage file size") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id,
+                        miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "getSecureStorageSize",
+                        "id" : "5.114110153404574",
+                        "param": {}
+                    }
+                    """
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(equal("{\"used\":0,\"max\":2000000}"))
+                }
+            }
         }
     }
 }
