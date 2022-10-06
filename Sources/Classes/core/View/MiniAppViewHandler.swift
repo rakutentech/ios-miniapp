@@ -189,7 +189,7 @@ class MiniAppViewHandler: NSObject {
             return
         }
 
-        getMiniAppInfo(miniAppId: appId) { [weak self] result in
+        getMiniAppInfo(miniAppId: appId, miniAppVersion: version ?? "") { [weak self] result in
             guard let self = self else {
                 completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp download failed")))
                 return
