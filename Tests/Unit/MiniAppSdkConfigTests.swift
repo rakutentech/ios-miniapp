@@ -87,6 +87,28 @@ class MiniAppSdkConfigTests: QuickSpec {
                     expect(env.sslKeyHashBackup).to(equal(config.sslKeyHash?.backupPin))
                 }
             }
+            context("MiniAppSdkConfigSSLKeyHash") {
+                it("should validate matching results") {
+                    let pinConf = MiniAppConfigSSLKeyHash(pin: "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=", backup: "AABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=")
+                    let config = MiniAppSdkConfig()
+                    config.sslKeyHash = pinConf
+
+                    guard let sslKeyHash = config.sslKeyHash else {
+                        fail("SSLKeyHash does not exist")
+                        return
+                    }
+
+                    expect(sslKeyHash.matches("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=")).to(equal(.main))
+                    expect(sslKeyHash.matches("AABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=")).to(equal(.backup))
+                    expect(sslKeyHash.matches("CCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=")).to(beNil())
+                }
+            }
+            context("MiniAppSSLConfig") {
+                it("should be able to initialize ssl config") {
+                    let sslConfig = MiniAppSSLConfig(with: "abcd-1234", keyHashes: "abc")
+                    expect(sslConfig.dictionary().count).to(equal(2))
+                }
+            }
         }
     }
 }

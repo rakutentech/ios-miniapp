@@ -231,6 +231,59 @@ class MiniAppViewTests: XCTestCase {
         let view = MiniAppView(params: params)
         XCTAssertTrue(view.alertInfo == nil)
     }
+
+    func test_miniappviewable_load() {
+
+        let messageDelegate = MockMessageInterface()
+        let params = MiniAppViewParameters.url(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                url: URL(string: "http://localhost:1337")!
+            )
+        )
+        let view: MiniAppViewable = MiniAppView(params: params)
+
+        let expectation = XCTestExpectation(description: #function)
+        view.load { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case let .failure(error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
+
+    func test_miniappviewable_load_async() {
+        let messageDelegate = MockMessageInterface()
+        let params = MiniAppViewParameters.url(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                url: URL(string: "http://localhost:1337")!
+            )
+        )
+        let view: MiniAppViewable = MiniAppView(params: params)
+
+        let expectation = XCTestExpectation(description: #function)
+        Task {
+            do {
+                try await view.loadAsync()
+                expectation.fulfill()
+            } catch {
+                XCTFail(error.localizedDescription)
+            }
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
 }
 
 extension MiniAppViewTests {
