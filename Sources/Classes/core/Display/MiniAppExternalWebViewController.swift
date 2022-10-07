@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import WebKit
+import SwiftUI
 
 public class MiniAppExternalWebViewController: UIViewController {
 

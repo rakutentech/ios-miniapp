@@ -10,7 +10,7 @@ internal class MetaDataDownloader {
 
     func getMiniAppMetaInfo(miniAppId: String,
                             miniAppVersion: String,
-                            apiClient: MiniAppClient,
+                            apiClient: MiniAppClientProtocol,
                             languageCode: String,
                             completionHandler: @escaping (Result<MiniAppManifest, MASDKError>) -> Void) {
         guard let manifest = getCachedManifest(miniAppId: miniAppId), !apiClient.environment.isPreviewMode else {

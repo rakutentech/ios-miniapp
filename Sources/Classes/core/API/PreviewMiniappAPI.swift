@@ -15,9 +15,10 @@ internal class PreviewMiniappAPI {
     }
 
     private func getMiniAppInfo(using token: String) -> URL? {
+        let previewToken = token.replacingOccurrences(of: "\\\\/", with: "", options: .regularExpression, range: nil)
         guard let baseURL = environment.baseUrl else {
             return nil
         }
-        return baseURL.appendingPathComponent("host/\(environment.projectId)/preview-codes/\(token)")
+        return baseURL.appendingPathComponent("host/\(environment.projectId)/preview-codes/\(previewToken)")
     }
 }

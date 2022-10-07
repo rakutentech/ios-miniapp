@@ -133,10 +133,14 @@ public enum MiniAppEvent: String {
     public static let notificationName = Notification.Name("MiniAppNotificationEvent")
 
     public struct Event {
+        var miniAppId: String
+        var miniAppVersion: String
         var type: MiniAppEvent
         var comment: String
 
-        public init(type: MiniAppEvent, comment: String) {
+        public init(miniAppId: String, miniAppVersion: String, type: MiniAppEvent, comment: String) {
+            self.miniAppId = miniAppId
+            self.miniAppVersion = miniAppVersion
             self.type = type
             self.comment = comment
         }

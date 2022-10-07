@@ -57,6 +57,8 @@ DSYM_FILE=$TMP_DIR/dsym.zip
 EXPORT_PLIST=$TMP_DIR/miniapp.plist
 
 echo "Installing the Apple certificate and provisioning profile stored as base64 env vars"
+### Here is an example on how to generate the base64 from a P12 or a provisionning profile:
+### openssl base64 -in MiniAppDemo.mobileprovision -out MiniAppDemoBase64.txt
 echo -n "$APPLE_ENTERPRISE_P12" | base64 --decode --output "$P12"
 echo -n "$APPLE_ENTERPRISE_PROVISION" | base64 --decode --output "$PROVISION"
 

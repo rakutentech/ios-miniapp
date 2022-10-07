@@ -1,5 +1,106 @@
 ## CHANGELOG
 
+### 5.0.0 (TBD)
+**SDK**
+- **Feature:** Support for showing multiple MiniApps at the same time. Added `MiniAppView` which will replace `MiniApp.shared().create()`. From now on `create` will be deprecated.
+<details>
+<summary>Show code</summary>
+
+```swift
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), messageInterface: self),
+    appId: "your-miniapp-id"
+)
+let miniAppView = MiniAppView(params: params)
+self.view.addSubview(miniAppView)
+miniAppView.frame = self.view.bounds
+
+// load the miniapp (default)
+miniAppView.load { _ in
+  //...
+}
+```
+
+</details>
+
+- **Feature:** Async/Await Support with `MiniAppView`'s `loadAsync` that will load the MiniApp. 
+<details>
+<summary>Show code</summary>
+
+```swift
+// using closure
+miniAppView.load { success in
+  switch result {
+    case .success:
+      // miniAppView is loaded
+    case let .failure(error):
+      print("error: \(error.localizedDescription)")
+  } 
+}
+
+// using async/await
+Task {
+    do {
+        let result = try await miniAppView.loadAsync()
+        //...
+    } catch {
+        print("error: \(error.localizedDescription)")
+    }
+}
+```
+
+</details>
+
+- **Feature:** Added `MiniAppParameters` and a new config `MiniAppConfig` that is used to initialize `MiniAppView`
+<details>
+<summary>Show code</summary>
+
+```swift
+let config = MiniAppConfig(config: Config.current(), messageInterface: self)
+let params = MiniAppParameters.default(
+    config: config,
+    appId: "your-miniapp-id"
+)
+```
+
+</details>
+
+- **Feature:** Added a new additional initializer to load MiniApps from URL for local testing.
+<details>
+<summary>Show code</summary>
+
+```swift
+// with url
+let urlParams = MiniAppParameters.url(
+    config: MiniAppConfig(config: Config.current(), messageInterface: self),
+    url: URL(string: "http://localhost:3000")!
+)
+let miniAppView = MiniAppView(params: urlParams)
+```
+
+</details>
+
+- **Feature:** Support for SwiftUI. Added `MiniAppSUIView` to the UI module that conforms to `UIViewRepresentable` and will autoload when added.
+<details>
+<summary>Show code</summary>
+
+```swift
+struct Content: View {
+
+  var params: MiniAppParameters
+
+  var body: some View {
+    MiniAppSUIView(params: params)
+  }
+
+}
+```
+
+</details>
+
+**Sample app**
+- **Feature:** New demo app interface with List I and List II (multiple miniapp support demo) and reworked with SwiftUI
+
 ### 4.3.0 (2022-08-08)
 **SDK**
 - **Fix:** Secure storage feature bug fixes

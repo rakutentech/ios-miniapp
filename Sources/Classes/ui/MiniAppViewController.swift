@@ -1,6 +1,8 @@
 import Foundation
 import UIKit
 
+// swiftlint:disable function_body_length
+
 /// Protocol to track Miniapp loading/Close status
 public protocol MiniAppUIDelegate: AnyObject {
     /// Interface that is used to get controller and config
@@ -39,17 +41,7 @@ public class MiniAppViewController: UIViewController {
         didSet { update() }
     }
 
-    /// Overridden viewDidAppear to send analytics
-    public override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .resume, comment: "MiniApp view did appear"))
-    }
-
-    /// Overridden viewWillDisappear to send analytics
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.sendCustomEvent(MiniAppEvent.Event(type: .pause, comment: "MiniApp view will disappear"))
-    }
+    var miniAppView: MiniAppViewable?
 
     weak var messageDelegate: MiniAppMessageDelegate?
     weak var navDelegate: MiniAppNavigationDelegate?
@@ -132,6 +124,32 @@ public class MiniAppViewController: UIViewController {
         setupFallback()
     }
 
+    /// Overridden viewDidAppear to send analytics
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        NotificationCenter.default.sendCustomEvent(
+            MiniAppEvent.Event(
+                miniAppId: appId,
+                miniAppVersion: version ?? "",
+                type: .resume,
+                comment: "MiniApp view did appear"
+            )
+        )
+    }
+
+    /// Overridden viewWillDisappear to send analytics
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.sendCustomEvent(
+            MiniAppEvent.Event(
+                miniAppId: appId,
+                miniAppVersion: version ?? "",
+                type: .pause,
+                comment: "MiniApp view will disappear"
+            )
+        )
+    }
+
     func setupUI() {
 
         view.backgroundColor = .white
@@ -195,76 +213,63 @@ public class MiniAppViewController: UIViewController {
     }
 
     func setupMiniApp() {
-
         state = .loading
 
         guard let messageDelegate = messageDelegate else { return }
-        let navSettings = MiniAppNavigationConfig(
-            navigationBarVisibility: .never,
-            navigationDelegate: navDelegate,
-            customNavigationView: nil
-        )
-        MiniApp
-            .shared(with: config, navigationSettings: navSettings)
-            .create(
+
+        let miniAppParams = MiniAppViewParameters.default(
+            .init(
+                config: MiniAppConfig(
+                    config: config,
+                    adsDisplayer: adsDisplayer,
+                    messageDelegate: messageDelegate,
+                    navigationDelegate: navDelegate
+                ),
+                type: .miniapp,
                 appId: appId,
                 version: version,
-                queryParams: queryParams,
-                completionHandler: { [weak self] (result) in
-                    guard let self = self else { return }
-                    switch result {
-                    case .success(let miniAppDisplay):
-                        let view = miniAppDisplay.getMiniAppView()
-                        view.frame = self.view.bounds
-                        self.view.addSubview(view)
-                        self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
-                        self.miniAppUiDelegate?.miniApp(self, didLoadWith: nil)
-                        self.state = .success
-                    case .failure(let error):
-                        if error.isQPSLimitError() {
-                            self.miniAppUiDelegate?.miniApp(self, didLoadWith: error)
-                            self.state = .error
-                        } else {
-                            if self.loadFromCacheIfFailed {
-                                self.loadFromCache(navSettings: navSettings, messageDelegate: messageDelegate)
-                            } else {
+                queryParams: queryParams
+            )
+        )
+
+        let miniAppView: MiniAppViewable = MiniAppView(params: miniAppParams)
+        miniAppView.progressStateView = MiniAppProgressView()
+        self.miniAppView = miniAppView
+        self.navBarDelegate = miniAppView
+
+        miniAppView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(miniAppView)
+        NSLayoutConstraint.activate([
+            miniAppView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            miniAppView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            miniAppView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            miniAppView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
+        miniAppView.load { result in
+            switch result {
+            case .success: ()
+            case let .failure(error):
+                if error.isQPSLimitError() {
+                    self.miniAppUiDelegate?.miniApp(self, didLoadWith: error)
+                    self.state = .error
+                } else {
+                    if self.loadFromCacheIfFailed {
+                        miniAppView.load(fromCache: true) { result in
+                            switch result {
+                            case .success: ()
+                            case let .failure(error):
                                 self.miniAppUiDelegate?.miniApp(self, didLoadWith: error)
                                 self.state = .error
                             }
                         }
-                    }
-                },
-                messageInterface: messageDelegate,
-                adsDisplayer: adsDisplayer
-            )
-    }
-
-    func loadFromCache(navSettings: MiniAppNavigationConfig?, messageDelegate: MiniAppMessageDelegate) {
-        MiniApp
-            .shared(with: config, navigationSettings: navSettings)
-            .create(
-                appId: appId,
-                version: version,
-                queryParams: queryParams,
-                completionHandler: { [weak self] (result) in
-                    guard let self = self else { return }
-                    switch result {
-                    case .success(let miniAppDisplay):
-                        let view = miniAppDisplay.getMiniAppView()
-                        view.frame = self.view.bounds
-                        self.view.addSubview(view)
-                        self.navBarDelegate = miniAppDisplay as? MiniAppNavigationBarDelegate
-                        self.miniAppUiDelegate?.miniApp(self, didLoadWith: nil)
-                        self.state = .success
-                    case .failure(let error):
+                    } else {
                         self.miniAppUiDelegate?.miniApp(self, didLoadWith: error)
                         self.state = .error
                     }
-                },
-                messageInterface: messageDelegate,
-                adsDisplayer: adsDisplayer,
-                fromCache: true
-            )
+                }
+            }
+        }
     }
 
     func setupFallback() {

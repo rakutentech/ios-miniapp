@@ -115,7 +115,6 @@ class MiniAppTests: QuickSpec {
                         case .success: break
                         case .failure(let error):
                             testError = error
-                            print("")
                         }
                     }, messageInterface: mockMessageInterface, adsDisplayer: nil)
                     expect(testError?.localizedDescription).toEventuallyNot(beNil(), timeout: .seconds(5))

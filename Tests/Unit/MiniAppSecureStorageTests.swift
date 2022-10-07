@@ -29,7 +29,7 @@ class MiniAppSecureStorageTests: XCTestCase {
         do {
             try MiniAppSecureStorage.wipeSecureStorages()
         } catch {
-            print("could not wipe storages")
+            MiniAppLogger.d("could not wipe storages")
         }
         guard FileManager.default.fileExists(atPath: miniAppPath.appendingPathComponent("securestorage.sqlite").path) == false
         else {
@@ -241,7 +241,7 @@ class MiniAppSecureStorageTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 30.0)
 
         XCTAssertGreaterThan(storage.size().used, 125_000)
         XCTAssertEqual(Int((try? storage.get(key: "1")) ?? ""), 1)

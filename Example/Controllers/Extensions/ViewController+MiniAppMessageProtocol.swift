@@ -3,8 +3,9 @@ import CoreLocation
 import Foundation
 import UIKit
 
+typealias PermissionCompletionHandler = (((Result<MASDKPermissionResponse, MASDKPermissionError>)) -> Void)
+
 extension ViewController: MiniAppMessageDelegate, CLLocationManagerDelegate {
-    typealias PermissionCompletionHandler = (((Result<MASDKPermissionResponse, MASDKPermissionError>)) -> Void)
 
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         switch permissionType {

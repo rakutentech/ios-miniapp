@@ -2,8 +2,9 @@ import UIKit
 import MiniApp
 
 enum AccessTokenCustomErrorType: String {
-    case AUTHORIZATION,
-         OTHER
+    case NORMAL = ""
+    case AUTHORIZATION
+    case OTHER
 }
 
 class QASettingsTableViewController: RATTableViewController {
