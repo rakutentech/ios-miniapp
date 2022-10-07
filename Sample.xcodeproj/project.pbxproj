@@ -120,7 +120,6 @@
 		F74865AB28B361B0001A0938 /* MiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74865AA28B361B0001A0938 /* MiniAppViewTests.swift */; };
 		F77586A828B5CEAA00B460F3 /* MiniAppViewHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77586A728B5CEAA00B460F3 /* MiniAppViewHandlerTests.swift */; };
 		F77F61B128E54EE400F55818 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F61B028E54EE400F55818 /* CloseButton.swift */; };
-		F7C8804626D8974800B828C6 /* UITableView+EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8804526D8974800B828C6 /* UITableView+EmptyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -266,7 +265,6 @@
 		F74865AA28B361B0001A0938 /* MiniAppViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewTests.swift; sourceTree = "<group>"; };
 		F77586A728B5CEAA00B460F3 /* MiniAppViewHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewHandlerTests.swift; sourceTree = "<group>"; };
 		F77F61B028E54EE400F55818 /* CloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
-		F7C8804526D8974800B828C6 /* UITableView+EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+EmptyView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -574,8 +572,6 @@
 			isa = PBXGroup;
 			children = (
 				F70DD8BB28D417C3003EF1F1 /* Settings */,
-				F70DD8C828D417C3003EF1F1 /* Widget */,
-				F70DD8C928D417C3003EF1F1 /* Segmented */,
 				F70DD8CA28D417C3003EF1F1 /* MiniAppFeatureListView.swift */,
 				F70DD8CB28D417C3003EF1F1 /* Terms */,
 				F70DD8D128D417C3003EF1F1 /* MiniAppFeatureListCell.swift */,
@@ -610,20 +606,6 @@
 				F70DD8C528D417C3003EF1F1 /* MiniAppSettingsSignatureView.swift */,
 			);
 			path = Features;
-			sourceTree = "<group>";
-		};
-		F70DD8C828D417C3003EF1F1 /* Widget */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Widget;
-			sourceTree = "<group>";
-		};
-		F70DD8C928D417C3003EF1F1 /* Segmented */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Segmented;
 			sourceTree = "<group>";
 		};
 		F70DD8CB28D417C3003EF1F1 /* Terms */ = {
@@ -853,8 +835,6 @@
 				F70DD90728D417C4003EF1F1 /* MiniAppViewNavigationDelegator.swift in Sources */,
 				A15CC6BA28ED2CC5009B328D /* SceneDelegate.swift in Sources */,
 				F77F61B128E54EE400F55818 /* CloseButton.swift in Sources */,
-				2AE218F0269D46DA00F9D1E7 /* UITextView+MiniApp.swift in Sources */,
-				F7C8804626D8974800B828C6 /* UITableView+EmptyView.swift in Sources */,
 				38920AF6251D9C57004C5DDD /* Array+MiniApp.swift in Sources */,
 				F70DD8F028D417C4003EF1F1 /* MiniAppSettingsSignatureView.swift in Sources */,
 				38920AF7251D9C57004C5DDD /* Config.swift in Sources */,
