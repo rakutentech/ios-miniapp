@@ -4,12 +4,6 @@
 <dict>
 	<key>AppCenterSecret</key>
 	<string>$(RMA_APP_CENTER_SECRET)</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.rakuten.tech.mobile.miniapp.MiniAppDemo</string>
-	<key>CFBundleShortVersionString</key>
-	<string>5.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -25,8 +19,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>1</string>
 	<key>GADApplicationIdentifier</key>
 	<string>$(RMA_GAD_APPLICATION_IDENTIFIER)</string>
 	<key>NSAppTransportSecurity</key>
@@ -89,12 +81,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-	</array>
 </dict>
 </plist>
