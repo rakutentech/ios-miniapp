@@ -23,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         if window?.isKeyWindow != true {
-            return .all
+            return [.portrait, .portraitUpsideDown]
         } else if MiniApp.MAOrientationLock.isEmpty {
-            return .all
+            return [.portrait, .portraitUpsideDown]
         } else {
             return MiniApp.MAOrientationLock
         }
