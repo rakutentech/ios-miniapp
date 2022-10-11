@@ -3,7 +3,7 @@ import XCTest
 @testable import MiniApp
 import WebKit
 
-// swiftlint:disable function_body_length file_length
+// swiftlint:disable function_body_length file_length type_body_length
 
 class MiniAppViewHandlerTests: XCTestCase {
 
