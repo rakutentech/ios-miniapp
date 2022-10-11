@@ -430,7 +430,7 @@ class MiniAppViewHandlerTests: XCTestCase {
     func test_miniappviewhandler_close_external_webview() {
         let messageDelegate = MockMessageInterface()
         let viewHandler = MiniAppViewHandler(
-            config: MiniAppConfig(
+            config: .init(
                 config: nil,
                 messageDelegate: messageDelegate
             ),
@@ -466,7 +466,7 @@ class MiniAppViewHandlerTests: XCTestCase {
 extension MiniAppViewHandlerTests {
     class MockNavigationAction: WKNavigationAction {
         var url: URL {
-            let url = URL(string: "https://www.rakuten.co.jp")!
+            let url = mockRakutenUrl
             return url
         }
         override var request: URLRequest {
