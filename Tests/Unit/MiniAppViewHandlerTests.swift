@@ -3,7 +3,7 @@ import XCTest
 @testable import MiniApp
 import WebKit
 
-// swiftlint:disable function_body_length
+// swiftlint:disable function_body_length file_length
 
 class MiniAppViewHandlerTests: XCTestCase {
 
@@ -425,6 +425,41 @@ class MiniAppViewHandlerTests: XCTestCase {
 
         let canGoForwardAgain = viewHandler.miniAppNavigationBar(didTriggerAction: .forward)
         XCTAssertEqual(canGoForwardAgain, true)
+    }
+
+    func test_miniappviewhandler_close_external_webview() {
+        let messageDelegate = MockMessageInterface()
+        let viewHandler = MiniAppViewHandler(
+            config: MiniAppConfig(
+                config: nil,
+                messageDelegate: messageDelegate
+            ),
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+
+        let miniAppWebView = MiniAppWebView()
+        do {
+            try viewHandler.loadWebView(
+                webView: miniAppWebView,
+                miniAppId: mockMiniAppInfo.id,
+                versionId: mockMiniAppInfo.version.versionId
+            )
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+        viewHandler.webView = miniAppWebView
+        let expectation = XCTestExpectation(description: #function)
+        var eventTypeResult: MiniAppEvent?
+        NotificationCenter.default.addObserver(forName: MiniAppEvent.notificationName, object: nil, queue: .main) { notification in
+            if let event = notification.object as? MiniAppEvent.Event {
+                eventTypeResult = event.type
+            }
+            expectation.fulfill()
+        }
+        viewHandler.onExternalWebviewClose?(mockRakutenUrl)
+        wait(for: [expectation], timeout: 3.0)
+        XCTAssertEqual(eventTypeResult, .resume)
     }
 }
 
