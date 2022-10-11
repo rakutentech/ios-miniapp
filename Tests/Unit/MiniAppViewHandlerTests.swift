@@ -422,9 +422,6 @@ class MiniAppViewHandlerTests: XCTestCase {
 
         let canGoBackAgain = viewHandler.miniAppNavigationBar(didTriggerAction: .back)
         XCTAssertEqual(canGoBackAgain, true)
-
-        let canGoForwardAgain = viewHandler.miniAppNavigationBar(didTriggerAction: .forward)
-        XCTAssertEqual(canGoForwardAgain, true)
     }
 
     func test_miniappviewhandler_close_external_webview() {
