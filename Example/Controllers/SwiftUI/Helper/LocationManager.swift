@@ -23,10 +23,21 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        authorizationStatus = manager.authorizationStatus
+        DispatchQueue.main.async {
+            self.authorizationStatus = manager.authorizationStatus
+            switch manager.authorizationStatus {
+            case .authorizedWhenInUse, .authorizedAlways:
+                self.locationManager.startUpdatingLocation()
+                self.locationManager.stopUpdatingLocation()
+            case .denied, .restricted, .notDetermined:
+                ()
+            }
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        lastSeenLocation = locations.first
+        DispatchQueue.main.async {
+            self.lastSeenLocation = locations.first
+        }
     }
 }
