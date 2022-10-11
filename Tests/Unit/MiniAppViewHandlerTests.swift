@@ -340,4 +340,120 @@ class MiniAppViewHandlerTests: XCTestCase {
 
         wait(for: [expectation], timeout: 3.0)
     }
+
+    // MARK: - Navigation Delegate
+    func test_miniappviewhandler_decide_policy_for_https_url() {
+        let messageDelegate = MockMessageInterface()
+
+        let viewHandler = MiniAppViewHandler(
+            config: MiniAppConfig(
+                config: nil,
+                messageDelegate: messageDelegate
+            ),
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+        viewHandler.webView = MiniAppWebView()
+
+        guard let webView = viewHandler.webView else {
+            XCTFail("no webview available")
+            return
+        }
+
+        let webViewExpectation = XCTestExpectation(description: #function)
+        let action = MockNavigationAction()
+        var policyResult: WKNavigationActionPolicy?
+        viewHandler.webView(webView, decidePolicyFor: action) { policy in
+            policyResult = policy
+            webViewExpectation.fulfill()
+        }
+        wait(for: [webViewExpectation], timeout: 3.0)
+        XCTAssertEqual(policyResult, .cancel)
+    }
+
+    func test_miniappviewhandler_can_go_back_forward() {
+        let messageDelegate = MockMessageInterface()
+        let viewHandler = MiniAppViewHandler(
+            config: MiniAppConfig(
+                config: nil,
+                messageDelegate: messageDelegate
+            ),
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+
+        let miniAppWebView = MiniAppWebView()
+        do {
+            try viewHandler.loadWebView(
+                webView: miniAppWebView,
+                miniAppId: mockMiniAppInfo.id,
+                versionId: mockMiniAppInfo.version.versionId
+            )
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+        viewHandler.webView = miniAppWebView
+
+        let delegate = MockNavDelegate()
+        miniAppWebView.navigationDelegate = delegate
+        let canGoBack = viewHandler.miniAppNavigationBar(didTriggerAction: .back)
+        XCTAssertEqual(canGoBack, false)
+
+        let canGoForward = viewHandler.miniAppNavigationBar(didTriggerAction: .forward)
+        XCTAssertEqual(canGoForward, false)
+
+        // initial page
+        let initialPageLoadExpectation = XCTestExpectation(description: #function)
+        delegate.didFinish = {
+            initialPageLoadExpectation.fulfill()
+        }
+        let request = URLRequest(url: mockRakutenUrl)
+        miniAppWebView.load(request)
+        wait(for: [initialPageLoadExpectation], timeout: 5.0)
+
+        // one extra page load
+        let extraPageLoadExpectation = XCTestExpectation(description: #function)
+        delegate.didFinish = {
+            extraPageLoadExpectation.fulfill()
+        }
+        let request2 = URLRequest(url: mockRakutenDeveloperUrl)
+        miniAppWebView.load(request2)
+        wait(for: [extraPageLoadExpectation], timeout: 5.0)
+
+        let canGoBackAgain = viewHandler.miniAppNavigationBar(didTriggerAction: .back)
+        XCTAssertEqual(canGoBackAgain, true)
+
+        let canGoForwardAgain = viewHandler.miniAppNavigationBar(didTriggerAction: .forward)
+        XCTAssertEqual(canGoForwardAgain, true)
+    }
+}
+
+extension MiniAppViewHandlerTests {
+    class MockNavigationAction: WKNavigationAction {
+        var url: URL {
+            let url = URL(string: "https://www.rakuten.co.jp")!
+            return url
+        }
+        override var request: URLRequest {
+            return URLRequest(url: url)
+        }
+    }
+
+    class MockWKNavigation: WKNavigation {
+        override var effectiveContentMode: WKWebpagePreferences.ContentMode {
+            .mobile
+        }
+    }
+
+    class MockNavDelegate: NSObject, WKNavigationDelegate {
+        var didFinish: (() -> Void)?
+
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            decisionHandler(.allow)
+        }
+
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            didFinish?()
+        }
+    }
 }

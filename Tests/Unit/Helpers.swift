@@ -49,6 +49,9 @@ let mockRATAid = "1"
 let mockSignature = "mockSignature"
 let mockSignatureId = "mockSignatureId"
 
+let mockRakutenUrl = URL(string: "https://rakuten.co.jp")!
+let mockRakutenDeveloperUrl = 
+
 // swiftlint:disable file_length
 class MockAPIClient: MiniAppClient {
     var data: Data?
