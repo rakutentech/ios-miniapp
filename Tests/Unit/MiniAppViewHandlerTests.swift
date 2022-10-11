@@ -466,8 +466,7 @@ class MiniAppViewHandlerTests: XCTestCase {
 extension MiniAppViewHandlerTests {
     class MockNavigationAction: WKNavigationAction {
         var url: URL {
-            let url = mockRakutenUrl
-            return url
+            mockRakutenUrl
         }
         override var request: URLRequest {
             return URLRequest(url: url)
