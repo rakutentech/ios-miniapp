@@ -267,7 +267,7 @@ class MiniAppSecureStorageTests: XCTestCase {
             }
         }
 
-        wait(for: [setExpectation], timeout: 10.0)
+        wait(for: [setExpectation], timeout: 30.0)
 
         XCTAssertEqual(Int((try? storage.get(key: "1")) ?? ""), 1)
         XCTAssertEqual(Int((try? storage.get(key: "100")) ?? ""), 100)
@@ -283,7 +283,7 @@ class MiniAppSecureStorageTests: XCTestCase {
             }
         }
 
-        wait(for: [removeExpectation], timeout: 10.0)
+        wait(for: [removeExpectation], timeout: 30.0)
 
         XCTAssertNil(try? storage.get(key: "1"))
         XCTAssertNil(try? storage.get(key: "100"))

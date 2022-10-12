@@ -409,7 +409,7 @@ class MiniAppViewHandlerTests: XCTestCase {
         }
         let request = URLRequest(url: mockRakutenUrl)
         miniAppWebView.load(request)
-        wait(for: [initialPageLoadExpectation], timeout: 5.0)
+        wait(for: [initialPageLoadExpectation], timeout: 15.0)
 
         // one extra page load
         let extraPageLoadExpectation = XCTestExpectation(description: #function)
@@ -418,7 +418,7 @@ class MiniAppViewHandlerTests: XCTestCase {
         }
         let request2 = URLRequest(url: mockRakutenDeveloperUrl)
         miniAppWebView.load(request2)
-        wait(for: [extraPageLoadExpectation], timeout: 5.0)
+        wait(for: [extraPageLoadExpectation], timeout: 15.0)
 
         let canGoBackAgain = viewHandler.miniAppNavigationBar(didTriggerAction: .back)
         XCTAssertEqual(canGoBackAgain, true)
