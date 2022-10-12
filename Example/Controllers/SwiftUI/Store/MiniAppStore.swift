@@ -153,6 +153,20 @@ class MiniAppStore: ObservableObject {
         let fakeName = Self.randomFakeName()
         return MAContact(id: UUID().uuidString, name: fakeName, email: Self.fakeMail(with: fakeName))
     }
+
+    func getMiniAppPreviewInfo(previewToken: String) async throws -> MiniAppInfo? {
+        try await withCheckedThrowingContinuation { continuation in
+            MiniApp.shared().getMiniAppPreviewInfo(using: previewToken) { result in
+                switch result {
+                case let .success(previewInfo):
+                    // may need to add host support through qr code
+                    continuation.resume(returning: previewInfo.miniapp)
+                case let .failure(error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
 }
 
 extension MiniAppStore {

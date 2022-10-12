@@ -4,20 +4,6 @@
 <dict>
 	<key>AppCenterSecret</key>
 	<string>$(RMA_APP_CENTER_SECRET)</string>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -33,31 +19,19 @@
 			</array>
 		</dict>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>1</string>
 	<key>GADApplicationIdentifier</key>
 	<string>$(RMA_GAD_APPLICATION_IDENTIFIER)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>This will let you to take Photos</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Demo app helps you find more information near you</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Needs Microphone while recording video</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Demo app needs permission to save photos</string>
 	<key>RASProjectId</key>
 	<string>$(RAS_PROJECT_IDENTIFIER_PROD)</string>
-	<key>RASStagingProjectId</key>
-	<string>$(RAS_PROJECT_IDENTIFIER_STG)</string>
 	<key>RASProjectSubscriptionKey</key>
 	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY_PROD)</string>
+	<key>RASStagingProjectId</key>
+	<string>$(RAS_PROJECT_IDENTIFIER_STG)</string>
 	<key>RASStagingProjectSubscriptionKey</key>
 	<string>$(RAS_PROJECT_SUBSCRIPTION_KEY_STG)</string>
 	<key>RATAccountIdentifier</key>
@@ -90,20 +64,22 @@
 			<string>cstr6suwn9.skadnetwork</string>
 		</dict>
 	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-	</array>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
 </dict>
 </plist>

@@ -3,6 +3,8 @@ import MiniApp
 import CoreLocation
 import UIKit
 
+typealias PermissionCompletionHandler = (((Result<MASDKPermissionResponse, MASDKPermissionError>)) -> Void)
+
 class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
 
     let locationManager = LocationManager()
@@ -19,6 +21,10 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
     }
 
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success("UNIQUE-\(miniAppId.prefix(8))-\((miniAppVersion ?? "").prefix(8))"))
+    }
+
+    func getMauid(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.success("MAUID-\(miniAppId.prefix(8))-\((miniAppVersion ?? "").prefix(8))"))
     }
 
