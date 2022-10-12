@@ -8,6 +8,7 @@ echo "
 
         -v Version      Version to deploy.
         -b Branch       Branch to release. By default 'candidate'
+        -r Remote       Name/address of the remote server. By default 'git@github.com:rakutentech/ios-miniapp.git'
         -d              displays useful data to debug this script
         -a              automatic mode. Requires -v parameter to be 100% without prompt
         -s              same as -a but in silent mode
@@ -19,11 +20,13 @@ echo "
 }
 NO_PROMPT=0
 
-while getopts ":v:b:dhas" opt; do
+while getopts ":v:b:r:dhas" opt; do
   case $opt in
     v) VERSION="$OPTARG"
     ;;
     b) UPSTREAM_BRANCH="$OPTARG"
+    ;;
+    r) UPSTREAM="$OPTARG"
     ;;
     d) set -ex
     ;;
@@ -43,12 +46,16 @@ if [ -z "$UPSTREAM_BRANCH" ]
     UPSTREAM_BRANCH=candidate
 fi
 
+if [ -z "$UPSTREAM" ]
+  then
+    UPSTREAM=git@github.com:rakutentech/ios-miniapp.git
+fi
+
 if [ -z "$VERSION" ]
   then
     read -r -p "Please input the version number to release (ex: for v3.5.0 please input 3.5.0): " VERSION
 fi
 
-UPSTREAM=git@github.com:rakutentech/ios-miniapp.git
 CANDIDATE_BRANCH=$VERSION/$UPSTREAM_BRANCH
 WORK_BRANCH=$(git branch --show-current)
 
