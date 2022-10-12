@@ -1,6 +1,9 @@
 @testable import MiniApp
 import WebKit
 import Foundation
+
+// swiftlint:disable file_length
+
 let mockHost = "https://example.com"
 
 let jSONManifest = """
@@ -49,7 +52,9 @@ let mockRATAid = "1"
 let mockSignature = "mockSignature"
 let mockSignatureId = "mockSignatureId"
 
-// swiftlint:disable file_length
+let mockRakutenUrl = URL(string: "https://rakuten.co.jp")!
+let mockRakutenDeveloperUrl = URL(string: "https://developers.rakuten.com")!
+
 class MockAPIClient: MiniAppClient {
     var data: Data?
     var manifestData: Data?

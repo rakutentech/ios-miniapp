@@ -69,6 +69,41 @@ class MiniAppViewTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
     }
 
+    func test_miniappview_info_load() {
+        let expectation = XCTestExpectation(description: #function)
+
+        let delegate = MockMessageInterface()
+        let mockHandler = makeMockViewHandler(messageDelegate: delegate)
+
+        let params = MiniAppViewParameters.info(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: delegate
+                ),
+                type: .miniapp,
+                info: MiniAppInfo(
+                    id: mockMiniAppInfo.id,
+                    icon: URL(string: "https://www.rakuten.co.jp")!,
+                    version: mockMiniAppInfo.version
+                )
+            )
+        )
+        let view = MiniAppView(params: params)
+        view.miniAppHandler = mockHandler
+        view.load { result in
+            switch result {
+            case let .success(success):
+                XCTAssertTrue(success)
+                expectation.fulfill()
+            case let .failure(error):
+                XCTFail(error.localizedDescription)
+            }
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
+
     func test_miniappview_load_should_fail() {
         let expectation = XCTestExpectation(description: #function)
         let messageDelegate = MockMessageInterface()
@@ -230,6 +265,59 @@ class MiniAppViewTests: XCTestCase {
         )
         let view = MiniAppView(params: params)
         XCTAssertTrue(view.alertInfo == nil)
+    }
+
+    func test_miniappviewable_load() {
+
+        let messageDelegate = MockMessageInterface()
+        let params = MiniAppViewParameters.url(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                url: URL(string: "http://localhost:1337")!
+            )
+        )
+        let view: MiniAppViewable = MiniAppView(params: params)
+
+        let expectation = XCTestExpectation(description: #function)
+        view.load { result in
+            switch result {
+            case .success:
+                expectation.fulfill()
+            case let .failure(error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
+
+    func test_miniappviewable_load_async() {
+        let messageDelegate = MockMessageInterface()
+        let params = MiniAppViewParameters.url(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                url: URL(string: "http://localhost:1337")!
+            )
+        )
+        let view: MiniAppViewable = MiniAppView(params: params)
+
+        let expectation = XCTestExpectation(description: #function)
+        Task {
+            do {
+                try await view.loadAsync()
+                expectation.fulfill()
+            } catch {
+                XCTFail(error.localizedDescription)
+            }
+        }
+        wait(for: [expectation], timeout: 10.0)
     }
 }
 

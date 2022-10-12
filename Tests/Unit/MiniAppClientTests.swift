@@ -286,6 +286,32 @@ class MiniAppClientTests: QuickSpec {
                 }
             }
         }
+
+        describe("fetch miniapp meta data") {
+            let testURL = mockHost
+            let testID = "testID"
+            it("it should retrieve a result when fetching miniapp meta data") {
+                let mockSession = MockSession(data: [
+                    "id": "123"
+                ])
+                let miniAppClient = MiniAppClient(
+                    baseUrl: testURL,
+                    rasProjectId: testID
+                )
+                miniAppClient.session = mockSession
+                var returnedData: Data?
+                miniAppClient.getMiniAppMetaData(appId: "abcd", versionId: "cdef", languageCode: "en-US") { result in
+                    switch result {
+                    case let .success(data):
+                        returnedData = data.data
+                    case let .failure(error):
+                        fail(error.localizedDescription)
+                    }
+                }
+                expect(returnedData).toEventuallyNot(beNil())
+            }
+        }
+
         describe("override configuration at runtime") {
             let projectId = "RASProjectId"
             let versionKey = "CFBundleShortVersionString"
@@ -390,6 +416,21 @@ class MiniAppClientTests: QuickSpec {
                     expect(miniAppClient.environment.subscriptionKey).to(equal(bundle.value(for: subscriptionKey)))
                     expect(miniAppClient.environment.baseUrl?.absoluteString).to(equal(bundle.value(for: endpointKey)))
                     expect(miniAppClient.environment.isPreviewMode).to(equal(bundle.bool(for: isPreviewMode)))
+                }
+            }
+
+            context("when we update ssl config") {
+                it("it will update the ssl pinning config") {
+                    let miniAppClient = MiniAppClient(
+                        baseUrl: testURL,
+                        sslKeyHash: MiniAppConfigSSLKeyHash(
+                            pin: "AABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=",
+                            backup: "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB="
+                        ),
+                        rasProjectId: testID
+                    )
+                    miniAppClient.updateSSLPinConfig()
+                    expect(miniAppClient.sslPinningConfig).toNot(beNil())
                 }
             }
         }
