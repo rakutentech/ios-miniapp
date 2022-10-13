@@ -24,13 +24,14 @@ jobs:
     - name: Repository checkout
       if: contains(github.event.pull_request.labels.*.name, '✓')
       uses: actions/checkout@v2
-      
+  
     - name: Setup ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7.2
         bundler-cache: true
-        
     - name: Run tests
       run: |
         bundle exec fastlane ci
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1.2.1
