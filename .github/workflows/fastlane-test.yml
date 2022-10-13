@@ -1,8 +1,7 @@
 name: Fastlane CI (TEST)
 
 on:
-  pull_request_target:
-    types: [labeled]
+  pull_request:
 
 jobs:
   build:
@@ -19,10 +18,9 @@ jobs:
       RMA_API_ENDPOINT_STG: https://developers.rakuten.com/
       RMA_APP_CENTER_SECRET: test-appcenter
       RMA_DEMO_APP_BUILD_TYPE: -DEMO
-      RMA_GAD_APPLICATION_IDENTIFIER: ${{ secrets.RMA_GAD_APPLICATION_IDENTIFIER }}
+      RMA_GAD_APPLICATION_IDENTIFIER: test-gad-id
     steps:
     - name: Repository checkout
-      if: contains(github.event.pull_request.labels.*.name, '✓')
       uses: actions/checkout@v2
   
     - name: Setup ruby
