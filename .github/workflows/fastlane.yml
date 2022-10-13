@@ -21,9 +21,6 @@ jobs:
       RMA_DEMO_APP_BUILD_TYPE: ${{ secrets.RMA_DEMO_APP_BUILD_TYPE }}
       RMA_GAD_APPLICATION_IDENTIFIER: ${{ secrets.RMA_GAD_APPLICATION_IDENTIFIER }}
     steps:
-    - name: Repository checkout
-      if: contains(github.event.pull_request.labels.*.name, '✓')
-      uses: actions/checkout@v2
       
     - name: Setup ruby
       uses: ruby/setup-ruby@v1
