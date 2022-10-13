@@ -1,0 +1,53 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7.0
+  gh: circleci/github-cli@1.0.4
+  macos: circleci/macos@2
+  ruby: circleci/ruby@1.2.0
+  codecov: codecov/codecov@3.1.1
+
+container_medium: &container_medium
+  macos:
+    xcode: 13.2.1
+  resource_class: medium
+
+jobs:
+  build-and-test:
+    <<: *container_medium
+    environment:
+      FL_OUTPUT_DIR: output
+      FASTLANE_LANE: build_sim_ci
+    steps:
+      - checkout
+      - run: bundle install
+      - run: pod install --repo-update
+      - run:
+          name: Build Simulator
+          command: fastlane build_simulator
+      - run:
+          name: Execute Tests
+          command: fastlane ci
+      - store_artifacts:
+          path: ./artifacts/unit-tests
+
+  upload-code-coverage:
+    <<: *container_medium
+    steps:
+      - codecov/upload:
+        file: "./artifacts/0/artifacts/unit-tests/report.junit"
+      - codecov/upload:
+        file: "./artifacts/0/artifacts/unit-tests/report.html"
+      - codecov/upload:
+        file: "./artifacts/0/artifacts/unit-tests/compile_commands.json"
+
+workflows:
+  version: 2.1
+  build-and-release-workflow:
+    jobs:
+        - build-and-test
+        - upload-code-coverage:
+            requires:
+              - build-and-test

@@ -12,10 +12,6 @@ platform :ios do
 
   desc "Check lint"
   lane :ci do |options|
-    swiftlint(
-      strict: true,
-      ignore_exit_status: false
-    )
 # Uncomment this to disable Unit tests on Bitrise
 #     if !is_ci
        tests
@@ -58,15 +54,25 @@ platform :ios do
     xcversion(version: "~> 13.2")
 
     updatePods
+    increment_build_number_bitrise
+    start_building
+  end
 
-    increment_build_number(
-      build_number: ENV["BITRISE_BUILD_NUMBER"] # set a specific number
-    )
+  lane :build_sim_ci do |options|
+    xcversion(version: "~> 13.2")
+
+    updatePods
+    increment_build_number_circle_ci
+    start_building
+
+  end
+
+  lane :start_building do |options|
 
     # configure Analytics SDK
     set_info_plist_value(path: "./Example/Info.plist", key: "RATAccountIdentifier", value: ENV['RAT_ACCOUNT_IDENTIFIER'].to_i)
     set_info_plist_value(path: "./Example/Info.plist", key: "RATAppIdentifier", value: ENV['RAT_APP_IDENTIFIER'].to_i)
-
+  
     xcodebuild(
       archive: true,
       archive_path: "artifacts/MiniApp-Example.xcarchive",
@@ -108,4 +114,23 @@ platform :ios do
           upload_assets: ["./Binary/XCFramework/MiniApp.xcframework.zip"]
        )
   end
+
+  def app_build_number
+    `git rev-list HEAD --count`.chomp()
+  end
+
+  desc "Increment Build Number - Bitrise"
+  lane :increment_build_number_bitrise do |options|
+    increment_build_number(
+      build_number: ENV["BITRISE_BUILD_NUMBER"] # set a specific number
+    )
+  end
+
+  desc "Increment Build Number - CircleCI"
+  lane :increment_build_number_circle_ci do |options|
+    increment_build_number(
+      build_number: ENV["CIRCLE_BUILD_NUM"] # set a specific number
+    )
+  end
+
 end
