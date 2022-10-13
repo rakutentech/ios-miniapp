@@ -21,12 +21,9 @@ jobs:
       RMA_DEMO_APP_BUILD_TYPE: ${{ secrets.RMA_DEMO_APP_BUILD_TYPE }}
       RMA_GAD_APPLICATION_IDENTIFIER: ${{ secrets.RMA_GAD_APPLICATION_IDENTIFIER }}
     steps:
-      
-    - name: Setup ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7.2
-        bundler-cache: true
+    - name: Repository checkout
+      if: contains(github.event.pull_request.labels.*.name, '✓')
+      uses: actions/checkout@v2
         
     - name: Run tests
       run: |
