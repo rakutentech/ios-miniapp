@@ -1,7 +1,6 @@
 import SwiftUI
 import UIKit
 import MiniApp
-import UIKit
 
 // swiftlint:disable line_length
 
