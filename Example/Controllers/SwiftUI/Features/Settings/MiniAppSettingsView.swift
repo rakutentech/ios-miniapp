@@ -140,6 +140,7 @@ struct MiniAppSettingsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
+                    dismissKeyboard()
                     viewModel.save()
                 }
                 .disabled((viewModel.config.listIProjectId.isEmpty || viewModel.config.listISubscriptionKey.isEmpty))
@@ -171,6 +172,10 @@ struct MiniAppSettingsView: View {
                 ()
             }
         }
+    }
+
+    func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
