@@ -18,7 +18,7 @@ jobs:
       RMA_API_ENDPOINT_STG: https://developers.rakuten.com/
       RMA_APP_CENTER_SECRET: test-appcenter
       RMA_DEMO_APP_BUILD_TYPE: -DEMO
-      RMA_GAD_APPLICATION_IDENTIFIER: test-gad-id
+      RMA_GAD_APPLICATION_IDENTIFIER: ca-app-pub-0000000000000000~0000000000
     steps:
     - name: Repository checkout
       uses: actions/checkout@v2
