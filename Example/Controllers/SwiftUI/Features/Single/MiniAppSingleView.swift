@@ -56,7 +56,6 @@ struct MiniAppSingleView: View {
                     }
                 }
                 .alert(item: $closeAlertMessage) { errorMessage in
-                    // test
                     Alert(
                         title: Text(errorMessage.title),
                         message: Text(errorMessage.message),
