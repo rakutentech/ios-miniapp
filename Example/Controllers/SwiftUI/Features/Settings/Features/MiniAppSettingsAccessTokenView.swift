@@ -46,6 +46,7 @@ struct MiniAppSettingsAccessTokenView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    trackButtonTap(pageName: "Access Token", buttonTitle: "Save")
                     viewModel.saveAccessTokenBehavior(behavior: accessTokenErrorBehavior)
                     viewModel.saveAccessTokenErrorString(text: accessTokenErrorString)
                     if viewModel.saveTokenDetails(accessToken: accessTokenString, date: expiryDate) {
@@ -69,6 +70,7 @@ struct MiniAppSettingsAccessTokenView: View {
             accessTokenString = tokenInfo.tokenString
             expiryDate = tokenInfo.expiryDate
         }
+        .trackPage(pageName: "Access Token")
     }
 }
 

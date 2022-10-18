@@ -123,6 +123,7 @@ struct MiniAppTermsView: View {
                 Spacer()
                 VStack {
                     Button {
+                        trackButtonTap(buttonTitle: "Accept")
                         viewModel.updatePermissions()
                         didAccept = true
                         // store.viewState = .success

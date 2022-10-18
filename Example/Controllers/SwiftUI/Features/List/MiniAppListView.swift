@@ -86,6 +86,7 @@ struct MiniAppListView: View {
                 }
             }
         }
+        .trackPage(pageName: title)
     }
 
     var config: MiniAppSdkConfig {

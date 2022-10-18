@@ -39,6 +39,7 @@ struct MiniAppSettingsProfileView: View {
                 HStack {
                     Spacer()
                     Button {
+                        trackButtonTap(pageName: "Proifle", buttonTitle: "Edit")
                         showImagePicker = true
                     } label: {
                         Text("Edit")
@@ -49,6 +50,7 @@ struct MiniAppSettingsProfileView: View {
                     }
 
                     Button {
+                        trackButtonTap(pageName: "Profile", buttonTitle: "Clear")
                         image = nil
                     } label: {
                         Text("Clear")
@@ -69,6 +71,7 @@ struct MiniAppSettingsProfileView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    trackButtonTap(pageName: "Profile", buttonTitle: "Save")
                     if viewModel.setUserDetails(name: name, imageUrl: image?.dataURI()) {
                         alertMessage = MiniAppAlertMessage(title: "Success", message: "Profile saved successfully")
                     } else {
@@ -92,6 +95,7 @@ struct MiniAppSettingsProfileView: View {
                 image = userDetails.profileImageURI?.convertBase64ToImage()
             }
         }
+        .trackPage(pageName: "Profile")
     }
 }
 

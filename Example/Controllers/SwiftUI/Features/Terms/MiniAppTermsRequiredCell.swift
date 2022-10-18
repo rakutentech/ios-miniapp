@@ -23,6 +23,7 @@ struct MiniAppTermsRequiredCell: View {
             }
         }
         .padding(5)
+        .trackCell(cellTitle: name)
     }
 }
 

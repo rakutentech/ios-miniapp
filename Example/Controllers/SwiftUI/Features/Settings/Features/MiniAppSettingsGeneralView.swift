@@ -19,6 +19,7 @@ struct MiniAppSettingsGeneralView: View {
             }
         }
         .navigationTitle("General")
+        .trackPage(pageName: "General")
     }
 }
 
@@ -64,6 +65,7 @@ extension MiniAppSettingsGeneralView {
             .onAppear {
                 parameters = getQueryParam()
             }
+            .trackPage(pageName: "Query Parameters")
         }
 
         func save() {
@@ -163,6 +165,7 @@ extension MiniAppSettingsGeneralView {
             .onAppear {
                 deepLinks = getDeepLinksList()
             }
+            .trackPage(pageName: "Deeplinks")
         }
 
         func save() {

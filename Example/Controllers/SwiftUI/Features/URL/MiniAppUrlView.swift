@@ -20,6 +20,7 @@ struct MiniAppUrlView: View {
                     .font(.system(size: 13))
 
                 Button(action: {
+                    trackButtonTap(pageName: "MiniApp (URL)", buttonTitle: "Load")
                     currentUrl = ""
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250), execute: {
                         currentUrl = url
@@ -55,6 +56,7 @@ struct MiniAppUrlView: View {
             }
         }
         .navigationTitle("MiniApp (URL)")
+        .trackPage(pageName: "MiniApp (URL)")
     }
 }
 

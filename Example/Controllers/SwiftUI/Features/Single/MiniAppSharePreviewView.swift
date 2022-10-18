@@ -43,6 +43,7 @@ struct MiniAppSharePreviewView: View {
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarLeading) {
                 CloseButton {
+                    trackButtonTap(pageName: "Share Preview", buttonTitle: "Back")
                     presentationMode.wrappedValue.dismiss()
                 }
             }
@@ -60,6 +61,7 @@ struct MiniAppSharePreviewView: View {
                 }
             }
         }
+        .trackPage(pageName: "Share Preview")
     }
 }
 

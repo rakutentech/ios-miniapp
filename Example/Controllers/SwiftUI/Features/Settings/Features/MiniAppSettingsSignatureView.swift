@@ -25,6 +25,7 @@ struct MiniAppSettingsSignatureView: View {
         .onChange(of: signatureMode) { newValue in
             viewModel.saveSignature(mode: newValue)
         }
+        .trackPage(pageName: "Signature")
     }
 }
 

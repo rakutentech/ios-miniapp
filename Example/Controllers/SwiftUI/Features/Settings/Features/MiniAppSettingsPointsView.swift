@@ -38,6 +38,7 @@ struct MiniAppSettingsPointsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    trackButtonTap(pageName: "Profile", buttonTitle: "Save")
                     guard
                         let spoints = Int(pointsStandard),
                         let tpoints = Int(pointsTerm),
@@ -67,6 +68,7 @@ struct MiniAppSettingsPointsView: View {
                 pointsCash = "0"
             }
         }
+        .trackPage(pageName: "Points")
     }
 }
 

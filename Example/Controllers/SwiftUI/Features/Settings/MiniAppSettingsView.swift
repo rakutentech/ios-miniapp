@@ -180,6 +180,7 @@ struct MiniAppSettingsView: View {
         .onAppear {
             UITextField.appearance().clearButtonMode = .whileEditing
         }
+        .trackPage(pageName: "Settings")
         .onReceive(viewModel.$state) { state in
             switch state {
             case .loading:

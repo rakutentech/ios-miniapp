@@ -21,6 +21,7 @@ struct MiniAppSettingsContactsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    trackButtonTap(pageName: "Contacts", buttonTitle: "Add")
                     newContact = viewModel.createRandomContact()
                 } label: {
                     Image(systemName: "plus")
@@ -46,6 +47,7 @@ struct MiniAppSettingsContactsView: View {
         .onAppear {
             contacts = viewModel.getContacts()
         }
+        .trackPage(pageName: "QA")
     }
 }
 

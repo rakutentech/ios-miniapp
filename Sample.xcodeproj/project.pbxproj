@@ -79,6 +79,7 @@
 		A15CC6BA28ED2CC5009B328D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */; };
 		A15CC6BC28ED2CD4009B328D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6BB28ED2CD4009B328D /* ContentView.swift */; };
 		A15CC6C028ED307C009B328D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A15CC6BD28ED3042009B328D /* LaunchScreen.xib */; };
+		A15CC6CE28FE4E90009B328D /* View+Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6CD28FE4E90009B328D /* View+Tracking.swift */; };
 		D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07452302567B72A00B6E842 /* MASDKErrorTests.swift */; };
 		D0CACE26281A68D700E39920 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CACE25281A68D700E39920 /* Base64UriHelper.swift */; };
 		F70DD8E728D417C4003EF1F1 /* MiniAppDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70DD8B928D417C3003EF1F1 /* MiniAppDashboardView.swift */; };
@@ -223,6 +224,7 @@
 		A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A15CC6BB28ED2CD4009B328D /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A15CC6BE28ED3042009B328D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		A15CC6CD28FE4E90009B328D /* View+Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Tracking.swift"; sourceTree = "<group>"; };
 		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D07452302567B72A00B6E842 /* MASDKErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKErrorTests.swift; sourceTree = "<group>"; };
 		D0CACE25281A68D700E39920 /* Base64UriHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
@@ -611,11 +613,11 @@
 		F70DD8CB28D417C3003EF1F1 /* Terms */ = {
 			isa = PBXGroup;
 			children = (
-				F70DD8CC28D417C3003EF1F1 /* MiniAppTermsOptionalCell.swift */,
 				F70DD8CD28D417C3003EF1F1 /* MiniAppTermsView.swift */,
 				F70DD8CE28D417C3003EF1F1 /* MiniAppWithTermsView.swift */,
 				F70DD8CF28D417C3003EF1F1 /* MiniAppWithTermsViewModel.swift */,
 				F70DD8D028D417C3003EF1F1 /* MiniAppTermsRequiredCell.swift */,
+				F70DD8CC28D417C3003EF1F1 /* MiniAppTermsOptionalCell.swift */,
 			);
 			path = Terms;
 			sourceTree = "<group>";
@@ -659,6 +661,7 @@
 				F70DD8E228D417C3003EF1F1 /* LocationManager.swift */,
 				F70DD8E328D417C3003EF1F1 /* MiniAppViewNavigationDelegator.swift */,
 				F77F61B028E54EE400F55818 /* CloseButton.swift */,
+				A15CC6CD28FE4E90009B328D /* View+Tracking.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -837,6 +840,7 @@
 				F77F61B128E54EE400F55818 /* CloseButton.swift in Sources */,
 				38920AF6251D9C57004C5DDD /* Array+MiniApp.swift in Sources */,
 				F70DD8F028D417C4003EF1F1 /* MiniAppSettingsSignatureView.swift in Sources */,
+				A15CC6CE28FE4E90009B328D /* View+Tracking.swift in Sources */,
 				38920AF7251D9C57004C5DDD /* Config.swift in Sources */,
 				F70DD90128D417C4003EF1F1 /* TextFieldStyle+MiniApp.swift in Sources */,
 				3857ED7E25DEE0690083F3E1 /* Bundle+MiniApp.swift in Sources */,
@@ -1068,7 +1072,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5.0.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				EXCLUDED_SOURCE_FILE_NAMES = "/Binary/*";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1081,6 +1085,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MODULE_NAME = ExampleApp;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS $(inherited) -D RMA_SDK_ADMOB -D RMA_SDK_ADMOB8 $(inherited) -D RMA_SDK_SIGNATURE -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.miniapp.MiniAppDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1094,7 +1099,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5.0.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				EXCLUDED_SOURCE_FILE_NAMES = "/Binary/*";
 				GENERATE_INFOPLIST_FILE = YES;

@@ -20,6 +20,7 @@ struct MiniAppFeatureListView: View {
         .listStyle(InsetGroupedListStyle())
         .navigationTitle("Features")
         .navigationBarTitleDisplayMode(.inline)
+        .trackPage(pageName: "Features")
     }
 }
 
