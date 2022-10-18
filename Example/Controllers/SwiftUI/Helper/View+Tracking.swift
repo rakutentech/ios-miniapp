@@ -2,10 +2,10 @@ import SwiftUI
 import MiniApp
 
 struct PageTrackingModifier: ViewModifier {
-    
+
     var pageName: String?
     var siteSection: String?
-    
+
     func body(content: Content) -> some View {
         let siteSection = !(siteSection?.isEmpty ?? true) ? siteSection : pageName
         content
