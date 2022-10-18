@@ -49,6 +49,7 @@ extension MiniAppSettingsGeneralView {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        trackButtonTap(pageName: "Query Parameters", buttonTitle: "Save")
                         save()
                     } label: {
                         Text("Save")
@@ -129,6 +130,7 @@ extension MiniAppSettingsGeneralView {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        trackButtonTap(pageName: "Settings", buttonTitle: "Add")
                         isAddPresented = true
                     } label: {
                         Image(systemName: "plus")
@@ -149,6 +151,7 @@ extension MiniAppSettingsGeneralView {
                             .toolbar {
                                 ToolbarItem(placement: .navigationBarTrailing) {
                                     Button {
+                                        trackButtonTap(pageName: "Deeplinks", buttonTitle: "Save")
                                         deepLinks.append(newDeepLinkText)
                                         isAddPresented = false
                                         save()

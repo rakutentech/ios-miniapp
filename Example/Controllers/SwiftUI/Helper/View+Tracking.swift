@@ -110,4 +110,18 @@ extension View {
         print("track button tap: \(pageName ?? "-"), \(siteSection ?? "-"), \(buttonTitle ?? "-"), Button")
         #endif
     }
+    func trackSegmentedTap(pageName: String? = nil, siteSection: String? = nil, segmentTitle: String?) {
+        #if !DEBUG
+        DemoAppAnalytics.sendAnalytics(
+            eventType: .click,
+            actionType: .changeStatus,
+            pageName: pageName,
+            siteSection: siteSection,
+            componentName: segmentTitle,
+            elementType: "Segmented"
+        )
+        #else
+        print("track segmented tap: \(pageName ?? "-"), \(siteSection ?? "-"), \(segmentTitle ?? "-"), Segmented")
+        #endif
+    }
 }

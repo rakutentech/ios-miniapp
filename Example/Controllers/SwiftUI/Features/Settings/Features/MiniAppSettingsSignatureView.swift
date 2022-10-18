@@ -16,9 +16,12 @@ struct MiniAppSettingsSignatureView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.vertical, 15)
+                .onChange(of: signatureMode, perform: { mode in
+                    trackSegmentedTap(pageName: "Signature", segmentTitle: mode.name)
+                })
             }
         }
-        .navigationTitle("demo.app.rat.page.name.custom.signature.verification")
+        .navigationTitle("Signature")
         .onAppear {
             signatureMode = viewModel.getSignature()
         }

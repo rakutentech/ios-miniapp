@@ -21,6 +21,9 @@ struct MiniAppSettingsAccessTokenView: View {
                         }
                     }
                     .pickerStyle(.segmented)
+                    .onChange(of: accessTokenErrorBehavior, perform: { behavior in
+                        trackSegmentedTap(pageName: "Access Token", segmentTitle: behavior.name)
+                    })
 
                     TextField("Custom error message", text: $accessTokenErrorString)
                     .textFieldStyle(MiniAppTextFieldStyle())

@@ -62,6 +62,9 @@ struct MiniAppSettingsView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.vertical, 15)
+                .onChange(of: selectedListConfig, perform: { config in
+                    trackSegmentedTap(pageName: "Settings", segmentTitle: config.name)
+                })
 
                 switch viewModel.config.environmentMode {
                 case .production:
@@ -164,6 +167,7 @@ struct MiniAppSettingsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
+                    trackButtonTap(pageName: "Settings", buttonTitle: "Save")
                     dismissKeyboard()
                     viewModel.save()
                 }
@@ -180,7 +184,6 @@ struct MiniAppSettingsView: View {
         .onAppear {
             UITextField.appearance().clearButtonMode = .whileEditing
         }
-        .trackPage(pageName: "Settings")
         .onReceive(viewModel.$state) { state in
             switch state {
             case .loading:
@@ -200,6 +203,7 @@ struct MiniAppSettingsView: View {
                 ()
             }
         }
+        .trackPage(pageName: "Settings")
     }
 
     func dismissKeyboard() {
