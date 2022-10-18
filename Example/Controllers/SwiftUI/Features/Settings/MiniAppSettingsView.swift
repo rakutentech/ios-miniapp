@@ -67,28 +67,52 @@ struct MiniAppSettingsView: View {
                 case .production:
                     switch selectedListConfig {
                     case .listI:
-                        TextField(viewModel.config.listIProjectIdPlaceholder, text: $viewModel.config.listIProjectId)
-                            .padding(.vertical, 15)
-                        TextField(viewModel.config.listISubscriptionKeyPlaceholder, text: $viewModel.config.listISubscriptionKey)
-                            .padding(.vertical, 15)
+                        TextField(
+                            viewModel.config.listIProjectIdPlaceholder,
+                            text: $viewModel.config.listIProjectId
+                        )
+                        .padding(.vertical, 15)
+                        TextField(
+                            viewModel.config.listISubscriptionKeyPlaceholder,
+                            text: $viewModel.config.listISubscriptionKey
+                        )
+                        .padding(.vertical, 15)
                     case .listII:
-                        TextField(viewModel.config.listIProjectIdPlaceholder, text: $viewModel.config.listIIProjectId)
-                            .padding(.vertical, 15)
-                        TextField(viewModel.config.listISubscriptionKeyPlaceholder, text: $viewModel.config.listIISubscriptionKey)
-                            .padding(.vertical, 15)
+                        TextField(
+                            viewModel.config.listIProjectIdPlaceholder,
+                            text: $viewModel.config.listIIProjectId
+                        )
+                        .padding(.vertical, 15)
+                        TextField(
+                            viewModel.config.listISubscriptionKeyPlaceholder,
+                            text: $viewModel.config.listIISubscriptionKey
+                        )
+                        .padding(.vertical, 15)
                     }
                 case .staging:
                     switch selectedListConfig {
                     case .listI:
-                        TextField("Project Id", text: $viewModel.config.listIStagingProjectId)
-                            .padding(.vertical, 15)
-                        TextField("Subscription Key", text: $viewModel.config.listIStagingSubscriptionKey)
-                            .padding(.vertical, 15)
+                        TextField(
+                            "Project Id",
+                            text: $viewModel.config.listIStagingProjectId
+                        )
+                        .padding(.vertical, 15)
+                        TextField(
+                            "Subscription Key",
+                            text: $viewModel.config.listIStagingSubscriptionKey
+                        )
+                        .padding(.vertical, 15)
                     case .listII:
-                        TextField("Project Id", text: $viewModel.config.listIIStagingProjectId)
-                            .padding(.vertical, 15)
-                        TextField("Subscription Key", text: $viewModel.config.listIIStagingSubscriptionKey)
-                            .padding(.vertical, 15)
+                        TextField(
+                            "Project Id",
+                            text: $viewModel.config.listIIStagingProjectId
+                        )
+                        .padding(.vertical, 15)
+                        TextField(
+                            "Subscription Key",
+                            text: $viewModel.config.listIIStagingSubscriptionKey
+                        )
+                        .padding(.vertical, 15)
                     }
                 }
 
@@ -140,6 +164,7 @@ struct MiniAppSettingsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
+                    dismissKeyboard()
                     viewModel.save()
                 }
                 .disabled((viewModel.config.listIProjectId.isEmpty || viewModel.config.listISubscriptionKey.isEmpty))
@@ -151,6 +176,9 @@ struct MiniAppSettingsView: View {
                 message: Text(errorMessage.message),
                 dismissButton: .default(Text("Ok"))
             )
+        }
+        .onAppear {
+            UITextField.appearance().clearButtonMode = .whileEditing
         }
         .onReceive(viewModel.$state) { state in
             switch state {
@@ -171,6 +199,10 @@ struct MiniAppSettingsView: View {
                 ()
             }
         }
+    }
+
+    func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
