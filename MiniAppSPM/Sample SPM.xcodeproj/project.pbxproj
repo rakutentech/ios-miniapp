@@ -86,6 +86,8 @@
 		F74AA112283C65AB00087718 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA111283C65AB00087718 /* Nimble */; };
 		F74AA115283C65E300087718 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = F74AA114283C65E300087718 /* Quick */; };
 		F758977128FE789300D04B62 /* View+Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F758977028FE789300D04B62 /* View+Tracking.swift */; };
+		F7589773290260AA00D04B62 /* DemoAppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7589772290260AA00D04B62 /* DemoAppAnalytics.swift */; };
+		F7589775290260B700D04B62 /* View+Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7589774290260B700D04B62 /* View+Tracking.swift */; };
 		F75D49DD28C5B83A0053F74E /* MiniAppDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49BC28C5B83A0053F74E /* MiniAppDashboardView.swift */; };
 		F75D49DE28C5B83A0053F74E /* MiniAppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49BF28C5B83A0053F74E /* MiniAppSettingsViewModel.swift */; };
 		F75D49DF28C5B83A0053F74E /* MiniAppSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D49C028C5B83A0053F74E /* MiniAppSettingsView.swift */; };
@@ -222,6 +224,8 @@
 		F74AA0DA283C651300087718 /* MiniAppKeyChainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppKeyChainTests.swift; sourceTree = "<group>"; };
 		F74AA0DC283C651300087718 /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
 		F758977028FE789300D04B62 /* View+Tracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Tracking.swift"; sourceTree = "<group>"; };
+		F7589772290260AA00D04B62 /* DemoAppAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DemoAppAnalytics.swift; path = ../Controllers/SwiftUI/Helper/DemoAppAnalytics.swift; sourceTree = "<group>"; };
+		F7589774290260B700D04B62 /* View+Tracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "View+Tracking.swift"; path = "../Controllers/SwiftUI/Helper/View+Tracking.swift"; sourceTree = "<group>"; };
 		F75D49BC28C5B83A0053F74E /* MiniAppDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppDashboardView.swift; sourceTree = "<group>"; };
 		F75D49BF28C5B83A0053F74E /* MiniAppSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSettingsViewModel.swift; sourceTree = "<group>"; };
 		F75D49C028C5B83A0053F74E /* MiniAppSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSettingsView.swift; sourceTree = "<group>"; };
@@ -344,6 +348,8 @@
 				3105757A27EE213400D93B06 /* UIViewController+MiniApp.swift */,
 				3105757B27EE213400D93B06 /* MiniApp+UIImage.swift */,
 				3105757C27EE213400D93B06 /* Bundle+MiniApp.swift */,
+				F7589774290260B700D04B62 /* View+Tracking.swift */,
+				F7589772290260AA00D04B62 /* DemoAppAnalytics.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -826,6 +832,7 @@
 				310575C627EE213400D93B06 /* MiniApp+UIImage.swift in Sources */,
 				310575BE27EE213400D93B06 /* Array+MiniApp.swift in Sources */,
 				F75D49FF28C6F3B70053F74E /* MiniAppSettingsPointsView.swift in Sources */,
+				F7589773290260AA00D04B62 /* DemoAppAnalytics.swift in Sources */,
 				F7C0BCF228D072A400C56C2E /* MiniAppSharePreviewView.swift in Sources */,
 				310575C727EE213400D93B06 /* Bundle+MiniApp.swift in Sources */,
 				A1B4E6E428E6C7E7009ED66F /* SampleApp.swift in Sources */,
@@ -873,6 +880,7 @@
 				F75D4A0F28CAF6ED0053F74E /* MiniAppSettingsListCellView.swift in Sources */,
 				310575BF27EE213400D93B06 /* UIColor+MiniApp.swift in Sources */,
 				310575BC27EE213400D93B06 /* Encodable+MiniApp.swift in Sources */,
+				F7589775290260B700D04B62 /* View+Tracking.swift in Sources */,
 				F75D49E928C5B83A0053F74E /* MiniAppTermsRequiredCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
