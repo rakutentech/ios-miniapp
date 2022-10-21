@@ -76,6 +76,7 @@
 		A15CC6BC28ED2CD4009B328D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6BB28ED2CD4009B328D /* ContentView.swift */; };
 		A15CC6C028ED307C009B328D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A15CC6BD28ED3042009B328D /* LaunchScreen.xib */; };
 		A15CC6CE28FE4E90009B328D /* View+Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6CD28FE4E90009B328D /* View+Tracking.swift */; };
+		A15CC6DC29025B2B009B328D /* DemoAppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6DB29025B2B009B328D /* DemoAppAnalytics.swift */; };
 		D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07452302567B72A00B6E842 /* MASDKErrorTests.swift */; };
 		D0CACE26281A68D700E39920 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CACE25281A68D700E39920 /* Base64UriHelper.swift */; };
 		F70DD8E728D417C4003EF1F1 /* MiniAppDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70DD8B928D417C3003EF1F1 /* MiniAppDashboardView.swift */; };
@@ -217,6 +218,7 @@
 		A15CC6BB28ED2CD4009B328D /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A15CC6BE28ED3042009B328D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		A15CC6CD28FE4E90009B328D /* View+Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Tracking.swift"; sourceTree = "<group>"; };
+		A15CC6DB29025B2B009B328D /* DemoAppAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppAnalytics.swift; sourceTree = "<group>"; };
 		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D07452302567B72A00B6E842 /* MASDKErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKErrorTests.swift; sourceTree = "<group>"; };
 		D0CACE25281A68D700E39920 /* Base64UriHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
@@ -642,6 +644,7 @@
 				F70DD8E328D417C3003EF1F1 /* MiniAppViewNavigationDelegator.swift */,
 				F77F61B028E54EE400F55818 /* CloseButton.swift */,
 				A15CC6CD28FE4E90009B328D /* View+Tracking.swift */,
+				A15CC6DB29025B2B009B328D /* DemoAppAnalytics.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -792,6 +795,7 @@
 				3180E6C12689A21000B6B590 /* Print+MiniApp.swift in Sources */,
 				F70DD90428D417C4003EF1F1 /* ImagePicker.swift in Sources */,
 				F70DD8FE28D417C4003EF1F1 /* MiniAppListRowCell.swift in Sources */,
+				A15CC6DC29025B2B009B328D /* DemoAppAnalytics.swift in Sources */,
 				F70DD8F828D417C4003EF1F1 /* MiniAppTermsRequiredCell.swift in Sources */,
 				F70DD8ED28D417C4003EF1F1 /* MiniAppSettingsContactsView.swift in Sources */,
 				F70DD90028D417C4003EF1F1 /* RemoteImageView.swift in Sources */,
