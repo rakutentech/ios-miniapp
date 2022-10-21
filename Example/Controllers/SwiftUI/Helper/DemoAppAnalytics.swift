@@ -1,4 +1,5 @@
 import Foundation
+import MiniApp
 import RAnalytics
 
 internal enum DemoAppRATEventType: String, CaseIterable {
@@ -70,7 +71,6 @@ class DemoAppAnalytics {
 		return component + "-" + element + "." + action.rawValue
 	}
 }
-
 
 internal class RATNotificationCenter {
 	static func sendAnalytics(
