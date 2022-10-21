@@ -21,6 +21,9 @@ struct MiniAppSettingsAccessTokenView: View {
                         }
                     }
                     .pickerStyle(.segmented)
+                    .onChange(of: accessTokenErrorBehavior, perform: { behavior in
+                        trackSegmentedTap(pageName: pageName, segmentTitle: behavior.name)
+                    })
 
                     TextField("Custom error message", text: $accessTokenErrorString)
                     .textFieldStyle(MiniAppTextFieldStyle())
@@ -42,10 +45,11 @@ struct MiniAppSettingsAccessTokenView: View {
             }
 
         }
-        .navigationTitle("Access Token")
+        .navigationTitle(pageName)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    trackButtonTap(pageName: pageName, buttonTitle: "Save")
                     viewModel.saveAccessTokenBehavior(behavior: accessTokenErrorBehavior)
                     viewModel.saveAccessTokenErrorString(text: accessTokenErrorString)
                     if viewModel.saveTokenDetails(accessToken: accessTokenString, date: expiryDate) {
@@ -69,7 +73,14 @@ struct MiniAppSettingsAccessTokenView: View {
             accessTokenString = tokenInfo.tokenString
             expiryDate = tokenInfo.expiryDate
         }
+        .trackPage(pageName: pageName)
     }
+}
+
+extension MiniAppSettingsAccessTokenView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.access_token", comment: "")
+	}
 }
 
 struct MiniAppSettingsAccessTokenView_Previews: PreviewProvider {

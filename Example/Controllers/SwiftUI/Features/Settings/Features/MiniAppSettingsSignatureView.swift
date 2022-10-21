@@ -16,16 +16,26 @@ struct MiniAppSettingsSignatureView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.vertical, 15)
+                .onChange(of: signatureMode, perform: { mode in
+                    trackSegmentedTap(pageName: pageName, segmentTitle: mode.name)
+                })
             }
         }
-        .navigationTitle("demo.app.rat.page.name.custom.signature.verification")
+        .navigationTitle(pageName)
         .onAppear {
             signatureMode = viewModel.getSignature()
         }
         .onChange(of: signatureMode) { newValue in
             viewModel.saveSignature(mode: newValue)
         }
+        .trackPage(pageName: pageName)
     }
+}
+
+extension MiniAppSettingsSignatureView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.signature.verification", comment: "")
+	}
 }
 
 struct MiniAppSettingsSignatureView_Previews: PreviewProvider {

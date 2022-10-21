@@ -46,6 +46,7 @@ struct MiniAppSingleView: View {
 
             ToolbarItem(placement: .navigationBarLeading) {
                 CloseButton {
+                    trackButtonTap(pageName: pageName, buttonTitle: "Close")
                     if let closeInfo = handler.closeAlertInfo?(), closeInfo.shouldDisplay ?? true {
                         closeAlertMessage = MiniAppAlertMessage(
                             title: closeInfo.title ?? "",
@@ -69,6 +70,7 @@ struct MiniAppSingleView: View {
 
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
+                    trackButtonTap(pageName: pageName, buttonTitle: "Back")
                     handler.action = .goBack
                 } label: {
                     Image(systemName: "chevron.backward")
@@ -78,6 +80,7 @@ struct MiniAppSingleView: View {
 
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
+                    trackButtonTap(pageName: pageName, buttonTitle: "Forward")
                     handler.action = .goForward
                 } label: {
                     Image(systemName: "chevron.forward")
@@ -87,6 +90,7 @@ struct MiniAppSingleView: View {
 
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    trackButtonTap(pageName: pageName, buttonTitle: "Share")
                     isSharePreviewPresented = true
                 } label: {
                     Image(systemName: "square.and.arrow.up")
@@ -101,6 +105,7 @@ struct MiniAppSingleView: View {
 
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    trackButtonTap(pageName: pageName, buttonTitle: "Permissions")
                     openPermissionSettings()
                 } label: {
                     Image(systemName: "gearshape")
@@ -116,12 +121,14 @@ struct MiniAppSingleView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
+                            trackButtonTap(pageName: "Permissions", buttonTitle: "Cancel")
                             permissionRequest = nil
                         } label: {
                             Text("Cancel")
                         }
                     }
                 }
+                .trackPage(pageName: "Permissions")
             }
         })
         .onChange(of: didAcceptSettingsTerms, perform: { accepted in
@@ -138,6 +145,7 @@ struct MiniAppSingleView: View {
                 ()
             }
         }
+        .trackPage(pageName: pageName)
     }
 
     func openPermissionSettings() {
@@ -150,6 +158,12 @@ struct MiniAppSingleView: View {
             }
         }
     }
+}
+
+extension MiniAppSingleView: ViewTrackable {
+	var pageName: String {
+		return handler.miniAppTitle?() ?? "MiniAppSingleView"
+	}
 }
 
 struct MiniAppSingleView_Previews: PreviewProvider {

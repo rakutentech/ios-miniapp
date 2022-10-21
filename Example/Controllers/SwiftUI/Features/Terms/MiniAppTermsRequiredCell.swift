@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MiniAppTermsRequiredCell: View {
 
+	@State var pageName: String?
     @State var name: String
     @State var description: String?
 
@@ -23,6 +24,7 @@ struct MiniAppTermsRequiredCell: View {
             }
         }
         .padding(5)
+		.trackCell(pageName: pageName, cellTitle: name)
     }
 }
 

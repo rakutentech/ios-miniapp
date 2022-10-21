@@ -13,14 +13,10 @@
 		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
-		2A7C7EC826DDA76300520DF9 /* Swizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7C7EC726DDA76300520DF9 /* Swizzling.swift */; };
-		2AA894BA26D6895F0078B2F4 /* RATNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA894B926D6895F0078B2F4 /* RATNotificationCenter.swift */; };
-		2AA894D226D697520078B2F4 /* DemoAppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA894D126D697520078B2F4 /* DemoAppAnalytics.swift */; };
 		2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */; };
 		2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */; };
 		2AB1B0E926A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */; };
 		2AB1B0F026A6DB77004CAC1B /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */; };
-		2AB8499426E069720028870A /* RATController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB8499326E069720028870A /* RATController.swift */; };
 		2AD324EA271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD324E9271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift */; };
 		2AFDE8EA27B1221100B7B340 /* MiniAppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFDE8E927B1221000B7B340 /* MiniAppVersionTests.swift */; };
 		2AFDE8EC27B1222A00B7B340 /* MiniAppManifestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFDE8EB27B1222A00B7B340 /* MiniAppManifestTests.swift */; };
@@ -79,6 +75,7 @@
 		A15CC6BA28ED2CC5009B328D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */; };
 		A15CC6BC28ED2CD4009B328D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6BB28ED2CD4009B328D /* ContentView.swift */; };
 		A15CC6C028ED307C009B328D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A15CC6BD28ED3042009B328D /* LaunchScreen.xib */; };
+		A15CC6CE28FE4E90009B328D /* View+Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6CD28FE4E90009B328D /* View+Tracking.swift */; };
 		D07452312567B72A00B6E842 /* MASDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07452302567B72A00B6E842 /* MASDKErrorTests.swift */; };
 		D0CACE26281A68D700E39920 /* Base64UriHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CACE25281A68D700E39920 /* Base64UriHelper.swift */; };
 		F70DD8E728D417C4003EF1F1 /* MiniAppDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70DD8B928D417C3003EF1F1 /* MiniAppDashboardView.swift */; };
@@ -141,14 +138,10 @@
 		185DBD6124B2A06300CD2094 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
-		2A7C7EC726DDA76300520DF9 /* Swizzling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swizzling.swift; sourceTree = "<group>"; };
-		2AA894B926D6895F0078B2F4 /* RATNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RATNotificationCenter.swift; sourceTree = "<group>"; };
-		2AA894D126D697520078B2F4 /* DemoAppAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppAnalytics.swift; sourceTree = "<group>"; };
 		2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKLocaleTests.swift; sourceTree = "<group>"; };
 		2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalWebViewControllerTests.swift; sourceTree = "<group>"; };
 		2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPermissionsViewControllerTests.swift; sourceTree = "<group>"; };
 		2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
-		2AB8499326E069720028870A /* RATController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RATController.swift; sourceTree = "<group>"; };
 		2AD324E9271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewMiniAppFetcherTests.swift; sourceTree = "<group>"; };
 		2AFDE8E927B1221000B7B340 /* MiniAppVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppVersionTests.swift; sourceTree = "<group>"; };
 		2AFDE8EB27B1222A00B7B340 /* MiniAppManifestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppManifestTests.swift; sourceTree = "<group>"; };
@@ -223,6 +216,7 @@
 		A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A15CC6BB28ED2CD4009B328D /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A15CC6BE28ED3042009B328D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		A15CC6CD28FE4E90009B328D /* View+Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Tracking.swift"; sourceTree = "<group>"; };
 		A78AF8E4D879DF8FC03A7E9F /* MiniApp.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = MiniApp.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D07452302567B72A00B6E842 /* MASDKErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKErrorTests.swift; sourceTree = "<group>"; };
 		D0CACE25281A68D700E39920 /* Base64UriHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64UriHelper.swift; sourceTree = "<group>"; };
@@ -306,17 +300,6 @@
 			);
 			name = Config;
 			path = Example/Config;
-			sourceTree = "<group>";
-		};
-		2AA894B826D6893B0078B2F4 /* Analytics */ = {
-			isa = PBXGroup;
-			children = (
-				2AB8499326E069720028870A /* RATController.swift */,
-				2AA894B926D6895F0078B2F4 /* RATNotificationCenter.swift */,
-				2AA894D126D697520078B2F4 /* DemoAppAnalytics.swift */,
-				2A7C7EC726DDA76300520DF9 /* Swizzling.swift */,
-			);
-			path = Analytics;
 			sourceTree = "<group>";
 		};
 		2AB1B0D126A6D625004CAC1B /* core */ = {
@@ -510,7 +493,6 @@
 				A15CC6BB28ED2CD4009B328D /* ContentView.swift */,
 				3878D4D123B44F85001E27F8 /* AppDelegate.swift */,
 				A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */,
-				2AA894B826D6893B0078B2F4 /* Analytics */,
 				38920ACA251D9C57004C5DDD /* Utils */,
 				38920AD4251D9C57004C5DDD /* Models */,
 				38920AE0251D9C57004C5DDD /* Controllers */,
@@ -611,11 +593,11 @@
 		F70DD8CB28D417C3003EF1F1 /* Terms */ = {
 			isa = PBXGroup;
 			children = (
-				F70DD8CC28D417C3003EF1F1 /* MiniAppTermsOptionalCell.swift */,
 				F70DD8CD28D417C3003EF1F1 /* MiniAppTermsView.swift */,
 				F70DD8CE28D417C3003EF1F1 /* MiniAppWithTermsView.swift */,
 				F70DD8CF28D417C3003EF1F1 /* MiniAppWithTermsViewModel.swift */,
 				F70DD8D028D417C3003EF1F1 /* MiniAppTermsRequiredCell.swift */,
+				F70DD8CC28D417C3003EF1F1 /* MiniAppTermsOptionalCell.swift */,
 			);
 			path = Terms;
 			sourceTree = "<group>";
@@ -659,6 +641,7 @@
 				F70DD8E228D417C3003EF1F1 /* LocationManager.swift */,
 				F70DD8E328D417C3003EF1F1 /* MiniAppViewNavigationDelegator.swift */,
 				F77F61B028E54EE400F55818 /* CloseButton.swift */,
+				A15CC6CD28FE4E90009B328D /* View+Tracking.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -809,7 +792,6 @@
 				3180E6C12689A21000B6B590 /* Print+MiniApp.swift in Sources */,
 				F70DD90428D417C4003EF1F1 /* ImagePicker.swift in Sources */,
 				F70DD8FE28D417C4003EF1F1 /* MiniAppListRowCell.swift in Sources */,
-				2AB8499426E069720028870A /* RATController.swift in Sources */,
 				F70DD8F828D417C4003EF1F1 /* MiniAppTermsRequiredCell.swift in Sources */,
 				F70DD8ED28D417C4003EF1F1 /* MiniAppSettingsContactsView.swift in Sources */,
 				F70DD90028D417C4003EF1F1 /* RemoteImageView.swift in Sources */,
@@ -837,6 +819,7 @@
 				F77F61B128E54EE400F55818 /* CloseButton.swift in Sources */,
 				38920AF6251D9C57004C5DDD /* Array+MiniApp.swift in Sources */,
 				F70DD8F028D417C4003EF1F1 /* MiniAppSettingsSignatureView.swift in Sources */,
+				A15CC6CE28FE4E90009B328D /* View+Tracking.swift in Sources */,
 				38920AF7251D9C57004C5DDD /* Config.swift in Sources */,
 				F70DD90128D417C4003EF1F1 /* TextFieldStyle+MiniApp.swift in Sources */,
 				3857ED7E25DEE0690083F3E1 /* Bundle+MiniApp.swift in Sources */,
@@ -848,7 +831,6 @@
 				F70DD8E728D417C4003EF1F1 /* MiniAppDashboardView.swift in Sources */,
 				F70DD8F128D417C4003EF1F1 /* MiniAppSettingsListCellView.swift in Sources */,
 				F70DD90828D417C4003EF1F1 /* MiniAppStore.swift in Sources */,
-				2AA894BA26D6895F0078B2F4 /* RATNotificationCenter.swift in Sources */,
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
 				D0CACE26281A68D700E39920 /* Base64UriHelper.swift in Sources */,
 				38920AF4251D9C57004C5DDD /* String+MiniApp.swift in Sources */,
@@ -856,9 +838,7 @@
 				F70DD8FA28D417C4003EF1F1 /* MiniAppSingleView.swift in Sources */,
 				38920AFB251D9C57004C5DDD /* UserProfileModel.swift in Sources */,
 				F70DD90928D417C4003EF1F1 /* MiniAppPermissionService.swift in Sources */,
-				2AA894D226D697520078B2F4 /* DemoAppAnalytics.swift in Sources */,
 				31850BC1269837F300CFE422 /* UIColor+MiniApp.swift in Sources */,
-				2A7C7EC826DDA76300520DF9 /* Swizzling.swift in Sources */,
 				F70DD90328D417C4003EF1F1 /* MiniAppViewMessageDelegator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1068,7 +1048,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5.0.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				EXCLUDED_SOURCE_FILE_NAMES = "/Binary/*";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1081,6 +1061,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MODULE_NAME = ExampleApp;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS $(inherited) -D RMA_SDK_ADMOB -D RMA_SDK_ADMOB8 $(inherited) -D RMA_SDK_SIGNATURE -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.miniapp.MiniAppDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1094,7 +1075,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5.0.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				EXCLUDED_SOURCE_FILE_NAMES = "/Binary/*";
 				GENERATE_INFOPLIST_FILE = YES;

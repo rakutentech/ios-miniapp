@@ -86,11 +86,18 @@ struct MiniAppListView: View {
                 }
             }
         }
+        .trackPage(pageName: title)
     }
 
     var config: MiniAppSdkConfig {
         viewModel.config
     }
+}
+
+extension MiniAppListView: ViewTrackable {
+	var pageName: String {
+		return title
+	}
 }
 
 struct MiniAppListView_Previews: PreviewProvider {

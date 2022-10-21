@@ -38,11 +38,12 @@ struct MiniAppSharePreviewView: View {
                 Spacer()
             }
         }
-        .navigationTitle("Share Preview")
+        .navigationTitle(pageName)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarLeading) {
                 CloseButton {
+                    trackButtonTap(pageName: pageName, buttonTitle: "Back")
                     presentationMode.wrappedValue.dismiss()
                 }
             }
@@ -60,7 +61,14 @@ struct MiniAppSharePreviewView: View {
                 }
             }
         }
+        .trackPage(pageName: pageName)
     }
+}
+
+extension MiniAppSharePreviewView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.share.preview", comment: "")
+	}
 }
 
 struct MiniAppSharePreviewView_Previews: PreviewProvider {

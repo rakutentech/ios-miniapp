@@ -18,9 +18,16 @@ struct MiniAppFeatureListView: View {
             }
         }
         .listStyle(InsetGroupedListStyle())
-        .navigationTitle("Features")
+        .navigationTitle(pageName)
         .navigationBarTitleDisplayMode(.inline)
+        .trackPage(pageName: pageName)
     }
+}
+
+extension MiniAppFeatureListView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.features", comment: "")
+	}
 }
 
 struct MiniAppFeatureListView_Previews: PreviewProvider {

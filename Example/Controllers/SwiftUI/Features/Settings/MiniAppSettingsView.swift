@@ -62,6 +62,9 @@ struct MiniAppSettingsView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.vertical, 15)
+                .onChange(of: selectedListConfig, perform: { config in
+                    trackSegmentedTap(pageName: "Settings", segmentTitle: config.name)
+                })
 
                 switch viewModel.config.environmentMode {
                 case .production:
@@ -159,11 +162,12 @@ struct MiniAppSettingsView: View {
             Text(viewModel.getBuildVersionText())
         }
         .font(.system(size: 13))
-        .navigationTitle("Settings")
+        .navigationTitle(pageName)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
+                    trackButtonTap(pageName: pageName, buttonTitle: "Save")
                     dismissKeyboard()
                     viewModel.save()
                 }
@@ -199,6 +203,7 @@ struct MiniAppSettingsView: View {
                 ()
             }
         }
+        .trackPage(pageName: pageName)
     }
 
     func dismissKeyboard() {
@@ -210,6 +215,12 @@ struct MiniAppAlertMessage: Identifiable {
     let id = UUID().uuidString
     let title: String
     let message: String
+}
+
+extension MiniAppSettingsView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.settings", comment: "")
+	}
 }
 
 struct MiniAppFeatureConfigView_Previews: PreviewProvider {

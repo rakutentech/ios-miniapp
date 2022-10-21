@@ -18,8 +18,15 @@ struct MiniAppSettingsGeneralView: View {
                 Label("Deep Links", systemImage: "link")
             }
         }
-        .navigationTitle("General")
+        .navigationTitle(pageName)
+        .trackPage(pageName: pageName)
     }
+}
+
+extension MiniAppSettingsGeneralView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.general", comment: "")
+	}
 }
 
 struct MiniAppSettingsGeneralView_Previews: PreviewProvider {
@@ -30,7 +37,7 @@ struct MiniAppSettingsGeneralView_Previews: PreviewProvider {
 
 extension MiniAppSettingsGeneralView {
 
-    struct QueryParametersView: View {
+    struct QueryParametersView: View, ViewTrackable {
 
         @Environment(\.presentationMode) var presentationMode
 
@@ -44,10 +51,11 @@ extension MiniAppSettingsGeneralView {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
             }
-            .navigationTitle("Query Parameters")
+            .navigationTitle(pageName)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        trackButtonTap(pageName: pageName, buttonTitle: "Save")
                         save()
                     } label: {
                         Text("Save")
@@ -64,6 +72,7 @@ extension MiniAppSettingsGeneralView {
             .onAppear {
                 parameters = getQueryParam()
             }
+            .trackPage(pageName: pageName)
         }
 
         func save() {
@@ -74,100 +83,127 @@ extension MiniAppSettingsGeneralView {
             }
         }
 
+		var pageName: String {
+			return NSLocalizedString("demo.app.rat.page.name.queryparam", comment: "")
+		}
     }
 
-    struct DeepLinkView: View {
+    struct DeepLinkView: View, ViewTrackable {
+
+		@Environment(\.presentationMode) var presentationMode
 
         @ObservedObject var viewModel: MiniAppSettingsViewModel
 
         @State var deepLinks: [String] = []
 
-        @State private var newDeepLinkText: String = ""
         @State private var isAddPresented: Bool = false
-        @State private var isDetailPresented: Bool = false
+		@State private var selectedIndex: Int?
 
         var body: some View {
             List {
-                ForEach($deepLinks, id: \.self) { deeplink in
+				ForEach(deepLinks.indices, id: \.self) { index in
                     Button {
-                        isDetailPresented = true
+                        selectedIndex = index
                     } label: {
-                        Text(deeplink.wrappedValue)
+                        Text(deepLinks[index])
                     }
-                    .sheet(isPresented: $isDetailPresented, content: {
-                        NavigationView {
-                            Form {
-                                VStack(alignment: .leading) {
-                                    Text("Please enter valid deep link")
-                                        .font(.system(size: 13, weight: .medium))
-                                    TextField("Deeplink", text: deeplink)
-                                        .autocapitalization(.none)
-                                }
-                                .padding(.vertical, 15)
-                            }
-                            .navigationTitle("Deeplink")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar {
-                                ToolbarItem(placement: .navigationBarTrailing) {
-                                    Button {
-                                        isDetailPresented = false
-                                        save()
-                                    } label: {
-                                        Text("Save")
-                                    }
-                                    .disabled(deeplink.wrappedValue.isEmpty)
-                                }
-                            }
-                        }
-                    })
                 }
+				.onDelete { indexSet in
+					deepLinks.remove(atOffsets: indexSet)
+					save()
+				}
             }
-            .navigationTitle("Deeplinks")
+            .navigationTitle(pageName)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        trackButtonTap(pageName: pageName, buttonTitle: "Add")
                         isAddPresented = true
                     } label: {
                         Image(systemName: "plus")
                     }
                     .sheet(isPresented: $isAddPresented, content: {
                         NavigationView {
-                            Form {
-                                VStack(alignment: .leading) {
-                                    Text("Please enter valid deep link")
-                                        .font(.system(size: 13, weight: .medium))
-                                    TextField("Deeplink", text: $newDeepLinkText)
-                                        .autocapitalization(.none)
-                                }
-                                .padding(.vertical, 15)
-                            }
-                            .navigationTitle("Deeplink")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar {
-                                ToolbarItem(placement: .navigationBarTrailing) {
-                                    Button {
-                                        deepLinks.append(newDeepLinkText)
-                                        isAddPresented = false
-                                        save()
-                                    } label: {
-                                        Text("Save")
-                                    }
-                                    .disabled(newDeepLinkText.isEmpty)
-                                }
-                            }
+							DeepLinkDetailView(deepLinks: $deepLinks, isPresented: $isAddPresented, deepLink: "") { new in
+								deepLinks.append(new)
+								save()
+							}
                         }
                     })
                 }
             }
+			.sheet(item: $selectedIndex, content: { index in
+				NavigationView {
+					DeepLinkDetailView(
+						deepLinks: $deepLinks,
+						isPresented: Binding<Bool>(get: { selectedIndex != nil }, set: { new in if !new { selectedIndex = nil } }),
+						deepLink: deepLinks[index]
+					) { updated in
+						deepLinks[index] = updated
+						save()
+					}
+				}
+			})
             .onAppear {
                 deepLinks = getDeepLinksList()
             }
+            .trackPage(pageName: pageName)
         }
 
         func save() {
             viewModel.saveDeepLinkList(list: deepLinks)
         }
 
-    }
+		var pageName: String {
+			return NSLocalizedString("demo.app.rat.page.name.deeplinks", comment: "")
+		}
+	}
+
+	struct DeepLinkDetailView: View, ViewTrackable {
+
+		@Binding var deepLinks: [String]
+		@Binding var isPresented: Bool
+
+		@State var deepLink: String = ""
+
+		var onSave: (String) -> Void
+
+		var body: some View {
+			Form {
+				VStack(alignment: .leading) {
+					Text("Please enter valid deep link")
+						.font(.system(size: 13, weight: .medium))
+					TextField("Deeplink", text: $deepLink)
+						.autocapitalization(.none)
+				}
+				.padding(.vertical, 15)
+			}
+			.navigationTitle(pageName)
+			.navigationBarTitleDisplayMode(.inline)
+			.toolbar {
+				ToolbarItem(placement: .navigationBarLeading) {
+					CloseButton {
+						trackButtonTap(pageName: pageName, buttonTitle: "Close")
+						isPresented = false
+					}
+				}
+				ToolbarItem(placement: .navigationBarTrailing) {
+					Button {
+						trackButtonTap(pageName: pageName, buttonTitle: "Save")
+						onSave(deepLink)
+						isPresented = false
+					} label: {
+						Text("Save")
+					}
+					.disabled(deepLink.isEmpty)
+				}
+			}
+			.trackPage(pageName: pageName)
+		}
+
+		var pageName: String {
+			return NSLocalizedString("demo.app.rat.page.name.deeplink", comment: "")
+		}
+	}
 }

@@ -20,6 +20,7 @@ struct MiniAppUrlView: View {
                     .font(.system(size: 13))
 
                 Button(action: {
+                    trackButtonTap(pageName: pageName, buttonTitle: "Load")
                     currentUrl = ""
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250), execute: {
                         currentUrl = url
@@ -54,8 +55,15 @@ struct MiniAppUrlView: View {
                 )
             }
         }
-        .navigationTitle("MiniApp (URL)")
+        .navigationTitle(pageName)
+        .trackPage(pageName: pageName)
     }
+}
+
+extension MiniAppUrlView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.qa", comment: "")
+	}
 }
 
 struct MiniAppUrlView_Previews: PreviewProvider {
