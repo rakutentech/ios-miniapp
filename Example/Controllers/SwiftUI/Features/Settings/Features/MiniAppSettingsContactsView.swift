@@ -89,7 +89,7 @@ extension MiniAppSettingsContactsView {
             .padding(.vertical, 10)
         }
     }
-    
+
     struct ContactFormView: View, ViewTrackable {
 
         @Binding var name: String
