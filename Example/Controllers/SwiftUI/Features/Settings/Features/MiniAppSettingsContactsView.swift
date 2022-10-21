@@ -32,7 +32,7 @@ struct MiniAppSettingsContactsView: View {
                             name: Binding<String>(get: { contact.name ?? "" }, set: { new in newContact?.name = new }),
                             contactId: Binding<String>(get: { contact.id }, set: { new in newContact?.id = new }),
                             email: Binding<String>(get: { contact.email ?? "" }, set: { new in newContact?.email = new }),
-							isPresented: Binding<Bool>(get: { newContact != nil }, set: { new in if !new { newContact = nil } }),
+                            isPresented: Binding<Bool>(get: { newContact != nil }, set: { new in if !new { newContact = nil } }),
                             onSave: {
                                 if let contact = newContact {
                                     contacts.insert(contact, at: 0)
@@ -53,9 +53,9 @@ struct MiniAppSettingsContactsView: View {
 }
 
 extension MiniAppSettingsContactsView: ViewTrackable {
-	var pageName: String {
-		return NSLocalizedString("demo.app.rat.page.name.contactslist", comment: "")
-	}
+    var pageName: String {
+        return NSLocalizedString("demo.app.rat.page.name.contactslist", comment: "")
+    }
 }
 
 struct MiniAppSettingsContactsView_Previews: PreviewProvider {
@@ -89,13 +89,13 @@ extension MiniAppSettingsContactsView {
             .padding(.vertical, 10)
         }
     }
-
+    
     struct ContactFormView: View, ViewTrackable {
 
         @Binding var name: String
         @Binding var contactId: String
         @Binding var email: String
-		@Binding var isPresented: Bool
+        @Binding var isPresented: Bool
 
         var onSave: () -> Void
 
@@ -108,15 +108,15 @@ extension MiniAppSettingsContactsView {
             .navigationTitle(pageName)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-				ToolbarItem(placement: .navigationBarLeading) {
-					CloseButton {
-						trackButtonTap(pageName: pageName, buttonTitle: "Close")
-						isPresented = false
-					}
-				}
+                ToolbarItem(placement: .navigationBarLeading) {
+                    CloseButton {
+                        trackButtonTap(pageName: pageName, buttonTitle: "Close")
+                        isPresented = false
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-						trackButtonTap(pageName: pageName, buttonTitle: "Save")
+                        trackButtonTap(pageName: pageName, buttonTitle: "Save")
                         onSave()
                     } label: {
                         Text("Save")
@@ -125,8 +125,8 @@ extension MiniAppSettingsContactsView {
             }
         }
 
-		var pageName: String {
-			return NSLocalizedString("demo.app.rat.page.name.contactsform", comment: "")
-		}
+        var pageName: String {
+            return NSLocalizedString("demo.app.rat.page.name.contactsform", comment: "")
+        }
     }
 }
