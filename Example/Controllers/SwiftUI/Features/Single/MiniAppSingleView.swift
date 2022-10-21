@@ -158,10 +158,12 @@ struct MiniAppSingleView: View {
             }
         }
     }
+}
 
-    var pageName: String {
-        handler.miniAppTitle?() ?? "MiniAppSingleView"
-    }
+extension MiniAppSingleView: ViewTrackable {
+	var pageName: String {
+		return handler.miniAppTitle?() ?? "MiniAppSingleView"
+	}
 }
 
 struct MiniAppSingleView_Previews: PreviewProvider {

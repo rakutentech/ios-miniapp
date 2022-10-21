@@ -94,6 +94,12 @@ struct MiniAppListView: View {
     }
 }
 
+extension MiniAppListView: ViewTrackable {
+	var pageName: String {
+		return title
+	}
+}
+
 struct MiniAppListView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppListView(type: .listI, title: "List I")

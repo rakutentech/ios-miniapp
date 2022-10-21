@@ -84,11 +84,12 @@ struct MiniAppTermsView: View {
                 List {
                     Section(header: Text("Permissions (\(viewModel.totalPermissionCount))")) {
                         ForEach((viewModel.requiredPermissions), id: \.permissionName) { perm in
-                            MiniAppTermsRequiredCell(name: perm.permissionName.title, description: perm.permissionDescription)
+							MiniAppTermsRequiredCell(pageName: pageName, name: perm.permissionName.title, description: perm.permissionDescription)
                         }
                         if viewModel.optionalPermissionCount > 0 {
                             ForEach((viewModel.optionalPermissions), id: \.permissionName) { perm in
                                 MiniAppTermsOptionalCell(
+									pageName: pageName,
                                     name: perm.permissionName.title,
                                     description: perm.permissionDescription,
                                     isAccepted: Binding<Bool>(
@@ -123,7 +124,7 @@ struct MiniAppTermsView: View {
                 Spacer()
                 VStack {
                     Button {
-                        trackButtonTap(buttonTitle: "Accept")
+						trackButtonTap(pageName: pageName, buttonTitle: "Accept")
                         viewModel.updatePermissions()
                         didAccept = true
                         // store.viewState = .success
@@ -145,7 +146,14 @@ struct MiniAppTermsView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
         )
+		.trackPage(pageName: pageName)
     }
+}
+
+extension MiniAppTermsView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.terms", comment: "")
+	}
 }
 
 struct MiniAppTermsView_Previews: PreviewProvider {

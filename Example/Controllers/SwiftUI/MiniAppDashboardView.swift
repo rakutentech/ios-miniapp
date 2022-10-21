@@ -19,7 +19,7 @@ struct MiniAppDashboardView: View {
         ZStack {
             TabView(selection: $selection) {
                 NavigationView {
-                    MiniAppListView(type: .listI, title: "List I")
+                    MiniAppListView(type: .listI, title: NSLocalizedString("demo.app.rat.page.name.list.i", comment: ""))
                 }
                 .tabItem {
                     Label("List I", systemImage: "list.bullet")
@@ -27,7 +27,7 @@ struct MiniAppDashboardView: View {
                 .tag(0)
 
                 NavigationView {
-                    MiniAppListView(type: .listII, title: "List II")
+                    MiniAppListView(type: .listII, title: NSLocalizedString("demo.app.rat.page.name.list.ii", comment: ""))
                 }
                 .tabItem {
                     Label("List II", systemImage: "list.bullet")

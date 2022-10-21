@@ -25,10 +25,6 @@
 		310575E827EE213400D93B06 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 310575A827EE213400D93B06 /* Localizable.strings */; };
 		310575E927EE213400D93B06 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 310575AA27EE213400D93B06 /* Colors.xcassets */; };
 		310575EA27EE213400D93B06 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 310575AC27EE213400D93B06 /* Images.xcassets */; };
-		310575EC27EE213400D93B06 /* Swizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310575AF27EE213400D93B06 /* Swizzling.swift */; };
-		310575ED27EE213400D93B06 /* RATNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310575B027EE213400D93B06 /* RATNotificationCenter.swift */; };
-		310575EE27EE213400D93B06 /* DemoAppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310575B127EE213400D93B06 /* DemoAppAnalytics.swift */; };
-		310575EF27EE213400D93B06 /* RATController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310575B227EE213400D93B06 /* RATController.swift */; };
 		310575FD27EE321900D93B06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310575FC27EE321900D93B06 /* UIKit.framework */; };
 		310575FF27EE322300D93B06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310575FE27EE322300D93B06 /* Foundation.framework */; };
 		3105761227EE387800D93B06 /* Config-test-release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3105760D27EE387800D93B06 /* Config-test-release.xcconfig */; };
@@ -167,10 +163,6 @@
 		310575AB27EE213400D93B06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		310575AC27EE213400D93B06 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		310575AD27EE213400D93B06 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		310575AF27EE213400D93B06 /* Swizzling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swizzling.swift; sourceTree = "<group>"; };
-		310575B027EE213400D93B06 /* RATNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RATNotificationCenter.swift; sourceTree = "<group>"; };
-		310575B127EE213400D93B06 /* DemoAppAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoAppAnalytics.swift; sourceTree = "<group>"; };
-		310575B227EE213400D93B06 /* RATController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RATController.swift; sourceTree = "<group>"; };
 		310575FC27EE321900D93B06 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		310575FE27EE322300D93B06 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3105760D27EE387800D93B06 /* Config-test-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-release.xcconfig"; sourceTree = "<group>"; };
@@ -328,7 +320,6 @@
 				3105758127EE213400D93B06 /* AppDelegate.swift */,
 				F77F61B328E58E0600F55818 /* SceneDelegate.swift */,
 				3105756C27EE213400D93B06 /* Utils */,
-				310575AE27EE213400D93B06 /* Analytics */,
 				3105757E27EE213400D93B06 /* Models */,
 				3105758227EE213400D93B06 /* Controllers */,
 				310575A727EE213400D93B06 /* Assets */,
@@ -382,17 +373,6 @@
 				310575AC27EE213400D93B06 /* Images.xcassets */,
 			);
 			path = Assets;
-			sourceTree = "<group>";
-		};
-		310575AE27EE213400D93B06 /* Analytics */ = {
-			isa = PBXGroup;
-			children = (
-				310575AF27EE213400D93B06 /* Swizzling.swift */,
-				310575B027EE213400D93B06 /* RATNotificationCenter.swift */,
-				310575B127EE213400D93B06 /* DemoAppAnalytics.swift */,
-				310575B227EE213400D93B06 /* RATController.swift */,
-			);
-			path = Analytics;
 			sourceTree = "<group>";
 		};
 		310575F627EE2F1D00D93B06 /* Frameworks */ = {
@@ -852,7 +832,6 @@
 				F75D4A1528CEE2F90053F74E /* KeyboardNotificationHelper.swift in Sources */,
 				F75D49F928C6F3600053F74E /* MiniAppSettingsProfileView.swift in Sources */,
 				310575C027EE213400D93B06 /* Config.swift in Sources */,
-				310575ED27EE213400D93B06 /* RATNotificationCenter.swift in Sources */,
 				F75D49DE28C5B83A0053F74E /* MiniAppSettingsViewModel.swift in Sources */,
 				310575C427EE213400D93B06 /* Print+MiniApp.swift in Sources */,
 				310575CB27EE213400D93B06 /* AppDelegate.swift in Sources */,
@@ -872,11 +851,8 @@
 				F75D49FD28C6F38B0053F74E /* MiniAppSettingsAccessTokenView.swift in Sources */,
 				F75D49DF28C5B83A0053F74E /* MiniAppSettingsView.swift in Sources */,
 				F75D4A0128C6F3BF0053F74E /* MiniAppSettingsSignatureView.swift in Sources */,
-				310575EE27EE213400D93B06 /* DemoAppAnalytics.swift in Sources */,
-				310575EC27EE213400D93B06 /* Swizzling.swift in Sources */,
 				F758977128FE789300D04B62 /* View+Tracking.swift in Sources */,
 				F75D4A1328CEDE5C0053F74E /* LocationManager.swift in Sources */,
-				310575EF27EE213400D93B06 /* RATController.swift in Sources */,
 				F75D49E428C5B83A0053F74E /* MiniAppFeatureListView.swift in Sources */,
 				F75D49EC28C5B83A0053F74E /* MiniAppListView.swift in Sources */,
 				310575BD27EE213400D93B06 /* Number+MiniApp.swift in Sources */,

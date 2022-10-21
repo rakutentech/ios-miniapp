@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MiniAppTermsOptionalCell: View {
 
+	@State var pageName: String?
     @State var name: String
     @State var description: String?
     @Binding var isAccepted: Bool
@@ -27,7 +28,10 @@ struct MiniAppTermsOptionalCell: View {
         })
         .toggleStyle(SwitchToggleStyle(tint: Color.red)) // .tint(.red)
         .padding(5)
-        .trackCell(cellTitle: name)
+		.onChange(of: isAccepted, perform: { newValue in
+			trackToggleTap(pageName: pageName, toggleTitle: name, isOn: newValue)
+		})
+		.trackCell(pageName: pageName, cellTitle: name)
     }
 }
 

@@ -60,8 +60,10 @@
 "demo.app.rat.page.name.points"                         =   "Points";
 "demo.app.rat.page.name.profile"                        =   "Profile";
 "demo.app.rat.page.name.contactslist"                   =   "Contacts List";
+"demo.app.rat.page.name.contactsform"                   =   "Add Contact";
 "demo.app.rat.page.name.permissions"                    =   "Permissions";
 "demo.app.rat.page.name.access_token"                   =   "Access Token";
+"demo.app.rat.page.name.deeplinks"                       =  "Deeplinks";
 "demo.app.rat.page.name.deeplink"                       =   "Deeplink";
 "demo.app.rat.page.name.display.miniapp"                =   "Mini App Display";
 "demo.app.rat.page.name.usersettings"                   =   "User Settings";
@@ -70,3 +72,9 @@
 "demo.app.rat.page.name.chatselector"                   =   "Chat Selector";
 "demo.app.rat.page.name.custom.permission.list"         =   "Permissions List";
 "demo.app.rat.page.name.custom.signature.verification"  =   "Signature Verification";
+"demo.app.rat.page.name.features"                       =   "Features";
+"demo.app.rat.page.name.url"                            =   "MiniApp (URL)";
+"demo.app.rat.page.name.share.preview"                  =   "Share Preview";
+"demo.app.rat.page.name.terms"                          =   "Terms";
+"demo.app.rat.page.name.list.i"                         =   "List I";
+"demo.app.rat.page.name.list.ii"                        =   "List II";

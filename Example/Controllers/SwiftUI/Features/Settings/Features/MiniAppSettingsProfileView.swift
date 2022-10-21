@@ -39,7 +39,7 @@ struct MiniAppSettingsProfileView: View {
                 HStack {
                     Spacer()
                     Button {
-                        trackButtonTap(pageName: "Proifle", buttonTitle: "Edit")
+                        trackButtonTap(pageName: pageName, buttonTitle: "Edit")
                         showImagePicker = true
                     } label: {
                         Text("Edit")
@@ -50,7 +50,7 @@ struct MiniAppSettingsProfileView: View {
                     }
 
                     Button {
-                        trackButtonTap(pageName: "Profile", buttonTitle: "Clear")
+                        trackButtonTap(pageName: pageName, buttonTitle: "Clear")
                         image = nil
                     } label: {
                         Text("Clear")
@@ -66,12 +66,12 @@ struct MiniAppSettingsProfileView: View {
                 TextField("Name", text: $name)
             }
         }
-        .navigationTitle("Profile")
+        .navigationTitle(pageName)
         .listStyle(.plain)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    trackButtonTap(pageName: "Profile", buttonTitle: "Save")
+                    trackButtonTap(pageName: pageName, buttonTitle: "Save")
                     if viewModel.setUserDetails(name: name, imageUrl: image?.dataURI()) {
                         alertMessage = MiniAppAlertMessage(title: "Success", message: "Profile saved successfully")
                     } else {
@@ -95,8 +95,14 @@ struct MiniAppSettingsProfileView: View {
                 image = userDetails.profileImageURI?.convertBase64ToImage()
             }
         }
-        .trackPage(pageName: "Profile")
+        .trackPage(pageName: pageName)
     }
+}
+
+extension MiniAppSettingsProfileView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.profile", comment: "")
+	}
 }
 
 struct MiniAppSettingsProfileView_Previews: PreviewProvider {

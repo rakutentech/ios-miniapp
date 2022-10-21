@@ -16,7 +16,7 @@ struct MiniAppSettingsQAView: View {
             Section(header: Text("Secure Storage")) {
                 VStack(spacing: 10) {
                     Button {
-                        trackButtonTap(pageName: "QA", buttonTitle: "Wipe Secure Storages")
+                        trackButtonTap(pageName: pageName, buttonTitle: "Wipe Secure Storages")
                         viewModel.clearSecureStorages()
                         alertMessage = MiniAppAlertMessage(title: "Success", message: "All stores were wiped successfully!")
                     } label: {
@@ -34,7 +34,7 @@ struct MiniAppSettingsQAView: View {
                             .textFieldStyle(MiniAppTextFieldStyle())
                             .font(.system(size: 13))
                         Button {
-                            trackButtonTap(pageName: "QA", buttonTitle: "Wipe Secure Storage")
+                            trackButtonTap(pageName: pageName, buttonTitle: "Wipe Secure Storage")
                             viewModel.clearSecureStorage(appId: miniAppWipeAppId)
                             alertMessage = MiniAppAlertMessage(title: "Success", message: "MiniApp Storage cleared!")
                         } label: {
@@ -50,7 +50,7 @@ struct MiniAppSettingsQAView: View {
                             .textFieldStyle(MiniAppTextFieldStyle())
                             .font(.system(size: 13))
                         Button {
-                            trackButtonTap(pageName: "QA", buttonTitle: "Save Max Storage Limit")
+                            trackButtonTap(pageName: pageName, buttonTitle: "Save Max Storage Limit")
                             switch viewModel.setSecureStorageLimit(maxSize: miniAppMaxStorageSize) {
                             case let .success(formattedString):
                                 miniAppMaxStorageSize = formattedString
@@ -69,15 +69,21 @@ struct MiniAppSettingsQAView: View {
                 .padding(.vertical, 15)
             }
         }
-        .navigationTitle("QA")
+        .navigationTitle(pageName)
         .alert(item: $alertMessage) { alert in
             Alert(title: Text(alert.title), message: Text(alert.message), dismissButton: .default(Text("Ok")))
         }
         .onAppear {
             miniAppMaxStorageSize = viewModel.getSecureStorageMaxSize()
         }
-        .trackPage(pageName: "QA")
+        .trackPage(pageName: pageName)
     }
+}
+
+extension MiniAppSettingsQAView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.qa", comment: "")
+	}
 }
 
 struct MiniAppSettingsQAView_Previews: PreviewProvider {

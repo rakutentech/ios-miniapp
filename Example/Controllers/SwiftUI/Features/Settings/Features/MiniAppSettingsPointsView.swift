@@ -34,11 +34,11 @@ struct MiniAppSettingsPointsView: View {
             }
             .padding(.vertical, 10)
         }
-        .navigationTitle("Points")
+        .navigationTitle(pageName)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    trackButtonTap(pageName: "Profile", buttonTitle: "Save")
+                    trackButtonTap(pageName: pageName, buttonTitle: "Save")
                     guard
                         let spoints = Int(pointsStandard),
                         let tpoints = Int(pointsTerm),
@@ -68,8 +68,14 @@ struct MiniAppSettingsPointsView: View {
                 pointsCash = "0"
             }
         }
-        .trackPage(pageName: "Points")
+        .trackPage(pageName: pageName)
     }
+}
+
+extension MiniAppSettingsPointsView: ViewTrackable {
+	var pageName: String {
+		return NSLocalizedString("demo.app.rat.page.name.points", comment: "")
+	}
 }
 
 struct MiniAppSettingsPointsView_Previews: PreviewProvider {
