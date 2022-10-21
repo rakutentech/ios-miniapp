@@ -13,14 +13,10 @@
 		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
-		2A7C7EC826DDA76300520DF9 /* Swizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7C7EC726DDA76300520DF9 /* Swizzling.swift */; };
-		2AA894BA26D6895F0078B2F4 /* RATNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA894B926D6895F0078B2F4 /* RATNotificationCenter.swift */; };
-		2AA894D226D697520078B2F4 /* DemoAppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA894D126D697520078B2F4 /* DemoAppAnalytics.swift */; };
 		2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */; };
 		2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */; };
 		2AB1B0E926A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */; };
 		2AB1B0F026A6DB77004CAC1B /* AdMobDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */; };
-		2AB8499426E069720028870A /* RATController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB8499326E069720028870A /* RATController.swift */; };
 		2AD324EA271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD324E9271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift */; };
 		2AFDE8EA27B1221100B7B340 /* MiniAppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFDE8E927B1221000B7B340 /* MiniAppVersionTests.swift */; };
 		2AFDE8EC27B1222A00B7B340 /* MiniAppManifestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFDE8EB27B1222A00B7B340 /* MiniAppManifestTests.swift */; };
@@ -142,14 +138,10 @@
 		185DBD6124B2A06300CD2094 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
-		2A7C7EC726DDA76300520DF9 /* Swizzling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swizzling.swift; sourceTree = "<group>"; };
-		2AA894B926D6895F0078B2F4 /* RATNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RATNotificationCenter.swift; sourceTree = "<group>"; };
-		2AA894D126D697520078B2F4 /* DemoAppAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAppAnalytics.swift; sourceTree = "<group>"; };
 		2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKLocaleTests.swift; sourceTree = "<group>"; };
 		2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalWebViewControllerTests.swift; sourceTree = "<group>"; };
 		2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPermissionsViewControllerTests.swift; sourceTree = "<group>"; };
 		2AB1B0EF26A6DB77004CAC1B /* AdMobDisplayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobDisplayerTests.swift; sourceTree = "<group>"; };
-		2AB8499326E069720028870A /* RATController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RATController.swift; sourceTree = "<group>"; };
 		2AD324E9271E63DD006EBEFB /* PreviewMiniAppFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewMiniAppFetcherTests.swift; sourceTree = "<group>"; };
 		2AFDE8E927B1221000B7B340 /* MiniAppVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppVersionTests.swift; sourceTree = "<group>"; };
 		2AFDE8EB27B1222A00B7B340 /* MiniAppManifestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppManifestTests.swift; sourceTree = "<group>"; };
@@ -308,17 +300,6 @@
 			);
 			name = Config;
 			path = Example/Config;
-			sourceTree = "<group>";
-		};
-		2AA894B826D6893B0078B2F4 /* Analytics */ = {
-			isa = PBXGroup;
-			children = (
-				2AB8499326E069720028870A /* RATController.swift */,
-				2AA894B926D6895F0078B2F4 /* RATNotificationCenter.swift */,
-				2AA894D126D697520078B2F4 /* DemoAppAnalytics.swift */,
-				2A7C7EC726DDA76300520DF9 /* Swizzling.swift */,
-			);
-			path = Analytics;
 			sourceTree = "<group>";
 		};
 		2AB1B0D126A6D625004CAC1B /* core */ = {
@@ -512,7 +493,6 @@
 				A15CC6BB28ED2CD4009B328D /* ContentView.swift */,
 				3878D4D123B44F85001E27F8 /* AppDelegate.swift */,
 				A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */,
-				2AA894B826D6893B0078B2F4 /* Analytics */,
 				38920ACA251D9C57004C5DDD /* Utils */,
 				38920AD4251D9C57004C5DDD /* Models */,
 				38920AE0251D9C57004C5DDD /* Controllers */,
@@ -812,7 +792,6 @@
 				3180E6C12689A21000B6B590 /* Print+MiniApp.swift in Sources */,
 				F70DD90428D417C4003EF1F1 /* ImagePicker.swift in Sources */,
 				F70DD8FE28D417C4003EF1F1 /* MiniAppListRowCell.swift in Sources */,
-				2AB8499426E069720028870A /* RATController.swift in Sources */,
 				F70DD8F828D417C4003EF1F1 /* MiniAppTermsRequiredCell.swift in Sources */,
 				F70DD8ED28D417C4003EF1F1 /* MiniAppSettingsContactsView.swift in Sources */,
 				F70DD90028D417C4003EF1F1 /* RemoteImageView.swift in Sources */,
@@ -852,7 +831,6 @@
 				F70DD8E728D417C4003EF1F1 /* MiniAppDashboardView.swift in Sources */,
 				F70DD8F128D417C4003EF1F1 /* MiniAppSettingsListCellView.swift in Sources */,
 				F70DD90828D417C4003EF1F1 /* MiniAppStore.swift in Sources */,
-				2AA894BA26D6895F0078B2F4 /* RATNotificationCenter.swift in Sources */,
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
 				D0CACE26281A68D700E39920 /* Base64UriHelper.swift in Sources */,
 				38920AF4251D9C57004C5DDD /* String+MiniApp.swift in Sources */,
@@ -860,9 +838,7 @@
 				F70DD8FA28D417C4003EF1F1 /* MiniAppSingleView.swift in Sources */,
 				38920AFB251D9C57004C5DDD /* UserProfileModel.swift in Sources */,
 				F70DD90928D417C4003EF1F1 /* MiniAppPermissionService.swift in Sources */,
-				2AA894D226D697520078B2F4 /* DemoAppAnalytics.swift in Sources */,
 				31850BC1269837F300CFE422 /* UIColor+MiniApp.swift in Sources */,
-				2A7C7EC826DDA76300520DF9 /* Swizzling.swift in Sources */,
 				F70DD90328D417C4003EF1F1 /* MiniAppViewMessageDelegator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
