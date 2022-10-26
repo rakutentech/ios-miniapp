@@ -4,6 +4,122 @@ import MiniApp
 
 extension MiniAppSettingsView {
 
+	struct ListConfiguration: Hashable {
+
+		var listType: ListConfig
+		var previewMode: PreviewMode = (NewConfig.bool(.isPreviewMode, fallback: .isPreviewMode) ?? true) ? .previewable : .published
+		var environmentMode: NewConfig.Environment = (NewConfig.bool(.environment) ?? true) ? .production : .staging
+
+		var listProjectIdProd: String = NewConfig.string(.production, key: .projectId, withFallback: true) ?? ""
+		var listSubscriptionKeyProd: String = NewConfig.string(.production, key: .subscriptionKey, withFallback: true) ?? ""
+		var listProjectIdStaging: String = NewConfig.string(.staging, key: .projectId, fallbackKey: .stagingProjectId) ?? ""
+		var listSubscriptionKeyStaging: String = NewConfig.string(.staging, key: .subscriptionKey, fallbackKey: .stagingSubscriptionKey) ?? ""
+
+		var baseUrl: String? {
+			environmentMode == .production ? NewConfig.getInfoString(key: .endpoint) : NewConfig.getInfoString(key: .stagingEndpoint)
+		}
+
+		var projectId: String? {
+			get {
+				switch listType {
+				case .listI:
+					switch environmentMode {
+					case .production:
+						return NewConfig.string(.production, key: .projectId, withFallback: true) ?? ""
+					case .staging:
+						return NewConfig.string(.staging, key: .projectId, withFallback: true) ?? ""
+					}
+				case .listII:
+					switch environmentMode {
+					case .production:
+						return NewConfig.string(.production, key: .projectIdList2, withFallback: true) ?? ""
+					case .staging:
+						return NewConfig.string(.staging, key: .projectIdList2, withFallback: true) ?? ""
+					}
+				}
+			}
+			set {
+				switch environmentMode {
+				case .production:
+					listProjectIdProd = newValue ?? ""
+				case .staging:
+					listProjectIdStaging = newValue ?? ""
+				}
+			}
+		}
+
+		var subscriptionKey: String? {
+			get {
+				return environmentMode == .production ? listProjectIdStaging : listSubscriptionKeyStaging
+			}
+			set {
+				switch environmentMode {
+				case .production:
+					listSubscriptionKeyProd = newValue ?? ""
+				case .staging:
+					listSubscriptionKeyStaging = newValue ?? ""
+				}
+			}
+		}
+
+		var placeholderProjectId: String {
+			switch environmentMode {
+			case .production:
+				return NewConfig.getInfoString(projectKey: .projectId) ?? ""
+			case .staging:
+				return NewConfig.getInfoString(projectKey: .projectId) ?? ""
+			}
+		}
+
+		var placeholderSubscriptionKey: String {
+			switch environmentMode {
+			case .production:
+				return NewConfig.getInfoString(projectKey: .subscriptionKey) ?? ""
+			case .staging:
+				return NewConfig.getInfoString(projectKey: .subscriptionKey) ?? ""
+			}
+		}
+
+		var hostAppVersion: String? {
+			NewConfig.string(.version)
+		}
+
+		var requiresSignatureVerification: Bool? {
+			NewConfig.bool(.signatureVerification)
+		}
+
+		func sslKey(enabled: Bool) -> MiniAppConfigSSLKeyHash? {
+			var pinConf: MiniAppConfigSSLKeyHash?
+			let sslKeyHash = NewConfig.getInfoAny(.sslKeyHash)
+			if enabled, let keyHash = (sslKeyHash as? [String: Any?])?["main"] as? String {
+				pinConf = MiniAppConfigSSLKeyHash(pin: keyHash, backup: (sslKeyHash as? [String: Any?])?["backup"] as? String)
+			}
+			return pinConf
+		}
+
+		var analyticsConfig: [MAAnalyticsConfig]? {
+			[MAAnalyticsConfig(acc: "477", aid: "998")]
+		}
+
+		var storageMaxSizeInBytes: Int {
+			NewConfig.int(.maxSecureStorageFileLimit) ?? 5_000_000
+		}
+
+		var sdkConfig: MiniAppSdkConfig {
+			return MiniAppSdkConfig(
+				baseUrl: baseUrl,
+				rasProjectId: projectId,
+				subscriptionKey: subscriptionKey,
+				hostAppVersion: hostAppVersion,
+				isPreviewMode: previewMode == .previewable,
+				analyticsConfigList: analyticsConfig,
+				requireMiniAppSignatureVerification: requiresSignatureVerification,
+				sslKeyHash: sslKey(enabled: false),
+				storageMaxSizeInBytes: storageMaxSizeInBytes > 0 ? UInt64(storageMaxSizeInBytes) : nil
+			)
+		}
+	}
+
     struct SettingsConfig: Hashable {
 
         var previewMode: PreviewMode = (NewConfig.bool(.isPreviewMode, fallback: .isPreviewMode) ?? true) ? .previewable : .published
