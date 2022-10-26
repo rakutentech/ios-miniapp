@@ -7,13 +7,42 @@ extension MiniAppSettingsView {
 	struct ListConfiguration: Hashable {
 
 		var listType: ListConfig
-		var previewMode: PreviewMode = (NewConfig.bool(.isPreviewMode, fallback: .isPreviewMode) ?? true) ? .previewable : .published
-		var environmentMode: NewConfig.Environment = (NewConfig.bool(.environment) ?? true) ? .production : .staging
+		var previewMode: PreviewMode
+		var environmentMode: NewConfig.Environment
 
-		var listProjectIdProd: String = NewConfig.string(.production, key: .projectId, withFallback: true) ?? ""
-		var listSubscriptionKeyProd: String = NewConfig.string(.production, key: .subscriptionKey, withFallback: true) ?? ""
-		var listProjectIdStaging: String = NewConfig.string(.staging, key: .projectId, fallbackKey: .stagingProjectId) ?? ""
-		var listSubscriptionKeyStaging: String = NewConfig.string(.staging, key: .subscriptionKey, fallbackKey: .stagingSubscriptionKey) ?? ""
+		var listProjectIdProd: String
+		var listSubscriptionKeyProd: String
+		var listProjectIdStaging: String
+		var listSubscriptionKeyStaging: String
+
+		var listUserDefaults: UserDefaults? {
+			switch listType {
+			case .listI:
+				return UserDefaults(suiteName: "")
+			case .listII:
+				return UserDefaults(suiteName: "")
+			}
+		}
+
+		// @AppStorage("PREVIEW_MODE", store: listUserDefaults) var accessTokenErrorMessage = ""
+
+		init(listType: ListConfig) {
+			self.listType = listType
+			self.previewMode = (NewConfig.bool(.isPreviewMode, fallback: .isPreviewMode) ?? true) ? .previewable : .published
+			self.environmentMode = (NewConfig.bool(.environment) ?? true) ? .production : .staging
+			switch listType {
+			case .listI:
+				listProjectIdProd 			= NewConfig.string(.production, key: .projectId, withFallback: true) ?? ""
+				listSubscriptionKeyProd 	= NewConfig.string(.production, key: .subscriptionKey, withFallback: true) ?? ""
+				listProjectIdStaging 		= NewConfig.string(.staging, key: .projectId, fallbackKey: .stagingProjectId) ?? ""
+				listSubscriptionKeyStaging 	= NewConfig.string(.staging, key: .subscriptionKey, fallbackKey: .stagingSubscriptionKey) ?? ""
+			case .listII:
+				listProjectIdProd 			= NewConfig.string(.production, key: .projectIdList2, withFallback: true) ?? ""
+				listSubscriptionKeyProd 	= NewConfig.string(.production, key: .subscriptionKeyList2, withFallback: true) ?? ""
+				listProjectIdStaging 		= NewConfig.string(.staging, key: .projectIdList2) ?? ""
+				listSubscriptionKeyStaging 	= NewConfig.string(.staging, key: .subscriptionKeyList2) ?? ""
+			}
+		}
 
 		var baseUrl: String? {
 			environmentMode == .production ? NewConfig.getInfoString(key: .endpoint) : NewConfig.getInfoString(key: .stagingEndpoint)
@@ -21,22 +50,7 @@ extension MiniAppSettingsView {
 
 		var projectId: String? {
 			get {
-				switch listType {
-				case .listI:
-					switch environmentMode {
-					case .production:
-						return NewConfig.string(.production, key: .projectId, withFallback: true) ?? ""
-					case .staging:
-						return NewConfig.string(.staging, key: .projectId, withFallback: true) ?? ""
-					}
-				case .listII:
-					switch environmentMode {
-					case .production:
-						return NewConfig.string(.production, key: .projectIdList2, withFallback: true) ?? ""
-					case .staging:
-						return NewConfig.string(.staging, key: .projectIdList2, withFallback: true) ?? ""
-					}
-				}
+				return environmentMode == .production ? listProjectIdProd : listProjectIdStaging
 			}
 			set {
 				switch environmentMode {
@@ -50,7 +64,7 @@ extension MiniAppSettingsView {
 
 		var subscriptionKey: String? {
 			get {
-				return environmentMode == .production ? listProjectIdStaging : listSubscriptionKeyStaging
+				return environmentMode == .production ? listSubscriptionKeyProd : listSubscriptionKeyStaging
 			}
 			set {
 				switch environmentMode {
@@ -67,7 +81,7 @@ extension MiniAppSettingsView {
 			case .production:
 				return NewConfig.getInfoString(projectKey: .projectId) ?? ""
 			case .staging:
-				return NewConfig.getInfoString(projectKey: .projectId) ?? ""
+				return NewConfig.getInfoString(projectKey: .stagingProjectId) ?? ""
 			}
 		}
 
@@ -76,7 +90,7 @@ extension MiniAppSettingsView {
 			case .production:
 				return NewConfig.getInfoString(projectKey: .subscriptionKey) ?? ""
 			case .staging:
-				return NewConfig.getInfoString(projectKey: .subscriptionKey) ?? ""
+				return NewConfig.getInfoString(projectKey: .stagingSubscriptionKey) ?? ""
 			}
 		}
 

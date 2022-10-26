@@ -192,6 +192,8 @@ class NewConfig {
     enum ProjectKey: String {
         case projectId = "RASProjectId"
         case subscriptionKey = "RASProjectSubscriptionKey"
+		case stagingProjectId = "RASStagingProjectId"
+		case stagingSubscriptionKey = "RASStagingProjectSubscriptionKey"
 
         case projectIdList2 = "RASProjectIdList2"
         case subscriptionKeyList2 = "RASProjectSubscriptionKeyList2"
