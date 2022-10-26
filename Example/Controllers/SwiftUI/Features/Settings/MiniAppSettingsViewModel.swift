@@ -17,28 +17,6 @@ class MiniAppSettingsViewModel: ObservableObject {
             store.config = newValue
         }
     }
-	@Published var listConfigI = MiniAppSettingsView.ListConfiguration(listType: .listI)
-	@Published var listConfigII = MiniAppSettingsView.ListConfiguration(listType: .listII)
-
-	@Published var selectedListConfig: MiniAppSettingsView.ListConfig = .listI
-	var listConfig: MiniAppSettingsView.ListConfiguration {
-		get {
-			switch selectedListConfig {
-			case .listI:
-				return listConfigI
-			case .listII:
-				return listConfigII
-			}
-		}
-		set {
-			switch selectedListConfig {
-			case .listI:
-				listConfigI = newValue
-			case .listII:
-				listConfigII = newValue
-			}
-		}
-	}
 
     var bag = Set<AnyCancellable>()
 

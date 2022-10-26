@@ -34,51 +34,90 @@ struct MiniAppSettingsView: View {
                 .padding(.vertical, 15)
             }
 
-			Section(header: Text("RAS")) {
-				Picker("List Config", selection: $viewModel.selectedListConfig) {
-					ForEach(ListConfig.allCases, id: \.self) { config in
-						Text(config.name).tag(config)
-					}
-				}
-				.pickerStyle(.segmented)
-				.padding(.vertical, 15)
-				.onChange(of: viewModel.selectedListConfig, perform: { config in
-					trackSegmentedTap(pageName: "Settings", segmentTitle: config.name)
-					dismissKeyboard()
-				})
+            Section(header: Text("Preview Mode")) {
+                Picker("Published", selection: $viewModel.config.previewMode) {
+                    ForEach(PreviewMode.allCases, id: \.self) { mode in
+                        Text(mode.name).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.vertical, 15)
+            }
 
-				Picker("Environment", selection: $viewModel.listConfig.environmentMode) {
-					ForEach(NewConfig.Environment.allCases, id: \.self) { mode in
-						Text(mode.name).tag(mode)
-					}
-				}
-				.pickerStyle(.segmented)
-				.padding(.vertical, 15)
+            Section(header: Text("Environment")) {
+                Picker("Environment", selection: $viewModel.config.environmentMode) {
+                    ForEach(NewConfig.Environment.allCases, id: \.self) { mode in
+                        Text(mode.name).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.vertical, 15)
+            }
 
-				Picker("Published", selection: $viewModel.listConfig.previewMode) {
-					ForEach(PreviewMode.allCases, id: \.self) { mode in
-						Text(mode.name).tag(mode)
-					}
-				}
-				.pickerStyle(.segmented)
-				.padding(.vertical, 15)
+            Section(header: Text("RAS")) {
+                Picker("List Config", selection: $selectedListConfig) {
+                    ForEach(ListConfig.allCases, id: \.self) { config in
+                        Text(config.name).tag(config)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.vertical, 15)
+                .onChange(of: selectedListConfig, perform: { config in
+                    trackSegmentedTap(pageName: "Settings", segmentTitle: config.name)
+                })
 
-				TextField(
-					viewModel.listConfig.placeholderProjectId,
-					text: Binding<String>(
-						get: { viewModel.listConfig.projectId ?? "" },
-						set: { newValue in viewModel.listConfig.projectId = newValue }
-					)
-				)
-				.padding(.vertical, 15)
-				TextField(
-					viewModel.listConfig.placeholderSubscriptionKey,
-					text: Binding<String>(
-						get: { viewModel.listConfig.subscriptionKey ?? "" },
-						set: { newValue in viewModel.listConfig.subscriptionKey = newValue }
-					)
-				)
-				.padding(.vertical, 15)
+                switch viewModel.config.environmentMode {
+                case .production:
+                    switch selectedListConfig {
+                    case .listI:
+                        TextField(
+                            viewModel.config.listIProjectIdPlaceholder,
+                            text: $viewModel.config.listIProjectId
+                        )
+                        .padding(.vertical, 15)
+                        TextField(
+                            viewModel.config.listISubscriptionKeyPlaceholder,
+                            text: $viewModel.config.listISubscriptionKey
+                        )
+                        .padding(.vertical, 15)
+                    case .listII:
+                        TextField(
+                            viewModel.config.listIProjectIdPlaceholder,
+                            text: $viewModel.config.listIIProjectId
+                        )
+                        .padding(.vertical, 15)
+                        TextField(
+                            viewModel.config.listISubscriptionKeyPlaceholder,
+                            text: $viewModel.config.listIISubscriptionKey
+                        )
+                        .padding(.vertical, 15)
+                    }
+                case .staging:
+                    switch selectedListConfig {
+                    case .listI:
+                        TextField(
+                            "Project Id",
+                            text: $viewModel.config.listIStagingProjectId
+                        )
+                        .padding(.vertical, 15)
+                        TextField(
+                            "Subscription Key",
+                            text: $viewModel.config.listIStagingSubscriptionKey
+                        )
+                        .padding(.vertical, 15)
+                    case .listII:
+                        TextField(
+                            "Project Id",
+                            text: $viewModel.config.listIIStagingProjectId
+                        )
+                        .padding(.vertical, 15)
+                        TextField(
+                            "Subscription Key",
+                            text: $viewModel.config.listIIStagingSubscriptionKey
+                        )
+                        .padding(.vertical, 15)
+                    }
+                }
 
             }
 
