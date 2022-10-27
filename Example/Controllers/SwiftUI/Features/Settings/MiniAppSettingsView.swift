@@ -37,16 +37,8 @@ struct MiniAppSettingsView: View {
 			Section(header: Text("RAS")) {
 				VStack {
 					Picker("List Config", selection: $viewModel.selectedListConfig) {
-						if hasListIErrors {
-							Text(ListType.listI.name + " 🛑").tag(ListType.listI)
-						} else {
-							Text(ListType.listI.name).tag(ListType.listI)
-						}
-						if case .error = viewModel.state, viewModel.listConfigII.error != nil {
-							Text(ListType.listII.name + " 🛑").tag(ListType.listII)
-						} else {
-							Text(ListType.listII.name).tag(ListType.listII)
-						}
+						Text(ListType.listI.name).tag(ListType.listI)
+						Text(ListType.listII.name).tag(ListType.listII)
 					}
 					.pickerStyle(.segmented)
 					.padding(.vertical, 15)
@@ -57,15 +49,17 @@ struct MiniAppSettingsView: View {
 
 					switch viewModel.selectedListConfig {
 					case .listI:
-						if hasListIErrors {
+						if let error = viewModel.listConfigI.error {
 							VStack(alignment: .leading, spacing: 10) {
 								Text("🛑 Something went wrong when loading the list.")
+								Text(error.localizedDescription)
+									.font(.system(size: 11))
 							}
 						} else {
 							EmptyView()
 						}
 					case .listII:
-						if case .error = viewModel.state, let error = viewModel.listConfigII.error {
+						if let error = viewModel.listConfigII.error {
 							VStack(alignment: .leading, spacing: 10) {
 								Text("🛑 Something went wrong when loading the list.")
 								Text(error.localizedDescription)
@@ -187,9 +181,15 @@ struct MiniAppSettingsView: View {
                     title: MASDKLocale.localize("miniapp.sdk.ios.param.save_title"),
                     message: MASDKLocale.localize("miniapp.sdk.ios.param.save_text")
                 )
-            case let .error(error):
+            case .error:
                 showFullProgress = false
-                alertMessage = MiniAppAlertMessage(title: "Error", message: error.localizedDescription)
+				if viewModel.listConfigI.error != nil && viewModel.listConfigII.error != nil {
+					alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load both lists.")
+				} else if viewModel.listConfigI.error != nil {
+					alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load List I.")
+				} else if viewModel.listConfigII.error != nil {
+					alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load List II.")
+				}
             default:
                 ()
             }
@@ -202,12 +202,11 @@ struct MiniAppSettingsView: View {
     }
 
 	var hasListIErrors: Bool {
-		switch viewModel.state {
-		case .error:
-			return viewModel.listConfigI.error != nil
-		default:
-			return false
-		}
+		return viewModel.listConfigI.error != nil
+	}
+
+	var hasListIIErrors: Bool {
+		return viewModel.listConfigII.error != nil
 	}
 }
 

@@ -25,6 +25,7 @@ struct MiniAppDashboardView: View {
                     Label("List I", systemImage: "list.bullet")
                 }
                 .tag(0)
+				.accessibilityIdentifier("")
 
                 NavigationView {
                     MiniAppListView(type: .listII, title: NSLocalizedString("demo.app.rat.page.name.list.ii", comment: ""))
