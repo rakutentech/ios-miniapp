@@ -64,14 +64,14 @@ class MiniAppSettingsViewModel: ObservableObject {
 		loadAndPersistList(listConfig: listConfigI) { [weak self] listErrorI in
 			guard let self = self else { return }
 			if let listErrorI = listErrorI {
-				self.store.update(type: .listI, infos: [])
 				self.listConfigI.error = listErrorI
+				self.store.miniAppInfoListError = listErrorI
 				self.state = .error(listErrorI)
 			}
 			self.loadAndPersistList(listConfig: self.listConfigII) { listErrorII in
 				if let listErrorII = listErrorII {
-					self.store.update(type: .listII, infos: [])
 					self.listConfigII.error = listErrorII
+					self.store.miniAppInfoList2Error = listErrorII
 					self.state = .error(listErrorII)
 				}
 				guard listErrorI == nil && listErrorII == nil else {
@@ -97,6 +97,7 @@ class MiniAppSettingsViewModel: ObservableObject {
 						self.store.update(type: listConfig.listType, infos: infos)
 						completion?(nil)
 					case .failure(let error):
+						self.store.update(type: listConfig.listType, infos: [])
 						completion?(error)
 					}
 				}

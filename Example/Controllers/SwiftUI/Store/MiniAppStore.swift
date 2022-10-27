@@ -28,7 +28,9 @@ class MiniAppStore: ObservableObject {
     @AppStorage(NewConfig.GlobalKey.signatureVerification.rawValue) var signatureVerification: Bool?
 
     @Published var miniAppInfoList: [MiniAppInfo] = []
+	@Published var miniAppInfoListError: Error?
     @Published var miniAppInfoList2: [MiniAppInfo] = []
+	@Published var miniAppInfoList2Error: Error?
 
     private init() {
         if !miniAppFirstLaunch {
@@ -82,6 +84,15 @@ class MiniAppStore: ObservableObject {
             miniAppInfoList2 = infos
         }
     }
+
+	func hasError(type: ListType) -> Bool {
+		switch type {
+		case .listI:
+			return miniAppInfoListError != nil
+		case .listII:
+			return miniAppInfoList2Error != nil
+		}
+	}
 
     static func empty() -> MiniAppStore {
         return MiniAppStore()

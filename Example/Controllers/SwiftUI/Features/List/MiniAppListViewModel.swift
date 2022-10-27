@@ -16,7 +16,7 @@ class MiniAppListViewModel: ObservableObject {
     init(type: ListType) {
         self.type = type
         setupObservers()
-        if store.miniAppSetupCompleted {
+		if store.miniAppSetupCompleted && !store.hasError(type: type) {
             load()
         } else {
             state = .awaitsSetup

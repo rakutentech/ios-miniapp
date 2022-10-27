@@ -37,21 +37,15 @@ struct MiniAppSettingsView: View {
 			Section(header: Text("RAS")) {
 				VStack {
 					Picker("List Config", selection: $viewModel.selectedListConfig) {
-						ForEach(ListType.allCases, id: \.self) { config in
-							switch config {
-							case .listI:
-								if viewModel.listConfigI.error != nil {
-									Text(config.name + " 🛑").tag(config)
-								} else {
-									Text(config.name).tag(config)
-								}
-							case .listII:
-								if viewModel.listConfigII.error != nil {
-									Text(config.name + " 🛑").tag(config)
-								} else {
-									Text(config.name).tag(config)
-								}
-							}
+						if hasListIErrors {
+							Text(ListType.listI.name + " 🛑").tag(ListType.listI)
+						} else {
+							Text(ListType.listI.name).tag(ListType.listI)
+						}
+						if case .error = viewModel.state, viewModel.listConfigII.error != nil {
+							Text(ListType.listII.name + " 🛑").tag(ListType.listII)
+						} else {
+							Text(ListType.listII.name).tag(ListType.listII)
 						}
 					}
 					.pickerStyle(.segmented)
@@ -63,20 +57,22 @@ struct MiniAppSettingsView: View {
 
 					switch viewModel.selectedListConfig {
 					case .listI:
-						if let error = viewModel.listConfigI.error {
-							VStack {
-								Text("Something went wrong when loading the list.")
-								Text(error.localizedDescription)
-									.font(.system(size: 11))
+						if hasListIErrors {
+							VStack(alignment: .leading, spacing: 10) {
+								Text("🛑 Something went wrong when loading the list.")
 							}
+						} else {
+							EmptyView()
 						}
 					case .listII:
-						if let error = viewModel.listConfigII.error {
-							VStack {
-								Text("Something went wrong when loading the list.")
+						if case .error = viewModel.state, let error = viewModel.listConfigII.error {
+							VStack(alignment: .leading, spacing: 10) {
+								Text("🛑 Something went wrong when loading the list.")
 								Text(error.localizedDescription)
 									.font(.system(size: 11))
 							}
+						} else {
+							EmptyView()
 						}
 					}
 				}
@@ -166,7 +162,7 @@ struct MiniAppSettingsView: View {
                     dismissKeyboard()
                     viewModel.save()
                 }
-                .disabled((viewModel.config.listIProjectId.isEmpty || viewModel.config.listISubscriptionKey.isEmpty))
+				.disabled((viewModel.listConfig.wrappedProjectId.isEmpty || viewModel.listConfig.wrappedSubscriptionKey.isEmpty))
             }
         }
         .alert(item: $alertMessage) { errorMessage in
@@ -204,6 +200,15 @@ struct MiniAppSettingsView: View {
     func dismissKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
+
+	var hasListIErrors: Bool {
+		switch viewModel.state {
+		case .error:
+			return viewModel.listConfigI.error != nil
+		default:
+			return false
+		}
+	}
 }
 
 struct MiniAppAlertMessage: Identifiable {

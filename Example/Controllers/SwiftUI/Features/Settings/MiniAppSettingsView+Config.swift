@@ -104,6 +104,15 @@ struct ListConfiguration {
 		}
 	}
 
+	var wrappedProjectId: String {
+		switch environmentMode {
+		case .production:
+			return projectIdProd.isEmpty ? placeholderProjectId : projectIdProd
+		case .staging:
+			return projectIdStaging.isEmpty ? placeholderProjectId : projectIdStaging
+		}
+	}
+
 	var subscriptionKey: String? {
 		get {
 			return environmentMode == .production ? subscriptionKeyProd : subscriptionKeyStaging
@@ -115,6 +124,15 @@ struct ListConfiguration {
 			case .staging:
 				subscriptionKeyStaging = newValue ?? ""
 			}
+		}
+	}
+
+	var wrappedSubscriptionKey: String {
+		switch environmentMode {
+		case .production:
+			return subscriptionKeyProd.isEmpty ? placeholderSubscriptionKey : subscriptionKeyProd
+		case .staging:
+			return subscriptionKeyProd.isEmpty ? placeholderSubscriptionKey : subscriptionKeyStaging
 		}
 	}
 
