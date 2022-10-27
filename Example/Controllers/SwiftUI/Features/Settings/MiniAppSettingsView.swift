@@ -189,7 +189,7 @@ struct MiniAppSettingsView: View {
                 )
             case let .error(error):
                 showFullProgress = false
-                //alertMessage = MiniAppAlertMessage(title: "Error", message: error.localizedDescription)
+                alertMessage = MiniAppAlertMessage(title: "Error", message: error.localizedDescription)
             default:
                 ()
             }

@@ -66,18 +66,28 @@ class MiniAppSettingsViewModel: ObservableObject {
 			if let listErrorI = listErrorI {
 				self.listConfigI.error = listErrorI
 				self.store.miniAppInfoListError = listErrorI
-				self.state = .error(listErrorI)
+			} else {
+				self.listConfigI.error = nil
+				self.store.miniAppInfoListError = nil
 			}
 			self.loadAndPersistList(listConfig: self.listConfigII) { listErrorII in
 				if let listErrorII = listErrorII {
 					self.listConfigII.error = listErrorII
 					self.store.miniAppInfoList2Error = listErrorII
-					self.state = .error(listErrorII)
+				} else {
+					self.listConfigII.error = nil
+					self.store.miniAppInfoList2Error = nil
 				}
-				guard listErrorI == nil && listErrorII == nil else {
-					return
+				if listErrorI == nil && listErrorII == nil {
+					self.state = .success
+				} else {
+					if let listErrorI = listErrorI {
+						self.state = .error(listErrorI)
+					}
+					else if let listErrorII = listErrorII {
+						self.state = .error(listErrorII)
+					}
 				}
-				self.state = .success
 			}
 		}
 	}

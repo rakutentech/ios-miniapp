@@ -34,8 +34,8 @@ class MiniAppListViewModel: ObservableObject {
                         self?.state = .awaitsSetup
                         return
                     }
-                    self.state = .success
                     self.indexedMiniAppInfoList = self.makeIndexed(infos: list)
+					self.state = .success
                 }
                 .store(in: &bag)
         case .listII:
@@ -47,8 +47,8 @@ class MiniAppListViewModel: ObservableObject {
                         self?.state = .awaitsSetup
                         return
                     }
-                    self.state = .success
                     self.indexedMiniAppInfoList = self.makeIndexed(infos: list)
+					self.state = .success
                 }
                 .store(in: &bag)
         }
