@@ -8,7 +8,7 @@ struct MiniAppListView: View {
     @State var title: String
     @State private var miniAppInfo: MiniAppSingleViewRequest?
 
-    init(type: MiniAppSettingsView.ListConfig, title: String) {
+    init(type: ListType, title: String) {
         _viewModel = StateObject(wrappedValue: MiniAppListViewModel(type: type))
         _title = State(wrappedValue: title)
     }

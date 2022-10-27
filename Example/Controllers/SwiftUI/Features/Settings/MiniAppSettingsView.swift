@@ -12,7 +12,7 @@ struct MiniAppSettingsView: View {
 
     @State private var isPickerPresented: Bool = false
     @State private var alertMessage: MiniAppAlertMessage?
-    @State private var selectedListConfig: ListConfig = .listI
+    @State private var selectedListConfig: ListType = .listI
 
     var body: some View {
         Form {
@@ -35,17 +35,51 @@ struct MiniAppSettingsView: View {
             }
 
 			Section(header: Text("RAS")) {
-				Picker("List Config", selection: $viewModel.selectedListConfig) {
-					ForEach(ListConfig.allCases, id: \.self) { config in
-						Text(config.name).tag(config)
+				VStack {
+					Picker("List Config", selection: $viewModel.selectedListConfig) {
+						ForEach(ListType.allCases, id: \.self) { config in
+							switch config {
+							case .listI:
+								if viewModel.listConfigI.error != nil {
+									Text(config.name + " 🛑").tag(config)
+								} else {
+									Text(config.name).tag(config)
+								}
+							case .listII:
+								if viewModel.listConfigII.error != nil {
+									Text(config.name + " 🛑").tag(config)
+								} else {
+									Text(config.name).tag(config)
+								}
+							}
+						}
+					}
+					.pickerStyle(.segmented)
+					.padding(.vertical, 15)
+					.onChange(of: viewModel.selectedListConfig, perform: { config in
+						trackSegmentedTap(pageName: "Settings", segmentTitle: config.name)
+						dismissKeyboard()
+					})
+
+					switch viewModel.selectedListConfig {
+					case .listI:
+						if let error = viewModel.listConfigI.error {
+							VStack {
+								Text("Something went wrong when loading the list.")
+								Text(error.localizedDescription)
+									.font(.system(size: 11))
+							}
+						}
+					case .listII:
+						if let error = viewModel.listConfigII.error {
+							VStack {
+								Text("Something went wrong when loading the list.")
+								Text(error.localizedDescription)
+									.font(.system(size: 11))
+							}
+						}
 					}
 				}
-				.pickerStyle(.segmented)
-				.padding(.vertical, 15)
-				.onChange(of: viewModel.selectedListConfig, perform: { config in
-					trackSegmentedTap(pageName: "Settings", segmentTitle: config.name)
-					dismissKeyboard()
-				})
 
 				Picker("Environment", selection: $viewModel.listConfig.environmentMode) {
 					ForEach(NewConfig.Environment.allCases, id: \.self) { mode in
@@ -159,7 +193,7 @@ struct MiniAppSettingsView: View {
                 )
             case let .error(error):
                 showFullProgress = false
-                alertMessage = MiniAppAlertMessage(title: "Error", message: error.localizedDescription)
+                //alertMessage = MiniAppAlertMessage(title: "Error", message: error.localizedDescription)
             default:
                 ()
             }

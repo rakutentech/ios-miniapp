@@ -8,7 +8,7 @@ struct MiniAppSingleView: View {
     @StateObject var viewModel: MiniAppWithTermsViewModel
     @StateObject var handler = MiniAppSUIViewHandler()
 
-    var listType: MiniAppSettingsView.ListConfig
+    var listType: ListType
     var config: MiniAppSdkConfig {
         MiniAppSettingsView.SettingsConfig().sdkConfig(list: listType)
     }
@@ -24,7 +24,7 @@ struct MiniAppSingleView: View {
     @State private var isSharePreviewPresented: Bool = false
     @State private var closeAlertMessage: MiniAppAlertMessage?
 
-    init(listType: MiniAppSettingsView.ListConfig, miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
+    init(listType: ListType, miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
         self.listType = listType
         let sdkConfig = MiniAppSettingsView.SettingsConfig().sdkConfig(list: listType)
         _viewModel = StateObject(wrappedValue:

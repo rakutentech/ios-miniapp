@@ -53,7 +53,7 @@ class MiniAppStore: ObservableObject {
         _ = setProfileSettings(userDisplayName: "MiniAppUser", profileImageURI: defaultImage)
     }
 
-    func load(type: MiniAppSettingsView.ListConfig) {
+    func load(type: ListType) {
         let sdkConfig = config.sdkConfig(list: type)
         MiniApp
             .shared(with: sdkConfig)
@@ -74,7 +74,7 @@ class MiniAppStore: ObservableObject {
             }
     }
 
-    func update(type: MiniAppSettingsView.ListConfig, infos: [MiniAppInfo]) {
+    func update(type: ListType, infos: [MiniAppInfo]) {
         switch type {
         case .listI:
             miniAppInfoList = infos

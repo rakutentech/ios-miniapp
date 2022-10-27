@@ -7,13 +7,13 @@ class MiniAppListViewModel: ObservableObject {
 
     let store = MiniAppStore.shared
 
-    @Published var type: MiniAppSettingsView.ListConfig
+    @Published var type: ListType
     @Published var state: ListState = .none
     @Published var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
 
     var bag = Set<AnyCancellable>()
 
-    init(type: MiniAppSettingsView.ListConfig) {
+    init(type: ListType) {
         self.type = type
         setupObservers()
         if store.miniAppSetupCompleted {
