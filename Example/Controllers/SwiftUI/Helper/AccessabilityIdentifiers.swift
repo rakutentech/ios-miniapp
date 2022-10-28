@@ -3,9 +3,8 @@ enum AccessibilityIdentifiers: String {
     case tabBarListII = "tabbar.list.ii"
     case tabBarFeatures = "tabbar.features"
     case tabBarSettings = "tabbar.settings"
-    
 
-  var identifier: String {
-    return "miniapp.demo." + rawValue
-  }
+    var identifier: String {
+        return "miniapp.demo." + rawValue
+    }
 }
