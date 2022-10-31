@@ -2,7 +2,6 @@ import Foundation
 import SwiftUI
 import MiniApp
 
-
 enum PreviewMode: CaseIterable {
 	case previewable
 	case published
@@ -141,7 +140,12 @@ struct ListConfiguration {
 		case .production:
 			return NewConfig.getInfoString(projectKey: .projectId) ?? ""
 		case .staging:
-			return NewConfig.getInfoString(projectKey: .stagingProjectId) ?? ""
+			switch listType {
+			case .listI:
+				return NewConfig.getInfoString(projectKey: .stagingProjectId) ?? ""
+			case .listII:
+				return NewConfig.getInfoString(projectKey: .stagingProjectId) ?? ""
+			}
 		}
 	}
 
@@ -150,7 +154,12 @@ struct ListConfiguration {
 		case .production:
 			return NewConfig.getInfoString(projectKey: .subscriptionKey) ?? ""
 		case .staging:
-			return NewConfig.getInfoString(projectKey: .stagingSubscriptionKey) ?? ""
+			switch listType {
+			case .listI:
+				return NewConfig.getInfoString(projectKey: .stagingSubscriptionKey) ?? ""
+			case .listII:
+				return NewConfig.getInfoString(projectKey: .stagingSubscriptionKey) ?? ""
+			}
 		}
 	}
 
@@ -207,101 +216,14 @@ struct ListConfiguration {
 			NewConfig.setString(.staging, key: .subscriptionKeyList2, value: subscriptionKeyStaging)
 		}
 	}
+
+	static func current(type: ListType) -> MiniAppSdkConfig {
+		let config = ListConfiguration(listType: type)
+		return config.sdkConfig
+	}
 }
 
-
 extension MiniAppSettingsView {
-
-    struct SettingsConfig: Hashable {
-
-        var previewMode: PreviewMode = (NewConfig.bool(.isPreviewMode, fallback: .isPreviewMode) ?? true) ? .previewable : .published
-        var environmentMode: NewConfig.Environment = (NewConfig.bool(.environment) ?? true) ? .production : .staging
-
-        // list 1 placeholders
-        var listIProjectIdPlaceholder: String = NewConfig.getInfoString(projectKey: .projectId) ?? ""
-        var listISubscriptionKeyPlaceholder: String = NewConfig.getInfoString(projectKey: .subscriptionKey) ?? ""
-
-        // list 1 prod
-        var listIProjectId: String = NewConfig.string(.production, key: .projectId, withFallback: true) ?? ""
-        var listISubscriptionKey: String = NewConfig.string(.production, key: .subscriptionKey, withFallback: true) ?? ""
-        // list 1 stg
-        var listIStagingProjectId: String = NewConfig.string(.staging, key: .projectId, fallbackKey: .stagingProjectId) ?? ""
-        var listIStagingSubscriptionKey: String = NewConfig.string(.staging, key: .subscriptionKey, fallbackKey: .stagingSubscriptionKey) ?? ""
-
-        // list 2 prod
-        var listIIProjectId: String = NewConfig.string(.production, key: .projectIdList2, withFallback: true) ?? ""
-        var listIISubscriptionKey: String = NewConfig.string(.production, key: .subscriptionKeyList2, withFallback: true) ?? ""
-        // list 2 stg
-        var listIIStagingProjectId: String = NewConfig.string(.staging, key: .projectIdList2, withFallback: false) ?? ""
-        var listIIStagingSubscriptionKey: String = NewConfig.string(.staging, key: .subscriptionKeyList2, withFallback: false) ?? ""
-
-        init() {
-            // init
-        }
-
-        func sdkConfig(list: ListType) -> MiniAppSdkConfig {
-            return MiniAppSdkConfig(
-                baseUrl: baseUrl,
-                rasProjectId: projectId(list: list),
-                subscriptionKey: subscriptionKey(list: list),
-                hostAppVersion: hostAppVersion,
-                isPreviewMode: previewMode == .previewable,
-                analyticsConfigList: analyticsConfig,
-                requireMiniAppSignatureVerification: requiresSignatureVerification,
-                sslKeyHash: sslKey(enabled: false),
-                storageMaxSizeInBytes: storageMaxSizeInBytes > 0 ? UInt64(storageMaxSizeInBytes) : nil
-            )
-        }
-
-        var baseUrl: String? {
-            environmentMode == .production ? NewConfig.getInfoString(key: .endpoint) : NewConfig.getInfoString(key: .stagingEndpoint)
-        }
-
-        func projectId(list: ListType) -> String? {
-            switch list {
-            case .listI:
-                return environmentMode == .production ? listIProjectId : listIStagingProjectId
-            case .listII:
-                return environmentMode == .production ? listIIProjectId : listIIStagingProjectId
-            }
-        }
-
-        func subscriptionKey(list: ListType) -> String? {
-            switch list {
-            case .listI:
-                return environmentMode == .production ? listISubscriptionKey : listIStagingSubscriptionKey
-            case .listII:
-                return environmentMode == .production ? listIISubscriptionKey : listIIStagingSubscriptionKey
-            }
-        }
-
-        var hostAppVersion: String? {
-            NewConfig.string(.version)
-        }
-
-        var requiresSignatureVerification: Bool? {
-            NewConfig.bool(.signatureVerification)
-        }
-
-        func sslKey(enabled: Bool) -> MiniAppConfigSSLKeyHash? {
-            var pinConf: MiniAppConfigSSLKeyHash?
-            let sslKeyHash = NewConfig.getInfoAny(.sslKeyHash)
-            if enabled, let keyHash = (sslKeyHash as? [String: Any?])?["main"] as? String {
-                pinConf = MiniAppConfigSSLKeyHash(pin: keyHash, backup: (sslKeyHash as? [String: Any?])?["backup"] as? String)
-            }
-            return pinConf
-        }
-
-        var analyticsConfig: [MAAnalyticsConfig]? {
-            [MAAnalyticsConfig(acc: "477", aid: "998")]
-        }
-
-        var storageMaxSizeInBytes: Int {
-            NewConfig.int(.maxSecureStorageFileLimit) ?? 5_000_000
-        }
-    }
-
-
     enum MenuItem: CaseIterable {
         case general
         case qaSecureStorage

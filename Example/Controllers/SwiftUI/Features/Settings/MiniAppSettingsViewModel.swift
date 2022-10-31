@@ -9,14 +9,7 @@ class MiniAppSettingsViewModel: ObservableObject {
 
     @Published var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
     @Published var state: State = .none
-    var config: MiniAppSettingsView.SettingsConfig {
-        get {
-            store.config
-        }
-        set {
-            store.config = newValue
-        }
-    }
+
 	@Published var listConfigI = ListConfiguration(listType: .listI)
 	@Published var listConfigII = ListConfiguration(listType: .listII)
 

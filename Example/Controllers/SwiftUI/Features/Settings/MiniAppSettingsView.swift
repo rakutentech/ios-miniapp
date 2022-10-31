@@ -53,6 +53,7 @@ struct MiniAppSettingsView: View {
 							VStack(alignment: .leading, spacing: 10) {
 								Text("🛑 Something went wrong when loading the list.")
 								Text(error.localizedDescription)
+									.lineLimit(2)
 									.font(.system(size: 11))
 							}
 						} else {
@@ -63,6 +64,7 @@ struct MiniAppSettingsView: View {
 							VStack(alignment: .leading, spacing: 10) {
 								Text("🛑 Something went wrong when loading the list.")
 								Text(error.localizedDescription)
+									.lineLimit(2)
 									.font(.system(size: 11))
 							}
 						} else {

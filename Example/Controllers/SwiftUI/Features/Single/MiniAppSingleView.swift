@@ -9,9 +9,6 @@ struct MiniAppSingleView: View {
     @StateObject var handler = MiniAppSUIViewHandler()
 
     var listType: ListType
-    var config: MiniAppSdkConfig {
-        MiniAppSettingsView.SettingsConfig().sdkConfig(list: listType)
-    }
 
     @State var miniAppId: String
     @State var miniAppVersion: String?
@@ -25,10 +22,15 @@ struct MiniAppSingleView: View {
     @State private var closeAlertMessage: MiniAppAlertMessage?
 
     init(listType: ListType, miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
+		let sdkConfig = ListConfiguration.current(type: listType)
         self.listType = listType
-        let sdkConfig = MiniAppSettingsView.SettingsConfig().sdkConfig(list: listType)
         _viewModel = StateObject(wrappedValue:
-            MiniAppWithTermsViewModel(miniAppId: miniAppId, miniAppVersion: miniAppVersion, miniAppType: .miniapp, sdkConfig: sdkConfig)
+			MiniAppWithTermsViewModel(
+				miniAppId: miniAppId,
+				miniAppVersion: miniAppVersion,
+				miniAppType: .miniapp,
+				sdkConfig: sdkConfig
+			)
         )
         _miniAppId = State(wrappedValue: miniAppId)
         _miniAppVersion = State(wrappedValue: miniAppVersion)

@@ -65,16 +65,6 @@ struct MiniAppListView: View {
         }
         .trackPage(pageName: title)
     }
-
-    var config: MiniAppSdkConfig {
-        viewModel.config
-    }
-}
-
-extension MiniAppListView: ViewTrackable {
-	var pageName: String {
-		return title
-	}
 }
 
 struct MiniAppListView_Previews: PreviewProvider {
@@ -83,39 +73,49 @@ struct MiniAppListView_Previews: PreviewProvider {
     }
 }
 
+// MARK: - ViewTrackable
+extension MiniAppListView: ViewTrackable {
+	var pageName: String {
+		return title
+	}
+}
+
 struct MiniAppSingleViewRequest: Identifiable {
     let id = UUID()
     let info: MiniAppInfo
 }
 
-struct MiniAppIndexedListView: View {
+// MARK: - MiniAppIndexedListView
+extension MiniAppListView {
+	struct MiniAppIndexedListView: View {
 
-	@ObservedObject var viewModel: MiniAppListViewModel
+		@ObservedObject var viewModel: MiniAppListViewModel
 
-	var body: some View {
-		List {
-			ForEach(viewModel.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
-				Section(header: Text(key)) {
-					ForEach(viewModel.indexedMiniAppInfoList[key]!, id: \.version) { (info) in
-						NavigationLink {
-							MiniAppSingleView(
-								listType: viewModel.type,
-								miniAppId: info.id,
-								miniAppVersion: info.version.versionId,
-								miniAppType: .miniapp
-							)
-						} label: {
-							MiniAppListRowCell(
-								iconUrl: info.icon,
-								displayName: info.displayName ?? "",
-								versionTag: info.version.versionTag,
-								versionId: info.version.versionId
-							)
+		var body: some View {
+			List {
+				ForEach(viewModel.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
+					Section(header: Text(key)) {
+						ForEach(viewModel.indexedMiniAppInfoList[key]!, id: \.version) { (info) in
+							NavigationLink {
+								MiniAppSingleView(
+									listType: viewModel.type,
+									miniAppId: info.id,
+									miniAppVersion: info.version.versionId,
+									miniAppType: .miniapp
+								)
+							} label: {
+								MiniAppListRowCell(
+									iconUrl: info.icon,
+									displayName: info.displayName ?? "",
+									versionTag: info.version.versionTag,
+									versionId: info.version.versionId
+								)
+							}
 						}
 					}
 				}
 			}
+			.listStyle(GroupedListStyle())
 		}
-		.listStyle(GroupedListStyle())
 	}
 }

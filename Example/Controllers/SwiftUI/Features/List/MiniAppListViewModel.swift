@@ -73,10 +73,6 @@ class MiniAppListViewModel: ObservableObject {
         state = .loading
         store.load(type: type)
     }
-
-    var config: MiniAppSdkConfig {
-        store.config.sdkConfig(list: type)
-    }
 }
 
 enum ListState {

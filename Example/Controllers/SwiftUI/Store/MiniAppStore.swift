@@ -17,8 +17,6 @@ class MiniAppStore: ObservableObject {
 
     static let shared = MiniAppStore()
 
-    @Published var config = MiniAppSettingsView.SettingsConfig()
-
     @AppStorage("MiniApp.FirstLaunch") var miniAppFirstLaunch = false
     @AppStorage("MiniApp.SetupCompleted") var miniAppSetupCompleted = false
 
@@ -56,7 +54,7 @@ class MiniAppStore: ObservableObject {
     }
 
     func load(type: ListType) {
-        let sdkConfig = config.sdkConfig(list: type)
+		let sdkConfig = ListConfiguration.current(type: type)
         MiniApp
             .shared(with: sdkConfig)
             .list { result in
