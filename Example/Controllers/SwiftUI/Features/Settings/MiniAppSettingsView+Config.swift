@@ -53,15 +53,6 @@ struct ListConfiguration {
 
 	var error: Error?
 
-	var listUserDefaults: UserDefaults? {
-		switch listType {
-		case .listI:
-			return UserDefaults(suiteName: "")
-		case .listII:
-			return UserDefaults(suiteName: "")
-		}
-	}
-
 	init(listType: ListType) {
 		self.listType = listType
 		self.previewMode = (NewConfig.bool(.isPreviewMode, fallback: .isPreviewMode) ?? true) ? .previewable : .published
