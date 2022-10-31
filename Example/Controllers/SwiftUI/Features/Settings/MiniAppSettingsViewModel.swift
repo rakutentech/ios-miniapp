@@ -76,8 +76,7 @@ class MiniAppSettingsViewModel: ObservableObject {
 				} else {
 					if let listErrorI = listErrorI {
 						self.state = .error(listErrorI)
-					}
-					else if let listErrorII = listErrorII {
+					} else if let listErrorII = listErrorII {
 						self.state = .error(listErrorII)
 					}
 				}
