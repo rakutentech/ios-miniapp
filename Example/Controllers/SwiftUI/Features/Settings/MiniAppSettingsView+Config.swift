@@ -28,6 +28,15 @@ enum ListType: CaseIterable {
 			return "List II"
 		}
 	}
+
+	var suiteName: String {
+		switch self {
+		case .listI:
+			return "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings.list.i"
+		case .listII:
+			return "com.rakuten.tech.mobile.miniapp.MiniAppDemo.settings.list.ii"
+		}
+	}
 }
 
 protocol ListConfigurable: Hashable {
@@ -54,21 +63,13 @@ struct ListConfiguration {
 	var error: Error?
 
 	init(listType: ListType) {
-		self.listType = listType
-		self.previewMode = (NewConfig.bool(.isPreviewMode, fallback: .isPreviewMode) ?? true) ? .previewable : .published
-		self.environmentMode = (NewConfig.bool(.environment) ?? true) ? .production : .staging
-		switch listType {
-		case .listI:
-			projectIdProd 			= NewConfig.string(.production, key: .projectId, withFallback: true) ?? ""
-			subscriptionKeyProd 	= NewConfig.string(.production, key: .subscriptionKey, withFallback: true) ?? ""
-			projectIdStaging 		= NewConfig.string(.staging, key: .projectId, fallbackKey: .stagingProjectId) ?? ""
-			subscriptionKeyStaging 	= NewConfig.string(.staging, key: .subscriptionKey, fallbackKey: .stagingSubscriptionKey) ?? ""
-		case .listII:
-			projectIdProd 			= NewConfig.string(.production, key: .projectIdList2, withFallback: true) ?? ""
-			subscriptionKeyProd 	= NewConfig.string(.production, key: .subscriptionKeyList2, withFallback: true) ?? ""
-			projectIdStaging 		= NewConfig.string(.staging, key: .projectIdList2) ?? ""
-			subscriptionKeyStaging 	= NewConfig.string(.staging, key: .subscriptionKeyList2) ?? ""
-		}
+		self.listType 					= listType
+		self.previewMode 				= (NewConfig.bool(listType, key: .isPreviewMode, fallbackKey: .isPreviewMode) ?? true) ? .previewable : .published
+		self.environmentMode 			= (NewConfig.bool(listType, key: .environment, fallbackKey: .environment) ?? true) ? .production : .staging
+		self.projectIdProd 				= NewConfig.string(listType, key: .projectId, fallbackKey: .projectId) ?? ""
+		self.subscriptionKeyProd 		= NewConfig.string(listType, key: .subscriptionKey, fallbackKey: .subscriptionKey) ?? ""
+		self.projectIdStaging 			= NewConfig.string(listType, key: .stagingProjectId, fallbackKey: .stagingProjectId) ?? ""
+		self.subscriptionKeyStaging 	= NewConfig.string(listType, key: .stagingSubscriptionKey, fallbackKey: .stagingSubscriptionKey) ?? ""
 	}
 
 	var baseUrl: String? {
@@ -189,18 +190,12 @@ struct ListConfiguration {
 	}
 
 	func persist() {
-		switch listType {
-		case .listI:
-			NewConfig.setString(.production, key: .projectId, value: projectIdProd)
-			NewConfig.setString(.production, key: .subscriptionKey, value: subscriptionKeyProd)
-			NewConfig.setString(.staging, key: .projectId, value: projectIdStaging)
-			NewConfig.setString(.staging, key: .subscriptionKey, value: subscriptionKeyStaging)
-		case .listII:
-			NewConfig.setString(.production, key: .projectIdList2, value: projectIdProd)
-			NewConfig.setString(.production, key: .subscriptionKeyList2, value: subscriptionKeyProd)
-			NewConfig.setString(.staging, key: .projectIdList2, value: projectIdStaging)
-			NewConfig.setString(.staging, key: .subscriptionKeyList2, value: subscriptionKeyStaging)
-		}
+		NewConfig.setBool(listType, key: .isPreviewMode, value: previewMode == .previewable)
+		NewConfig.setBool(listType, key: .environment, value: environmentMode == .production)
+		NewConfig.setString(listType, key: .projectId, value: projectIdProd)
+		NewConfig.setString(listType, key: .subscriptionKey, value: subscriptionKeyProd)
+		NewConfig.setString(listType, key: .stagingProjectId, value: projectIdStaging)
+		NewConfig.setString(listType, key: .stagingSubscriptionKey, value: subscriptionKeyStaging)
 	}
 
 	static func current(type: ListType) -> MiniAppSdkConfig {

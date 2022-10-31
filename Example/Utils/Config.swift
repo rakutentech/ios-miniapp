@@ -190,16 +190,21 @@ class NewConfig {
     }
 
     enum ProjectKey: String {
-        case projectId = "RASProjectId"
-        case subscriptionKey = "RASProjectSubscriptionKey"
+		case isPreviewMode = "RMAIsPreviewMode"
+		case environment = "RMAEnvironment"
+
+		case projectId = "RASProjectId"
+		case subscriptionKey = "RASProjectSubscriptionKey"
 		case stagingProjectId = "RASStagingProjectId"
 		case stagingSubscriptionKey = "RASStagingProjectSubscriptionKey"
-
-        case projectIdList2 = "RASProjectIdList2"
-        case subscriptionKeyList2 = "RASProjectSubscriptionKeyList2"
     }
 
     enum FallbackKey: String {
+		case isPreviewMode = "RMAIsPreviewMode"
+		case environment = "RMAEnvironment"
+
+		case projectId = "RASProjectId"
+		case subscriptionKey = "RASProjectSubscriptionKey"
         case stagingProjectId = "RASStagingProjectId"
         case stagingSubscriptionKey = "RASStagingProjectSubscriptionKey"
     }
@@ -274,6 +279,36 @@ class NewConfig {
         return userDefaults?.value(forKey: key.rawValue) as? Bool
     }
 
+	class func string(_ list: ListType, key: ProjectKey, fallbackKey: FallbackKey? = nil) -> String? {
+		let userDefaults = UserDefaults(suiteName: list.suiteName)
+		if let withFallback = fallbackKey {
+			return userDefaults?.string(forKey: key.rawValue) ?? getInfoString(string: withFallback.rawValue)
+		} else {
+			return userDefaults?.string(forKey: key.rawValue)
+		}
+	}
+
+	class func setString(_ list: ListType, key: ProjectKey, value: String) {
+		let userDefaults = UserDefaults(suiteName: list.suiteName)
+		userDefaults?.set(value, forKey: key.rawValue)
+		userDefaults?.synchronize()
+	}
+
+	class func bool(_ list: ListType, key: ProjectKey, fallbackKey: FallbackKey? = nil) -> Bool? {
+		let userDefaults = UserDefaults(suiteName: list.suiteName)
+		if let withFallback = fallbackKey {
+			return userDefaults?.value(forKey: key.rawValue) as? Bool ?? getInfoBool(key: withFallback.rawValue)
+		} else {
+			return userDefaults?.value(forKey: key.rawValue) as? Bool
+		}
+	}
+
+	class func setBool(_ list: ListType, key: ProjectKey, value: Bool) {
+		let userDefaults = UserDefaults(suiteName: list.suiteName)
+		userDefaults?.set(value, forKey: key.rawValue)
+		userDefaults?.synchronize()
+	}
+
     class func value(_ env: Environment, key: ProjectKey) -> Any? {
         let userDefaults = UserDefaults(suiteName: env.suiteName)
         return userDefaults?.value(forKey: key.rawValue)
@@ -303,4 +338,8 @@ class NewConfig {
     class func getInfoBool(key: GlobalKey) -> Bool? {
         return Bundle.main.infoDictionary?[key.rawValue] as? Bool
     }
+
+	class func getInfoBool(key: String) -> Bool? {
+		return Bundle.main.infoDictionary?[key] as? Bool
+	}
 }

@@ -51,7 +51,7 @@ struct MiniAppSettingsView: View {
 					case .listI:
 						if let error = viewModel.listConfigI.error {
 							VStack(alignment: .leading, spacing: 10) {
-								Text("🛑 Something went wrong when loading the list.")
+								Text("🛑 Something went wrong when loading the list. This list configuration will not be saved.")
 								Text(error.localizedDescription)
 									.lineLimit(2)
 									.font(.system(size: 11))
@@ -62,7 +62,7 @@ struct MiniAppSettingsView: View {
 					case .listII:
 						if let error = viewModel.listConfigII.error {
 							VStack(alignment: .leading, spacing: 10) {
-								Text("🛑 Something went wrong when loading the list.")
+								Text("🛑 Something went wrong when loading the list. This list configuration will not be saved.")
 								Text(error.localizedDescription)
 									.lineLimit(2)
 									.font(.system(size: 11))

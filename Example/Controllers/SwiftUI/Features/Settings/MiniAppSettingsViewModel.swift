@@ -36,9 +36,13 @@ class MiniAppSettingsViewModel: ObservableObject {
     var bag = Set<AnyCancellable>()
 
     init() {
-        //
+        print(getDocumentsDirectory())
     }
-
+	func getDocumentsDirectory() -> URL {
+		let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+		let documentsDirectory = paths[0]
+		return documentsDirectory
+	}
     func getBuildVersionText() -> String {
         var versionText = ""
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
