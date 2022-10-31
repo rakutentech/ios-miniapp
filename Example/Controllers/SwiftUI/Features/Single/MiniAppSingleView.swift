@@ -181,6 +181,7 @@ struct MiniAppSingleView_Previews: PreviewProvider {
 
 struct MiniAppPermissionRequest: Identifiable {
     let id = UUID()
+	let sdkConfig: MiniAppSdkConfig
     let info: MiniAppInfo
     let manifest: MiniAppManifest
 }

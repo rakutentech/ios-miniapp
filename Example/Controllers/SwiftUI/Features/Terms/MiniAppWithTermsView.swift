@@ -21,7 +21,7 @@ struct MiniAppWithTermsView: View {
             case let .permissionRequested(info, manifest):
                 MiniAppTermsView(
                     didAccept: $didAcceptTerms,
-                    request: MiniAppPermissionRequest(info: info, manifest: manifest)
+					request: MiniAppPermissionRequest(sdkConfig: viewModel.sdkConfig, info: info, manifest: manifest)
                 )
             case .error(let error):
                 Text(error.localizedDescription)

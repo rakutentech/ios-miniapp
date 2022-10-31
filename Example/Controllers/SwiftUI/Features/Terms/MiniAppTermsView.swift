@@ -3,14 +3,17 @@ import MiniApp
 
 @MainActor
 class MiniAppTermsViewModel: ObservableObject {
-    let service = MiniAppPermissionService()
+	let sdkConfig: MiniAppSdkConfig
+	let service: MiniAppPermissionService
 
     @Published var info: MiniAppInfo
     @Published var manifest: MiniAppManifest
     @Published var requiredPermissions: [MASDKCustomPermissionModel]
     @Published var optionalPermissions: [MASDKCustomPermissionModel]
 
-    init(info: MiniAppInfo, manifest: MiniAppManifest) {
+	init(sdkConfig: MiniAppSdkConfig, info: MiniAppInfo, manifest: MiniAppManifest) {
+		self.sdkConfig = sdkConfig
+		self.service = MiniAppPermissionService(config: sdkConfig)
         self.info = info
         self.manifest = manifest
         self.requiredPermissions = manifest.requiredPermissions ?? []
@@ -50,7 +53,9 @@ struct MiniAppTermsView: View {
 
     init(didAccept: Binding<Bool>, request: MiniAppPermissionRequest) {
         _didAccept = didAccept
-        _viewModel = StateObject(wrappedValue: MiniAppTermsViewModel(info: request.info, manifest: request.manifest))
+		_viewModel = StateObject(wrappedValue:
+			MiniAppTermsViewModel(sdkConfig: request.sdkConfig, info: request.info, manifest: request.manifest)
+		)
     }
 
     var body: some View {
@@ -160,7 +165,9 @@ struct MiniAppTermsView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppTermsView(
             didAccept: .constant(false),
-            request: MiniAppPermissionRequest(info:
+            request: MiniAppPermissionRequest(
+				sdkConfig: NewConfig.sampleSdkConfig(),
+				info:
                 MiniAppInfo(
                     id: "",
                     icon: URL(string: "")!,
