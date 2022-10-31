@@ -127,12 +127,7 @@ struct ListConfiguration {
 		case .production:
 			return NewConfig.getInfoString(projectKey: .projectId) ?? ""
 		case .staging:
-			switch listType {
-			case .listI:
-				return NewConfig.getInfoString(projectKey: .stagingProjectId) ?? ""
-			case .listII:
-				return NewConfig.getInfoString(projectKey: .stagingProjectId) ?? ""
-			}
+			return NewConfig.getInfoString(projectKey: .stagingProjectId) ?? ""
 		}
 	}
 
@@ -141,12 +136,7 @@ struct ListConfiguration {
 		case .production:
 			return NewConfig.getInfoString(projectKey: .subscriptionKey) ?? ""
 		case .staging:
-			switch listType {
-			case .listI:
-				return NewConfig.getInfoString(projectKey: .stagingSubscriptionKey) ?? ""
-			case .listII:
-				return NewConfig.getInfoString(projectKey: .stagingSubscriptionKey) ?? ""
-			}
+			return NewConfig.getInfoString(projectKey: .stagingSubscriptionKey) ?? ""
 		}
 	}
 
