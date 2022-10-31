@@ -53,11 +53,6 @@ struct ListConfiguration {
 
 	var error: Error?
 
-//		@AppStorage(NewConfig.ProjectKey.projectId.rawValue, store: listUserDefaults) var userDefaultsProjectId = ""
-//		@AppStorage(NewConfig.ProjectKey.subscriptionKey.rawValue, store: listUserDefaults) var userDefaultsSubscriptionKey = ""
-//		@AppStorage(NewConfig.ProjectKey.stagingProjectId.rawValue, store: listUserDefaults) var userDefaultsProjectIdStaging = ""
-//		@AppStorage(NewConfig.ProjectKey.stagingSubscriptionKey.rawValue, store: listUserDefaults) var userDefaultsSubscriptionKeyStaging = ""
-
 	var listUserDefaults: UserDefaults? {
 		switch listType {
 		case .listI:
