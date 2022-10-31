@@ -73,6 +73,6 @@ extension MiniAppSharePreviewView: ViewTrackable {
 
 struct MiniAppSharePreviewView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppSharePreviewView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: Config.current()))
+		MiniAppSharePreviewView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: NewConfig.sampleSdkConfig()))
     }
 }

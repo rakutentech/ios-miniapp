@@ -46,7 +46,7 @@ struct MiniAppUrlView: View {
                 MiniAppSUIView(urlParams:
                     .init(
                         config: MiniAppConfig(
-                            config: Config.current(),
+							config: ListConfiguration(listType: .listI).sdkConfig,
                             messageDelegate: MiniAppViewMessageDelegator()
                         ),
                         type: .miniapp,

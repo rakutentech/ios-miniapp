@@ -105,11 +105,11 @@ class MiniAppStore: ObservableObject {
     }
 
     func getSecureStorageLimit() -> UInt64 {
-        return UInt64(UserDefaults.standard.integer(forKey: Config.LocalKey.maxSecureStorageFileLimit.rawValue))
+		return UInt64(NewConfig.int(.maxSecureStorageFileLimit) ?? 5_000_000)
     }
 
     func getSecureStorageLimitString() -> String {
-        let maxSecureStorageLimit = UserDefaults.standard.integer(forKey: Config.LocalKey.maxSecureStorageFileLimit.rawValue)
+        let maxSecureStorageLimit = NewConfig.int(.maxSecureStorageFileLimit) ?? 5_000_000
         if maxSecureStorageLimit > 0 {
             return storageLimitFormatter.string(from: NSNumber(value: maxSecureStorageLimit)) ?? ""
         }
@@ -125,8 +125,7 @@ class MiniAppStore: ObservableObject {
         }
         let textInt = Int(truncating: textNumber)
 
-        UserDefaults.standard.set(textInt, forKey: Config.LocalKey.maxSecureStorageFileLimit.rawValue)
-        UserDefaults.standard.synchronize()
+		NewConfig.setInt(key: .maxSecureStorageFileLimit, value: textInt)
 
         return .success(textIntString)
     }

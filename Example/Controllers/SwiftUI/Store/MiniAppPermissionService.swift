@@ -6,7 +6,7 @@ final class MiniAppPermissionService {
 
     let config: MiniAppSdkConfig
 
-    init(config: MiniAppSdkConfig = Config.current()) {
+	init(config: MiniAppSdkConfig = ListConfiguration.current(type: .listI)) {
         self.config = config
     }
 
