@@ -58,7 +58,7 @@ class DemoAppAnalytics {
 
 	internal class func getAnalyticsInfo() -> [(String, String)] {
 		var result = [(String, String)]()
-		if let projectId = NewConfig.string(.listI, key: .projectId) {
+		if let projectId = Config.string(.listI, key: .projectId) {
 			result.append((DemoAppAnalyticsParameter.projectId.name(), projectId))
 		}
 		if let version = sdkVersion {

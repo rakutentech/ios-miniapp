@@ -1,7 +1,7 @@
 import UIKit
 import MiniApp
 
-class NewConfig {
+class Config {
 
 	enum Environment: String, CaseIterable {
 		case production

@@ -166,7 +166,7 @@ struct MiniAppTermsView_Previews: PreviewProvider {
         MiniAppTermsView(
             didAccept: .constant(false),
             request: MiniAppPermissionRequest(
-				sdkConfig: NewConfig.sampleSdkConfig(),
+				sdkConfig: Config.sampleSdkConfig(),
 				info:
                 MiniAppInfo(
                     id: "",

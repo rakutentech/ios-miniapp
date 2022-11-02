@@ -42,7 +42,7 @@ enum ListType: CaseIterable {
 protocol ListConfigurable: Hashable {
 	var listType: ListType { get set }
 	var previewMode: PreviewMode { get set }
-	var environmentMode: NewConfig.Environment { get set }
+	var environmentMode: Config.Environment { get set }
 	var projectId: String? { get set }
 	var subscriptionKey: String? { get set }
 	var placeholderProjectId: String { get set }
@@ -53,7 +53,7 @@ struct ListConfiguration {
 
 	var listType: ListType
 	var previewMode: PreviewMode
-	var environmentMode: NewConfig.Environment
+	var environmentMode: Config.Environment
 
 	var projectIdProd: String
 	var subscriptionKeyProd: String
@@ -64,16 +64,16 @@ struct ListConfiguration {
 
 	init(listType: ListType) {
 		self.listType 					= listType
-		self.previewMode 				= (NewConfig.bool(listType, key: .isPreviewMode, fallbackKey: .isPreviewMode) ?? true) ? .previewable : .published
-		self.environmentMode 			= (NewConfig.bool(listType, key: .environment, fallbackKey: .environment) ?? true) ? .production : .staging
-		self.projectIdProd 				= NewConfig.string(listType, key: .projectId, fallbackKey: .projectId) ?? ""
-		self.subscriptionKeyProd 		= NewConfig.string(listType, key: .subscriptionKey, fallbackKey: .subscriptionKey) ?? ""
-		self.projectIdStaging 			= NewConfig.string(listType, key: .stagingProjectId, fallbackKey: .stagingProjectId) ?? ""
-		self.subscriptionKeyStaging 	= NewConfig.string(listType, key: .stagingSubscriptionKey, fallbackKey: .stagingSubscriptionKey) ?? ""
+		self.previewMode 				= (Config.bool(listType, key: .isPreviewMode, fallbackKey: .isPreviewMode) ?? true) ? .previewable : .published
+		self.environmentMode 			= (Config.bool(listType, key: .environment, fallbackKey: .environment) ?? true) ? .production : .staging
+		self.projectIdProd 				= Config.string(listType, key: .projectId, fallbackKey: .projectId) ?? ""
+		self.subscriptionKeyProd 		= Config.string(listType, key: .subscriptionKey, fallbackKey: .subscriptionKey) ?? ""
+		self.projectIdStaging 			= Config.string(listType, key: .stagingProjectId, fallbackKey: .stagingProjectId) ?? ""
+		self.subscriptionKeyStaging 	= Config.string(listType, key: .stagingSubscriptionKey, fallbackKey: .stagingSubscriptionKey) ?? ""
 	}
 
 	var baseUrl: String? {
-		environmentMode == .production ? NewConfig.getInfoString(key: .endpoint) : NewConfig.getInfoString(key: .stagingEndpoint)
+		environmentMode == .production ? Config.getInfoString(key: .endpoint) : Config.getInfoString(key: .stagingEndpoint)
 	}
 
 	var projectId: String? {
@@ -125,32 +125,32 @@ struct ListConfiguration {
 	var placeholderProjectId: String {
 		switch environmentMode {
 		case .production:
-			return NewConfig.getInfoString(projectKey: .projectId) ?? ""
+			return Config.getInfoString(projectKey: .projectId) ?? ""
 		case .staging:
-			return NewConfig.getInfoString(projectKey: .stagingProjectId) ?? ""
+			return Config.getInfoString(projectKey: .stagingProjectId) ?? ""
 		}
 	}
 
 	var placeholderSubscriptionKey: String {
 		switch environmentMode {
 		case .production:
-			return NewConfig.getInfoString(projectKey: .subscriptionKey) ?? ""
+			return Config.getInfoString(projectKey: .subscriptionKey) ?? ""
 		case .staging:
-			return NewConfig.getInfoString(projectKey: .stagingSubscriptionKey) ?? ""
+			return Config.getInfoString(projectKey: .stagingSubscriptionKey) ?? ""
 		}
 	}
 
 	var hostAppVersion: String? {
-		NewConfig.string(.version)
+		Config.string(.version)
 	}
 
 	var requiresSignatureVerification: Bool? {
-		NewConfig.bool(.signatureVerification)
+		Config.bool(.signatureVerification)
 	}
 
 	func sslKey(enabled: Bool) -> MiniAppConfigSSLKeyHash? {
 		var pinConf: MiniAppConfigSSLKeyHash?
-		let sslKeyHash = NewConfig.getInfoAny(.sslKeyHash)
+		let sslKeyHash = Config.getInfoAny(.sslKeyHash)
 		if enabled, let keyHash = (sslKeyHash as? [String: Any?])?["main"] as? String {
 			pinConf = MiniAppConfigSSLKeyHash(pin: keyHash, backup: (sslKeyHash as? [String: Any?])?["backup"] as? String)
 		}
@@ -162,7 +162,7 @@ struct ListConfiguration {
 	}
 
 	var storageMaxSizeInBytes: Int {
-		NewConfig.int(.maxSecureStorageFileLimit) ?? 5_000_000
+		Config.int(.maxSecureStorageFileLimit) ?? 5_000_000
 	}
 
 	var sdkConfig: MiniAppSdkConfig {
@@ -180,12 +180,12 @@ struct ListConfiguration {
 	}
 
 	func persist() {
-		NewConfig.setBool(listType, key: .isPreviewMode, value: previewMode == .previewable)
-		NewConfig.setBool(listType, key: .environment, value: environmentMode == .production)
-		NewConfig.setString(listType, key: .projectId, value: projectIdProd)
-		NewConfig.setString(listType, key: .subscriptionKey, value: subscriptionKeyProd)
-		NewConfig.setString(listType, key: .stagingProjectId, value: projectIdStaging)
-		NewConfig.setString(listType, key: .stagingSubscriptionKey, value: subscriptionKeyStaging)
+		Config.setBool(listType, key: .isPreviewMode, value: previewMode == .previewable)
+		Config.setBool(listType, key: .environment, value: environmentMode == .production)
+		Config.setString(listType, key: .projectId, value: projectIdProd)
+		Config.setString(listType, key: .subscriptionKey, value: subscriptionKeyProd)
+		Config.setString(listType, key: .stagingProjectId, value: projectIdStaging)
+		Config.setString(listType, key: .stagingSubscriptionKey, value: subscriptionKeyStaging)
 	}
 
 	static func current(type: ListType) -> MiniAppSdkConfig {

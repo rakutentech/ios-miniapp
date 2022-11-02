@@ -66,6 +66,6 @@ struct MiniAppWithTermsView: View {
 
 struct MiniAppWithTermsView_Previews: PreviewProvider {
     static var previews: some View {
-		MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: NewConfig.sampleSdkConfig()))
+		MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: Config.sampleSdkConfig()))
     }
 }

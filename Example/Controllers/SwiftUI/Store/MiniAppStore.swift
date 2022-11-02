@@ -23,7 +23,7 @@ class MiniAppStore: ObservableObject {
     @AppStorage("QA_CUSTOM_ACCESS_TOKEN_ERROR_MESSAGE") var accessTokenErrorMessage = ""
     @AppStorage("QA_CUSTOM_ACCESS_TOKEN_ERROR_TYPE") var accessTokenErrorBehavior = ""
 
-    @AppStorage(NewConfig.GlobalKey.signatureVerification.rawValue) var signatureVerification: Bool?
+    @AppStorage(Config.GlobalKey.signatureVerification.rawValue) var signatureVerification: Bool?
 
     @Published var miniAppInfoList: [MiniAppInfo] = []
 	@Published var miniAppInfoListError: Error?
@@ -105,11 +105,11 @@ class MiniAppStore: ObservableObject {
     }
 
     func getSecureStorageLimit() -> UInt64 {
-		return UInt64(NewConfig.int(.maxSecureStorageFileLimit) ?? 5_000_000)
+		return UInt64(Config.int(.maxSecureStorageFileLimit) ?? 5_000_000)
     }
 
     func getSecureStorageLimitString() -> String {
-        let maxSecureStorageLimit = NewConfig.int(.maxSecureStorageFileLimit) ?? 5_000_000
+        let maxSecureStorageLimit = Config.int(.maxSecureStorageFileLimit) ?? 5_000_000
         if maxSecureStorageLimit > 0 {
             return storageLimitFormatter.string(from: NSNumber(value: maxSecureStorageLimit)) ?? ""
         }
@@ -125,7 +125,7 @@ class MiniAppStore: ObservableObject {
         }
         let textInt = Int(truncating: textNumber)
 
-		NewConfig.setInt(key: .maxSecureStorageFileLimit, value: textInt)
+		Config.setInt(key: .maxSecureStorageFileLimit, value: textInt)
 
         return .success(textIntString)
     }
