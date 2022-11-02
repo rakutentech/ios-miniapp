@@ -39,30 +39,7 @@ struct MiniAppListView: View {
                     Text("No MiniApps found")
                         .foregroundColor(Color(.secondaryLabel))
                 } else {
-                    List {
-                        ForEach(viewModel.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
-                            Section(header: Text(key)) {
-                                ForEach(viewModel.indexedMiniAppInfoList[key]!, id: \.version) { (info) in
-                                    NavigationLink {
-                                        MiniAppSingleView(
-                                            listType: viewModel.type,
-                                            miniAppId: info.id,
-                                            miniAppVersion: info.version.versionId,
-                                            miniAppType: .miniapp
-                                        )
-                                    } label: {
-                                        MiniAppListRowCell(
-                                            iconUrl: info.icon,
-                                            displayName: info.displayName ?? "",
-                                            versionTag: info.version.versionTag,
-                                            versionId: info.version.versionId
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .listStyle(GroupedListStyle())
+                    MiniAppIndexedListView(viewModel: viewModel)
                 }
             }
         }
@@ -109,4 +86,46 @@ struct MiniAppListView_Previews: PreviewProvider {
 struct MiniAppSingleViewRequest: Identifiable {
     let id = UUID()
     let info: MiniAppInfo
+}
+
+// MARK: - MiniAppIndexedListView
+extension MiniAppListView {
+	struct MiniAppIndexedListView: View {
+
+		@ObservedObject var viewModel: MiniAppListViewModel
+		@State private var searchText: String = ""
+
+		var body: some View {
+			VStack {
+				TextField("Search... (id, version)", text: $viewModel.searchText)
+					.textFieldStyle(MiniAppSearchTextFieldStyle())
+					.padding(.vertical, 10)
+					.padding(.horizontal, 16)
+				List {
+					ForEach(viewModel.filteredIndexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
+						Section(header: Text(key)) {
+							ForEach(viewModel.filteredIndexedMiniAppInfoList[key]!, id: \.version) { (info) in
+								NavigationLink {
+									MiniAppSingleView(
+										listType: viewModel.type,
+										miniAppId: info.id,
+										miniAppVersion: info.version.versionId,
+										miniAppType: .miniapp
+									)
+								} label: {
+									MiniAppListRowCell(
+										iconUrl: info.icon,
+										displayName: info.displayName ?? "",
+										versionTag: info.version.versionTag,
+										versionId: info.version.versionId
+									)
+								}
+							}
+						}
+					}
+				}
+				.listStyle(GroupedListStyle())
+			}
+		}
+	}
 }
