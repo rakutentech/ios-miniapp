@@ -103,19 +103,18 @@ class MiniAppListViewModel: ObservableObject {
 	}
 
 	func updateFilter(text: String) {
-		let searchText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+		var searchText = text.trimmingCharacters(in: .whitespacesAndNewlines)
 		guard !searchText.isEmpty else {
 			filteredIndexedMiniAppInfoList = indexedMiniAppInfoList
 			return
 		}
 
-		// deeplink search, not applicabale right now
-		// if searchText.starts(with: "miniappdemo://miniapp/preview/"), let searchTextUrl = URL(string: searchText) {
-		// 	let miniAppId = searchTextUrl.pathComponents[2]
-		// 	searchText = miniAppId
-		// }
+		if searchText.starts(with: "miniappdemo://miniapp/dl/"), let searchTextUrl = URL(string: searchText) {
+			let miniAppId = searchTextUrl.pathComponents[2]
+			searchText = miniAppId
+		}
 
-		if isUUID(searchText), let identifierFound = indexedMiniAppInfoList[searchText.uppercased()] {
+		if isUUID(searchText), let identifierFound = indexedMiniAppInfoList[searchText] {
 			filteredIndexedMiniAppInfoList = [searchText: identifierFound]
 			return
 		}
