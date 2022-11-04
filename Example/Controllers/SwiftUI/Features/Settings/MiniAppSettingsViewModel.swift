@@ -10,28 +10,28 @@ class MiniAppSettingsViewModel: ObservableObject {
     @Published var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
     @Published var state: State = .none
 
-	@Published var listConfigI = ListConfiguration(listType: .listI)
-	@Published var listConfigII = ListConfiguration(listType: .listII)
+    @Published var listConfigI = ListConfiguration(listType: .listI)
+    @Published var listConfigII = ListConfiguration(listType: .listII)
 
-	@Published var selectedListConfig: ListType = .listI
-	var listConfig: ListConfiguration {
-		get {
-			switch selectedListConfig {
-			case .listI:
-				return listConfigI
-			case .listII:
-				return listConfigII
-			}
-		}
-		set {
-			switch selectedListConfig {
-			case .listI:
-				listConfigI = newValue
-			case .listII:
-				listConfigII = newValue
-			}
-		}
-	}
+    @Published var selectedListConfig: ListType = .listI
+    var listConfig: ListConfiguration {
+        get {
+            switch selectedListConfig {
+            case .listI:
+                return listConfigI
+            case .listII:
+                return listConfigII
+            }
+        }
+        set {
+            switch selectedListConfig {
+            case .listI:
+                listConfigI = newValue
+            case .listII:
+                listConfigII = newValue
+            }
+        }
+    }
 
     var bag = Set<AnyCancellable>()
 
@@ -46,61 +46,61 @@ class MiniAppSettingsViewModel: ObservableObject {
         return versionText
     }
 
-	func save(completion: (() -> Void)? = nil) {
+    func save(completion: (() -> Void)? = nil) {
 
-		state = .loading
+        state = .loading
 
-		loadAndPersistList(listConfig: listConfigI) { [weak self] listErrorI in
-			guard let self = self else { return }
-			if let listErrorI = listErrorI {
-				self.listConfigI.error = listErrorI
-				self.store.miniAppInfoListError = listErrorI
-			} else {
-				self.listConfigI.error = nil
-				self.store.miniAppInfoListError = nil
-			}
-			self.loadAndPersistList(listConfig: self.listConfigII) { listErrorII in
-				if let listErrorII = listErrorII {
-					self.listConfigII.error = listErrorII
-					self.store.miniAppInfoList2Error = listErrorII
-				} else {
-					self.listConfigII.error = nil
-					self.store.miniAppInfoList2Error = nil
-				}
-				if listErrorI == nil && listErrorII == nil {
-					self.state = .success
-				} else {
-					if let listErrorI = listErrorI {
-						self.state = .error(listErrorI)
-					} else if let listErrorII = listErrorII {
-						self.state = .error(listErrorII)
-					}
-				}
-			}
-		}
-	}
+        loadAndPersistList(listConfig: listConfigI) { [weak self] listErrorI in
+            guard let self = self else { return }
+            if let listErrorI = listErrorI {
+                self.listConfigI.error = listErrorI
+                self.store.miniAppInfoListError = listErrorI
+            } else {
+                self.listConfigI.error = nil
+                self.store.miniAppInfoListError = nil
+            }
+            self.loadAndPersistList(listConfig: self.listConfigII) { listErrorII in
+                if let listErrorII = listErrorII {
+                    self.listConfigII.error = listErrorII
+                    self.store.miniAppInfoList2Error = listErrorII
+                } else {
+                    self.listConfigII.error = nil
+                    self.store.miniAppInfoList2Error = nil
+                }
+                if listErrorI == nil && listErrorII == nil {
+                    self.state = .success
+                } else {
+                    if let listErrorI = listErrorI {
+                        self.state = .error(listErrorI)
+                    } else if let listErrorII = listErrorII {
+                        self.state = .error(listErrorII)
+                    }
+                }
+            }
+        }
+    }
 
-	func loadAndPersistList(listConfig: ListConfiguration, completion: ((Error?) -> Void)? = nil) {
-		let listSdkConfig = listConfig.sdkConfig
-		MiniApp
-			.shared(with: listSdkConfig)
-			.list { (result) in
-				DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
-					switch result {
-					case let .success(infos):
-						if !self.store.miniAppSetupCompleted {
-							self.store.miniAppSetupCompleted = true
-						}
-						listConfig.persist()
-						self.store.update(type: listConfig.listType, infos: infos)
-						completion?(nil)
-					case .failure(let error):
-						self.store.update(type: listConfig.listType, infos: [])
-						completion?(error)
-					}
-				}
-			}
-	}
+    func loadAndPersistList(listConfig: ListConfiguration, completion: ((Error?) -> Void)? = nil) {
+        let listSdkConfig = listConfig.sdkConfig
+        MiniApp
+            .shared(with: listSdkConfig)
+            .list { (result) in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
+                    switch result {
+                    case let .success(infos):
+                        if !self.store.miniAppSetupCompleted {
+                            self.store.miniAppSetupCompleted = true
+                        }
+                        listConfig.persist()
+                        self.store.update(type: listConfig.listType, infos: infos)
+                        completion?(nil)
+                    case .failure(let error):
+                        self.store.update(type: listConfig.listType, infos: [])
+                        completion?(error)
+                    }
+                }
+            }
+    }
 
     // MARK: - General
 

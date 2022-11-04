@@ -16,7 +16,7 @@ class MiniAppListViewModel: ObservableObject {
     init(type: ListType) {
         self.type = type
         setupObservers()
-		if store.miniAppSetupCompleted && !store.hasError(type: type) {
+        if store.miniAppSetupCompleted && !store.hasError(type: type) {
             load()
         } else {
             state = .awaitsSetup
@@ -35,7 +35,7 @@ class MiniAppListViewModel: ObservableObject {
                         return
                     }
                     self.indexedMiniAppInfoList = self.makeIndexed(infos: list)
-					self.state = .success
+                    self.state = .success
                 }
                 .store(in: &bag)
         case .listII:
@@ -48,7 +48,7 @@ class MiniAppListViewModel: ObservableObject {
                         return
                     }
                     self.indexedMiniAppInfoList = self.makeIndexed(infos: list)
-					self.state = .success
+                    self.state = .success
                 }
                 .store(in: &bag)
         }

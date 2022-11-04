@@ -6,21 +6,21 @@ final class MiniAppPermissionService {
 
     let config: MiniAppSdkConfig
 
-	init(config: MiniAppSdkConfig) {
+    init(config: MiniAppSdkConfig) {
         self.config = config
     }
 
     func getInfo(miniAppId: String, miniAppVersion: String, completion: @escaping ((Result<MiniAppInfo, MASDKError>) -> Void)) {
         MiniApp
-        .shared(with: config)
-        .info(miniAppId: miniAppId, miniAppVersion: miniAppVersion) { result in
-            switch result {
-            case .success(let info):
-                completion(.success(info))
-            case .failure(let error):
-                completion(.failure(error))
+            .shared(with: config)
+            .info(miniAppId: miniAppId, miniAppVersion: miniAppVersion) { result in
+                switch result {
+                case .success(let info):
+                    completion(.success(info))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
-        }
     }
 
     func getCachedManifest(miniAppId: String) -> MiniAppManifest? {
@@ -86,31 +86,31 @@ final class MiniAppPermissionService {
         completion: @escaping ((Result<Bool, Error>) -> Void)
     ) {
         MiniApp
-        .shared(with: config)
-        .getMiniAppManifest(
-            miniAppId: info.id,
-            miniAppVersion: info.version.versionId,
-            languageCode: NSLocale.current.languageCode
-        ) { (result) in
-            switch result {
-            case .success(let manifestData):
-                if manifest == manifestData {
-                    completion(.success(true))
-                } else {
-                    completion(.success(false))
-                }
-            case .failure(let error):
-                if error.isQPSLimitError() {
-                    let title = MASDKLocale.localize("miniapp.sdk.ios.error.title")
-                    let message = MASDKLocale.localize(.miniAppTooManyRequestsError)
-                    completion(.failure(MiniAppViewError(title: title, message: message)))
-                } else {
-                    let title = MASDKLocale.localize("miniapp.sdk.ios.error.title")
-                    let message = MASDKLocale.localize("miniapp.sdk.ios.error.message.single")
-                    completion(.failure(MiniAppViewError(title: title, message: message)))
+            .shared(with: config)
+            .getMiniAppManifest(
+                miniAppId: info.id,
+                miniAppVersion: info.version.versionId,
+                languageCode: NSLocale.current.languageCode
+            ) { (result) in
+                switch result {
+                case .success(let manifestData):
+                    if manifest == manifestData {
+                        completion(.success(true))
+                    } else {
+                        completion(.success(false))
+                    }
+                case .failure(let error):
+                    if error.isQPSLimitError() {
+                        let title = MASDKLocale.localize("miniapp.sdk.ios.error.title")
+                        let message = MASDKLocale.localize(.miniAppTooManyRequestsError)
+                        completion(.failure(MiniAppViewError(title: title, message: message)))
+                    } else {
+                        let title = MASDKLocale.localize("miniapp.sdk.ios.error.title")
+                        let message = MASDKLocale.localize("miniapp.sdk.ios.error.message.single")
+                        completion(.failure(MiniAppViewError(title: title, message: message)))
+                    }
                 }
             }
-        }
     }
 
     func fetchMetaData(
@@ -119,27 +119,27 @@ final class MiniAppPermissionService {
         completion: @escaping ((Result<MiniAppManifest, Error>) -> Void)
     ) {
         MiniApp
-        .shared(with: config)
-        .getMiniAppManifest(
-            miniAppId: miniAppId,
-            miniAppVersion: miniAppVersion,
-            languageCode: NSLocale.current.languageCode
-        ) { (result) in
-            switch result {
-            case .success(let manifestData):
-                completion(.success(manifestData))
-            case .failure(let error):
-                if error.isQPSLimitError() {
-                    let title = MASDKLocale.localize("miniapp.sdk.ios.error.title")
-                    let message = MASDKLocale.localize(.miniAppTooManyRequestsError)
-                    completion(.failure(MiniAppViewError(title: title, message: message)))
-                } else {
-                    let title = MASDKLocale.localize("miniapp.sdk.ios.error.title")
-                    let message = MASDKLocale.localize("miniapp.sdk.ios.error.message.single")
-                    completion(.failure(MiniAppViewError(title: title, message: message)))
+            .shared(with: config)
+            .getMiniAppManifest(
+                miniAppId: miniAppId,
+                miniAppVersion: miniAppVersion,
+                languageCode: NSLocale.current.languageCode
+            ) { (result) in
+                switch result {
+                case .success(let manifestData):
+                    completion(.success(manifestData))
+                case .failure(let error):
+                    if error.isQPSLimitError() {
+                        let title = MASDKLocale.localize("miniapp.sdk.ios.error.title")
+                        let message = MASDKLocale.localize(.miniAppTooManyRequestsError)
+                        completion(.failure(MiniAppViewError(title: title, message: message)))
+                    } else {
+                        let title = MASDKLocale.localize("miniapp.sdk.ios.error.title")
+                        let message = MASDKLocale.localize("miniapp.sdk.ios.error.message.single")
+                        completion(.failure(MiniAppViewError(title: title, message: message)))
+                    }
                 }
             }
-        }
     }
 
     // MARK: - Change Permissions

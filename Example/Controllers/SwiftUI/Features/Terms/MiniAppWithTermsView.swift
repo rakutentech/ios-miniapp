@@ -21,7 +21,7 @@ struct MiniAppWithTermsView: View {
             case let .permissionRequested(info, manifest):
                 MiniAppTermsView(
                     didAccept: $didAcceptTerms,
-					request: MiniAppPermissionRequest(sdkConfig: viewModel.sdkConfig, info: info, manifest: manifest)
+                    request: MiniAppPermissionRequest(sdkConfig: viewModel.sdkConfig, info: info, manifest: manifest)
                 )
             case .error(let error):
                 Text(error.localizedDescription)
@@ -66,6 +66,6 @@ struct MiniAppWithTermsView: View {
 
 struct MiniAppWithTermsView_Previews: PreviewProvider {
     static var previews: some View {
-		MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: Config.sampleSdkConfig()))
+        MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: Config.sampleSdkConfig()))
     }
 }

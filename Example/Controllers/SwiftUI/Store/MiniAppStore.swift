@@ -26,9 +26,9 @@ class MiniAppStore: ObservableObject {
     @AppStorage(Config.GlobalKey.signatureVerification.rawValue) var signatureVerification: Bool?
 
     @Published var miniAppInfoList: [MiniAppInfo] = []
-	@Published var miniAppInfoListError: Error?
+    @Published var miniAppInfoListError: Error?
     @Published var miniAppInfoList2: [MiniAppInfo] = []
-	@Published var miniAppInfoList2Error: Error?
+    @Published var miniAppInfoList2Error: Error?
 
     private init() {
         if !miniAppFirstLaunch {
@@ -54,7 +54,7 @@ class MiniAppStore: ObservableObject {
     }
 
     func load(type: ListType) {
-		let sdkConfig = ListConfiguration.current(type: type)
+        let sdkConfig = ListConfiguration.current(type: type)
         MiniApp
             .shared(with: sdkConfig)
             .list { result in
@@ -83,14 +83,14 @@ class MiniAppStore: ObservableObject {
         }
     }
 
-	func hasError(type: ListType) -> Bool {
-		switch type {
-		case .listI:
-			return miniAppInfoListError != nil
-		case .listII:
-			return miniAppInfoList2Error != nil
-		}
-	}
+    func hasError(type: ListType) -> Bool {
+        switch type {
+        case .listI:
+            return miniAppInfoListError != nil
+        case .listII:
+            return miniAppInfoList2Error != nil
+        }
+    }
 
     static func empty() -> MiniAppStore {
         return MiniAppStore()
@@ -105,7 +105,7 @@ class MiniAppStore: ObservableObject {
     }
 
     func getSecureStorageLimit() -> UInt64 {
-		return UInt64(Config.int(.maxSecureStorageFileLimit) ?? 5_000_000)
+        return UInt64(Config.int(.maxSecureStorageFileLimit) ?? 5_000_000)
     }
 
     func getSecureStorageLimitString() -> String {
@@ -125,7 +125,7 @@ class MiniAppStore: ObservableObject {
         }
         let textInt = Int(truncating: textNumber)
 
-		Config.setInt(key: .maxSecureStorageFileLimit, value: textInt)
+        Config.setInt(key: .maxSecureStorageFileLimit, value: textInt)
 
         return .success(textIntString)
     }

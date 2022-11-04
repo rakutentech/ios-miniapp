@@ -22,15 +22,15 @@ struct MiniAppSingleView: View {
     @State private var closeAlertMessage: MiniAppAlertMessage?
 
     init(listType: ListType, miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
-		let sdkConfig = ListConfiguration.current(type: listType)
+        let sdkConfig = ListConfiguration.current(type: listType)
         self.listType = listType
         _viewModel = StateObject(wrappedValue:
-			MiniAppWithTermsViewModel(
-				miniAppId: miniAppId,
-				miniAppVersion: miniAppVersion,
-				miniAppType: .miniapp,
-				sdkConfig: sdkConfig
-			)
+            MiniAppWithTermsViewModel(
+                miniAppId: miniAppId,
+                miniAppVersion: miniAppVersion,
+                miniAppType: .miniapp,
+                sdkConfig: sdkConfig
+            )
         )
         _miniAppId = State(wrappedValue: miniAppId)
         _miniAppVersion = State(wrappedValue: miniAppVersion)
@@ -163,9 +163,9 @@ struct MiniAppSingleView: View {
 }
 
 extension MiniAppSingleView: ViewTrackable {
-	var pageName: String {
-		return handler.miniAppTitle?() ?? "MiniAppSingleView"
-	}
+    var pageName: String {
+        return handler.miniAppTitle?() ?? "MiniAppSingleView"
+    }
 }
 
 struct MiniAppSingleView_Previews: PreviewProvider {
@@ -181,7 +181,7 @@ struct MiniAppSingleView_Previews: PreviewProvider {
 
 struct MiniAppPermissionRequest: Identifiable {
     let id = UUID()
-	let sdkConfig: MiniAppSdkConfig
+    let sdkConfig: MiniAppSdkConfig
     let info: MiniAppInfo
     let manifest: MiniAppManifest
 }

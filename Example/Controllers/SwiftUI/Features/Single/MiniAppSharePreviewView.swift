@@ -66,13 +66,13 @@ struct MiniAppSharePreviewView: View {
 }
 
 extension MiniAppSharePreviewView: ViewTrackable {
-	var pageName: String {
-		return NSLocalizedString("demo.app.rat.page.name.share.preview", comment: "")
-	}
+    var pageName: String {
+        return NSLocalizedString("demo.app.rat.page.name.share.preview", comment: "")
+    }
 }
 
 struct MiniAppSharePreviewView_Previews: PreviewProvider {
     static var previews: some View {
-		MiniAppSharePreviewView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: Config.sampleSdkConfig()))
+        MiniAppSharePreviewView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: Config.sampleSdkConfig()))
     }
 }

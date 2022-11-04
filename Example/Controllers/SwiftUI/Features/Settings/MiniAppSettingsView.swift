@@ -34,77 +34,77 @@ struct MiniAppSettingsView: View {
                 .padding(.vertical, 15)
             }
 
-			Section(header: Text("RAS")) {
-				VStack {
-					Picker("List Config", selection: $viewModel.selectedListConfig) {
-						Text(ListType.listI.name).tag(ListType.listI)
-						Text(ListType.listII.name).tag(ListType.listII)
-					}
-					.pickerStyle(.segmented)
-					.padding(.vertical, 15)
-					.onChange(of: viewModel.selectedListConfig, perform: { config in
-						trackSegmentedTap(pageName: "Settings", segmentTitle: config.name)
-						dismissKeyboard()
-					})
+            Section(header: Text("RAS")) {
+                VStack {
+                    Picker("List Config", selection: $viewModel.selectedListConfig) {
+                        Text(ListType.listI.name).tag(ListType.listI)
+                        Text(ListType.listII.name).tag(ListType.listII)
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.vertical, 15)
+                    .onChange(of: viewModel.selectedListConfig, perform: { config in
+                        trackSegmentedTap(pageName: "Settings", segmentTitle: config.name)
+                        dismissKeyboard()
+                    })
 
-					switch viewModel.selectedListConfig {
-					case .listI:
-						if let error = viewModel.listConfigI.error {
-							VStack(alignment: .leading, spacing: 10) {
-								Text("🛑 Something went wrong when loading the list. This list configuration will not be saved.")
-								Text(error.localizedDescription)
-									.lineLimit(2)
-									.font(.system(size: 11))
-							}
-						} else {
-							EmptyView()
-						}
-					case .listII:
-						if let error = viewModel.listConfigII.error {
-							VStack(alignment: .leading, spacing: 10) {
-								Text("🛑 Something went wrong when loading the list. This list configuration will not be saved.")
-								Text(error.localizedDescription)
-									.lineLimit(2)
-									.font(.system(size: 11))
-							}
-						} else {
-							EmptyView()
-						}
-					}
-				}
+                    switch viewModel.selectedListConfig {
+                    case .listI:
+                        if let error = viewModel.listConfigI.error {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text("🛑 Something went wrong when loading the list. This list configuration will not be saved.")
+                                Text(error.localizedDescription)
+                                    .lineLimit(2)
+                                    .font(.system(size: 11))
+                            }
+                        } else {
+                            EmptyView()
+                        }
+                    case .listII:
+                        if let error = viewModel.listConfigII.error {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text("🛑 Something went wrong when loading the list. This list configuration will not be saved.")
+                                Text(error.localizedDescription)
+                                    .lineLimit(2)
+                                    .font(.system(size: 11))
+                            }
+                        } else {
+                            EmptyView()
+                        }
+                    }
+                }
 
-				Picker("Environment", selection: $viewModel.listConfig.environmentMode) {
-					ForEach(Config.Environment.allCases, id: \.self) { mode in
-						Text(mode.name).tag(mode)
-					}
-				}
-				.pickerStyle(.segmented)
-				.padding(.vertical, 15)
+                Picker("Environment", selection: $viewModel.listConfig.environmentMode) {
+                    ForEach(Config.Environment.allCases, id: \.self) { mode in
+                        Text(mode.name).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.vertical, 15)
 
-				Picker("Published", selection: $viewModel.listConfig.previewMode) {
-					ForEach(PreviewMode.allCases, id: \.self) { mode in
-						Text(mode.name).tag(mode)
-					}
-				}
-				.pickerStyle(.segmented)
-				.padding(.vertical, 15)
+                Picker("Published", selection: $viewModel.listConfig.previewMode) {
+                    ForEach(PreviewMode.allCases, id: \.self) { mode in
+                        Text(mode.name).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.vertical, 15)
 
-				TextField(
-					viewModel.listConfig.placeholderProjectId,
-					text: Binding<String>(
-						get: { viewModel.listConfig.projectId ?? "" },
-						set: { newValue in viewModel.listConfig.projectId = newValue }
-					)
-				)
-				.padding(.vertical, 15)
-				TextField(
-					viewModel.listConfig.placeholderSubscriptionKey,
-					text: Binding<String>(
-						get: { viewModel.listConfig.subscriptionKey ?? "" },
-						set: { newValue in viewModel.listConfig.subscriptionKey = newValue }
-					)
-				)
-				.padding(.vertical, 15)
+                TextField(
+                    viewModel.listConfig.placeholderProjectId,
+                    text: Binding<String>(
+                        get: { viewModel.listConfig.projectId ?? "" },
+                        set: { newValue in viewModel.listConfig.projectId = newValue }
+                    )
+                )
+                    .padding(.vertical, 15)
+                TextField(
+                    viewModel.listConfig.placeholderSubscriptionKey,
+                    text: Binding<String>(
+                        get: { viewModel.listConfig.subscriptionKey ?? "" },
+                        set: { newValue in viewModel.listConfig.subscriptionKey = newValue }
+                    )
+                )
+                    .padding(.vertical, 15)
 
             }
 
@@ -158,7 +158,7 @@ struct MiniAppSettingsView: View {
                     dismissKeyboard()
                     viewModel.save()
                 }
-				.disabled((viewModel.listConfig.wrappedProjectId.isEmpty || viewModel.listConfig.wrappedSubscriptionKey.isEmpty))
+                .disabled((viewModel.listConfig.wrappedProjectId.isEmpty || viewModel.listConfig.wrappedSubscriptionKey.isEmpty))
             }
         }
         .alert(item: $alertMessage) { errorMessage in
@@ -185,13 +185,13 @@ struct MiniAppSettingsView: View {
                 )
             case .error:
                 showFullProgress = false
-				if viewModel.listConfigI.error != nil && viewModel.listConfigII.error != nil {
-					alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load both lists.")
-				} else if viewModel.listConfigI.error != nil {
-					alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load List I.")
-				} else if viewModel.listConfigII.error != nil {
-					alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load List II.")
-				}
+                if viewModel.listConfigI.error != nil && viewModel.listConfigII.error != nil {
+                    alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load both lists.")
+                } else if viewModel.listConfigI.error != nil {
+                    alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load List I.")
+                } else if viewModel.listConfigII.error != nil {
+                    alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load List II.")
+                }
             default:
                 ()
             }
@@ -203,13 +203,13 @@ struct MiniAppSettingsView: View {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 
-	var hasListIErrors: Bool {
-		return viewModel.listConfigI.error != nil
-	}
+    var hasListIErrors: Bool {
+        return viewModel.listConfigI.error != nil
+    }
 
-	var hasListIIErrors: Bool {
-		return viewModel.listConfigII.error != nil
-	}
+    var hasListIIErrors: Bool {
+        return viewModel.listConfigII.error != nil
+    }
 }
 
 struct MiniAppAlertMessage: Identifiable {
@@ -219,9 +219,9 @@ struct MiniAppAlertMessage: Identifiable {
 }
 
 extension MiniAppSettingsView: ViewTrackable {
-	var pageName: String {
-		return NSLocalizedString("demo.app.rat.page.name.settings", comment: "")
-	}
+    var pageName: String {
+        return NSLocalizedString("demo.app.rat.page.name.settings", comment: "")
+    }
 }
 
 struct MiniAppFeatureConfigView_Previews: PreviewProvider {

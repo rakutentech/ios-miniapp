@@ -39,7 +39,7 @@ struct MiniAppListView: View {
                     Text("No MiniApps found")
                         .foregroundColor(Color(.secondaryLabel))
                 } else {
-					MiniAppIndexedListView(viewModel: viewModel)
+                    MiniAppIndexedListView(viewModel: viewModel)
                 }
             }
         }
@@ -75,9 +75,9 @@ struct MiniAppListView_Previews: PreviewProvider {
 
 // MARK: - ViewTrackable
 extension MiniAppListView: ViewTrackable {
-	var pageName: String {
-		return title
-	}
+    var pageName: String {
+        return title
+    }
 }
 
 struct MiniAppSingleViewRequest: Identifiable {
@@ -87,35 +87,35 @@ struct MiniAppSingleViewRequest: Identifiable {
 
 // MARK: - MiniAppIndexedListView
 extension MiniAppListView {
-	struct MiniAppIndexedListView: View {
+    struct MiniAppIndexedListView: View {
 
-		@ObservedObject var viewModel: MiniAppListViewModel
+        @ObservedObject var viewModel: MiniAppListViewModel
 
-		var body: some View {
-			List {
-				ForEach(viewModel.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
-					Section(header: Text(key)) {
-						ForEach(viewModel.indexedMiniAppInfoList[key]!, id: \.version) { (info) in
-							NavigationLink {
-								MiniAppSingleView(
-									listType: viewModel.type,
-									miniAppId: info.id,
-									miniAppVersion: info.version.versionId,
-									miniAppType: .miniapp
-								)
-							} label: {
-								MiniAppListRowCell(
-									iconUrl: info.icon,
-									displayName: info.displayName ?? "",
-									versionTag: info.version.versionTag,
-									versionId: info.version.versionId
-								)
-							}
-						}
-					}
-				}
-			}
-			.listStyle(GroupedListStyle())
-		}
-	}
+        var body: some View {
+            List {
+                ForEach(viewModel.indexedMiniAppInfoList.keys.sorted(), id: \.self) { (key) in
+                    Section(header: Text(key)) {
+                        ForEach(viewModel.indexedMiniAppInfoList[key]!, id: \.version) { (info) in
+                            NavigationLink {
+                                MiniAppSingleView(
+                                    listType: viewModel.type,
+                                    miniAppId: info.id,
+                                    miniAppVersion: info.version.versionId,
+                                    miniAppType: .miniapp
+                                )
+                            } label: {
+                                MiniAppListRowCell(
+                                    iconUrl: info.icon,
+                                    displayName: info.displayName ?? "",
+                                    versionTag: info.version.versionTag,
+                                    versionId: info.version.versionId
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            .listStyle(GroupedListStyle())
+        }
+    }
 }

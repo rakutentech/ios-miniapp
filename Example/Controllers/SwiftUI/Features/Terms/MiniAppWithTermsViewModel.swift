@@ -88,10 +88,10 @@ class MiniAppWithTermsViewModel: ObservableObject {
         }
 
         permissionService.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { [weak self] result in
-			guard let self = self else { return }
+            guard let self = self else { return }
             switch result {
             case .success(let info):
-				completion(.success(MiniAppPermissionRequest(sdkConfig: self.sdkConfig, info: info, manifest: manifest)))
+                completion(.success(MiniAppPermissionRequest(sdkConfig: self.sdkConfig, info: info, manifest: manifest)))
             case .failure(let error):
                 completion(.failure(error))
             }
