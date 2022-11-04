@@ -183,8 +183,15 @@ struct MiniAppSettingsView: View {
                     title: MASDKLocale.localize("miniapp.sdk.ios.param.save_title"),
                     message: MASDKLocale.localize("miniapp.sdk.ios.param.save_text")
                 )
-            case .error:
+            case let .error(error):
                 showFullProgress = false
+                if let error = error as? MASDKError, error.isQPSLimitError() {
+                    alertMessage = MiniAppAlertMessage(
+                        title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
+                        message: MASDKLocale.localize("miniapp.sdk.ios.error.message.miniapp_too_many_requests_error")
+                    )
+                    return
+                }
                 if viewModel.listConfigI.error != nil && viewModel.listConfigII.error != nil {
                     alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load both lists.")
                 } else if viewModel.listConfigI.error != nil {
