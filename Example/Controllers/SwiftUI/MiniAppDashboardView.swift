@@ -23,6 +23,7 @@ struct MiniAppDashboardView: View {
                 }
                 .tabItem {
                     Label("List I", systemImage: "list.bullet")
+                        .accessibilityIdentifier(AccessibilityIdentifiers.tabBarListI.identifier)
                 }
                 .tag(0)
 
@@ -31,6 +32,7 @@ struct MiniAppDashboardView: View {
                 }
                 .tabItem {
                     Label("List II", systemImage: "list.bullet")
+                        .accessibilityIdentifier(AccessibilityIdentifiers.tabBarListII.identifier)
                 }
                 .tag(1)
 
@@ -40,8 +42,10 @@ struct MiniAppDashboardView: View {
                 .tabItem {
                     if #available(iOS 15, *) {
                         Label("Features", systemImage: "menucard")
+                            .accessibilityIdentifier(AccessibilityIdentifiers.tabBarFeatures.identifier)
                     } else {
                         Label("Features", systemImage: "flag")
+                            .accessibilityIdentifier(AccessibilityIdentifiers.tabBarFeatures.identifier)
                     }
                 }
                 .tag(2)
@@ -52,6 +56,7 @@ struct MiniAppDashboardView: View {
                 .navigationViewStyle(.stack)
                 .tabItem {
                     Label("Settings", systemImage: "gear")
+                        .accessibilityIdentifier(AccessibilityIdentifiers.tabBarSettings.identifier)
                 }
                 .tag(3)
             }
