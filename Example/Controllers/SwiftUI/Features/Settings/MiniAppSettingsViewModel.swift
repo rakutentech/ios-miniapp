@@ -9,20 +9,31 @@ class MiniAppSettingsViewModel: ObservableObject {
 
     @Published var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
     @Published var state: State = .none
-    var config: MiniAppSettingsView.SettingsConfig {
+
+    @Published var listConfigI = ListConfiguration(listType: .listI)
+    @Published var listConfigII = ListConfiguration(listType: .listII)
+
+    @Published var selectedListConfig: ListType = .listI
+    var listConfig: ListConfiguration {
         get {
-            store.config
+            switch selectedListConfig {
+            case .listI:
+                return listConfigI
+            case .listII:
+                return listConfigII
+            }
         }
         set {
-            store.config = newValue
+            switch selectedListConfig {
+            case .listI:
+                listConfigI = newValue
+            case .listII:
+                listConfigII = newValue
+            }
         }
     }
 
     var bag = Set<AnyCancellable>()
-
-    init() {
-        //
-    }
 
     func getBuildVersionText() -> String {
         var versionText = ""
@@ -39,59 +50,56 @@ class MiniAppSettingsViewModel: ObservableObject {
 
         state = .loading
 
-        let configListI = config.sdkConfig(list: .listI)
-        MiniApp
-            .shared(with: configListI)
-            .list { (result) in
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
-                    switch result {
-                    case let .success(infos):
-                        self.persistConfig()
-                        self.store.update(type: .listI, infos: infos)
-                        self.state = .success
-                    case .failure(let error):
-                        self.state = .error(error)
+        loadAndPersistList(listConfig: listConfigI) { [weak self] listErrorI in
+            guard let self = self else { return }
+            if let listErrorI = listErrorI {
+                self.listConfigI.error = listErrorI
+                self.store.miniAppInfoListError = listErrorI
+            } else {
+                self.listConfigI.error = nil
+                self.store.miniAppInfoListError = nil
+            }
+            self.loadAndPersistList(listConfig: self.listConfigII) { listErrorII in
+                if let listErrorII = listErrorII {
+                    self.listConfigII.error = listErrorII
+                    self.store.miniAppInfoList2Error = listErrorII
+                } else {
+                    self.listConfigII.error = nil
+                    self.store.miniAppInfoList2Error = nil
+                }
+                if listErrorI == nil && listErrorII == nil {
+                    self.state = .success
+                } else {
+                    if let listErrorI = listErrorI {
+                        self.state = .error(listErrorI)
+                    } else if let listErrorII = listErrorII {
+                        self.state = .error(listErrorII)
                     }
-                    completion?()
                 }
             }
-
-        let configListII: MiniAppSdkConfig = config.sdkConfig(list: .listII)
-        MiniApp
-            .shared(with: configListII)
-            .list { (result) in
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
-                    switch result {
-                    case let .success(infos):
-                        self.persistConfig()
-                        self.store.update(type: .listII, infos: infos)
-                    case .failure(let error):
-                        self.state = .error(error)
-                    }
-                    completion?()
-                }
-            }
+        }
     }
 
-    func persistConfig() {
-        if !store.miniAppSetupCompleted {
-            store.miniAppSetupCompleted = true
-        }
-
-        NewConfig.setValue(.isPreviewMode, value: config.previewMode == .previewable)
-        NewConfig.setValue(.environment, value: config.environmentMode == .production)
-
-        // list 1
-        NewConfig.setString(.production, key: .projectId, value: config.listIProjectId)
-        NewConfig.setString(.production, key: .subscriptionKey, value: config.listISubscriptionKey)
-        NewConfig.setString(.staging, key: .projectId, value: config.listIStagingProjectId)
-        NewConfig.setString(.staging, key: .subscriptionKey, value: config.listIStagingSubscriptionKey)
-
-        // list 2
-        NewConfig.setString(.production, key: .projectIdList2, value: config.listIIProjectId)
-        NewConfig.setString(.production, key: .subscriptionKeyList2, value: config.listIISubscriptionKey)
-        NewConfig.setString(.staging, key: .projectIdList2, value: config.listIIStagingProjectId)
-        NewConfig.setString(.staging, key: .subscriptionKeyList2, value: config.listIIStagingSubscriptionKey)
+    func loadAndPersistList(listConfig: ListConfiguration, completion: ((Error?) -> Void)? = nil) {
+        let listSdkConfig = listConfig.sdkConfig
+        MiniApp
+            .shared(with: listSdkConfig)
+            .list { (result) in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
+                    switch result {
+                    case let .success(infos):
+                        if !self.store.miniAppSetupCompleted {
+                            self.store.miniAppSetupCompleted = true
+                        }
+                        listConfig.persist()
+                        self.store.update(type: listConfig.listType, infos: infos)
+                        completion?(nil)
+                    case .failure(let error):
+                        self.store.update(type: listConfig.listType, infos: [])
+                        completion?(error)
+                    }
+                }
+            }
     }
 
     // MARK: - General

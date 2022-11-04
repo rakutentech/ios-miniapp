@@ -12,7 +12,7 @@ struct MiniAppSettingsView: View {
 
     @State private var isPickerPresented: Bool = false
     @State private var alertMessage: MiniAppAlertMessage?
-    @State private var selectedListConfig: ListConfig = .listI
+    @State private var selectedListConfig: ListType = .listI
 
     var body: some View {
         Form {
@@ -34,90 +34,77 @@ struct MiniAppSettingsView: View {
                 .padding(.vertical, 15)
             }
 
-            Section(header: Text("Preview Mode")) {
-                Picker("Published", selection: $viewModel.config.previewMode) {
+            Section(header: Text("RAS")) {
+                VStack {
+                    Picker("List Config", selection: $viewModel.selectedListConfig) {
+                        Text(ListType.listI.name).tag(ListType.listI)
+                        Text(ListType.listII.name).tag(ListType.listII)
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.vertical, 15)
+                    .onChange(of: viewModel.selectedListConfig, perform: { config in
+                        trackSegmentedTap(pageName: "Settings", segmentTitle: config.name)
+                        dismissKeyboard()
+                    })
+
+                    switch viewModel.selectedListConfig {
+                    case .listI:
+                        if let error = viewModel.listConfigI.error {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text("🛑 Something went wrong when loading the list. This list configuration will not be saved.")
+                                Text(error.localizedDescription)
+                                    .lineLimit(2)
+                                    .font(.system(size: 11))
+                            }
+                        } else {
+                            EmptyView()
+                        }
+                    case .listII:
+                        if let error = viewModel.listConfigII.error {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text("🛑 Something went wrong when loading the list. This list configuration will not be saved.")
+                                Text(error.localizedDescription)
+                                    .lineLimit(2)
+                                    .font(.system(size: 11))
+                            }
+                        } else {
+                            EmptyView()
+                        }
+                    }
+                }
+
+                Picker("Environment", selection: $viewModel.listConfig.environmentMode) {
+                    ForEach(Config.Environment.allCases, id: \.self) { mode in
+                        Text(mode.name).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.vertical, 15)
+
+                Picker("Published", selection: $viewModel.listConfig.previewMode) {
                     ForEach(PreviewMode.allCases, id: \.self) { mode in
                         Text(mode.name).tag(mode)
                     }
                 }
                 .pickerStyle(.segmented)
                 .padding(.vertical, 15)
-            }
 
-            Section(header: Text("Environment")) {
-                Picker("Environment", selection: $viewModel.config.environmentMode) {
-                    ForEach(NewConfig.Environment.allCases, id: \.self) { mode in
-                        Text(mode.name).tag(mode)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.vertical, 15)
-            }
-
-            Section(header: Text("RAS")) {
-                Picker("List Config", selection: $selectedListConfig) {
-                    ForEach(ListConfig.allCases, id: \.self) { config in
-                        Text(config.name).tag(config)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.vertical, 15)
-                .onChange(of: selectedListConfig, perform: { config in
-                    trackSegmentedTap(pageName: "Settings", segmentTitle: config.name)
-                })
-
-                switch viewModel.config.environmentMode {
-                case .production:
-                    switch selectedListConfig {
-                    case .listI:
-                        TextField(
-                            viewModel.config.listIProjectIdPlaceholder,
-                            text: $viewModel.config.listIProjectId
-                        )
-                        .padding(.vertical, 15)
-                        TextField(
-                            viewModel.config.listISubscriptionKeyPlaceholder,
-                            text: $viewModel.config.listISubscriptionKey
-                        )
-                        .padding(.vertical, 15)
-                    case .listII:
-                        TextField(
-                            viewModel.config.listIProjectIdPlaceholder,
-                            text: $viewModel.config.listIIProjectId
-                        )
-                        .padding(.vertical, 15)
-                        TextField(
-                            viewModel.config.listISubscriptionKeyPlaceholder,
-                            text: $viewModel.config.listIISubscriptionKey
-                        )
-                        .padding(.vertical, 15)
-                    }
-                case .staging:
-                    switch selectedListConfig {
-                    case .listI:
-                        TextField(
-                            "Project Id",
-                            text: $viewModel.config.listIStagingProjectId
-                        )
-                        .padding(.vertical, 15)
-                        TextField(
-                            "Subscription Key",
-                            text: $viewModel.config.listIStagingSubscriptionKey
-                        )
-                        .padding(.vertical, 15)
-                    case .listII:
-                        TextField(
-                            "Project Id",
-                            text: $viewModel.config.listIIStagingProjectId
-                        )
-                        .padding(.vertical, 15)
-                        TextField(
-                            "Subscription Key",
-                            text: $viewModel.config.listIIStagingSubscriptionKey
-                        )
-                        .padding(.vertical, 15)
-                    }
-                }
+                TextField(
+                    viewModel.listConfig.placeholderProjectId,
+                    text: Binding<String>(
+                        get: { viewModel.listConfig.projectId ?? "" },
+                        set: { newValue in viewModel.listConfig.projectId = newValue }
+                    )
+                )
+                    .padding(.vertical, 15)
+                TextField(
+                    viewModel.listConfig.placeholderSubscriptionKey,
+                    text: Binding<String>(
+                        get: { viewModel.listConfig.subscriptionKey ?? "" },
+                        set: { newValue in viewModel.listConfig.subscriptionKey = newValue }
+                    )
+                )
+                    .padding(.vertical, 15)
 
             }
 
@@ -171,7 +158,7 @@ struct MiniAppSettingsView: View {
                     dismissKeyboard()
                     viewModel.save()
                 }
-                .disabled((viewModel.config.listIProjectId.isEmpty || viewModel.config.listISubscriptionKey.isEmpty))
+                .disabled((viewModel.listConfig.wrappedProjectId.isEmpty || viewModel.listConfig.wrappedSubscriptionKey.isEmpty))
             }
         }
         .alert(item: $alertMessage) { errorMessage in
@@ -198,7 +185,20 @@ struct MiniAppSettingsView: View {
                 )
             case let .error(error):
                 showFullProgress = false
-                alertMessage = MiniAppAlertMessage(title: "Error", message: error.localizedDescription)
+                if let error = error as? MASDKError, error.isQPSLimitError() {
+                    alertMessage = MiniAppAlertMessage(
+                        title: MASDKLocale.localize("miniapp.sdk.ios.error.title"),
+                        message: MASDKLocale.localize("miniapp.sdk.ios.error.message.miniapp_too_many_requests_error")
+                    )
+                    return
+                }
+                if viewModel.listConfigI.error != nil && viewModel.listConfigII.error != nil {
+                    alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load both lists.")
+                } else if viewModel.listConfigI.error != nil {
+                    alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load List I.")
+                } else if viewModel.listConfigII.error != nil {
+                    alertMessage = MiniAppAlertMessage(title: "Error", message: "Something went wrong. Failed to load List II.")
+                }
             default:
                 ()
             }
@@ -209,6 +209,14 @@ struct MiniAppSettingsView: View {
     func dismissKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
+
+    var hasListIErrors: Bool {
+        return viewModel.listConfigI.error != nil
+    }
+
+    var hasListIIErrors: Bool {
+        return viewModel.listConfigII.error != nil
+    }
 }
 
 struct MiniAppAlertMessage: Identifiable {
@@ -218,9 +226,9 @@ struct MiniAppAlertMessage: Identifiable {
 }
 
 extension MiniAppSettingsView: ViewTrackable {
-	var pageName: String {
-		return NSLocalizedString("demo.app.rat.page.name.settings", comment: "")
-	}
+    var pageName: String {
+        return NSLocalizedString("demo.app.rat.page.name.settings", comment: "")
+    }
 }
 
 struct MiniAppFeatureConfigView_Previews: PreviewProvider {

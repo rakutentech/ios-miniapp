@@ -3,14 +3,17 @@ import MiniApp
 
 @MainActor
 class MiniAppTermsViewModel: ObservableObject {
-    let service = MiniAppPermissionService()
+    let sdkConfig: MiniAppSdkConfig
+    let service: MiniAppPermissionService
 
     @Published var info: MiniAppInfo
     @Published var manifest: MiniAppManifest
     @Published var requiredPermissions: [MASDKCustomPermissionModel]
     @Published var optionalPermissions: [MASDKCustomPermissionModel]
 
-    init(info: MiniAppInfo, manifest: MiniAppManifest) {
+    init(sdkConfig: MiniAppSdkConfig, info: MiniAppInfo, manifest: MiniAppManifest) {
+        self.sdkConfig = sdkConfig
+        self.service = MiniAppPermissionService(config: sdkConfig)
         self.info = info
         self.manifest = manifest
         self.requiredPermissions = manifest.requiredPermissions ?? []
@@ -50,7 +53,8 @@ struct MiniAppTermsView: View {
 
     init(didAccept: Binding<Bool>, request: MiniAppPermissionRequest) {
         _didAccept = didAccept
-        _viewModel = StateObject(wrappedValue: MiniAppTermsViewModel(info: request.info, manifest: request.manifest))
+        _viewModel = StateObject(wrappedValue: MiniAppTermsViewModel(sdkConfig: request.sdkConfig, info: request.info, manifest: request.manifest)
+        )
     }
 
     var body: some View {
@@ -84,12 +88,12 @@ struct MiniAppTermsView: View {
                 List {
                     Section(header: Text("Permissions (\(viewModel.totalPermissionCount))")) {
                         ForEach((viewModel.requiredPermissions), id: \.permissionName) { perm in
-							MiniAppTermsRequiredCell(pageName: pageName, name: perm.permissionName.title, description: perm.permissionDescription)
+                            MiniAppTermsRequiredCell(pageName: pageName, name: perm.permissionName.title, description: perm.permissionDescription)
                         }
                         if viewModel.optionalPermissionCount > 0 {
                             ForEach((viewModel.optionalPermissions), id: \.permissionName) { perm in
                                 MiniAppTermsOptionalCell(
-									pageName: pageName,
+                                    pageName: pageName,
                                     name: perm.permissionName.title,
                                     description: perm.permissionDescription,
                                     isAccepted: Binding<Bool>(
@@ -124,7 +128,7 @@ struct MiniAppTermsView: View {
                 Spacer()
                 VStack {
                     Button {
-						trackButtonTap(pageName: pageName, buttonTitle: "Accept")
+                        trackButtonTap(pageName: pageName, buttonTitle: "Accept")
                         viewModel.updatePermissions()
                         didAccept = true
                         // store.viewState = .success
@@ -146,7 +150,7 @@ struct MiniAppTermsView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
         )
-		.trackPage(pageName: pageName)
+        .trackPage(pageName: pageName)
     }
 }
 
@@ -160,7 +164,9 @@ struct MiniAppTermsView_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppTermsView(
             didAccept: .constant(false),
-            request: MiniAppPermissionRequest(info:
+            request: MiniAppPermissionRequest(
+                sdkConfig: Config.sampleSdkConfig(),
+                info:
                 MiniAppInfo(
                     id: "",
                     icon: URL(string: "")!,
