@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 4.3.0 Docs
+          MiniApp 5.0.0 Docs
         </a>
-         (75% documented)
+         (73% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -112,6 +112,9 @@
                 <a class="nav-group-task-link" href="Classes/MiniAppNavigationConfig.html">MiniAppNavigationConfig</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppSUIViewHandler.html">MiniAppSUIViewHandler</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppSdkConfig.html">MiniAppSdkConfig</a>
               </li>
               <li class="nav-group-task">
@@ -119,6 +122,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppUI.html">MiniAppUI</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppView.html">MiniAppView</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MiniAppView/MiniAppLoadStatus.html">– MiniAppLoadStatus</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MiniAppViewController.html">MiniAppViewController</a>
@@ -182,6 +191,27 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppNavigationVisibility.html">MiniAppNavigationVisibility</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppSUIViewAction.html">MiniAppSUIViewAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppType.html">MiniAppType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppViewParameters.html">MiniAppViewParameters</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppViewParameters/DefaultParams.html">– DefaultParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppViewParameters/UrlParams.html">– UrlParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppViewParameters/InfoParams.html">– InfoParams</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppViewState.html">MiniAppViewState</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -192,6 +222,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Extensions/NotificationCenter.html">NotificationCenter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/UIWindow.html">UIWindow</a>
               </li>
             </ul>
           </li>
@@ -220,6 +253,9 @@
                 <a class="nav-group-task-link" href="Protocols/MiniAppNavigationDelegate.html">MiniAppNavigationDelegate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/MiniAppProgressViewable.html">MiniAppProgressViewable</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/MiniAppShareContentDelegate.html">MiniAppShareContentDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -227,6 +263,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/MiniAppViewable.html">MiniAppViewable</a>
               </li>
             </ul>
           </li>
@@ -252,6 +291,9 @@
                 <a class="nav-group-task-link" href="Structs/MASDKLocale/LocalizableKey.html">– LocalizableKey</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppConfig.html">MiniAppConfig</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MiniAppConfigSSLKeyHash.html">MiniAppConfigSSLKeyHash</a>
               </li>
               <li class="nav-group-task">
@@ -265,6 +307,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs.html#/s:7MiniApp0aB9SSLConfigV">MiniAppSSLConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppSUIView.html">MiniAppSUIView</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppSUIView.html#/s:7SwiftUI19UIViewRepresentableP11CoordinatorQa">– Coordinator</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MiniAppShareContent.html">MiniAppShareContent</a>
@@ -302,6 +350,111 @@
           <div class="section-content top-matter">
             
             <h2 id='changelog' class='heading'>CHANGELOG</h2>
+<h3 id='5-0-0-2022-11-04' class='heading'>5.0.0 (2022-11-04)</h3>
+
+<p><strong>SDK</strong></p>
+
+<ul>
+<li><strong>Feature:</strong> Support for showing multiple MiniApps at the same time. Added <code><a href="Classes/MiniAppView.html">MiniAppView</a></code> which will replace <code>MiniApp.shared().create()</code>. From now on <code>create</code> will be deprecated.
+<details>
+<summary>Show code</summary></li>
+</ul>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">params</span> <span class="o">=</span> <span class="kt">MiniAppParameters</span><span class="o">.</span><span class="nf">default</span><span class="p">(</span>
+    <span class="nv">config</span><span class="p">:</span> <span class="kt">MiniAppConfig</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">current</span><span class="p">(),</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="k">self</span><span class="p">),</span>
+    <span class="nv">appId</span><span class="p">:</span> <span class="s">"your-miniapp-id"</span>
+<span class="p">)</span>
+<span class="k">let</span> <span class="nv">miniAppView</span> <span class="o">=</span> <span class="kt">MiniAppView</span><span class="p">(</span><span class="nv">params</span><span class="p">:</span> <span class="n">params</span><span class="p">)</span>
+<span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">miniAppView</span><span class="p">)</span>
+<span class="n">miniAppView</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">bounds</span>
+
+<span class="c1">// load the miniapp (default)</span>
+<span class="n">miniAppView</span><span class="o">.</span><span class="n">load</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+  <span class="c1">//...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p></details></p>
+
+<ul>
+<li><strong>Feature:</strong> Async/Await Support with <code><a href="Classes/MiniAppView.html">MiniAppView</a></code>&lsquo;s <code>loadAsync</code> that will load the MiniApp. 
+<details>
+<summary>Show code</summary></li>
+</ul>
+<pre class="highlight swift"><code><span class="c1">// using closure</span>
+<span class="n">miniAppView</span><span class="o">.</span><span class="n">load</span> <span class="p">{</span> <span class="n">success</span> <span class="k">in</span>
+  <span class="k">switch</span> <span class="n">result</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">success</span><span class="p">:</span>
+      <span class="c1">// miniAppView is loaded</span>
+    <span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+      <span class="nf">print</span><span class="p">(</span><span class="s">"error: </span><span class="se">\(</span><span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+  <span class="p">}</span> 
+<span class="p">}</span>
+
+<span class="c1">// using async/await</span>
+<span class="kt">Task</span> <span class="p">{</span>
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="k">try</span> <span class="n">await</span> <span class="n">miniAppView</span><span class="o">.</span><span class="nf">loadAsync</span><span class="p">()</span>
+        <span class="c1">//...</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"error: </span><span class="se">\(</span><span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p></details></p>
+
+<ul>
+<li><strong>Feature:</strong> Added <code>MiniAppParameters</code> and a new config <code><a href="Structs/MiniAppConfig.html">MiniAppConfig</a></code> that is used to initialize <code><a href="Classes/MiniAppView.html">MiniAppView</a></code>
+<details>
+<summary>Show code</summary></li>
+</ul>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">config</span> <span class="o">=</span> <span class="kt">MiniAppConfig</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">current</span><span class="p">(),</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">params</span> <span class="o">=</span> <span class="kt">MiniAppParameters</span><span class="o">.</span><span class="nf">default</span><span class="p">(</span>
+    <span class="nv">config</span><span class="p">:</span> <span class="n">config</span><span class="p">,</span>
+    <span class="nv">appId</span><span class="p">:</span> <span class="s">"your-miniapp-id"</span>
+<span class="p">)</span>
+</code></pre>
+
+<p></details></p>
+
+<ul>
+<li><strong>Feature:</strong> Added a new additional initializer to load MiniApps from URL for local testing.
+<details>
+<summary>Show code</summary></li>
+</ul>
+<pre class="highlight swift"><code><span class="c1">// with url</span>
+<span class="k">let</span> <span class="nv">urlParams</span> <span class="o">=</span> <span class="kt">MiniAppParameters</span><span class="o">.</span><span class="nf">url</span><span class="p">(</span>
+    <span class="nv">config</span><span class="p">:</span> <span class="kt">MiniAppConfig</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">current</span><span class="p">(),</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="k">self</span><span class="p">),</span>
+    <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"http://localhost:3000"</span><span class="p">)</span><span class="o">!</span>
+<span class="p">)</span>
+<span class="k">let</span> <span class="nv">miniAppView</span> <span class="o">=</span> <span class="kt">MiniAppView</span><span class="p">(</span><span class="nv">params</span><span class="p">:</span> <span class="n">urlParams</span><span class="p">)</span>
+</code></pre>
+
+<p></details></p>
+
+<ul>
+<li><strong>Feature:</strong> Support for SwiftUI. Added <code><a href="Structs/MiniAppSUIView.html">MiniAppSUIView</a></code> to the UI module that conforms to <code>UIViewRepresentable</code> and will autoload when added.
+<details>
+<summary>Show code</summary></li>
+</ul>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Content</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+
+  <span class="k">var</span> <span class="nv">params</span><span class="p">:</span> <span class="kt">MiniAppParameters</span>
+
+  <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kt">MiniAppSUIView</span><span class="p">(</span><span class="nv">params</span><span class="p">:</span> <span class="n">params</span><span class="p">)</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre>
+
+<p></details></p>
+
+<p><strong>Sample app</strong></p>
+
+<ul>
+<li><strong>Feature:</strong> New demo app interface with List I and List II (multiple miniapp support demo) and reworked with SwiftUI</li>
+</ul>
 <h3 id='4-3-0-2022-08-08' class='heading'>4.3.0 (2022-08-08)</h3>
 
 <p><strong>SDK</strong></p>
@@ -423,7 +576,7 @@
 <li><strong>Feature:</strong> Store Manifest as a json file</li>
 <li><strong>Feature:</strong> A secure check is performed on manifest permissions before launching the Mini App</li>
 <li><strong>Feature:</strong> A new subspec <code>MiniApp/Signature</code> is now available. If the dependency is added to the host, the MiniApp zip file signature is now checked to prevent file corruption or man in the middle attack</li>
-<li><strong>Feature:</strong> A <code>RMAForceSignatureCheck</code> boolean setting can be set in &lsquo;.plist&rsquo; file. It is considered false by default and is only used by <code>MiniApp/Signature</code></li>
+<li><strong>Feature:</strong> A <code>RMAForceSignatureCheck</code> boolean setting can be set in &rsquo;.plist&rsquo; file. It is considered false by default and is only used by <code>MiniApp/Signature</code></li>
 <li><strong>Feature:</strong> Added support for App Store URL schemes</li>
 <li><strong>Feature:</strong> Added new public interface <code>getMiniAppPreviewInfo</code> to get Mini app info using preview token</li>
 <li><strong>Feature:</strong> Added SSL pinning check for API calls</li>
@@ -789,8 +942,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-08-08)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-11-04)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
 </html>
