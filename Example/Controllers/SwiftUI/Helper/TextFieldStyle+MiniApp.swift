@@ -14,3 +14,37 @@ struct MiniAppTextFieldStyle: TextFieldStyle {
         )
     }
 }
+
+struct NumberPadKeyboardViewModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 15.0, *) {
+            content
+            .keyboardType(.numberPad)
+            .toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+                        Button("Done") {
+                            dismissKeyboard()
+                        }
+                        .foregroundColor(.blue)
+                    }
+                }
+            }
+        } else {
+            // keep default layout for iOS 14 to dismiss the keyboard
+            // can be removed after min target upgrade to iOS 15
+            content
+        }
+    }
+
+    func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+extension View {
+    func keyboardWithCustomNumberPad() -> some View {
+        modifier(NumberPadKeyboardViewModifier())
+    }
+}

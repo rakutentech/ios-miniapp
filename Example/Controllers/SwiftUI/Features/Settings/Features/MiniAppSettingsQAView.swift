@@ -49,6 +49,7 @@ struct MiniAppSettingsQAView: View {
                             .frame(height: 50)
                             .textFieldStyle(MiniAppTextFieldStyle())
                             .font(.system(size: 13))
+                            .keyboardWithCustomNumberPad()
                         Button {
                             trackButtonTap(pageName: pageName, buttonTitle: "Save Max Storage Limit")
                             switch viewModel.setSecureStorageLimit(maxSize: miniAppMaxStorageSize) {
