@@ -54,6 +54,7 @@ struct MiniAppSettingsQAView: View {
                             trackButtonTap(pageName: pageName, buttonTitle: "Save Max Storage Limit")
                             switch viewModel.setSecureStorageLimit(maxSize: miniAppMaxStorageSize) {
                             case let .success(formattedString):
+                                dismissKeyboard()
                                 miniAppMaxStorageSize = formattedString
                                 alertMessage = MiniAppAlertMessage(title: "Success", message: "Saved Max Storage Size Limit to \(formattedString) bytes.")
                             case let .failure(error):

@@ -47,4 +47,8 @@ extension View {
     func keyboardWithCustomNumberPad() -> some View {
         modifier(NumberPadKeyboardViewModifier())
     }
+
+    func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }
