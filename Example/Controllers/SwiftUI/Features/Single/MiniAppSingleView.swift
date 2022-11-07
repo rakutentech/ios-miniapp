@@ -135,8 +135,8 @@ struct MiniAppSingleView: View {
         })
         .onChange(of: didAcceptSettingsTerms, perform: { accepted in
             if accepted {
-                viewModel.load()
                 didAcceptSettingsTerms = false
+                permissionRequest = nil
             }
         })
         .onChange(of: viewModel.viewState) { state in
