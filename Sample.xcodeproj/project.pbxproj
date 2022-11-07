@@ -69,6 +69,7 @@
 		38F73B4523D554FE00F2C1CE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4423D554FE00F2C1CE /* Helpers.swift */; };
 		38F73B4723D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F73B4623D55CCB00F2C1CE /* MiniAppInfoFetcherTests.swift */; };
 		38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC4652244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift */; };
+		6226CB7C290BCC51007DC20D /* AccessabilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6226CB7B290BCC51007DC20D /* AccessabilityIdentifiers.swift */; };
 		750191FB804B88456CA24CA7 /* MiniAppAdDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */; };
 		A13C249826A15048003ADC6D /* UserPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13C249726A15048003ADC6D /* UserPointsModel.swift */; };
 		A15CC6B828ED2CB4009B328D /* SampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6B728ED2CB4009B328D /* SampleApp.swift */; };
@@ -209,6 +210,7 @@
 		607FACD01AFB9204008FA782 /* MiniApp_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniApp_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACE51AFB9204008FA782 /* MiniApp_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniApp_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6226CB7B290BCC51007DC20D /* AccessabilityIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessabilityIdentifiers.swift; sourceTree = "<group>"; };
 		7501901BB0FC97CC8680E785 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		7501924AE42A5A88FF5CFB12 /* Config-test-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-release.xcconfig"; sourceTree = "<group>"; };
 		75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppAdDisplayerTests.swift; sourceTree = "<group>"; };
@@ -634,6 +636,7 @@
 		F70DD8DB28D417C3003EF1F1 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				6226CB7B290BCC51007DC20D /* AccessabilityIdentifiers.swift */,
 				F70DD8DC28D417C3003EF1F1 /* RemoteImageView.swift */,
 				F70DD8DD28D417C3003EF1F1 /* TextFieldStyle+MiniApp.swift */,
 				F70DD8DE28D417C3003EF1F1 /* KeyboardNotificationHelper.swift */,
@@ -841,6 +844,7 @@
 				F70DD8E928D417C4003EF1F1 /* MiniAppSettingsViewModel.swift in Sources */,
 				F70DD8FA28D417C4003EF1F1 /* MiniAppSingleView.swift in Sources */,
 				38920AFB251D9C57004C5DDD /* UserProfileModel.swift in Sources */,
+				6226CB7C290BCC51007DC20D /* AccessabilityIdentifiers.swift in Sources */,
 				F70DD90928D417C4003EF1F1 /* MiniAppPermissionService.swift in Sources */,
 				31850BC1269837F300CFE422 /* UIColor+MiniApp.swift in Sources */,
 				F70DD90328D417C4003EF1F1 /* MiniAppViewMessageDelegator.swift in Sources */,

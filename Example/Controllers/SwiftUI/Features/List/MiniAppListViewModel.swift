@@ -7,16 +7,16 @@ class MiniAppListViewModel: ObservableObject {
 
     let store = MiniAppStore.shared
 
-    @Published var type: MiniAppSettingsView.ListConfig
+    @Published var type: ListType
     @Published var state: ListState = .none
     @Published var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
 
     var bag = Set<AnyCancellable>()
 
-    init(type: MiniAppSettingsView.ListConfig) {
+    init(type: ListType) {
         self.type = type
         setupObservers()
-        if store.miniAppSetupCompleted {
+        if store.miniAppSetupCompleted && !store.hasError(type: type) {
             load()
         } else {
             state = .awaitsSetup
@@ -34,8 +34,8 @@ class MiniAppListViewModel: ObservableObject {
                         self?.state = .awaitsSetup
                         return
                     }
-                    self.state = .success
                     self.indexedMiniAppInfoList = self.makeIndexed(infos: list)
+                    self.state = .success
                 }
                 .store(in: &bag)
         case .listII:
@@ -47,8 +47,8 @@ class MiniAppListViewModel: ObservableObject {
                         self?.state = .awaitsSetup
                         return
                     }
-                    self.state = .success
                     self.indexedMiniAppInfoList = self.makeIndexed(infos: list)
+                    self.state = .success
                 }
                 .store(in: &bag)
         }
@@ -72,10 +72,6 @@ class MiniAppListViewModel: ObservableObject {
     private func load() {
         state = .loading
         store.load(type: type)
-    }
-
-    var config: MiniAppSdkConfig {
-        store.config.sdkConfig(list: type)
     }
 }
 

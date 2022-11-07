@@ -46,7 +46,7 @@ struct MiniAppUrlView: View {
                 MiniAppSUIView(urlParams:
                     .init(
                         config: MiniAppConfig(
-                            config: Config.current(),
+                            config: ListConfiguration(listType: .listI).sdkConfig,
                             messageDelegate: MiniAppViewMessageDelegator()
                         ),
                         type: .miniapp,
@@ -62,7 +62,7 @@ struct MiniAppUrlView: View {
 
 extension MiniAppUrlView: ViewTrackable {
 	var pageName: String {
-		return NSLocalizedString("demo.app.rat.page.name.qa", comment: "")
+        return NSLocalizedString("demo.app.rat.page.name.qa", comment: "")
 	}
 }
 
