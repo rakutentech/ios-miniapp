@@ -7,24 +7,24 @@ class MiniAppListViewModel: ObservableObject {
 
 	let store = MiniAppStore.shared
 
-	@Published var type: MiniAppSettingsView.ListConfig
-	@Published var state: ListState = .none
-	@Published var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
+    @Published var type: ListType
+    @Published var state: ListState = .none
+    @Published var indexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
 
 	@Published var searchText: String = ""
 	@Published var filteredIndexedMiniAppInfoList: [String: [MiniAppInfo]] = [:]
 
-	var bag = Set<AnyCancellable>()
+    var bag = Set<AnyCancellable>()
 
-	init(type: MiniAppSettingsView.ListConfig) {
-		self.type = type
-		setupObservers()
-		if store.miniAppSetupCompleted {
-			load()
-		} else {
-			state = .awaitsSetup
-		}
-	}
+    init(type: ListType) {
+        self.type = type
+        setupObservers()
+        if store.miniAppSetupCompleted && !store.hasError(type: type) {
+            load()
+        } else {
+            state = .awaitsSetup
+        }
+    }
 
 	func setupObservers() {
 		switch type {
@@ -89,10 +89,6 @@ class MiniAppListViewModel: ObservableObject {
 	private func load() {
 		state = .loading
 		store.load(type: type)
-	}
-
-	var config: MiniAppSdkConfig {
-		store.config.sdkConfig(list: type)
 	}
 
 	func applyCurrentFilter(_ targetList: [String: [MiniAppInfo]]) -> [String: [MiniAppInfo]] {
