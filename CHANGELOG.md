@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 5.0.0 (TBD)
+### 5.0.0 (2022-11-04)
 **SDK**
 - **Feature:** Support for showing multiple MiniApps at the same time. Added `MiniAppView` which will replace `MiniApp.shared().create()`. From now on `create` will be deprecated.
 <details>
