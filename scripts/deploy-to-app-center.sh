@@ -35,10 +35,11 @@ appcenter distribute release \
 --app "$APP_CENTER_APP_NAME" \
 --release-notes-file "$TMP_DIR"/CHANGELOG.md \
 --group "$APP_CENTER_GROUP" \
---build-version "$APP_CENTER_BUILD_VERSION" \
+--build-version "$CIRCLE_BUILD_NUM" \
 --file ./artifacts/miniapp.app.zip \
 --quiet
 
+echo "Uploading Symbols to $APP_CENTER_GROUP group on App Center."
 appcenter crashes upload-symbols \
 --symbol ./artifacts/MiniApp_Example.app.dSYM \
 --token "$APP_CENTER_TOKEN" \
@@ -117,6 +118,7 @@ appcenter distribute release \
 --file "$TMP_DIR"/MiniApp_Example.ipa \
 --quiet
 
+echo "Uploading Crash Symbols to $APP_CENTER_GROUP group on App Center."
 appcenter crashes upload-symbols \
 --symbol "$DSYM_FILE" \
 --token "$APP_CENTER_TOKEN_DEVICE" \
