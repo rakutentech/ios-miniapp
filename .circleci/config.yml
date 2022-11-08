@@ -16,7 +16,7 @@ container_medium: &container_medium
   resource_class: medium
 
 jobs:
-  build-sim:
+  build-and-test:
     <<: *container_medium
     environment:
       FL_OUTPUT_DIR: output
@@ -27,7 +27,12 @@ jobs:
       - run: pod install --repo-update
       - run:
           name: Build Simulator
-          command: fastlane build_sim_ci
+          command: fastlane build_simulator
+      - run:
+          name: Execute Tests
+          command: fastlane ci
+      - store_artifacts:
+          path: ./artifacts/unit-tests
       - persist_to_workspace:
             root: .
             paths:
@@ -35,7 +40,17 @@ jobs:
       - persist_to_workspace:
             root: ../
             paths:
-              - MiniApp-Secrets.xcconfig
+              - MiniApp-Secrets.xcconfig          
+
+  upload-code-coverage:
+    <<: *container_medium
+    steps:
+      - codecov/upload:
+        file: "./artifacts/0/artifacts/unit-tests/report.junit"
+      - codecov/upload:
+        file: "./artifacts/0/artifacts/unit-tests/report.html"
+      - codecov/upload:
+        file: "./artifacts/0/artifacts/unit-tests/compile_commands.json"
 
   app-center-publish:
     <<: *container_medium
@@ -55,9 +70,12 @@ jobs:
 
 workflows:
   version: 2.1
-  build_and_deploy:
+  build-and-release-workflow:
     jobs:
-      - build-sim
-      - app-center-publish:
-          requires:
-            - build-sim
+        - build-and-test
+        - upload-code-coverage:
+            requires:
+              - build-and-test
+        - app-center-publish:
+            requires:
+              - build-and-test
