@@ -175,6 +175,20 @@ class MiniAppStore: ObservableObject {
             }
         }
     }
+
+    func getMiniAppInfo(miniAppId: String) async throws -> MiniAppInfo? {
+        try await withCheckedThrowingContinuation { continuation in
+            MiniApp.shared().info(miniAppId: miniAppId) { result in
+                switch result {
+                case let .success(info):
+                    // may need to add host support through qr code
+                    continuation.resume(returning: info)
+                case let .failure(error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
 }
 
 extension MiniAppStore {
