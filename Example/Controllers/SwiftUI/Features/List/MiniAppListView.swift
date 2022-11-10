@@ -95,7 +95,7 @@ extension MiniAppListView {
         var body: some View {
             VStack {
                 TextField("Search... (id, version)", text: $viewModel.searchText)
-                    .textFieldStyle(MiniAppSearchTextFieldStyle())
+                    .textFieldStyle(MiniAppSearchTextFieldStyle(textFieldAcessibilityIdentifier: AccessibilityIdentifiers.listSearch.identifier))
                     .padding(.vertical, 10)
                     .padding(.horizontal, 16)
                     .accessibilityIdentifier(AccessibilityIdentifiers.listSearch.identifier)
