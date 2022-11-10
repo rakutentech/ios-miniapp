@@ -8,26 +8,30 @@ public struct MiniAppSUIView: UIViewRepresentable {
     @ObservedObject var handler: MiniAppSUIViewHandler
 
     var params: MiniAppViewParameters
+    var fromCache: Bool
 
-    public init(params: MiniAppViewParameters.DefaultParams, handler: MiniAppSUIViewHandler) {
+    public init(params: MiniAppViewParameters.DefaultParams, fromCache: Bool = false, handler: MiniAppSUIViewHandler) {
         self.params = .default(params)
+        self.fromCache = fromCache
         self.handler = handler
     }
 
     public init(urlParams: MiniAppViewParameters.UrlParams) {
         self.params = .url(urlParams)
+        self.fromCache = false
         self.handler = MiniAppSUIViewHandler()
     }
 
-    public init(infoParams: MiniAppViewParameters.InfoParams) {
+    public init(infoParams: MiniAppViewParameters.InfoParams, fromCache: Bool = false) {
         self.params = .info(infoParams)
+        self.fromCache = fromCache
         self.handler = MiniAppSUIViewHandler()
     }
 
     public func makeUIView(context: Context) -> MiniAppView {
         let view = MiniAppView(params: params)
         view.progressStateView = MiniAppProgressView()
-        view.load { _ in
+        view.load(fromCache: fromCache) { _ in
             self.handler.isActive = true
         }
         context.coordinator.onGoBack = {

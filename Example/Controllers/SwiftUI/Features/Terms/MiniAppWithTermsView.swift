@@ -24,9 +24,28 @@ struct MiniAppWithTermsView: View {
                     request: MiniAppPermissionRequest(sdkConfig: viewModel.sdkConfig, info: info, manifest: manifest)
                 )
             case .error(let error):
-                Text(error.localizedDescription)
-                    .font(.system(size: 14, weight: .medium))
-                    .padding(.horizontal, 40)
+                if isDeviceOfflineError(error: error) {
+                    MiniAppSUIView(params:
+                        .init(
+                            config: MiniAppConfig(
+                                config: viewModel.sdkConfig,
+                                adsDisplayer: AdMobDisplayer(),
+                                messageDelegate: viewModel.messageInterface,
+                                navigationDelegate: viewModel.navigationDelegate
+                            ),
+                            type: viewModel.miniAppType,
+                            appId: viewModel.miniAppId,
+                            version: viewModel.miniAppVersion,
+                            queryParams: getQueryParam()
+                        ),
+                        fromCache: true,
+                        handler: handler
+                    )
+                } else {
+                    Text(error.localizedDescription)
+                        .font(.system(size: 14, weight: .medium))
+                        .padding(.horizontal, 40)
+                }
             case .success:
                 MiniAppSUIView(params:
                     .init(
@@ -41,6 +60,7 @@ struct MiniAppWithTermsView: View {
                         version: viewModel.miniAppVersion,
                         queryParams: getQueryParam()
                     ),
+                    fromCache: false,
                     handler: handler
                 )
             }
@@ -61,6 +81,14 @@ struct MiniAppWithTermsView: View {
         .onReceive(viewModel.showMessageAlert) {
             showMessageAlert = $0
         }
+    }
+
+    func isDeviceOfflineError(error: Error) -> Bool {
+        let error = error as NSError
+        if let maSdkError = error as? MASDKError {
+            return maSdkError.isDeviceOfflineDownloadError()
+        }
+        return [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut].contains(error.code)
     }
 }
 

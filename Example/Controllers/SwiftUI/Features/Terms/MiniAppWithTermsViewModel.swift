@@ -66,17 +66,20 @@ class MiniAppWithTermsViewModel: ObservableObject {
         viewState = .loading
         permissionService
             .checkPermissions(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { [weak self] result in
-            switch result {
-            case .success(let permState):
-                switch permState {
-                case .permissionGranted:
-                    self?.viewState = .success
-                case let .permissionRequested(info, manifest):
-                    self?.viewState = .permissionRequested(info: info, manifest: manifest)
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let permState):
+                        switch permState {
+                        case .permissionGranted:
+                            self.viewState = .success
+                        case let .permissionRequested(info, manifest):
+                            self.viewState = .permissionRequested(info: info, manifest: manifest)
+                        }
+                    case .failure(let error):
+                        self.viewState = .error(error)
+                    }
                 }
-            case .failure(let error):
-                self?.viewState = .error(error)
-            }
         }
     }
 
@@ -107,5 +110,33 @@ class MiniAppWithTermsViewModel: ObservableObject {
                 completion(.failure(error))
             }
         }
+    }
+}
+
+extension MiniAppTermsViewModel {
+    enum ViewState: Equatable {
+        static func == (lhs: ViewState, rhs: ViewState) -> Bool {
+            switch (lhs, rhs) {
+            case (.none, .none):
+                return true
+            case (.loading, .loading):
+                return true
+            case (.permissionRequested(let lhsInfo, let lhsManifest), .permissionRequested(let rhsInfo, let rhsManifest)):
+                return lhsInfo.id == rhsInfo.id && lhsManifest.versionId == rhsManifest.versionId
+            case (.error(let lhsError), .error(let rhsError)):
+                return lhsError.localizedDescription == rhsError.localizedDescription
+            case (.success, .success):
+                return true
+            default:
+                return false
+            }
+        }
+
+        case none
+        case loading
+        case permissionRequested(info: MiniAppInfo, manifest: MiniAppManifest)
+        case error(Error)
+        case offline
+        case success
     }
 }
