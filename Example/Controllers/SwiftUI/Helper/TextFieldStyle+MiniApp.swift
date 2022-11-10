@@ -17,18 +17,16 @@ struct MiniAppTextFieldStyle: TextFieldStyle {
 
 struct MiniAppSearchTextFieldStyle: TextFieldStyle {
 
-    var textFieldAcessibilityIdentifier: String = AccessibilityIdentifiers.textFieldSearchTextField.identifier
-
     func _body(configuration: TextField<Self._Label>) -> some View {
         HStack {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
                 .padding(.leading, 15)
-                .accessibilityIdentifier(AccessibilityIdentifiers.textFieldSearchIcon.identifier)
+                .accessibilityIdentifier(AccessibilityIdentifiers.listSearchIcon.identifier)
             configuration
                 .frame(height: 40)
                 .padding(.trailing, 15)
-                .accessibilityIdentifier(textFieldAcessibilityIdentifier)
+                .accessibilityIdentifier(AccessibilityIdentifiers.listSearchTextField.identifier)
         }
         .font(.system(size: 14))
         .background(

@@ -9,9 +9,8 @@ enum AccessibilityIdentifiers: String {
     case settingsRasMode = "settings.ras.mode"
     case settingsHostId = "settings.host.id"
     case settingsSubscriptionKey = "settings.subscription.key"
-    case listSearch = "list.search"
-    case textFieldSearchIcon = "textfield.search.icon"
-    case textFieldSearchTextField = "textfield.search.textfield"
+    case listSearchIcon = "list.search.icon"
+    case listSearchTextField = "list.search.textfield"
 
     var identifier: String {
         return "miniapp.demo." + rawValue
