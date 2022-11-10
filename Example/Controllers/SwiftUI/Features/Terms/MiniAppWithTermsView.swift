@@ -24,45 +24,13 @@ struct MiniAppWithTermsView: View {
                     request: MiniAppPermissionRequest(sdkConfig: viewModel.sdkConfig, info: info, manifest: manifest)
                 )
             case .error(let error):
-                if isDeviceOfflineError(error: error) {
-                    MiniAppSUIView(params:
-                        .init(
-                            config: MiniAppConfig(
-                                config: viewModel.sdkConfig,
-                                adsDisplayer: AdMobDisplayer(),
-                                messageDelegate: viewModel.messageInterface,
-                                navigationDelegate: viewModel.navigationDelegate
-                            ),
-                            type: viewModel.miniAppType,
-                            appId: viewModel.miniAppId,
-                            version: viewModel.miniAppVersion,
-                            queryParams: getQueryParam()
-                        ),
-                        fromCache: true,
-                        handler: handler
-                    )
-                } else {
-                    Text(error.localizedDescription)
-                        .font(.system(size: 14, weight: .medium))
-                        .padding(.horizontal, 40)
-                }
+                Text(error.localizedDescription)
+                    .font(.system(size: 14, weight: .medium))
+                    .padding(.horizontal, 40)
+            case .offline:
+                MiniAppSUIView(params: miniAppViewParams(config: viewModel.sdkConfigProduction), fromCache: true, handler: handler)
             case .success:
-                MiniAppSUIView(params:
-                    .init(
-                        config: MiniAppConfig(
-                            config: viewModel.sdkConfig,
-                            adsDisplayer: AdMobDisplayer(),
-                            messageDelegate: viewModel.messageInterface,
-                            navigationDelegate: viewModel.navigationDelegate
-                        ),
-                        type: viewModel.miniAppType,
-                        appId: viewModel.miniAppId,
-                        version: viewModel.miniAppVersion,
-                        queryParams: getQueryParam()
-                    ),
-                    fromCache: false,
-                    handler: handler
-                )
+                MiniAppSUIView(params: miniAppViewParams(config: viewModel.sdkConfig), fromCache: false, handler: handler)
             }
         }
         .alert(isPresented: $showMessageAlert) {
@@ -83,12 +51,19 @@ struct MiniAppWithTermsView: View {
         }
     }
 
-    func isDeviceOfflineError(error: Error) -> Bool {
-        let error = error as NSError
-        if let maSdkError = error as? MASDKError {
-            return maSdkError.isDeviceOfflineDownloadError()
-        }
-        return [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut].contains(error.code)
+    func miniAppViewParams(config: MiniAppSdkConfig) -> MiniAppViewParameters.DefaultParams {
+        return MiniAppViewParameters.DefaultParams.init(
+            config: MiniAppConfig(
+                config: config,
+                adsDisplayer: AdMobDisplayer(),
+                messageDelegate: viewModel.messageInterface,
+                navigationDelegate: viewModel.navigationDelegate
+            ),
+            type: viewModel.miniAppType,
+            appId: viewModel.miniAppId,
+            version: viewModel.miniAppVersion,
+            queryParams: getQueryParam()
+        )
     }
 }
 

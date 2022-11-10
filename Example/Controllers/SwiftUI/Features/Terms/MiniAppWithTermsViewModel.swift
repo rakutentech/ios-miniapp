@@ -9,7 +9,7 @@ class MiniAppWithTermsViewModel: ObservableObject {
     let permissionService: MiniAppPermissionService
     let sdkConfig: MiniAppSdkConfig
 
-    @Published var viewState: MiniAppPermissionService.ViewState = .none
+    @Published var viewState: ViewState = .none
 
     var miniAppId: String
     var miniAppVersion: String?
@@ -77,7 +77,11 @@ class MiniAppWithTermsViewModel: ObservableObject {
                             self.viewState = .permissionRequested(info: info, manifest: manifest)
                         }
                     case .failure(let error):
-                        self.viewState = .error(error)
+                        if self.isOffline(error: error) {
+                            self.viewState = .offline
+                        } else {
+                            self.viewState = .error(error)
+                        }
                     }
                 }
         }
@@ -111,9 +115,23 @@ class MiniAppWithTermsViewModel: ObservableObject {
             }
         }
     }
+
+    func isOffline(error: Error) -> Bool {
+        let error = error as NSError
+        if let maSdkError = error as? MASDKError {
+            return maSdkError.code == -1020 || maSdkError.code == -1009
+        }
+        return [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut, NSURLErrorDataNotAllowed].contains(error.code)
+    }
+
+    var sdkConfigProduction: MiniAppSdkConfig {
+        let productionConfig = sdkConfig
+        productionConfig.isPreviewMode = false
+        return productionConfig
+    }
 }
 
-extension MiniAppTermsViewModel {
+extension MiniAppWithTermsViewModel {
     enum ViewState: Equatable {
         static func == (lhs: ViewState, rhs: ViewState) -> Bool {
             switch (lhs, rhs) {
