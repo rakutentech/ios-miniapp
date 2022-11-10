@@ -24,7 +24,16 @@ struct SampleApp: App {
                         Task {
                             do {
                                 if let info = try await store.getMiniAppPreviewInfo(previewToken: code) {
-                                    print(info)
+                                    deepLink = .miniapp(info: info)
+                                }
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    case let .deeplink(id):
+                        Task {
+                            do {
+                                if let info = try await store.getMiniAppInfo(miniAppId: id) {
                                     deepLink = .miniapp(info: info)
                                 }
                             } catch {

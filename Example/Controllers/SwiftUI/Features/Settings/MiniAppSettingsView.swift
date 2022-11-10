@@ -105,7 +105,6 @@ struct MiniAppSettingsView: View {
                     )
                 )
                     .padding(.vertical, 15)
-
             }
 
             Section {
