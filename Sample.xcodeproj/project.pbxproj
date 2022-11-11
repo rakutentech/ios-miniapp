@@ -71,6 +71,7 @@
 		38FC4653244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC4652244628F600BE33E0 /* MiniAppScriptMessageHandlerTests.swift */; };
 		6226CB7C290BCC51007DC20D /* AccessabilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6226CB7B290BCC51007DC20D /* AccessabilityIdentifiers.swift */; };
 		750191FB804B88456CA24CA7 /* MiniAppAdDisplayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */; };
+		A13198012918A45C00B839E8 /* View+Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13198002918A45C00B839E8 /* View+Events.swift */; };
 		A13C249826A15048003ADC6D /* UserPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13C249726A15048003ADC6D /* UserPointsModel.swift */; };
 		A15CC6B828ED2CB4009B328D /* SampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6B728ED2CB4009B328D /* SampleApp.swift */; };
 		A15CC6BA28ED2CC5009B328D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */; };
@@ -214,6 +215,7 @@
 		7501901BB0FC97CC8680E785 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		7501924AE42A5A88FF5CFB12 /* Config-test-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-release.xcconfig"; sourceTree = "<group>"; };
 		75019776AEA5AACCC4BD4BF4 /* MiniAppAdDisplayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppAdDisplayerTests.swift; sourceTree = "<group>"; };
+		A13198002918A45C00B839E8 /* View+Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Events.swift"; sourceTree = "<group>"; };
 		A13C249726A15048003ADC6D /* UserPointsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPointsModel.swift; sourceTree = "<group>"; };
 		A15CC6B728ED2CB4009B328D /* SampleApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleApp.swift; sourceTree = "<group>"; };
 		A15CC6B928ED2CC5009B328D /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -637,17 +639,18 @@
 			isa = PBXGroup;
 			children = (
 				6226CB7B290BCC51007DC20D /* AccessabilityIdentifiers.swift */,
+				F70DD8E128D417C3003EF1F1 /* Binding+Optional.swift */,
+				F77F61B028E54EE400F55818 /* CloseButton.swift */,
+				A15CC6DB29025B2B009B328D /* DemoAppAnalytics.swift */,
+				F70DD8E028D417C3003EF1F1 /* ImagePicker.swift */,
+				F70DD8DE28D417C3003EF1F1 /* KeyboardNotificationHelper.swift */,
+				F70DD8E228D417C3003EF1F1 /* LocationManager.swift */,
+				F70DD8DF28D417C3003EF1F1 /* MiniAppViewMessageDelegator.swift */,
+				F70DD8E328D417C3003EF1F1 /* MiniAppViewNavigationDelegator.swift */,
 				F70DD8DC28D417C3003EF1F1 /* RemoteImageView.swift */,
 				F70DD8DD28D417C3003EF1F1 /* TextFieldStyle+MiniApp.swift */,
-				F70DD8DE28D417C3003EF1F1 /* KeyboardNotificationHelper.swift */,
-				F70DD8DF28D417C3003EF1F1 /* MiniAppViewMessageDelegator.swift */,
-				F70DD8E028D417C3003EF1F1 /* ImagePicker.swift */,
-				F70DD8E128D417C3003EF1F1 /* Binding+Optional.swift */,
-				F70DD8E228D417C3003EF1F1 /* LocationManager.swift */,
-				F70DD8E328D417C3003EF1F1 /* MiniAppViewNavigationDelegator.swift */,
-				F77F61B028E54EE400F55818 /* CloseButton.swift */,
+				A13198002918A45C00B839E8 /* View+Events.swift */,
 				A15CC6CD28FE4E90009B328D /* View+Tracking.swift */,
-				A15CC6DB29025B2B009B328D /* DemoAppAnalytics.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -820,6 +823,7 @@
 				F70DD8EA28D417C4003EF1F1 /* MiniAppSettingsProfileView.swift in Sources */,
 				F70DD8E828D417C4003EF1F1 /* MiniAppSettingsView+Config.swift in Sources */,
 				F70DD8F628D417C4003EF1F1 /* MiniAppWithTermsView.swift in Sources */,
+				A13198012918A45C00B839E8 /* View+Events.swift in Sources */,
 				F70DD8EE28D417C4003EF1F1 /* MiniAppSettingsAccessTokenView.swift in Sources */,
 				F70DD90728D417C4003EF1F1 /* MiniAppViewNavigationDelegator.swift in Sources */,
 				A15CC6BA28ED2CC5009B328D /* SceneDelegate.swift in Sources */,

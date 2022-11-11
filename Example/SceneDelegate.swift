@@ -16,18 +16,22 @@ class DeeplinkManager {
 
     enum Path: String {
         case qrcode = "preview"
+        case deeplink = "dl"
     }
 
     enum Target: Equatable, Identifiable {
         case unknown
         case qrcode(code: String)
+        case deeplink(id: String)
 
         var id: String {
             switch self {
             case .unknown:
                 return "unknown"
-            case .qrcode(let code):
+            case let .qrcode(code):
                 return code
+            case let .deeplink(id):
+                return id
             }
         }
     }
@@ -43,6 +47,9 @@ class DeeplinkManager {
         case .qrcode:
             guard url.pathComponents.count > 1 else { return .unknown }
             return .qrcode(code: url.pathComponents[2])
+        case .deeplink:
+            guard url.pathComponents.count > 1 else { return .unknown }
+            return .deeplink(id: url.pathComponents[2])
         }
     }
 }
