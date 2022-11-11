@@ -35,7 +35,7 @@ appcenter distribute release \
 --app "$APP_CENTER_APP_NAME" \
 --release-notes-file "$TMP_DIR"/CHANGELOG.md \
 --group "$APP_CENTER_GROUP" \
---build-version "$APP_CENTER_BUILD_VERSION" \
+--build-version "$CIRCLE_BUILD_NUM" \
 --file ./artifacts/miniapp.app.zip \
 --quiet
 
