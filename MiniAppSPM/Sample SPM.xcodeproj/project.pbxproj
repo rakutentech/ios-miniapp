@@ -34,6 +34,8 @@
 		3105761627EE387800D93B06 /* Config-test-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3105761127EE387800D93B06 /* Config-test-debug.xcconfig */; };
 		31A7169B27EF0800003770E9 /* MiniApp in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169A27EF0800003770E9 /* MiniApp */; };
 		31A7169D27EF0800003770E9 /* AppCenterCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = 31A7169C27EF0800003770E9 /* AppCenterCrashes */; };
+		A13198032918A67E00B839E8 /* View+Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13198022918A67E00B839E8 /* View+Events.swift */; };
+		A13198052918A69500B839E8 /* AccessabilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13198042918A69500B839E8 /* AccessabilityIdentifiers.swift */; };
 		A1B4E6E428E6C7E7009ED66F /* SampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B4E6E328E6C7E7009ED66F /* SampleApp.swift */; };
 		F7370A8A287BD21C00090032 /* MiniAppSecureStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */; };
 		F73D0E9328D41205002437DC /* MiniAppFeatureListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73D0E9228D41205002437DC /* MiniAppFeatureListCell.swift */; };
@@ -173,6 +175,8 @@
 		3105761027EE387800D93B06 /* Config-common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-common.xcconfig"; sourceTree = "<group>"; };
 		3105761127EE387800D93B06 /* Config-test-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Config-test-debug.xcconfig"; sourceTree = "<group>"; };
 		31A7169827EF0428003770E9 /* MiniApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MiniApp; path = ..; sourceTree = "<group>"; };
+		A13198022918A67E00B839E8 /* View+Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Events.swift"; sourceTree = "<group>"; };
+		A13198042918A69500B839E8 /* AccessabilityIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessabilityIdentifiers.swift; sourceTree = "<group>"; };
 		A1B4E6E328E6C7E7009ED66F /* SampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleApp.swift; sourceTree = "<group>"; };
 		F7370A89287BD21C00090032 /* MiniAppSecureStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageTests.swift; sourceTree = "<group>"; };
 		F73D0E9228D41205002437DC /* MiniAppFeatureListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppFeatureListCell.swift; sourceTree = "<group>"; };
@@ -613,15 +617,17 @@
 		F75D49D728C5B83A0053F74E /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				F75D49D828C5B83A0053F74E /* RemoteImageView.swift */,
+				A13198042918A69500B839E8 /* AccessabilityIdentifiers.swift */,
+				F75D4A1028CAF7750053F74E /* Binding+Optional.swift */,
+				F77F61AE28E54D1E00F55818 /* CloseButton.swift */,
+				F75D4A0828C9D3B00053F74E /* ImagePicker.swift */,
+				F75D4A1428CEE2F90053F74E /* KeyboardNotificationHelper.swift */,
+				F75D4A1228CEDE5C0053F74E /* LocationManager.swift */,
 				F7C0BCEF28CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift */,
 				F7C0BCED28CEF09700C56C2E /* MiniAppViewNavigationDelegator.swift */,
+				F75D49D828C5B83A0053F74E /* RemoteImageView.swift */,
 				F75D4A0A28CAF2A90053F74E /* TextFieldStyle+MiniApp.swift */,
-				F75D4A1028CAF7750053F74E /* Binding+Optional.swift */,
-				F75D4A0828C9D3B00053F74E /* ImagePicker.swift */,
-				F75D4A1228CEDE5C0053F74E /* LocationManager.swift */,
-				F75D4A1428CEE2F90053F74E /* KeyboardNotificationHelper.swift */,
-				F77F61AE28E54D1E00F55818 /* CloseButton.swift */,
+				A13198022918A67E00B839E8 /* View+Events.swift */,
 				F758977028FE789300D04B62 /* View+Tracking.swift */,
 			);
 			path = Helper;
@@ -848,12 +854,14 @@
 				F77F61BB28ED3B9900F55818 /* ContentView.swift in Sources */,
 				F73D0E9328D41205002437DC /* MiniAppFeatureListCell.swift in Sources */,
 				F75D49F228C5B83A0053F74E /* MiniAppStore.swift in Sources */,
+				A13198052918A69500B839E8 /* AccessabilityIdentifiers.swift in Sources */,
 				F75D4A0728C9CADE0053F74E /* MiniAppSettingsView+Config.swift in Sources */,
 				F75D49ED28C5B83A0053F74E /* MiniAppListRowCell.swift in Sources */,
 				F75D49F028C5B83A0053F74E /* RemoteImageView.swift in Sources */,
 				F7C0BCF028CEF3AE00C56C2E /* MiniAppViewMessageDelegator.swift in Sources */,
 				310575CA27EE213400D93B06 /* UserProfileModel.swift in Sources */,
 				F75D4A1128CAF7750053F74E /* Binding+Optional.swift in Sources */,
+				A13198032918A67E00B839E8 /* View+Events.swift in Sources */,
 				F77F61AF28E54D1E00F55818 /* CloseButton.swift in Sources */,
 				F75D49FD28C6F38B0053F74E /* MiniAppSettingsAccessTokenView.swift in Sources */,
 				F75D49DF28C5B83A0053F74E /* MiniAppSettingsView.swift in Sources */,
