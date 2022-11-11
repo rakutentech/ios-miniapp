@@ -8,6 +8,7 @@ orbs:
   macos: circleci/macos@2
   ruby: circleci/ruby@1.2.0
   codecov: codecov/codecov@3.1.1
+  app-center: rakutentech/app-center@0.1.3
 
 container_medium: &container_medium
   macos:
@@ -32,6 +33,14 @@ jobs:
           command: fastlane ci
       - store_artifacts:
           path: ./artifacts/unit-tests
+      - persist_to_workspace:
+            root: .
+            paths:
+              - .
+      - persist_to_workspace:
+            root: ../
+            paths:
+              - MiniApp-Secrets.xcconfig          
 
   upload-code-coverage:
     <<: *container_medium
@@ -43,11 +52,31 @@ jobs:
       - codecov/upload:
         file: "./artifacts/0/artifacts/unit-tests/compile_commands.json"
 
+  app-center-publish:
+    <<: *container_medium
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Copy Configurations
+          command: cp MiniApp-Secrets.xcconfig ../MiniApp-Secrets.xcconfig
+      - run:
+          name: Deploy to AppCenter
+          no_output_timeout: 20m
+          command: ./scripts/deploy-to-app-center.sh
+      - run:
+          name: Clear Cache
+          when: always
+          command: rm ../MiniApp-Secrets.xcconfig || true
+
 workflows:
   version: 2.1
   build-and-release-workflow:
     jobs:
         - build-and-test
         - upload-code-coverage:
+            requires:
+              - build-and-test
+        - app-center-publish:
             requires:
               - build-and-test
