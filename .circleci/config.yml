@@ -27,7 +27,7 @@ jobs:
       - run: pod install --repo-update
       - run:
           name: Build Simulator
-          command: fastlane build_simulator
+          command: fastlane build_sim_ci
       - run:
           name: Execute Tests
           command: fastlane ci
