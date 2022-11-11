@@ -66,6 +66,7 @@ jobs:
           command: ./scripts/deploy-to-app-center.sh
       - run:
           name: Clear Cache
+          when: always
           command: rm ../MiniApp-Secrets.xcconfig || true
 
 workflows:
