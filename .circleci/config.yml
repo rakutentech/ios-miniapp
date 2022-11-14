@@ -91,9 +91,9 @@ workflows:
   build-and-release-workflow:
     jobs:
         - build-and-test
-        - upload-code-coverage:
-            requires:
-              - build-and-test
+        # - upload-code-coverage:
+        #     requires:
+        #       - build-and-test
         - app-center-publish-sim:
             requires:
               - build-and-test
