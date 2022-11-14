@@ -8,7 +8,7 @@ public struct MiniAppSUIView: UIViewRepresentable {
     @ObservedObject var handler: MiniAppSUIViewHandler
 
     var params: MiniAppViewParameters
-    var fromCache: Bool
+    var fromCache: Bool = false
 
     public init(params: MiniAppViewParameters.DefaultParams, fromCache: Bool = false, handler: MiniAppSUIViewHandler) {
         self.params = .default(params)
@@ -18,7 +18,6 @@ public struct MiniAppSUIView: UIViewRepresentable {
 
     public init(urlParams: MiniAppViewParameters.UrlParams) {
         self.params = .url(urlParams)
-        self.fromCache = false
         self.handler = MiniAppSUIViewHandler()
     }
 
