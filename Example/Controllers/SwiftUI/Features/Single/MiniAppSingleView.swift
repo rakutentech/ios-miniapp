@@ -20,6 +20,7 @@ struct MiniAppSingleView: View {
     @State private var didAcceptSettingsTerms: Bool = false
     @State private var isSharePreviewPresented: Bool = false
     @State private var closeAlertMessage: MiniAppAlertMessage?
+    @State private var permissionToolbarEnabled: Bool = false
 
     init(listType: ListType, miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
         let sdkConfig = ListConfiguration.current(type: listType)
@@ -112,7 +113,7 @@ struct MiniAppSingleView: View {
                 } label: {
                     Image(systemName: "gearshape")
                 }
-                .disabled(!(viewModel.viewState == .success))
+                .disabled(!(permissionToolbarEnabled))
             }
 
         })
@@ -140,6 +141,7 @@ struct MiniAppSingleView: View {
             }
         })
         .onChange(of: viewModel.viewState) { state in
+            self.permissionToolbarEnabled = (state == .success || state == .offline)
             switch state {
             case .success:
                 self.permissionRequest = nil
@@ -166,11 +168,13 @@ struct MiniAppSingleView: View {
 
     func openPermissionSettings() {
         viewModel.fetchPermissionRequest { result in
-            switch result {
-            case .success(let request):
-                permissionRequest = request
-            case .failure(let error):
-                viewModel.viewState = .error(error)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let request):
+                    permissionRequest = request
+                case .failure(let error):
+                    viewModel.viewState = .error(error)
+                }
             }
         }
     }

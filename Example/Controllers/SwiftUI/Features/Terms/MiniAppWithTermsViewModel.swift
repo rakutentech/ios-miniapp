@@ -94,6 +94,23 @@ class MiniAppWithTermsViewModel: ObservableObject {
             return
         }
 
+        guard
+            Reachability.isConnectedToNetwork()
+        else
+        {
+            let request = MiniAppPermissionRequest(
+                sdkConfig: sdkConfig,
+                info: MiniAppInfo(
+                    id: miniAppId,
+                    icon: URL(string: "https://example.com")!,
+                    version: Version(versionTag: "", versionId: miniAppVersion ?? "")
+                ),
+                manifest: manifest
+            )
+            completion(.success(request))
+            return
+        }
+
         permissionService.getInfo(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { [weak self] result in
             guard let self = self else { return }
             switch result {
