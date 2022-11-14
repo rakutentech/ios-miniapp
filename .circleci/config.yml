@@ -62,7 +62,7 @@ jobs:
           command: cp MiniApp-Secrets.xcconfig ../MiniApp-Secrets.xcconfig
       - run:
           name: Deploy to AppCenter
-          no_output_timeout: 20m
+          no_output_timeout: 30m
           command: ./scripts/deploy-to-app-center.sh
       - run:
           name: Clear Cache
