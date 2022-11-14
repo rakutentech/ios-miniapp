@@ -136,7 +136,7 @@ class MiniAppWithTermsViewModel: ObservableObject {
     func isOffline(error: Error) -> Bool {
         let error = error as NSError
         if let maSdkError = error as? MASDKError {
-            return maSdkError.code == -1020 || maSdkError.code == -1009
+            return maSdkError.isDeviceOfflineDownloadError()
         }
         return [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut, NSURLErrorDataNotAllowed].contains(error.code)
     }
