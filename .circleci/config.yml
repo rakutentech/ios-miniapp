@@ -63,7 +63,7 @@ jobs:
       - run:
           name: Deploy to AppCenter
           no_output_timeout: 30m
-          command: ./scripts/deploy-to-app-center-simulator.sh
+          command: ./scripts/deploy-to-app-center.sh -t Simulator
       - run:
           name: Clear Cache
           when: always
@@ -80,7 +80,7 @@ jobs:
       - run:
           name: Deploy to AppCenter
           no_output_timeout: 30m
-          command: ./scripts/deploy-to-app-center-device.sh
+          command: ./scripts/deploy-to-app-center.sh -t Device 
       - run:
           name: Clear Cache
           when: always
