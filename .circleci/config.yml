@@ -52,7 +52,7 @@ jobs:
       - codecov/upload:
         file: "./artifacts/0/artifacts/unit-tests/compile_commands.json"
 
-  app-center-publish:
+  app-center-publish-sim:
     <<: *container_medium
     steps:
       - attach_workspace:
@@ -63,7 +63,24 @@ jobs:
       - run:
           name: Deploy to AppCenter
           no_output_timeout: 30m
-          command: ./scripts/deploy-to-app-center.sh
+          command: ./scripts/deploy-to-app-center.sh -t Simulator
+      - run:
+          name: Clear Cache
+          when: always
+          command: rm ../MiniApp-Secrets.xcconfig || true
+
+  app-center-publish-device:
+    <<: *container_medium
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Copy Configurations
+          command: cp MiniApp-Secrets.xcconfig ../MiniApp-Secrets.xcconfig
+      - run:
+          name: Deploy to AppCenter
+          no_output_timeout: 30m
+          command: ./scripts/deploy-to-app-center.sh -t Device 
       - run:
           name: Clear Cache
           when: always
@@ -77,6 +94,9 @@ workflows:
         - upload-code-coverage:
             requires:
               - build-and-test
-        - app-center-publish:
+        - app-center-publish-sim:
             requires:
               - build-and-test
+        - app-center-publish-device:
+            requires:
+              - build-and-test              
