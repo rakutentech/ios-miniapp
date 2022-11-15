@@ -135,8 +135,8 @@ struct MiniAppSingleView: View {
         })
         .onChange(of: didAcceptSettingsTerms, perform: { accepted in
             if accepted {
-                viewModel.load()
                 didAcceptSettingsTerms = false
+                permissionRequest = nil
             }
         })
         .onChange(of: viewModel.viewState) { state in
@@ -147,6 +147,20 @@ struct MiniAppSingleView: View {
                 ()
             }
         }
+        .onChange(of: permissionRequest, perform: { request in
+            if let request = request {
+                sendPauseMiniApp(miniAppId: request.info.id, version: request.info.version.versionId)
+            } else {
+                sendResumeMiniApp(miniAppId: viewModel.miniAppId, version: viewModel.miniAppVersion)
+            }
+        })
+        .onChange(of: isSharePreviewPresented, perform: { isPresented in
+            if isPresented {
+                sendPauseMiniApp(miniAppId: viewModel.miniAppId, version: viewModel.miniAppVersion)
+            } else {
+                sendResumeMiniApp(miniAppId: viewModel.miniAppId, version: viewModel.miniAppVersion)
+            }
+        })
         .trackPage(pageName: pageName)
     }
 
@@ -179,9 +193,13 @@ struct MiniAppSingleView_Previews: PreviewProvider {
     }
 }
 
-struct MiniAppPermissionRequest: Identifiable {
+struct MiniAppPermissionRequest: Identifiable, Equatable {
     let id = UUID()
     let sdkConfig: MiniAppSdkConfig
     let info: MiniAppInfo
     let manifest: MiniAppManifest
+
+    static func == (lhs: MiniAppPermissionRequest, rhs: MiniAppPermissionRequest) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
