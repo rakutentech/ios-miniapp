@@ -25,24 +25,13 @@ struct MiniAppWithTermsView: View {
                 )
             case .error(let error):
                 Text(error.localizedDescription)
+                    .foregroundColor(Color(UIColor.secondaryLabel))
                     .font(.system(size: 14, weight: .medium))
                     .padding(.horizontal, 40)
+            case .offline:
+                MiniAppSUIView(params: miniAppViewParams(config: viewModel.sdkConfig), fromCache: true, handler: handler)
             case .success:
-                MiniAppSUIView(params:
-                    .init(
-                        config: MiniAppConfig(
-                            config: viewModel.sdkConfig,
-                            adsDisplayer: AdMobDisplayer(),
-                            messageDelegate: viewModel.messageInterface,
-                            navigationDelegate: viewModel.navigationDelegate
-                        ),
-                        type: viewModel.miniAppType,
-                        appId: viewModel.miniAppId,
-                        version: viewModel.miniAppVersion,
-                        queryParams: getQueryParam()
-                    ),
-                    handler: handler
-                )
+                MiniAppSUIView(params: miniAppViewParams(config: viewModel.sdkConfig), fromCache: false, handler: handler)
             }
         }
         .alert(isPresented: $showMessageAlert) {
@@ -62,10 +51,25 @@ struct MiniAppWithTermsView: View {
             showMessageAlert = $0
         }
     }
+
+    func miniAppViewParams(config: MiniAppSdkConfig) -> MiniAppViewParameters.DefaultParams {
+        return MiniAppViewParameters.DefaultParams.init(
+            config: MiniAppConfig(
+                config: config,
+                adsDisplayer: AdMobDisplayer(),
+                messageDelegate: viewModel.messageInterface,
+                navigationDelegate: viewModel.navigationDelegate
+            ),
+            type: viewModel.miniAppType,
+            appId: viewModel.miniAppId,
+            version: viewModel.miniAppVersion,
+            queryParams: getQueryParam()
+        )
+    }
 }
 
 struct MiniAppWithTermsView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: Config.sampleSdkConfig()))
+        MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", listType: .listI))
     }
 }

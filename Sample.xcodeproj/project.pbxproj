@@ -118,6 +118,7 @@
 		F70DD90928D417C4003EF1F1 /* MiniAppPermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70DD8E628D417C3003EF1F1 /* MiniAppPermissionService.swift */; };
 		F7370A8C287BF94300090032 /* MiniAppSecureStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7370A8B287BF94300090032 /* MiniAppSecureStorageTests.swift */; };
 		F74865AB28B361B0001A0938 /* MiniAppViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74865AA28B361B0001A0938 /* MiniAppViewTests.swift */; };
+		F7714D0329220B31004B11A7 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7714D0229220B31004B11A7 /* Reachability.swift */; };
 		F77586A828B5CEAA00B460F3 /* MiniAppViewHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77586A728B5CEAA00B460F3 /* MiniAppViewHandlerTests.swift */; };
 		F77F61B128E54EE400F55818 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F61B028E54EE400F55818 /* CloseButton.swift */; };
 /* End PBXBuildFile section */
@@ -263,6 +264,7 @@
 		F70DD8E628D417C3003EF1F1 /* MiniAppPermissionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppPermissionService.swift; sourceTree = "<group>"; };
 		F7370A8B287BF94300090032 /* MiniAppSecureStorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageTests.swift; sourceTree = "<group>"; };
 		F74865AA28B361B0001A0938 /* MiniAppViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppViewTests.swift; sourceTree = "<group>"; };
+		F7714D0229220B31004B11A7 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		F77586A728B5CEAA00B460F3 /* MiniAppViewHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppViewHandlerTests.swift; sourceTree = "<group>"; };
 		F77F61B028E54EE400F55818 /* CloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -651,6 +653,7 @@
 				F70DD8DD28D417C3003EF1F1 /* TextFieldStyle+MiniApp.swift */,
 				A13198002918A45C00B839E8 /* View+Events.swift */,
 				A15CC6CD28FE4E90009B328D /* View+Tracking.swift */,
+				F7714D0229220B31004B11A7 /* Reachability.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -807,6 +810,7 @@
 				F70DD90028D417C4003EF1F1 /* RemoteImageView.swift in Sources */,
 				F70DD8EB28D417C4003EF1F1 /* MiniAppSettingsPointsView.swift in Sources */,
 				F70DD8FC28D417C4003EF1F1 /* MiniAppUrlView.swift in Sources */,
+				F7714D0329220B31004B11A7 /* Reachability.swift in Sources */,
 				F70DD8F728D417C4003EF1F1 /* MiniAppWithTermsViewModel.swift in Sources */,
 				F70DD8F428D417C4003EF1F1 /* MiniAppTermsOptionalCell.swift in Sources */,
 				38920AF5251D9C57004C5DDD /* Number+MiniApp.swift in Sources */,
