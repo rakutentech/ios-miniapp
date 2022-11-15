@@ -23,14 +23,13 @@ struct MiniAppSingleView: View {
     @State private var permissionToolbarEnabled: Bool = false
 
     init(listType: ListType, miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
-        let sdkConfig = ListConfiguration.current(type: listType)
         self.listType = listType
         _viewModel = StateObject(wrappedValue:
             MiniAppWithTermsViewModel(
                 miniAppId: miniAppId,
                 miniAppVersion: miniAppVersion,
                 miniAppType: .miniapp,
-                sdkConfig: sdkConfig
+                listType: listType
             )
         )
         _miniAppId = State(wrappedValue: miniAppId)
@@ -113,7 +112,7 @@ struct MiniAppSingleView: View {
                 } label: {
                     Image(systemName: "gearshape")
                 }
-                .disabled(!(permissionToolbarEnabled))
+                .disabled(!(viewModel.isSuccessOrOffline))
             }
 
         })
@@ -141,7 +140,6 @@ struct MiniAppSingleView: View {
             }
         })
         .onChange(of: viewModel.viewState) { state in
-            self.permissionToolbarEnabled = (state == .success || state == .offline)
             switch state {
             case .success:
                 self.permissionRequest = nil

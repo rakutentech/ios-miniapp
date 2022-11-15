@@ -25,10 +25,11 @@ struct MiniAppWithTermsView: View {
                 )
             case .error(let error):
                 Text(error.localizedDescription)
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
                     .font(.system(size: 14, weight: .medium))
                     .padding(.horizontal, 40)
             case .offline:
-                MiniAppSUIView(params: miniAppViewParams(config: viewModel.sdkConfigProduction), fromCache: true, handler: handler)
+                MiniAppSUIView(params: miniAppViewParams(config: viewModel.sdkConfig), fromCache: true, handler: handler)
             case .success:
                 MiniAppSUIView(params: miniAppViewParams(config: viewModel.sdkConfig), fromCache: false, handler: handler)
             }
@@ -69,6 +70,6 @@ struct MiniAppWithTermsView: View {
 
 struct MiniAppWithTermsView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", sdkConfig: Config.sampleSdkConfig()))
+        MiniAppWithTermsView(viewModel: MiniAppWithTermsViewModel(miniAppId: "", listType: .listI))
     }
 }

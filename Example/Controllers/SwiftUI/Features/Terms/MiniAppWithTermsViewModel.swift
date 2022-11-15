@@ -28,13 +28,15 @@ class MiniAppWithTermsViewModel: ObservableObject {
         miniAppType: MiniAppType = .miniapp,
         messageInterface: MiniAppMessageDelegate? = nil,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
-        sdkConfig: MiniAppSdkConfig
+        listType: ListType
     ) {
+        let updatedSdkConfig = ListConfiguration.current(type: listType)
+        updatedSdkConfig.isPreviewMode = Reachability.isConnectedToNetwork() ? updatedSdkConfig.isPreviewMode : false
         self.miniAppId = miniAppId
         self.miniAppVersion = miniAppVersion
         self.miniAppType = miniAppType
-        self.sdkConfig = sdkConfig
-        self.permissionService = MiniAppPermissionService(config: sdkConfig)
+        self.sdkConfig = updatedSdkConfig
+        self.permissionService = MiniAppPermissionService(config: updatedSdkConfig)
 
         if let navigationDelegate = navigationDelegate {
             self.navigationDelegate = navigationDelegate
@@ -63,6 +65,15 @@ class MiniAppWithTermsViewModel: ObservableObject {
     }
 
     func load() {
+        if !Reachability.isConnectedToNetwork() {
+            if MiniApp.shared(with: sdkConfig).getDownloadedManifest(miniAppId: miniAppId) != nil {
+                self.viewState = .offline
+            } else {
+                self.viewState = .error(LocalError.notCachedOffline)
+            }
+            return
+        }
+
         viewState = .loading
         permissionService
             .checkPermissions(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { [weak self] result in
@@ -141,10 +152,13 @@ class MiniAppWithTermsViewModel: ObservableObject {
         return [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut, NSURLErrorDataNotAllowed].contains(error.code)
     }
 
-    var sdkConfigProduction: MiniAppSdkConfig {
-        let productionConfig = sdkConfig
-        productionConfig.isPreviewMode = false
-        return productionConfig
+    var isSuccessOrOffline: Bool {
+        switch viewState {
+        case .success, .offline:
+            return true
+        default:
+            return false
+        }
     }
 }
 
@@ -173,5 +187,16 @@ extension MiniAppWithTermsViewModel {
         case error(Error)
         case offline
         case success
+    }
+
+    enum LocalError: Error, LocalizedError {
+        case notCachedOffline
+
+        var errorDescription: String? {
+            switch self {
+            case .notCachedOffline:
+                return "Device is offline and MiniApp is not cached."
+            }
+        }
     }
 }
