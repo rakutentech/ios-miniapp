@@ -63,14 +63,6 @@ $(dirname "$0")/extract-version.sh
 echo "Installing App Center CLI."
 npm install -g appcenter-cli
 
-shopt -s nocasematch
-
-if [[ "$TYPE" == "$DEPLOY_TYPE_SIMULATOR" ]]; then
-  deploy_simulator_build
-else
-  deploy_device_build
-fi
-
 # ##############################
 # # Simulator Build           #
 # ############################
@@ -97,7 +89,6 @@ deploy_simulator_build()
     --app "$APP_CENTER_DSYM_NAME" \
     --quiet
 }
-
 
 # ##############################
 # # Device Build              #
@@ -179,3 +170,10 @@ deploy_device_build()
     --app "$APP_CENTER_DSYM_NAME" \
     --quiet
 }
+
+shopt -s nocasematch
+if [[ "$TYPE" == "$DEPLOY_TYPE_SIMULATOR" ]]; then
+  deploy_simulator_build
+else
+  deploy_device_build
+fi
