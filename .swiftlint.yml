@@ -20,6 +20,9 @@ cyclomatic_complexity:
 identifier_name:
   excluded:
     - id
+included:
+  - Sources
+  - Example
 excluded:
   - Pods
   - Carthage
