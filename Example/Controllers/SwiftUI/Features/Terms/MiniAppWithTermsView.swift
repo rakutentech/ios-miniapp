@@ -25,7 +25,7 @@ struct MiniAppWithTermsView: View {
                 )
             case .error(let error):
                 Text(error.localizedDescription)
-                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                    .foregroundColor(Color(UIColor.secondaryLabel))
                     .font(.system(size: 14, weight: .medium))
                     .padding(.horizontal, 40)
             case .offline:
