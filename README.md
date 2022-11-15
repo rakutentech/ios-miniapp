@@ -1,6 +1,6 @@
 [![Cocoapods](https://img.shields.io/cocoapods/v/MiniApp)](https://cocoapods.org/pods/MiniApp)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Build Status](https://app.bitrise.io/app/bddaf16e1f0fc0d6/status.svg?token=79YRf2JDkNHluFGQUlNCPg&branch=master)](https://app.bitrise.io/app/bddaf16e1f0fc0d6)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/rakutentech/ios-miniapp/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/rakutentech/ios-miniapp/tree/master)
 [![codecov](https://codecov.io/gh/rakutentech/ios-miniapp/branch/master/graph/badge.svg)](https://codecov.io/gh/rakutentech/ios-miniapp)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
