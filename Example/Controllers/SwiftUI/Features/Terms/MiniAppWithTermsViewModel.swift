@@ -9,7 +9,7 @@ class MiniAppWithTermsViewModel: ObservableObject {
     let permissionService: MiniAppPermissionService
     let sdkConfig: MiniAppSdkConfig
 
-    @Published var viewState: MiniAppPermissionService.ViewState = .none
+    @Published var viewState: ViewState = .none
 
     var miniAppId: String
     var miniAppVersion: String?
@@ -28,13 +28,15 @@ class MiniAppWithTermsViewModel: ObservableObject {
         miniAppType: MiniAppType = .miniapp,
         messageInterface: MiniAppMessageDelegate? = nil,
         navigationDelegate: MiniAppNavigationDelegate? = nil,
-        sdkConfig: MiniAppSdkConfig
+        listType: ListType
     ) {
+        let updatedSdkConfig = ListConfiguration.current(type: listType)
+        updatedSdkConfig.isPreviewMode = Reachability.isConnectedToNetwork() ? updatedSdkConfig.isPreviewMode : false
         self.miniAppId = miniAppId
         self.miniAppVersion = miniAppVersion
         self.miniAppType = miniAppType
-        self.sdkConfig = sdkConfig
-        self.permissionService = MiniAppPermissionService(config: sdkConfig)
+        self.sdkConfig = updatedSdkConfig
+        self.permissionService = MiniAppPermissionService(config: updatedSdkConfig)
 
         if let navigationDelegate = navigationDelegate {
             self.navigationDelegate = navigationDelegate
@@ -63,20 +65,36 @@ class MiniAppWithTermsViewModel: ObservableObject {
     }
 
     func load() {
+        if !Reachability.isConnectedToNetwork() {
+            if MiniApp.shared(with: sdkConfig).getDownloadedManifest(miniAppId: miniAppId) != nil {
+                self.viewState = .offline
+            } else {
+                self.viewState = .error(LocalError.notCachedOffline)
+            }
+            return
+        }
+
         viewState = .loading
         permissionService
             .checkPermissions(miniAppId: miniAppId, miniAppVersion: miniAppVersion ?? "") { [weak self] result in
-            switch result {
-            case .success(let permState):
-                switch permState {
-                case .permissionGranted:
-                    self?.viewState = .success
-                case let .permissionRequested(info, manifest):
-                    self?.viewState = .permissionRequested(info: info, manifest: manifest)
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let permState):
+                        switch permState {
+                        case .permissionGranted:
+                            self.viewState = .success
+                        case let .permissionRequested(info, manifest):
+                            self.viewState = .permissionRequested(info: info, manifest: manifest)
+                        }
+                    case .failure(let error):
+                        if self.isOffline(error: error) {
+                            self.viewState = .offline
+                        } else {
+                            self.viewState = .error(error)
+                        }
+                    }
                 }
-            case .failure(let error):
-                self?.viewState = .error(error)
-            }
         }
     }
 
@@ -84,6 +102,23 @@ class MiniAppWithTermsViewModel: ObservableObject {
         guard
             let manifest = permissionService.getCachedManifest(miniAppId: miniAppId)
         else {
+            return
+        }
+
+        guard
+            Reachability.isConnectedToNetwork()
+        else
+        {
+            let request = MiniAppPermissionRequest(
+                sdkConfig: sdkConfig,
+                info: MiniAppInfo(
+                    id: miniAppId,
+                    icon: URL(string: "https://example.com")!,
+                    version: Version(versionTag: "", versionId: miniAppVersion ?? "")
+                ),
+                manifest: manifest
+            )
+            completion(.success(request))
             return
         }
 
@@ -105,6 +140,62 @@ class MiniAppWithTermsViewModel: ObservableObject {
                 completion(.success(info))
             case .failure(let error):
                 completion(.failure(error))
+            }
+        }
+    }
+
+    func isOffline(error: Error) -> Bool {
+        let error = error as NSError
+        if let maSdkError = error as? MASDKError {
+            return maSdkError.isDeviceOfflineDownloadError()
+        }
+        return [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut, NSURLErrorDataNotAllowed].contains(error.code)
+    }
+
+    var isSuccessOrOffline: Bool {
+        switch viewState {
+        case .success, .offline:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
+extension MiniAppWithTermsViewModel {
+    enum ViewState: Equatable {
+        static func == (lhs: ViewState, rhs: ViewState) -> Bool {
+            switch (lhs, rhs) {
+            case (.none, .none):
+                return true
+            case (.loading, .loading):
+                return true
+            case (.permissionRequested(let lhsInfo, let lhsManifest), .permissionRequested(let rhsInfo, let rhsManifest)):
+                return lhsInfo.id == rhsInfo.id && lhsManifest.versionId == rhsManifest.versionId
+            case (.error(let lhsError), .error(let rhsError)):
+                return lhsError.localizedDescription == rhsError.localizedDescription
+            case (.success, .success):
+                return true
+            default:
+                return false
+            }
+        }
+
+        case none
+        case loading
+        case permissionRequested(info: MiniAppInfo, manifest: MiniAppManifest)
+        case error(Error)
+        case offline
+        case success
+    }
+
+    enum LocalError: Error, LocalizedError {
+        case notCachedOffline
+
+        var errorDescription: String? {
+            switch self {
+            case .notCachedOffline:
+                return "Device is offline and MiniApp is not cached."
             }
         }
     }

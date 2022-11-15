@@ -121,6 +121,7 @@
 		F75D4A1128CAF7750053F74E /* Binding+Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A1028CAF7750053F74E /* Binding+Optional.swift */; };
 		F75D4A1328CEDE5C0053F74E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A1228CEDE5C0053F74E /* LocationManager.swift */; };
 		F75D4A1528CEE2F90053F74E /* KeyboardNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75D4A1428CEE2F90053F74E /* KeyboardNotificationHelper.swift */; };
+		F7714D01292203DC004B11A7 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7714D00292203DC004B11A7 /* Reachability.swift */; };
 		F77F61AF28E54D1E00F55818 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F61AE28E54D1E00F55818 /* CloseButton.swift */; };
 		F77F61B428E58E0600F55818 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F61B328E58E0600F55818 /* SceneDelegate.swift */; };
 		F77F61BB28ED3B9900F55818 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77F61BA28ED3B9900F55818 /* ContentView.swift */; };
@@ -261,6 +262,7 @@
 		F75D4A1028CAF7750053F74E /* Binding+Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Optional.swift"; sourceTree = "<group>"; };
 		F75D4A1228CEDE5C0053F74E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		F75D4A1428CEE2F90053F74E /* KeyboardNotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationHelper.swift; sourceTree = "<group>"; };
+		F7714D00292203DC004B11A7 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		F77F61AE28E54D1E00F55818 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		F77F61B328E58E0600F55818 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F77F61BA28ED3B9900F55818 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -629,6 +631,7 @@
 				F75D4A0A28CAF2A90053F74E /* TextFieldStyle+MiniApp.swift */,
 				A13198022918A67E00B839E8 /* View+Events.swift */,
 				F758977028FE789300D04B62 /* View+Tracking.swift */,
+				F7714D00292203DC004B11A7 /* Reachability.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -869,6 +872,7 @@
 				F758977128FE789300D04B62 /* View+Tracking.swift in Sources */,
 				F75D4A1328CEDE5C0053F74E /* LocationManager.swift in Sources */,
 				F75D49E428C5B83A0053F74E /* MiniAppFeatureListView.swift in Sources */,
+				F7714D01292203DC004B11A7 /* Reachability.swift in Sources */,
 				F75D49EC28C5B83A0053F74E /* MiniAppListView.swift in Sources */,
 				310575BD27EE213400D93B06 /* Number+MiniApp.swift in Sources */,
 				F75D49EA28C5B83A0053F74E /* MiniAppSingleView.swift in Sources */,
