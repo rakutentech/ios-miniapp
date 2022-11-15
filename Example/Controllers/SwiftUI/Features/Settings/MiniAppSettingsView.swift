@@ -110,7 +110,7 @@ struct MiniAppSettingsView: View {
                     )
                 )
                     .padding(.vertical, 15)
-                    .accessibilityIdentifier(AccessibilityIdentifiers.settingsSubscriptionKey.identifier)   
+                    .accessibilityIdentifier(AccessibilityIdentifiers.settingsSubscriptionKey.identifier)
             }
 
             Section {
