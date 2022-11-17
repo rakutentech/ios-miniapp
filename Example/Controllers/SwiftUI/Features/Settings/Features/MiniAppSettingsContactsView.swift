@@ -7,42 +7,58 @@ struct MiniAppSettingsContactsView: View {
 
     @State var contacts: [MAContact] = []
     @State var newContact: MAContact?
+    @State var editingIndex: Int? = nil
 
     var body: some View {
         ZStack {
             List {
                 ForEach($contacts, id: \.self) { contact in
                     ContactCellView(name: contact.name ?? "", contactId: contact.id, email: contact.email ?? "")
+                        .onTapGesture {
+                            newContact = MAContact(
+                                id: contact.id.wrappedValue ,
+                                name: contact.name.wrappedValue ?? "" ,
+                                email: contact.email.wrappedValue ?? "")
+                            editingIndex = contacts.firstIndex(of: contact.wrappedValue)
+                        }
                 }
             }
         }
+        .sheet(item: $newContact, content: { contact in
+            NavigationView {
+                ContactFormView(
+                    name: Binding<String>(get: { contact.name ?? "" }, set: { new in newContact?.name = new }),
+                    contactId: Binding<String>(get: { contact.id }, set: { new in newContact?.id = new }),
+                    email: Binding<String>(get: { contact.email ?? "" }, set: { new in newContact?.email = new }),
+                    isPresented: Binding<Bool>(get: { newContact != nil }, set: { new in if !new { newContact = nil } }),
+                    isEditing: Binding<Bool>(get: {editingIndex != nil}, set: {new in if !new {editingIndex = nil}}),
+                    onSave: {
+                        if let contact = newContact{
+                            if editingIndex != nil {
+                                contacts[editingIndex!] = contact
+                            } else {
+                                contacts.insert(contact, at: 0)
+                            }
+                            newContact = nil
+                            editingIndex = nil
+                        }
+                        viewModel.saveContactList(contacts: contacts)
+                    }
+                    
+                )
+            }
+        })
         .listStyle(.plain)
         .navigationTitle(pageName)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    editingIndex = nil
                     trackButtonTap(pageName: pageName, buttonTitle: "Add")
                     newContact = viewModel.createRandomContact()
                 } label: {
                     Image(systemName: "plus")
                 }
-                .sheet(item: $newContact, content: { contact in
-                    NavigationView {
-                        ContactFormView(
-                            name: Binding<String>(get: { contact.name ?? "" }, set: { new in newContact?.name = new }),
-                            contactId: Binding<String>(get: { contact.id }, set: { new in newContact?.id = new }),
-                            email: Binding<String>(get: { contact.email ?? "" }, set: { new in newContact?.email = new }),
-                            isPresented: Binding<Bool>(get: { newContact != nil }, set: { new in if !new { newContact = nil } }),
-                            onSave: {
-                                if let contact = newContact {
-                                    contacts.insert(contact, at: 0)
-                                    newContact = nil
-                                }
-                                viewModel.saveContactList(contacts: contacts)
-                            }
-                        )
-                    }
-                })
             }
         }
         .onAppear {
@@ -96,6 +112,7 @@ extension MiniAppSettingsContactsView {
         @Binding var contactId: String
         @Binding var email: String
         @Binding var isPresented: Bool
+        @Binding var isEditing: Bool
 
         var onSave: () -> Void
 
@@ -126,7 +143,12 @@ extension MiniAppSettingsContactsView {
         }
 
         var pageName: String {
-            return NSLocalizedString("demo.app.rat.page.name.contactsform", comment: "")
+        
+            if isEditing {
+                return (NSLocalizedString("demo.app.rat.page.name.editcontactsform", comment: ""))
+            }else{
+                return (NSLocalizedString("demo.app.rat.page.name.contactsform", comment: ""))
+            }
         }
     }
 }
