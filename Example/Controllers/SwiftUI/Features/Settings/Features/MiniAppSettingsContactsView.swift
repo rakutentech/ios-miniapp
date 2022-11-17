@@ -7,7 +7,7 @@ struct MiniAppSettingsContactsView: View {
 
     @State var contacts: [MAContact] = []
     @State var newContact: MAContact?
-    @State var editingIndex: Int? = nil
+    @State var editingIndex: Int?
 
     var body: some View {
         ZStack {
@@ -16,8 +16,8 @@ struct MiniAppSettingsContactsView: View {
                     ContactCellView(name: contact.name ?? "", contactId: contact.id, email: contact.email ?? "")
                         .onTapGesture {
                             newContact = MAContact(
-                                id: contact.id.wrappedValue ,
-                                name: contact.name.wrappedValue ?? "" ,
+                                id: contact.id.wrappedValue,
+                                name: contact.name.wrappedValue ?? "",
                                 email: contact.email.wrappedValue ?? "")
                             editingIndex = contacts.firstIndex(of: contact.wrappedValue)
                         }
@@ -33,7 +33,7 @@ struct MiniAppSettingsContactsView: View {
                     isPresented: Binding<Bool>(get: { newContact != nil }, set: { new in if !new { newContact = nil } }),
                     isEditing: Binding<Bool>(get: {editingIndex != nil}, set: {new in if !new {editingIndex = nil}}),
                     onSave: {
-                        if let contact = newContact{
+                        if let contact = newContact {
                             if editingIndex != nil {
                                 contacts[editingIndex!] = contact
                             } else {
@@ -44,7 +44,6 @@ struct MiniAppSettingsContactsView: View {
                         }
                         viewModel.saveContactList(contacts: contacts)
                     }
-                    
                 )
             }
         })
@@ -143,10 +142,9 @@ extension MiniAppSettingsContactsView {
         }
 
         var pageName: String {
-        
             if isEditing {
                 return (NSLocalizedString("demo.app.rat.page.name.editcontactsform", comment: ""))
-            }else{
+            } else {
                 return (NSLocalizedString("demo.app.rat.page.name.contactsform", comment: ""))
             }
         }
