@@ -38,7 +38,9 @@ struct MiniAppSettingsView: View {
                 VStack {
                     Picker("List Config", selection: $viewModel.selectedListConfig) {
                         Text(ListType.listI.name).tag(ListType.listI)
+                            .accessibilityIdentifier(AccessibilityIdentifiers.settingsRasListI.identifier)
                         Text(ListType.listII.name).tag(ListType.listII)
+                            .accessibilityIdentifier(AccessibilityIdentifiers.settingsRasListII.identifier)
                     }
                     .pickerStyle(.segmented)
                     .padding(.vertical, 15)
@@ -76,6 +78,7 @@ struct MiniAppSettingsView: View {
                 Picker("Environment", selection: $viewModel.listConfig.environmentMode) {
                     ForEach(Config.Environment.allCases, id: \.self) { mode in
                         Text(mode.name).tag(mode)
+                            .accessibilityIdentifier("\(AccessibilityIdentifiers.settingsRasEnvironment.identifier).\(mode.name)")
                     }
                 }
                 .pickerStyle(.segmented)
@@ -84,6 +87,7 @@ struct MiniAppSettingsView: View {
                 Picker("Published", selection: $viewModel.listConfig.previewMode) {
                     ForEach(PreviewMode.allCases, id: \.self) { mode in
                         Text(mode.name).tag(mode)
+                            .accessibilityIdentifier(AccessibilityIdentifiers.settingsRasMode.identifier + "." + mode.name)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -97,6 +101,7 @@ struct MiniAppSettingsView: View {
                     )
                 )
                     .padding(.vertical, 15)
+                    .accessibilityIdentifier(AccessibilityIdentifiers.settingsHostId.identifier)
                 TextField(
                     viewModel.listConfig.placeholderSubscriptionKey,
                     text: Binding<String>(
@@ -105,6 +110,7 @@ struct MiniAppSettingsView: View {
                     )
                 )
                     .padding(.vertical, 15)
+                    .accessibilityIdentifier(AccessibilityIdentifiers.settingsSubscriptionKey.identifier)
             }
 
             Section {
