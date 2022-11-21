@@ -80,7 +80,7 @@ public class MiniAppExternalWebViewController: UIViewController {
     }
 
     deinit {
-        if let wView = webView, let url = wView.url {
+        if let url = currentURL {
             miniAppExternalUrlClose?(url)
         }
     }
