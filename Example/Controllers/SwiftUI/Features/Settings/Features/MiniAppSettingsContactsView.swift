@@ -31,7 +31,8 @@ struct MiniAppSettingsContactsView: View {
                     contactId: Binding<String>(get: { contact.id }, set: { new in newContact?.id = new }),
                     email: Binding<String>(get: { contact.email ?? "" }, set: { new in newContact?.email = new }),
                     isPresented: Binding<Bool>(get: { newContact != nil }, set: { new in if !new { newContact = nil } }),
-                    isEditing: Binding<Bool>(get: {editingIndex != nil}, set: {new in if !new {editingIndex = nil}}),
+                    isEditing: Binding<Bool>(get: { contacts.contains(where: { $0.id == contact.id }) }, set: { _ in }),
+                    isContactInfoValid: false,
                     onSave: {
                         if let contact = newContact {
                             if editingIndex != nil {
@@ -112,6 +113,7 @@ extension MiniAppSettingsContactsView {
         @Binding var email: String
         @Binding var isPresented: Bool
         @Binding var isEditing: Bool
+        @State var isContactInfoValid: Bool
 
         var onSave: () -> Void
 
@@ -133,12 +135,41 @@ extension MiniAppSettingsContactsView {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         trackButtonTap(pageName: pageName, buttonTitle: "Save")
-                        onSave()
+                        if validateContactinfo() {
+                            isContactInfoValid = false
+                            onSave()
+                        } else {
+                            isContactInfoValid = true
+                        }
                     } label: {
                         Text("Save")
                     }
                 }
             }
+            .alert(isPresented: $isContactInfoValid) {
+                var errorMessage = ""
+                if name.isValueEmpty() {
+                    errorMessage += "Name cannot be empty.\n"
+                }
+                if contactId.isValueEmpty() {
+                    errorMessage += "Contact Id cannot be empty.\n"
+                }
+                if email.isValueEmpty() {
+                    errorMessage += "Email id cannot be empty.\n"
+                }
+                if !email.isValueEmpty() && !email.isValidEmail() {
+                    errorMessage += "Email id is invalid.\n"
+                }
+                errorMessage += "Please correct and try again."
+                return Alert(
+                    title: Text("Invalid Contact Details"),
+                    message: Text(errorMessage)
+                )
+            }
+        }
+
+        func validateContactinfo() -> Bool {
+            return (!name.isValueEmpty() && !contactId.isValueEmpty() && email.isValidEmail())
         }
 
         var pageName: String {
