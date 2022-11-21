@@ -110,14 +110,14 @@ internal class MiniAppClient: NSObject, MiniAppClientProtocol, URLSessionDownloa
         }
         return requestDataFromServer(urlRequest: urlRequest) { [weak self] result in
             switch result {
-            case .success(let data) :
+            case .success(let data):
                 if let signature = data.httpResponse.value(forHTTPHeaderField: "Signature"), let signatureId = ResponseDecoder.decode(decodeType: ManifestResponse.self, data: data.data)?.publicKeyId {
                     MiniAppLogger.d(signature, "🖊️")
                     self?.signatures[versionId] = (signatureId, signature)
                 } else {
                     fallthrough
                 }
-            case .failure :
+            case .failure:
                 self?.signatures.removeValue(forKey: versionId)
             }
             completionHandler(result)
