@@ -1,5 +1,6 @@
 disabled_rules: # rule identifiers to exclude from running
   - nesting
+  - orphaned_doc_comment
 # parameterized rules are first parameterized as a warning level, then error level.
 line_length:
     warning: 200
@@ -8,23 +9,24 @@ line_length:
     ignores_comments: true
     ignores_urls: true
 function_body_length:
-    warning: 40
-    error: 60
+    warning: 80
+    error: 100
 type_body_length:
-    warning: 300
-    error: 400
+    warning: 400
+    error: 500
 cyclomatic_complexity:
     warning: 20
     error: 20
 # paths to ignore
 identifier_name:
   excluded:
-    - id
-included:
+    - id 
+included:  
   - Sources
   - Example
 excluded:
   - Pods
   - Carthage
   - vendor
-  - .build
+  - .build     
+  - Sources/Classes/core/JavascriptBridge
