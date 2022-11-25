@@ -6,43 +6,37 @@ struct MiniAppSettingsContactsView: View {
     @ObservedObject var viewModel: MiniAppSettingsViewModel
 
     @State var contacts: [MAContact] = []
-    @State var newContact: MAContact?
-    @State var editingIndex: Int?
+    @State var editContact: MAContact?
 
     var body: some View {
         ZStack {
             List {
-                ForEach($contacts, id: \.self) { contact in
-                    ContactCellView(name: contact.name ?? "", contactId: contact.id, email: contact.email ?? "")
-                        .onTapGesture {
-                            newContact = MAContact(
-                                id: contact.id.wrappedValue,
-                                name: contact.name.wrappedValue ?? "",
-                                email: contact.email.wrappedValue ?? "")
-                            editingIndex = contacts.firstIndex(of: contact.wrappedValue)
-                        }
+                ForEach($contacts, id: \.id) { contact in
+                    ContactCellView(
+                        name: contact.name ?? "",
+                        contactId: contact.id,
+                        email: contact.email ?? ""
+                    )
+                    .onTapGesture {
+                        guard let index = index(for: contact.wrappedValue) else { return }
+                        editContact = contacts[index]
+                    }
                 }
             }
         }
-        .sheet(item: $newContact, content: { contact in
+        .sheet(item: $editContact, content: { contact in
             NavigationView {
                 ContactFormView(
-                    name: Binding<String>(get: { contact.name ?? "" }, set: { new in newContact?.name = new }),
-                    contactId: Binding<String>(get: { contact.id }, set: { new in newContact?.id = new }),
-                    email: Binding<String>(get: { contact.email ?? "" }, set: { new in newContact?.email = new }),
-                    isPresented: Binding<Bool>(get: { newContact != nil }, set: { new in if !new { newContact = nil } }),
-                    isEditing: Binding<Bool>(get: { contacts.contains(where: { $0.id == contact.id }) }, set: { _ in }),
-                    isContactInfoValid: false,
+                    contactData: Binding<MAContact>(get: { contact }, set: { _ in }),
+                    isPresented: Binding<Bool>(get: { editContact != nil }, set: { new in if !new { editContact = nil } }),
+                    isEditing: Binding<Bool>(get: { index(for: contact) != nil }, set: { _ in }),
                     onSave: {
-                        if let contact = newContact {
-                            if editingIndex != nil {
-                                contacts[editingIndex!] = contact
-                            } else {
-                                contacts.insert(contact, at: 0)
-                            }
-                            newContact = nil
-                            editingIndex = nil
+                        if let index = index(for: contact) {
+                            contacts[index] = contact
+                        } else {
+                            contacts.insert(contact, at: 0)
                         }
+                        editContact = nil
                         viewModel.saveContactList(contacts: contacts)
                     }
                 )
@@ -53,9 +47,8 @@ struct MiniAppSettingsContactsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    editingIndex = nil
                     trackButtonTap(pageName: pageName, buttonTitle: "Add")
-                    newContact = viewModel.createRandomContact()
+                    editContact = viewModel.createRandomContact()
                 } label: {
                     Image(systemName: "plus")
                 }
@@ -65,6 +58,10 @@ struct MiniAppSettingsContactsView: View {
             contacts = viewModel.getContacts()
         }
         .trackPage(pageName: pageName)
+    }
+
+    func index(for contact: MAContact) -> Int? {
+        return contacts.firstIndex(where: { $0.id == contact.id })
     }
 }
 
@@ -108,20 +105,18 @@ extension MiniAppSettingsContactsView {
 
     struct ContactFormView: View, ViewTrackable {
 
-        @Binding var name: String
-        @Binding var contactId: String
-        @Binding var email: String
+        @Binding var contactData: MAContact
         @Binding var isPresented: Bool
         @Binding var isEditing: Bool
-        @State var isContactInfoValid: Bool
+        @State private var isContactInfoValid: Bool = false
 
         var onSave: () -> Void
 
         var body: some View {
             List {
-                TextField("Name", text: $name)
-                TextField("Contact Id", text: $contactId)
-                TextField("Email", text: $email)
+                TextField("Name", text: $contactData.name ?? "")
+                TextField("Contact Id", text: $contactData.id)
+                TextField("Email", text: $contactData.email ?? "")
             }
             .navigationTitle(pageName)
             .navigationBarTitleDisplayMode(.inline)
@@ -136,7 +131,6 @@ extension MiniAppSettingsContactsView {
                     Button {
                         trackButtonTap(pageName: pageName, buttonTitle: "Save")
                         if validateContactinfo() {
-                            isContactInfoValid = false
                             onSave()
                         } else {
                             isContactInfoValid = true
@@ -147,20 +141,7 @@ extension MiniAppSettingsContactsView {
                 }
             }
             .alert(isPresented: $isContactInfoValid) {
-                var errorMessage = ""
-                if name.isValueEmpty() {
-                    errorMessage += "Name cannot be empty.\n"
-                }
-                if contactId.isValueEmpty() {
-                    errorMessage += "Contact Id cannot be empty.\n"
-                }
-                if email.isValueEmpty() {
-                    errorMessage += "Email id cannot be empty.\n"
-                }
-                if !email.isValueEmpty() && !email.isValidEmail() {
-                    errorMessage += "Email id is invalid.\n"
-                }
-                errorMessage += "Please correct and try again."
+                let errorMessage = self.getValidationErrormessage()
                 return Alert(
                     title: Text("Invalid Contact Details"),
                     message: Text(errorMessage)
@@ -168,8 +149,29 @@ extension MiniAppSettingsContactsView {
             }
         }
 
+        func getValidationErrormessage() -> String {
+            var errorMessage = ""
+            if (contactData.name ?? "").isValueEmpty() {
+                errorMessage += "Name cannot be empty.\n"
+            }
+            if contactData.id.isValueEmpty() {
+                errorMessage += "Contact Id cannot be empty.\n"
+            }
+
+            if let email = contactData.email, !email.isValueEmpty() {
+                if !email.isValidEmail() {
+                    errorMessage += "Email id is invalid.\n"
+                }
+            } else {
+                errorMessage += "Email id cannot be empty.\n"
+            }
+
+            errorMessage += "Please correct and try again."
+            return errorMessage
+        }
+
         func validateContactinfo() -> Bool {
-            return (!name.isValueEmpty() && !contactId.isValueEmpty() && email.isValidEmail())
+            return (!(contactData.name ?? "").isValueEmpty() && !contactData.id.isValueEmpty() && (contactData.email ?? "").isValidEmail())
         }
 
         var pageName: String {
