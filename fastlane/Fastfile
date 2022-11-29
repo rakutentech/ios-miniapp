@@ -28,7 +28,7 @@ platform :ios do
       if !fetched_sim.empty?
           sh("xcrun", "simctl", "delete", "iPhone Fastlane")
       end
-      sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-8","com.apple.CoreSimulator.SimRuntime.iOS-15-2")
+      sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-8","com.apple.CoreSimulator.SimRuntime.iOS-15-5")
       scan(
         clean: true,
         output_directory: './artifacts/unit-tests',
