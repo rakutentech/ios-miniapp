@@ -114,7 +114,7 @@ extension MiniAppSettingsContactsView {
         @State private var isContactInfoValid: Bool = false
 
         var onSave: () -> Void
-        
+
         var onClose: () -> Void
 
         var body: some View {
