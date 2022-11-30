@@ -46,13 +46,7 @@ jobs:
       - persist_to_workspace:
             root: ../
             paths:
-              - MiniApp-Secrets.xcconfig          
-
-  upload-code-coverage:
-    <<: *container_medium
-    steps:
-      - attach_workspace:
-          at: .
+              - MiniApp-Secrets.xcconfig
       - codecov/upload:
         file: "./artifacts/0/artifacts/unit-tests/report.junit"
       - codecov/upload:
@@ -88,7 +82,7 @@ jobs:
       - run:
           name: Deploy to AppCenter
           no_output_timeout: 30m
-          command: ./scripts/deploy-to-app-center.sh -t Device 
+          command: ./scripts/deploy-to-app-center.sh -t Device
       - run:
           name: Clear Cache
           when: always
@@ -99,12 +93,9 @@ workflows:
   build-and-release-workflow:
     jobs:
         - build-and-test
-        - upload-code-coverage:
-            requires:
-              - build-and-test
         - app-center-publish-sim:
             requires:
               - build-and-test
         - app-center-publish-device:
             requires:
-              - build-and-test              
+              - build-and-test
