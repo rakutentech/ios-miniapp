@@ -27,8 +27,7 @@ struct MiniAppSettingsContactsView: View {
         .sheet(item: $editContact, content: { contact in
             NavigationView {
                 ContactFormView(
-                    contactData: Binding<MAContact>(get: { contact }, set: { _ in }),
-                    isPresented: Binding<Bool>(get: { editContact != nil }, set: { new in if !new { editContact = nil } }),
+                    contactData: Binding<MAContact>(get: { contact }, set: {new in editContact = new }),
                     isEditing: Binding<Bool>(get: { index(for: contact) != nil }, set: { _ in }),
                     onSave: {
                         if let index = index(for: contact) {
@@ -38,6 +37,9 @@ struct MiniAppSettingsContactsView: View {
                         }
                         editContact = nil
                         viewModel.saveContactList(contacts: contacts)
+                    },
+                    onClose: {
+                        editContact = nil
                     }
                 )
             }
@@ -106,11 +108,12 @@ extension MiniAppSettingsContactsView {
     struct ContactFormView: View, ViewTrackable {
 
         @Binding var contactData: MAContact
-        @Binding var isPresented: Bool
         @Binding var isEditing: Bool
         @State private var isContactInfoValid: Bool = false
 
         var onSave: () -> Void
+
+        var onClose: () -> Void
 
         var body: some View {
             List {
@@ -124,7 +127,7 @@ extension MiniAppSettingsContactsView {
                 ToolbarItem(placement: .navigationBarLeading) {
                     CloseButton {
                         trackButtonTap(pageName: pageName, buttonTitle: "Close")
-                        isPresented = false
+                        onClose()
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -175,11 +178,7 @@ extension MiniAppSettingsContactsView {
         }
 
         var pageName: String {
-            if isEditing {
-                return (NSLocalizedString("demo.app.rat.page.name.editcontactsform", comment: ""))
-            } else {
-                return (NSLocalizedString("demo.app.rat.page.name.contactsform", comment: ""))
-            }
+            return isEditing ? (NSLocalizedString("demo.app.rat.page.name.editcontactsform", comment: "")) : (NSLocalizedString("demo.app.rat.page.name.contactsform", comment: ""))
         }
     }
 }

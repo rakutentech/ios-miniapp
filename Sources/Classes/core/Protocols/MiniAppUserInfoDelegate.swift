@@ -72,7 +72,7 @@ public extension MiniAppUserInfoDelegate {
 }
 
 /// Contact Object of a User
-public class MAContact: Codable, Equatable, Hashable, Identifiable {
+public struct MAContact: Codable, Equatable, Hashable, Identifiable {
     /// Contact ID
     public var id: String
     /// Contact Name
