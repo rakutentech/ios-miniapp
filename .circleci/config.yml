@@ -51,6 +51,8 @@ jobs:
   upload-code-coverage:
     <<: *container_medium
     steps:
+      - attach_workspace:
+          at: .
       - codecov/upload:
         file: "./artifacts/0/artifacts/unit-tests/report.junit"
       - codecov/upload:
