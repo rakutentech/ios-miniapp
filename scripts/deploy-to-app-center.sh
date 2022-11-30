@@ -96,9 +96,9 @@ deploy_simulator_build()
 
 deploy_device_build()
 {
-    KEYCHAIN=miniapp-signing.keychain-db
+    KEYCHAIN_FILE=miniapp-signing.keychain-db
     PROVISION=miniapp.mobileprovision
-    P12=miniapp.p12
+    P12_FILE=miniapp.p12
     PROFILES_DIR=~/Library/MobileDevice/Provisioning\ Profiles
     DSYM_FILE=$TMP_DIR/dsym.zip
     EXPORT_PLIST=$TMP_DIR/miniapp.plist
@@ -106,17 +106,19 @@ deploy_device_build()
     echo "Installing the Apple certificate and provisioning profile stored as base64 env vars"
     ### Here is an example on how to generate the base64 from a P12 or a provisionning profile:
     ### openssl base64 -in MiniAppDemo.mobileprovision -out MiniAppDemoBase64.txt
-    echo -n "$APPLE_ENTERPRISE_P12" | base64 --decode --output "$P12"
+    echo -n "$APPLE_ENTERPRISE_P12" | base64 --decode --output "$P12_FILE"
     echo -n "$APPLE_ENTERPRISE_PROVISION" | base64 --decode --output "$PROVISION"
 
     echo "Initializing the custom keychain used to sign the IPA"
-    security create-keychain -p "$P12_PASSWORD" $KEYCHAIN
-    security default-keychain -d user -s $KEYCHAIN
-    security set-keychain-settings -t 120 $KEYCHAIN
-    security unlock-keychain -p "$P12_PASSWORD" $KEYCHAIN
-    security import "$P12" -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN
-    security set-key-partition-list -S apple-tool:,apple: -k "$P12_PASSWORD" $KEYCHAIN
-    security list-keychain -d user -s $KEYCHAIN
+    security create-keychain -p "$P12_PASSWORD" $KEYCHAIN_FILE
+    security default-keychain -d user -s $KEYCHAIN_FILE
+    security set-keychain-settings -lut 21600 $KEYCHAIN_FILE
+    security unlock-keychain -p "$P12_PASSWORD" $KEYCHAIN_FILE
+
+    echo "Importing Certificate to Keychain"
+    security import "$P12_FILE" -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_FILE
+    security set-key-partition-list -S apple-tool:,apple: -k "$P12_PASSWORD" $KEYCHAIN_FILE
+    security list-keychain -d user -s $KEYCHAIN_FILE
 
     mkdir -p "$PROFILES_DIR"
     cp "$PROVISION" "$PROFILES_DIR"
@@ -131,7 +133,7 @@ deploy_device_build()
 
     echo "Building archive"
     xcodebuild DEVELOPMENT_TEAM="$APPLE_DEVELOPMENT_TEAM" \
-    OTHER_CODE_SIGN_FLAGS="--keychain $KEYCHAIN" \
+    OTHER_CODE_SIGN_FLAGS="--keychain $KEYCHAIN_FILE" \
     CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY" \
     PROVISIONING_PROFILE="$UUID" \
     archive \
@@ -145,8 +147,8 @@ deploy_device_build()
     -exportPath "$TMP_DIR" \
     -exportOptionsPlist "$EXPORT_PLIST"
 
-    echo "Cleaning $KEYCHAIN keychain"
-    security delete-keychain $KEYCHAIN
+    echo "Cleaning $KEYCHAIN_FILE keychain"
+    security delete-keychain $KEYCHAIN_FILE
     rm "$PROFILES_DIR"/"$PROVISION"
 
     echo "Retrieving dsym files"
@@ -164,6 +166,7 @@ deploy_device_build()
     --file "$TMP_DIR"/MiniApp_Example.ipa \
     --quiet
 
+    echo "Uploading symbols for Tracking Crash"
     appcenter crashes upload-symbols \
     --symbol "$DSYM_FILE" \
     --token "$APP_CENTER_TOKEN_DEVICE" \
