@@ -1,4 +1,4 @@
-name: Fastlane CI
+name: Build and Test using Fastlane
 
 on:
   pull_request:
@@ -6,7 +6,6 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-    environment: STG
     env:
       RAS_PROJECT_IDENTIFIER_PROD: test-prod
       RAS_PROJECT_IDENTIFIER_STG: test-stg
