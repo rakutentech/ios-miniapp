@@ -241,7 +241,7 @@ class MiniAppSecureStorageTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 30.0)
+        wait(for: [expectation], timeout: 60.0)
 
         XCTAssertGreaterThan(storage.size().used, 125_000)
         XCTAssertEqual(Int((try? storage.get(key: "1")) ?? ""), 1)
@@ -267,7 +267,7 @@ class MiniAppSecureStorageTests: XCTestCase {
             }
         }
 
-        wait(for: [setExpectation], timeout: 30.0)
+        wait(for: [setExpectation], timeout: 60.0)
 
         XCTAssertEqual(Int((try? storage.get(key: "1")) ?? ""), 1)
         XCTAssertEqual(Int((try? storage.get(key: "100")) ?? ""), 100)
@@ -283,7 +283,7 @@ class MiniAppSecureStorageTests: XCTestCase {
             }
         }
 
-        wait(for: [removeExpectation], timeout: 30.0)
+        wait(for: [removeExpectation], timeout: 60.0)
 
         XCTAssertNil(try? storage.get(key: "1"))
         XCTAssertNil(try? storage.get(key: "100"))
@@ -314,7 +314,7 @@ class MiniAppSecureStorageTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 20.0)
+        wait(for: [expectation], timeout: 60.0)
         XCTAssertEqual(storage.size().used, firstInsertSize)
 
         let expectation2 = XCTestExpectation(description: #function)
