@@ -58,6 +58,7 @@ struct MiniAppSingleView: View {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
+                .accessibilityIdentifier(AccessibilityIdentifiers.miniappHeaderClose.identifier)
                 .alert(item: $closeAlertMessage) { errorMessage in
                     Alert(
                         title: Text(errorMessage.title),
@@ -78,6 +79,7 @@ struct MiniAppSingleView: View {
                     Image(systemName: "chevron.backward")
                 }
                 .disabled(!(viewModel.viewState == .success) || !viewModel.canGoBack)
+                .accessibilityIdentifier(AccessibilityIdentifiers.miniappHeaderBack.identifier)
             }
 
             ToolbarItem(placement: .navigationBarLeading) {
@@ -88,6 +90,7 @@ struct MiniAppSingleView: View {
                     Image(systemName: "chevron.forward")
                 }
                 .disabled(!(viewModel.viewState == .success) || !viewModel.canGoForward)
+                .accessibilityIdentifier(AccessibilityIdentifiers.miniappHeaderForward.identifier)
             }
 
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -103,6 +106,7 @@ struct MiniAppSingleView: View {
                     }
                 })
                 .disabled(!(viewModel.viewState == .success))
+                .accessibilityIdentifier(AccessibilityIdentifiers.miniappHeaderShare.identifier)
             }
 
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -113,6 +117,7 @@ struct MiniAppSingleView: View {
                     Image(systemName: "gearshape")
                 }
                 .disabled(!(viewModel.isSuccessOrOffline))
+                .accessibilityIdentifier(AccessibilityIdentifiers.miniappHeaderSettings.identifier)
             }
 
         })
@@ -128,6 +133,7 @@ struct MiniAppSingleView: View {
                         } label: {
                             Text("Cancel")
                         }
+                        .accessibilityIdentifier(AccessibilityIdentifiers.miniappPermissionCancel.identifier)
                     }
                 }
                 .trackPage(pageName: "Permissions")

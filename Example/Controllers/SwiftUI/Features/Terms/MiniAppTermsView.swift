@@ -140,6 +140,7 @@ struct MiniAppTermsView: View {
                     }
                     .foregroundColor(.white)
                     .background(RoundedRectangle(cornerRadius: 10).fill(.red))
+                    .accessibilityIdentifier(AccessibilityIdentifiers.miniappPermissionAccept.identifier)
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
