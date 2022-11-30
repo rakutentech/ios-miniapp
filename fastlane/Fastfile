@@ -22,7 +22,7 @@ platform :ios do
 
   desc "Unit tests"
   lane :tests do |options|
-      xcversion(version: "~> 13.2")
+      xcversion(version: "~> 13.4")
       updatePods
       fetched_sim = sh("xcrun simctl list | grep 'Fastlane' | cat")
       if !fetched_sim.empty?
@@ -50,16 +50,8 @@ platform :ios do
     )    
   end
 
-  lane :build_simulator do |options|
-    xcversion(version: "~> 13.2")
-
-    updatePods
-    increment_build_number_bitrise
-    start_building
-  end
-
   lane :build_sim_ci do |options|
-    xcversion(version: "~> 13.2")
+    xcversion(version: "~> 13.4")
 
     updatePods
     increment_build_number_circle_ci
@@ -117,13 +109,6 @@ platform :ios do
 
   def app_build_number
     `git rev-list HEAD --count`.chomp()
-  end
-
-  desc "Increment Build Number - Bitrise"
-  lane :increment_build_number_bitrise do |options|
-    increment_build_number(
-      build_number: ENV["BITRISE_BUILD_NUMBER"] # set a specific number
-    )
   end
 
   desc "Increment Build Number - CircleCI"
