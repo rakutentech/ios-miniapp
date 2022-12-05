@@ -122,6 +122,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             getSecureStorageSize(with: callbackId, parameters: requestParam)
         case .setCloseAlert:
             setMiniAppCloseAlert(with: callbackId, parameters: requestParam)
+        case .sendJsonToHostapp:
+            sendJsonToHostApp(requestParam: requestParam, callbackId: callbackId)
         }
     }
 
@@ -742,6 +744,37 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             messageId: callbackId,
             response: prepareMAJavascriptError(MiniAppErrorType.unknownError)
         )
+    }
+}
+
+//MARK: Universal Bridge support
+extension MiniAppScriptMessageHandler {
+    func sendJsonToHostApp(requestParam: RequestParameters?, callbackId: String) {
+        guard let requestParamValue = requestParam?.jsonInfo else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: MiniAppJavaScriptError.invalidPermissionType.rawValue)
+            return
+        }
+        if !requestParamValue.content.isEmpty {
+            let info = MiniAppBridgeContent(jsonStringContent: requestParamValue.content)
+            self.hostAppMessageDelegate?.sendJsonToHostApp(info: info, completionHandler: { (result) in
+                self.manageJsonStringToHostAppResult(result, with: callbackId)
+            })
+        } else {
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.valueIsEmpty))
+        }
+    }
+    
+    func manageJsonStringToHostAppResult(_ result: Result<MASDKProtocolResponse, Error>, with callbackId: String) {
+        switch result {
+        case .success:
+            self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "SUCCESS")
+        case .failure(let error):
+            if !error.localizedDescription.isEmpty {
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: error.localizedDescription)
+                return
+            }
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.unknownError))
+        }
     }
 }
 

@@ -1,5 +1,39 @@
 ## CHANGELOG
 
+### 5.1.0 (TBD)
+**SDK**
+- **Feature:** Universal Bridge support for receiving the Json or string content from the MiniApp to host app. 
+- **Feature:** Added new public protocol `MiniAppBridgeDelegate` which is confirmed by `MiniAppMessageDelegate`, further added public interface `sendJsonToHostApp(info:, completionHandler:) -> Void)` in `MiniAppBridgeDelegate` which can be implemented in host app to receive the string content from mini app and use in host app through Universal Bridge.
+<details>
+<summary>Show code</summary>
+
+```swift
+func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+    onBridgeJsonString?(info.jsonStringContent)
+    completionHandler(.success(.success))
+}
+```
+
+</details>
+
+- **Feature:** Universal bridge support for sending the Json/String content to MiniApp from host app which will have the public interface.
+
+<details>
+<summary>Show code</summary>
+
+```swift
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), messageInterface: self),
+    appId: "your-miniapp-id"
+)
+let miniAppView = MiniAppView(params: params)
+self.view.addSubview(miniAppView)
+miniAppView.frame = self.view.bounds
+miniAppView.sendJsonToMiniApp(string: "<Your string content / json content>")
+```
+
+</details>
+
 ### 5.0.0 (2022-11-04)
 **SDK**
 - **Feature:** Support for showing multiple MiniApps at the same time. Added `MiniAppView` which will replace `MiniApp.shared().create()`. From now on `create` will be deprecated.

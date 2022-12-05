@@ -48,6 +48,7 @@ struct MiniAppSingleView: View {
 
             ToolbarItem(placement: .navigationBarLeading) {
                 CloseButton {
+                    viewModel.removeHandlerFromList(handler)
                     trackButtonTap(pageName: pageName, buttonTitle: "Close")
                     if let closeInfo = handler.closeAlertInfo?(), closeInfo.shouldDisplay ?? true {
                         closeAlertMessage = MiniAppAlertMessage(

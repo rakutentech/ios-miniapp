@@ -471,6 +471,11 @@ extension RealMiniApp: MiniAppMessageDelegate {
     func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
+
+    func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+        let error: NSError = NSError.init(domain: "MiniAppMessageBridge has not been implemented sendJsonToHostApp(info:completionHandler:) by the host app", code: 0, userInfo: nil)
+        completionHandler(.failure(error as Error))
+    }
 }
 
 extension RealMiniApp {
@@ -497,5 +502,20 @@ extension RealMiniApp {
                     screenHeight: screenHeight
                 )
             )
+    }
+}
+
+extension RealMiniApp {
+    func sendJsonStringToMiniApp(miniAppId: String,
+                                 miniAppVersion: String,
+                                 jsonString: String) {
+        NotificationCenter.default.sendCustomEvent(
+            MiniAppEvent.Event(
+                miniAppId: miniAppId,
+                miniAppVersion: miniAppVersion,
+                type: .miniappRecieveJsonString,
+                comment: jsonString
+            )
+        )
     }
 }

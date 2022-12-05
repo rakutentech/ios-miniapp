@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C0F571B293650CE001CC161 /* MiniAppBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F571A293650CE001CC161 /* MiniAppBridgeDelegate.swift */; };
+		1C0F571D29365140001CC161 /* MiniAppBridgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F571C29365140001CC161 /* MiniAppBridgeModel.swift */; };
 		2A0FEE02286950C100935226 /* MiniAppManageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0FEE01286950C100935226 /* MiniAppManageDelegate.swift */; };
 		2A0FEE05286950CC00935226 /* MAPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0FEE03286950CC00935226 /* MAPoints.swift */; };
 		2A0FEE06286950CC00935226 /* MATokenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0FEE04286950CC00935226 /* MATokenInfo.swift */; };
@@ -163,6 +165,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C0F571A293650CE001CC161 /* MiniAppBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppBridgeDelegate.swift; sourceTree = "<group>"; };
+		1C0F571C29365140001CC161 /* MiniAppBridgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppBridgeModel.swift; sourceTree = "<group>"; };
 		2A0FEE01286950C100935226 /* MiniAppManageDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppManageDelegate.swift; sourceTree = "<group>"; };
 		2A0FEE03286950CC00935226 /* MAPoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAPoints.swift; sourceTree = "<group>"; };
 		2A0FEE04286950CC00935226 /* MATokenInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MATokenInfo.swift; sourceTree = "<group>"; };
@@ -682,6 +686,8 @@
 				31FA5ECE27608D1A0070B611 /* MiniAppMessageDelegate.swift */,
 				31FA5ECF27608D1A0070B611 /* MiniAppShareContentDelegate.swift */,
 				31FA5ED027608D1A0070B611 /* MiniAppMessageModels.swift */,
+				1C0F571A293650CE001CC161 /* MiniAppBridgeDelegate.swift */,
+				1C0F571C29365140001CC161 /* MiniAppBridgeModel.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1033,6 +1039,7 @@
 				31FA5F3927608D1B0070B611 /* MimeTypes.swift in Sources */,
 				F75593D4283DD70F009D5833 /* MiniAppSecureStorageSqliteDatabase.swift in Sources */,
 				31FA5F1427608D1B0070B611 /* WKUserContentController+MiniApp.swift in Sources */,
+				1C0F571B293650CE001CC161 /* MiniAppBridgeDelegate.swift in Sources */,
 				31FA5F4A27608D1B0070B611 /* MiniAppJavaScriptEnumerations.swift in Sources */,
 				31FA5F0727608D1B0070B611 /* MiniAppVersion.swift in Sources */,
 				31FA5F5427608D1B0070B611 /* AdMobDisplayer.swift in Sources */,
@@ -1064,6 +1071,7 @@
 				31FA5F4727608D1B0070B611 /* ChatMessageBridgeDelegate.swift in Sources */,
 				31FA5EFC27608D1B0070B611 /* MetaDataDownloader.swift in Sources */,
 				31FA5F0B27608D1B0070B611 /* MiniAppVerificationStorage.swift in Sources */,
+				1C0F571D29365140001CC161 /* MiniAppBridgeModel.swift in Sources */,
 				31FA5F1727608D1B0070B611 /* UIView+MiniApp.swift in Sources */,
 				31FA5F2927608D1B0070B611 /* MetaDataAPI.swift in Sources */,
 				F77586A628B5CE4100B460F3 /* MiniAppClientProtocol.swift in Sources */,

@@ -373,6 +373,10 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
+    func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        return mockMessageInterface.sendJsonToHostApp(info: info, completionHandler: completionHandler)
+    }
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
@@ -529,6 +533,10 @@ class MockMessageInterface: MiniAppMessageDelegate {
         } else {
             completionHandler(.failure(.downloadFailed(code: -1, reason: "download failed")))
         }
+    }
+
+    func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+        completionHandler(.success(.success))
     }
 }
 

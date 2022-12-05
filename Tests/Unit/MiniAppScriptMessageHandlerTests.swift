@@ -93,7 +93,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageKey: nil,
                         secureStorageItems: nil,
                         secureStorageKeyList: nil,
-                        closeAlertInfo: nil
+                        closeAlertInfo: nil,
+                        jsonInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -120,7 +121,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageKey: nil,
                         secureStorageItems: nil,
                         secureStorageKeyList: nil,
-                        closeAlertInfo: nil
+                        closeAlertInfo: nil,
+                        jsonInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -147,7 +149,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageKey: nil,
                         secureStorageItems: nil,
                         secureStorageKeyList: nil,
-                        closeAlertInfo: nil
+                        closeAlertInfo: nil,
+                        jsonInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMessagingUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -174,7 +177,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageKey: nil,
                         secureStorageItems: nil,
                         secureStorageKeyList: nil,
-                        closeAlertInfo: nil
+                        closeAlertInfo: nil,
+                        jsonInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMauid", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)

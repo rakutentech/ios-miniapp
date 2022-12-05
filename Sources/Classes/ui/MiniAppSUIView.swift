@@ -45,6 +45,12 @@ public struct MiniAppSUIView: UIViewRepresentable {
         handler.miniAppTitle  = {
             return view.miniAppTitle
         }
+        handler.miniAppIdentifier = {
+            return view.miniAppHandler.appId
+        }
+        handler.sendJsonToMiniApp = { jsonStr in
+            view.sendJsonStringToMiniApp(string: jsonStr)
+        }
         return view
     }
 
@@ -96,6 +102,9 @@ public class MiniAppSUIViewHandler: ObservableObject {
 
     public var closeAlertInfo: (() -> CloseAlertInfo?)?
     public var miniAppTitle: (() -> String)?
+    public var miniAppIdentifier: (() -> String)?
+    public var sendJsonToMiniApp: ((String) -> ())?
+    
 
     public init() {}
 }

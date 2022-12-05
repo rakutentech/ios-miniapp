@@ -13,6 +13,8 @@
 		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
+		1C2E06AE293A6A99003C6380 /* MiniAppSecureStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */; };
+		1C4698702936817E0018D4B3 /* MiniAppBridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C46986F2936817E0018D4B3 /* MiniAppBridgeView.swift */; };
 		2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */; };
 		2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */; };
 		2AB1B0E926A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */; };
@@ -142,6 +144,8 @@
 		185DBD6124B2A06300CD2094 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
+		1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageView.swift; sourceTree = "<group>"; };
+		1C46986F2936817E0018D4B3 /* MiniAppBridgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppBridgeView.swift; sourceTree = "<group>"; };
 		2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKLocaleTests.swift; sourceTree = "<group>"; };
 		2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalWebViewControllerTests.swift; sourceTree = "<group>"; };
 		2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPermissionsViewControllerTests.swift; sourceTree = "<group>"; };
@@ -594,6 +598,8 @@
 				F70DD8C328D417C3003EF1F1 /* MiniAppSettingsAccessTokenView.swift */,
 				F70DD8C428D417C3003EF1F1 /* MiniAppSettingsGeneralView.swift */,
 				F70DD8C528D417C3003EF1F1 /* MiniAppSettingsSignatureView.swift */,
+				1C46986F2936817E0018D4B3 /* MiniAppBridgeView.swift */,
+				1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -822,6 +828,7 @@
 				38920AF9251D9C57004C5DDD /* UIViewController+MiniApp.swift in Sources */,
 				A15CC6BC28ED2CD4009B328D /* ContentView.swift in Sources */,
 				F70DD8F928D417C4003EF1F1 /* MiniAppFeatureListCell.swift in Sources */,
+				1C2E06AE293A6A99003C6380 /* MiniAppSecureStorageView.swift in Sources */,
 				F70DD90528D417C4003EF1F1 /* Binding+Optional.swift in Sources */,
 				F70DD8EC28D417C4003EF1F1 /* MiniAppSettingsQAView.swift in Sources */,
 				F70DD8EA28D417C4003EF1F1 /* MiniAppSettingsProfileView.swift in Sources */,
@@ -849,6 +856,7 @@
 				3878D4D423B44F85001E27F8 /* AppDelegate.swift in Sources */,
 				D0CACE26281A68D700E39920 /* Base64UriHelper.swift in Sources */,
 				38920AF4251D9C57004C5DDD /* String+MiniApp.swift in Sources */,
+				1C4698702936817E0018D4B3 /* MiniAppBridgeView.swift in Sources */,
 				F70DD8E928D417C4003EF1F1 /* MiniAppSettingsViewModel.swift in Sources */,
 				F70DD8FA28D417C4003EF1F1 /* MiniAppSingleView.swift in Sources */,
 				38920AFB251D9C57004C5DDD /* UserProfileModel.swift in Sources */,

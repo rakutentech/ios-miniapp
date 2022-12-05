@@ -15,6 +15,8 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
 
     var onSendMessage: (() -> Void)?
 
+    var onSendJsonToHostApp: ((_ jsonStr:String) -> Void)?
+
     init(miniAppId: String = "", miniAppVersion: String? = nil) {
         self.miniAppId = miniAppId
         self.miniAppVersion = miniAppVersion
@@ -170,6 +172,13 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
             }
         }
     }
+
+    // MARK: - Universal Bridge support
+    func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+        onSendJsonToHostApp?(info.jsonStringContent)
+        completionHandler(.success(.success))
+    }
+
 }
 
 extension MiniAppViewMessageDelegator {
@@ -252,5 +261,11 @@ extension MiniAppViewMessageDelegator: CLLocationManagerDelegate {
         @unknown default:
         break
         }
+    }
+}
+
+extension MiniAppViewMessageDelegator{
+    func sendJsonStringToMiniApp(jsonString: String) {
+        MiniApp.shared().sendJsonStringToMiniApp(withId: miniAppId, miniAppVersion: miniAppVersion ?? "", jsonString: jsonString)
     }
 }

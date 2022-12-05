@@ -1016,6 +1016,21 @@ miniAppView.load(fromCache: true) { success in
 `fromCache` helps to retrieve the already downloaded mini-app from the cache.
 NOTE: Using the above approach will never retrieve/query latest version of the mini-app.
 
+<a id="miniapp-send-json-from-hostapp"></a>
+
+### Send JSON/String content from the host app to MiniApp.
+
+Send JSON or a string conent to mini app from the host app using the below sdk api,
+This api will send the content message/json to the mini app using the custom events which will must be listned by the mini apps to receive the content.
+
+```swift
+miniAppView.sendJsonToMiniApp(string: "<Your string content / json content>")
+
+```
+
+`string` This will hold the Json or stringcontent to be sent to MiniApp from the host app.
+NOTE: Using the above approach will never retrieve/query latest version of the mini-app.
+
 <a id="keyboard-events"></a>
 
 ### Keyboard Events

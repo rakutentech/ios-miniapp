@@ -724,7 +724,12 @@ extension MiniAppViewHandler {
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
                         self.didReceiveEvent(event.type, message: event.comment)
                     }
-                } else {
+                } else if event.type == .miniappRecieveJsonString {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .microseconds(50)) {
+                        self.didReceiveEvent(event.type, message: event.comment)
+                    }
+                }
+                else {
                     didReceiveEvent(event.type, message: event.comment)
                 }
             } else {
@@ -865,5 +870,19 @@ extension MiniAppViewHandler: WKUIDelegate {
 
     internal func presentAlert(alertController: UIAlertController) {
         UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
+    }
+}
+
+// MARK: - Universal Bridge
+extension MiniAppViewHandler {
+    internal func sendJsonStringToMiniApp(string jsonString: String?){
+        NotificationCenter.default.sendCustomEvent(
+            MiniAppEvent.Event(
+                miniAppId: appId,
+                miniAppVersion: version ?? "",
+                type: .miniappRecieveJsonString,
+                comment: jsonString ?? ""
+            )
+        )
     }
 }

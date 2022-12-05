@@ -10,6 +10,7 @@ struct MiniAppWithTermsView: View {
 
     @State private var didAcceptTerms: Bool = false
     @State private var showMessageAlert: Bool = false
+    @State private var showJsonStringAlert: Bool = false
 
     var body: some View {
         VStack {
@@ -35,12 +36,21 @@ struct MiniAppWithTermsView: View {
             }
         }
         .alert(isPresented: $showMessageAlert) {
-            Alert(
-                title: Text("Info"),
-                message: Text("Message sent!"),
-                dismissButton: Alert.Button.cancel(Text("Ok"), action: {
-                    viewModel.showMessageAlert.send(false)
-            }))
+            if let message = viewModel.showJsonString {
+                return Alert(
+                    title: Text("Universal Bridge"),
+                    message: Text(message),
+                    dismissButton: Alert.Button.cancel(Text("Ok"), action: {
+                        viewModel.showMessageAlert.send(false)
+                }))
+            } else {
+                return Alert(
+                    title: Text("Info"),
+                    message: Text("Message sent!"),
+                    dismissButton: Alert.Button.cancel(Text("Ok"), action: {
+                        viewModel.showMessageAlert.send(false)
+                }))
+            }
         }
         .onChange(of: didAcceptTerms, perform: { accepted in
             if accepted {
@@ -49,6 +59,14 @@ struct MiniAppWithTermsView: View {
         })
         .onReceive(viewModel.showMessageAlert) {
             showMessageAlert = $0
+        }
+        .onChange(of: viewModel.viewState) { newValue in
+            switch newValue {
+            case .success:
+                viewModel.addHandlerToList(handler)
+            default:
+                print("No Handler to passs")
+            }
         }
     }
 
