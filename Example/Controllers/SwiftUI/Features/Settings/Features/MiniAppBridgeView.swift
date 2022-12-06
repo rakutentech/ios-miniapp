@@ -23,7 +23,7 @@ struct MiniAppBridgeView: View {
 
     func sendDataStringToMiniApp(textString str:String) {
         for (_,handler) in viewModel.store.handlersListDict {
-            handler.sendJsonToMiniApp?(str)
+            handler.sendJsonStringToMiniApp?(str)
         }
     }
 }

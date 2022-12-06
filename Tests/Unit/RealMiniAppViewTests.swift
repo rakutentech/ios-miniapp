@@ -410,3 +410,40 @@ class RealMiniAppViewCustomNavigationTests: QuickSpec {
         }
     }
 }
+
+class RealMiniAppUniversalBridgeTests: QuickSpec {
+    override func spec() {
+        describe("MiniApp Universal Bridge miniappreceivejsoninfo") {
+            let mockMessageInterface = MockMessageInterface()
+            let miniAppView = RealMiniAppView(miniAppId: mockMiniAppInfo.id,
+                                              versionId: mockMiniAppInfo.version.versionId,
+                                              projectId: "project-id",
+                                              miniAppTitle: mockMiniAppInfo.displayName!,
+                                              hostAppMessageDelegate: mockMessageInterface,
+                                              shouldAutoLoadSecureStorage: false)
+            
+            context("When sending miniappRecieveJsonString ") {
+                beforeEach {
+                    miniAppView.messageBodies = []
+                }
+                it("will post miniappRecieveJsonString event with empty string") {
+                    miniAppView.sendJsonStringToMiniApp(string: "")
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.miniappRecieveJsonString.rawValue))
+                }
+                it("will send json string content to mini app") {
+                    miniAppView.sendJsonStringToMiniApp(string: "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.822978364672421\"}")
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.miniappRecieveJsonString.rawValue))
+                }
+                it("will send string content to mini app") {
+                    miniAppView.sendJsonStringToMiniApp(string: "Some string content")
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.miniappRecieveJsonString.rawValue))
+                }
+            }
+        }
+    }
+}
+
+

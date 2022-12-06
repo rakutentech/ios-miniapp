@@ -29,7 +29,7 @@ let params = MiniAppParameters.default(
 let miniAppView = MiniAppView(params: params)
 self.view.addSubview(miniAppView)
 miniAppView.frame = self.view.bounds
-miniAppView.sendJsonToMiniApp(string: "<Your string content / json content>")
+miniAppView.sendJsonStringToMiniApp(string: "<Your string content / json content>")
 ```
 
 </details>

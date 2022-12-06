@@ -1024,7 +1024,7 @@ Send JSON or a string conent to mini app from the host app using the below sdk a
 This api will send the content message/json to the mini app using the custom events which will must be listned by the mini apps to receive the content.
 
 ```swift
-miniAppView.sendJsonToMiniApp(string: "<Your string content / json content>")
+miniAppView.sendJsonStringToMiniApp(string: "<Your string content / json content>")
 
 ```
 

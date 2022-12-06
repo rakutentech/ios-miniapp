@@ -464,13 +464,13 @@ extension RealMiniAppView: MiniAppManageDelegate {
 
 // MARK: - Universal Bridge
 extension RealMiniAppView {
-    func sendJsonToMiniApp(string jsonString:String) {
+    func sendJsonStringToMiniApp(string jsonString:String) {
         //Post custom event to send the string content to mini app.
         NotificationCenter.default.sendCustomEvent(
             MiniAppEvent.Event(
                 miniAppId: self.miniAppId ?? "",
                 miniAppVersion: self.miniAppVersion ?? "",
-                type: .resume,
+                type: .miniappRecieveJsonString,
                 comment: jsonString
             )
         )
