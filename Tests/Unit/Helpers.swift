@@ -536,7 +536,11 @@ class MockMessageInterface: MiniAppMessageDelegate {
     }
 
     func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
-        completionHandler(.success(.success))
+        if messageContentAllowed {
+            completionHandler(.success(.success))
+        } else {
+            completionHandler(.failure(NSError(domain: "SendJsonToHostAppError", code: 0, userInfo: nil)))
+        }
     }
 }
 
