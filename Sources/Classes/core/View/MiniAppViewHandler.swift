@@ -728,8 +728,7 @@ extension MiniAppViewHandler {
                     DispatchQueue.main.asyncAfter(deadline: .now() + .microseconds(50)) {
                         self.didReceiveEvent(event.type, message: event.comment)
                     }
-                }
-                else {
+                } else {
                     didReceiveEvent(event.type, message: event.comment)
                 }
             } else {
@@ -875,7 +874,7 @@ extension MiniAppViewHandler: WKUIDelegate {
 
 // MARK: - Universal Bridge
 extension MiniAppViewHandler {
-    internal func sendJsonStringToMiniApp(string jsonString: String?){
+    internal func sendJsonStringToMiniApp(string jsonString: String?) {
         NotificationCenter.default.sendCustomEvent(
             MiniAppEvent.Event(
                 miniAppId: appId,

@@ -4,7 +4,7 @@ import MiniApp
 struct MiniAppBridgeView: View {
     @ObservedObject var viewModel: MiniAppSettingsViewModel
 
-    @State var textToSend:String = "{\"browsers\":{\"firefox\":{\"name\":\"Firefox\",\"pref_url\":\"about:config\",\"releases\":{\"1\":{\"release_date\":\"2004-11-09\",\"status\":\"retired\",\"engine\":\"Gecko\",\"engine_version\":\"1.7\"}}}}}"
+    @State var textToSend: String = "{\\\"data\\\":\\\"This is a sample json information from host app.\\\"}"
 
     var body: some View {
         VStack {
@@ -21,8 +21,8 @@ struct MiniAppBridgeView: View {
         .trackPage(pageName: pageName)
     }
 
-    func sendDataStringToMiniApp(textString str:String) {
-        for (_,handler) in viewModel.store.handlersListDict {
+    func sendDataStringToMiniApp(textString str: String) {
+        for (_, handler) in viewModel.store.handlersListDict {
             handler.sendJsonStringToMiniApp?(str)
         }
     }

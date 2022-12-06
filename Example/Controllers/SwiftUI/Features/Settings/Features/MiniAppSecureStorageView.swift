@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MiniAppSecureStorageView: View {
-    
+
     @ObservedObject var viewModel: MiniAppSettingsViewModel
 
     @State private var miniAppWipeAppId = ""

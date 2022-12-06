@@ -203,7 +203,7 @@ public class MiniApp: NSObject {
     public func clearSecureStorage(for miniAppId: String) {
         try? MiniAppSecureStorage.wipeSecureStorage(for: miniAppId)
     }
-    
+
     /// Method will send the jsonString to MiniApp
     /// - Parameters:
     ///   - miniAppId: Mini AppId String value

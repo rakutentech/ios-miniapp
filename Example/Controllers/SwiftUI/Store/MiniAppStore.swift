@@ -30,7 +30,7 @@ class MiniAppStore: ObservableObject {
     @Published var miniAppInfoList2: [MiniAppInfo] = []
     @Published var miniAppInfoList2Error: Error?
 
-    var handlersListDict : [String:MiniAppSUIViewHandler] = [:]
+    var handlersListDict: [String: MiniAppSUIViewHandler] = [:]
 
     private init() {
         if !miniAppFirstLaunch {
@@ -192,14 +192,14 @@ class MiniAppStore: ObservableObject {
         }
     }
 
-    func addHandlerToList(_ handler:MiniAppSUIViewHandler) {
+    func addHandlerToList(_ handler: MiniAppSUIViewHandler) {
         guard let miniAppId = handler.miniAppIdentifier?() else {
             return
         }
         handlersListDict[miniAppId] = handler
     }
 
-    func removeHandlerFromList(_ handler:MiniAppSUIViewHandler) {
+    func removeHandlerFromList(_ handler: MiniAppSUIViewHandler) {
         guard let miniAppId = handler.miniAppIdentifier?() else {
             return
         }

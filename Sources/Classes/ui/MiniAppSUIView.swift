@@ -103,8 +103,7 @@ public class MiniAppSUIViewHandler: ObservableObject {
     public var closeAlertInfo: (() -> CloseAlertInfo?)?
     public var miniAppTitle: (() -> String)?
     public var miniAppIdentifier: (() -> String)?
-    public var sendJsonStringToMiniApp: ((String) -> ())?
-    
+    public var sendJsonStringToMiniApp: ((String) -> Void)?
 
     public init() {}
 }

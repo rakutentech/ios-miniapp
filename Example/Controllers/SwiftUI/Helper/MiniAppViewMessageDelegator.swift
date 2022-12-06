@@ -15,7 +15,7 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
 
     var onSendMessage: (() -> Void)?
 
-    var onSendJsonToHostApp: ((_ jsonStr:String) -> Void)?
+    var onSendJsonToHostApp: ((_ jsonStr: String) -> Void)?
 
     init(miniAppId: String = "", miniAppVersion: String? = nil) {
         self.miniAppId = miniAppId
@@ -264,7 +264,7 @@ extension MiniAppViewMessageDelegator: CLLocationManagerDelegate {
     }
 }
 
-extension MiniAppViewMessageDelegator{
+extension MiniAppViewMessageDelegator {
     func sendJsonStringToMiniApp(jsonString: String) {
         MiniApp.shared().sendJsonStringToMiniApp(withId: miniAppId, miniAppVersion: miniAppVersion ?? "", jsonString: jsonString)
     }

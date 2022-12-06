@@ -18,7 +18,7 @@ class MiniAppWithTermsViewModel: ObservableObject {
     var navigationDelegate: MiniAppNavigationDelegate
 
     var showMessageAlert: CurrentValueSubject<Bool, Never> = .init(false)
-    var showJsonString:String?
+    var showJsonString: String?
 
     @Published var canGoBack: Bool = false
     @Published var canGoForward: Bool = false
@@ -167,11 +167,11 @@ class MiniAppWithTermsViewModel: ObservableObject {
         }
     }
 
-    func addHandlerToList(_ handler:MiniAppSUIViewHandler) {
+    func addHandlerToList(_ handler: MiniAppSUIViewHandler) {
         store.addHandlerToList(handler)
     }
 
-    func removeHandlerFromList(_ handler:MiniAppSUIViewHandler) {
+    func removeHandlerFromList(_ handler: MiniAppSUIViewHandler) {
         store.removeHandlerFromList(handler)
     }
 }
