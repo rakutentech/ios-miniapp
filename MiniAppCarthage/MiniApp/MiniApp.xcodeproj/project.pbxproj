@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1C0F571B293650CE001CC161 /* MiniAppBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F571A293650CE001CC161 /* MiniAppBridgeDelegate.swift */; };
 		1C0F571D29365140001CC161 /* MiniAppBridgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F571C29365140001CC161 /* MiniAppBridgeModel.swift */; };
+		2A04640229399AFE00F6440F /* MiniAppProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04640129399AFE00F6440F /* MiniAppProgressView.swift */; };
+		2A04640429399B2300F6440F /* MiniAppParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04640329399B2300F6440F /* MiniAppParameters.swift */; };
+		2A04640629399B8B00F6440F /* MiniAppInfoFetcherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04640529399B8B00F6440F /* MiniAppInfoFetcherProtocol.swift */; };
 		2A0FEE02286950C100935226 /* MiniAppManageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0FEE01286950C100935226 /* MiniAppManageDelegate.swift */; };
 		2A0FEE05286950CC00935226 /* MAPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0FEE03286950CC00935226 /* MAPoints.swift */; };
 		2A0FEE06286950CC00935226 /* MATokenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0FEE04286950CC00935226 /* MATokenInfo.swift */; };
@@ -167,6 +170,9 @@
 /* Begin PBXFileReference section */
 		1C0F571A293650CE001CC161 /* MiniAppBridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppBridgeDelegate.swift; sourceTree = "<group>"; };
 		1C0F571C29365140001CC161 /* MiniAppBridgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppBridgeModel.swift; sourceTree = "<group>"; };
+		2A04640129399AFE00F6440F /* MiniAppProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppProgressView.swift; sourceTree = "<group>"; };
+		2A04640329399B2300F6440F /* MiniAppParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppParameters.swift; sourceTree = "<group>"; };
+		2A04640529399B8B00F6440F /* MiniAppInfoFetcherProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppInfoFetcherProtocol.swift; sourceTree = "<group>"; };
 		2A0FEE01286950C100935226 /* MiniAppManageDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppManageDelegate.swift; sourceTree = "<group>"; };
 		2A0FEE03286950CC00935226 /* MAPoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MAPoints.swift; sourceTree = "<group>"; };
 		2A0FEE04286950CC00935226 /* MATokenInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MATokenInfo.swift; sourceTree = "<group>"; };
@@ -495,6 +501,7 @@
 		31FA5E6D27608D1A0070B611 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				2A04640129399AFE00F6440F /* MiniAppProgressView.swift */,
 				31FA5E6E27608D1A0070B611 /* MiniAppUI.swift */,
 				317AA32A2762D0740037180D /* MiniAppSharePreviewViewController.swift */,
 				31FA5E6F27608D1A0070B611 /* MiniAppViewController+Fallback.swift */,
@@ -676,6 +683,7 @@
 		31FA5EC827608D1A0070B611 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				2A04640529399B8B00F6440F /* MiniAppInfoFetcherProtocol.swift */,
 				F77586A528B5CE4100B460F3 /* MiniAppClientProtocol.swift */,
 				2A0FEE01286950C100935226 /* MiniAppManageDelegate.swift */,
 				31FA5EC927608D1A0070B611 /* MiniAppDownloaderProtocol.swift */,
@@ -782,6 +790,7 @@
 		F70178A328B71783002B4D17 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2A04640329399B2300F6440F /* MiniAppParameters.swift */,
 				F70178A428B71783002B4D17 /* MiniAppViewHandler.swift */,
 				F70178A528B71783002B4D17 /* MiniAppView.swift */,
 				F70178A628B71783002B4D17 /* MiniAppViewable.swift */,
@@ -1004,9 +1013,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A04640429399B2300F6440F /* MiniAppParameters.swift in Sources */,
 				F70178AB28B71783002B4D17 /* MiniAppView+Definitions.swift in Sources */,
 				F70178AD28B717F9002B4D17 /* MiniAppSUIView.swift in Sources */,
 				31FA5F1D27608D1B0070B611 /* UIApplication.swift in Sources */,
+				2A04640629399B8B00F6440F /* MiniAppInfoFetcherProtocol.swift in Sources */,
 				31FA5F4D27608D1B0070B611 /* Verifier.swift in Sources */,
 				31FA5F3E27608D1B0070B611 /* MiniAppDisplayProtocol.swift in Sources */,
 				31FA5F4227608D1B0070B611 /* MiniAppMessageDelegate.swift in Sources */,
@@ -1122,6 +1133,7 @@
 				31FA5F4527608D1B0070B611 /* MAJavascriptErrorHandler.swift in Sources */,
 				F75593D8283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift in Sources */,
 				31FA5EF927608D1B0070B611 /* DownloadOperation.swift in Sources */,
+				2A04640229399AFE00F6440F /* MiniAppProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,13 +22,13 @@ platform :ios do
 
   desc "Unit tests"
   lane :tests do |options|
-      xcversion(version: "~> 13.4")
+      xcversion(version: "~> 13.2.1")
       updatePods
       fetched_sim = sh("xcrun simctl list | grep 'Fastlane' | cat")
       if !fetched_sim.empty?
           sh("xcrun", "simctl", "delete", "iPhone Fastlane")
       end
-      sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-8","com.apple.CoreSimulator.SimRuntime.iOS-15-5")
+      sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-8","com.apple.CoreSimulator.SimRuntime.iOS-15-2")
       scan(
         clean: true,
         output_directory: './artifacts/unit-tests',
@@ -51,7 +51,7 @@ platform :ios do
   end
 
   lane :build_sim_ci do |options|
-    xcversion(version: "~> 13.4")
+    xcversion(version: "~> 13.2.1")
 
     updatePods
     increment_build_number_circle_ci
