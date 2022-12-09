@@ -301,3 +301,29 @@ public enum MASDKDownloadFileError: Error {
         }
     }
 }
+
+public enum UniversalBridgeError: Error, MiniAppErrorProtocol {
+    /// Host app failed to implement required interface
+    case failedToConformToProtocol
+    case error(description: String)
+
+    /// Title of the error
+    public var name: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return "FailedToConformToProtocol"
+        case .error(let name):
+            return name
+        }
+    }
+
+    /// Detailed Description
+    public var description: String {
+        switch self {
+        case .failedToConformToProtocol:
+            return MASDKLocale.localize(.failedToConformToProtocol)
+        case .error(let description):
+            return description
+        }
+    }
+}

@@ -174,7 +174,8 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
     }
 
     // MARK: - Universal Bridge support
-    func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+    func sendJsonToHostApp(info: UniversalBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+        print("Message form MiniApp: \(info.jsonStringContent)")
         onSendJsonToHostApp?(info.jsonStringContent)
         completionHandler(.success(.success))
     }
@@ -261,11 +262,5 @@ extension MiniAppViewMessageDelegator: CLLocationManagerDelegate {
         @unknown default:
         break
         }
-    }
-}
-
-extension MiniAppViewMessageDelegator {
-    func sendJsonStringToMiniApp(jsonString: String) {
-        MiniApp.shared().sendJsonStringToMiniApp(withId: miniAppId, miniAppVersion: miniAppVersion ?? "", jsonString: jsonString)
     }
 }

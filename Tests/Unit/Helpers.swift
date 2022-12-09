@@ -373,7 +373,7 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
-    func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+    func sendJsonToHostApp(info: UniversalBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.sendJsonToHostApp(info: info, completionHandler: completionHandler)
     }
@@ -535,11 +535,11 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+    func sendJsonToHostApp(info: UniversalBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
         if messageContentAllowed {
             completionHandler(.success(.success))
         } else {
-            completionHandler(.failure(NSError(domain: "SendJsonToHostAppError", code: 0, userInfo: nil)))
+            completionHandler(.failure(.failedToConformToProtocol))
         }
     }
 }

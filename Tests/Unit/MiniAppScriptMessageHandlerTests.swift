@@ -1355,7 +1355,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.822978364672421\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.errorMessage).toEventually(contain("SendJsonToHostAppError"), timeout: .seconds(10))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(UniversalBridgeError.failedToConformToProtocol.name))
                 }
             }
         }

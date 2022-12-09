@@ -1,7 +1,7 @@
 import SwiftUI
 import MiniApp
 
-struct MiniAppBridgeView: View {
+struct UniversalBridgeView: View {
     @ObservedObject var viewModel: MiniAppSettingsViewModel
 
     @State var textToSend: String = "{\\\"data\\\":\\\"This is a sample json information from host app.\\\"}"
@@ -23,19 +23,19 @@ struct MiniAppBridgeView: View {
 
     func sendDataStringToMiniApp(textString str: String) {
         for (_, handler) in viewModel.store.handlersListDict {
-            handler.sendJsonStringToMiniApp?(str)
+            handler.sendJsonToMiniApp?(str)
         }
     }
 }
 
-extension MiniAppBridgeView: ViewTrackable {
+extension UniversalBridgeView: ViewTrackable {
     var pageName: String {
         return NSLocalizedString("demo.app.rat.page.name.universalbridge", comment: "")
     }
 }
 
-struct MiniAppBridgeView_Previews: PreviewProvider {
+struct UniversalBridgeView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppBridgeView(viewModel: MiniAppSettingsViewModel())
+        UniversalBridgeView(viewModel: MiniAppSettingsViewModel())
     }
 }

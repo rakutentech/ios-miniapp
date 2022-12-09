@@ -472,9 +472,8 @@ extension RealMiniApp: MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
-        let error: NSError = NSError.init(domain: "MiniAppMessageBridge has not been implemented sendJsonToHostApp(info:completionHandler:) by the host app", code: 0, userInfo: nil)
-        completionHandler(.failure(error as Error))
+    func sendJsonToHostApp(info: UniversalBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
     }
 }
 
@@ -506,9 +505,7 @@ extension RealMiniApp {
 }
 
 extension RealMiniApp {
-    func sendJsonStringToMiniApp(miniAppId: String,
-                                 miniAppVersion: String,
-                                 jsonString: String) {
+    func sendJsonToMiniApp(miniAppId: String, miniAppVersion: String, jsonString: String) {
         NotificationCenter.default.sendCustomEvent(
             MiniAppEvent.Event(
                 miniAppId: miniAppId,

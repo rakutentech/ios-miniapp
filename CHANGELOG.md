@@ -3,12 +3,12 @@
 ### 5.1.0 (TBD)
 **SDK**
 - **Feature:** Universal Bridge support for receiving the Json or string content from the MiniApp to host app. 
-- **Feature:** Added new public protocol `MiniAppBridgeDelegate` which is confirmed by `MiniAppMessageDelegate`, further added public interface `sendJsonToHostApp(info:, completionHandler:) -> Void)` in `MiniAppBridgeDelegate` which can be implemented in host app to receive the string content from mini app and use in host app through Universal Bridge.
+- **Feature:** Added new public protocol `UniversalBridgeDelegate` which is confirmed by `MiniAppMessageDelegate`, further added public interface `sendJsonToHostApp(info:, completionHandler:) -> Void)` in `UniversalBridgeDelegate` which can be implemented in host app to receive the string content from mini app and use in host app through Universal Bridge.
 <details>
 <summary>Show code</summary>
 
 ```swift
-func sendJsonToHostApp(info: MiniAppBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, Error>) -> Void) {
+func sendJsonToHostApp(info: UniversalBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
     onBridgeJsonString?(info.jsonStringContent)
     completionHandler(.success(.success))
 }
@@ -29,7 +29,7 @@ let params = MiniAppParameters.default(
 let miniAppView = MiniAppView(params: params)
 self.view.addSubview(miniAppView)
 miniAppView.frame = self.view.bounds
-miniAppView.sendJsonStringToMiniApp(string: "<Your string content / json content>")
+miniAppView.sendJsonToMiniApp(string: "<Your string content / json content>")
 ```
 
 </details>

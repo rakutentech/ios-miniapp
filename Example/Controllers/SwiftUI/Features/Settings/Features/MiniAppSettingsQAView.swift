@@ -12,7 +12,7 @@ struct MiniAppSettingsQAView: View {
                 Label("Secure Storage", systemImage: "questionmark.circle")
             }
             NavigationLink {
-                MiniAppBridgeView(viewModel: viewModel)
+                UniversalBridgeView(viewModel: viewModel)
             } label: {
                 Label("Universal Bridge", systemImage: "link")
             }
