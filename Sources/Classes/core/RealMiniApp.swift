@@ -510,7 +510,7 @@ extension RealMiniApp {
             MiniAppEvent.Event(
                 miniAppId: miniAppId,
                 miniAppVersion: miniAppVersion,
-                type: .miniappRecieveJsonString,
+                type: .miniappReceiveJsonString,
                 comment: jsonString
             )
         )

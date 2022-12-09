@@ -130,7 +130,7 @@ public enum MiniAppEvent: String {
     case resume = "miniappresume"
     case secureStorageReady = "miniappsecurestorageready"
     case secureStorageError = "miniappsecurestorageloaderror"
-    case miniappRecieveJsonString = "miniappreceivejsoninfo"
+    case miniappReceiveJsonString = "miniappreceivejsoninfo"
 
     public static let notificationName = Notification.Name("MiniAppNotificationEvent")
 

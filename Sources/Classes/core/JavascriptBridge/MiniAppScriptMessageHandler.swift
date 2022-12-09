@@ -767,7 +767,7 @@ extension MiniAppScriptMessageHandler {
     func manageJsonStringToHostAppResult(_ result: Result<MASDKProtocolResponse, UniversalBridgeError>, with callbackId: String) {
         switch result {
         case .success:
-            self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "SUCCESS")
+            self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: MASDKProtocolResponse.success.rawValue)
         case .failure(let error):
             if !error.localizedDescription.isEmpty {
                 self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))

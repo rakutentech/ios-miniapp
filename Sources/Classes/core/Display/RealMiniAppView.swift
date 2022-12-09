@@ -470,7 +470,7 @@ extension RealMiniAppView {
             MiniAppEvent.Event(
                 miniAppId: self.miniAppId ?? "",
                 miniAppVersion: self.miniAppVersion ?? "",
-                type: .miniappRecieveJsonString,
+                type: .miniappReceiveJsonString,
                 comment: jsonString
             )
         )
