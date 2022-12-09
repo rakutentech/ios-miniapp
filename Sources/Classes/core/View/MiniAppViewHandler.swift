@@ -724,7 +724,7 @@ extension MiniAppViewHandler {
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
                         self.didReceiveEvent(event.type, message: event.comment)
                     }
-                } else if event.type == .miniappRecieveJsonString {
+                } else if event.type == .miniappReceiveJsonString {
                     DispatchQueue.main.asyncAfter(deadline: .now() + .microseconds(50)) {
                         self.didReceiveEvent(event.type, message: event.comment)
                     }
@@ -879,7 +879,7 @@ extension MiniAppViewHandler {
             MiniAppEvent.Event(
                 miniAppId: appId,
                 miniAppVersion: version ?? "",
-                type: .miniappRecieveJsonString,
+                type: .miniappReceiveJsonString,
                 comment: jsonString ?? ""
             )
         )
