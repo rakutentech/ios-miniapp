@@ -426,20 +426,21 @@ class RealMiniAppUniversalBridgeTests: QuickSpec {
                 beforeEach {
                     miniAppView.messageBodies = []
                 }
-                afterEach {
+                it("will post miniappRecieveJsonString event with empty string") {
+                    miniAppView.sendJsonToMiniApp(string: "")
                     expect(miniAppView.messageBodies.count).toEventually(equal(1))
                     expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.miniappReceiveJsonString.rawValue))
                 }
-                it("will post miniappRecieveJsonString event with empty string") {
-                    miniAppView.sendJsonToMiniApp(string: "")
-                }
                 it("will send json string content to mini app") {
                     miniAppView.sendJsonToMiniApp(string: "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.822978364672421\"}")
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.miniappReceiveJsonString.rawValue))
                 }
                 it("will send string content to mini app") {
                     miniAppView.sendJsonToMiniApp(string: "Some string content")
+                    expect(miniAppView.messageBodies.count).toEventually(equal(1))
+                    expect(miniAppView.messageBodies[0]).toEventually(contain(MiniAppEvent.miniappReceiveJsonString.rawValue))
                 }
-                
             }
         }
     }
