@@ -77,6 +77,9 @@ class MiniAppSettingsViewModel: ObservableObject {
                     }
                 }
             }
+            if self.saveTokenDetails(accessToken: "ACCESS_TOKEN", date: Date()) {
+                print("AccessToken is now set to default value \"ACCESS_TOKEN\"")
+            }
         }
     }
 
