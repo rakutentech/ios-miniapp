@@ -472,7 +472,7 @@ extension RealMiniApp: MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func sendJsonToHostApp(info: UniversalBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+    func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }
@@ -501,18 +501,5 @@ extension RealMiniApp {
                     screenHeight: screenHeight
                 )
             )
-    }
-}
-
-extension RealMiniApp {
-    func sendJsonToMiniApp(miniAppId: String, miniAppVersion: String, jsonString: String) {
-        NotificationCenter.default.sendCustomEvent(
-            MiniAppEvent.Event(
-                miniAppId: miniAppId,
-                miniAppVersion: miniAppVersion,
-                type: .miniappReceiveJsonString,
-                comment: jsonString
-            )
-        )
     }
 }

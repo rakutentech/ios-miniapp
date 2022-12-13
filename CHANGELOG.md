@@ -8,8 +8,8 @@
 <summary>Show code</summary>
 
 ```swift
-func sendJsonToHostApp(info: UniversalBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
-    onBridgeJsonString?(info.jsonStringContent)
+func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+    onBridgeJsonString?(info)
     completionHandler(.success(.success))
 }
 ```

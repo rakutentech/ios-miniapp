@@ -466,13 +466,6 @@ extension RealMiniAppView: MiniAppManageDelegate {
 extension RealMiniAppView {
     func sendJsonToMiniApp(string jsonString: String) {
         // Post custom event to send the string content to mini app.
-        NotificationCenter.default.sendCustomEvent(
-            MiniAppEvent.Event(
-                miniAppId: self.miniAppId ?? "",
-                miniAppVersion: self.miniAppVersion ?? "",
-                type: .miniappReceiveJsonString,
-                comment: jsonString
-            )
-        )
+        didReceiveEvent(MiniAppEvent.miniappReceiveJsonString, message: jsonString)
     }
 }

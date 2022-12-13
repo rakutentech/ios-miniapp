@@ -6,5 +6,5 @@ import Foundation
  */
 public protocol UniversalBridgeDelegate: AnyObject {
     /// Interface that is used to send the string content from the Mini app. This must be implemented in the host app to receive the message from MiniApp.
-    func sendJsonToHostApp(info: UniversalBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void)
+    func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void)
 }

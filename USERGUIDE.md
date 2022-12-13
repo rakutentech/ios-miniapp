@@ -593,8 +593,8 @@ To receive the message from the MiniApp and process it in the host app you must 
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func sendJsonToHostApp(info: UniversalBridgeContent, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
-        print("Message form MiniApp: \(info.jsonStringContent)")
+    func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+        print("Message form MiniApp: \(info)")
         completionHandler(.success(.success))
     }
 }

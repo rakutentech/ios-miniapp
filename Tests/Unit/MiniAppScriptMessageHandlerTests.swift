@@ -1070,7 +1070,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                 }
             }
             context("when MiniAppScriptMessageHandler receives downloadFile command") {
-                it("will return ") {
+                it("will return file name on success") {
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
                     let scriptMessageHandler = MiniAppScriptMessageHandler(
                         delegate: mockCallbackProtocol,
@@ -1101,6 +1101,38 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.response).toEventually(equal("sample.jpg"))
+                }
+                it("will return nil on failure") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id,
+                        miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "downloadFile",
+                        "id" : "5.1141101534045745",
+                        "param": {
+                            "filename" : "sample.jpg",
+                            "url" : "https://rakuten.co.jp/sample.jpg",
+                            "headers" : { "token": "test" }
+                        }
+                    }
+                    """
+                    updateCustomPermissionStatus(
+                        miniAppId: mockMiniAppInfo.id,
+                        permissionType: .fileDownload,
+                        status: .allowed
+                    )
+                    mockMessageInterface.mockDownloadFile = false
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.response).toEventually(beNil())
                 }
             }
             context("when MiniAppScriptMessageHandler executes keyboard events") {
@@ -1187,6 +1219,29 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                                 "description" : "Would you like to close the mini-app?"
                             }
                         }
+                    }
+                    """
+                    mockMessageInterface.mockDownloadFile = true
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.rawValue))
+                }
+                it("received empty params then it will throw error") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id,
+                        miniAppTitle: mockMiniAppTitle
+                    )
+                    let command = """
+                    {
+                        "action" : "setCloseAlert",
+                        "id" : "5.114110153404574",
+                        "param": {}
                     }
                     """
                     mockMessageInterface.mockDownloadFile = true
@@ -1321,41 +1376,43 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(mockCallbackProtocol.response).toEventually(equal("{\"used\":0,\"max\":2000000}"))
                 }
             }
-            context("when MiniAppScriptMessageHandler receives valid sendJsonToHostApp info message") {
-                it("will return SUCCESS after host app recieves content strig") {
+            context("when MiniAppScriptMessageHandler receives sendJsonToHostApp info message") {
+                let scriptMessageHandler = MiniAppScriptMessageHandler(
+                    delegate: callbackProtocol,
+                    hostAppMessageDelegate: mockMessageInterface,
+                    adsDisplayer: mockAdsDelegate,
+                    secureStorageDelegate: mockSecureStorageDelegate,
+                    miniAppManageDelegate: mockMiniAppManageInterface,
+                    miniAppId: mockMiniAppInfo.id,
+                    miniAppTitle: mockMiniAppTitle
+                )
+                it("will return SUCCESS after host app recieves valid content strig") {
                     mockMessageInterface.messageContentAllowed = true
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        secureStorageDelegate: mockSecureStorageDelegate,
-                        miniAppManageDelegate: mockMiniAppManageInterface,
-                        miniAppId: mockMiniAppInfo.id,
-                        miniAppTitle: mockMiniAppTitle
-                    )
-                    let mockMessage = MockWKScriptMessage(
-                        name: "", body: "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.822978364672421\"}" as AnyObject)
+                    let command = "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.050192665128856\"}"
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: .seconds(10))
-                    expect(callbackProtocol.response).toEventually(equal("SUCCESS"), timeout: .seconds(10))
+                    expect(callbackProtocol.response).toEventually(equal(MASDKProtocolResponse.success.rawValue), timeout: .seconds(10))
                 }
-            }
-            context("when MiniAppScriptMessageHandler receives valid json string message from sendJsonToHostApp but there is an error in host app delegate implementation") {
-                it("will return Error") {
+                it("will return failedToConformToProtocol Error when message interface is nil") {
                     mockMessageInterface.messageContentAllowed = false
-                    let scriptMessageHandler = MiniAppScriptMessageHandler(
-                        delegate: callbackProtocol,
-                        hostAppMessageDelegate: mockMessageInterface,
-                        adsDisplayer: mockAdsDelegate,
-                        secureStorageDelegate: mockSecureStorageDelegate,
-                        miniAppManageDelegate: mockMiniAppManageInterface,
-                        miniAppId: mockMiniAppInfo.id,
-                        miniAppTitle: mockMiniAppTitle
-                    )
-                    let mockMessage = MockWKScriptMessage(
-                        name: "", body: "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.822978364672421\"}" as AnyObject)
+                    let command = "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.050192665128856\"}"
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventually(contain(UniversalBridgeError.failedToConformToProtocol.name))
+                }
+                it("will return empty value Error when content is empty") {
+                    let command = "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"\"}},\"id\":\"10.050192665128856\"}"
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.valueIsEmpty.rawValue))
+                }
+                it("will return Error unexpected message format when jsonInfo parameter is empty") {
+                    let command = "{\"action\":\"sendJsonToHostapp\",\"param\":{},\"id\":\"10.050192665128856\"}"
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.name))
                 }
             }
         }

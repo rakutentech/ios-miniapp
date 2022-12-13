@@ -319,6 +319,25 @@ class MiniAppViewTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 10.0)
     }
+    
+    func test_sendJsonToMiniApp(){
+        let messageDelegate = MockMessageInterface()
+        let mockHandler = makeMockViewHandler(messageDelegate: messageDelegate)
+        let params = MiniAppViewParameters.default(
+            .init(
+                config: MiniAppConfig(
+                    config: nil,
+                    messageDelegate: messageDelegate
+                ),
+                type: .miniapp,
+                appId: mockMiniAppInfo.id
+            )
+        )
+        let view = MiniAppView(params: params)
+        view.miniAppHandler = mockHandler
+        view.sendJsonToMiniApp(string: "Test send json to miniapp")
+        XCTAssertEqual(mockHandler.messageBodies.count, 1)
+    }
 }
 
 extension MiniAppViewTests {

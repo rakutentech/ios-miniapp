@@ -755,8 +755,7 @@ extension MiniAppScriptMessageHandler {
             return
         }
         if !requestParamValue.content.isEmpty {
-            let info = UniversalBridgeContent(jsonStringContent: requestParamValue.content)
-            self.hostAppMessageDelegate?.sendJsonToHostApp(info: info, completionHandler: { (result) in
+            self.hostAppMessageDelegate?.sendJsonToHostApp(info: requestParamValue.content, completionHandler: { (result) in
                 self.manageJsonStringToHostAppResult(result, with: callbackId)
             })
         } else {
