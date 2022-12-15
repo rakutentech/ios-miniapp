@@ -15,6 +15,8 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
 
     var onSendMessage: (() -> Void)?
 
+    var onSendJsonToHostApp: ((String) -> Void)?
+
     init(miniAppId: String = "", miniAppVersion: String? = nil) {
         self.miniAppId = miniAppId
         self.miniAppVersion = miniAppVersion
@@ -169,6 +171,12 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
                 }
             }
         }
+    }
+
+    // MARK: - Universal Bridge support
+    func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+        onSendJsonToHostApp?(info)
+        completionHandler(.success(.success))
     }
 }
 

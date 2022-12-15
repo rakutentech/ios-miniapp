@@ -867,3 +867,10 @@ extension MiniAppViewHandler: WKUIDelegate {
         UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
     }
 }
+
+// MARK: - Universal Bridge
+extension MiniAppViewHandler {
+    internal func sendJsonToMiniApp(string jsonString: String?) {
+        self.didReceiveEvent(MiniAppEvent.miniappReceiveJsonString, message: jsonString ?? "")
+    }
+}

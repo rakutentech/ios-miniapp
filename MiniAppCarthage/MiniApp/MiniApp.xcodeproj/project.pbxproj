@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CD1591C2942B72E001E0E21 /* UniversalBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1591B2942B72E001E0E21 /* UniversalBridgeDelegate.swift */; };
 		2A04640229399AFE00F6440F /* MiniAppProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04640129399AFE00F6440F /* MiniAppProgressView.swift */; };
 		2A04640429399B2300F6440F /* MiniAppParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04640329399B2300F6440F /* MiniAppParameters.swift */; };
 		2A04640629399B8B00F6440F /* MiniAppInfoFetcherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04640529399B8B00F6440F /* MiniAppInfoFetcherProtocol.swift */; };
@@ -166,6 +167,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1CD1591B2942B72E001E0E21 /* UniversalBridgeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalBridgeDelegate.swift; sourceTree = "<group>"; };
 		2A04640129399AFE00F6440F /* MiniAppProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppProgressView.swift; sourceTree = "<group>"; };
 		2A04640329399B2300F6440F /* MiniAppParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppParameters.swift; sourceTree = "<group>"; };
 		2A04640529399B8B00F6440F /* MiniAppInfoFetcherProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppInfoFetcherProtocol.swift; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 		31FA5EC827608D1A0070B611 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				1CD1591B2942B72E001E0E21 /* UniversalBridgeDelegate.swift */,
 				2A04640529399B8B00F6440F /* MiniAppInfoFetcherProtocol.swift */,
 				F77586A528B5CE4100B460F3 /* MiniAppClientProtocol.swift */,
 				2A0FEE01286950C100935226 /* MiniAppManageDelegate.swift */,
@@ -1069,6 +1072,7 @@
 				31FA5F3A27608D1B0070B611 /* Displayer.swift in Sources */,
 				31FA5F0027608D1B0070B611 /* MiniAppInfo.swift in Sources */,
 				317AA32B2762D0740037180D /* MiniAppSharePreviewViewController.swift in Sources */,
+				1CD1591C2942B72E001E0E21 /* UniversalBridgeDelegate.swift in Sources */,
 				31FA5F1027608D1B0070B611 /* String+MiniApp.swift in Sources */,
 				31FA5EFA27608D1B0070B611 /* MiniAppDownloader.swift in Sources */,
 				31FA5F5327608D1B0070B611 /* KeyModel.swift in Sources */,

@@ -23,6 +23,7 @@ struct RequestParameters: Decodable {
     let secureStorageItems: [String: String]?
     let secureStorageKeyList: [String]?
     let closeAlertInfo: CloseAlertInfo?
+    let jsonInfo: JsonStringInfoParameters?
 }
 
 struct LocationOptions: Decodable {
@@ -30,6 +31,10 @@ struct LocationOptions: Decodable {
 }
 
 struct ShareInfoParameters: Decodable {
+    var content: String
+}
+
+struct JsonStringInfoParameters: Codable {
     var content: String
 }
 

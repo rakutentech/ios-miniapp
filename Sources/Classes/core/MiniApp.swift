@@ -203,7 +203,6 @@ public class MiniApp: NSObject {
     public func clearSecureStorage(for miniAppId: String) {
         try? MiniAppSecureStorage.wipeSecureStorage(for: miniAppId)
     }
-
 }
 
 // MARK: - Testing

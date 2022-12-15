@@ -743,6 +743,20 @@ class RealMiniAppTests: QuickSpec {
                     expect(testResponseData).toEventually(beAnInstanceOf(RealMiniAppView.self), timeout: .seconds(10))
                 }
             }
+            context("when mini app send string to host app and delegate not implemented") {
+                it("will receive the error") {
+                    var testResponseError: UniversalBridgeError?
+                    realMiniApp.sendJsonToHostApp(info: "Test String to host from miniapp") { (result) in
+                        switch result {
+                        case .success:
+                            fail("should not succeed")
+                        case .failure(let error):
+                            testResponseError = error
+                        }
+                    }
+                    expect(testResponseError?.description).to(contain(MASDKLocale.localize(.failedToConformToProtocol)))
+                }
+            }
         }
     }
 }

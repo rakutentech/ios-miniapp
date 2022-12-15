@@ -461,3 +461,11 @@ extension RealMiniAppView: MiniAppManageDelegate {
         self.closeAlertInfo = alertInfo
     }
 }
+
+// MARK: - Universal Bridge
+extension RealMiniAppView {
+    func sendJsonToMiniApp(string jsonString: String) {
+        // Post custom event to send the string content to mini app.
+        didReceiveEvent(MiniAppEvent.miniappReceiveJsonString, message: jsonString)
+    }
+}

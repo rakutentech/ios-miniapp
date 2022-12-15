@@ -181,3 +181,10 @@ extension MiniAppView: MiniAppNavigationBarDelegate {
         miniAppHandler.closeAlertInfo
     }
 }
+
+// MARK: - Universal Bridge
+extension MiniAppView {
+    public func sendJsonToMiniApp(string jsonString: String) {
+        miniAppHandler.sendJsonToMiniApp(string: jsonString)
+    }
+}

@@ -18,6 +18,7 @@ class MiniAppWithTermsViewModel: ObservableObject {
     var navigationDelegate: MiniAppNavigationDelegate
 
     var showMessageAlert: CurrentValueSubject<Bool, Never> = .init(false)
+    var showJsonString: String?
 
     @Published var canGoBack: Bool = false
     @Published var canGoForward: Bool = false
@@ -51,6 +52,11 @@ class MiniAppWithTermsViewModel: ObservableObject {
             self.messageInterface = delegator
             delegator.onSendMessage = {
                 self.showMessageAlert.send(true)
+                self.showJsonString = nil
+            }
+            delegator.onSendJsonToHostApp = { string in
+                self.showMessageAlert.send(true)
+                self.showJsonString = string
             }
         }
 
@@ -159,6 +165,14 @@ class MiniAppWithTermsViewModel: ObservableObject {
         default:
             return false
         }
+    }
+
+    func addHandlerToList(_ handler: MiniAppSUIViewHandler) {
+        store.addHandlerToList(handler)
+    }
+
+    func removeHandlerFromList(_ handler: MiniAppSUIViewHandler) {
+        store.removeHandlerFromList(handler)
     }
 }
 

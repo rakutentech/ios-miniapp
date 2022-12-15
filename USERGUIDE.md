@@ -584,6 +584,22 @@ Use `wipeSecureStorages` to delete all secure storages stored on the device.
 MiniAppSecureStorage.wipeSecureStorages()
 ```
 
+<a id="send-message-to-hostapp"></a>
+
+###### Receive string information from MiniApp
+
+You can receive the message string/json from MiniApp in to host app trough the universal bridge interface implemented in `MiniAppMessageDelegate`.
+To receive the message from the MiniApp and process it in the host app you must implement the delegeate method `sendJsonToHostApp(info:completionHandler:)` from the MiniAppMessageDelegate. 
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+        print("Message form MiniApp: \(info)")
+        completionHandler(.success(.success))
+    }
+}
+```
+
 <a id="load-miniapp-list"></a>
 
 ### Load the `MiniApp` list:
@@ -1014,6 +1030,21 @@ miniAppView.load(fromCache: true) { success in
 ```
 
 `fromCache` helps to retrieve the already downloaded mini-app from the cache.
+NOTE: Using the above approach will never retrieve/query latest version of the mini-app.
+
+<a id="miniapp-send-json-from-hostapp"></a>
+
+### Send JSON/String content from the host app to MiniApp.
+
+Send JSON or a string conent to mini app from the host app using the below sdk api,
+This api will send the content message/json to the mini app using the custom events which will must be listned by the mini apps to receive the content.
+
+```swift
+miniAppView.sendJsonToMiniApp(string: "<Your string content / json content>")
+
+```
+
+`string` This will hold the Json or stringcontent to be sent to MiniApp from the host app.
 NOTE: Using the above approach will never retrieve/query latest version of the mini-app.
 
 <a id="keyboard-events"></a>

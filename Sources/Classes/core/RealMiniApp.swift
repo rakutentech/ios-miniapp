@@ -471,6 +471,10 @@ extension RealMiniApp: MiniAppMessageDelegate {
     func downloadFile(fileName: String, url: String, headers: DownloadHeaders, completionHandler: @escaping (Result<String, MASDKDownloadFileError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
+
+    func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
 }
 
 extension RealMiniApp {

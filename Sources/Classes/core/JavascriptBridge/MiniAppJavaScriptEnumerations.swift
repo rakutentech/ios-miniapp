@@ -27,6 +27,7 @@ enum MiniAppJSActionCommand: String {
     case clearSecureStorage
     case getSecureStorageSize
     case setCloseAlert
+    case sendJsonToHostapp
 }
 
 enum JavaScriptExecResult: String {
@@ -129,6 +130,7 @@ public enum MiniAppEvent: String {
     case resume = "miniappresume"
     case secureStorageReady = "miniappsecurestorageready"
     case secureStorageError = "miniappsecurestorageloaderror"
+    case miniappReceiveJsonString = "miniappreceivejsoninfo"
 
     public static let notificationName = Notification.Name("MiniAppNotificationEvent")
 
