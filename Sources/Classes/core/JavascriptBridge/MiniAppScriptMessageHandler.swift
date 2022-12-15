@@ -759,7 +759,7 @@ extension MiniAppScriptMessageHandler {
                 self.manageJsonStringToHostAppResult(result, with: callbackId)
             })
         } else {
-            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.valueIsEmpty))
+            self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.valueIsEmpty))
         }
     }
     

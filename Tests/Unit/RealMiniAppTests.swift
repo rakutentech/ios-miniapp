@@ -749,7 +749,7 @@ class RealMiniAppTests: QuickSpec {
                     realMiniApp.sendJsonToHostApp(info: "Test String to host from miniapp") { (result) in
                         switch result {
                         case .success:
-                            break
+                            fail("should not succeed")
                         case .failure(let error):
                             testResponseError = error
                         }
