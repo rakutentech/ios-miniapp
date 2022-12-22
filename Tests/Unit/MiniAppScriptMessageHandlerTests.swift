@@ -538,6 +538,23 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
                 }
+                it("will return Error if contacts are nil") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    mockMessageInterface.mockContactList = nil
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                       delegate: mockCallbackProtocol,
+                       hostAppMessageDelegate: mockMessageInterface,
+                       adsDisplayer: mockAdsDelegate,
+                       secureStorageDelegate: mockSecureStorageDelegate,
+                       miniAppManageDelegate: mockMiniAppManageInterface,
+                       miniAppId: mockMiniAppInfo.id, miniAppTitle: "Mini App"
+                    )
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .allowed)
+                    let mockMessage = MockWKScriptMessage(
+                       name: "", body: "{\"action\": \"getContacts\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.internalError.rawValue), timeout: .seconds(10))
+                }
             }
             context("when MiniAppScriptMessageHandler receives getAccessToken command without scopes") {
                 it("will return an error") {
