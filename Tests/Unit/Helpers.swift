@@ -411,9 +411,9 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockContactList: [MAContact]? = [
         MAContact(
             id: "contact_id",
-            name: "test test",
-            email: MiniAppStore.fakeMail(with: "test test"),
-            allEmailList: MiniAppStore.fakeMailList(with: "test test")
+            name: MiniAppStore.randomFakeName(),
+            email: MiniAppStore.fakeMail(with: MiniAppStore.randomFakeName()),
+            allEmailList: MiniAppStore.fakeMailList(with: MiniAppStore.randomFakeName())
         )
     ]
     var messageContentAllowed: Bool = false
@@ -517,7 +517,6 @@ class MockMessageInterface: MiniAppMessageDelegate {
         } else {
             completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
         }
-        
     }
 
     func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
