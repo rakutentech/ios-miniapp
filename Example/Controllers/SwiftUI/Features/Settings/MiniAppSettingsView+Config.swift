@@ -234,7 +234,7 @@ extension MiniAppSettingsView {
             case .contacts:
                 return Image(systemName: "person.3.fill")
             case .accessToken:
-                return Image(systemName: "checkerboard.shield")
+                return Image("Security")
             case .points:
                 return Image(systemName: "p.circle")
             case .signature:
