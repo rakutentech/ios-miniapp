@@ -1,7 +1,8 @@
 ## CHANGELOG
 
-### 5.1.0 (TBD)
+### 5.1.0 (xxxx-xx-xx)
 **SDK**
+- **Update:** Added `allEmailList` field in `MAContact` to support multiple emails of a specific contact.
 - **Feature:** Universal Bridge support for receiving the Json or string content from the MiniApp to host app. 
 - **Feature:** Added new public protocol `UniversalBridgeDelegate` which is confirmed by `MiniAppMessageDelegate`, further added public interface `sendJsonToHostApp(info:, completionHandler:) -> Void)` in `UniversalBridgeDelegate` which can be implemented in host app to receive the string content from mini app and use in host app through Universal Bridge.
 <details>
