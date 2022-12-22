@@ -46,7 +46,7 @@ class MiniAppStore: ObservableObject {
         // contacts
         let randomList: [MAContact] = (0..<10).map({ _ in
             let fakeName = Self.randomFakeName()
-            return MAContact(id: UUID().uuidString, name: fakeName, email: Self.fakeMail(with: fakeName), allEmailList:Self.fakeMailList(with: fakeName))
+            return MAContact(id: UUID().uuidString, name: fakeName, email: Self.fakeMail(with: fakeName), allEmailList: Self.fakeMailList(with: fakeName))
         })
         updateContactList(list: randomList)
 
@@ -160,19 +160,17 @@ class MiniAppStore: ObservableObject {
     }
 
     class func fakeMailList(with name: String?) -> [String] {
-        var allEmails:[String] = []
-        for i in 1...3 {
-            allEmails.append(name != nil ? name!.replacingOccurrences(of: " ", with: ".", options: .literal, range: nil).lowercased() + "@example\(i).com" : "")
+        var allEmails: [String] = []
+        for index in 1...3 {
+            allEmails.append(name != nil ? name!.replacingOccurrences(of: " ", with: ".", options: .literal, range: nil).lowercased() + "@example\(index).com" : "")
         }
         return allEmails
     }
 
     func createRandomContact() -> MAContact {
         let fakeName = Self.randomFakeName()
-        return MAContact(id: UUID().uuidString, name: fakeName, email: Self.fakeMail(with: fakeName), allEmailList:Self.fakeMailList(with: fakeName))
+        return MAContact(id: UUID().uuidString, name: fakeName, email: Self.fakeMail(with: fakeName), allEmailList: Self.fakeMailList(with: fakeName))
     }
-    
-    
 
     func getMiniAppPreviewInfo(previewToken: String) async throws -> MiniAppInfo? {
         try await withCheckedThrowingContinuation { continuation in

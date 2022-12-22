@@ -153,7 +153,7 @@ class MiniAppSettingsViewModel: ObservableObject {
 
     func createRandomContact() -> MAContact {
         let fakeName = MiniAppStore.randomFakeName()
-        return MAContact(id: UUID().uuidString, name: fakeName, email: MiniAppStore.fakeMail(with: fakeName), allEmailList:MiniAppStore.fakeMailList(with: fakeName))
+        return MAContact(id: UUID().uuidString, name: fakeName, email: MiniAppStore.fakeMail(with: fakeName), allEmailList: MiniAppStore.fakeMailList(with: fakeName))
     }
 
     // MARK: - Access Token
