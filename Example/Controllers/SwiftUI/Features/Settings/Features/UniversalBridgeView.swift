@@ -10,7 +10,7 @@ struct UniversalBridgeView: View {
         VStack {
             TextEditor(text: $textToSend)
                 .padding()
-                .frame(width : 300.0, height : 200)
+                .frame(width: 300.0, height: 200)
                 .overlay(
                     RoundedRectangle(cornerRadius: 5)
                         .stroke(Color.red, lineWidth: 1)
