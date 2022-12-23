@@ -79,11 +79,14 @@ public struct MAContact: Codable, Equatable, Hashable, Identifiable {
     public var name: String?
     /// Contact Email address
     public var email: String?
+    /// Contact Email addresses list
+    public var allEmailList: [String]?
 
-    public init(id: String, name: String? = nil, email: String? = nil) {
+    public init(id: String, name: String? = nil, email: String? = nil, allEmailList: [String]? = nil) {
         self.id = id
         self.name = name
         self.email = email
+        self.allEmailList = allEmailList
     }
 
     public static func == (lhs: MAContact, rhs: MAContact) -> Bool {
@@ -94,5 +97,6 @@ public struct MAContact: Codable, Equatable, Hashable, Identifiable {
         hasher.combine(id)
         hasher.combine(name)
         hasher.combine(email)
+        hasher.combine(allEmailList)
     }
 }

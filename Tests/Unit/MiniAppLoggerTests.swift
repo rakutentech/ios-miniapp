@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import Foundation
+import os
 @testable import MiniApp
 
 class MiniAppLoggerTests: QuickSpec {
@@ -11,6 +12,16 @@ class MiniAppLoggerTests: QuickSpec {
                 it("will not crash") {
                     expect {
                         MiniAppLogger.d("test")
+                    }.toNot(throwAssertion())
+                }
+            }
+            context("when I log something on debug with custom bullet and otput pormatting") {
+                it("will not crash") {
+                    expect {
+                        MiniAppLogger.d(codable: "error","🔴", true, outputFormatting: .prettyPrinted)
+                    }.toNot(throwAssertion())
+                    expect {
+                        MiniAppLogger.d("test", "🔴", true)
                     }.toNot(throwAssertion())
                 }
             }
