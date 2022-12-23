@@ -1,5 +1,6 @@
 import Quick
 import Nimble
+import Foundation
 @testable import MiniApp
 
 class MiniAppExternalWebViewControllerTests: QuickSpec {
@@ -13,6 +14,13 @@ class MiniAppExternalWebViewControllerTests: QuickSpec {
                     expect(config.defaultWebpagePreferences.allowsContentJavaScript).to(equal(true))
                     expect(config.allowsInlineMediaPlayback).to(equal(true))
                     expect(config.allowsPictureInPictureMediaPlayback).to(equal(true))
+                }
+            }
+            context("when modally presenting the external web view") {
+                it("will present the webview with close navigation controller") {
+                    MiniAppExternalWebViewController.presentModally(url: URL(string: "https://www.google.com")!, externalLinkResponseHandler: nil, customMiniAppURL: nil, onCloseHandler: nil)
+                    expect(UIApplication.shared.keyWindow()?.topController()!).toEventually(beAnInstanceOf(MiniAppCloseNavigationController.self))
+                    UIApplication.shared.keyWindow()?.topController()?.dismiss(animated: true, completion: nil)
                 }
             }
         }
