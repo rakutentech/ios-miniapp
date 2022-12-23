@@ -3,7 +3,7 @@ import UIKit
 
 /// Mini App Public API methods
 public class MiniApp: NSObject {
-    public static let version = "5.0.0"
+    public static let version = "5.1.0"
     private static let shared = MiniApp()
     private let realMiniApp = RealMiniApp()
     public static var MAOrientationLock: UIInterfaceOrientationMask = []
