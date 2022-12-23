@@ -9,9 +9,15 @@ struct UniversalBridgeView: View {
     var body: some View {
         VStack {
             TextEditor(text: $textToSend)
-                .lineLimit(15)
-                .frame(width: 300, height: 400, alignment: .top)
+                .padding()
+                .frame(width: 300.0, height: 200)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color.red, lineWidth: 1)
+                ).keyboardType(.alphabet)
+                .padding()
             Button {
+                dismissKeyboard()
                 sendDataStringToMiniApp(textString: $textToSend.wrappedValue)
             } label: {
                 Text("Send Data to MiniApp")
@@ -19,6 +25,9 @@ struct UniversalBridgeView: View {
         }
         .navigationTitle(pageName)
         .trackPage(pageName: pageName)
+        .onTapGesture {
+            dismissKeyboard()
+        }
     }
 
     func sendDataStringToMiniApp(textString str: String) {
