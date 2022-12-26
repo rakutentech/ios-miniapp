@@ -116,7 +116,7 @@ extension MiniAppSettingsContactsView {
         @Binding var contactData: MAContact
         @Binding var isEditing: Bool
         @State private var isContactInfoValid: Bool = false
-        @Binding var allEmailList:[String]
+        @Binding var allEmailList: [String]
 
         var onSave: () -> Void
 
@@ -128,23 +128,24 @@ extension MiniAppSettingsContactsView {
                 TextField("Contact Id", text: $contactData.id)
                 TextField("Email", text: $contactData.email ?? "")
                     .keyboardType(.emailAddress)
-                ForEach(allEmailList.indices, id: \.self){ index in
-                    HStack{
+                ForEach(allEmailList.indices, id: \.self) { index in
+                    HStack {
                         TextField("Email \(index + 1)", text: $allEmailList[index])
                             .keyboardType(.emailAddress)
-                        Button(action: {
+                        Button {
                             allEmailList.remove(at: index)
-                        }) {
+                        } label: {
                             Image(systemName: "at.badge.minus")
                                 .foregroundColor(Color.red)
                         }
+
                     }
                 }
-                HStack{
+                HStack {
                     Spacer()
-                    Button(action: {
+                    Button {
                         allEmailList.append("")
-                    }) {
+                    } label: {
                         Image(systemName: "at.badge.plus")
                             .foregroundColor(Color.red)
                     }
@@ -203,7 +204,7 @@ extension MiniAppSettingsContactsView {
                 return errorMessage
             }
 
-            for (idx,emailId) in allEmails.enumerated() {
+            for (idx, emailId) in allEmails.enumerated() {
                 if !emailId.isValueEmpty() {
                     if !emailId.isValidEmail() {
                         errorMessage += "Email \(idx + 1) is invalid.\n"
@@ -219,10 +220,11 @@ extension MiniAppSettingsContactsView {
 
         func validateContactinfo() -> Bool {
             var isEmailListValid = true
-            for (_,emailId) in contactData.allEmailList!.enumerated() {
-                if !emailId.isValidEmail() {
-                    isEmailListValid = false
-                }
+            guard let emailList = contactData.allEmailList else {
+                return (!(contactData.name ?? "").isValueEmpty() && !contactData.id.isValueEmpty() && (contactData.email ?? "").isValidEmail() && isEmailListValid)
+            }
+            for emailId in emailList where !emailId.isValidEmail() {
+                isEmailListValid = false
             }
             return (!(contactData.name ?? "").isValueEmpty() && !contactData.id.isValueEmpty() && (contactData.email ?? "").isValidEmail() && isEmailListValid)
         }
