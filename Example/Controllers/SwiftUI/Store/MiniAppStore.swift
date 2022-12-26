@@ -161,9 +161,7 @@ class MiniAppStore: ObservableObject {
 
     class func fakeMailList(with name: String?) -> [String] {
         var allEmails: [String] = []
-        for index in 1...3 {
-            allEmails.append(name != nil ? name!.replacingOccurrences(of: " ", with: ".", options: .literal, range: nil).lowercased() + "@example\(index).com" : "")
-        }
+        allEmails.append(name != nil ? name!.replacingOccurrences(of: " ", with: ".", options: .literal, range: nil).lowercased() + "@example1.com" : "")
         return allEmails
     }
 

@@ -15,7 +15,8 @@ struct MiniAppSettingsContactsView: View {
                     ContactCellView(
                         name: contact.name ?? "",
                         contactId: contact.id,
-                        email: contact.email ?? ""
+                        email: contact.email ?? "",
+                        allEmails: contact.allEmailList ?? [""]
                     )
                     .onTapGesture {
                         guard let index = index(for: contact.wrappedValue) else { return }
@@ -29,6 +30,7 @@ struct MiniAppSettingsContactsView: View {
                 ContactFormView(
                     contactData: Binding<MAContact>(get: { contact }, set: {new in editContact = new }),
                     isEditing: Binding<Bool>(get: { index(for: contact) != nil }, set: { _ in }),
+                    allEmailList: Binding<[String]>(get: {contact.allEmailList!}, set: {new in editContact?.allEmailList = new}),
                     onSave: {
                         if let index = index(for: contact) {
                             contacts[index] = contact
@@ -85,6 +87,7 @@ extension MiniAppSettingsContactsView {
         @Binding var name: String
         @Binding var contactId: String
         @Binding var email: String
+        @Binding var allEmails: [String]
 
         var body: some View {
             HStack {
@@ -98,6 +101,9 @@ extension MiniAppSettingsContactsView {
                     Text("Contact ID: \(contactId)")
                         .lineLimit(1)
                     Text("E-Mail address: \(email)")
+                    ForEach(allEmails.indices, id: \.self) { index in
+                        Text("Email \(index + 1): \(allEmails[index])")
+                    }
                 }
                 .font(.system(size: 13))
             }
@@ -110,6 +116,7 @@ extension MiniAppSettingsContactsView {
         @Binding var contactData: MAContact
         @Binding var isEditing: Bool
         @State private var isContactInfoValid: Bool = false
+        @Binding var allEmailList:[String]
 
         var onSave: () -> Void
 
@@ -120,6 +127,28 @@ extension MiniAppSettingsContactsView {
                 TextField("Name", text: $contactData.name ?? "")
                 TextField("Contact Id", text: $contactData.id)
                 TextField("Email", text: $contactData.email ?? "")
+                    .keyboardType(.emailAddress)
+                ForEach(allEmailList.indices, id: \.self){ index in
+                    HStack{
+                        TextField("Email \(index + 1)", text: $allEmailList[index])
+                            .keyboardType(.emailAddress)
+                        Button(action: {
+                            allEmailList.remove(at: index)
+                        }) {
+                            Image(systemName: "at.badge.minus")
+                                .foregroundColor(Color.red)
+                        }
+                    }
+                }
+                HStack{
+                    Spacer()
+                    Button(action: {
+                        allEmailList.append("")
+                    }) {
+                        Image(systemName: "at.badge.plus")
+                            .foregroundColor(Color.red)
+                    }
+                }
             }
             .navigationTitle(pageName)
             .navigationBarTitleDisplayMode(.inline)
@@ -169,12 +198,33 @@ extension MiniAppSettingsContactsView {
                 errorMessage += "Email id cannot be empty.\n"
             }
 
+            guard let allEmails = contactData.allEmailList else {
+                errorMessage += "Please correct and try again."
+                return errorMessage
+            }
+
+            for (idx,emailId) in allEmails.enumerated() {
+                if !emailId.isValueEmpty() {
+                    if !emailId.isValidEmail() {
+                        errorMessage += "Email \(idx + 1) is invalid.\n"
+                    }
+                } else {
+                    errorMessage += "Email \(idx + 1) cannot be empty.\n"
+                }
+            }
+
             errorMessage += "Please correct and try again."
             return errorMessage
         }
 
         func validateContactinfo() -> Bool {
-            return (!(contactData.name ?? "").isValueEmpty() && !contactData.id.isValueEmpty() && (contactData.email ?? "").isValidEmail())
+            var isEmailListValid = true
+            for (_,emailId) in contactData.allEmailList!.enumerated() {
+                if !emailId.isValidEmail() {
+                    isEmailListValid = false
+                }
+            }
+            return (!(contactData.name ?? "").isValueEmpty() && !contactData.id.isValueEmpty() && (contactData.email ?? "").isValidEmail() && isEmailListValid)
         }
 
         var pageName: String {
