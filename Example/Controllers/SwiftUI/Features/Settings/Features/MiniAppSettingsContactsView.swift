@@ -130,7 +130,7 @@ extension MiniAppSettingsContactsView {
                     .keyboardType(.emailAddress)
                 ForEach(allEmailList.indices, id: \.self) { index in
                     HStack {
-                        TextField("Email Address (Optional) \(index + 1)", text: $allEmailList[index])
+                        TextField("E-mail Address (Optional) \(index + 1)", text: $allEmailList[index])
                             .keyboardType(.emailAddress)
                         Button {
                             allEmailList.remove(at: index)
