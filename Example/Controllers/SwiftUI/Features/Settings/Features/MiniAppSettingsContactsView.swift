@@ -30,7 +30,7 @@ struct MiniAppSettingsContactsView: View {
                 ContactFormView(
                     contactData: Binding<MAContact>(get: { contact }, set: {new in editContact = new }),
                     isEditing: Binding<Bool>(get: { index(for: contact) != nil }, set: { _ in }),
-                    allEmailList: Binding<[String]>(get: {contact.allEmailList!}, set: {new in editContact?.allEmailList = new}),
+                    allEmailList: Binding<[String]>(get: { contact.allEmailList ?? [""] }, set: {new in editContact?.allEmailList = new}),
                     onSave: {
                         if let index = index(for: contact) {
                             contacts[index] = contact
@@ -101,8 +101,8 @@ extension MiniAppSettingsContactsView {
                     Text("Contact ID: \(contactId)")
                         .lineLimit(1)
                     Text("E-Mail address: \(email)")
-                    ForEach(allEmails.indices, id: \.self) { index in
-                        Text("Email \(index + 1): \(allEmails[index])")
+                    if !allEmails.isEmpty && allEmails.first != "" {
+                        Text("Email List: \(allEmails.map { String($0) }.joined(separator: ", "))")
                     }
                 }
                 .font(.system(size: 13))
@@ -130,7 +130,7 @@ extension MiniAppSettingsContactsView {
                     .keyboardType(.emailAddress)
                 ForEach(allEmailList.indices, id: \.self) { index in
                     HStack {
-                        TextField("Email \(index + 1)", text: $allEmailList[index])
+                        TextField("Email Address (Optional) \(index + 1)", text: $allEmailList[index])
                             .keyboardType(.emailAddress)
                         Button {
                             allEmailList.remove(at: index)
@@ -138,7 +138,6 @@ extension MiniAppSettingsContactsView {
                             Image(systemName: "at.badge.minus")
                                 .foregroundColor(Color.red)
                         }
-
                     }
                 }
                 HStack {
