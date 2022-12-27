@@ -209,7 +209,7 @@ extension MiniAppSettingsContactsView {
                         errorMessage += "E-mail \(idx + 1) is invalid.\n"
                     }
                 } else {
-                    errorMessage += "Email \(idx + 1) cannot be empty.\n"
+                    errorMessage += "E-mail \(idx + 1) cannot be empty.\n"
                 }
             }
 
