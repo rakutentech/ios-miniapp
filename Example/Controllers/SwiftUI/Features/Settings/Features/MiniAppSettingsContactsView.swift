@@ -16,7 +16,7 @@ struct MiniAppSettingsContactsView: View {
                         name: contact.name ?? "",
                         contactId: contact.id,
                         email: contact.email ?? "",
-                        allEmails: contact.allEmailList ?? [""]
+                        allEmails: contact.allEmailList ?? []
                     )
                     .onTapGesture {
                         guard let index = index(for: contact.wrappedValue) else { return }
@@ -30,7 +30,7 @@ struct MiniAppSettingsContactsView: View {
                 ContactFormView(
                     contactData: Binding<MAContact>(get: { contact }, set: {new in editContact = new }),
                     isEditing: Binding<Bool>(get: { index(for: contact) != nil }, set: { _ in }),
-                    allEmails: Binding<[String]>(get: { contact.allEmailList ?? [""] }, set: {new in editContact?.allEmailList = new}),
+                    allEmails: Binding<[String]>(get: { contact.allEmailList ?? [] }, set: {new in editContact?.allEmailList = new}),
                     onSave: {
                         if let index = index(for: contact) {
                             contacts[index] = removeEmptyEmailStrings(for: contact)
@@ -71,11 +71,7 @@ struct MiniAppSettingsContactsView: View {
     func removeEmptyEmailStrings(for contact: MAContact) -> MAContact {
         var newContact = contact
         if newContact.allEmailList != nil {
-            if newContact.allEmailList?.first ?? "" == "" {
-                newContact.allEmailList = nil
-            } else {
-                newContact.allEmailList = newContact.allEmailList?.filter { $0 != "" }
-            }
+            newContact.allEmailList = newContact.allEmailList?.filter { $0 != "" }
             return newContact
         } else {
             return newContact
