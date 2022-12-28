@@ -413,7 +413,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
             id: "contact_id",
             name: MiniAppStore.randomFakeName(),
             email: MiniAppStore.fakeMail(with: MiniAppStore.randomFakeName()),
-            allEmailList: ["test@test.com"]
+            allEmailList: [MiniAppStore.fakeMail(with: MiniAppStore.randomFakeName()),MiniAppStore.fakeMail(with: MiniAppStore.randomFakeName()),MiniAppStore.fakeMail(with: MiniAppStore.randomFakeName())]
         )
     ]
     var messageContentAllowed: Bool = false
