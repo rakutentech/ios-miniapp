@@ -15,7 +15,8 @@ struct MiniAppSettingsContactsView: View {
                     ContactCellView(
                         name: contact.name ?? "",
                         contactId: contact.id,
-                        email: contact.email ?? ""
+                        email: contact.email ?? "",
+                        allEmails: contact.allEmailList ?? []
                     )
                     .onTapGesture {
                         guard let index = index(for: contact.wrappedValue) else { return }
@@ -29,9 +30,10 @@ struct MiniAppSettingsContactsView: View {
                 ContactFormView(
                     contactData: Binding<MAContact>(get: { contact }, set: {new in editContact = new }),
                     isEditing: Binding<Bool>(get: { index(for: contact) != nil }, set: { _ in }),
+                    allEmails: Binding<[String]>(get: { contact.allEmailList ?? [] }, set: {new in editContact?.allEmailList = new}),
                     onSave: {
                         if let index = index(for: contact) {
-                            contacts[index] = contact
+                            contacts[index] = removeEmptyEmailStrings(for: contact)
                         } else {
                             contacts.insert(contact, at: 0)
                         }
@@ -65,6 +67,16 @@ struct MiniAppSettingsContactsView: View {
     func index(for contact: MAContact) -> Int? {
         return contacts.firstIndex(where: { $0.id == contact.id })
     }
+
+    func removeEmptyEmailStrings(for contact: MAContact) -> MAContact {
+        var newContact = contact
+        if newContact.allEmailList != nil {
+            newContact.allEmailList = newContact.allEmailList?.filter { $0 != "" }
+            return newContact
+        } else {
+            return newContact
+        }
+    }
 }
 
 extension MiniAppSettingsContactsView: ViewTrackable {
@@ -85,6 +97,7 @@ extension MiniAppSettingsContactsView {
         @Binding var name: String
         @Binding var contactId: String
         @Binding var email: String
+        @Binding var allEmails: [String]
 
         var body: some View {
             HStack {
@@ -98,6 +111,9 @@ extension MiniAppSettingsContactsView {
                     Text("Contact ID: \(contactId)")
                         .lineLimit(1)
                     Text("E-Mail address: \(email)")
+                    if allEmails.first ?? "" != "" {
+                        Text("Email List: \(allEmails.map { String($0) }.joined(separator: ", "))")
+                    }
                 }
                 .font(.system(size: 13))
             }
@@ -109,7 +125,8 @@ extension MiniAppSettingsContactsView {
 
         @Binding var contactData: MAContact
         @Binding var isEditing: Bool
-        @State private var isContactInfoValid: Bool = false
+        @State private var isContactInfoInValid: Bool = false
+        @Binding var allEmails: [String]
 
         var onSave: () -> Void
 
@@ -120,6 +137,35 @@ extension MiniAppSettingsContactsView {
                 TextField("Name", text: $contactData.name ?? "")
                 TextField("Contact Id", text: $contactData.id)
                 TextField("Email", text: $contactData.email ?? "")
+                    .keyboardType(.emailAddress)
+                ForEach(allEmails.indices, id: \.self) { index in
+                    HStack {
+                        TextField("E-mail Address (Optional) \(index + 1)", text: $allEmails[index])
+                            .keyboardType(.emailAddress)
+                        Button {
+                            allEmails.remove(at: index)
+                        } label: {
+                            Image(systemName: "at.badge.minus")
+                                .foregroundColor(Color.red)
+                        }
+                    }
+                }
+                HStack {
+                    Spacer()
+                    Button {
+                        if allEmails.count < 5 {
+                            allEmails.append("")
+                        }
+                    } label: {
+                        if allEmails.count < 5 {
+                            Image(systemName: "at.badge.plus")
+                                .foregroundColor(Color.red)
+                        } else {
+                            Text("Maximum of 5 E-mails allowed")
+                                .foregroundColor(Color.red)
+                        }
+                    }.disabled(allEmails.count > 5)
+                }
             }
             .navigationTitle(pageName)
             .navigationBarTitleDisplayMode(.inline)
@@ -134,16 +180,17 @@ extension MiniAppSettingsContactsView {
                     Button {
                         trackButtonTap(pageName: pageName, buttonTitle: "Save")
                         if validateContactinfo() {
+                            isContactInfoInValid = false
                             onSave()
                         } else {
-                            isContactInfoValid = true
+                            isContactInfoInValid = true
                         }
                     } label: {
                         Text("Save")
                     }
                 }
             }
-            .alert(isPresented: $isContactInfoValid) {
+            .alert(isPresented: $isContactInfoInValid) {
                 let errorMessage = self.getValidationErrormessage()
                 return Alert(
                     title: Text("Invalid Contact Details"),
@@ -160,21 +207,31 @@ extension MiniAppSettingsContactsView {
             if contactData.id.isValueEmpty() {
                 errorMessage += "Contact Id cannot be empty.\n"
             }
-
             if let email = contactData.email, !email.isValueEmpty() {
                 if !email.isValidEmail() {
-                    errorMessage += "Email id is invalid.\n"
+                    errorMessage += "E-mail id is invalid.\n"
                 }
             } else {
-                errorMessage += "Email id cannot be empty.\n"
+                errorMessage += "E-mail id cannot be empty.\n"
+            }
+            guard let allEmails = contactData.allEmailList else {
+                errorMessage += "Please correct and try again."
+                return errorMessage
             }
 
+            for (idx, emailId) in allEmails.enumerated() where (!emailId.isValueEmpty() && !emailId.isValidEmail()) {
+                errorMessage += "E-mail \(idx + 1) is invalid.\n"
+            }
             errorMessage += "Please correct and try again."
             return errorMessage
         }
 
         func validateContactinfo() -> Bool {
-            return (!(contactData.name ?? "").isValueEmpty() && !contactData.id.isValueEmpty() && (contactData.email ?? "").isValidEmail())
+            var isEmailListValid = true
+            for emailStr in allEmails where !emailStr.isValueEmpty() {
+                isEmailListValid = emailStr.isValidEmail()
+            }
+            return (!(contactData.name ?? "").isValueEmpty() && !contactData.id.isValueEmpty() && (contactData.email ?? "").isValidEmail() && isEmailListValid)
         }
 
         var pageName: String {
