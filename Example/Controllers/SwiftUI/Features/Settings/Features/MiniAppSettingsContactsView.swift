@@ -232,12 +232,8 @@ extension MiniAppSettingsContactsView {
 
         func validateContactinfo() -> Bool {
             var isEmailListValid = true
-            for emailStr in allEmails {
-                if emailStr == "" {
-                    isEmailListValid = true
-                } else {
-                    isEmailListValid = emailStr.isValidEmail()
-                }
+            for emailStr in allEmails where !emailStr.isValueEmpty() {
+                isEmailListValid = emailStr.isValidEmail()
             }
             return (!(contactData.name ?? "").isValueEmpty() && !contactData.id.isValueEmpty() && (contactData.email ?? "").isValidEmail() && isEmailListValid)
         }
