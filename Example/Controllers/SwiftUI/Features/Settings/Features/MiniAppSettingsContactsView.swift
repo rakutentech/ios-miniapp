@@ -222,6 +222,7 @@ extension MiniAppSettingsContactsView {
                 errorMessage += "Please correct and try again."
                 return errorMessage
             }
+
             for (idx, emailId) in allEmails.enumerated() where (!emailId.isValueEmpty() && !emailId.isValidEmail()) {
                 errorMessage += "E-mail \(idx + 1) is invalid.\n"
             }
