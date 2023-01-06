@@ -94,7 +94,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageItems: nil,
                         secureStorageKeyList: nil,
                         closeAlertInfo: nil,
-                        jsonInfo: JsonStringInfoParameters(content: "")
+                        jsonInfo: JsonStringInfoParameters(content: ""),
+                        miniAppShouldClose: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -122,7 +123,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageItems: nil,
                         secureStorageKeyList: nil,
                         closeAlertInfo: nil,
-                        jsonInfo: JsonStringInfoParameters(content: "")
+                        jsonInfo: JsonStringInfoParameters(content: ""),
+                        miniAppShouldClose: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -150,7 +152,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageItems: nil,
                         secureStorageKeyList: nil,
                         closeAlertInfo: nil,
-                        jsonInfo: JsonStringInfoParameters(content: "")
+                        jsonInfo: JsonStringInfoParameters(content: ""),
+                        miniAppShouldClose: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMessagingUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -178,7 +181,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageItems: nil,
                         secureStorageKeyList: nil,
                         closeAlertInfo: nil,
-                        jsonInfo: JsonStringInfoParameters(content: "")
+                        jsonInfo: JsonStringInfoParameters(content: ""),
+                        miniAppShouldClose: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMauid", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)

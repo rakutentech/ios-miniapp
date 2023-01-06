@@ -168,6 +168,16 @@ struct MiniAppSingleView: View {
                 sendResumeMiniApp(miniAppId: viewModel.miniAppId, version: viewModel.miniAppVersion)
             }
         })
+        .onChange(of: viewModel.closeWithConfirmation, perform: { withConfirmation in
+            if withConfirmation {
+                closeAlertMessage = MiniAppAlertMessage(
+                    title: "Close Miniapp",
+                    message: "Are you sure, you want to close this MiniApp?"
+                )
+            } else {
+                presentationMode.wrappedValue.dismiss()
+            }
+        })
         .trackPage(pageName: pageName)
     }
 

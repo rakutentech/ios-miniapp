@@ -16,6 +16,7 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
     var onSendMessage: (() -> Void)?
 
     var onSendJsonToHostApp: ((String) -> Void)?
+    var onShoudCloseMiniApp: ((Bool) -> Void)?
 
     init(miniAppId: String = "", miniAppVersion: String? = nil) {
         self.miniAppId = miniAppId
@@ -177,6 +178,10 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
     func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
         onSendJsonToHostApp?(info)
         completionHandler(.success(.success))
+    }
+
+    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool,MASDKError>) -> Void) {
+        onShoudCloseMiniApp?(withConfirmation)
     }
 }
 

@@ -28,6 +28,7 @@ enum MiniAppJSActionCommand: String {
     case getSecureStorageSize
     case setCloseAlert
     case sendJsonToHostapp
+    case miniAppShouldClose
 }
 
 enum JavaScriptExecResult: String {

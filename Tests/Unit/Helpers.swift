@@ -374,6 +374,10 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
+    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
+        //TO-DO: implementation pending
+    }
+    
     func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.sendJsonToHostApp(info: info, completionHandler: completionHandler)
@@ -553,6 +557,10 @@ class MockMessageInterface: MiniAppMessageDelegate {
         } else {
             completionHandler(.failure(.failedToConformToProtocol))
         }
+    }
+
+    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
+        //TO-DO: implementation pending
     }
 }
 
