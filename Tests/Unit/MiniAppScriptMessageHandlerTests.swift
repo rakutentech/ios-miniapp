@@ -95,7 +95,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageKeyList: nil,
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
-                        miniAppShouldClose: nil
+                        withConfirmationAlert: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -124,7 +124,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageKeyList: nil,
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
-                        miniAppShouldClose: nil
+                        withConfirmationAlert: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -153,7 +153,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageKeyList: nil,
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
-                        miniAppShouldClose: nil
+                        withConfirmationAlert: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMessagingUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -182,7 +182,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         secureStorageKeyList: nil,
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
-                        miniAppShouldClose: nil
+                        withConfirmationAlert: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMauid", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -1404,7 +1404,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     miniAppTitle: mockMiniAppTitle
                 )
                 it("will return SUCCESS after host app recieves valid content strig") {
-                    mockMessageInterface.messageContentAllowed = true
+                    mockMessageInterface.mockInterfaceImplemented = true
                     let command = "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.050192665128856\"}"
                     let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -1412,7 +1412,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(callbackProtocol.response).toEventually(equal(MASDKProtocolResponse.success.rawValue), timeout: .seconds(10))
                 }
                 it("will return failedToConformToProtocol Error when message interface is nil") {
-                    mockMessageInterface.messageContentAllowed = false
+                    mockMessageInterface.mockInterfaceImplemented = false
                     let command = "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.050192665128856\"}"
                     let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
@@ -1430,6 +1430,32 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         name: "", body: command as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.name))
+                }
+            }
+            context("when host app recieve the closeMiniApp(withConfirmationAlert:) action") {
+                let scriptMessageHandler = MiniAppScriptMessageHandler(
+                    delegate: callbackProtocol,
+                    hostAppMessageDelegate: mockMessageInterface,
+                    adsDisplayer: mockAdsDelegate,
+                    secureStorageDelegate: mockSecureStorageDelegate,
+                    miniAppManageDelegate: mockMiniAppManageInterface,
+                    miniAppId: mockMiniAppInfo.id,
+                    miniAppTitle: mockMiniAppTitle
+                )
+                it("if protocol implemented the miniapp will be closed and success will be returned") {
+                    mockMessageInterface.mockInterfaceImplemented = true
+                    let command = "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.050192665128856\"}"
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: .seconds(10))
+                    expect(callbackProtocol.response).toEventually(equal(MASDKProtocolResponse.success.rawValue), timeout: .seconds(10))
+                }
+                it("if protocol delegate not implemented, will throw failed to confirm to protocol error") {
+                    mockMessageInterface.mockInterfaceImplemented = false
+                    let command = "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.050192665128856\"}"
+                    let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(UniversalBridgeError.failedToConformToProtocol.name))
                 }
             }
         }

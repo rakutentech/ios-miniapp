@@ -368,7 +368,7 @@ public class MiniAppViewController: UIViewController {
         present(nvc, animated: true, completion: nil)
     }
 
-    public func closeMiniApp(withConfirmation confirmation:Bool) {
+    public func closeMiniApp(withConfirmation confirmation: Bool) {
         if confirmation {
             self.closePressed()
         } else {

@@ -38,7 +38,7 @@ internal enum MiniAppRATEvent: String, CaseIterable {
     case getSecureStorageSize = "mini_app_secure_storage_size"
     case setCloseAlertInfo = "mini_app_close_alert_info"
     case sendJsonToHostapp = "mini_app_send_json_to_host_app"
-    case miniAppShouldClose = "mini_app_should_close_with_confirmation"
+    case closeMiniApp = "close_mini_app_with_confirmation_alert"
 
     func name() -> String {
         "mini_app_\(rawValue)"
@@ -79,7 +79,7 @@ internal enum MiniAppRATEvent: String, CaseIterable {
              .getSecureStorageSize,
              .setCloseAlertInfo,
              .sendJsonToHostapp,
-             .miniAppShouldClose:
+             .closeMiniApp:
             return .click
         }
     }
@@ -210,8 +210,8 @@ public class MiniAppAnalytics {
             return .setCloseAlertInfo
         case .sendJsonToHostapp:
             return .sendJsonToHostapp
-        case .miniAppShouldClose:
-            return .miniAppShouldClose
+        case .closeMiniApp:
+            return .closeMiniApp
         }
     }
 }

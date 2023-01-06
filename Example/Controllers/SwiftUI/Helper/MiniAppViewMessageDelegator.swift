@@ -180,7 +180,7 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
         completionHandler(.success(.success))
     }
 
-    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool,MASDKError>) -> Void) {
+    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
         onShoudCloseMiniApp?(withConfirmation)
     }
 }

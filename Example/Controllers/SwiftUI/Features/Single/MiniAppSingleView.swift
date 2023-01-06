@@ -67,7 +67,9 @@ struct MiniAppSingleView: View {
                         primaryButton: .default(Text("Ok"), action: {
                             presentationMode.wrappedValue.dismiss()
                         }),
-                        secondaryButton: .cancel(Text("Cancel"))
+                        secondaryButton: .cancel(Text("Cancel"), action: {
+                            viewModel.shouldCloseMiniApp.send(false)
+                        })
                     )
                 }
             }
@@ -168,14 +170,16 @@ struct MiniAppSingleView: View {
                 sendResumeMiniApp(miniAppId: viewModel.miniAppId, version: viewModel.miniAppVersion)
             }
         })
-        .onChange(of: viewModel.closeWithConfirmation, perform: { withConfirmation in
-            if withConfirmation {
-                closeAlertMessage = MiniAppAlertMessage(
-                    title: "Close Miniapp",
-                    message: "Are you sure, you want to close this MiniApp?"
-                )
-            } else {
-                presentationMode.wrappedValue.dismiss()
+        .onChange(of: viewModel.shouldCloseMiniApp.value, perform: { newValue in
+            if newValue {
+                if viewModel.closeWithConfirmation {
+                    closeAlertMessage = MiniAppAlertMessage(
+                        title: "Close Miniapp",
+                        message: "Are you sure, you want to close this MiniApp?"
+                    )
+                } else {
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
         })
         .trackPage(pageName: pageName)
