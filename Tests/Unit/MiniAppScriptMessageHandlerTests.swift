@@ -1444,7 +1444,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                 )
                 it("if protocol implemented the miniapp will be closed and success will be returned") {
                     mockMessageInterface.mockInterfaceImplemented = true
-                    let command = "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.050192665128856\"}"
+                    let command = "{\"action\":\"closeMiniApp\",\"param\":{\"withConfirmationAlert\":true},\"id\":\"11.4876229746876\"}"
                     let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: .seconds(10))
@@ -1452,10 +1452,18 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                 }
                 it("if protocol delegate not implemented, will throw failed to confirm to protocol error") {
                     mockMessageInterface.mockInterfaceImplemented = false
-                    let command = "{\"action\":\"sendJsonToHostapp\",\"param\":{\"jsonInfo\":{\"content\":\"{\\\"data\\\":\\\"Thisisasamplejsoninformation\\\"}\"}},\"id\":\"10.050192665128856\"}"
+                    let command = "{\"action\":\"closeMiniApp\",\"param\":{\"withConfirmationAlert\":true},\"id\":\"11.4876229746876\"}"
                     let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.errorMessage).toEventually(contain(UniversalBridgeError.failedToConformToProtocol.name))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MASDKError.failedToConformToProtocol.errorDescription ??  ""))
+                }
+                it("will return Error unexpected message format when jsonInfo parameter is empty") {
+                    mockMessageInterface.mockInterfaceImplemented = true
+                    let command = "{\"action\":\"closeMiniApp\",\"param\":{\"wrongKeyName\":true},\"id\":\"11.4876229746876\"}"
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.name))
                 }
             }
         }
