@@ -367,6 +367,14 @@ public class MiniAppViewController: UIViewController {
         nvc.navigationBar.barTintColor = .systemBackground
         present(nvc, animated: true, completion: nil)
     }
+
+    public func closeMiniApp(withConfirmation confirmation: Bool) {
+        if confirmation {
+            self.closePressed()
+        } else {
+            self.closeMiniApp()
+        }
+    }
 }
 
 // MARK: - MiniAppNavigationDelegate

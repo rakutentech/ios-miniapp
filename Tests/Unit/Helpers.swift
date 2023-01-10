@@ -374,6 +374,11 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
+    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        return mockMessageInterface.closeMiniApp(withConfirmation: withConfirmation, completionHandler: completionHandler)
+    }
+    
     func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.sendJsonToHostApp(info: info, completionHandler: completionHandler)
@@ -421,6 +426,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockAccessToken: String? = ""
     var mockEnvironmentInfo: Bool = false
     var mockDownloadFile: Bool = false
+    var mockInterfaceImplemented: Bool = false
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         if messageContentAllowed {
@@ -548,8 +554,16 @@ class MockMessageInterface: MiniAppMessageDelegate {
     }
 
     func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
-        if messageContentAllowed {
+        if mockInterfaceImplemented {
             completionHandler(.success(.success))
+        } else {
+            completionHandler(.failure(.failedToConformToProtocol))
+        }
+    }
+
+    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
+        if mockInterfaceImplemented {
+            completionHandler(.success(true))
         } else {
             completionHandler(.failure(.failedToConformToProtocol))
         }

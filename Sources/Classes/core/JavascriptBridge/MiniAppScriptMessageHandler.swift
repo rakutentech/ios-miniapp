@@ -124,6 +124,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             setMiniAppCloseAlert(with: callbackId, parameters: requestParam)
         case .sendJsonToHostapp:
             sendJsonToHostApp(requestParam: requestParam, callbackId: callbackId)
+        case .closeMiniApp:
+            closeMiniApp(requestParam: requestParam, callbackId: callbackId)
         }
     }
 
@@ -774,6 +776,24 @@ extension MiniAppScriptMessageHandler {
             }
             self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppErrorType.unknownError))
         }
+    }
+}
+
+//MARK: MiniApp ShouldClose Handler
+extension MiniAppScriptMessageHandler {
+    func closeMiniApp(requestParam: RequestParameters?, callbackId: String) {
+        guard let requestParamValue = requestParam?.withConfirmationAlert else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
+            return
+        }
+
+        self.hostAppMessageDelegate?.closeMiniApp(withConfirmation: requestParamValue, completionHandler: { result in
+            switch result {
+            case .success: ()
+            case .failure(let error):
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
+            }
+        })
     }
 }
 

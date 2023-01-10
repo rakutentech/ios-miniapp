@@ -20,6 +20,10 @@ class MiniAppWithTermsViewModel: ObservableObject {
     var showMessageAlert: CurrentValueSubject<Bool, Never> = .init(false)
     var showJsonString: String?
 
+    var shouldCloseMiniApp: CurrentValueSubject<Bool, Never> = .init(false)
+
+    @Published var closeWithConfirmation: Bool = false
+
     @Published var canGoBack: Bool = false
     @Published var canGoForward: Bool = false
 
@@ -57,6 +61,10 @@ class MiniAppWithTermsViewModel: ObservableObject {
             delegator.onSendJsonToHostApp = { string in
                 self.showMessageAlert.send(true)
                 self.showJsonString = string
+            }
+            delegator.onShoudCloseMiniApp = { confirmation in
+                self.closeWithConfirmation = confirmation
+                self.shouldCloseMiniApp.send(true)
             }
         }
 

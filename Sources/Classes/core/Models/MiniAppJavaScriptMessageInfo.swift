@@ -24,6 +24,7 @@ struct RequestParameters: Decodable {
     let secureStorageKeyList: [String]?
     let closeAlertInfo: CloseAlertInfo?
     let jsonInfo: JsonStringInfoParameters?
+    let withConfirmationAlert: Bool?
 }
 
 struct LocationOptions: Decodable {

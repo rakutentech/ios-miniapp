@@ -37,13 +37,14 @@ struct MAJavascriptErrorModel: Codable {
     var message: String?
 }
 
-enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
+public enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
     case internalError
     case unexpectedMessageFormat
     case invalidPermissionType
     case valueIsEmpty
     case scopeError
     case audienceError
+    case failedToConformToProtocol = "FAILED_TO_CONFORM_PROTOCOL"
 
     var name: String {
         self.rawValue
@@ -63,6 +64,8 @@ enum MiniAppJavaScriptError: String, Codable, MiniAppErrorProtocol {
         return "No scopes provided for the audience requested"
         case .audienceError:
         return "Audience with scopes requested not allowed on this MiniApp"
+        case .failedToConformToProtocol:
+            return MASDKLocale.localize(.failedToConformToProtocol)
         }
     }
 }
@@ -311,7 +314,7 @@ public enum UniversalBridgeError: Error, MiniAppErrorProtocol {
     public var name: String {
         switch self {
         case .failedToConformToProtocol:
-            return "FailedToConformToProtocol"
+            return "FAILED_TO_CONFORM_PROTOCOL"
         case .error(let name):
             return name
         }
