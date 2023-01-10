@@ -1074,6 +1074,25 @@ window.addEventListener(MiniAppKeyboardEvents.KEYBOARDHIDDEN, function (e) {
 }
 ```
 
+<a id="miniapp-close-event-listner></a>
+
+### MiniApp Close
+
+MiniApp can request the host app to close itself through the javascript bridge event trigger.
+MiniApp-SDK provides the `MiniAppMessageDelegate` interface method `func closeMiniApp(withConfirmation: , completionHandler:)` which must be implemented in the host app.
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
+        if withConfirmation {
+            // You can handle the close action with confirmation alert.
+        } else {
+            // you can directly  close the MiniApp without the confirmation alert.
+        }
+    }
+}
+```
+
 <a id="faqs-and-troubleshooting"></a>
 
 ## FAQs and Troubleshooting
