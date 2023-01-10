@@ -476,7 +476,7 @@ extension RealMiniApp: MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
+    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }

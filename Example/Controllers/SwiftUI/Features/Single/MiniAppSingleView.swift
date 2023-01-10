@@ -173,10 +173,14 @@ struct MiniAppSingleView: View {
         .onChange(of: viewModel.shouldCloseMiniApp.value, perform: { newValue in
             if newValue {
                 if viewModel.closeWithConfirmation {
-                    closeAlertMessage = MiniAppAlertMessage(
-                        title: "Close Miniapp",
-                        message: "Are you sure, you want to close this MiniApp?"
-                    )
+                    if let closeInfo = handler.closeAlertInfo?(), closeInfo.shouldDisplay ?? true {
+                        closeAlertMessage = MiniAppAlertMessage(
+                            title: closeInfo.title ?? "",
+                            message: closeInfo.description ?? ""
+                        )
+                    } else {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 } else {
                     presentationMode.wrappedValue.dismiss()
                 }

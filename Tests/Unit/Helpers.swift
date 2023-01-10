@@ -374,7 +374,7 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
-    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
+    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.closeMiniApp(withConfirmation: withConfirmation, completionHandler: completionHandler)
     }
@@ -561,7 +561,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
+    func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
         if mockInterfaceImplemented {
             completionHandler(.success(true))
         } else {

@@ -791,7 +791,7 @@ extension MiniAppScriptMessageHandler {
             switch result {
             case .success: ()
             case .failure(let error):
-                self.handleMASDKError(error: error, callbackId: callbackId)
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
             }
         })
     }
