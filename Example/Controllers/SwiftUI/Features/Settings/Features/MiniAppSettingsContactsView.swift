@@ -179,7 +179,7 @@ extension MiniAppSettingsContactsView {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         trackButtonTap(pageName: pageName, buttonTitle: "Save")
-                        if validateContactinfo() {
+                        if isValidContactinfo() {
                             isContactInfoInValid = false
                             onSave()
                         } else {
@@ -226,12 +226,20 @@ extension MiniAppSettingsContactsView {
             return errorMessage
         }
 
-        func validateContactinfo() -> Bool {
+        func isValidContactinfo() -> Bool {
             var isEmailListValid = true
             for emailStr in allEmails where !emailStr.isValueEmpty() {
                 isEmailListValid = emailStr.isValidEmail()
             }
+            if containsDuplicateEmails() {
+                return false
+            }
             return (!(contactData.name ?? "").isValueEmpty() && !contactData.id.isValueEmpty() && (contactData.email ?? "").isValidEmail() && isEmailListValid)
+        }
+
+        func containsDuplicateEmails() -> Bool {
+            let duplicateArrayCount = Dictionary(grouping: allEmails, by: {$0}).filter { $1.count > 1 }.keys
+            return duplicateArrayCount.count > 0 || allEmails.contains(contactData.email ?? "")
         }
 
         var pageName: String {
