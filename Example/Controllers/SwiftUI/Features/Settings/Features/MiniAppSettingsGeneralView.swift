@@ -70,7 +70,9 @@ extension MiniAppSettingsGeneralView {
                 }
             }
             .onAppear {
-                parameters = getQueryParam()
+                DispatchQueue.main.async {
+                    parameters = getQueryParam()
+                }
             }
             .trackPage(pageName: pageName)
         }
