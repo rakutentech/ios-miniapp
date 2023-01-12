@@ -241,7 +241,7 @@ extension MiniAppSettingsContactsView {
             let duplicateArrayCount = Dictionary(grouping: allEmails, by: {$0}).filter { $1.count > 1 }.keys
             return duplicateArrayCount.count > 0 || allEmails.contains(contactData.email ?? "")
         }
-        
+
         var pageName: String {
             return isEditing ? (NSLocalizedString("demo.app.rat.page.name.editcontactsform", comment: "")) : (NSLocalizedString("demo.app.rat.page.name.contactsform", comment: ""))
         }
