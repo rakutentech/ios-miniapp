@@ -40,19 +40,19 @@ jobs:
       - store_artifacts:
           path: ./artifacts/unit-tests
       - persist_to_workspace:
-            root: .
-            paths:
-              - .
+          root: .
+          paths:
+            - .
       - persist_to_workspace:
-            root: ../
-            paths:
-              - MiniApp-Secrets.xcconfig
+          root: ../
+          paths:
+            - MiniApp-Secrets.xcconfig
       - codecov/upload:
-        file: "./artifacts/0/artifacts/unit-tests/report.junit"
+        file: './artifacts/0/artifacts/unit-tests/report.junit'
       - codecov/upload:
-        file: "./artifacts/0/artifacts/unit-tests/report.html"
+        file: './artifacts/0/artifacts/unit-tests/report.html'
       - codecov/upload:
-        file: "./artifacts/0/artifacts/unit-tests/compile_commands.json"
+        file: './artifacts/0/artifacts/unit-tests/compile_commands.json'
 
   app-center-publish-sim:
     <<: *container_medium
@@ -82,7 +82,24 @@ jobs:
       - run:
           name: Deploy to AppCenter
           no_output_timeout: 30m
-          command: ./scripts/deploy-to-app-center.sh -t Device
+          command: ./scripts/deploy-to-app-center.sh -t Device -build-prefix STG -app-center-group $APP_CENTER_GROUP
+      - run:
+          name: Clear Cache
+          when: always
+          command: rm ../MiniApp-Secrets.xcconfig || true
+
+  app-center-candidate-publish-device:
+    <<: *container_medium
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Copy Configurations
+          command: cp MiniApp-Secrets.xcconfig ../MiniApp-Secrets.xcconfig
+      - run:
+          name: Deploy to AppCenter
+          no_output_timeout: 30m
+          command: ./scripts/deploy-to-app-center.sh -t Device -build-prefix RC -app-center-group $APP_CENTER_GROUP_CANDIDATE
       - run:
           name: Clear Cache
           when: always
@@ -92,10 +109,16 @@ workflows:
   version: 2.1
   build-and-release-workflow:
     jobs:
-        - build-and-test
-        - app-center-publish-sim:
-            requires:
-              - build-and-test
-        - app-center-publish-device:
-            requires:
-              - build-and-test
+      - build-and-test
+      - app-center-publish-sim:
+          requires:
+            - build-and-test
+      - app-center-publish-device:
+          requires:
+            - build-and-test
+      - app-center-candidate-publish-device:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: candidate

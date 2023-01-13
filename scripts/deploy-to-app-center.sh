@@ -15,24 +15,28 @@ show_help()
 echo "
         Usage: [-v Type]
 
-        -t Type         Simulator
-        -d              Displays useful data to debug this script
-        -a              Automatic mode. Requires -v parameter to be 100% without prompt
-        -s              Same as -a but in silent mode
+        -t Type           Simulator/Device
+        -p Build Prefix   Build prefix
+        -d                Displays useful data to debug this script
+        -a                Automatic mode. Requires -v parameter to be 100% without prompt
+        -s                Same as -a but in silent mode
 
         For Example: ./deploy-to-app-center.sh -t SIMULATOR
 
-        -h              Help
+        -h                Help
 "
 }
 NO_PROMPT=0
 DEPLOY_TYPE_SIMULATOR="SIMULATOR"
 DEPLOY_TYPE_DEVICE="DEVICE"
 
-while getopts ":t:dhas" opt; do
+while getopts ":t:build-prefix:app-center-group:dhas" opt; do
   case $opt in
     t) TYPE="$OPTARG"
     ;;
+    build-prefix) BUILD_PREFIX="$OPTARG"
+    ;;
+    app-center-group) APPCENTER_GROUP="$OPTARG"
     d) set -ex
     ;;
     h) show_help; exit 0
@@ -72,21 +76,21 @@ deploy_simulator_build()
     echo "Creating ZIP file for Simulator build."
     zip -r ./artifacts/miniapp.app.zip ./artifacts/MiniApp_Example.app/*
 
-    echo "Deploying Simulator App build to $APP_CENTER_GROUP group on App Center."
+    echo "Deploying Simulator App build to $APPCENTER_GROUP group on App Center."
     appcenter distribute release \
     --token "$APP_CENTER_TOKEN" \
     --app "$APP_CENTER_APP_NAME" \
     --release-notes-file "$TMP_DIR"/CHANGELOG.md \
-    --group "$APP_CENTER_GROUP" \
-    --build-version "$CIRCLE_BUILD_NUM" \
+    --group "$APPCENTER_GROUP" \
+    --build-version "$CIRCLE_BUILD_NUM-$BUILD_PREFIX" \
     --file ./artifacts/miniapp.app.zip \
     --quiet
 
-    echo "Uploading Symbols to $APP_CENTER_GROUP group on App Center."
+    echo "Uploading Symbols to $APPCENTER_GROUP group on App Center."
     appcenter crashes upload-symbols \
     --symbol ./artifacts/MiniApp_Example.app.dSYM \
     --token "$APP_CENTER_TOKEN" \
-    --app "$APP_CENTER_DSYM_NAME" \
+    --app "$APP_CENTER_APP_NAME_DEVICE" \
     --quiet
 }
 
@@ -156,11 +160,11 @@ deploy_device_build()
     zip -rX "$DSYM_FILE" -- *
     cd "$WORK_DIR"
 
-    echo "Deploying Device App build to $APP_CENTER_GROUP group on App Center."
+    echo "Deploying Device App build to $APPCENTER_GROUP group on App Center."
     appcenter distribute release \
     --token "$APP_CENTER_TOKEN_DEVICE" \
     --app "$APP_CENTER_APP_NAME_DEVICE" \
-    --group "$APP_CENTER_GROUP" \
+    --group "$APPCENTER_GROUP" \
     --build-version "$CIRCLE_BUILD_NUM" \
     --release-notes-file "$TMP_DIR"/CHANGELOG.md \
     --file "$TMP_DIR"/MiniApp_Example.ipa \
@@ -170,7 +174,7 @@ deploy_device_build()
     appcenter crashes upload-symbols \
     --symbol "$DSYM_FILE" \
     --token "$APP_CENTER_TOKEN_DEVICE" \
-    --app "$APP_CENTER_DSYM_NAME" \
+    --app "$APP_CENTER_APP_NAME_DEVICE" \
     --quiet
 }
 
