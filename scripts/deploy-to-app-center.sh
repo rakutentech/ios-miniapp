@@ -15,11 +15,12 @@ show_help()
 echo "
         Usage: [-v Type]
 
-        -t Type           Simulator/Device
-        -p Build Prefix   Build prefix
-        -d                Displays useful data to debug this script
-        -a                Automatic mode. Requires -v parameter to be 100% without prompt
-        -s                Same as -a but in silent mode
+        -t Type             Simulator/Device
+        -p Build Prefix     Build prefix
+        -g Group Name       Appcenter groupname
+        -d                  Displays useful data to debug this script
+        -a                  Automatic mode. Requires -v parameter to be 100% without prompt
+        -s                  Same as -a but in silent mode
 
         For Example: ./deploy-to-app-center.sh -t SIMULATOR
 
@@ -30,13 +31,13 @@ NO_PROMPT=0
 DEPLOY_TYPE_SIMULATOR="SIMULATOR"
 DEPLOY_TYPE_DEVICE="DEVICE"
 
-while getopts ":t:build-prefix:app-center-group:dhas" opt; do
+while getopts ":t:p:g:dhas" opt; do
   case $opt in
     t) TYPE="$OPTARG"
     ;;
-    build-prefix) BUILD_PREFIX="$OPTARG"
+    p) BUILD_PREFIX="$OPTARG"
     ;;
-    app-center-group) APPCENTER_GROUP="$OPTARG"
+    g) APPCENTER_GROUP="$OPTARG"
     ;;
     d) set -ex
     ;;
@@ -166,7 +167,7 @@ deploy_device_build()
     --token "$APP_CENTER_TOKEN_DEVICE" \
     --app "$APP_CENTER_APP_NAME_DEVICE" \
     --group "$APPCENTER_GROUP" \
-    --build-version "$CIRCLE_BUILD_NUM" \
+    --build-version "$CIRCLE_BUILD_NUM-$BUILD_PREFIX" \
     --release-notes-file "$TMP_DIR"/CHANGELOG.md \
     --file "$TMP_DIR"/MiniApp_Example.ipa \
     --quiet
