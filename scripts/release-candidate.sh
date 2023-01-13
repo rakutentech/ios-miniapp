@@ -100,7 +100,7 @@ echo "Updating MiniApp.podspec file miniapp.version variable with v$VERSION vers
 sed -i "" -e "s/$SEARCH_STRING/$REPLACE_STRING/" MiniApp.podspec
 
 echo -e "\nChangelog:"
-./extract-version.sh
+./scripts/extract-version.sh
 cat tmp/CHANGELOG.md
 
 if [ $NO_PROMPT == 0 ]
