@@ -37,6 +37,7 @@ while getopts ":t:build-prefix:app-center-group:dhas" opt; do
     build-prefix) BUILD_PREFIX="$OPTARG"
     ;;
     app-center-group) APPCENTER_GROUP="$OPTARG"
+    ;;
     d) set -ex
     ;;
     h) show_help; exit 0
