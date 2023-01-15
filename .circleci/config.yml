@@ -80,6 +80,13 @@ jobs:
 
   app-center-publish-device:
     <<: *container_medium
+    parameters:
+      BUILD_PREFIX:
+        type: string
+        default: $RMA_DEMO_APP_BUILD_TYPE
+      APPCENTER_GROUP:
+        type: string
+        default: $APP_CENTER_GROUP    
     steps:
       - attach_workspace:
           at: .
