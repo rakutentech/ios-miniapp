@@ -114,12 +114,18 @@ workflows:
           APPCENTER_GROUP: $APP_CENTER_GROUP
           requires:
             - build-and-test
+          filters:
+            branches:
+              only: master            
       - app-center-publish-device:
           name: "Publish Device Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
           APPCENTER_GROUP: $APP_CENTER_GROUP
           requires:
             - build-and-test
+          filters:
+            branches:
+              only: master            
       - app-center-publish-sim:
           name: "Publish RC Simulator Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE_CANDIDATE
