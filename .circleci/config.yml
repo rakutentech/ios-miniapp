@@ -126,7 +126,7 @@ workflows:
           filters:
             branches:
               only: candidate
-      - app-center-publish-candidate-device:
+      - app-center-publish-device:
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE_CANDIDATE
           APPCENTER_GROUP: $APP_CENTER_GROUP_CANDIDATE
           requires:
@@ -134,7 +134,7 @@ workflows:
           filters:
             branches:
               only: candidate
-      - app-center-publish-feature-device:
+      - app-center-publish-device:
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
           APPCENTER_GROUP: $APP_CENTER_GROUP_FEATURES
           requires:
@@ -142,7 +142,7 @@ workflows:
           filters:
             branches:
               only: features/*
-      - app-center-publish-release-device:
+      - app-center-publish-device:
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
           APPCENTER_GROUP: $APP_CENTER_GROUP_PROD
           requires:
