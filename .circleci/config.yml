@@ -48,14 +48,21 @@ jobs:
           paths:
             - MiniApp-Secrets.xcconfig
       - codecov/upload:
-        file: './artifacts/0/artifacts/unit-tests/report.junit'
+          file: './artifacts/0/artifacts/unit-tests/report.junit'
       - codecov/upload:
-        file: './artifacts/0/artifacts/unit-tests/report.html'
+          file: './artifacts/0/artifacts/unit-tests/report.html'
       - codecov/upload:
-        file: './artifacts/0/artifacts/unit-tests/compile_commands.json'
+          file: './artifacts/0/artifacts/unit-tests/compile_commands.json'
 
   app-center-publish-sim:
     <<: *container_medium
+    parameters:
+      BUILD_PREFIX:
+        type: string
+        default: $RMA_DEMO_APP_BUILD_TYPE
+      APPCENTER_GROUP:
+        type: string
+        default: $APP_CENTER_GROUP
     steps:
       - attach_workspace:
           at: .
@@ -65,7 +72,7 @@ jobs:
       - run:
           name: Deploy to AppCenter
           no_output_timeout: 30m
-          command: ./scripts/deploy-to-app-center.sh -t Simulator -g $APP_CENTER_GROUP
+          command: ./scripts/deploy-to-app-center.sh -t Simulator -p << parameters.BUILD_PREFIX >> -g << parameters.APPCENTER_GROUP >>
       - run:
           name: Clear Cache
           when: always
@@ -82,28 +89,12 @@ jobs:
       - run:
           name: Deploy to AppCenter
           no_output_timeout: 30m
-          command: ./scripts/deploy-to-app-center.sh -t Device -g $APP_CENTER_GROUP
+          command: ./scripts/deploy-to-app-center.sh -t Device -p << parameters.BUILD_PREFIX >> -g << parameters.APPCENTER_GROUP >>
       - run:
           name: Clear Cache
           when: always
           command: rm ../MiniApp-Secrets.xcconfig || true
 
-  app-center-candidate-publish-device:
-    <<: *container_medium
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          name: Copy Configurations
-          command: cp MiniApp-Secrets.xcconfig ../MiniApp-Secrets.xcconfig
-      - run:
-          name: Deploy to AppCenter
-          no_output_timeout: 30m
-          command: ./scripts/deploy-to-app-center.sh -t Device -p RC -g $APP_CENTER_GROUP_CANDIDATE
-      - run:
-          name: Clear Cache
-          when: always
-          command: rm ../MiniApp-Secrets.xcconfig || true
 
 workflows:
   version: 2.1
@@ -111,14 +102,46 @@ workflows:
     jobs:
       - build-and-test
       - app-center-publish-sim:
+          BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
+          APPCENTER_GROUP: $APP_CENTER_GROUP
           requires:
             - build-and-test
       - app-center-publish-device:
+          BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
+          APPCENTER_GROUP: $APP_CENTER_GROUP
           requires:
             - build-and-test
-      - app-center-candidate-publish-device:
+      - app-center-publish-sim:
+          BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE_CANDIDATE
+          APPCENTER_GROUP: $APP_CENTER_GROUP_CANDIDATE
           requires:
             - build-and-test
           filters:
             branches:
               only: candidate
+      - app-center-publish-candidate-device:
+          BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE_CANDIDATE
+          APPCENTER_GROUP: $APP_CENTER_GROUP_CANDIDATE
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: candidate
+      - app-center-publish-feature-device:
+          BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
+          APPCENTER_GROUP: $APP_CENTER_GROUP_FEATURES
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: features/*
+      - app-center-publish-release-device:
+          BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
+          APPCENTER_GROUP: $APP_CENTER_GROUP_PROD
+          requires:
+            - build-and-test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: /.*/

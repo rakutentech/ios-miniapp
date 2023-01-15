@@ -84,7 +84,7 @@ deploy_simulator_build()
     --app "$APP_CENTER_APP_NAME" \
     --release-notes-file "$TMP_DIR"/CHANGELOG.md \
     --group "$APPCENTER_GROUP" \
-    --build-version "$CIRCLE_BUILD_NUM-$BUILD_PREFIX" \
+    --build-version "$CIRCLE_BUILD_NUM$BUILD_PREFIX" \
     --file ./artifacts/miniapp.app.zip \
     --quiet
 
@@ -167,7 +167,7 @@ deploy_device_build()
     --token "$APP_CENTER_TOKEN_DEVICE" \
     --app "$APP_CENTER_APP_NAME_DEVICE" \
     --group "$APPCENTER_GROUP" \
-    --build-version "$CIRCLE_BUILD_NUM-$BUILD_PREFIX" \
+    --build-version "$CIRCLE_BUILD_NUM$BUILD_PREFIX" \
     --release-notes-file "$TMP_DIR"/CHANGELOG.md \
     --file "$TMP_DIR"/MiniApp_Example.ipa \
     --quiet
