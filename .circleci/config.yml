@@ -147,14 +147,3 @@ workflows:
           filters:
             branches:
               only: features/*
-      - app-center-publish-device:
-          name: "Publish Production Device Build"
-          BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
-          APPCENTER_GROUP: $APP_CENTER_GROUP_PROD
-          requires:
-            - build-and-test
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              only: /.*/
