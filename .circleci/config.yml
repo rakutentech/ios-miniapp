@@ -86,7 +86,7 @@ jobs:
         default: $RMA_DEMO_APP_BUILD_TYPE
       APPCENTER_GROUP:
         type: string
-        default: $APP_CENTER_GROUP    
+        default: $APP_CENTER_GROUP
     steps:
       - attach_workspace:
           at: .
@@ -109,16 +109,19 @@ workflows:
     jobs:
       - build-and-test
       - app-center-publish-sim:
+          name: "Publish Simulator Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
           APPCENTER_GROUP: $APP_CENTER_GROUP
           requires:
             - build-and-test
       - app-center-publish-device:
+          name: "Publish Device Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
           APPCENTER_GROUP: $APP_CENTER_GROUP
           requires:
             - build-and-test
       - app-center-publish-sim:
+          name: "Publish RC Simulator Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE_CANDIDATE
           APPCENTER_GROUP: $APP_CENTER_GROUP_CANDIDATE
           requires:
@@ -127,6 +130,7 @@ workflows:
             branches:
               only: candidate
       - app-center-publish-device:
+          name: "Publish RC Device Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE_CANDIDATE
           APPCENTER_GROUP: $APP_CENTER_GROUP_CANDIDATE
           requires:
@@ -135,6 +139,7 @@ workflows:
             branches:
               only: candidate
       - app-center-publish-device:
+          name: "Publish Features Device Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
           APPCENTER_GROUP: $APP_CENTER_GROUP_FEATURES
           requires:
@@ -143,6 +148,7 @@ workflows:
             branches:
               only: features/*
       - app-center-publish-device:
+          name: "Publish Production Device Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
           APPCENTER_GROUP: $APP_CENTER_GROUP_PROD
           requires:
