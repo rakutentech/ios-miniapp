@@ -54,12 +54,12 @@ final class MiniAppPermissionService {
             compareMiniAppManifest(info: miniAppInfo, manifest: cachedManifest) { result in
                 DispatchQueue.main.async {
                     switch result {
-                    case .success(let isManifestSame):
-                        if isManifestSame {
+                    case .success(let manifestData):
+                        guard let fetchedManifest = manifestData else {
                             completion(.success(.permissionGranted))
-                        } else {
-                            completion(.success(.permissionRequested(info: miniAppInfo, manifest: cachedManifest)))
+                            return
                         }
+                        completion(.success(.permissionRequested(info: miniAppInfo, manifest: fetchedManifest)))
                     case .failure(let error):
                         completion(.failure(error))
                     }
@@ -83,7 +83,7 @@ final class MiniAppPermissionService {
     func compareMiniAppManifest(
         info: MiniAppInfo,
         manifest: MiniAppManifest,
-        completion: @escaping ((Result<Bool, Error>) -> Void)
+        completion: @escaping ((Result<MiniAppManifest?, Error>) -> Void)
     ) {
         MiniApp
             .shared(with: config)
@@ -95,9 +95,9 @@ final class MiniAppPermissionService {
                 switch result {
                 case .success(let manifestData):
                     if manifest == manifestData {
-                        completion(.success(true))
+                        completion(.success(nil))
                     } else {
-                        completion(.success(false))
+                        completion(.success(manifestData))
                     }
                 case .failure(let error):
                     if error.isQPSLimitError() {
