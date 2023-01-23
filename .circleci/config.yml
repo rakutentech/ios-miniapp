@@ -102,6 +102,26 @@ jobs:
           when: always
           command: rm ../MiniApp-Secrets.xcconfig || true
 
+  app-center-publish-prod:
+    <<: *container_medium
+    parameters:
+      APPCENTER_GROUP:
+        type: string
+        default: $APP_CENTER_GROUP
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Copy Configurations
+          command: cp MiniApp-Secrets.xcconfig ../MiniApp-Secrets.xcconfig
+      - run:
+          name: Deploy to AppCenter
+          no_output_timeout: 30m
+          command: ./scripts/deploy-to-app-center.sh -t Device -g << parameters.APPCENTER_GROUP >>
+      - run:
+          name: Clear Cache
+          when: always
+          command: rm ../MiniApp-Secrets.xcconfig || true
 
 workflows:
   version: 2.1
@@ -153,7 +173,7 @@ workflows:
           filters:
             branches:
               only: features/*
-      - app-center-publish-device:
+      - app-center-publish-prod:
           name: "Publish Production Device Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
           APPCENTER_GROUP: $APP_CENTER_GROUP_PROD
@@ -163,4 +183,4 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              only: /.*/
+              only: master
