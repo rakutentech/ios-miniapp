@@ -23,6 +23,10 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
         self.miniAppVersion = miniAppVersion
     }
 
+    func getMessagingUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
+        completionHandler(.success("MESSAGINGID-\(miniAppId.prefix(8))-\((miniAppVersion ?? "").prefix(8))"))
+    }
+
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.success("UNIQUE-\(miniAppId.prefix(8))-\((miniAppVersion ?? "").prefix(8))"))
     }
