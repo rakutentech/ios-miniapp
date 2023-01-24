@@ -63,10 +63,6 @@ class MiniAppSecureStorageSqliteDatabase: MiniAppSecureStorageDatabase {
     }
 
     func load(completion: ((MiniAppSecureStorageError?) -> Void)?) {
-        guard doesStoragePathExist else {
-            completion?(.storageUnavailable)
-            return
-        }
         do {
             let queue = try Connection(storagePath)
             self.dbQueue = queue
