@@ -140,13 +140,9 @@ class MiniAppSecureStorageTests: XCTestCase {
     }
 
     func testSetup_UnloadedStorage_WithoutSetup() {
-        let expectation = XCTestExpectation(description: #function)
         let storage = MiniAppSecureStorage(appId: miniAppId)
-        var didLoadStorage: Bool?
-        storage.loadStorage { success in
-            didLoadStorage = success
-            expectation.fulfill()
-        }
+        let didLoadStorage = storage.database.isStoreAvailable
+
         XCTAssertEqual(didLoadStorage, false)
     }
 

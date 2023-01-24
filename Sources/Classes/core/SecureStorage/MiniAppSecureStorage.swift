@@ -33,20 +33,14 @@ class MiniAppSecureStorage: MiniAppSecureStorageDelegate {
     // MARK: - Load/Unload
     func loadStorage(completion: ((Bool) -> Void)? = nil) {
         isStoreLoading = true
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            self?.database.load(completion: { [weak self] error in
-                self?.isStoreLoading = false
-                guard error == nil else {
-                    DispatchQueue.main.async {
-                        completion?(false)
-                    }
-                    return
-                }
-                DispatchQueue.main.async {
-                    completion?(true)
-                }
-            })
-        }
+        database.load(completion: { [weak self] error in
+            self?.isStoreLoading = false
+            guard error == nil else {
+                completion?(false)
+                return
+            }
+            completion?(true)
+        })
     }
 
     func unloadStorage() {
