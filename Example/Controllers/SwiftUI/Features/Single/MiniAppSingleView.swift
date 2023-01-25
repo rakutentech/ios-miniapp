@@ -148,7 +148,7 @@ struct MiniAppSingleView: View {
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
-                            CloseButton{
+                            CloseButton {
                                 trackButtonTap(pageName: NSLocalizedString("demo.app.rat.page.name.share.preview", comment: ""), buttonTitle: "Cancel")
                                 isSharePreviewPresented = false
                                 shouldPresentModalView = false
