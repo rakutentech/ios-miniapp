@@ -21,6 +21,7 @@ struct MiniAppSingleView: View {
     @State private var isSharePreviewPresented: Bool = false
     @State private var closeAlertMessage: MiniAppAlertMessage?
     @State private var permissionToolbarEnabled: Bool = false
+    @State private var shouldPresentModalView: Bool = false
 
     init(listType: ListType, miniAppId: String, miniAppVersion: String?, miniAppType: MiniAppType) {
         self.listType = listType
@@ -100,14 +101,11 @@ struct MiniAppSingleView: View {
                 Button {
                     trackButtonTap(pageName: pageName, buttonTitle: "Share")
                     isSharePreviewPresented = true
+                    shouldPresentModalView = true
+                    permissionRequest = nil
                 } label: {
                     Image(systemName: "square.and.arrow.up")
                 }
-                .sheet(isPresented: $isSharePreviewPresented, content: {
-                    NavigationView {
-                        MiniAppSharePreviewView(viewModel: viewModel)
-                    }
-                })
                 .disabled(!(viewModel.viewState == .success))
                 .accessibilityIdentifier(AccessibilityIdentifiers.miniappHeaderShare.identifier)
             }
@@ -115,6 +113,8 @@ struct MiniAppSingleView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     trackButtonTap(pageName: pageName, buttonTitle: "Permissions")
+                    shouldPresentModalView = true
+                    isSharePreviewPresented = false
                     openPermissionSettings()
                 } label: {
                     Image(systemName: "gearshape")
@@ -124,28 +124,47 @@ struct MiniAppSingleView: View {
             }
 
         })
-        .sheet(item: $permissionRequest, content: { request in
+        .sheet(isPresented: $shouldPresentModalView, onDismiss: {shouldPresentModalView = false}, content: {
             NavigationView {
-                MiniAppTermsView(didAccept: $didAcceptSettingsTerms, request: request)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            trackButtonTap(pageName: "Permissions", buttonTitle: "Cancel")
-                            permissionRequest = nil
-                        } label: {
-                            Text("Cancel")
+                if let permissionRequest = permissionRequest {
+                    MiniAppTermsView(didAccept: $didAcceptSettingsTerms, request: permissionRequest)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button {
+                                trackButtonTap(pageName: "Permissions", buttonTitle: "Cancel")
+                                self.permissionRequest = nil
+                                shouldPresentModalView = false
+                            } label: {
+                                Text("Cancel")
+                            }
+                            .accessibilityIdentifier(AccessibilityIdentifiers.miniappPermissionCancel.identifier)
                         }
-                        .accessibilityIdentifier(AccessibilityIdentifiers.miniappPermissionCancel.identifier)
                     }
+                    .trackPage(pageName: "Permissions")
                 }
-                .trackPage(pageName: "Permissions")
+                if isSharePreviewPresented {
+                    MiniAppSharePreviewView(viewModel: viewModel)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            CloseButton{
+                                trackButtonTap(pageName: NSLocalizedString("demo.app.rat.page.name.share.preview", comment: ""), buttonTitle: "Cancel")
+                                isSharePreviewPresented = false
+                                shouldPresentModalView = false
+                            }
+                            .accessibilityIdentifier(AccessibilityIdentifiers.miniappSharePreviewCancel.identifier)
+                        }
+                    }
+                    .trackPage(pageName: NSLocalizedString("demo.app.rat.page.name.share.preview", comment: ""))
+                }
             }
         })
         .onChange(of: didAcceptSettingsTerms, perform: { accepted in
             if accepted {
                 didAcceptSettingsTerms = false
                 permissionRequest = nil
+                shouldPresentModalView = false
             }
         })
         .onChange(of: viewModel.viewState) { state in
