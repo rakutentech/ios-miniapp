@@ -255,6 +255,16 @@ workflows:
       - release-sdk:
           requires:
             - build-and-test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/            
       - generate-and-publish-documentation:
           requires:
             - release-sdk
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/            
