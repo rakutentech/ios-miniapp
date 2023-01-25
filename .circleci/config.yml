@@ -48,11 +48,11 @@ jobs:
           paths:
             - MiniApp-Secrets.xcconfig
       - codecov/upload:
-          file: './artifacts/0/artifacts/unit-tests/report.junit'
+          file: "./artifacts/0/artifacts/unit-tests/report.junit"
       - codecov/upload:
-          file: './artifacts/0/artifacts/unit-tests/report.html'
+          file: "./artifacts/0/artifacts/unit-tests/report.html"
       - codecov/upload:
-          file: './artifacts/0/artifacts/unit-tests/compile_commands.json'
+          file: "./artifacts/0/artifacts/unit-tests/compile_commands.json"
 
   app-center-publish-sim:
     <<: *container_medium
@@ -123,11 +123,76 @@ jobs:
           when: always
           command: rm ../MiniApp-Secrets.xcconfig || true
 
+  generate-documentation:
+    <<: *container_medium
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Copy Configurations
+          command: cp MiniApp-Secrets.xcconfig ../MiniApp-Secrets.xcconfig
+      - run:
+          name: Build Documentation
+          no_output_timeout: 20m
+          command: ./scripts/build-doc.sh
+      - run:
+          name: Clear Cache
+          when: always
+          command: rm ../MiniApp-Secrets.xcconfig || true
+
+  generate-and-publish-documentation:
+    <<: *container_medium
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Copy Configurations
+          command: cp MiniApp-Secrets.xcconfig ../MiniApp-Secrets.xcconfig
+      - run:
+          name: Build Documentation
+          no_output_timeout: 20m
+          command: ./scripts/build-doc.sh
+      - run:
+          name: Release Documentation
+          no_output_timeout: 20m
+          command: ./scripts/release-docs.sh
+      - run:
+          name: Clear Cache
+          when: always
+          command: rm ../MiniApp-Secrets.xcconfig || true
+
+  release-candidate-pr:
+    <<: *container_medium
+    steps:
+      - run:
+          name: Candidate PR Push
+          command: fastlane build_sim_ci
+
+  release-sdk:
+    <<: *container_medium
+    steps:
+      - run:
+          name: Setup Git Config
+          command: |
+            git config user.name "$CI_PUBLISHER_NAME"
+            git config user.email "$CI_PUBLISHER_MAIL"
+      - run:
+          name: Push tag to prod branch
+          no_output_timeout: 20m
+          command: ./scripts/release-prod-branch.sh
+      - run:
+          name: Push to Cocoapods
+          no_output_timeout: 20m
+          command: ./scripts/release-cocoapods.sh
+
 workflows:
   version: 2.1
   build-and-release-workflow:
     jobs:
       - build-and-test
+      - generate-documentation:
+          requires:
+            - build-and-test
       - app-center-publish-sim:
           name: "Publish Simulator Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
@@ -135,8 +200,10 @@ workflows:
           requires:
             - build-and-test
           filters:
+            tags:
+              ignore: /^v.*/
             branches:
-              only: master            
+              only: master
       - app-center-publish-device:
           name: "Publish Device Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
@@ -144,8 +211,10 @@ workflows:
           requires:
             - build-and-test
           filters:
+            tags:
+              ignore: /^v.*/
             branches:
-              only: master            
+              only: master
       - app-center-publish-sim:
           name: "Publish RC Simulator Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE_CANDIDATE
@@ -165,7 +234,7 @@ workflows:
             branches:
               only: candidate
       - app-center-publish-device:
-          name: "Publish Features Device Build"
+          name: "Publish Feature branch Device Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
           APPCENTER_GROUP: $APP_CENTER_GROUP_FEATURES
           requires:
@@ -183,3 +252,9 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+      - release-sdk:
+          requires:
+            - build-and-test
+      - generate-and-publish-documentation:
+          requires:
+            - release-sdk
