@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 
+bundle install
 ### Removing admobs subspec before generating doc is necessary. The following script has to be run (from CI) before
 echo "" >> MiniApp.podspec # add a new line to the podspec file to remove it after awk treatment
 awk '!/Admob'\''/' RS=miniapp.subspec ORS=miniapp.subspec MiniApp.podspec > MiniApp.jazzy.podspec # create the jazzy podspec
