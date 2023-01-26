@@ -123,23 +123,6 @@ jobs:
           when: always
           command: rm ../MiniApp-Secrets.xcconfig || true
 
-  generate-documentation:
-    <<: *container_medium
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          name: Copy Configurations
-          command: cp MiniApp-Secrets.xcconfig ../MiniApp-Secrets.xcconfig
-      - run:
-          name: Build Documentation
-          no_output_timeout: 20m
-          command: ./scripts/build-doc.sh
-      - run:
-          name: Clear Cache
-          when: always
-          command: rm ../MiniApp-Secrets.xcconfig || true
-
   generate-and-publish-documentation:
     <<: *container_medium
     steps:
@@ -190,9 +173,6 @@ workflows:
   build-and-release-workflow:
     jobs:
       - build-and-test
-      - generate-documentation:
-          requires:
-            - build-and-test
       - app-center-publish-sim:
           name: "Publish Simulator Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
