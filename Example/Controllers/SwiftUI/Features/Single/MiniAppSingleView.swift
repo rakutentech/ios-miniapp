@@ -61,18 +61,6 @@ struct MiniAppSingleView: View {
                     }
                 }
                 .accessibilityIdentifier(AccessibilityIdentifiers.miniappHeaderClose.identifier)
-                .alert(item: $closeAlertMessage) { errorMessage in
-                    Alert(
-                        title: Text(errorMessage.title),
-                        message: Text(errorMessage.message),
-                        primaryButton: .default(Text("Ok"), action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }),
-                        secondaryButton: .cancel(Text("Cancel"), action: {
-                            viewModel.shouldCloseMiniApp.send(false)
-                        })
-                    )
-                }
             }
 
             ToolbarItem(placement: .navigationBarLeading) {
@@ -124,6 +112,18 @@ struct MiniAppSingleView: View {
             }
 
         })
+        .alert(item: $closeAlertMessage) { errorMessage in
+            Alert(
+                title: Text(errorMessage.title),
+                message: Text(errorMessage.message),
+                primaryButton: .default(Text("Ok"), action: {
+                    presentationMode.wrappedValue.dismiss()
+                }),
+                secondaryButton: .cancel(Text("Cancel"), action: {
+                    viewModel.shouldCloseMiniApp.send(false)
+                })
+            )
+        }
         .sheet(isPresented: $shouldPresentModalView, onDismiss: {shouldPresentModalView = false}, content: {
             NavigationView {
                 if let permissionRequest = permissionRequest {
