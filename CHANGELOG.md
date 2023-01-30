@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 5.1.0 (xxxx-xx-xx)
+### 5.1.0 (2023-01-30)
 **SDK**
 - **Update:** Added `allEmailList` field in `MAContact` to support multiple emails of a specific contact.
 - **Feature:** Added a new optional interface `func closeMiniApp(withConfirmation: , completionHandler:)` in `MiniAppMessageDelegate` to support the close mini-app action from MinApps.
