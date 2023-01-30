@@ -237,7 +237,7 @@ workflows:
           name: "Publish Production Device Build"
           APPCENTER_GROUP: $APP_CENTER_GROUP_PROD
           requires:
-            - build-and-test
+            - Release Build
           filters:
             tags:
               only: /^v.*/
@@ -245,7 +245,7 @@ workflows:
               ignore: /.*/
       - release-sdk:
           requires:
-            - build-and-test
+            - Release Build
           filters:
             tags:
               only: /^v.*/
@@ -253,7 +253,7 @@ workflows:
               ignore: /.*/
       - generate-and-publish-documentation:
           requires:
-            - release-sdk
+            - Release Build
           filters:
             tags:
               only: /^v.*/
