@@ -202,6 +202,8 @@ workflows:
           requires:
             - build-and-test
           filters:
+            tags:
+              ignore: /^v.*/
             branches:
               only: candidate
       - app-center-publish-device:
@@ -211,6 +213,8 @@ workflows:
           requires:
             - build-and-test
           filters:
+            tags:
+              ignore: /^v.*/
             branches:
               only: candidate
       - app-center-publish-device:
