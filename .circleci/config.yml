@@ -173,6 +173,13 @@ workflows:
   build-and-release-workflow:
     jobs:
       - build-and-test
+      - build-and-test:
+          name: "Release Build"
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
       - app-center-publish-sim:
           name: "Publish Simulator Build"
           BUILD_PREFIX: $RMA_DEMO_APP_BUILD_TYPE
@@ -243,7 +250,7 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              ignore: /.*/            
+              ignore: /.*/
       - generate-and-publish-documentation:
           requires:
             - release-sdk
@@ -251,4 +258,4 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              ignore: /.*/            
+              ignore: /.*/
