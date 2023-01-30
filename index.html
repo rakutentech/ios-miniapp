@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 5.0.0 Docs
+          MiniApp 5.1.0 Docs
         </a>
-         (73% documented)
+         (71% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -65,9 +65,6 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/AdMobDisplayer.html">AdMobDisplayer</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/MAContact.html">MAContact</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MAHostEnvironmentInfo.html">MAHostEnvironmentInfo</a>
@@ -180,6 +177,9 @@
                 <a class="nav-group-task-link" href="Enums/MiniAppEvent/Event.html">– Event</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppJavaScriptError.html">MiniAppJavaScriptError</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppKeyboardEvent.html">MiniAppKeyboardEvent</a>
               </li>
               <li class="nav-group-task">
@@ -211,6 +211,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppViewState.html">MiniAppViewState</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/UniversalBridgeError.html">UniversalBridgeError</a>
               </li>
             </ul>
           </li>
@@ -267,6 +270,9 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/MiniAppViewable.html">MiniAppViewable</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/UniversalBridgeDelegate.html">UniversalBridgeDelegate</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -280,6 +286,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MAAnalyticsConfig.html">MAAnalyticsConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MAContact.html">MAContact</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MASDKAccessTokenScopes.html">MASDKAccessTokenScopes</a>
@@ -421,7 +430,7 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
 
 <p>To integrate MiniApp SDK into your Xcode project using Swift Package Manager, add it to the dependencies value of your <code>Package.swift</code>:</p>
 <pre class="highlight ruby"><code><span class="ss">dependencies: </span><span class="p">[</span>
-    <span class="p">.</span><span class="nf">package</span><span class="p">(</span><span class="ss">url: </span><span class="s2">"https://github.com/rakutentech/ios-miniapp.git"</span><span class="p">,</span> <span class="p">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="ss">from: </span><span class="s2">"5.0.0"</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">package</span><span class="p">(</span><span class="ss">url: </span><span class="s2">"https://github.com/rakutentech/ios-miniapp.git"</span><span class="p">,</span> <span class="p">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="ss">from: </span><span class="s2">"5.1.0"</span><span class="p">))</span>
 <span class="p">]</span>
 </code></pre>
 <h3 id='configuration' class='heading'>Configuration</h3>
@@ -1013,6 +1022,19 @@ throw an error <code>MiniAppSecureStorageError.storageFullError</code> when sett
 <pre class="highlight swift"><code><span class="kt">MiniAppSecureStorage</span><span class="o">.</span><span class="nf">wipeSecureStorages</span><span class="p">()</span>
 </code></pre>
 
+<p><a id="send-message-to-hostapp"></a></p>
+<h6 id='receive-string-information-from-miniapp' class='heading'>Receive string information from MiniApp</h6>
+
+<p>You can receive the message string/json from MiniApp in to host app trough the universal bridge interface implemented in <code><a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></code>.
+To receive the message from the MiniApp and process it in the host app you must implement the delegeate method <code>sendJsonToHostApp(info:completionHandler:)</code> from the MiniAppMessageDelegate. </p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">sendJsonToHostApp</span><span class="p">(</span><span class="nv">info</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">MASDKProtocolResponse</span><span class="p">,</span> <span class="kt">UniversalBridgeError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Message form MiniApp: </span><span class="se">\(</span><span class="n">info</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="o">.</span><span class="n">success</span><span class="p">))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
 <p><a id="load-miniapp-list"></a></p>
 <h3 id='load-the-code-miniapp-code-list' class='heading'>Load the <code><a href="Classes/MiniApp.html">MiniApp</a></code> list:</h3>
 
@@ -1560,6 +1582,18 @@ Mini App SDK will look in the host app <code>Localizable.strings</code> for thes
 <p><code>fromCache</code> helps to retrieve the already downloaded mini-app from the cache.
 NOTE: Using the above approach will never retrieve/query latest version of the mini-app.</p>
 
+<p><a id="miniapp-send-json-from-hostapp"></a></p>
+<h3 id='send-json-string-content-from-the-host-app-to-miniapp' class='heading'>Send JSON/String content from the host app to MiniApp.</h3>
+
+<p>Send JSON or a string conent to mini app from the host app using the below sdk api,
+This api will send the content message/json to the mini app using the custom events which will must be listned by the mini apps to receive the content.</p>
+<pre class="highlight swift"><code><span class="n">miniAppView</span><span class="o">.</span><span class="nf">sendJsonToMiniApp</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"&lt;Your string content / json content&gt;"</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>string</code> This will hold the Json or stringcontent to be sent to MiniApp from the host app.
+NOTE: Using the above approach will never retrieve/query latest version of the mini-app.</p>
+
 <p><a id="keyboard-events"></a></p>
 <h3 id='keyboard-events' class='heading'>Keyboard Events</h3>
 
@@ -1580,6 +1614,22 @@ NOTE: Using the above approach will never retrieve/query latest version of the m
 <span class="p">}</span>
 <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">MiniAppKeyboardEvents</span><span class="p">.</span><span class="nx">KEYBOARDHIDDEN</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
     <span class="p">...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><a id="miniapp-close"></a></p>
+<h3 id='miniapp-close' class='heading'>MiniApp Close</h3>
+
+<p>MiniApp can request the host app to close itself through the javascript bridge event trigger.
+MiniApp iOS provides the <code><a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></code> interface method <code>func closeMiniApp(withConfirmation: , completionHandler:)</code> which can be implemented in the host app. This delegate method is an optional.</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">closeMiniApp</span><span class="p">(</span><span class="nv">withConfirmation</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="p">,</span> <span class="kt">MiniAppJavaScriptError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">withConfirmation</span> <span class="p">{</span>
+            <span class="c1">// You can handle the close action with confirmation alert.</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// you can directly  close the MiniApp without the confirmation alert.</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -1663,7 +1713,7 @@ NOTE: Using the above approach will never retrieve/query latest version of the m
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-11-04)</p>
+      <p>&copy; 2023 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2023-01-30)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>

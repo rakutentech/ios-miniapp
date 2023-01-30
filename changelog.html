@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 5.0.0 Docs
+          MiniApp 5.1.0 Docs
         </a>
-         (73% documented)
+         (71% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -65,9 +65,6 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/AdMobDisplayer.html">AdMobDisplayer</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/MAContact.html">MAContact</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MAHostEnvironmentInfo.html">MAHostEnvironmentInfo</a>
@@ -180,6 +177,9 @@
                 <a class="nav-group-task-link" href="Enums/MiniAppEvent/Event.html">– Event</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MiniAppJavaScriptError.html">MiniAppJavaScriptError</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppKeyboardEvent.html">MiniAppKeyboardEvent</a>
               </li>
               <li class="nav-group-task">
@@ -211,6 +211,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MiniAppViewState.html">MiniAppViewState</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/UniversalBridgeError.html">UniversalBridgeError</a>
               </li>
             </ul>
           </li>
@@ -267,6 +270,9 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/MiniAppViewable.html">MiniAppViewable</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/UniversalBridgeDelegate.html">UniversalBridgeDelegate</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -280,6 +286,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MAAnalyticsConfig.html">MAAnalyticsConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MAContact.html">MAContact</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/MASDKAccessTokenScopes.html">MASDKAccessTokenScopes</a>
@@ -350,6 +359,47 @@
           <div class="section-content top-matter">
             
             <h2 id='changelog' class='heading'>CHANGELOG</h2>
+<h3 id='5-1-0-2023-01-30' class='heading'>5.1.0 (2023-01-30)</h3>
+
+<p><strong>SDK</strong></p>
+
+<ul>
+<li><strong>Update:</strong> Added <code>allEmailList</code> field in <code><a href="Structs/MAContact.html">MAContact</a></code> to support multiple emails of a specific contact.</li>
+<li><strong>Feature:</strong> Added a new optional interface <code>func closeMiniApp(withConfirmation: , completionHandler:)</code> in <code><a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></code> to support the close mini-app action from MinApps.</li>
+<li><strong>Feature:</strong> Universal Bridge support for receiving the Json or string content from the MiniApp to host app.</li>
+<li><strong>Feature:</strong> Added new public protocol <code><a href="Protocols/UniversalBridgeDelegate.html">UniversalBridgeDelegate</a></code> which is confirmed by <code><a href="Protocols/MiniAppMessageDelegate.html">MiniAppMessageDelegate</a></code>, further added public interface <code>sendJsonToHostApp(info:, completionHandler:) -&gt; Void)</code> in <code><a href="Protocols/UniversalBridgeDelegate.html">UniversalBridgeDelegate</a></code> which can be implemented in host app to receive the string content from mini app and use in host app through Universal Bridge.
+<details>
+<summary>Show code</summary></li>
+</ul>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sendJsonToHostApp</span><span class="p">(</span><span class="nv">info</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">MASDKProtocolResponse</span><span class="p">,</span> <span class="kt">UniversalBridgeError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">onBridgeJsonString</span><span class="p">?(</span><span class="n">info</span><span class="p">)</span>
+    <span class="nf">completionHandler</span><span class="p">(</span><span class="o">.</span><span class="nf">success</span><span class="p">(</span><span class="o">.</span><span class="n">success</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre>
+
+<p></details></p>
+
+<ul>
+<li><strong>Feature:</strong> Universal bridge support for sending the Json/String content to MiniApp from host app which will have the public interface.</li>
+</ul>
+
+<details>
+<summary>Show code</summary>
+
+&ldquo;`swift
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), messageInterface: self),
+    appId: &quot;your-miniapp-id&rdquo;
+)
+let miniAppView = MiniAppView(params: params)
+self.view.addSubview(miniAppView)
+miniAppView.frame = self.view.bounds
+miniAppView.sendJsonToMiniApp(string: &ldquo;<Your string content / json content>&rdquo;)
+&ldquo;`
+
+</details>
+
+<hr>
 <h3 id='5-0-0-2022-11-04' class='heading'>5.0.0 (2022-11-04)</h3>
 
 <p><strong>SDK</strong></p>
@@ -455,6 +505,8 @@
 <ul>
 <li><strong>Feature:</strong> New demo app interface with List I and List II (multiple miniapp support demo) and reworked with SwiftUI</li>
 </ul>
+
+<hr>
 <h3 id='4-3-0-2022-08-08' class='heading'>4.3.0 (2022-08-08)</h3>
 
 <p><strong>SDK</strong></p>
@@ -462,6 +514,8 @@
 <ul>
 <li><strong>Fix:</strong> Secure storage feature bug fixes</li>
 </ul>
+
+<hr>
 <h3 id='4-2-0-2022-06-24' class='heading'>4.2.0 (2022-06-24)</h3>
 
 <p><strong>SDK</strong></p>
@@ -900,7 +954,7 @@
 <li><em>Feature:</em> Added example of custom view to navigate backward inside MiniApp - <a href="USERGUIDE.md#navigation">See here</a></li>
 <li>Added build information in App&rsquo;s setting screen</li>
 <li><em>Bugfix:</em> First time settings success dialog dismissed before tapping OK</li>
-<li><em>Bugfix:</em> &ldquo;Display MiniApp&rdquo; button was not visible when scrolling in the Mini Apps list</li>
+<li><em>Bugfix:</em> &quot;Display MiniApp&rdquo; button was not visible when scrolling in the Mini Apps list</li>
 </ul>
 
 <hr>
@@ -942,7 +996,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2022 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2022-11-04)</p>
+      <p>&copy; 2023 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2023-01-30)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
