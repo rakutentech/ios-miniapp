@@ -154,6 +154,11 @@ jobs:
   release-sdk:
     <<: *container_medium
     steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Copy Configurations
+          command: cp MiniApp-Secrets.xcconfig ../MiniApp-Secrets.xcconfig          
       - run:
           name: Setup Git Config
           command: |
@@ -167,6 +172,10 @@ jobs:
           name: Push to Cocoapods
           no_output_timeout: 20m
           command: ./scripts/release-cocoapods.sh
+      - run:
+          name: Clear Cache
+          when: always
+          command: rm ../MiniApp-Secrets.xcconfig || true          
 
 workflows:
   version: 2.1

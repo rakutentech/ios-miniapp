@@ -7,5 +7,5 @@ set -ex
 # It should include a github token in the format:
 # https://{GITHUB_TOKEN}@github.com/{ORG}/{REPO}.git
 
-git fetch $RELEASE_GIT_REMOTE $RELEASE_TAG:prod --force
+git fetch $RELEASE_GIT_REMOTE $CIRCLE_TAG:prod --force
 git push $RELEASE_GIT_REMOTE prod --force
