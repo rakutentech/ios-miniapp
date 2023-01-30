@@ -244,6 +244,7 @@ workflows:
             branches:
               ignore: /.*/
       - release-sdk:
+          name: "Release SDK"
           requires:
             - Release Build
           filters:
@@ -252,8 +253,9 @@ workflows:
             branches:
               ignore: /.*/
       - generate-and-publish-documentation:
+          name: "Generate and Publish Doc"
           requires:
-            - Release Build
+            - Release SDK
           filters:
             tags:
               only: /^v.*/
