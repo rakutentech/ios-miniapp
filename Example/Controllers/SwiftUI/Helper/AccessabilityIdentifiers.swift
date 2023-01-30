@@ -18,6 +18,7 @@ enum AccessibilityIdentifiers: String {
     case miniappHeaderBack = "miniapp.header.back"
     case miniappHeaderForward = "miniapp.header.forward"
     case miniappHeaderClose = "miniapp.header.close"
+    case miniappSharePreviewCancel = "miniapp.sharepview.cancel"
 
     var identifier: String {
         return "miniapp.demo." + rawValue
