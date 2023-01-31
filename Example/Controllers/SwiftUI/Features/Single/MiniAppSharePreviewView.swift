@@ -26,7 +26,7 @@ struct MiniAppSharePreviewView: View {
                         })
                     } else {
                         RemoteImageView(urlString: url.absoluteString)
-                            .frame(width: 60, height: 40, alignment: .center)
+                            .frame(width: 300, height: 120, alignment: .center)
                     }
                     Spacer()
                 }
@@ -40,14 +40,6 @@ struct MiniAppSharePreviewView: View {
         }
         .navigationTitle(pageName)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar(content: {
-            ToolbarItem(placement: .navigationBarLeading) {
-                CloseButton {
-                    trackButtonTap(pageName: pageName, buttonTitle: "Back")
-                    presentationMode.wrappedValue.dismiss()
-                }
-            }
-        })
         .onAppear {
             viewModel.getInfo { result in
                 switch result {
