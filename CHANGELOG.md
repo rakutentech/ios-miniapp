@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 5.1.0 (xxxx-xx-xx)
+### 5.1.0 (2023-01-30)
 **SDK**
 - **Update:** Added `allEmailList` field in `MAContact` to support multiple emails of a specific contact.
 - **Feature:** Added a new optional interface `func closeMiniApp(withConfirmation: , completionHandler:)` in `MiniAppMessageDelegate` to support the close mini-app action from MinApps.
@@ -35,6 +35,8 @@ miniAppView.sendJsonToMiniApp(string: "<Your string content / json content>")
 ```
 
 </details>
+
+---
 
 ### 5.0.0 (2022-11-04)
 **SDK**
@@ -137,9 +139,13 @@ struct Content: View {
 **Sample app**
 - **Feature:** New demo app interface with List I and List II (multiple miniapp support demo) and reworked with SwiftUI
 
+---
+
 ### 4.3.0 (2022-08-08)
 **SDK**
 - **Fix:** Secure storage feature bug fixes
+
+---
 
 ### 4.2.0 (2022-06-24)
 
