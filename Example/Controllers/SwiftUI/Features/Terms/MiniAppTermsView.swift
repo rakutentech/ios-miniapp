@@ -112,7 +112,7 @@ struct MiniAppTermsView: View {
                             .foregroundColor(Color(.secondaryLabel))
                         }
                     }
-                    if (viewModel.manifest.customMetaData != nil) {
+                    if viewModel.manifest.customMetaData != nil {
                         Section(header: Text("Metadata")) {
                             Text(viewModel.manifest.customMetaData.JSONString)
                             .font(.system(size: 12))
