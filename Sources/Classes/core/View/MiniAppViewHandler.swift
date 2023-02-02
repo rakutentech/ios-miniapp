@@ -336,16 +336,6 @@ class MiniAppViewHandler: NSObject {
         )
         initExternalWebViewClosures()
         observeWebView()
-
-        if shouldAutoLoadSecureStorage {
-            secureStorage.loadStorage { success in
-                if success {
-                    MiniAppSecureStorage.sendLoadStorageReady(miniAppId: self.appId, miniAppVersion: self.version ?? "")
-                } else {
-                    MiniAppSecureStorage.sendLoadStorageError(miniAppId: self.appId, miniAppVersion: self.version ?? "")
-                }
-            }
-        }
     }
 
     func loadWebView(url: URL) {
@@ -598,6 +588,7 @@ extension MiniAppViewHandler: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        notifySecureStorageStatus()
         initialLoadCallback?(true)
         initialLoadCallback = nil
     }
@@ -657,6 +648,18 @@ extension MiniAppViewHandler: WKNavigationDelegate {
             }
         }
         decisionHandler(.cancel)
+    }
+    
+    private func notifySecureStorageStatus() {
+        if shouldAutoLoadSecureStorage {
+            secureStorage.loadStorage { success in
+                if success {
+                    MiniAppSecureStorage.sendLoadStorageReady(miniAppId: self.appId, miniAppVersion: self.version ?? "")
+                } else {
+                    MiniAppSecureStorage.sendLoadStorageError(miniAppId: self.appId, miniAppVersion: self.version ?? "")
+                }
+            }
+        }
     }
 }
 
