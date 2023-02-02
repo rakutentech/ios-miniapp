@@ -649,7 +649,7 @@ extension MiniAppViewHandler: WKNavigationDelegate {
         }
         decisionHandler(.cancel)
     }
-    
+
     private func notifySecureStorageStatus() {
         if shouldAutoLoadSecureStorage {
             secureStorage.loadStorage { success in
