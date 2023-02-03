@@ -458,6 +458,94 @@ class MiniAppViewHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 3.0)
         XCTAssertEqual(eventTypeResult, .resume)
     }
+    
+    func test_keyboard_shown_event() {
+        let messageDelegate = MockMessageInterface()
+        let viewHandler = MiniAppViewHandler(
+            config: .init(
+                config: nil,
+                messageDelegate: messageDelegate
+            ),
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+
+        let miniAppWebView = MiniAppWebView()
+        do {
+            try viewHandler.loadWebView(
+                webView: miniAppWebView,
+                miniAppId: mockMiniAppInfo.id,
+                versionId: mockMiniAppInfo.version.versionId
+            )
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+        viewHandler.webView = miniAppWebView
+        let expectation = XCTestExpectation(description: #function)
+        var eventTypeResult: MiniAppKeyboardEvent?
+        NotificationCenter.default.addObserver(forName: MiniAppKeyboardEvent.notificationName, object: nil, queue: .main) { notification in
+            if let event = notification.object as? MiniAppKeyboardEvent.Event {
+                eventTypeResult = event.type
+            }
+            expectation.fulfill()
+        }
+        NotificationCenter.default
+            .sendKeyboardEvent(
+                MiniAppKeyboardEvent.Event(
+                    type: .keyboardShown,
+                    comment: "Keyboard was shown",
+                    navigationBarHeight: 100.0,
+                    keyboardHeight: 100.0,
+                    screenHeight: 100.0
+                )
+            )
+        wait(for: [expectation], timeout: 3.0)
+        XCTAssertEqual(eventTypeResult, .keyboardShown)
+    }
+
+    func test_keyboard_hide_event() {
+        let messageDelegate = MockMessageInterface()
+        let viewHandler = MiniAppViewHandler(
+            config: .init(
+                config: nil,
+                messageDelegate: messageDelegate
+            ),
+            appId: mockMiniAppInfo.id,
+            version: mockMiniAppInfo.version.versionId
+        )
+
+        let miniAppWebView = MiniAppWebView()
+        do {
+            try viewHandler.loadWebView(
+                webView: miniAppWebView,
+                miniAppId: mockMiniAppInfo.id,
+                versionId: mockMiniAppInfo.version.versionId
+            )
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+        viewHandler.webView = miniAppWebView
+        let expectation = XCTestExpectation(description: #function)
+        var eventTypeResult: MiniAppKeyboardEvent?
+        NotificationCenter.default.addObserver(forName: MiniAppKeyboardEvent.notificationName, object: nil, queue: .main) { notification in
+            if let event = notification.object as? MiniAppKeyboardEvent.Event {
+                eventTypeResult = event.type
+            }
+            expectation.fulfill()
+        }
+        NotificationCenter.default
+            .sendKeyboardEvent(
+                MiniAppKeyboardEvent.Event(
+                    type: .keyboardHidden,
+                    comment: "Keyboard was Hidden",
+                    navigationBarHeight: 100.0,
+                    keyboardHeight: 0,
+                    screenHeight: 100.0
+                )
+            )
+        wait(for: [expectation], timeout: 3.0)
+        XCTAssertEqual(eventTypeResult, .keyboardHidden)
+    }
 }
 
 extension MiniAppViewHandlerTests {
