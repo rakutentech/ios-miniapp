@@ -112,11 +112,12 @@ struct MiniAppTermsView: View {
                             .foregroundColor(Color(.secondaryLabel))
                         }
                     }
-
-                    Section(header: Text("Metadata")) {
-                        Text(viewModel.manifest.customMetaData.JSONString)
-                        .font(.system(size: 12))
-                        .foregroundColor(Color(.secondaryLabel))
+                    if viewModel.manifest.customMetaData != nil {
+                        Section(header: Text("Metadata")) {
+                            Text(viewModel.manifest.customMetaData.JSONString)
+                            .font(.system(size: 12))
+                            .foregroundColor(Color(.secondaryLabel))
+                        }
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
