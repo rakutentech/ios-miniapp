@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### 5.2.0 (2023-xx-xx)
+**SDK**
+- **Fix:** Fix Secure storage ready notification
+
+---
+
 ### 5.1.0 (2023-01-30)
 **SDK**
 - **Update:** Added `allEmailList` field in `MAContact` to support multiple emails of a specific contact.
