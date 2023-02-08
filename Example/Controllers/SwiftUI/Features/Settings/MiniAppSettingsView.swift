@@ -135,7 +135,6 @@ struct MiniAppSettingsView: View {
                     .onAppear {
                         self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
                     }
-                    
             }
 
             Section {
@@ -235,15 +234,15 @@ struct MiniAppSettingsView: View {
         }
         .onChange(of: viewModel.listConfig.environmentMode, perform: { _ in
             self.dismissKeyboard()
-            switch(viewModel.listConfig.environmentMode) {
+            switch viewModel.listConfig.environmentMode {
             case .production:
                 viewModel.listConfig.projectId = viewModel.listConfig.projectIdProd
                 viewModel.listConfig.subscriptionKey = viewModel.listConfig.subscriptionKeyProd
-                break
+
             case .staging:
                 viewModel.listConfig.projectId = viewModel.listConfig.projectIdStaging
                 viewModel.listConfig.subscriptionKey = viewModel.listConfig.subscriptionKeyStaging
-                break
+
             }
             self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
             self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
@@ -263,14 +262,14 @@ struct MiniAppSettingsView: View {
         return viewModel.listConfigII.error != nil
     }
 
-    func maskedString(of keyString:String) -> String {
-        if (keyString.count > 5) {
-            let iS = keyString.index(keyString.startIndex, offsetBy: 5)
-            let iE = keyString.endIndex
+    func maskedString(of keyString: String) -> String {
+        if keyString.count > 5 {
+            let startIndex = keyString.index(keyString.startIndex, offsetBy: 5)
+            let endIndex = keyString.endIndex
             var str = keyString
             do {
                 let regex = try NSRegularExpression(pattern: "([a-zA-Z0-9-])", options: .caseInsensitive)
-                let range: Range<String.Index> = iS..<iE
+                let range: Range<String.Index> = startIndex..<endIndex
                 str = regex.stringByReplacingMatches(in: str, options: [], range: NSRange(range, in: str), withTemplate: "*")
             } catch { return str}
             return str
