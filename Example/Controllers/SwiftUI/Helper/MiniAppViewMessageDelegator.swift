@@ -74,10 +74,6 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
         }
     }
 
-    func requestCustomPermissions(permissions: [MASDKCustomPermissionModel], miniAppTitle: String, completionHandler: @escaping (Result<[MASDKCustomPermissionModel], MASDKCustomPermissionError>) -> Void) {
-        completionHandler(.failure(.userDenied))
-    }
-
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         switch permissionType {
         case .location:
