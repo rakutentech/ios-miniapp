@@ -14,6 +14,9 @@ struct MiniAppSettingsView: View {
     @State private var alertMessage: MiniAppAlertMessage?
     @State private var selectedListConfig: ListType = .listI
 
+    @State private var tmpSubscriptionKey: String = ""
+    @State private var tmpProjectKey: String = ""
+
     var body: some View {
         Form {
 
@@ -95,22 +98,43 @@ struct MiniAppSettingsView: View {
 
                 TextField(
                     viewModel.listConfig.placeholderProjectId,
-                    text: Binding<String>(
-                        get: { viewModel.listConfig.projectId ?? "" },
-                        set: { newValue in viewModel.listConfig.projectId = newValue }
-                    )
+                    text: $tmpProjectKey,
+                    onEditingChanged: { isEditing in
+                        if isEditing {
+                            tmpProjectKey = viewModel.listConfig.projectId ?? ""
+                        } else {
+                            self.tmpProjectKey = maskedString(of: tmpProjectKey)
+                        }
+                    },
+                    onCommit: {
+                        viewModel.listConfig.projectId = tmpProjectKey
+                        self.tmpProjectKey = maskedString(of: tmpProjectKey)
+                    }
                 )
                     .padding(.vertical, 15)
                     .accessibilityIdentifier(AccessibilityIdentifiers.settingsHostId.identifier)
+                    .onAppear {
+                        self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
+                    }
                 TextField(
                     viewModel.listConfig.placeholderSubscriptionKey,
-                    text: Binding<String>(
-                        get: { viewModel.listConfig.subscriptionKey ?? "" },
-                        set: { newValue in viewModel.listConfig.subscriptionKey = newValue }
-                    )
+                    text: $tmpSubscriptionKey,
+                    onEditingChanged: { isEditing in
+                        if isEditing {
+                            tmpSubscriptionKey = viewModel.listConfig.subscriptionKey ?? ""
+                        } else {
+                            self.tmpSubscriptionKey = maskedString(of: tmpSubscriptionKey)
+                        }
+                    }, onCommit: {
+                        viewModel.listConfig.subscriptionKey = tmpSubscriptionKey
+                        self.tmpSubscriptionKey = maskedString(of: tmpSubscriptionKey)
+                    }
                 )
                     .padding(.vertical, 15)
                     .accessibilityIdentifier(AccessibilityIdentifiers.settingsSubscriptionKey.identifier)
+                    .onAppear {
+                        self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
+                    }
             }
 
             Section {
@@ -208,6 +232,21 @@ struct MiniAppSettingsView: View {
                 ()
             }
         }
+        .onChange(of: viewModel.listConfig.environmentMode, perform: { _ in
+            self.dismissKeyboard()
+            switch viewModel.listConfig.environmentMode {
+            case .production:
+                viewModel.listConfig.projectId = viewModel.listConfig.projectIdProd
+                viewModel.listConfig.subscriptionKey = viewModel.listConfig.subscriptionKeyProd
+
+            case .staging:
+                viewModel.listConfig.projectId = viewModel.listConfig.projectIdStaging
+                viewModel.listConfig.subscriptionKey = viewModel.listConfig.subscriptionKeyStaging
+
+            }
+            self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
+            self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
+        })
         .trackPage(pageName: pageName)
     }
 
@@ -221,6 +260,21 @@ struct MiniAppSettingsView: View {
 
     var hasListIIErrors: Bool {
         return viewModel.listConfigII.error != nil
+    }
+
+    func maskedString(of keyString: String) -> String {
+        if keyString.count > 5 {
+            let startIndex = keyString.index(keyString.startIndex, offsetBy: 5)
+            let endIndex = keyString.endIndex
+            var str = keyString
+            do {
+                let regex = try NSRegularExpression(pattern: "([a-zA-Z0-9-])", options: .caseInsensitive)
+                let range: Range<String.Index> = startIndex..<endIndex
+                str = regex.stringByReplacingMatches(in: str, options: [], range: NSRange(range, in: str), withTemplate: "*")
+            } catch { return str}
+            return str
+        }
+        return keyString
     }
 }
 
