@@ -4,6 +4,8 @@
 **SDK**
 - **Fix:** Fix Secure storage ready notification
 
+**Sample App**
+- **Bugfix:** Mask Project ID & Subscription Key in Settings
 ---
 
 ### 5.1.0 (2023-01-30)
