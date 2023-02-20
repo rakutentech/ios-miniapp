@@ -102,7 +102,7 @@ public enum MASDKPermissionError: String, MiniAppErrorProtocol {
 
 /// Enumeration that is used to differentiate the Custom permission errors
 public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
-    
+
     /// Unknown Error
     case unknownError = "UKNOWN_ERROR"
 
@@ -138,7 +138,7 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
 
     /// Location Customer permission denied error
     case locationPermissionError
-    
+
     public var name: String {
         return self.rawValue
     }
