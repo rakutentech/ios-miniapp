@@ -454,7 +454,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getUserName\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userNamePermissionError.rawValue), timeout: .seconds(10))
                 }
             }
             context("when MiniAppScriptMessageHandler receives valid getProfilePhoto command") {
@@ -506,7 +506,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     let mockMessage = MockWKScriptMessage(
                         name: "", body: "{\"action\": \"getProfilePhoto\", \"param\":null, \"id\":\"12345\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.profilePhotoPermissionError.rawValue), timeout: .seconds(10))
                 }
             }
             context("when MiniAppScriptMessageHandler receives valid getContacts command") {
@@ -538,7 +538,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     )
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .contactsList, status: .denied)
                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.contactsPermissionError.rawValue), timeout: .seconds(10))
                 }
                 it("will return Error if contacts are nil") {
                     let mockCallbackProtocol = MockMiniAppCallbackProtocol()
@@ -1000,7 +1000,7 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .points, status: .denied)
                     let mockMessage = MockWKScriptMessage(name: "", body: command as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.userDenied.rawValue), timeout: .seconds(10))
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.pointsPermissionError.rawValue), timeout: .seconds(10))
 
                 }
             }
