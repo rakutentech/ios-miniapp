@@ -507,7 +507,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         } else {
             executeJavaScriptCallback(responseStatus: .onError,
                                       messageId: callbackId,
-                                      response: prepareMAJavascriptError(MASDKCustomPermissionError.userDenied))
+                                      response: prepareMAJavascriptError(MASDKCustomPermissionError.contactsPermissionError))
         }
     }
 
