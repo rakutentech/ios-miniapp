@@ -658,6 +658,23 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(mockCallbackProtocol.errorMessage).toEventually(contain("Unable to return Access Token"), timeout: .seconds(2))
                 }
+                it("will return Error if User didn't allow Access Token permission") {
+                    let mockCallbackProtocol = MockMiniAppCallbackProtocol()
+                    let scriptMessageHandler = MiniAppScriptMessageHandler(
+                        delegate: mockCallbackProtocol,
+                        hostAppMessageDelegate: mockMessageInterface,
+                        adsDisplayer: mockAdsDelegate,
+                        secureStorageDelegate: mockSecureStorageDelegate,
+                        miniAppManageDelegate: mockMiniAppManageInterface,
+                        miniAppId: mockMiniAppInfo.id, miniAppTitle: mockMiniAppTitle
+                    )
+                    mockMessageInterface.mockAccessToken = ""
+                    updateCustomPermissionStatus(miniAppId: mockMiniAppInfo.id, permissionType: .accessToken, status: .denied)
+                    let mockMessage = MockWKScriptMessage(
+                        name: "", body: "{\"action\": \"getAccessToken\", \"param\":{\"audience\": \"AUDIENCE_TEST\", \"scopes\":[\"scope_test\"]}, \"id\":\"12345\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(mockCallbackProtocol.errorMessage).toEventually(contain(MASDKCustomPermissionError.accessTokenPermissionError.rawValue), timeout: .seconds(10))
+                }
             }
             context("when MiniApp manifest contained no scopes") {
                 it("will return error") {
