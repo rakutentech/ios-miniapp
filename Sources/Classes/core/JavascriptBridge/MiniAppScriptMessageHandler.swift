@@ -146,7 +146,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     private func sendMessageToContactId(with callBackId: String, parameters: RequestParameters?) {
-        if isUserAllowedPermission(customPermissionType: .sendMessage, callbackId: callBackId) {
+        if isUserAllowedPermission(customPermissionType: .sendMessage) {
             if let message = parameters?.messageToContact {
                 if let contactId = parameters?.contactId {
                     hostAppMessageDelegate?.sendMessageToContactId(contactId, message: message) { result in
@@ -164,6 +164,10 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             } else {
                 executeJavaScriptCallback(responseStatus: .onError, messageId: callBackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.unexpectedMessageFormat))
             }
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError,
+                                      messageId: callBackId,
+                                      response: getMiniAppErrorMessage(MASDKCustomPermissionError.contactsPermissionError))
         }
     }
 
@@ -295,8 +299,12 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func getCurrentPosition(callbackId: String, location: CLLocation?) {
-        if isUserAllowedPermission(customPermissionType: .deviceLocation, callbackId: callbackId) {
+        if isUserAllowedPermission(customPermissionType: .deviceLocation) {
             executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: getLocationInfo(location: location))
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError,
+                                      messageId: callbackId,
+                                      response: prepareMAJavascriptError(MASDKCustomPermissionError.locationPermissionError))
         }
     }
 
@@ -441,7 +449,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func fetchUserName(callbackId: String) {
-        if isUserAllowedPermission(customPermissionType: .userName, callbackId: callbackId) {
+        if isUserAllowedPermission(customPermissionType: .userName) {
             hostAppMessageDelegate?.getUserName { (result) in
                 switch result {
                 case .success(let response):
@@ -454,11 +462,15 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     self.handleMASDKError(error: error, callbackId: callbackId)
                 }
             }
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError,
+                                      messageId: callbackId,
+                                      response: prepareMAJavascriptError(MASDKCustomPermissionError.userNamePermissionError))
         }
     }
 
     func fetchProfilePhoto(callbackId: String) {
-        if isUserAllowedPermission(customPermissionType: .profilePhoto, callbackId: callbackId) {
+        if isUserAllowedPermission(customPermissionType: .profilePhoto) {
             hostAppMessageDelegate?.getProfilePhoto { (result) in
                 switch result {
                 case .success(let response):
@@ -471,11 +483,15 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     self.handleMASDKError(error: error, callbackId: callbackId)
                 }
             }
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError,
+                                      messageId: callbackId,
+                                      response: prepareMAJavascriptError(MASDKCustomPermissionError.profilePhotoPermissionError))
         }
     }
 
     func fetchContacts(callbackId: String) {
-        if isUserAllowedPermission(customPermissionType: .contactsList, callbackId: callbackId) {
+        if isUserAllowedPermission(customPermissionType: .contactsList) {
             hostAppMessageDelegate?.getContacts { [self] result in
                 switch result {
                 case .success(let contactsList):
@@ -488,18 +504,15 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppJavaScriptError.internalError))
                 }
             }
-        }
-    }
-
-    func isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType, callbackId: String) -> Bool {
-        if isPermissionAllowedAlready(customPermissionType: customPermissionType) {
-            return true
         } else {
             executeJavaScriptCallback(responseStatus: .onError,
                                       messageId: callbackId,
-                                      response: getMiniAppErrorMessage(MASDKCustomPermissionError.userDenied))
-            return false
+                                      response: prepareMAJavascriptError(MASDKCustomPermissionError.contactsPermissionError))
         }
+    }
+
+    func isUserAllowedPermission(customPermissionType: MiniAppCustomPermissionType) -> Bool {
+        return isPermissionAllowedAlready(customPermissionType: customPermissionType)
     }
 
     private func isPermissionAllowedAlready(customPermissionType: MiniAppCustomPermissionType) -> Bool {
@@ -530,7 +543,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
     }
 
     func fetchTokenDetails(callbackId: String, for requestParam: RequestParameters?) {
-        if isUserAllowedPermission(customPermissionType: .accessToken, callbackId: callbackId) {
+        if isUserAllowedPermission(customPermissionType: .accessToken) {
             guard var accessTokenPermission = MASDKAccessTokenScopes(audience: requestParam?.audience, scopes: []),
                   let accessTokenPermissions = MiniApp.shared().getDownloadedManifest(miniAppId: miniAppId)?.accessTokenPermissions,
                   accessTokenPermission.isPartOf(accessTokenPermissions) // we check that the Mini App manages scopes and that these scopes are included in the Manifest
@@ -554,11 +567,15 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
                 }
             }
+        } else {
+            executeJavaScriptCallback(responseStatus: .onError,
+                                      messageId: callbackId,
+                                      response: prepareMAJavascriptError(MASDKCustomPermissionError.accessTokenPermissionError))
         }
     }
 
     func fetchPoints(with callbackId: String) {
-         if isUserAllowedPermission(customPermissionType: .points, callbackId: callbackId) {
+         if isUserAllowedPermission(customPermissionType: .points) {
             hostAppMessageDelegate?.getPoints { (result) in
                 switch result {
                 case .success(let response):
@@ -571,7 +588,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
                 }
             }
-        }
+         } else {
+             executeJavaScriptCallback(responseStatus: .onError,
+                                       messageId: callbackId,
+                                       response: prepareMAJavascriptError(MASDKCustomPermissionError.pointsPermissionError))
+         }
     }
 
     func getEnvironmentInfo(with callbackId: String) {
@@ -595,7 +616,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
     func downloadFile(with callbackId: String, parameters: RequestParameters?) {
          if
-            isUserAllowedPermission(customPermissionType: .fileDownload, callbackId: callbackId),
+            isUserAllowedPermission(customPermissionType: .fileDownload),
             let fileName = parameters?.filename,
             let url = parameters?.url,
             let headers = parameters?.headers
@@ -616,7 +637,11 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                     )
                 }
             }
-        }
+         } else {
+             executeJavaScriptCallback(responseStatus: .onError,
+                                       messageId: callbackId,
+                                       response: prepareMAJavascriptError(MASDKCustomPermissionError.userDenied))
+         }
     }
 
     func getSecureStorageItem(with callbackId: String, parameters: RequestParameters?) {
