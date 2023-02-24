@@ -121,7 +121,25 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
     /// Invalid scope request for the Custom Permission
     case outOfScope
 
-    var name: String {
+    /// User name Customer permission denied error
+    case userNamePermissionError
+
+    /// Profile Photo Customer permission denied error
+    case profilePhotoPermissionError
+
+    /// Access Token Customer permission denied error
+    case accessTokenPermissionError
+
+    /// Contacts Customer permission denied error
+    case contactsPermissionError
+
+    /// Points Customer permission denied error
+    case pointsPermissionError
+
+    /// Location Customer permission denied error
+    case locationPermissionError
+
+    public var name: String {
         return self.rawValue
     }
 
@@ -140,6 +158,18 @@ public enum MASDKCustomPermissionError: String, MiniAppErrorProtocol {
             return "User denied to share the detail"
         case .outOfScope:
             return "Invalid scope request for the Custom Permission"
+        case .userNamePermissionError:
+            return "Cannot get user name: Permission has not been accepted yet for getting user name."
+        case .profilePhotoPermissionError:
+            return "Cannot get profile photo: Permission has not been accepted yet for getting profile photo."
+        case .accessTokenPermissionError:
+            return "Cannot get access token: Permission has not been accepted yet for getting access token."
+        case .contactsPermissionError:
+            return "Cannot get contacts: Permission has not been accepted yet for getting contacts."
+        case .pointsPermissionError:
+            return "Cannot get points: Permission has not been accepted yet for getting points."
+        case .locationPermissionError:
+            return "Cannot get location: Permission has not been accepted yet for getting location."
         }
     }
 }
