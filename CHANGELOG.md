@@ -3,6 +3,7 @@
 ### 5.2.0 (2023-xx-xx)
 **SDK**
 - **Fix:** Fix Secure storage ready notification
+- **Update:** `sendJsonToMiniApp` is updated as public interface
 
 **Sample App**
 - **Bugfix:** Mask Project ID & Subscription Key in Settings
