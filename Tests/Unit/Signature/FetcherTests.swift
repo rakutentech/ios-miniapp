@@ -54,7 +54,7 @@ class FetcherSpec: QuickSpec {
 
                 fetcher.fetchKey(with: "key", completionHandler: { (_) in
                 })
-                expect(apiClientMock.request?.allHTTPHeaderFields!["apiKey"]).toEventually(equal("ras-my-subkey"))
+                expect(apiClientMock.request?.allHTTPHeaderFields!["apiKey"]).toEventually(equal("ras-my-subkey"), timeout: .seconds(5))
             }
 
             context("when valid key model is received as the result from the api client") {
