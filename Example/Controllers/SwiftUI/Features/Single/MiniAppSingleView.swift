@@ -119,7 +119,7 @@ struct MiniAppSingleView: View {
                 primaryButton: .default(Text("Ok"), action: {
                     presentationMode.wrappedValue.dismiss()
                 }),
-                secondaryButton: .cancel(Text("Cancel"), action: {
+                secondaryButton: .cancel(Text("No"), action: {
                     viewModel.shouldCloseMiniApp.send(false)
                 })
             )
