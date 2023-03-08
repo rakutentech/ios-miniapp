@@ -4,7 +4,6 @@
 **SDK**
 - **Fix:** Fix Secure storage ready notification
 - **Refactor:** Update the Custom permissions error messages format
-- **Update:** `sendJsonToMiniApp` is updated as public interface
 
 **Sample App**
 - **Bugfix:** Mask Project ID & Subscription Key in Settings
