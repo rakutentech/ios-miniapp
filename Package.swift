@@ -25,7 +25,7 @@ let package = Package(
         ),
         .package(
             name: "GoogleMobileAds-SPM",
-            url: "https://github.com/rakutentech/GoogleMobileAds-SPM.git", .upToNextMajor(from: "8.0.0")
+            url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", .upToNextMajor(from: "9.0.0")
         )
     ],
     targets: [
