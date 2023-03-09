@@ -58,7 +58,7 @@ Here are the different environment variables you can set before running `fastlan
 |`RAS_PROJECT_IDENTIFIER_PROD` |Project id key you can find in your Rakuten App Studio project |yes |
 |`RAS_PROJECT_IDENTIFIER_STG` |Project id you can find in your staging Rakuten App Studio project |yes |
 |`RMA_DEMO_APP_BUILD_TYPE` |This is used as a suffix for your demo app version name (for example if demo app is 3.7.0 and you provide `DEV` as value for this variable, your version will be named `3.7.0-DEV`) |no |
-|`RMA_GAD_APPLICATION_IDENTIFIER` |Only required if you intend to work with the Google Ads subspec `MiniApp/Admob` or `MiniApp/Admob8` |no |
+|`RMA_GAD_APPLICATION_IDENTIFIER` |Only required if you intend to work with the Google Ads subspec `MiniApp/Admob`, `MiniApp/Admob7` or `MiniApp/Admob8` |no |
 |`RMA_APP_CENTER_SECRET` |This variable is used to send crash reports to an AppCenter project (the token can be generated in your AppCenter project page). |no |
 
 <a id="test-sample-app"></a>
