@@ -16,7 +16,7 @@ secrets = [
 ]
 
 def miniapp_pods
-  pod 'MiniApp/Admob8', :path => './'
+  pod 'MiniApp/Admob', :path => './'
   pod 'MiniApp/UI', :path => './'
   pod 'MiniApp/Signature', :path => './'
 end
