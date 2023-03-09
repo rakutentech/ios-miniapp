@@ -17,7 +17,7 @@ class AdMobDisplayerTests: QuickSpec {
                     let adMobDisplayer = AdMobDisplayer()
                     #if RMA_SDK_ADMOB7
                         adMobDisplayer.interstitialAds = [key1: GADInterstitial(adUnitID: adId), key2: GADInterstitial(adUnitID: adId)]
-                    #elseif RMA_SDK_ADMOB8
+                    #elseif RMA_SDK_ADMOB
                         adMobDisplayer.interstitialAds = [key1: GADInterstitialAd(), key2: GADInterstitialAd()]
                     #endif
                     expect(adMobDisplayer.interstitialAds.count).to(equal(2))
@@ -31,7 +31,7 @@ class AdMobDisplayerTests: QuickSpec {
                     let adMobDisplayer = AdMobDisplayer()
                     #if RMA_SDK_ADMOB7
                         adMobDisplayer.rewardedAds = [key1: GADRewardedAd(adUnitID: adId), key2: GADRewardedAd(adUnitID: adId)]
-                    #elseif RMA_SDK_ADMOB8
+                    #elseif RMA_SDK_ADMOB
                         adMobDisplayer.rewardedAds = [key1: GADRewardedAd(), key2: GADRewardedAd()]
                     #endif
                     expect(adMobDisplayer.rewardedAds.count).to(equal(2))
