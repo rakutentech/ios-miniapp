@@ -5,6 +5,7 @@
 - **Fix:** Fix Secure storage ready notification
 - **Refactor:** Update the Custom permissions error messages format
 - **SPM:** Moved Admob dependency to the official SPM repo
+- **Fix:** Updated `sendJsonToMiniApp` to `MiniAppManageDelegate` that will help the old architecture to use it.
 
 **Sample App**
 - **Bugfix:** Mask Project ID & Subscription Key in Settings
