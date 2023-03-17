@@ -1,9 +1,34 @@
 import UIKit
 import SwiftUI
+import AdSupport
+import AppTrackingTransparency
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // scene implementation
+    }
+
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.requestPermission()
+        }
+    }
+
+    func requestPermission() {
+        ATTrackingManager.requestTrackingAuthorization { status in
+            switch status {
+            case .authorized:
+                print("Authorized Tracking Permission")
+            case .denied:
+                print("Denied Tracking Permission")
+            case .notDetermined:
+                print("Not Determined Tracking Permission")
+            case .restricted:
+                print("Restricted Tracking Permission")
+            @unknown default:
+                print("Unknown Tracking Permission")
+            }
+        }
     }
 }
 
