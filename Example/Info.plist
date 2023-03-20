@@ -81,5 +81,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Required by GoogleAdMobSDK for showing the personalised ads only for you.</string>
 </dict>
 </plist>
