@@ -2,6 +2,7 @@ import UIKit
 import SwiftUI
 import AdSupport
 import AppTrackingTransparency
+import GoogleMobileAds
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -18,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ATTrackingManager.requestTrackingAuthorization { status in
             switch status {
             case .authorized:
+                GADMobileAds.sharedInstance().start(completionHandler: nil)
                 print("Authorized Tracking Permission")
             case .denied:
                 print("Denied Tracking Permission")
