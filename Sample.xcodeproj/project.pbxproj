@@ -13,6 +13,8 @@
 		185DBD6224B2A06300CD2094 /* SmallMA.zip in Resources */ = {isa = PBXBuildFile; fileRef = 185DBD6124B2A06300CD2094 /* SmallMA.zip */; };
 		188F8BA725133BFB004F2D06 /* RealMiniAppView+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */; };
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
+		1C0A785B29C3417500433A38 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0A785929C3417500433A38 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1C0A785C29C3417500433A38 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0A785A29C3417500433A38 /* AppTrackingTransparency.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C2E06AE293A6A99003C6380 /* MiniAppSecureStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */; };
 		1CD1591829421FDF001E0E21 /* UniversalBridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1591729421FDF001E0E21 /* UniversalBridgeView.swift */; };
 		2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */; };
@@ -144,6 +146,8 @@
 		185DBD6124B2A06300CD2094 /* SmallMA.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = SmallMA.zip; sourceTree = "<group>"; };
 		188F8BA625133BFB004F2D06 /* RealMiniAppView+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppView+Mock.swift"; sourceTree = "<group>"; };
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
+		1C0A785929C3417500433A38 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		1C0A785A29C3417500433A38 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageView.swift; sourceTree = "<group>"; };
 		1CD1591729421FDF001E0E21 /* UniversalBridgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalBridgeView.swift; sourceTree = "<group>"; };
 		2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKLocaleTests.swift; sourceTree = "<group>"; };
@@ -278,6 +282,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C0A785C29C3417500433A38 /* AppTrackingTransparency.framework in Frameworks */,
+				1C0A785B29C3417500433A38 /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +366,15 @@
 				2AFDE8EB27B1222A00B7B340 /* MiniAppManifestTests.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		30E524B35B7C7EB66E496B49 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1C0A785929C3417500433A38 /* AdSupport.framework */,
+				1C0A785A29C3417500433A38 /* AppTrackingTransparency.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		31AB8EE025CA438D0046F694 /* Fastlane */ = {
@@ -486,6 +501,7 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD11AFB9204008FA782 /* Products */,
 				00051FDBEA11366DAD528C30 /* Pods */,
+				30E524B35B7C7EB66E496B49 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

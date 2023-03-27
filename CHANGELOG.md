@@ -9,6 +9,7 @@
 
 **Sample App**
 - **Bugfix:** Mask Project ID & Subscription Key in Settings
+- **Update:** Enabled App Tracking Tansperancy, with 'Privacy - Tracking Usage Description' and authorisation request propmpt on launch.
 ---
 
 ### 5.1.0 (2023-01-30)
