@@ -2732,280 +2732,315 @@
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 201,
+      "line": 142,
+      "symbol": "MASDKCustomPermissionError.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 142,
+      "symbol": "MASDKCustomPermissionError.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 142,
+      "symbol": "MASDKCustomPermissionError.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 142,
+      "symbol": "MASDKCustomPermissionError.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 142,
+      "symbol": "MASDKCustomPermissionError.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 231,
       "symbol": "MASDKPointError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 201,
+      "line": 231,
       "symbol": "MASDKPointError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 201,
+      "line": 231,
       "symbol": "MASDKPointError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 201,
+      "line": 231,
       "symbol": "MASDKPointError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 201,
+      "line": 231,
       "symbol": "MASDKPointError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 253,
+      "line": 283,
       "symbol": "MASDKDownloadFileError.invalidUrl",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 253,
+      "line": 283,
       "symbol": "MASDKDownloadFileError.invalidUrl",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 253,
+      "line": 283,
       "symbol": "MASDKDownloadFileError.invalidUrl",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 253,
+      "line": 283,
       "symbol": "MASDKDownloadFileError.invalidUrl",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 253,
+      "line": 283,
       "symbol": "MASDKDownloadFileError.invalidUrl",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 254,
+      "line": 284,
       "symbol": "MASDKDownloadFileError.downloadFailed(code:reason:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 254,
+      "line": 284,
       "symbol": "MASDKDownloadFileError.downloadFailed(code:reason:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 254,
+      "line": 284,
       "symbol": "MASDKDownloadFileError.downloadFailed(code:reason:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 254,
+      "line": 284,
       "symbol": "MASDKDownloadFileError.downloadFailed(code:reason:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 254,
+      "line": 284,
       "symbol": "MASDKDownloadFileError.downloadFailed(code:reason:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 255,
+      "line": 285,
       "symbol": "MASDKDownloadFileError.downloadHttpError(code:reason:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 255,
+      "line": 285,
       "symbol": "MASDKDownloadFileError.downloadHttpError(code:reason:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 255,
+      "line": 285,
       "symbol": "MASDKDownloadFileError.downloadHttpError(code:reason:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 255,
+      "line": 285,
       "symbol": "MASDKDownloadFileError.downloadHttpError(code:reason:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 255,
+      "line": 285,
       "symbol": "MASDKDownloadFileError.downloadHttpError(code:reason:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 256,
+      "line": 286,
       "symbol": "MASDKDownloadFileError.saveTemporarilyFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 256,
+      "line": 286,
       "symbol": "MASDKDownloadFileError.saveTemporarilyFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 256,
+      "line": 286,
       "symbol": "MASDKDownloadFileError.saveTemporarilyFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 256,
+      "line": 286,
       "symbol": "MASDKDownloadFileError.saveTemporarilyFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 256,
+      "line": 286,
       "symbol": "MASDKDownloadFileError.saveTemporarilyFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 257,
+      "line": 287,
       "symbol": "MASDKDownloadFileError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 257,
+      "line": 287,
       "symbol": "MASDKDownloadFileError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 257,
+      "line": 287,
       "symbol": "MASDKDownloadFileError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 257,
+      "line": 287,
       "symbol": "MASDKDownloadFileError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 257,
+      "line": 287,
       "symbol": "MASDKDownloadFileError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 308,
+      "line": 338,
       "symbol": "UniversalBridgeError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 308,
+      "line": 338,
       "symbol": "UniversalBridgeError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 308,
+      "line": 338,
       "symbol": "UniversalBridgeError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 308,
+      "line": 338,
       "symbol": "UniversalBridgeError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 308,
+      "line": 338,
       "symbol": "UniversalBridgeError",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 311,
+      "line": 341,
       "symbol": "UniversalBridgeError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 311,
+      "line": 341,
       "symbol": "UniversalBridgeError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 311,
+      "line": 341,
       "symbol": "UniversalBridgeError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 311,
+      "line": 341,
       "symbol": "UniversalBridgeError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
-      "line": 311,
+      "line": 341,
       "symbol": "UniversalBridgeError.error(description:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
