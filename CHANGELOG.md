@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 5.2.0 (2023-xx-xx)
+### 5.2.0 (2023-03-30)
 **SDK**
 - **Fix:** Fix Secure storage ready notification
 - **Refactor:** Update the Custom permissions error messages format

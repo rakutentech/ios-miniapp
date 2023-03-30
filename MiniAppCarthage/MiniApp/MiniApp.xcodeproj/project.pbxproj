@@ -1324,7 +1324,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MARKETING_VERSION = 5.1.0;
+				MARKETING_VERSION = 5.2.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.MiniApp;
 				PRODUCT_NAME = MiniApp;
@@ -1353,7 +1353,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MARKETING_VERSION = 5.1.0;
+				MARKETING_VERSION = ;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.MiniApp;
 				PRODUCT_NAME = MiniApp;

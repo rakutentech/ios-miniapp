@@ -336,6 +336,7 @@ class MiniAppViewHandler: NSObject {
         )
         initExternalWebViewClosures()
         observeWebView()
+        notifySecureStorageStatus()
     }
 
     func loadWebView(url: URL) {
@@ -588,7 +589,6 @@ extension MiniAppViewHandler: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        notifySecureStorageStatus()
         initialLoadCallback?(true)
         initialLoadCallback = nil
     }
