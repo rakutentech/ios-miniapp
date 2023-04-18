@@ -295,3 +295,4 @@ struct MiniAppFeatureConfigView_Previews: PreviewProvider {
         MiniAppSettingsView(showFullProgress: .constant(false))
     }
 }
+// swiftlint:enable line_length
