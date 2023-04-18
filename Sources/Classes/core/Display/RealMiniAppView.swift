@@ -469,3 +469,4 @@ extension RealMiniAppView {
         didReceiveEvent(MiniAppEvent.miniappReceiveJsonString, message: jsonString)
     }
 }
+// swiftlint:enable file_length function_body_length
