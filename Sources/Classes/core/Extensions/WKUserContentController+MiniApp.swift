@@ -58,4 +58,5 @@ extension WKUserContentController {
         let userScript = WKUserScript(source: javascriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
          addUserScript(userScript)
     }
+    // swiftlint:enable function_parameter_count
 }
