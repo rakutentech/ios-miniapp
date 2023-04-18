@@ -116,7 +116,7 @@ struct MiniAppSingleView: View {
             Alert(
                 title: Text(errorMessage.title),
                 message: Text(errorMessage.message),
-                primaryButton: .default(Text("Ok"), action: {
+                primaryButton: .default(Text("Yes"), action: {
                     presentationMode.wrappedValue.dismiss()
                 }),
                 secondaryButton: .cancel(Text("No"), action: {
