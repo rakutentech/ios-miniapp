@@ -265,7 +265,6 @@ internal class RealMiniApp {
             }
         }
     }
-    // swiftlint:enable function_parameter_count
 
     func retrieveCustomPermissions(forMiniApp id: String) -> [MASDKCustomPermissionModel] {
         let cachedPermissions = miniAppPermissionStorage.getCustomPermissions(forMiniApp: id)
@@ -508,5 +507,3 @@ extension RealMiniApp {
             )
     }
 }
-// swiftlint:enable type_body_length
-// swiftlint:enable file_length

@@ -127,4 +127,3 @@ enum MiniAppSDKErrorCode: Int {
          failedToConformToProtocol,
          invalidSignature
 }
-// swiftlint:enable identifier_name

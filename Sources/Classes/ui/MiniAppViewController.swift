@@ -386,4 +386,3 @@ extension MiniAppViewController: MiniAppNavigationDelegate {
     }
 
 }
-// swiftlint:enable function_body_length
