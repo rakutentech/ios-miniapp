@@ -8,6 +8,7 @@ Public Protocol that will be used by the Mini App to communicate
 public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareContentDelegate, ChatMessageBridgeDelegate, UniversalBridgeDelegate {
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
+    @available(*, deprecated, renamed:"getMessagingUniqueId(completionHandler:)")
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void)
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device assembled as message unique id
@@ -57,6 +58,7 @@ public extension MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
+    @available(*, deprecated, renamed:"getMessagingUniqueId(completionHandler:)")
     func getUniqueId(completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }

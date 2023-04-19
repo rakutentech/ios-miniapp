@@ -215,6 +215,8 @@ Mini App SDK provides default implementation for few interfaces in `MiniAppMessa
 | Method                       | Default  |
 | :----                        | :----:   |
 | getUniqueId                  | 🚫       |
+| getMessagingUniqueId         | 🚫       |
+| getMauid                     | 🚫       |
 | requestDevicePermission      | 🚫       |
 | requestCustomPermissions     | ✅       |
 | shareContent                 | ✅       |
@@ -234,6 +236,36 @@ Mini App SDK provides default implementation for few interfaces in `MiniAppMessa
 extension ViewController: MiniAppMessageDelegate {
     func getUniqueId(completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
         // Implementation to return the Unique ID
+        completionHandler(.success(""))
+    }
+}
+```
+
+<a id="retrieve-unique-id"></a>
+
+##### Retrieving Messaging Unique ID
+---
+**API Docs:** [MiniAppUserInfoDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppUserInfoDelegate.html)
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getMessagingUniqueId(completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+        // Implementation to return the Messaging Unique ID
+        completionHandler(.success(""))
+    }
+}
+```
+
+<a id="retrieve-unique-id"></a>
+
+##### Retrieving Unique MAUID for v2
+---
+**API Docs:** [MiniAppUserInfoDelegate](https://rakutentech.github.io/ios-miniapp/Protocols/MiniAppUserInfoDelegate.html)
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getMauid(completionHandler: @escaping (Result<String, MASDKError>) -> Void) {
+        // Implementation to return the Unique MAUID
         completionHandler(.success(""))
     }
 }
