@@ -97,3 +97,4 @@ public struct MASDKLocale {
         localize(bundle: path, key.rawValue)
     }
 }
+// swiftlint:enable identifier_name

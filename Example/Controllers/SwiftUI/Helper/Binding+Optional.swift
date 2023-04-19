@@ -9,3 +9,4 @@ func ??<T>(lhs: Binding<Optional<T>>, rhs: T) -> Binding<T> {
         set: { lhs.wrappedValue = $0 }
     )
 }
+// swiftlint:enable operator_whitespace syntactic_sugar

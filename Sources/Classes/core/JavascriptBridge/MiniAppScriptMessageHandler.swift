@@ -128,6 +128,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             closeMiniApp(requestParam: requestParam, callbackId: callbackId)
         }
     }
+    // swiftlint:enable function_body_length cyclomatic_complexity
 
     private func sendMessageToContact(with callBackId: String, parameters: RequestParameters?) {
         if let message = parameters?.messageToContact {
@@ -773,6 +774,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         )
     }
 }
+// swiftlint:enable type_body_length file_length
 
 //MARK: Universal Bridge support
 extension MiniAppScriptMessageHandler {
