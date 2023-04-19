@@ -217,3 +217,4 @@ public class MiniAppAnalytics {
         }
     }
 }
+// swiftlint:enable function_body_length cyclomatic_complexity
