@@ -240,6 +240,7 @@ extension ViewController: MiniAppMessageDelegate {
     }
 }
 ```
+```NOTE:  This method `getUniqueId(completionHandler:)` will be deprecated in the upcoming release of MiniAppSDK. You should use `getMessagingUniqueId(completionHandler:)` instead.```
 
 <a id="retrieve-unique-id"></a>
 

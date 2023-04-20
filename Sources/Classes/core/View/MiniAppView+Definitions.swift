@@ -29,7 +29,7 @@ public struct MiniAppConfig {
     - Parameters:
         - config: MiniAppSdkConfig that defines the baseUrl and other basic settings
         - adsDisplayer: Ads Displayer for showing ads
-        - messageDelegate: Message delegate to handle getMauid etc
+        - messageDelegate: Message delegate to handle different interface callbacks used by Mini App to communicate with the Native implementation.
         - navigationDelegate: Handling of webview navigation actions
      */
     public init(
