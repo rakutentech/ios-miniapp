@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 5.3.0 (XXXX-XX-XX)
+**SDK**
+- **Deprecated:** `getUniqueId(completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `getMessagingUniqueId(completionHandler:)` instead.
+
 ### 5.2.0 (2023-03-30)
 **SDK**
 - **Fix:** Fix Secure storage ready notification

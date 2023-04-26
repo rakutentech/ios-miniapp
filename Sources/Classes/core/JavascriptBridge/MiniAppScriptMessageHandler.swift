@@ -227,6 +227,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
     }
 
+    @available(*, deprecated, renamed:"getMessagingUniqueId(completionHandler:)")
     func getUniqueId(callbackId: String) {
         hostAppMessageDelegate?.getUniqueId { (result) in
             switch result {
