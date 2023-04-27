@@ -36,10 +36,25 @@ internal struct MetaDataCustomPermissionModel: Codable, Hashable {
 internal struct MACustomPermissionsResponse: Codable, Hashable {
     var name: String?
     var reason: String?
+    var isOneTimePermission: Bool?
 
     private enum CodingKeys: String, CodingKey {
         case name,
-             reason
+             reason,
+             isOneTimePermission
+    }
+
+    init(name: String?, reason: String?, isOneTimePermission: Bool? = false) {
+        self.name = name
+        self.reason = reason
+        self.isOneTimePermission = isOneTimePermission
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        reason = try container.decode(String.self, forKey: .reason)
+        isOneTimePermission = try container.decodeIfPresent(Bool.self, forKey: .isOneTimePermission) ?? false
     }
 
     static func == (lhs: MACustomPermissionsResponse, rhs: MACustomPermissionsResponse) -> Bool {
@@ -49,6 +64,7 @@ internal struct MACustomPermissionsResponse: Codable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(name)
         hasher.combine(reason)
+        hasher.combine(isOneTimePermission)
     }
 }
 

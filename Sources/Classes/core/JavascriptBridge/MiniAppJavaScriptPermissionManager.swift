@@ -61,7 +61,7 @@ extension MiniAppScriptMessageHandler {
                             MiniAppCustomPermissionGrantedStatus.permissionNotAvailable.rawValue))
                 return
             }
-            customPermissionRequestList.append(MASDKCustomPermissionModel(permissionName: permissionType, permissionRequestDescription: $0.description))
+            customPermissionRequestList.append(MASDKCustomPermissionModel(permissionName: permissionType, permissionRequestDescription: $0.description, isOneTimePermission: $0.isOneTimePermission ?? false))
         }
         return customPermissionRequestList
     }
@@ -164,6 +164,7 @@ public class MASDKCustomPermissionModel: Codable, Hashable, Comparable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(permissionName)
         hasher.combine(permissionDescription)
+        hasher.combine(isOneTimePermission)
     }
 
     /// Name of the Custom permission that is requested
@@ -172,10 +173,13 @@ public class MASDKCustomPermissionModel: Codable, Hashable, Comparable {
     public var isPermissionGranted: MiniAppCustomPermissionGrantedStatus
     /// Description for the respective custom permission
     public var permissionDescription: String?
+    /// Boolean value to specify if the permission is shown one time or must be shown on every launch, default value is 'false'.
+    public var isOneTimePermission: Bool?
 
-    init(permissionName: MiniAppCustomPermissionType, isPermissionGranted: MiniAppCustomPermissionGrantedStatus = .allowed, permissionRequestDescription: String? = "") {
+    init(permissionName: MiniAppCustomPermissionType, isPermissionGranted: MiniAppCustomPermissionGrantedStatus = .allowed, permissionRequestDescription: String? = "", isOneTimePermission:Bool = false) {
         self.permissionName = permissionName
         self.isPermissionGranted = isPermissionGranted
         self.permissionDescription = permissionRequestDescription
+        self.isOneTimePermission = isOneTimePermission
     }
 }

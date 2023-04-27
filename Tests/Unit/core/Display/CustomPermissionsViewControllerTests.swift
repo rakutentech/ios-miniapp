@@ -8,10 +8,10 @@ class CustomPermissionsViewControllerTests: QuickSpec {
     override func spec() {
         let requiredPermissions: [MASDKCustomPermissionModel] = [MASDKCustomPermissionModel(permissionName: .userName,
                                                                                             isPermissionGranted: .allowed,
-                                                                                            permissionRequestDescription: "User name custom permission"),
+                                                                                            permissionRequestDescription: "User name custom permission", isOneTimePermission: false),
                                                                  MASDKCustomPermissionModel(permissionName: .profilePhoto,
                                                                                             isPermissionGranted: .allowed,
-                                                                                            permissionRequestDescription: "Profile Photo custom permission")]
+                                                                                            permissionRequestDescription: "Profile Photo custom permission", isOneTimePermission: false)]
         describe("CustomPermissionsViewControllerTests") {
             let customPermissionsController = CustomPermissionsRequestViewController()
             customPermissionsController.permissionsRequestList = requiredPermissions
