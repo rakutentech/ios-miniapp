@@ -20,7 +20,10 @@ internal class MAManifestStorage {
             guard let name = $0.name, let permissionType = MiniAppCustomPermissionType(rawValue: name) else {
                 return nil
             }
-            return MASDKCustomPermissionModel(permissionName: permissionType, isPermissionGranted: .allowed, permissionRequestDescription: $0.reason, isOneTimePermission: $0.isOneTimePermission ?? false)
+            return MASDKCustomPermissionModel(permissionName: permissionType,
+                                              isPermissionGranted: .allowed,
+                                              permissionRequestDescription: $0.reason,
+                                              isOneTimePermission: $0.isOneTimePermission ?? false)
         }
     }
 

@@ -42,7 +42,7 @@ struct JsonStringInfoParameters: Codable {
 struct MiniAppCustomPermissionsRequest: Decodable {
     let name: String?
     let description: String?
-    let isOneTimePermission:Bool?
+    let isOneTimePermission: Bool?
 }
 
 struct MiniAppCustomPermissionsResponse: Codable {
