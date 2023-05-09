@@ -833,13 +833,13 @@ extension MiniAppScriptMessageHandler {
         hostAppMessageDelegate?.getHostAppThemeColors(completionHandler: { (result) in
             switch result {
             case .success(let hostAppColors):
-                guard let hostAppColors = ResponseEncoder.encode(data: hostAppColors) else {
-                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
+                guard hostAppColors != nil, let hostAppColors = ResponseEncoder.encode(data: hostAppColors) else {
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
                     return
                 }
                 self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: hostAppColors)
             case .failure(let error):
-                self.handleMASDKError(error: error, callbackId: callbackId)
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
             }
         })
     }

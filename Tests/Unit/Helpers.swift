@@ -403,6 +403,10 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         let mockMessageInterface = MockMessageInterface()
         mockMessageInterface.downloadFile(fileName: fileName, url: url, headers: headers, completionHandler: completionHandler)
     }
+    func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MiniAppJavaScriptError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.getHostAppThemeColors(completionHandler: completionHandler)
+    }
 }
 
 class MockMessageInterface: MiniAppMessageDelegate {
@@ -427,6 +431,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockEnvironmentInfo: Bool = false
     var mockDownloadFile: Bool = false
     var mockInterfaceImplemented: Bool = false
+    var mockHostAppThemeColorsAllowed: Bool = false
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
         if messageContentAllowed {
@@ -567,6 +572,17 @@ class MockMessageInterface: MiniAppMessageDelegate {
         } else {
             completionHandler(.failure(.failedToConformToProtocol))
         }
+    }
+    
+    func getHostAppThemeColors(completionHandler: @escaping(Result<HostAppThemeColors?, MiniAppJavaScriptError>) -> Void){
+        if mockInterfaceImplemented && mockHostAppThemeColorsAllowed {
+            completionHandler(.success(HostAppThemeColors(primaryColor: "#FFFFFF", secondaryColor: "#AAAAAA")))
+        } else if mockHostAppThemeColorsAllowed {
+            completionHandler(.failure(.failedToConformToProtocol))
+        } else {
+            completionHandler(.success(nil))
+        }
+        
     }
 }
 
