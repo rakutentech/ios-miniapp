@@ -481,7 +481,7 @@ extension RealMiniApp: MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MASDKError>) -> Void) {
+    func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MiniAppJavaScriptError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }
