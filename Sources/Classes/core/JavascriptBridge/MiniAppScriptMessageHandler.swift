@@ -126,6 +126,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             sendJsonToHostApp(requestParam: requestParam, callbackId: callbackId)
         case .closeMiniApp:
             closeMiniApp(requestParam: requestParam, callbackId: callbackId)
+        case .getHostAppThemeColors:
+            getHostAppThemeColors(with: callbackId)
         }
     }
     // swiftlint:enable function_body_length cyclomatic_complexity
@@ -825,6 +827,24 @@ extension MiniAppScriptMessageHandler {
     }
 }
 
+//MARK: MiniApp GetHostAppThemeColors
+extension MiniAppScriptMessageHandler {
+    func getHostAppThemeColors(with callbackId: String) {
+        hostAppMessageDelegate?.getHostAppThemeColors(completionHandler: { (result) in
+            switch result {
+            case .success(let hostAppColors):
+                guard hostAppColors != nil, let hostAppColors = ResponseEncoder.encode(data: hostAppColors) else {
+                    self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
+                    return
+                }
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: hostAppColors)
+            case .failure(let error):
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
+            }
+        })
+    }
+}
+
 class LocationManager: NSObject {
     let manager: CLLocationManager
     var locationListener: ((Result<CLLocation?, MAJSNaviGeolocationError>) -> Void)?
@@ -852,3 +872,4 @@ extension LocationManager: CLLocationManagerDelegate {
         manager.stopUpdatingLocation()
     }
 }
+

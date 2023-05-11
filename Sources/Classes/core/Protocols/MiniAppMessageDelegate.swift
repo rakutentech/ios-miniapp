@@ -35,6 +35,9 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
 
     /// Interface to recieve the close command from the MiniApp
     func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void)
+
+    /// Interface to get the host app theme colors
+    func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MiniAppJavaScriptError>) -> Void)
 }
 
 public extension MiniAppMessageDelegate {
@@ -88,6 +91,10 @@ public extension MiniAppMessageDelegate {
     func closeMiniApp(withConfirmation: Bool, completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
+
+    func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MiniAppJavaScriptError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
 }
 
 public enum MASDKProtocolResponse: String {
@@ -130,3 +137,14 @@ public class MAHostEnvironmentInfo: Codable {
 
 // Used for download files headers
 public typealias DownloadHeaders = [String: String]
+
+// Model class used for sending the Host App theme colors to miniapp
+public class HostAppThemeColors: Codable {
+    let primaryColor: String
+    let secondaryColor: String
+
+    public init(primaryColor: String, secondaryColor: String) {
+        self.primaryColor = primaryColor
+        self.secondaryColor = secondaryColor
+    }
+}

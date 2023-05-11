@@ -40,6 +40,7 @@ internal enum MiniAppRATEvent: String, CaseIterable {
     case sendJsonToHostapp = "mini_app_send_json_to_host_app"
     case sendJsonToMiniApp = "mini_app_send_json_to_mini_app"
     case closeMiniApp = "close_mini_app_with_confirmation_alert"
+    case getHostAppThemeColors = "mini_app_get_hostapp_theme_colors"
 
     func name() -> String {
         "mini_app_\(rawValue)"
@@ -81,7 +82,8 @@ internal enum MiniAppRATEvent: String, CaseIterable {
              .setCloseAlertInfo,
              .sendJsonToHostapp,
              .sendJsonToMiniApp,
-             .closeMiniApp:
+             .closeMiniApp,
+             .getHostAppThemeColors:
             return .click
         }
     }
@@ -214,6 +216,8 @@ public class MiniAppAnalytics {
             return .sendJsonToHostapp
         case .closeMiniApp:
             return .closeMiniApp
+        case .getHostAppThemeColors:
+            return .getHostAppThemeColors
         }
     }
 }

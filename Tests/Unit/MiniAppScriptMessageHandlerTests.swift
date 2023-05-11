@@ -1483,6 +1483,40 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.name))
                 }
             }
+            context("when user controller receive getHostAppThemeColors action and id") {
+                let scriptMessageHandler = MiniAppScriptMessageHandler(
+                    delegate: callbackProtocol,
+                    hostAppMessageDelegate: mockMessageInterface,
+                    adsDisplayer: mockAdsDelegate,
+                    secureStorageDelegate: mockSecureStorageDelegate,
+                    miniAppManageDelegate: mockMiniAppManageInterface,
+                    miniAppId: mockMiniAppInfo.id,
+                    miniAppTitle: mockMiniAppTitle
+                )
+                it("will return host app theme primary and secondary colors") {
+                    mockMessageInterface.mockInterfaceImplemented = true
+                    mockMessageInterface.mockHostAppThemeColorsAllowed = true
+                    let mockMessage = MockWKScriptMessage(name: "getHostAppThemeColors", body: "{\"action\":\"getHostAppThemeColors\",\"param\":null,\"id\":\"9.408169489793705\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.messageId).toEventually(equal("9.408169489793705"))
+                    expect(callbackProtocol.response).toEventuallyNot(beNil())
+                }
+                it("on error to get host app theme primary and secondary colors") {
+                    mockMessageInterface.mockInterfaceImplemented = true
+                    mockMessageInterface.mockHostAppThemeColorsAllowed = false
+                    let mockMessage = MockWKScriptMessage(name: "getHostAppThemeColors", body: "{\"action\":\"getHostAppThemeColors\",\"param\":null,\"id\":\"9.408169489793705\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.messageId).toEventually(equal("9.408169489793705"))
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.name))
+                }
+                it("on failed to implement method error will return host app failed to implement protocol") {
+                    mockMessageInterface.mockInterfaceImplemented = false
+                    mockMessageInterface.mockHostAppThemeColorsAllowed = true
+                    let mockMessage = MockWKScriptMessage(name: "getHostAppThemeColors", body: "{\"action\":\"getHostAppThemeColors\",\"param\":null,\"id\":\"9.408169489793705\"}" as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MASDKError.failedToConformToProtocol.errorDescription ??  ""))
+                }
+            }
         }
     }
 }

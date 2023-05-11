@@ -1112,7 +1112,7 @@ window.addEventListener(MiniAppKeyboardEvents.KEYBOARDHIDDEN, function (e) {
 ### MiniApp Close
 
 MiniApp can request the host app to close itself through the javascript bridge event trigger.
-MiniApp iOS provides the `MiniAppMessageDelegate` interface method `func closeMiniApp(withConfirmation: , completionHandler:)` which can be implemented in the host app. This delegate method is an optional.
+MiniAppSDK in iOS provides the `MiniAppMessageDelegate` interface method `func closeMiniApp(withConfirmation: , completionHandler:)` which can be implemented in the host app. This delegate method is an optional.
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
@@ -1122,6 +1122,27 @@ extension ViewController: MiniAppMessageDelegate {
         } else {
             // you can directly  close the MiniApp without the confirmation alert.
         }
+    }
+}
+```
+
+<a id="miniapp-getHostAppThemeColors"></a>
+
+### MiniApp Close
+
+MiniApp can request the host app to share the Themes primary and secondary colors through the javascript bridge event trigger.
+MiniAppSDK in iOS provides the `MiniAppMessageDelegate` interface method `func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MASDKError>) -> Void)` which can be implemented in the host app. This delegate method is an optional.
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MASDKError>) -> Void) {
+        completionHandler(
+            .success(
+                HostAppThemeColors(
+                    primaryColor: "#FF008C",
+                    secondaryColor: "#7D64BE")
+            )
+        )
     }
 }
 ```
