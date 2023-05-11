@@ -184,7 +184,7 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
         onShoudCloseMiniApp?(withConfirmation)
     }
 
-    func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MiniAppJavaScriptError>) -> Void) {
+    func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MASDKError>) -> Void) {
         completionHandler(
             .success(
                 HostAppThemeColors(
