@@ -403,7 +403,7 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         let mockMessageInterface = MockMessageInterface()
         mockMessageInterface.downloadFile(fileName: fileName, url: url, headers: headers, completionHandler: completionHandler)
     }
-    func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MiniAppJavaScriptError>) -> Void) {
+    func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MASDKError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         mockMessageInterface.getHostAppThemeColors(completionHandler: completionHandler)
     }
