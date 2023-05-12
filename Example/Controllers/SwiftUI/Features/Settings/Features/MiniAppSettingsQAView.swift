@@ -16,6 +16,11 @@ struct MiniAppSettingsQAView: View {
             } label: {
                 Label("Universal Bridge", systemImage: "link")
             }
+            NavigationLink {
+                HostAppThemeColorsView(viewModel: viewModel)
+            } label: {
+                Label("Theme Colors", systemImage: "paintpalette")
+            }
         }
         .navigationTitle(pageName)
         .trackPage(pageName: pageName)
