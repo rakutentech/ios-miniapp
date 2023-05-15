@@ -36,13 +36,10 @@ struct HostAppThemeColorsView: View {
                         .multilineTextAlignment(.leading)
                 }
             }
-           
-            
         }
         .onTapGesture {
             dismissKeyboard()
         }
-        
         Button {
             trackButtonTap(pageName: pageName, buttonTitle: "Save Theme Colors")
             dismissKeyboard()
@@ -61,7 +58,6 @@ struct HostAppThemeColorsView: View {
             Alert(title: Text(alert.title), message: Text(alert.message), dismissButton: .default(Text("Ok")))
         }
         .trackPage(pageName: pageName)
-        
     }
 
     func storeHostAppThemeColors() {
