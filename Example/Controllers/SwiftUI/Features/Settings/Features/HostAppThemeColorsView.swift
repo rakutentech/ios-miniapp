@@ -11,7 +11,7 @@ struct HostAppThemeColorsView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("Enter color as Hex values")) {
+            Section(header: Text("")) {
                 VStack {
                     Text("Primary Color")
                     TextField("Primary Color as(#FFFFFF)", text: $primaryColor)
@@ -62,15 +62,17 @@ struct HostAppThemeColorsView: View {
 
     func storeHostAppThemeColors() {
         if $primaryColor.wrappedValue != "" {
-            viewModel.store.hostAppThemeColors = HostAppThemeColors(primaryColor: $primaryColor.wrappedValue,
-                                                                    secondaryColor: $secondaryColor.wrappedValue == "" ? "#FFFFFF" : $secondaryColor.wrappedValue)
-            alertMessage = MiniAppAlertMessage(title: "Success", message: "Theme colors have been stored.")
+            viewModel.store.hostAppThemeColors = HostAppThemeColors(
+                primaryColor: $primaryColor.wrappedValue,
+                secondaryColor: $secondaryColor.wrappedValue
+            )
+            alertMessage = MiniAppAlertMessage(title: "Success", message: "Theme colors have been stored. Go to miniapp Color Theme page to check.")
         } else {
             viewModel.store.hostAppThemeColors = HostAppThemeColors(
-                primaryColor: $primaryColor.wrappedValue == "" ? "#FFFFFF" : $primaryColor.wrappedValue,
-                secondaryColor: $secondaryColor.wrappedValue == "" ? "#FFFFFF" : $secondaryColor.wrappedValue
+                primaryColor: $primaryColor.wrappedValue,
+                secondaryColor: $secondaryColor.wrappedValue
             )
-            alertMessage = MiniAppAlertMessage(title: "Failure", message: "Theme primary color must not be empty. Default value #FFFFFF will be set.")
+            alertMessage = MiniAppAlertMessage(title: "Error", message: "Primary color should not be empty.")
         }
     }
 }
