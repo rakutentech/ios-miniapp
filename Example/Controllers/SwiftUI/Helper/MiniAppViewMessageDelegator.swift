@@ -187,9 +187,7 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
     func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MiniAppJavaScriptError>) -> Void) {
         completionHandler(
             .success(
-                HostAppThemeColors(
-                    primaryColor: "#FF008C",
-                    secondaryColor: "#7D64BE")
+                MiniAppStore.shared.hostAppThemeColors
             )
         )
     }

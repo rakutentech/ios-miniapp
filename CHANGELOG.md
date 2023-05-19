@@ -8,6 +8,7 @@
 
 **Sample App**
 - **Feature:** Implemented method `getHostAppThemeColors(completionHandler:)` in the sample app to fetch the host app theme colors and pass it to MiniApps.
+- **Feature:** Added qa settings page 'Theme Color' to test sending host app theme primary and secondary colors.
 
 ### 5.2.0 (2023-03-30)
 **SDK**

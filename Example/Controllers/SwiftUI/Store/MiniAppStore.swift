@@ -31,6 +31,7 @@ class MiniAppStore: ObservableObject {
     @Published var miniAppInfoList2Error: Error?
 
     var handlersListDict: [String: MiniAppSUIViewHandler] = [:]
+    var hostAppThemeColors: HostAppThemeColors = HostAppThemeColors(primaryColor: "", secondaryColor: "")
 
     private init() {
         if !miniAppFirstLaunch {

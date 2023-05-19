@@ -15,6 +15,7 @@
 		189A69D12566479800DCE2B1 /* RealMiniAppTests+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */; };
 		1C0A785B29C3417500433A38 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0A785929C3417500433A38 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C0A785C29C3417500433A38 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0A785A29C3417500433A38 /* AppTrackingTransparency.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1C0C5C892A0C973300CB1F63 /* HostAppThemeColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0C5C882A0C973300CB1F63 /* HostAppThemeColorsView.swift */; };
 		1C2E06AE293A6A99003C6380 /* MiniAppSecureStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */; };
 		1CD1591829421FDF001E0E21 /* UniversalBridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1591729421FDF001E0E21 /* UniversalBridgeView.swift */; };
 		2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */; };
@@ -148,6 +149,7 @@
 		189A69D02566479800DCE2B1 /* RealMiniAppTests+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealMiniAppTests+Permissions.swift"; sourceTree = "<group>"; };
 		1C0A785929C3417500433A38 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		1C0A785A29C3417500433A38 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
+		1C0C5C882A0C973300CB1F63 /* HostAppThemeColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostAppThemeColorsView.swift; sourceTree = "<group>"; };
 		1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageView.swift; sourceTree = "<group>"; };
 		1CD1591729421FDF001E0E21 /* UniversalBridgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalBridgeView.swift; sourceTree = "<group>"; };
 		2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKLocaleTests.swift; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 				F70DD8C428D417C3003EF1F1 /* MiniAppSettingsGeneralView.swift */,
 				F70DD8C528D417C3003EF1F1 /* MiniAppSettingsSignatureView.swift */,
 				1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */,
+				1C0C5C882A0C973300CB1F63 /* HostAppThemeColorsView.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -861,6 +864,7 @@
 				A15CC6CE28FE4E90009B328D /* View+Tracking.swift in Sources */,
 				38920AF7251D9C57004C5DDD /* Config.swift in Sources */,
 				F70DD90128D417C4003EF1F1 /* TextFieldStyle+MiniApp.swift in Sources */,
+				1C0C5C892A0C973300CB1F63 /* HostAppThemeColorsView.swift in Sources */,
 				3857ED7E25DEE0690083F3E1 /* Bundle+MiniApp.swift in Sources */,
 				38920AF2251D9C57004C5DDD /* ImageCache.swift in Sources */,
 				F70DD8EF28D417C4003EF1F1 /* MiniAppSettingsGeneralView.swift in Sources */,
