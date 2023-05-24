@@ -103,6 +103,7 @@ struct MiniAppSettingsView: View {
                         if isEditing {
                             tmpProjectKey = viewModel.listConfig.projectId ?? ""
                         } else {
+                            viewModel.listConfig.projectId = tmpProjectKey
                             self.tmpProjectKey = maskedString(of: tmpProjectKey)
                         }
                     },
@@ -111,11 +112,14 @@ struct MiniAppSettingsView: View {
                         self.tmpProjectKey = maskedString(of: tmpProjectKey)
                     }
                 )
-                    .padding(.vertical, 15)
-                    .accessibilityIdentifier(AccessibilityIdentifiers.settingsHostId.identifier)
-                    .onAppear {
-                        self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
-                    }
+                .onChange(of: tmpProjectKey, perform: { value in
+                    self.tmpProjectKey = value
+                })
+                .padding(.vertical, 15)
+                .accessibilityIdentifier(AccessibilityIdentifiers.settingsHostId.identifier)
+                .onAppear {
+                    self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
+                }
                 TextField(
                     viewModel.listConfig.placeholderSubscriptionKey,
                     text: $tmpSubscriptionKey,
@@ -123,6 +127,7 @@ struct MiniAppSettingsView: View {
                         if isEditing {
                             tmpSubscriptionKey = viewModel.listConfig.subscriptionKey ?? ""
                         } else {
+                            viewModel.listConfig.subscriptionKey = tmpSubscriptionKey
                             self.tmpSubscriptionKey = maskedString(of: tmpSubscriptionKey)
                         }
                     }, onCommit: {
@@ -130,11 +135,14 @@ struct MiniAppSettingsView: View {
                         self.tmpSubscriptionKey = maskedString(of: tmpSubscriptionKey)
                     }
                 )
-                    .padding(.vertical, 15)
-                    .accessibilityIdentifier(AccessibilityIdentifiers.settingsSubscriptionKey.identifier)
-                    .onAppear {
-                        self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
-                    }
+                .onChange(of: tmpSubscriptionKey, perform: { value in
+                    self.tmpSubscriptionKey = value
+                })
+                .padding(.vertical, 15)
+                .accessibilityIdentifier(AccessibilityIdentifiers.settingsSubscriptionKey.identifier)
+                .onAppear {
+                    self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
+                }
             }
 
             Section {
