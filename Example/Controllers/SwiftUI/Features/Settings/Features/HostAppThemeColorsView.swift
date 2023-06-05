@@ -37,6 +37,10 @@ struct HostAppThemeColorsView: View {
                 }
             }
         }
+        .onAppear {
+            primaryColor = viewModel.store.hostAppThemeColors.primaryColor
+            secondaryColor = viewModel.store.hostAppThemeColors.secondaryColor
+        }
         .onTapGesture {
             dismissKeyboard()
         }

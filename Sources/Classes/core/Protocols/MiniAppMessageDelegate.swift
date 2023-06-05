@@ -140,8 +140,8 @@ public typealias DownloadHeaders = [String: String]
 
 // Model class used for sending the Host App theme colors to miniapp
 public class HostAppThemeColors: Codable {
-    let primaryColor: String
-    let secondaryColor: String
+    public let primaryColor: String
+    public let secondaryColor: String
 
     public init(primaryColor: String, secondaryColor: String) {
         self.primaryColor = primaryColor
