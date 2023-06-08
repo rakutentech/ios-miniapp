@@ -407,6 +407,10 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         let mockMessageInterface = MockMessageInterface()
         mockMessageInterface.getHostAppThemeColors(completionHandler: completionHandler)
     }
+    func isDarkMode(completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.isDarkMode(completionHandler: completionHandler)
+    }
 }
 
 class MockMessageInterface: MiniAppMessageDelegate {
@@ -431,6 +435,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var mockEnvironmentInfo: Bool = false
     var mockDownloadFile: Bool = false
     var mockInterfaceImplemented: Bool = false
+    var mockIsDarkMode: Bool = true
     var mockHostAppThemeColorsAllowed: Bool = false
 
     func sendMessageToContact(_ message: MessageToContact, completionHandler: @escaping (Result<String?, MASDKError>) -> Void) {
@@ -582,7 +587,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
         } else {
             completionHandler(.success(nil))
         }
-        
+    }
+
+    func isDarkMode(completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
+        if mockIsDarkMode {
+            completionHandler(.success(true))
+        } else {
+            completionHandler(.success(true))
+        }
     }
 }
 

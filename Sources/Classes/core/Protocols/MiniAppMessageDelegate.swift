@@ -38,6 +38,10 @@ public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareCon
 
     /// Interface to get the host app theme colors
     func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MiniAppJavaScriptError>) -> Void)
+
+    /// Interface to get if the Device is in Dark mode
+    func isDarkMode(completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void)
+
 }
 
 public extension MiniAppMessageDelegate {
@@ -93,6 +97,10 @@ public extension MiniAppMessageDelegate {
     }
 
     func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MiniAppJavaScriptError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
+
+    func isDarkMode(completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }
