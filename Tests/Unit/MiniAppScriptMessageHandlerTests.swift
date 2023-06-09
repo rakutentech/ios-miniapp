@@ -1531,14 +1531,14 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     mockMessageInterface.mockIsDarkMode = true
                     let mockMessage = MockWKScriptMessage(name: "isDarkMode", body: "{\"action\":\"isDarkMode\",\"param\":null,\"id\":\"9.408169489793706\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.messageId).toEventually(equal("9.408169489793705"))
+                    expect(callbackProtocol.messageId).toEventually(equal("9.408169489793706"))
                     expect(callbackProtocol.response).toEventually(equal("true"))
                 }
                 it("will return false if the device is NOT set to dark mode") {
                     mockMessageInterface.mockIsDarkMode = true
                     let mockMessage = MockWKScriptMessage(name: "isDarkMode", body: "{\"action\":\"isDarkMode\",\"param\":null,\"id\":\"9.408169489793706\"}" as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
-                    expect(callbackProtocol.messageId).toEventually(equal("9.408169489793705"))
+                    expect(callbackProtocol.messageId).toEventually(equal("9.408169489793706"))
                     expect(callbackProtocol.response).toEventually(equal("false"))
                 }
             }
