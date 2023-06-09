@@ -593,7 +593,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
         if mockIsDarkMode {
             completionHandler(.success(true))
         } else {
-            completionHandler(.success(true))
+            completionHandler(.success(false))
         }
     }
 }
