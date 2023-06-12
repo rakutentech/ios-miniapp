@@ -191,6 +191,14 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
             )
         )
     }
+
+    func isDarkMode(completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
+        if UIWindow().traitCollection.userInterfaceStyle == .dark {
+            completionHandler(.success(true))
+            return
+        }
+        completionHandler(.success(false))
+    }
 }
 
 extension MiniAppViewMessageDelegator {

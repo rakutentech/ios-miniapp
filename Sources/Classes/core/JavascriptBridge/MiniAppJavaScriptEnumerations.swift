@@ -30,6 +30,7 @@ enum MiniAppJSActionCommand: String {
     case sendJsonToHostapp
     case closeMiniApp
     case getHostAppThemeColors
+    case isDarkMode
 }
 
 enum JavaScriptExecResult: String {

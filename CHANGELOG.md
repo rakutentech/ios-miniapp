@@ -5,6 +5,7 @@
 - **Deprecated:** `getUniqueId(completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `getMessagingUniqueId(completionHandler:)` instead.
 - **Feature:** Added new `HostAppThemeColors` model class to hold the primary and secondary color strings in Hex format.
 - **Feature:** Added a new optional interface `getHostAppThemeColors(completionHandler:)` in `MiniAppMessageDelegate` protocol, to fetch the host app theme colors.
+- **Feature:** Added new `isDarkMode` interface to get the mode set in Host app / Device.
 
 **Sample App**
 - **Feature:** Implemented method `getHostAppThemeColors(completionHandler:)` in the sample app to fetch the host app theme colors and pass it to MiniApps.

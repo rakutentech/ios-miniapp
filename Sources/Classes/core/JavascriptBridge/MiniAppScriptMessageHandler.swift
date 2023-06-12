@@ -128,6 +128,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             closeMiniApp(requestParam: requestParam, callbackId: callbackId)
         case .getHostAppThemeColors:
             getHostAppThemeColors(with: callbackId)
+        case .isDarkMode:
+            isDarkMode(with: callbackId)
         }
     }
     // swiftlint:enable function_body_length cyclomatic_complexity
@@ -838,6 +840,21 @@ extension MiniAppScriptMessageHandler {
                     return
                 }
                 self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: hostAppColors)
+            case .failure(let error):
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
+            }
+        })
+    }
+    
+    func isDarkMode(with callbackId: String) {
+        hostAppMessageDelegate?.isDarkMode(completionHandler: { (result) in
+            switch result {
+            case .success(let isDarkMode):
+                if isDarkMode {
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "true")
+                    return
+                }
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: "false")
             case .failure(let error):
                 self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
             }
