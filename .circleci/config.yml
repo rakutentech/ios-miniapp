@@ -50,7 +50,7 @@ jobs:
       - codecov/upload:
           file: "./artifacts/0/artifacts/unit-tests/report.junit"
       - codecov/upload:
-          file: "./artifacts/0/artifacts/unit-tests/report.html"
+          file: "artifacts/unit-tests/report.html"
       - codecov/upload:
           file: "./artifacts/0/artifacts/unit-tests/compile_commands.json"
 
