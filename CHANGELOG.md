@@ -2,6 +2,7 @@
 
 ### 5.3.0 (XXXX-XX-XX)
 **SDK**
+- **Deprecated:** `create(appInfo: ,queryParams: ,completionHandler: ,messageInterface: ,adsDisplayer: ,fromCache: ) in `MiniApp` class.
 - **Deprecated:** `getUniqueId(completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `getMessagingUniqueId(completionHandler:)` instead.
 - **Feature:** Added new `HostAppThemeColors` model class to hold the primary and secondary color strings in Hex format.
 - **Feature:** Added a new optional interface `getHostAppThemeColors(completionHandler:)` in `MiniAppMessageDelegate` protocol, to fetch the host app theme colors.
