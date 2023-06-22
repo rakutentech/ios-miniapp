@@ -113,6 +113,7 @@ public class MiniApp: NSObject {
 
     /// Gets the list of downloaded Mini apps info and associated custom permissions status
     /// - Returns:Dictionary of MiniAppInfo and respective custom permissions info
+    @available(*, deprecated, message: "This will not be available from next major version")
     public func listDownloadedWithCustomPermissions() -> [(MiniAppInfo, [MASDKCustomPermissionModel])] {
         return realMiniApp.getDownloadedListWithCustomPermissions()
     }
@@ -129,6 +130,7 @@ public class MiniApp: NSObject {
     ///         -   MASDKError: MASDKError details if Mini App View creating is failed
     ///   - messageInterface: Protocol implemented by the user that helps to communicate between Mini App and native application
     ///   - adsDisplayer: a MiniAppAdDisplayer that will handle Miniapp ads requests
+    @available(*, deprecated, message: "Use `MiniAppView` instead")
     public func create(appInfo: MiniAppInfo,
                        queryParams: String? = nil,
                        completionHandler: @escaping (Result<MiniAppDisplayDelegate, MASDKError>) -> Void,
