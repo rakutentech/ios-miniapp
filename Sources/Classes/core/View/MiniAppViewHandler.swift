@@ -291,6 +291,42 @@ class MiniAppViewHandler: NSObject {
             completion(.failure(.miniAppCorrupted))
         }
     }
+    
+    func loadFromBundle(completion: @escaping ((Result<MiniAppWebView, MASDKError>) -> Void)) {
+        guard let versionId = version else {
+            completion(.failure(.invalidVersionId))
+            return
+        }
+        if isValidMiniAppInfo(versionId: versionId) {
+            if isMiniAppAvailable(versionId: versionId) {
+                if miniAppDownloader.isCacheSecure(appId: appId, versionId: versionId) {
+                    DispatchQueue.main.async {
+                        let newWebView = MiniAppWebView(
+                            miniAppId: self.appId,
+                            versionId: versionId,
+                            queryParams: self.queryParams
+                        )
+                        self.webView = newWebView
+                        do {
+                            try self.loadWebView(
+                                webView: newWebView,
+                                miniAppId: self.appId,
+                                versionId: versionId,
+                                queryParams: self.queryParams
+                            )
+                        } catch {
+                            completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
+                        }
+                        completion(.success(newWebView))
+                    }
+                } else {
+                    completion(.failure(.miniAppCorrupted))
+                }
+            } else {
+                completion(.failure(.miniAppNotFound))
+            }
+        }
+    }
 
     func loadWebView(
         webView: MiniAppWebView,
@@ -341,6 +377,19 @@ class MiniAppViewHandler: NSObject {
 
     func loadWebView(url: URL) {
         // load
+    }
+
+    func isValidMiniAppInfo(versionId: String) -> Bool {
+        return !appId.isEmpty || !versionId.isEmpty
+    }
+
+    func isMiniAppAvailable(versionId: String) -> Bool {
+        let versionDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+        var isDirectory: ObjCBool = true
+        if FileManager.default.fileExists(atPath: versionDirectory.path, isDirectory: &isDirectory) {
+            return true
+        }
+        return false
     }
 }
 

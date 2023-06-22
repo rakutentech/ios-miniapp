@@ -158,6 +158,26 @@ public class MiniAppView: UIView, MiniAppViewable {
             }
         }
     }
+    
+    public func loadFromBundle(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
+        guard webView == nil else {
+            completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp already loaded")))
+            return
+        }
+        state.send(.loading)
+        miniAppHandler.loadFromBundle { [weak self] result in
+            switch result {
+            case let .success(webView):
+                self?.state.send(.active)
+                self?.setupWebView(webView: webView)
+                completion(.success(true))
+            case let .failure(error):
+                self?.state.send(.error(error))
+                completion(.failure(error))
+            }
+        }
+    }
+
 
     public var alertInfo: CloseAlertInfo? {
         return miniAppHandler.miniAppShouldClose()
