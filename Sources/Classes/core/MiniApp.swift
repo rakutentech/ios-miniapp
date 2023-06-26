@@ -203,6 +203,10 @@ public class MiniApp: NSObject {
     public func clearSecureStorage(for miniAppId: String) {
         try? MiniAppSecureStorage.wipeSecureStorage(for: miniAppId)
     }
+    
+    public static func unzipMiniApp(fileName: String, miniAppId: String, versionId: String) {
+        MiniAppSDKUtility.unzipMiniApp(fileName: fileName, miniAppId: miniAppId, versionId: versionId)
+    }
 }
 
 // MARK: - Testing

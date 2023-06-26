@@ -1,9 +1,8 @@
 import Foundation
 import CommonCrypto
 
-public class MiniAppSDKUtility {
-
-    public static func unzipMiniApp(fileName: String, miniAppId: String, versionId: String) {
+class MiniAppSDKUtility {
+    internal static func unzipMiniApp(fileName: String, miniAppId: String, versionId: String) {
         let cacheVerifier = MiniAppCacheVerifier()
         guard let filePath = Bundle.main.url(forResource: fileName, withExtension: "zip") else {
             return
