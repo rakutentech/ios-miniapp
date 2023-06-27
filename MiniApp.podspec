@@ -48,8 +48,8 @@ Pod::Spec.new do |miniapp|
   miniapp.subspec 'Admob' do |admob|
     admob.source_files = 'Sources/Classes/admob/**/*.{swift,h,m}'
     admob.dependency 'MiniApp/Core'
-    admob.dependency 'Google-Mobile-Ads-SDK', '~> 9.0'
-    admob.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADMOB -D RMA_SDK_ADMOB9'}
+    admob.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
+    admob.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADMOB -D RMA_SDK_ADMOB10'}
     admob.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
     admob.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   end
@@ -68,6 +68,15 @@ Pod::Spec.new do |miniapp|
     admob.dependency 'MiniApp/Core'
     admob.dependency 'Google-Mobile-Ads-SDK', '~> 8.0'
     admob.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADMOB -D RMA_SDK_ADMOB8'}
+    admob.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+    admob.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  end
+
+  miniapp.subspec 'Admob9' do |admob|
+    admob.source_files = 'Sources/Classes/admob9/**/*.{swift,h,m}'
+    admob.dependency 'MiniApp/Core'
+    admob.dependency 'Google-Mobile-Ads-SDK', '~> 9.0'
+    admob.xcconfig = { 'OTHER_SWIFT_FLAGS' => '$(inherited) -D RMA_SDK_ADMOB -D RMA_SDK_ADMOB9'}
     admob.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
     admob.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   end
