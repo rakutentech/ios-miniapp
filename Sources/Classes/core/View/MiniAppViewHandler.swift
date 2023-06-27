@@ -291,7 +291,7 @@ class MiniAppViewHandler: NSObject {
             completion(.failure(.miniAppCorrupted))
         }
     }
-    
+
     func loadFromBundle(completion: @escaping ((Result<MiniAppWebView, MASDKError>) -> Void)) {
         guard let versionId = version else {
             completion(.failure(.invalidVersionId))

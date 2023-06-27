@@ -158,7 +158,7 @@ public class MiniAppView: UIView, MiniAppViewable {
             }
         }
     }
-    
+
     public func loadFromBundle(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
         guard webView == nil else {
             completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp already loaded")))
@@ -177,7 +177,6 @@ public class MiniAppView: UIView, MiniAppViewable {
             }
         }
     }
-
 
     public var alertInfo: CloseAlertInfo? {
         return miniAppHandler.miniAppShouldClose()

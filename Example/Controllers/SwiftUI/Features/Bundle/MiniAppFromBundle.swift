@@ -11,7 +11,7 @@ struct MiniAppFromBundle: View {
         }
         .navigationTitle("MiniApp")
     }
-    
+
     func miniAppViewParams(config: MiniAppSdkConfig) -> MiniAppViewParameters.DefaultParams {
         return MiniAppViewParameters.DefaultParams.init(
             config: MiniAppConfig(
