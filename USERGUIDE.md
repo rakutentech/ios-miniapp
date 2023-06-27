@@ -172,6 +172,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 ### Create a MiniApp for the given `MiniAppId` :
 ---
 **API Docs:**
+```NOTE:  The method `create(appInfo: ,queryParams: ,completionHandler: ,messageInterface: ,adsDisplayer: ,fromCache: ) in `MiniApp` class will be deprecated in the upcoming release of MiniAppSDK, `load(fromCache: , completion: )` from `MiniAppView` must be used as shown below.```
 
 `MiniAppView` is used to create a `View` for displaying a specific Mini App. You must provide the Mini App ID which you wish to create (you can get the Mini App ID by [Loading the Mini App List](#load-miniapp-list) first). Calling `MiniAppView`'s `load` method will do the following:
 
