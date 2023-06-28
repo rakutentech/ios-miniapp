@@ -25,6 +25,7 @@ struct RequestParameters: Decodable {
     let closeAlertInfo: CloseAlertInfo?
     let jsonInfo: JsonStringInfoParameters?
     let withConfirmationAlert: Bool?
+    let analyticsInfo: MAAnalytics?
 }
 
 struct LocationOptions: Decodable {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C0847CF2A4BEBAD00C87367 /* MAAnalyticsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0847CE2A4BEBAD00C87367 /* MAAnalyticsDelegate.swift */; };
+		1C8692942A49B7B000F6F471 /* MAAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8692932A49B7B000F6F471 /* MAAnalytics.swift */; };
 		1CD1591C2942B72E001E0E21 /* UniversalBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1591B2942B72E001E0E21 /* UniversalBridgeDelegate.swift */; };
 		2A04640229399AFE00F6440F /* MiniAppProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04640129399AFE00F6440F /* MiniAppProgressView.swift */; };
 		2A04640429399B2300F6440F /* MiniAppParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04640329399B2300F6440F /* MiniAppParameters.swift */; };
@@ -167,6 +169,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C0847CE2A4BEBAD00C87367 /* MAAnalyticsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAnalyticsDelegate.swift; sourceTree = "<group>"; };
+		1C8692932A49B7B000F6F471 /* MAAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAnalytics.swift; sourceTree = "<group>"; };
 		1CD1591B2942B72E001E0E21 /* UniversalBridgeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalBridgeDelegate.swift; sourceTree = "<group>"; };
 		2A04640129399AFE00F6440F /* MiniAppProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppProgressView.swift; sourceTree = "<group>"; };
 		2A04640329399B2300F6440F /* MiniAppParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppParameters.swift; sourceTree = "<group>"; };
@@ -566,6 +570,7 @@
 				31FA5E8727608D1A0070B611 /* PreviewMiniAppInfo.swift */,
 				31FA5E8827608D1A0070B611 /* APIResponse.swift */,
 				31FA5E8927608D1A0070B611 /* MiniAppReward.swift */,
+				1C8692932A49B7B000F6F471 /* MAAnalytics.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -693,6 +698,7 @@
 				31FA5ECE27608D1A0070B611 /* MiniAppMessageDelegate.swift */,
 				31FA5ECF27608D1A0070B611 /* MiniAppShareContentDelegate.swift */,
 				31FA5ED027608D1A0070B611 /* MiniAppMessageModels.swift */,
+				1C0847CE2A4BEBAD00C87367 /* MAAnalyticsDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1023,6 +1029,7 @@
 				31FA5F1B27608D1B0070B611 /* URLSession+SessionProtocol.swift in Sources */,
 				31FA5F0927608D1B0070B611 /* MiniAppStorage.swift in Sources */,
 				31FA5F3B27608D1B0070B611 /* MiniAppAdDisplayer.swift in Sources */,
+				1C0847CF2A4BEBAD00C87367 /* MAAnalyticsDelegate.swift in Sources */,
 				31FA5F0A27608D1B0070B611 /* MiniAppPermissionsStorage.swift in Sources */,
 				31FA5EFE27608D1B0070B611 /* MAAnalyticsConfig.swift in Sources */,
 				31FA5F1927608D1B0070B611 /* Bundle+Environment.swift in Sources */,
@@ -1128,6 +1135,7 @@
 				F70178A928B71783002B4D17 /* MiniAppView.swift in Sources */,
 				31FA5F4527608D1B0070B611 /* MAJavascriptErrorHandler.swift in Sources */,
 				F75593D8283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift in Sources */,
+				1C8692942A49B7B000F6F471 /* MAAnalytics.swift in Sources */,
 				31FA5EF927608D1B0070B611 /* DownloadOperation.swift in Sources */,
 				2A04640229399AFE00F6440F /* MiniAppProgressView.swift in Sources */,
 			);

@@ -5,7 +5,7 @@ import UIKit
 Public Protocol that will be used by the Mini App to communicate
  with the Native implementation
 */
-public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareContentDelegate, ChatMessageBridgeDelegate, UniversalBridgeDelegate {
+public protocol MiniAppMessageDelegate: MiniAppUserInfoDelegate, MiniAppShareContentDelegate, ChatMessageBridgeDelegate, UniversalBridgeDelegate, MAAnalyticsDelegate {
 
     /// Interface that should be implemented to return alphanumeric string that uniquely identifies a device.
     @available(*, deprecated, renamed: "getMessagingUniqueId(completionHandler:)")
@@ -101,6 +101,10 @@ public extension MiniAppMessageDelegate {
     }
 
     func isDarkMode(completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
+
+    func didReceiveMAAnalytics(analyticsInfo: MAAnalytics, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }
