@@ -380,7 +380,7 @@ class MiniAppViewHandler: NSObject {
     }
 
     func isValidMiniAppInfo(versionId: String) -> Bool {
-        return !appId.isEmpty || !versionId.isEmpty
+        return !appId.isEmpty && !versionId.isEmpty
     }
 
     func isMiniAppAvailable(versionId: String) -> Bool {
