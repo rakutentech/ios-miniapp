@@ -1129,7 +1129,7 @@ extension ViewController: MiniAppMessageDelegate {
 
 <a id="miniapp-getHostAppThemeColors"></a>
 
-### MiniApp Close
+### Send Host App Theme Colors to MiniApp
 
 MiniApp can request the host app to share the Themes primary and secondary colors through the javascript bridge event trigger.
 MiniAppSDK in iOS provides the `MiniAppMessageDelegate` interface method `func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MASDKError>) -> Void)` which can be implemented in the host app. This delegate method is an optional.
@@ -1144,6 +1144,23 @@ extension ViewController: MiniAppMessageDelegate {
                     secondaryColor: "#7D64BE")
             )
         )
+    }
+}
+```
+
+<a id="miniapp-sendAnalytics"></a>
+
+### Receive MiniApp Analytics 
+
+MiniApps can send the analytics information to host app through the `sendAnalytics` interface defined in JS-SDK.
+MiniAppSDK in iOS provides the `MiniAppMessageDelegate` interface method `func didReceiveMAAnalytics(analyticsInfo: MAAnalytics, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void)` which can be implemented in the host app , to receive the MiniApp analytics event info object of type `MAAnalytics`. This delegate method is an optional.
+
+```swift
+extension ViewController: MiniAppMessageDelegate {
+    func didReceiveMAAnalytics(analyticsInfo: MAAnalytics, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
+        print(analyticsInfo)
+        // analyticsInfo: MAAnalytics - This object holds the Analytics info of the events triggered from MiniApps, This can be further used to record the MiniApp Analytics events from host app.
+        completionHandler(.success(.success))
     }
 }
 ```
