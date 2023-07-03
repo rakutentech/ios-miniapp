@@ -9,11 +9,13 @@ public struct MiniAppSUIView: UIViewRepresentable {
 
     var params: MiniAppViewParameters
     var fromCache: Bool = false
+    var fromBundle: Bool = false
 
-    public init(params: MiniAppViewParameters.DefaultParams, fromCache: Bool = false, handler: MiniAppSUIViewHandler) {
+    public init(params: MiniAppViewParameters.DefaultParams, fromCache: Bool = false, handler: MiniAppSUIViewHandler, fromBundle: Bool = false) {
         self.params = .default(params)
         self.fromCache = fromCache
         self.handler = handler
+        self.fromBundle = fromBundle
     }
 
     public init(urlParams: MiniAppViewParameters.UrlParams) {
@@ -30,8 +32,14 @@ public struct MiniAppSUIView: UIViewRepresentable {
     public func makeUIView(context: Context) -> MiniAppView {
         let view = MiniAppView(params: params)
         view.progressStateView = MiniAppProgressView()
-        view.load(fromCache: fromCache) { _ in
-            self.handler.isActive = true
+        if fromBundle {
+            view.loadFromBundle {_ in
+                self.handler.isActive = true
+            }
+        } else {
+            view.load(fromCache: fromCache) { _ in
+                self.handler.isActive = true
+            }
         }
         context.coordinator.onGoBack = {
             _ = view.miniAppNavigationBar(didTriggerAction: .back)

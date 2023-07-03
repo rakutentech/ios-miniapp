@@ -18,6 +18,8 @@
 		1C0C5C892A0C973300CB1F63 /* HostAppThemeColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0C5C882A0C973300CB1F63 /* HostAppThemeColorsView.swift */; };
 		1C2E06AE293A6A99003C6380 /* MiniAppSecureStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */; };
 		1CD1591829421FDF001E0E21 /* UniversalBridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1591729421FDF001E0E21 /* UniversalBridgeView.swift */; };
+		2A52E3C12A42EFAC00DC8EFE /* js-miniapp-sample.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2A52E3C02A42EFAC00DC8EFE /* js-miniapp-sample.zip */; };
+		2A52E3C42A42F0F100DC8EFE /* MiniAppFromBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A52E3C32A42F0F100DC8EFE /* MiniAppFromBundle.swift */; };
 		2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */; };
 		2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */; };
 		2AB1B0E926A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */; };
@@ -152,6 +154,8 @@
 		1C0C5C882A0C973300CB1F63 /* HostAppThemeColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostAppThemeColorsView.swift; sourceTree = "<group>"; };
 		1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageView.swift; sourceTree = "<group>"; };
 		1CD1591729421FDF001E0E21 /* UniversalBridgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalBridgeView.swift; sourceTree = "<group>"; };
+		2A52E3C02A42EFAC00DC8EFE /* js-miniapp-sample.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "js-miniapp-sample.zip"; sourceTree = "<group>"; };
+		2A52E3C32A42F0F100DC8EFE /* MiniAppFromBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppFromBundle.swift; sourceTree = "<group>"; };
 		2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKLocaleTests.swift; sourceTree = "<group>"; };
 		2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalWebViewControllerTests.swift; sourceTree = "<group>"; };
 		2AB1B0E826A6D7F3004CAC1B /* CustomPermissionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPermissionsViewControllerTests.swift; sourceTree = "<group>"; };
@@ -320,6 +324,14 @@
 			);
 			name = Config;
 			path = Example/Config;
+			sourceTree = "<group>";
+		};
+		2A52E3C22A42F0E100DC8EFE /* Bundle */ = {
+			isa = PBXGroup;
+			children = (
+				2A52E3C32A42F0F100DC8EFE /* MiniAppFromBundle.swift */,
+			);
+			path = Bundle;
 			sourceTree = "<group>";
 		};
 		2AB1B0D126A6D625004CAC1B /* core */ = {
@@ -497,6 +509,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				2A52E3C02A42EFAC00DC8EFE /* js-miniapp-sample.zip */,
 				607FACD21AFB9204008FA782 /* Example for MiniApp */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				183AF07724CE63FA000ABCBF /* Config */,
@@ -583,6 +596,7 @@
 		F70DD8BA28D417C3003EF1F1 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				2A52E3C22A42F0E100DC8EFE /* Bundle */,
 				F70DD8BB28D417C3003EF1F1 /* Settings */,
 				F70DD8CA28D417C3003EF1F1 /* MiniAppFeatureListView.swift */,
 				F70DD8CB28D417C3003EF1F1 /* Terms */,
@@ -782,6 +796,7 @@
 				38920AFE251D9C57004C5DDD /* Images.xcassets in Resources */,
 				38920AFD251D9C57004C5DDD /* Localizable.strings in Resources */,
 				31D1BBC3262041920040235C /* Colors.xcassets in Resources */,
+				2A52E3C12A42EFAC00DC8EFE /* js-miniapp-sample.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -839,6 +854,7 @@
 				1CD1591829421FDF001E0E21 /* UniversalBridgeView.swift in Sources */,
 				F70DD8F728D417C4003EF1F1 /* MiniAppWithTermsViewModel.swift in Sources */,
 				F70DD8F428D417C4003EF1F1 /* MiniAppTermsOptionalCell.swift in Sources */,
+				2A52E3C42A42F0F100DC8EFE /* MiniAppFromBundle.swift in Sources */,
 				38920AF5251D9C57004C5DDD /* Number+MiniApp.swift in Sources */,
 				F70DD90228D417C4003EF1F1 /* KeyboardNotificationHelper.swift in Sources */,
 				F70DD8FF28D417C4003EF1F1 /* MiniAppListViewModel.swift in Sources */,
