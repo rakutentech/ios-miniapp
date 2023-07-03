@@ -489,7 +489,7 @@ extension RealMiniApp: MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func didReceiveMAAnalytics(analyticsInfo: MAAnalytics, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
+    func didReceiveMAAnalytics(analyticsInfo: MAAnalyticsInfo, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 }

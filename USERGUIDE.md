@@ -1153,7 +1153,7 @@ extension ViewController: MiniAppMessageDelegate {
 ### Receive MiniApp Analytics 
 
 MiniApps can send the analytics information to host app through the `sendAnalytics` interface defined in JS-SDK.
-MiniAppSDK in iOS provides the `MiniAppMessageDelegate` interface method `func didReceiveMAAnalytics(analyticsInfo: MAAnalytics, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void)` which can be implemented in the host app , to receive the MiniApp analytics event info object of type `MAAnalytics`. This delegate method is an optional.
+iOS Hostapp can extend this optional `MAAnalayticsDelegate` interface/delegate to receive the analytics that is sent from the Miniapp.
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {

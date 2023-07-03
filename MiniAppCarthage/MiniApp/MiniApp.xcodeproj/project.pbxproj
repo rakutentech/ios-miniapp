@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1C0847CF2A4BEBAD00C87367 /* MAAnalyticsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0847CE2A4BEBAD00C87367 /* MAAnalyticsDelegate.swift */; };
-		1C8692942A49B7B000F6F471 /* MAAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8692932A49B7B000F6F471 /* MAAnalytics.swift */; };
+		1C6A279C2A5287FA00FAB060 /* MAAnalyticsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A279B2A5287FA00FAB060 /* MAAnalyticsInfo.swift */; };
 		1CD1591C2942B72E001E0E21 /* UniversalBridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1591B2942B72E001E0E21 /* UniversalBridgeDelegate.swift */; };
 		2A04640229399AFE00F6440F /* MiniAppProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04640129399AFE00F6440F /* MiniAppProgressView.swift */; };
 		2A04640429399B2300F6440F /* MiniAppParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A04640329399B2300F6440F /* MiniAppParameters.swift */; };
@@ -170,7 +170,7 @@
 
 /* Begin PBXFileReference section */
 		1C0847CE2A4BEBAD00C87367 /* MAAnalyticsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAnalyticsDelegate.swift; sourceTree = "<group>"; };
-		1C8692932A49B7B000F6F471 /* MAAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAnalytics.swift; sourceTree = "<group>"; };
+		1C6A279B2A5287FA00FAB060 /* MAAnalyticsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAnalyticsInfo.swift; sourceTree = "<group>"; };
 		1CD1591B2942B72E001E0E21 /* UniversalBridgeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalBridgeDelegate.swift; sourceTree = "<group>"; };
 		2A04640129399AFE00F6440F /* MiniAppProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppProgressView.swift; sourceTree = "<group>"; };
 		2A04640329399B2300F6440F /* MiniAppParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppParameters.swift; sourceTree = "<group>"; };
@@ -570,7 +570,7 @@
 				31FA5E8727608D1A0070B611 /* PreviewMiniAppInfo.swift */,
 				31FA5E8827608D1A0070B611 /* APIResponse.swift */,
 				31FA5E8927608D1A0070B611 /* MiniAppReward.swift */,
-				1C8692932A49B7B000F6F471 /* MAAnalytics.swift */,
+				1C6A279B2A5287FA00FAB060 /* MAAnalyticsInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1056,6 +1056,7 @@
 				31FA5F1427608D1B0070B611 /* WKUserContentController+MiniApp.swift in Sources */,
 				31FA5F4A27608D1B0070B611 /* MiniAppJavaScriptEnumerations.swift in Sources */,
 				31FA5F0727608D1B0070B611 /* MiniAppVersion.swift in Sources */,
+				1C6A279C2A5287FA00FAB060 /* MAAnalyticsInfo.swift in Sources */,
 				31FA5F5427608D1B0070B611 /* AdMobDisplayer.swift in Sources */,
 				31FA5EF427608D1B0070B611 /* RealMiniApp.swift in Sources */,
 				31FA5F2A27608D1B0070B611 /* DownloadAPI.swift in Sources */,
@@ -1135,7 +1136,6 @@
 				F70178A928B71783002B4D17 /* MiniAppView.swift in Sources */,
 				31FA5F4527608D1B0070B611 /* MAJavascriptErrorHandler.swift in Sources */,
 				F75593D8283DD70F009D5833 /* MiniAppSecureStorage+Delegate.swift in Sources */,
-				1C8692942A49B7B000F6F471 /* MAAnalytics.swift in Sources */,
 				31FA5EF927608D1B0070B611 /* DownloadOperation.swift in Sources */,
 				2A04640229399AFE00F6440F /* MiniAppProgressView.swift in Sources */,
 			);

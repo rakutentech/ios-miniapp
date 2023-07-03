@@ -15,15 +15,20 @@ public enum MAAnalyticsActionType: String, Codable {
     case change
 }
 
-public class MAAnalytics: Codable {
+public class MAAnalyticsInfo: Codable {
     let eventType: MAAnalyticsEventType
     let actionType: MAAnalyticsActionType
-    let pageName: Int
+    let pageName: String
     let componentName: String
     let elementType: String
     let data: String
 
-    public init(eventType: MAAnalyticsEventType, actionType: MAAnalyticsActionType, pageName: Int, componentName: String, elementType: String, data: String) {
+    public init(eventType: MAAnalyticsEventType,
+                actionType: MAAnalyticsActionType,
+                pageName: String,
+                componentName: String,
+                elementType: String,
+                data: String) {
         self.eventType = eventType
         self.actionType = actionType
         self.pageName = pageName
