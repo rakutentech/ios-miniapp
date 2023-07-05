@@ -30,6 +30,7 @@ struct AccessTokenInfo: Codable {
 struct QueryParamInfo: Codable {
     var queryString: String
 
+    // swiftlint:disable unneeded_synthesized_initializer
     init(queryString: String) {
         self.queryString = queryString
     }
