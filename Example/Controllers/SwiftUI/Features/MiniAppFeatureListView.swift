@@ -15,6 +15,13 @@ struct MiniAppFeatureListView: View {
                         active: true
                     )
                 })
+                NavigationLink(destination: MiniAppFromBundle(), label: {
+                    MiniAppFeatureListCell(
+                        title: "Miniapp",
+                        subTitle: "Open a miniapp from Bundle",
+                        active: true
+                    )
+                })
             }
         }
         .listStyle(InsetGroupedListStyle())
