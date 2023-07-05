@@ -12,6 +12,10 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     internal var type: MiniAppType
 
+    internal let miniAppAlreadyLoadedError = MASDKError.unknownError(domain: "",
+                                                                     code: 0,
+                                                                     description: "Mini app already loaded")
+    
     public let state = PassthroughSubject<MiniAppViewState, Never>()
     public var progressStateView: MiniAppProgressViewable? {
         didSet {
@@ -108,7 +112,7 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     public func load(fromCache: Bool = false, completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
         guard webView == nil else {
-            completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp already loaded")))
+            completion(.failure(miniAppAlreadyLoadedError))
             return
         }
         state.send(.loading)
@@ -141,7 +145,7 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     public func loadAsync(fromCache: Bool = false) async throws -> MiniAppLoadStatus {
         guard webView == nil else {
-            throw MASDKError.unknownError(domain: "", code: 0, description: "miniapp already loaded")
+            throw miniAppAlreadyLoadedError
         }
         state.send(.loading)
         return try await withCheckedThrowingContinuation { continutation in
@@ -161,7 +165,7 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     public func loadFromBundle(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
         guard webView == nil else {
-            completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp already loaded")))
+            completion(.failure(miniAppAlreadyLoadedError))
             return
         }
         state.send(.loading)
