@@ -9,11 +9,11 @@ class MAAnalyticsInfoLogger {
     }
 
     static func startLogs(forMiniApp miniAppId: String) {
-        MAAnalyticsInfoLogger.logAnalytics("--------------------------------- \nMiniApp -> \(miniAppId) is OPEN")
+        MAAnalyticsInfoLogger.logAnalytics("--------------------------------- \nMiniApp -> \(miniAppId) is OPENED")
     }
 
     func stopLogs(forMiniApp miniAppId: String) {
-        MAAnalyticsInfoLogger.logAnalytics("MiniApp -> \(miniAppId) is CLOSE \n ---------------------------------")
+        MAAnalyticsInfoLogger.logAnalytics("MiniApp -> \(miniAppId) is CLOSED \n ---------------------------------")
     }
 
     static func logAnalyticsInfo(_ analyticsInfo: MAAnalyticsInfo) {
@@ -47,7 +47,7 @@ class MAAnalyticsInfoLogger {
 
     static func readAnalyticsInfoLogs() -> String {
         guard let logFile = logFile else {
-            return "Sorry, No analytics data found."
+            return NSLocalizedString("demo.app.analytics.info.sorryNoData", comment: "")
         }
         do {
             let data = try Data(contentsOf: logFile)
@@ -56,9 +56,9 @@ class MAAnalyticsInfoLogger {
             }
         } catch {
             print("Error reading file: \(error)")
-            return "Analytics data do not exists."
+            return NSLocalizedString("demo.app.analytics.info.dataNotExists", comment: "")
         }
-        return "Analytics data do not exists."
+        return NSLocalizedString("demo.app.analytics.info.dataNotExists", comment: "")
     }
 
     static func deleteAnalyticsInfoLogs() {

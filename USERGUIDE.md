@@ -1157,9 +1157,9 @@ iOS Hostapp can extend this optional `MAAnalayticsDelegate` interface/delegate t
 
 ```swift
 extension ViewController: MiniAppMessageDelegate {
-    func didReceiveMAAnalytics(analyticsInfo: MAAnalytics, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
+    func didReceiveMAAnalytics(analyticsInfo: MAAnalyticsInfo, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
         print(analyticsInfo)
-        // analyticsInfo: MAAnalytics - This object holds the Analytics info of the events triggered from MiniApps, This can be further used to record the MiniApp Analytics events from host app.
+            // analyticsInfo: MAAnalyticsInfo - This object holds the Analytics info of the events triggered from MiniApps, This can be further used to record the MiniApp Analytics events from host app.
         completionHandler(.success(.success))
     }
 }

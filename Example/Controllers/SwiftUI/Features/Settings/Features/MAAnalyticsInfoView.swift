@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MAAnalyticsInfoView: View {
-    @State var analyticsData: String = "No Data Found"
+    @State var analyticsData: String = NSLocalizedString("demo.app.analytics.info.noData", comment: "")
     var body: some View {
         ScrollView {
             VStack {
@@ -11,10 +11,10 @@ struct MAAnalyticsInfoView: View {
             .navigationBarItems(trailing: Button("Clear") {
                 if analyticsData != "" {
                     MAAnalyticsInfoLogger.deleteAnalyticsInfoLogs()
-                    analyticsData = "All analytics data cleared."
+                    analyticsData = NSLocalizedString("demo.app.analytics.info.dataCleared", comment: "")
                 }
             })
-            .navigationBarTitle("Analytics Info")
+            .navigationBarTitle(NSLocalizedString("demo.app.rat.page.name.viewanalyticsinfo", comment: ""))
             .trackPage(pageName: pageName)
             .onAppear {
                 analyticsData = MAAnalyticsInfoLogger.readAnalyticsInfoLogs()

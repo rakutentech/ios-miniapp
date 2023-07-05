@@ -22,7 +22,7 @@ struct MiniAppSettingsQAView: View {
                 Label("Theme Colors", systemImage: "paintpalette")
             }
             NavigationLink {
-                MAAnalyticsInfoView(analyticsData: "Loading analytics data...")
+                MAAnalyticsInfoView(analyticsData: NSLocalizedString("demo.app.analytics.info.loadingData", comment: ""))
             } label: {
                 Label("Analytics Info", systemImage: "doc.plaintext")
             }
