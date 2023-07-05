@@ -34,6 +34,7 @@ struct QueryParamInfo: Codable {
     init(queryString: String) {
         self.queryString = queryString
     }
+    // swiftlint:enable unneeded_synthesized_initializer
 }
 
 func setProfileSettings(forKey key: String = "UserProfileDetail", userDisplayName: String?, profileImageURI: String?, contactList: [MAContact]? = getContactList()) -> Bool {

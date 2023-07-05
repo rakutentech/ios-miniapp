@@ -15,4 +15,5 @@ internal struct KeyModel: Codable, Equatable {
         self.key = key
         self.pem = pem
     }
+    // swiftlint:enable unneeded_synthesized_initializer
 }
