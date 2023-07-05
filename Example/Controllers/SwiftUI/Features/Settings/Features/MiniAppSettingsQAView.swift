@@ -21,6 +21,11 @@ struct MiniAppSettingsQAView: View {
             } label: {
                 Label("Theme Colors", systemImage: "paintpalette")
             }
+            NavigationLink {
+                MAAnalyticsInfoView(analyticsData: "Loading analytics data...")
+            } label: {
+                Label("Analytics Info", systemImage: "doc.plaintext")
+            }
         }
         .navigationTitle(pageName)
         .trackPage(pageName: pageName)

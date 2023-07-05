@@ -202,6 +202,7 @@ class MiniAppViewMessageDelegator: NSObject, MiniAppMessageDelegate {
 
     func didReceiveMAAnalytics(analyticsInfo: MAAnalyticsInfo, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
         print(analyticsInfo)
+        MAAnalyticsInfoLogger.logAnalyticsInfo(analyticsInfo)
         completionHandler(.success(.success))
     }
 }

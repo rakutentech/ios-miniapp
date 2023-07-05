@@ -58,6 +58,7 @@ struct MiniAppSingleView: View {
                         )
                     } else {
                         presentationMode.wrappedValue.dismiss()
+                        MAAnalyticsInfoLogger().stopLogs(forMiniApp: viewModel.miniAppId)
                     }
                 }
                 .accessibilityIdentifier(AccessibilityIdentifiers.miniappHeaderClose.identifier)
@@ -118,6 +119,7 @@ struct MiniAppSingleView: View {
                 message: Text(errorMessage.message),
                 primaryButton: .default(Text("Yes"), action: {
                     presentationMode.wrappedValue.dismiss()
+                    MAAnalyticsInfoLogger().stopLogs(forMiniApp: viewModel.miniAppId)
                 }),
                 secondaryButton: .cancel(Text("No"), action: {
                     viewModel.shouldCloseMiniApp.send(false)
@@ -199,9 +201,11 @@ struct MiniAppSingleView: View {
                         )
                     } else {
                         presentationMode.wrappedValue.dismiss()
+                        MAAnalyticsInfoLogger().stopLogs(forMiniApp: viewModel.miniAppId)
                     }
                 } else {
                     presentationMode.wrappedValue.dismiss()
+                    MAAnalyticsInfoLogger().stopLogs(forMiniApp: viewModel.miniAppId)
                 }
             }
         })

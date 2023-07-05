@@ -17,6 +17,8 @@
 		1C0A785C29C3417500433A38 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0A785A29C3417500433A38 /* AppTrackingTransparency.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C0C5C892A0C973300CB1F63 /* HostAppThemeColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0C5C882A0C973300CB1F63 /* HostAppThemeColorsView.swift */; };
 		1C2E06AE293A6A99003C6380 /* MiniAppSecureStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */; };
+		1C6BAB472A5519340012E800 /* MAAnalyticsInfoLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6BAB462A5519340012E800 /* MAAnalyticsInfoLogger.swift */; };
+		1C6BAB4B2A5522F60012E800 /* MAAnalyticsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6BAB4A2A5522F60012E800 /* MAAnalyticsInfoView.swift */; };
 		1CD1591829421FDF001E0E21 /* UniversalBridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1591729421FDF001E0E21 /* UniversalBridgeView.swift */; };
 		2AB1B0A226A6CDEF004CAC1B /* MASDKLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */; };
 		2AB1B0E326A6D7DA004CAC1B /* MiniAppExternalWebViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */; };
@@ -151,6 +153,8 @@
 		1C0A785A29C3417500433A38 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		1C0C5C882A0C973300CB1F63 /* HostAppThemeColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostAppThemeColorsView.swift; sourceTree = "<group>"; };
 		1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageView.swift; sourceTree = "<group>"; };
+		1C6BAB462A5519340012E800 /* MAAnalyticsInfoLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAnalyticsInfoLogger.swift; sourceTree = "<group>"; };
+		1C6BAB4A2A5522F60012E800 /* MAAnalyticsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAnalyticsInfoView.swift; sourceTree = "<group>"; };
 		1CD1591729421FDF001E0E21 /* UniversalBridgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalBridgeView.swift; sourceTree = "<group>"; };
 		2AB1B0A126A6CDEF004CAC1B /* MASDKLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASDKLocaleTests.swift; sourceTree = "<group>"; };
 		2AB1B0D926A6D7B4004CAC1B /* MiniAppExternalWebViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAppExternalWebViewControllerTests.swift; sourceTree = "<group>"; };
@@ -619,6 +623,7 @@
 				F70DD8C528D417C3003EF1F1 /* MiniAppSettingsSignatureView.swift */,
 				1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */,
 				1C0C5C882A0C973300CB1F63 /* HostAppThemeColorsView.swift */,
+				1C6BAB4A2A5522F60012E800 /* MAAnalyticsInfoView.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -679,6 +684,7 @@
 				A13198002918A45C00B839E8 /* View+Events.swift */,
 				A15CC6CD28FE4E90009B328D /* View+Tracking.swift */,
 				F7714D0229220B31004B11A7 /* Reachability.swift */,
+				1C6BAB462A5519340012E800 /* MAAnalyticsInfoLogger.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -839,6 +845,7 @@
 				1CD1591829421FDF001E0E21 /* UniversalBridgeView.swift in Sources */,
 				F70DD8F728D417C4003EF1F1 /* MiniAppWithTermsViewModel.swift in Sources */,
 				F70DD8F428D417C4003EF1F1 /* MiniAppTermsOptionalCell.swift in Sources */,
+				1C6BAB4B2A5522F60012E800 /* MAAnalyticsInfoView.swift in Sources */,
 				38920AF5251D9C57004C5DDD /* Number+MiniApp.swift in Sources */,
 				F70DD90228D417C4003EF1F1 /* KeyboardNotificationHelper.swift in Sources */,
 				F70DD8FF28D417C4003EF1F1 /* MiniAppListViewModel.swift in Sources */,
@@ -846,6 +853,7 @@
 				A15CC6B828ED2CB4009B328D /* SampleApp.swift in Sources */,
 				F70DD8F328D417C4003EF1F1 /* MiniAppFeatureListView.swift in Sources */,
 				38920AF9251D9C57004C5DDD /* UIViewController+MiniApp.swift in Sources */,
+				1C6BAB472A5519340012E800 /* MAAnalyticsInfoLogger.swift in Sources */,
 				A15CC6BC28ED2CD4009B328D /* ContentView.swift in Sources */,
 				F70DD8F928D417C4003EF1F1 /* MiniAppFeatureListCell.swift in Sources */,
 				1C2E06AE293A6A99003C6380 /* MiniAppSecureStorageView.swift in Sources */,
