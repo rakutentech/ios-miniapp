@@ -835,10 +835,9 @@ extension MiniAppScriptMessageHandler {
 extension MiniAppScriptMessageHandler {
     func didReceiveMAAnalytics(requestParam: RequestParameters?, callbackId: String){
         guard let requestParamValue = requestParam?.analyticsInfo else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.valueIsEmpty))
             return
         }
-        
         self.hostAppMessageDelegate?.didReceiveMAAnalytics(analyticsInfo: requestParamValue, completionHandler: { result in
             switch result {
             case .success(let success):

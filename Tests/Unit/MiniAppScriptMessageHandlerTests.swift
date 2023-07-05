@@ -1546,6 +1546,45 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                     expect(callbackProtocol.response).toEventually(equal("false"))
                 }
             }
+            context("when MiniAppScriptMessageHandler receives sendAnalytics info with MAAnalyticsInfo object") {
+                let scriptMessageHandler = MiniAppScriptMessageHandler(
+                    delegate: callbackProtocol,
+                    hostAppMessageDelegate: mockMessageInterface,
+                    adsDisplayer: mockAdsDelegate,
+                    secureStorageDelegate: mockSecureStorageDelegate,
+                    miniAppManageDelegate: mockMiniAppManageInterface,
+                    miniAppId: mockMiniAppInfo.id,
+                    miniAppTitle: mockMiniAppTitle
+                )
+                it("will return SUCCESS after host app recieves valid analyticsInfo object") {
+                    mockMessageInterface.mockInterfaceImplemented = true
+                    let command = "{\"action\":\"sendAnalytics\",\"param\":{\"analyticsInfo\":{\"eventType\":\"appear\",\"actionType\":\"open\",\"pageName\":\"Ads\",\"componentName\":\"Screen\",\"elementType\":\"Page\",\"data\":\"\"}},\"id\":\"13.037395594324927\"}"
+                    let mockMessage = MockWKScriptMessage(name: "sendAnalytics", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: .seconds(10))
+                    expect(callbackProtocol.response).toEventually(equal(MASDKProtocolResponse.success.rawValue), timeout: .seconds(10))
+                }
+                it("will return failedToConformToProtocol Error when message interface is nil") {
+                    mockMessageInterface.mockInterfaceImplemented = false
+                    let command = "{\"action\":\"sendAnalytics\",\"param\":{\"analyticsInfo\":{\"eventType\":\"appear\",\"actionType\":\"open\",\"pageName\":\"Ads\",\"componentName\":\"Screen\",\"elementType\":\"Page\",\"data\":\"\"}},\"id\":\"13.037395594324927\"}"
+                    let mockMessage = MockWKScriptMessage(name: "sendAnalytics", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MAAnalyticsError.failedToConformToProtocol.name))
+                }
+                it("will return empty value Error when analyticsInfo is empty") {
+                    let command = "{\"action\":\"sendAnalytics\",\"param\":{\"analyticsInfo\":{}},\"id\":\"13.037395594324927\"}"
+                    let mockMessage = MockWKScriptMessage(name: "sendAnalytics", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.name))
+                }
+                it("will return Error unexpected message format when analyticsInfo parameter is empty") {
+                    let command = "{\"action\":\"sendAnalytics\",\"param\":{},\"id\":\"13.037395594324927\"}"
+                    let mockMessage = MockWKScriptMessage(
+                        name: "sendAnalytics", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.valueIsEmpty.rawValue))
+                }
+            }
         }
     }
 }
