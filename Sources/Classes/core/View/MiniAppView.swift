@@ -15,7 +15,7 @@ public class MiniAppView: UIView, MiniAppViewable {
     internal let miniAppAlreadyLoadedError = MASDKError.unknownError(domain: "",
                                                                      code: 0,
                                                                      description: "Mini app already loaded")
-    
+
     public let state = PassthroughSubject<MiniAppViewState, Never>()
     public var progressStateView: MiniAppProgressViewable? {
         didSet {
