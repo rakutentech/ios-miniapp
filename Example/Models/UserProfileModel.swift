@@ -30,9 +30,11 @@ struct AccessTokenInfo: Codable {
 struct QueryParamInfo: Codable {
     var queryString: String
 
+    // swiftlint:disable unneeded_synthesized_initializer
     init(queryString: String) {
         self.queryString = queryString
     }
+    // swiftlint:enable unneeded_synthesized_initializer
 }
 
 func setProfileSettings(forKey key: String = "UserProfileDetail", userDisplayName: String?, profileImageURI: String?, contactList: [MAContact]? = getContactList()) -> Bool {
