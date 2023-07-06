@@ -7,6 +7,7 @@
 - **Feature:** Added new `HostAppThemeColors` model class to hold the primary and secondary color strings in Hex format.
 - **Feature:** Added a new optional interface `getHostAppThemeColors(completionHandler:)` in `MiniAppMessageDelegate` protocol, to fetch the host app theme colors.
 - **Feature:** Added new `isDarkMode` interface to get the mode set in Host app / Device.
+- **Feature:** Added new public interface `didReceiveMAAnalytics(analyticsInfo:  MAAnalyticsInfo, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void)` for host app to receive the `MAAnalyticsInfo` info for the events from MiniApps.
 - **Feature:** Added a new public interface in `MiniappView` class. `loadFromBundle(completionHandler:)`. Now Native/Host apps can load a Miniapp from bundle. 
 
 **Sample App**

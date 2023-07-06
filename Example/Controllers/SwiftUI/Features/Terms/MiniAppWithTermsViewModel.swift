@@ -101,6 +101,7 @@ class MiniAppWithTermsViewModel: ObservableObject {
                         case let .permissionRequested(info, manifest):
                             self.viewState = .permissionRequested(info: info, manifest: manifest)
                         }
+                        MAAnalyticsInfoLogger.startLogs(forMiniApp: self.miniAppId)
                     case .failure(let error):
                         if self.isOffline(error: error) {
                             self.viewState = .offline

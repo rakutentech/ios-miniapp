@@ -130,6 +130,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             getHostAppThemeColors(with: callbackId)
         case .isDarkMode:
             isDarkMode(with: callbackId)
+        case .sendAnalytics:
+            didReceiveMAAnalytics(requestParam: requestParam, callbackId: callbackId)
         }
     }
     // swiftlint:enable function_body_length cyclomatic_complexity
@@ -824,6 +826,24 @@ extension MiniAppScriptMessageHandler {
             case .success: ()
             case .failure(let error):
                 self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(error))
+            }
+        })
+    }
+}
+
+//MARK: MiniApp Receive MAAnlyticsInfo
+extension MiniAppScriptMessageHandler {
+    func didReceiveMAAnalytics(requestParam: RequestParameters?, callbackId: String){
+        guard let requestParamValue = requestParam?.analyticsInfo else {
+            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
+            return
+        }
+        self.hostAppMessageDelegate?.didReceiveMAAnalytics(analyticsInfo: requestParamValue, completionHandler: { result in
+            switch result {
+            case .success(let success):
+                self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: success.rawValue)
+            case .failure(let failure):
+                self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(failure))
             }
         })
     }

@@ -31,6 +31,7 @@ enum MiniAppJSActionCommand: String {
     case closeMiniApp
     case getHostAppThemeColors
     case isDarkMode
+    case sendAnalytics
 }
 
 enum JavaScriptExecResult: String {
