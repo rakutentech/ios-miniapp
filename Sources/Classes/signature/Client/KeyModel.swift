@@ -9,9 +9,11 @@ internal struct KeyModel: Codable, Equatable {
         case pem = "pemKey"
     }
 
+    // swiftlint:disable unneeded_synthesized_initializer
     init(identifier: String, key: String, pem: String) {
         self.identifier = identifier
         self.key = key
         self.pem = pem
     }
+    // swiftlint:enable unneeded_synthesized_initializer
 }
