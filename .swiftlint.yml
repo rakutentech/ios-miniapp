@@ -2,6 +2,7 @@ disabled_rules: # rule identifiers to exclude from running
   - nesting
   - orphaned_doc_comment
   - superfluous_disable_command
+  - unneeded_synthesized_initializer
 # parameterized rules are first parameterized as a warning level, then error level.
 line_length:
     warning: 200
