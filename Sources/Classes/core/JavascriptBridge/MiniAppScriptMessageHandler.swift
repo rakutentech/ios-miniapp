@@ -831,7 +831,7 @@ extension MiniAppScriptMessageHandler {
     }
 }
 
-//MARK: MiniApp Receive MAAnlytics Info
+//MARK: MiniApp Receive MAAnlyticsInfo
 extension MiniAppScriptMessageHandler {
     func didReceiveMAAnalytics(requestParam: RequestParameters?, callbackId: String){
         guard let requestParamValue = requestParam?.analyticsInfo else {

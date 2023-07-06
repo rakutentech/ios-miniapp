@@ -224,6 +224,9 @@ Mini App SDK provides default implementation for few interfaces in `MiniAppMessa
 | getUserName                  | 🚫       |
 | getProfilePhoto              | 🚫       |
 | getAccessToken               | 🚫       |
+| sendJsonToHostApp            | 🚫       |
+| getHostAppThemeColors        | 🚫       |
+| didReceiveMAAnalytics        | 🚫       |
 
 ```NOTE: Following code snippets is an example for implementing MiniAppMessageDelegate methods, you can add your own custom implementation or you can make use of the code which is provided in the Sample app.```
 
@@ -1156,7 +1159,7 @@ MiniApps can send the analytics information to host app through the `sendAnalyti
 iOS Hostapp can extend this optional `MAAnalayticsDelegate` interface/delegate to receive the analytics that is sent from the Miniapp.
 
 ```swift
-extension ViewController: MiniAppMessageDelegate {
+extension ViewController: MAAnalyticsDelegate {
     func didReceiveMAAnalytics(analyticsInfo: MAAnalyticsInfo, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
         print(analyticsInfo)
             // analyticsInfo: MAAnalyticsInfo - This object holds the Analytics info of the events triggered from MiniApps, This can be further used to record the MiniApp Analytics events from host app.
