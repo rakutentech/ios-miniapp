@@ -48,11 +48,11 @@ jobs:
           paths:
             - MiniApp-Secrets.xcconfig
       - codecov/upload:
-          file: "./artifacts/0/artifacts/unit-tests/report.junit"
+          file: "artifacts/unit-tests/report.junit"
       - codecov/upload:
           file: "artifacts/unit-tests/report.html"
       - codecov/upload:
-          file: "./artifacts/0/artifacts/unit-tests/compile_commands.json"
+          file: "artifacts/unit-tests/compile_commands.json"
 
   app-center-publish-sim:
     <<: *container_medium
