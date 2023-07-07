@@ -411,6 +411,10 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         let mockMessageInterface = MockMessageInterface()
         mockMessageInterface.isDarkMode(completionHandler: completionHandler)
     }
+    func didReceiveMAAnalytics(analyticsInfo: MAAnalyticsInfo, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        mockMessageInterface.didReceiveMAAnalytics(analyticsInfo: analyticsInfo, completionHandler: completionHandler)
+    }
 }
 
 class MockMessageInterface: MiniAppMessageDelegate {
@@ -594,6 +598,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
             completionHandler(.success(true))
         } else {
             completionHandler(.success(false))
+        }
+    }
+
+    func didReceiveMAAnalytics(analyticsInfo: MAAnalyticsInfo, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
+        if mockInterfaceImplemented {
+            completionHandler(.success(.success))
+        } else {
+            completionHandler(.failure(.failedToConformToProtocol))
         }
     }
 }

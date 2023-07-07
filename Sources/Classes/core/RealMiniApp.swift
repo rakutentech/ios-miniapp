@@ -488,6 +488,10 @@ extension RealMiniApp: MiniAppMessageDelegate {
     func isDarkMode(completionHandler: @escaping (Result<Bool, MiniAppJavaScriptError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
+
+    func didReceiveMAAnalytics(analyticsInfo: MAAnalyticsInfo, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
+        completionHandler(.failure(.failedToConformToProtocol))
+    }
 }
 
 extension RealMiniApp {

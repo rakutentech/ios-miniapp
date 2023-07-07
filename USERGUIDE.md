@@ -224,6 +224,9 @@ Mini App SDK provides default implementation for few interfaces in `MiniAppMessa
 | getUserName                  | 🚫       |
 | getProfilePhoto              | 🚫       |
 | getAccessToken               | 🚫       |
+| sendJsonToHostApp            | 🚫       |
+| getHostAppThemeColors        | 🚫       |
+| didReceiveMAAnalytics        | 🚫       |
 
 ```NOTE: Following code snippets is an example for implementing MiniAppMessageDelegate methods, you can add your own custom implementation or you can make use of the code which is provided in the Sample app.```
 
@@ -1129,7 +1132,7 @@ extension ViewController: MiniAppMessageDelegate {
 
 <a id="miniapp-getHostAppThemeColors"></a>
 
-### MiniApp Close
+### Send Host App Theme Colors to MiniApp
 
 MiniApp can request the host app to share the Themes primary and secondary colors through the javascript bridge event trigger.
 MiniAppSDK in iOS provides the `MiniAppMessageDelegate` interface method `func getHostAppThemeColors(completionHandler: @escaping (Result<HostAppThemeColors?, MASDKError>) -> Void)` which can be implemented in the host app. This delegate method is an optional.
@@ -1144,6 +1147,23 @@ extension ViewController: MiniAppMessageDelegate {
                     secondaryColor: "#7D64BE")
             )
         )
+    }
+}
+```
+
+<a id="miniapp-sendAnalytics"></a>
+
+### Receive MiniApp Analytics 
+
+MiniApps can send the analytics information to host app through the `sendAnalytics` interface defined in JS-SDK.
+iOS Hostapp can extend this optional `MAAnalayticsDelegate` interface/delegate to receive the analytics that is sent from the Miniapp.
+
+```swift
+extension ViewController: MAAnalyticsDelegate {
+    func didReceiveMAAnalytics(analyticsInfo: MAAnalyticsInfo, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void) {
+        print(analyticsInfo)
+            // analyticsInfo: MAAnalyticsInfo - This object holds the Analytics info of the events triggered from MiniApps, This can be further used to record the MiniApp Analytics events from host app.
+        completionHandler(.success(.success))
     }
 }
 ```

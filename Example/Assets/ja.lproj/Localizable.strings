@@ -61,3 +61,9 @@
 "demo.app.rat.page.name.securestorage"                  =   "Secure Storage";
 "demo.app.rat.page.name.universalbridge"                =   "Universal Bridge";
 "demo.app.rat.page.name.themeColors"                    =   "Theme Colors";
+"demo.app.rat.page.name.viewanalyticsinfo"              =   "Analytics Info";
+"demo.app.analytics.info.noData"                        =   "No Data Found";
+"demo.app.analytics.info.dataCleared"                   =   "All analytics data cleared.";
+"demo.app.analytics.info.loadingData"                   =   "Loading analytics data...";
+"demo.app.analytics.info.sorryNoData"                   =   "Sorry, No analytics data found.";
+"demo.app.analytics.info.dataNotExists"                 =   "Analytics data do not exists.";
