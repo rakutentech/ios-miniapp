@@ -19,6 +19,7 @@ class MiniAppWithTermsViewModel: ObservableObject {
 
     var showMessageAlert: CurrentValueSubject<Bool, Never> = .init(false)
     var showJsonString: String?
+    var showInfoValue: UniversalBridgeInfoParameters?
 
     var shouldCloseMiniApp: CurrentValueSubject<Bool, Never> = .init(false)
 
@@ -61,6 +62,10 @@ class MiniAppWithTermsViewModel: ObservableObject {
             delegator.onSendJsonToHostApp = { string in
                 self.showMessageAlert.send(true)
                 self.showJsonString = string
+            }
+            delegator.onSendInfoToHostApp = { info in
+                self.showMessageAlert.send(true)
+                self.showInfoValue = info
             }
             delegator.onShoudCloseMiniApp = { confirmation in
                 self.closeWithConfirmation = confirmation

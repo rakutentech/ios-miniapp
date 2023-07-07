@@ -26,6 +26,7 @@ struct RequestParameters: Decodable {
     let jsonInfo: JsonStringInfoParameters?
     let withConfirmationAlert: Bool?
     let analyticsInfo: MAAnalyticsInfo?
+    let universalBridgeInfo: UniversalBridgeInfoParameters?
 }
 
 struct LocationOptions: Decodable {
@@ -38,6 +39,12 @@ struct ShareInfoParameters: Decodable {
 
 struct JsonStringInfoParameters: Codable {
     var content: String
+}
+
+public struct UniversalBridgeInfoParameters: Codable {
+    var key: String?
+    var value: String?
+    var description: String?
 }
 
 struct MiniAppCustomPermissionsRequest: Decodable {
