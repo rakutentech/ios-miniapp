@@ -384,7 +384,7 @@ class MockMessageInterfaceExtension: MiniAppMessageDelegate {
         return mockMessageInterface.sendJsonToHostApp(info: info, completionHandler: completionHandler)
     }
 
-    func sendInfoToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+    func sendInfoToHostApp(info: UniversalBridgeInfoParameters, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.sendInfoToHostApp(info: info, completionHandler: completionHandler)
     }
@@ -581,7 +581,7 @@ class MockMessageInterface: MiniAppMessageDelegate {
         }
     }
 
-    func sendInfoToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+    func sendInfoToHostApp(info: UniversalBridgeInfoParameters, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
         if mockInterfaceImplemented {
             completionHandler(.success(.success))
         } else {

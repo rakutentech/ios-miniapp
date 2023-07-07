@@ -96,7 +96,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
                         withConfirmationAlert: nil,
-                        analyticsInfo: nil
+                        analyticsInfo: nil,
+                        universalBridgeInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -126,7 +127,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
                         withConfirmationAlert: nil,
-                        analyticsInfo: nil
+                        analyticsInfo: nil,
+                        universalBridgeInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -156,7 +158,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
                         withConfirmationAlert: nil,
-                        analyticsInfo: nil
+                        analyticsInfo: nil,
+                        universalBridgeInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMessagingUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -186,7 +189,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
                         withConfirmationAlert: nil,
-                        analyticsInfo: nil
+                        analyticsInfo: nil,
+                        universalBridgeInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMauid", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
