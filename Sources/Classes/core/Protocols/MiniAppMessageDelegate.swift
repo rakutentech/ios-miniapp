@@ -92,7 +92,8 @@ public extension MiniAppMessageDelegate {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 
-    func sendInfoToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+    func sendInfoToHostApp(info: UniversalBridgeInfoParameters,
+                           completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
         completionHandler(.failure(.failedToConformToProtocol))
     }
 

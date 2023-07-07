@@ -803,7 +803,9 @@ extension MiniAppScriptMessageHandler {
     
     func sendInfoToHostApp(requestParam: RequestParameters?, callbackId: String) {
         guard let requestParamValue = requestParam?.universalBridgeInfo else {
-            executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
+            executeJavaScriptCallback(responseStatus: .onError,
+                                      messageId: callbackId,
+                                      response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
             return
         }
         self.hostAppMessageDelegate?.sendInfoToHostApp(info: requestParamValue, completionHandler: { (result) in
