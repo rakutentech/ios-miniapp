@@ -132,7 +132,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             isDarkMode(with: callbackId)
         case .sendAnalytics:
             didReceiveMAAnalytics(requestParam: requestParam, callbackId: callbackId)
-        case .sendInfoToHostApp:
+        case .sendInfoToHostapp:
             sendInfoToHostApp(requestParam: requestParam, callbackId: callbackId)
         }
     }
