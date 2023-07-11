@@ -96,7 +96,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
                         withConfirmationAlert: nil,
-                        analyticsInfo: nil
+                        analyticsInfo: nil,
+                        universalBridgeInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "", id: "123", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -126,7 +127,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
                         withConfirmationAlert: nil,
-                        analyticsInfo: nil
+                        analyticsInfo: nil,
+                        universalBridgeInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -156,7 +158,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
                         withConfirmationAlert: nil,
-                        analyticsInfo: nil
+                        analyticsInfo: nil,
+                        universalBridgeInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMessagingUniqueId", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -186,7 +189,8 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         closeAlertInfo: nil,
                         jsonInfo: JsonStringInfoParameters(content: ""),
                         withConfirmationAlert: nil,
-                        analyticsInfo: nil
+                        analyticsInfo: nil,
+                        universalBridgeInfo: nil
                     )
                     let javascriptMessageInfo = MiniAppJavaScriptMessageInfo(action: "getMauid", id: "", param: requestParam)
                     scriptMessageHandler.handleBridgeMessage(responseJson: javascriptMessageInfo)
@@ -1583,6 +1587,25 @@ class MiniAppScriptMessageHandlerTests: QuickSpec {
                         name: "sendAnalytics", body: command as AnyObject)
                     scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
                     expect(callbackProtocol.errorMessage).toEventually(contain(MiniAppJavaScriptError.unexpectedMessageFormat.name))
+                }
+            }
+            context("when MiniAppScriptMessageHandler receives sendInfoToHostapp command with UniversalBridgeInfoParameters") {
+                let scriptMessageHandler = MiniAppScriptMessageHandler(
+                    delegate: callbackProtocol,
+                    hostAppMessageDelegate: mockMessageInterface,
+                    adsDisplayer: mockAdsDelegate,
+                    secureStorageDelegate: mockSecureStorageDelegate,
+                    miniAppManageDelegate: mockMiniAppManageInterface,
+                    miniAppId: mockMiniAppInfo.id,
+                    miniAppTitle: mockMiniAppTitle
+                )
+                it("will return SUCCESS after host app recieves valid analyticsInfo object") {
+                    mockMessageInterface.mockInterfaceImplemented = true
+                    let command = "{\"action\":\"sendAnalytics\",\"param\":{\"universalBridgeInfo\":{\"key\":\"open\",\"value\":\"points\",\"description\":\"Universal Bridge info\"}},\"id\":\"13.037395594324927\"}"
+                    let mockMessage = MockWKScriptMessage(name: "universalBridgeInfo", body: command as AnyObject)
+                    scriptMessageHandler.userContentController(WKUserContentController(), didReceive: mockMessage)
+                    expect(callbackProtocol.response).toEventuallyNot(beNil(), timeout: .seconds(10))
+                    expect(callbackProtocol.response).toEventually(equal(MASDKProtocolResponse.success.rawValue), timeout: .seconds(10))
                 }
             }
         }

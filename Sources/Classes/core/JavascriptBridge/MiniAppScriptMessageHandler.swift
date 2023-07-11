@@ -132,6 +132,8 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
             isDarkMode(with: callbackId)
         case .sendAnalytics:
             didReceiveMAAnalytics(requestParam: requestParam, callbackId: callbackId)
+        case .sendInfoToHostapp:
+            sendInfoToHostApp(requestParam: requestParam, callbackId: callbackId)
         }
     }
     // swiftlint:enable function_body_length cyclomatic_complexity
@@ -797,6 +799,18 @@ extension MiniAppScriptMessageHandler {
         } else {
             self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: prepareMAJavascriptError(MiniAppJavaScriptError.valueIsEmpty))
         }
+    }
+    
+    func sendInfoToHostApp(requestParam: RequestParameters?, callbackId: String) {
+        guard let requestParamValue = requestParam?.universalBridgeInfo else {
+            executeJavaScriptCallback(responseStatus: .onError,
+                                      messageId: callbackId,
+                                      response: prepareMAJavascriptError(MiniAppJavaScriptError.unexpectedMessageFormat))
+            return
+        }
+        self.hostAppMessageDelegate?.sendInfoToHostApp(info: requestParamValue, completionHandler: { (result) in
+            self.manageJsonStringToHostAppResult(result, with: callbackId)
+        })
     }
     
     func manageJsonStringToHostAppResult(_ result: Result<MASDKProtocolResponse, UniversalBridgeError>, with callbackId: String) {
