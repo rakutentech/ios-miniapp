@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 5.2.0 Docs
+          MiniApp 5.3.0-alpha Docs
         </a>
-         (72% documented)
+         (69% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -66,6 +66,12 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/AdMobDisplayer.html">AdMobDisplayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/HostAppThemeColors.html">HostAppThemeColors</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/MAAnalyticsInfo.html">MAAnalyticsInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/MAHostEnvironmentInfo.html">MAHostEnvironmentInfo</a>
@@ -135,6 +141,15 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MAAnalyticsActionType.html">MAAnalyticsActionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MAAnalyticsError.html">MAAnalyticsError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MAAnalyticsEventType.html">MAAnalyticsEventType</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/MASDKAccessTokenError.html">MASDKAccessTokenError</a>
               </li>
@@ -239,6 +254,9 @@
                 <a class="nav-group-task-link" href="Protocols/ChatMessageBridgeDelegate.html">ChatMessageBridgeDelegate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/MAAnalyticsDelegate.html">MAAnalyticsDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/MiniAppAdDisplayDelegate.html">MiniAppAdDisplayDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -332,6 +350,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/PreviewMiniAppInfo.html">PreviewMiniAppInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/UniversalBridgeInfoParameters.html">UniversalBridgeInfoParameters</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/Version.html">Version</a>
@@ -464,6 +485,35 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7MiniApp19MAAnalyticsDelegateP"></a>
+                    <a name="//apple_ref/swift/Protocol/MAAnalyticsDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp19MAAnalyticsDelegateP">MAAnalyticsDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Public Protocol that will be used by the Mini App to send Analytics info to host app.
+With the Native implementation host can receive MAAnalyticsInfo object through this interface.</p>
+
+                        <a href="Protocols/MAAnalyticsDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MAAnalyticsDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7MiniApp0aB17AdDisplayDelegateP"></a>
                     <a name="//apple_ref/swift/Protocol/MiniAppAdDisplayDelegate" class="dashAnchor"></a>
                     <a class="token" href="#/s:7MiniApp0aB17AdDisplayDelegateP">MiniAppAdDisplayDelegate</a>
@@ -540,7 +590,7 @@ to communicate with the Mini App display module</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">:</span> <span class="kt"><a href="Protocols/ChatMessageBridgeDelegate.html">ChatMessageBridgeDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/MiniAppShareContentDelegate.html">MiniAppShareContentDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/UniversalBridgeDelegate.html">UniversalBridgeDelegate</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">:</span> <span class="kt"><a href="Protocols/ChatMessageBridgeDelegate.html">ChatMessageBridgeDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/MAAnalyticsDelegate.html">MAAnalyticsDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/MiniAppShareContentDelegate.html">MiniAppShareContentDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/UniversalBridgeDelegate.html">UniversalBridgeDelegate</a></span></code></pre>
 
                         </div>
                       </div>
@@ -754,7 +804,7 @@ with the Native implementation for sending string data through interface 1 mecha
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2023 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2023-03-30)</p>
+      <p>&copy; 2023 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2023-07-12)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>

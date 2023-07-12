@@ -912,770 +912,770 @@
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 71,
+      "line": 75,
       "symbol": "MiniAppCustomPermissionType.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 71,
+      "line": 75,
       "symbol": "MiniAppCustomPermissionType.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 71,
+      "line": 75,
       "symbol": "MiniAppCustomPermissionType.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 71,
+      "line": 75,
       "symbol": "MiniAppCustomPermissionType.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 71,
+      "line": 75,
       "symbol": "MiniAppCustomPermissionType.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 93,
+      "line": 97,
       "symbol": "MiniAppCustomPermissionGrantedStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 93,
+      "line": 97,
       "symbol": "MiniAppCustomPermissionGrantedStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 93,
+      "line": 97,
       "symbol": "MiniAppCustomPermissionGrantedStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 93,
+      "line": 97,
       "symbol": "MiniAppCustomPermissionGrantedStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 93,
+      "line": 97,
       "symbol": "MiniAppCustomPermissionGrantedStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 94,
+      "line": 98,
       "symbol": "MiniAppCustomPermissionGrantedStatus.allowed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 94,
+      "line": 98,
       "symbol": "MiniAppCustomPermissionGrantedStatus.allowed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 94,
+      "line": 98,
       "symbol": "MiniAppCustomPermissionGrantedStatus.allowed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 94,
+      "line": 98,
       "symbol": "MiniAppCustomPermissionGrantedStatus.allowed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 94,
+      "line": 98,
       "symbol": "MiniAppCustomPermissionGrantedStatus.allowed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 95,
+      "line": 99,
       "symbol": "MiniAppCustomPermissionGrantedStatus.denied",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 95,
+      "line": 99,
       "symbol": "MiniAppCustomPermissionGrantedStatus.denied",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 95,
+      "line": 99,
       "symbol": "MiniAppCustomPermissionGrantedStatus.denied",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 95,
+      "line": 99,
       "symbol": "MiniAppCustomPermissionGrantedStatus.denied",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 95,
+      "line": 99,
       "symbol": "MiniAppCustomPermissionGrantedStatus.denied",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 96,
+      "line": 100,
       "symbol": "MiniAppCustomPermissionGrantedStatus.permissionNotAvailable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 96,
+      "line": 100,
       "symbol": "MiniAppCustomPermissionGrantedStatus.permissionNotAvailable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 96,
+      "line": 100,
       "symbol": "MiniAppCustomPermissionGrantedStatus.permissionNotAvailable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 96,
+      "line": 100,
       "symbol": "MiniAppCustomPermissionGrantedStatus.permissionNotAvailable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 96,
+      "line": 100,
       "symbol": "MiniAppCustomPermissionGrantedStatus.permissionNotAvailable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 98,
+      "line": 102,
       "symbol": "MiniAppCustomPermissionGrantedStatus.boolValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 98,
+      "line": 102,
       "symbol": "MiniAppCustomPermissionGrantedStatus.boolValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 98,
+      "line": 102,
       "symbol": "MiniAppCustomPermissionGrantedStatus.boolValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 98,
+      "line": 102,
       "symbol": "MiniAppCustomPermissionGrantedStatus.boolValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 98,
+      "line": 102,
       "symbol": "MiniAppCustomPermissionGrantedStatus.boolValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 128,
+      "line": 132,
       "symbol": "MiniAppEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 128,
+      "line": 132,
       "symbol": "MiniAppEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 128,
+      "line": 132,
       "symbol": "MiniAppEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 128,
+      "line": 132,
       "symbol": "MiniAppEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 128,
+      "line": 132,
       "symbol": "MiniAppEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 129,
+      "line": 133,
       "symbol": "MiniAppEvent.externalWebViewClosed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 129,
+      "line": 133,
       "symbol": "MiniAppEvent.externalWebViewClosed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 129,
+      "line": 133,
       "symbol": "MiniAppEvent.externalWebViewClosed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 129,
+      "line": 133,
       "symbol": "MiniAppEvent.externalWebViewClosed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 129,
+      "line": 133,
       "symbol": "MiniAppEvent.externalWebViewClosed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 130,
+      "line": 134,
       "symbol": "MiniAppEvent.pause",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 130,
+      "line": 134,
       "symbol": "MiniAppEvent.pause",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 130,
+      "line": 134,
       "symbol": "MiniAppEvent.pause",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 130,
+      "line": 134,
       "symbol": "MiniAppEvent.pause",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 130,
+      "line": 134,
       "symbol": "MiniAppEvent.pause",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 131,
+      "line": 135,
       "symbol": "MiniAppEvent.resume",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 131,
+      "line": 135,
       "symbol": "MiniAppEvent.resume",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 131,
+      "line": 135,
       "symbol": "MiniAppEvent.resume",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 131,
+      "line": 135,
       "symbol": "MiniAppEvent.resume",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 131,
+      "line": 135,
       "symbol": "MiniAppEvent.resume",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 132,
+      "line": 136,
       "symbol": "MiniAppEvent.secureStorageReady",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 132,
+      "line": 136,
       "symbol": "MiniAppEvent.secureStorageReady",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 132,
+      "line": 136,
       "symbol": "MiniAppEvent.secureStorageReady",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 132,
+      "line": 136,
       "symbol": "MiniAppEvent.secureStorageReady",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 132,
+      "line": 136,
       "symbol": "MiniAppEvent.secureStorageReady",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 133,
+      "line": 137,
       "symbol": "MiniAppEvent.secureStorageError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 133,
+      "line": 137,
       "symbol": "MiniAppEvent.secureStorageError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 133,
+      "line": 137,
       "symbol": "MiniAppEvent.secureStorageError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 133,
+      "line": 137,
       "symbol": "MiniAppEvent.secureStorageError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 133,
+      "line": 137,
       "symbol": "MiniAppEvent.secureStorageError",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 134,
+      "line": 138,
       "symbol": "MiniAppEvent.miniappReceiveJsonString",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 134,
+      "line": 138,
       "symbol": "MiniAppEvent.miniappReceiveJsonString",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 134,
+      "line": 138,
       "symbol": "MiniAppEvent.miniappReceiveJsonString",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 134,
+      "line": 138,
       "symbol": "MiniAppEvent.miniappReceiveJsonString",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 134,
+      "line": 138,
       "symbol": "MiniAppEvent.miniappReceiveJsonString",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 136,
+      "line": 140,
       "symbol": "MiniAppEvent.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 136,
+      "line": 140,
       "symbol": "MiniAppEvent.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 136,
+      "line": 140,
       "symbol": "MiniAppEvent.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 136,
+      "line": 140,
       "symbol": "MiniAppEvent.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 136,
+      "line": 140,
       "symbol": "MiniAppEvent.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 138,
+      "line": 142,
       "symbol": "MiniAppEvent.Event",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 138,
+      "line": 142,
       "symbol": "MiniAppEvent.Event",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 138,
+      "line": 142,
       "symbol": "MiniAppEvent.Event",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 138,
+      "line": 142,
       "symbol": "MiniAppEvent.Event",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 138,
+      "line": 142,
       "symbol": "MiniAppEvent.Event",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 144,
+      "line": 148,
       "symbol": "MiniAppEvent.Event.init(miniAppId:miniAppVersion:type:comment:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 144,
+      "line": 148,
       "symbol": "MiniAppEvent.Event.init(miniAppId:miniAppVersion:type:comment:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 144,
+      "line": 148,
       "symbol": "MiniAppEvent.Event.init(miniAppId:miniAppVersion:type:comment:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 144,
+      "line": 148,
       "symbol": "MiniAppEvent.Event.init(miniAppId:miniAppVersion:type:comment:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 144,
+      "line": 148,
       "symbol": "MiniAppEvent.Event.init(miniAppId:miniAppVersion:type:comment:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 153,
+      "line": 157,
       "symbol": "MiniAppKeyboardEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 153,
+      "line": 157,
       "symbol": "MiniAppKeyboardEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 153,
+      "line": 157,
       "symbol": "MiniAppKeyboardEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 153,
+      "line": 157,
       "symbol": "MiniAppKeyboardEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 153,
+      "line": 157,
       "symbol": "MiniAppKeyboardEvent",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 154,
+      "line": 158,
       "symbol": "MiniAppKeyboardEvent.keyboardShown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 154,
+      "line": 158,
       "symbol": "MiniAppKeyboardEvent.keyboardShown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 154,
+      "line": 158,
       "symbol": "MiniAppKeyboardEvent.keyboardShown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 154,
+      "line": 158,
       "symbol": "MiniAppKeyboardEvent.keyboardShown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 154,
+      "line": 158,
       "symbol": "MiniAppKeyboardEvent.keyboardShown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 155,
+      "line": 159,
       "symbol": "MiniAppKeyboardEvent.keyboardHidden",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 155,
+      "line": 159,
       "symbol": "MiniAppKeyboardEvent.keyboardHidden",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 155,
+      "line": 159,
       "symbol": "MiniAppKeyboardEvent.keyboardHidden",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 155,
+      "line": 159,
       "symbol": "MiniAppKeyboardEvent.keyboardHidden",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 155,
+      "line": 159,
       "symbol": "MiniAppKeyboardEvent.keyboardHidden",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 157,
+      "line": 161,
       "symbol": "MiniAppKeyboardEvent.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 157,
+      "line": 161,
       "symbol": "MiniAppKeyboardEvent.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 157,
+      "line": 161,
       "symbol": "MiniAppKeyboardEvent.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 157,
+      "line": 161,
       "symbol": "MiniAppKeyboardEvent.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 157,
+      "line": 161,
       "symbol": "MiniAppKeyboardEvent.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 159,
+      "line": 163,
       "symbol": "MiniAppKeyboardEvent.Event",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 159,
+      "line": 163,
       "symbol": "MiniAppKeyboardEvent.Event",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 159,
+      "line": 163,
       "symbol": "MiniAppKeyboardEvent.Event",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 159,
+      "line": 163,
       "symbol": "MiniAppKeyboardEvent.Event",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 159,
+      "line": 163,
       "symbol": "MiniAppKeyboardEvent.Event",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 166,
+      "line": 170,
       "symbol": "MiniAppKeyboardEvent.Event.init(type:comment:navigationBarHeight:keyboardHeight:screenHeight:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 166,
+      "line": 170,
       "symbol": "MiniAppKeyboardEvent.Event.init(type:comment:navigationBarHeight:keyboardHeight:screenHeight:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 166,
+      "line": 170,
       "symbol": "MiniAppKeyboardEvent.Event.init(type:comment:navigationBarHeight:keyboardHeight:screenHeight:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 166,
+      "line": 170,
       "symbol": "MiniAppKeyboardEvent.Event.init(type:comment:navigationBarHeight:keyboardHeight:screenHeight:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/JavascriptBridge/MiniAppJavaScriptEnumerations.swift",
-      "line": 166,
+      "line": 170,
       "symbol": "MiniAppKeyboardEvent.Event.init(type:comment:navigationBarHeight:keyboardHeight:screenHeight:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1821,176 +1821,211 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 102,
-      "symbol": "MiniAppAnalyticsLoader",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 102,
-      "symbol": "MiniAppAnalyticsLoader",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 102,
-      "symbol": "MiniAppAnalyticsLoader",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 102,
-      "symbol": "MiniAppAnalyticsLoader",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 102,
-      "symbol": "MiniAppAnalyticsLoader",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 103,
-      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniApp.swift",
+      "line": 209,
+      "symbol": "MiniApp.unzipMiniApp(fileName:miniAppId:versionId:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 103,
-      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniApp.swift",
+      "line": 209,
+      "symbol": "MiniApp.unzipMiniApp(fileName:miniAppId:versionId:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 103,
-      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniApp.swift",
+      "line": 209,
+      "symbol": "MiniApp.unzipMiniApp(fileName:miniAppId:versionId:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 103,
-      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniApp.swift",
+      "line": 209,
+      "symbol": "MiniApp.unzipMiniApp(fileName:miniAppId:versionId:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 103,
-      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniApp.swift",
+      "line": 209,
+      "symbol": "MiniApp.unzipMiniApp(fileName:miniAppId:versionId:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
       "line": 110,
-      "symbol": "MiniAppAnalytics",
+      "symbol": "MiniAppAnalyticsLoader",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
       "line": 110,
-      "symbol": "MiniAppAnalytics",
+      "symbol": "MiniAppAnalyticsLoader",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
       "line": 110,
-      "symbol": "MiniAppAnalytics",
+      "symbol": "MiniAppAnalyticsLoader",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
       "line": 110,
-      "symbol": "MiniAppAnalytics",
+      "symbol": "MiniAppAnalyticsLoader",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
       "line": 110,
-      "symbol": "MiniAppAnalytics",
+      "symbol": "MiniAppAnalyticsLoader",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
       "line": 111,
-      "symbol": "MiniAppAnalytics.notificationName",
-      "symbol_kind": "source.lang.swift.decl.var.static",
+      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
       "line": 111,
-      "symbol": "MiniAppAnalytics.notificationName",
-      "symbol_kind": "source.lang.swift.decl.var.static",
+      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
       "line": 111,
-      "symbol": "MiniAppAnalytics.notificationName",
-      "symbol_kind": "source.lang.swift.decl.var.static",
+      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
       "line": 111,
-      "symbol": "MiniAppAnalytics.notificationName",
-      "symbol_kind": "source.lang.swift.decl.var.static",
+      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
       "line": 111,
+      "symbol": "MiniAppAnalyticsLoader.loadMiniAppAnalytics()",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
+      "line": 118,
+      "symbol": "MiniAppAnalytics",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
+      "line": 118,
+      "symbol": "MiniAppAnalytics",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
+      "line": 118,
+      "symbol": "MiniAppAnalytics",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
+      "line": 118,
+      "symbol": "MiniAppAnalytics",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
+      "line": 118,
+      "symbol": "MiniAppAnalytics",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
+      "line": 119,
       "symbol": "MiniAppAnalytics.notificationName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 112,
+      "line": 119,
+      "symbol": "MiniAppAnalytics.notificationName",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
+      "line": 119,
+      "symbol": "MiniAppAnalytics.notificationName",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
+      "line": 119,
+      "symbol": "MiniAppAnalytics.notificationName",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
+      "line": 119,
+      "symbol": "MiniAppAnalytics.notificationName",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
+      "line": 120,
       "symbol": "MiniAppAnalytics.sdkVersion",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 112,
+      "line": 120,
       "symbol": "MiniAppAnalytics.sdkVersion",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 112,
+      "line": 120,
       "symbol": "MiniAppAnalytics.sdkVersion",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 112,
+      "line": 120,
       "symbol": "MiniAppAnalytics.sdkVersion",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/MiniAppAnalytics.swift",
-      "line": 112,
+      "line": 120,
       "symbol": "MiniAppAnalytics.sdkVersion",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
@@ -2097,6 +2132,461 @@
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsConfig.swift",
       "line": 6,
       "symbol": "MAAnalyticsConfig.init(acc:aid:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 3,
+      "symbol": "MAAnalyticsEventType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 3,
+      "symbol": "MAAnalyticsEventType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 3,
+      "symbol": "MAAnalyticsEventType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 3,
+      "symbol": "MAAnalyticsEventType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 3,
+      "symbol": "MAAnalyticsEventType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 4,
+      "symbol": "MAAnalyticsEventType.appear",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 4,
+      "symbol": "MAAnalyticsEventType.appear",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 4,
+      "symbol": "MAAnalyticsEventType.appear",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 4,
+      "symbol": "MAAnalyticsEventType.appear",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 4,
+      "symbol": "MAAnalyticsEventType.appear",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 5,
+      "symbol": "MAAnalyticsEventType.click",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 5,
+      "symbol": "MAAnalyticsEventType.click",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 5,
+      "symbol": "MAAnalyticsEventType.click",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 5,
+      "symbol": "MAAnalyticsEventType.click",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 5,
+      "symbol": "MAAnalyticsEventType.click",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 6,
+      "symbol": "MAAnalyticsEventType.error",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 6,
+      "symbol": "MAAnalyticsEventType.error",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 6,
+      "symbol": "MAAnalyticsEventType.error",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 6,
+      "symbol": "MAAnalyticsEventType.error",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 6,
+      "symbol": "MAAnalyticsEventType.error",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 7,
+      "symbol": "MAAnalyticsEventType.custom",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 7,
+      "symbol": "MAAnalyticsEventType.custom",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 7,
+      "symbol": "MAAnalyticsEventType.custom",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 7,
+      "symbol": "MAAnalyticsEventType.custom",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 7,
+      "symbol": "MAAnalyticsEventType.custom",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 10,
+      "symbol": "MAAnalyticsActionType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 10,
+      "symbol": "MAAnalyticsActionType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 10,
+      "symbol": "MAAnalyticsActionType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 10,
+      "symbol": "MAAnalyticsActionType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 10,
+      "symbol": "MAAnalyticsActionType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 11,
+      "symbol": "MAAnalyticsActionType.open",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 11,
+      "symbol": "MAAnalyticsActionType.open",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 11,
+      "symbol": "MAAnalyticsActionType.open",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 11,
+      "symbol": "MAAnalyticsActionType.open",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 11,
+      "symbol": "MAAnalyticsActionType.open",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 12,
+      "symbol": "MAAnalyticsActionType.close",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 12,
+      "symbol": "MAAnalyticsActionType.close",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 12,
+      "symbol": "MAAnalyticsActionType.close",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 12,
+      "symbol": "MAAnalyticsActionType.close",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 12,
+      "symbol": "MAAnalyticsActionType.close",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 13,
+      "symbol": "MAAnalyticsActionType.add",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 13,
+      "symbol": "MAAnalyticsActionType.add",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 13,
+      "symbol": "MAAnalyticsActionType.add",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 13,
+      "symbol": "MAAnalyticsActionType.add",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 13,
+      "symbol": "MAAnalyticsActionType.add",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 14,
+      "symbol": "MAAnalyticsActionType.delete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 14,
+      "symbol": "MAAnalyticsActionType.delete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 14,
+      "symbol": "MAAnalyticsActionType.delete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 14,
+      "symbol": "MAAnalyticsActionType.delete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 14,
+      "symbol": "MAAnalyticsActionType.delete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 15,
+      "symbol": "MAAnalyticsActionType.change",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 15,
+      "symbol": "MAAnalyticsActionType.change",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 15,
+      "symbol": "MAAnalyticsActionType.change",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 15,
+      "symbol": "MAAnalyticsActionType.change",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 15,
+      "symbol": "MAAnalyticsActionType.change",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 18,
+      "symbol": "MAAnalyticsInfo",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 18,
+      "symbol": "MAAnalyticsInfo",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 18,
+      "symbol": "MAAnalyticsInfo",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 18,
+      "symbol": "MAAnalyticsInfo",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 18,
+      "symbol": "MAAnalyticsInfo",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 26,
+      "symbol": "MAAnalyticsInfo.init(eventType:actionType:pageName:componentName:elementType:data:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 26,
+      "symbol": "MAAnalyticsInfo.init(eventType:actionType:pageName:componentName:elementType:data:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 26,
+      "symbol": "MAAnalyticsInfo.init(eventType:actionType:pageName:componentName:elementType:data:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 26,
+      "symbol": "MAAnalyticsInfo.init(eventType:actionType:pageName:componentName:elementType:data:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MAAnalyticsInfo.swift",
+      "line": 26,
+      "symbol": "MAAnalyticsInfo.init(eventType:actionType:pageName:componentName:elementType:data:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -2312,140 +2802,280 @@
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 56,
+      "line": 44,
+      "symbol": "UniversalBridgeInfoParameters",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 44,
+      "symbol": "UniversalBridgeInfoParameters",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 44,
+      "symbol": "UniversalBridgeInfoParameters",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 44,
+      "symbol": "UniversalBridgeInfoParameters",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 44,
+      "symbol": "UniversalBridgeInfoParameters",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 45,
+      "symbol": "UniversalBridgeInfoParameters.key",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 45,
+      "symbol": "UniversalBridgeInfoParameters.key",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 45,
+      "symbol": "UniversalBridgeInfoParameters.key",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 45,
+      "symbol": "UniversalBridgeInfoParameters.key",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 45,
+      "symbol": "UniversalBridgeInfoParameters.key",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 46,
+      "symbol": "UniversalBridgeInfoParameters.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 46,
+      "symbol": "UniversalBridgeInfoParameters.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 46,
+      "symbol": "UniversalBridgeInfoParameters.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 46,
+      "symbol": "UniversalBridgeInfoParameters.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 46,
+      "symbol": "UniversalBridgeInfoParameters.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 47,
+      "symbol": "UniversalBridgeInfoParameters.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 47,
+      "symbol": "UniversalBridgeInfoParameters.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 47,
+      "symbol": "UniversalBridgeInfoParameters.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 47,
+      "symbol": "UniversalBridgeInfoParameters.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 47,
+      "symbol": "UniversalBridgeInfoParameters.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
+      "line": 64,
       "symbol": "CloseAlertInfo",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 56,
+      "line": 64,
       "symbol": "CloseAlertInfo",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 56,
+      "line": 64,
       "symbol": "CloseAlertInfo",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 56,
+      "line": 64,
       "symbol": "CloseAlertInfo",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 56,
+      "line": 64,
       "symbol": "CloseAlertInfo",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 57,
+      "line": 65,
       "symbol": "CloseAlertInfo.shouldDisplay",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 57,
+      "line": 65,
       "symbol": "CloseAlertInfo.shouldDisplay",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 57,
+      "line": 65,
       "symbol": "CloseAlertInfo.shouldDisplay",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 57,
+      "line": 65,
       "symbol": "CloseAlertInfo.shouldDisplay",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 57,
+      "line": 65,
       "symbol": "CloseAlertInfo.shouldDisplay",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 58,
+      "line": 66,
       "symbol": "CloseAlertInfo.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 58,
+      "line": 66,
       "symbol": "CloseAlertInfo.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 58,
+      "line": 66,
       "symbol": "CloseAlertInfo.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 58,
+      "line": 66,
       "symbol": "CloseAlertInfo.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 58,
+      "line": 66,
       "symbol": "CloseAlertInfo.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 59,
+      "line": 67,
       "symbol": "CloseAlertInfo.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 59,
+      "line": 67,
       "symbol": "CloseAlertInfo.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 59,
+      "line": 67,
       "symbol": "CloseAlertInfo.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 59,
+      "line": 67,
       "symbol": "CloseAlertInfo.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavaScriptMessageInfo.swift",
-      "line": 59,
+      "line": 67,
       "symbol": "CloseAlertInfo.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -3046,6 +3676,76 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 364,
+      "symbol": "MAAnalyticsError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 364,
+      "symbol": "MAAnalyticsError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 364,
+      "symbol": "MAAnalyticsError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 364,
+      "symbol": "MAAnalyticsError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 364,
+      "symbol": "MAAnalyticsError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 367,
+      "symbol": "MAAnalyticsError.error(description:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 367,
+      "symbol": "MAAnalyticsError.error(description:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 367,
+      "symbol": "MAAnalyticsError.error(description:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 367,
+      "symbol": "MAAnalyticsError.error(description:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppJavascriptErrorInfo.swift",
+      "line": 367,
+      "symbol": "MAAnalyticsError.error(description:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/distiller/project/Sources/Classes/core/Models/MiniAppManifest.swift",
       "line": 186,
       "symbol": "MiniAppManifest.init(requiredPermissions:optionalPermissions:customMetaData:accessTokenPermissions:versionId:)",
@@ -3152,212 +3852,352 @@
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 91,
+      "line": 117,
       "symbol": "MASDKProtocolResponse",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 91,
+      "line": 117,
       "symbol": "MASDKProtocolResponse",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 91,
+      "line": 117,
       "symbol": "MASDKProtocolResponse",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 91,
+      "line": 117,
       "symbol": "MASDKProtocolResponse",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 91,
+      "line": 117,
       "symbol": "MASDKProtocolResponse",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 92,
+      "line": 118,
       "symbol": "MASDKProtocolResponse.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 92,
+      "line": 118,
       "symbol": "MASDKProtocolResponse.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 92,
+      "line": 118,
       "symbol": "MASDKProtocolResponse.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 92,
+      "line": 118,
       "symbol": "MASDKProtocolResponse.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 92,
+      "line": 118,
       "symbol": "MASDKProtocolResponse.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 101,
+      "line": 127,
       "symbol": "MAHostEnvironmentInfo",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 101,
+      "line": 127,
       "symbol": "MAHostEnvironmentInfo",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 101,
+      "line": 127,
       "symbol": "MAHostEnvironmentInfo",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 101,
+      "line": 127,
       "symbol": "MAHostEnvironmentInfo",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 101,
+      "line": 127,
       "symbol": "MAHostEnvironmentInfo",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 107,
+      "line": 133,
       "symbol": "MAHostEnvironmentInfo.init(platformVersion:hostVersion:sdkVersion:hostLocale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 107,
+      "line": 133,
       "symbol": "MAHostEnvironmentInfo.init(platformVersion:hostVersion:sdkVersion:hostLocale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 107,
+      "line": 133,
       "symbol": "MAHostEnvironmentInfo.init(platformVersion:hostVersion:sdkVersion:hostLocale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 107,
+      "line": 133,
       "symbol": "MAHostEnvironmentInfo.init(platformVersion:hostVersion:sdkVersion:hostLocale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 107,
+      "line": 133,
       "symbol": "MAHostEnvironmentInfo.init(platformVersion:hostVersion:sdkVersion:hostLocale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 118,
+      "line": 144,
       "symbol": "MAHostEnvironmentInfo.init(hostLocale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 118,
+      "line": 144,
       "symbol": "MAHostEnvironmentInfo.init(hostLocale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 118,
+      "line": 144,
       "symbol": "MAHostEnvironmentInfo.init(hostLocale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 118,
+      "line": 144,
       "symbol": "MAHostEnvironmentInfo.init(hostLocale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 118,
+      "line": 144,
       "symbol": "MAHostEnvironmentInfo.init(hostLocale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 130,
+      "line": 156,
       "symbol": "DownloadHeaders",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 130,
+      "line": 156,
       "symbol": "DownloadHeaders",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 130,
+      "line": 156,
       "symbol": "DownloadHeaders",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 130,
+      "line": 156,
       "symbol": "DownloadHeaders",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
-      "line": 130,
+      "line": 156,
       "symbol": "DownloadHeaders",
       "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 159,
+      "symbol": "HostAppThemeColors",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 159,
+      "symbol": "HostAppThemeColors",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 159,
+      "symbol": "HostAppThemeColors",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 159,
+      "symbol": "HostAppThemeColors",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 159,
+      "symbol": "HostAppThemeColors",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 160,
+      "symbol": "HostAppThemeColors.primaryColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 160,
+      "symbol": "HostAppThemeColors.primaryColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 160,
+      "symbol": "HostAppThemeColors.primaryColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 160,
+      "symbol": "HostAppThemeColors.primaryColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 160,
+      "symbol": "HostAppThemeColors.primaryColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 161,
+      "symbol": "HostAppThemeColors.secondaryColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 161,
+      "symbol": "HostAppThemeColors.secondaryColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 161,
+      "symbol": "HostAppThemeColors.secondaryColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 161,
+      "symbol": "HostAppThemeColors.secondaryColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 161,
+      "symbol": "HostAppThemeColors.secondaryColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 163,
+      "symbol": "HostAppThemeColors.init(primaryColor:secondaryColor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 163,
+      "symbol": "HostAppThemeColors.init(primaryColor:secondaryColor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 163,
+      "symbol": "HostAppThemeColors.init(primaryColor:secondaryColor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 163,
+      "symbol": "HostAppThemeColors.init(primaryColor:secondaryColor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/Protocols/MiniAppMessageDelegate.swift",
+      "line": 163,
+      "symbol": "HostAppThemeColors.init(primaryColor:secondaryColor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -3957,35 +4797,35 @@
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 34,
+      "line": 38,
       "symbol": "MiniAppView.init(params:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 34,
+      "line": 38,
       "symbol": "MiniAppView.init(params:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 34,
+      "line": 38,
       "symbol": "MiniAppView.init(params:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 34,
+      "line": 38,
       "symbol": "MiniAppView.init(params:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 34,
+      "line": 38,
       "symbol": "MiniAppView.init(params:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -3993,307 +4833,342 @@
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
       "line": 166,
-      "symbol": "MiniAppView.miniAppTitle",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "MiniAppView.loadFromBundle(completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
       "line": 166,
-      "symbol": "MiniAppView.miniAppTitle",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "MiniAppView.loadFromBundle(completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
       "line": 166,
-      "symbol": "MiniAppView.miniAppTitle",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "MiniAppView.loadFromBundle(completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
       "line": 166,
-      "symbol": "MiniAppView.miniAppTitle",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "MiniAppView.loadFromBundle(completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
       "line": 166,
+      "symbol": "MiniAppView.loadFromBundle(completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
+      "line": 189,
       "symbol": "MiniAppView.miniAppTitle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 170,
+      "line": 189,
+      "symbol": "MiniAppView.miniAppTitle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
+      "line": 189,
+      "symbol": "MiniAppView.miniAppTitle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
+      "line": 189,
+      "symbol": "MiniAppView.miniAppTitle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
+      "line": 189,
+      "symbol": "MiniAppView.miniAppTitle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
+      "line": 193,
       "symbol": "MiniAppView.MiniAppLoadStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 170,
+      "line": 193,
       "symbol": "MiniAppView.MiniAppLoadStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 170,
+      "line": 193,
       "symbol": "MiniAppView.MiniAppLoadStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 170,
+      "line": 193,
       "symbol": "MiniAppView.MiniAppLoadStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 170,
+      "line": 193,
       "symbol": "MiniAppView.MiniAppLoadStatus",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 171,
+      "line": 194,
       "symbol": "MiniAppView.MiniAppLoadStatus.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 171,
+      "line": 194,
       "symbol": "MiniAppView.MiniAppLoadStatus.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 171,
+      "line": 194,
       "symbol": "MiniAppView.MiniAppLoadStatus.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 171,
+      "line": 194,
       "symbol": "MiniAppView.MiniAppLoadStatus.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 171,
+      "line": 194,
       "symbol": "MiniAppView.MiniAppLoadStatus.success",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 175,
+      "line": 198,
       "symbol": "MiniAppView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 175,
+      "line": 198,
       "symbol": "MiniAppView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 175,
+      "line": 198,
       "symbol": "MiniAppView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 175,
+      "line": 198,
       "symbol": "MiniAppView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 175,
+      "line": 198,
       "symbol": "MiniAppView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 186,
+      "line": 209,
       "symbol": "MiniAppView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 186,
+      "line": 209,
       "symbol": "MiniAppView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 186,
+      "line": 209,
       "symbol": "MiniAppView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 186,
+      "line": 209,
       "symbol": "MiniAppView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 186,
+      "line": 209,
       "symbol": "MiniAppView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 187,
+      "line": 210,
       "symbol": "MiniAppView.sendJsonToMiniApp(string:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 187,
+      "line": 210,
       "symbol": "MiniAppView.sendJsonToMiniApp(string:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 187,
+      "line": 210,
       "symbol": "MiniAppView.sendJsonToMiniApp(string:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 187,
+      "line": 210,
       "symbol": "MiniAppView.sendJsonToMiniApp(string:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/core/View/MiniAppView.swift",
-      "line": 187,
+      "line": 210,
       "symbol": "MiniAppView.sendJsonToMiniApp(string:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 13,
-      "symbol": "MiniAppSUIView.init(params:fromCache:handler:)",
+      "line": 14,
+      "symbol": "MiniAppSUIView.init(params:fromCache:handler:fromBundle:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 19,
+      "line": 21,
       "symbol": "MiniAppSUIView.init(urlParams:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 24,
+      "line": 26,
       "symbol": "MiniAppSUIView.init(infoParams:fromCache:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 97,
+      "line": 105,
       "symbol": "MiniAppSUIViewHandler",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 99,
+      "line": 107,
       "symbol": "MiniAppSUIViewHandler.action",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 101,
+      "line": 109,
       "symbol": "MiniAppSUIViewHandler.isActive",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 103,
+      "line": 111,
       "symbol": "MiniAppSUIViewHandler.closeAlertInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 104,
+      "line": 112,
       "symbol": "MiniAppSUIViewHandler.miniAppTitle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 105,
+      "line": 113,
       "symbol": "MiniAppSUIViewHandler.miniAppIdentifier",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 106,
+      "line": 114,
       "symbol": "MiniAppSUIViewHandler.sendJsonToMiniApp",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 108,
+      "line": 116,
       "symbol": "MiniAppSUIViewHandler.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 112,
+      "line": 120,
       "symbol": "MiniAppSUIViewAction",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 113,
+      "line": 121,
       "symbol": "MiniAppSUIViewAction.goBack",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/distiller/project/Sources/Classes/ui/MiniAppSUIView.swift",
-      "line": 114,
+      "line": 122,
       "symbol": "MiniAppSUIViewAction.goForward",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"

@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          MiniApp 5.2.0 Docs
+          MiniApp 5.3.0-alpha Docs
         </a>
-         (72% documented)
+         (69% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -66,6 +66,12 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/AdMobDisplayer.html">AdMobDisplayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/HostAppThemeColors.html">HostAppThemeColors</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/MAAnalyticsInfo.html">MAAnalyticsInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/MAHostEnvironmentInfo.html">MAHostEnvironmentInfo</a>
@@ -135,6 +141,15 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MAAnalyticsActionType.html">MAAnalyticsActionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MAAnalyticsError.html">MAAnalyticsError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/MAAnalyticsEventType.html">MAAnalyticsEventType</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/MASDKAccessTokenError.html">MASDKAccessTokenError</a>
               </li>
@@ -239,6 +254,9 @@
                 <a class="nav-group-task-link" href="../Protocols/ChatMessageBridgeDelegate.html">ChatMessageBridgeDelegate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/MAAnalyticsDelegate.html">MAAnalyticsDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/MiniAppAdDisplayDelegate.html">MiniAppAdDisplayDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -334,6 +352,9 @@
                 <a class="nav-group-task-link" href="../Structs/PreviewMiniAppInfo.html">PreviewMiniAppInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UniversalBridgeInfoParameters.html">UniversalBridgeInfoParameters</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/Version.html">Version</a>
               </li>
             </ul>
@@ -362,7 +383,7 @@
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ChatMessageBridgeDelegate.html">ChatMessageBridgeDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/MiniAppShareContentDelegate.html">MiniAppShareContentDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/UniversalBridgeDelegate.html">UniversalBridgeDelegate</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MiniAppMessageDelegate</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ChatMessageBridgeDelegate.html">ChatMessageBridgeDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/MAAnalyticsDelegate.html">MAAnalyticsDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/MiniAppShareContentDelegate.html">MiniAppShareContentDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/MiniAppUserInfoDelegate.html">MiniAppUserInfoDelegate</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/UniversalBridgeDelegate.html">UniversalBridgeDelegate</a></span></code></pre>
 
                 </div>
               </div>
@@ -403,7 +424,8 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getUniqueId</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">?,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, renamed: "getMessagingUniqueId(completionHandler:﹚")</span>
+<span class="kd">func</span> <span class="nf">getUniqueId</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">?,</span> <span class="kt"><a href="../Enums/MASDKError.html">MASDKError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -655,6 +677,74 @@ SDK will open its default UI for prompting Custom Permissions request if this pr
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7MiniApp0aB15MessageDelegateP07getHostB11ThemeColors17completionHandleryys6ResultOyAA0fbgH0CSgAA0aB15JavaScriptErrorOGc_tF"></a>
+                    <a name="//apple_ref/swift/Method/getHostAppThemeColors(completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB15MessageDelegateP07getHostB11ThemeColors17completionHandleryys6ResultOyAA0fbgH0CSgAA0aB15JavaScriptErrorOGc_tF">getHostAppThemeColors(completionHandler:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Interface to get the host app theme colors</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getHostAppThemeColors</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/HostAppThemeColors.html">HostAppThemeColors</a></span><span class="p">?,</span> <span class="kt"><a href="../Enums/MiniAppJavaScriptError.html">MiniAppJavaScriptError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp0aB15MessageDelegateP10isDarkMode17completionHandleryys6ResultOySbAA0aB15JavaScriptErrorOGc_tF"></a>
+                    <a name="//apple_ref/swift/Method/isDarkMode(completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp0aB15MessageDelegateP10isDarkMode17completionHandleryys6ResultOySbAA0aB15JavaScriptErrorOGc_tF">isDarkMode(completionHandler:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Interface to get if the Device is in Dark mode</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">isDarkMode</span><span class="p">(</span><span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="p">,</span> <span class="kt"><a href="../Enums/MiniAppJavaScriptError.html">MiniAppJavaScriptError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7MiniApp23UniversalBridgeDelegateP014sendJsonToHostB04info17completionHandlerySS_ys6ResultOyAA21MASDKProtocolResponseOAA0cD5ErrorOGctF"></a>
                     <a name="//apple_ref/swift/Method/sendJsonToHostApp(info:completionHandler:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7MiniApp23UniversalBridgeDelegateP014sendJsonToHostB04info17completionHandlerySS_ys6ResultOyAA21MASDKProtocolResponseOAA0cD5ErrorOGctF">sendJsonToHostApp(info:<wbr>completionHandler:<wbr>)</a>
@@ -681,6 +771,65 @@ SDK will open its default UI for prompting Custom Permissions request if this pr
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp23UniversalBridgeDelegateP014sendInfoToHostB04info17completionHandleryAA0cdG10ParametersV_ys6ResultOyAA21MASDKProtocolResponseOAA0cD5ErrorOGctF"></a>
+                    <a name="//apple_ref/swift/Method/sendInfoToHostApp(info:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp23UniversalBridgeDelegateP014sendInfoToHostB04info17completionHandleryAA0cdG10ParametersV_ys6ResultOyAA21MASDKProtocolResponseOAA0cD5ErrorOGctF">sendInfoToHostApp(info:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sendInfoToHostApp</span><span class="p">(</span><span class="nv">info</span><span class="p">:</span> <span class="kt"><a href="../Structs/UniversalBridgeInfoParameters.html">UniversalBridgeInfoParameters</a></span><span class="p">,</span>
+                       <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/UniversalBridgeError.html">UniversalBridgeError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7MiniApp19MAAnalyticsDelegateP010didReceiveC013analyticsInfo17completionHandleryAA0cH0C_ys6ResultOyAA21MASDKProtocolResponseOAA0C5ErrorOGctF"></a>
+                    <a name="//apple_ref/swift/Method/didReceiveMAAnalytics(analyticsInfo:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7MiniApp19MAAnalyticsDelegateP010didReceiveC013analyticsInfo17completionHandleryAA0cH0C_ys6ResultOyAA21MASDKProtocolResponseOAA0C5ErrorOGctF">didReceiveMAAnalytics(analyticsInfo:<wbr>completionHandler:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">didReceiveMAAnalytics</span><span class="p">(</span><span class="nv">analyticsInfo</span><span class="p">:</span> <span class="kt"><a href="../Classes/MAAnalyticsInfo.html">MAAnalyticsInfo</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt"><a href="../Enums/MASDKProtocolResponse.html">MASDKProtocolResponse</a></span><span class="p">,</span> <span class="kt"><a href="../Enums/MAAnalyticsError.html">MAAnalyticsError</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -689,7 +838,7 @@ SDK will open its default UI for prompting Custom Permissions request if this pr
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2023 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2023-03-30)</p>
+      <p>&copy; 2023 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2023-07-12)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
