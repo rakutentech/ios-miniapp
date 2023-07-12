@@ -51,13 +51,15 @@ struct MiniAppWithTermsView: View {
                 default:
                     print("No Handler to passs")
                 }
-            }.alert(Text(viewModel.showJsonString != nil ? "Universal Bridge" : "Info"), isPresented: $showMessageAlert) {
+            }.alert(Text((viewModel.showJsonString != nil || viewModel.showInfoValue != nil) ? "Universal Bridge" : "Info"), isPresented: $showMessageAlert) {
                 Button("OK") {
                     viewModel.showMessageAlert.send(false)
                 }
             } message: {
                 if let message = viewModel.showJsonString {
                     Text(message)
+                } else if let message = viewModel.showInfoValue {
+                    Text("Key: \(message.key ?? "")\nValue: \(message.value ?? "")\nDescription: \(message.description ?? "")")
                 } else {
                     Text("Message sent!")
                 }

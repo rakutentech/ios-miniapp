@@ -58,13 +58,16 @@ class MiniAppWithTermsViewModel: ObservableObject {
             delegator.onSendMessage = {
                 self.showMessageAlert.send(true)
                 self.showJsonString = nil
+                self.showInfoValue = nil
             }
             delegator.onSendJsonToHostApp = { string in
                 self.showMessageAlert.send(true)
                 self.showJsonString = string
+                self.showInfoValue = nil
             }
             delegator.onSendInfoToHostApp = { info in
                 self.showMessageAlert.send(true)
+                self.showJsonString = nil
                 self.showInfoValue = info
             }
             delegator.onShoudCloseMiniApp = { confirmation in
