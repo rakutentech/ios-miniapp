@@ -60,8 +60,7 @@ struct MiniAppWithTermsView: View {
                     Text(message)
                 } else if let message = viewModel.showInfoValue {
                     Text("Key: \(message.key ?? "")\nValue: \(message.value ?? "")\nDescription: \(message.description ?? "")")
-                }
-                else {
+                } else {
                     Text("Message sent!")
                 }
                 }
