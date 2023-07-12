@@ -1,19 +1,8 @@
 ## CHANGELOG
 
-### 5.3.0 (XXXX-XX-XX)
-**SDK**
-- **Deprecated:** `create(appInfo: ,queryParams: ,completionHandler: ,messageInterface: ,adsDisplayer: ,fromCache: ) in `MiniApp` class.
-- **Deprecated:** `getUniqueId(completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `getMessagingUniqueId(completionHandler:)` instead.
-- **Feature:** Added new `HostAppThemeColors` model class to hold the primary and secondary color strings in Hex format.
-- **Feature:** Added a new optional interface `getHostAppThemeColors(completionHandler:)` in `MiniAppMessageDelegate` protocol, to fetch the host app theme colors.
-- **Feature:** Added new `isDarkMode` interface to get the mode set in Host app / Device.
-- **Feature:** Added new public interface `didReceiveMAAnalytics(analyticsInfo:  MAAnalyticsInfo, completionHandler: @escaping (Result<MASDKProtocolResponse, MAAnalyticsError>) -> Void)` for host app to receive the `MAAnalyticsInfo` info for the events from MiniApps.
-- **Feature:** Added a new public interface in `MiniappView` class. `loadFromBundle(completionHandler:)`. Now Native/Host apps can load a Miniapp from bundle. 
-
-**Sample App**
-- **Feature:** Implemented method `getHostAppThemeColors(completionHandler:)` in the sample app to fetch the host app theme colors and pass it to MiniApps.
-- **Feature:** Added qa settings page 'Theme Color' to test sending host app theme primary and secondary colors.
-- **Feature:** Added implementation in Demo app under Features tab to show how a Miniapp can be loaded from Bundle.
+### 5.3.0-alpha (2023-07-12)
+⚠️ This version is an internal release. It is not fully tested and can produce unexpected behaviors. Due to potential changes, the full change log will be provided with the final version. Adding a dependancy to this alpha version is discouraged.
+    This version improves MiniApp loading from cache and brings several UI improvements features and deprecation.
 
 ### 5.2.0 (2023-03-30)
 **SDK**
