@@ -42,9 +42,9 @@ struct JsonStringInfoParameters: Codable {
 }
 
 public struct UniversalBridgeInfoParameters: Codable {
-    var key: String?
-    var value: String?
-    var description: String?
+    public var key: String?
+    public var value: String?
+    public var description: String?
 }
 
 struct MiniAppCustomPermissionsRequest: Decodable {
