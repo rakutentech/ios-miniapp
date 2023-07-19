@@ -113,6 +113,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 
 * [Configure MiniApp](#configure-mini-app)
 * [Create a MiniApp](#create-mini-app)
+* [Loading a Miniapp from Bundle](#load-a-mini-app-from-bundle)
 * [Mini App Features](#mini-app-features)
     * [Retrieving Unique ID](#retrieve-unique-id)
     * [Requesting Location Permissions](#request-location-permission)
@@ -202,6 +203,36 @@ miniAppView.load { success in
   }
 }
 ```
+
+<a id="create-mini-app"></a>
+
+### Load a MiniApp for Bundle
+---
+Miniapps can be loaded from Bundle now,
+
+The following is a simplified example:
+
+1. Provide  the filname of the bundle, followed by MiniApp ID and VersionID
+```swift
+MiniApp.unzipMiniApp(fileName: "js-miniapp-sample", miniAppId: "mini-app-testing-appid", versionId: "mini-app-testing-versionid")
+```
+2. Your Miniapp will be extracted to the default location where all Miniapps are downloaded
+3. Load Miniapp from Bundle
+
+```swift
+
+// notice the new parameter for ads delegation
+let params = MiniAppParameters.default(
+    config: MiniAppConfig(config: Config.current(), adsDisplayer: self, messageInterface: self),
+    appId: "mini-app-testing-appid",
+    version: "mini-app-testing-versionid"
+)
+let miniAppView = MiniAppView(params: params)
+view.loadFromBundle {
+    // Returns a MiniAppWebView to load
+}
+```
+
 
 <a id="mini-app-features"></a>
 
