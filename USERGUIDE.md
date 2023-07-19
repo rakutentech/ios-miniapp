@@ -204,7 +204,7 @@ miniAppView.load { success in
 }
 ```
 
-<a id="create-mini-app"></a>
+<a id="load-a-mini-app-from-bundle"></a>
 
 ### Load a MiniApp for Bundle
 ---
