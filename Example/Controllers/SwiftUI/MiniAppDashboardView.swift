@@ -9,6 +9,7 @@ class MiniAppDashboardViewModel: ObservableObject {
 struct MiniAppDashboardView: View {
 
     @StateObject var viewModel = MiniAppDashboardViewModel()
+    @StateObject var sharedSettingsVM: MiniAppSettingsViewModel
 
     @State var sampleMiniAppId: String = ""
     @State var sampleMiniAppVersion: String = ""
@@ -51,7 +52,7 @@ struct MiniAppDashboardView: View {
                 .tag(2)
 
                 NavigationView {
-                    MiniAppSettingsView(showFullProgress: $isPresentingFullProgress)
+                    MiniAppSettingsView(viewModel:sharedSettingsVM, showFullProgress: $isPresentingFullProgress)
                 }
                 .navigationViewStyle(.stack)
                 .tabItem {
@@ -95,6 +96,6 @@ struct MiniAppDashboardView: View {
 
 struct MiniAppDashboardView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppDashboardView()
+        MiniAppDashboardView(sharedSettingsVM: MiniAppSettingsViewModel())
     }
 }

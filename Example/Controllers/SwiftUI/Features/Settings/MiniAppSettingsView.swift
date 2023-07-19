@@ -5,8 +5,9 @@ import MiniApp
 // swiftlint:disable line_length
 
 struct MiniAppSettingsView: View {
+    @Environment(\.presentationMode) var presentationMode
 
-    @StateObject var viewModel = MiniAppSettingsViewModel()
+    @StateObject var viewModel: MiniAppSettingsViewModel
 
     @Binding var showFullProgress: Bool
 
@@ -194,19 +195,31 @@ struct MiniAppSettingsView: View {
                     trackButtonTap(pageName: pageName, buttonTitle: "Save")
                     dismissKeyboard()
                     viewModel.save()
+                    viewModel.listConfig.persist()
+                    viewModel.listConfigI.persist()
+                    viewModel.listConfigII.persist()
+                    if presentationMode.wrappedValue.isPresented {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
                 .disabled((viewModel.listConfig.wrappedProjectId.isEmpty || viewModel.listConfig.wrappedSubscriptionKey.isEmpty))
             }
+        }
+        .onAppear {
+            UITextField.appearance().clearButtonMode = .whileEditing
+            self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
+            self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
         }
         .alert(item: $alertMessage) { errorMessage in
             Alert(
                 title: Text(errorMessage.title),
                 message: Text(errorMessage.message),
-                dismissButton: .default(Text("Ok"))
+                dismissButton: .default(Text("Ok"), action: {
+                    self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
+                    self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
+                    
+                })
             )
-        }
-        .onAppear {
-            UITextField.appearance().clearButtonMode = .whileEditing
         }
         .onReceive(viewModel.$state) { state in
             switch state {
@@ -246,11 +259,9 @@ struct MiniAppSettingsView: View {
             case .production:
                 viewModel.listConfig.projectId = viewModel.listConfig.projectIdProd
                 viewModel.listConfig.subscriptionKey = viewModel.listConfig.subscriptionKeyProd
-
             case .staging:
                 viewModel.listConfig.projectId = viewModel.listConfig.projectIdStaging
                 viewModel.listConfig.subscriptionKey = viewModel.listConfig.subscriptionKeyStaging
-
             }
             self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
             self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
@@ -300,7 +311,7 @@ extension MiniAppSettingsView: ViewTrackable {
 
 struct MiniAppFeatureConfigView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAppSettingsView(showFullProgress: .constant(false))
+        MiniAppSettingsView(viewModel: MiniAppSettingsViewModel(), showFullProgress: .constant(false))
     }
 }
 // swiftlint:enable line_length

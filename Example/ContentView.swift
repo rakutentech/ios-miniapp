@@ -1,13 +1,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var sharedSettingsVM: MiniAppSettingsViewModel
+    
     var body: some View {
-        MiniAppDashboardView()
+        MiniAppDashboardView(sharedSettingsVM: sharedSettingsVM)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(sharedSettingsVM: MiniAppSettingsViewModel())
     }
 }
