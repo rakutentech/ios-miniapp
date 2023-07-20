@@ -5,30 +5,57 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-# MiniApp
+# iOS Mini App SDK
+​
+The iOS Mini App SDK is a software development kit that allows you to integrate Mini Apps into your Native iOS applications.
+​
+## Table of Contents
 
-This open-source library allows you to integrate Mini App ecosystem into your iOS applications. 
-Mini App SDK also facilitates communication between a mini app and the host app via a message bridge.
+- [What is a MiniApp?](#what-is-a-miniapp)
+- [How can we develop a MiniApp?](#how-can-we-develop-a-miniapp)
+- [How can we use this iOS SDK?](#how-does-the-ios-mini-app-sdk-support-loading-miniapps-in-native-host-applications)
+- [What this repository offers?](#what-this-repository-offers)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Changelog](#changelog)
+​
+## What is a MiniApp?
+​
+Mini apps leverage web technologies such as HTML, CSS, and JavaScript to create user interfaces and interact with platform-specific APIs. They can provide functionalities such as content display, data input, social sharing, payment processing, and more. Mini apps are typically developed using platform-specific frameworks or development kits provided by the platform or ecosystem they are built for.
+​
+The key advantages of mini apps include their lightweight nature, ease of use, and seamless integration with the hosting platform. 
 
-For instructions on implementing in an iOS application, see the [User Guide](https://rakutentech.github.io/ios-miniapp/).
+## How can we develop a MiniApp?
+​
+To develop a MiniApp, you can follow specific guidelines and best practices. There are several technologies that can be used to develop a mini app. For eg., React, Flutter, Vue.js, etc.,
+​
 
-## Features
+## What this repository offers?
+This repository offers following things,
 
-- Load MiniApp list
-- Load MiniApp metadata
-- Create a MiniApp view
-- Facilitate communication between host app and mini app
+* iOS Miniapp SDK that can be integrated into any Native iOS Applications. Check **[Installation](https://rakutentech.github.io/ios-miniapp#installation)** 
+* Sample iOS native application to demonstrate the features of iOS Miniapp SDK
+* Documentation
 
-All the MiniApp files downloaded by the MiniApp iOS library are cached locally.
+## How does the iOS Mini App SDK support loading MiniApps in Native Host applications?
+​
+The iOS Mini App SDK provides the necessary APIs and components to facilitate the seamless integration of MiniApps into native iOS applications. It offers functionalities such as MiniApp loading, navigation, data sharing, and permissions management, allowing developers to easily incorporate MiniApps into their iOS projects.
 
-## Getting started
+* Loading Miniapps from **[Rakuten Miniapp platform](https://developers.rakuten.com/miniapp/)** - Miniapps can be loaded using our **[Rakuten Miniapp platform](https://developers.rakuten.com/miniapp/)** which offers wide range of options to upload, manage a miniapp and also many other exciting features
+* Loading Miniapps from Bundle - Our SDK also supports loading a miniapp from Local as well(bundle)
+​
+​
+## Installation
+​
+To install and set up the iOS Mini App SDK, 
+check this **[Installation](https://rakutentech.github.io/ios-miniapp#installation)** file for more info.
+​
+## Usage
 
-* [Requirements](https://rakutentech.github.io/ios-miniapp#requirements)
-* [Documentation & User Guide](https://rakutentech.github.io/ios-miniapp/)
-* [Installation](https://rakutentech.github.io/ios-miniapp#installation)
-* [Configuration](https://rakutentech.github.io/ios-miniapp#configuration)
-* [Usage](https://rakutentech.github.io/ios-miniapp#usage)
-
+See the **[USAGE](https://rakutentech.github.io/ios-miniapp#usage)** file for more info.
+​
 ## Contributing
 
 See the [SDK Developer Guide](https://github.com/rakutentech/ios-miniapp/blob/master/DEV.md) and the [Contribution guide](https://github.com/rakutentech/ios-miniapp/blob/master/.github/CONTRIBUTING.md).
