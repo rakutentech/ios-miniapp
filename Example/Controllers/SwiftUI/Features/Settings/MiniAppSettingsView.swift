@@ -253,24 +253,32 @@ struct MiniAppSettingsView: View {
                 ()
             }
         }
+        .onChange(of: viewModel.listConfig.listType, perform: { _ in
+            self.dismissKeyboard()
+            self.updateKeys()
+        })
         .onChange(of: viewModel.listConfig.environmentMode, perform: { _ in
             self.dismissKeyboard()
-            switch viewModel.listConfig.environmentMode {
-            case .production:
-                viewModel.listConfig.projectId = viewModel.listConfig.projectIdProd
-                viewModel.listConfig.subscriptionKey = viewModel.listConfig.subscriptionKeyProd
-            case .staging:
-                viewModel.listConfig.projectId = viewModel.listConfig.projectIdStaging
-                viewModel.listConfig.subscriptionKey = viewModel.listConfig.subscriptionKeyStaging
-            }
-            self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
-            self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
+            self.updateKeys()
         })
         .trackPage(pageName: pageName)
     }
 
     func dismissKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+
+    func updateKeys() {
+        switch viewModel.listConfig.environmentMode {
+        case .production:
+            viewModel.listConfig.projectId = viewModel.listConfig.projectIdProd
+            viewModel.listConfig.subscriptionKey = viewModel.listConfig.subscriptionKeyProd
+        case .staging:
+            viewModel.listConfig.projectId = viewModel.listConfig.projectIdStaging
+            viewModel.listConfig.subscriptionKey = viewModel.listConfig.subscriptionKeyStaging
+        }
+        self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
+        self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
     }
 
     var hasListIErrors: Bool {
