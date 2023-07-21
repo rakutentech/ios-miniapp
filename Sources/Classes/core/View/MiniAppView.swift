@@ -98,6 +98,12 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     internal func setupWebView(webView: MiniAppWebView) {
         self.webView = webView
+#if DEBUG
+        if #available(iOS 16.4, *) {
+            self.webView?.isInspectable = true
+        }
+#endif
+        
         webView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(webView)
         NSLayoutConstraint.activate([
