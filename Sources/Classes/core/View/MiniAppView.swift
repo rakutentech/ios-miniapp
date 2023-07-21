@@ -103,7 +103,6 @@ public class MiniAppView: UIView, MiniAppViewable {
             self.webView?.isInspectable = true
         }
 #endif
-        
         webView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(webView)
         NSLayoutConstraint.activate([
