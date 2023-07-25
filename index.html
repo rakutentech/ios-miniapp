@@ -20,7 +20,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 5.3.0-alpha Docs
+          MiniApp 5.3.0 Docs
         </a>
          (69% documented)
       </p>
@@ -451,7 +451,7 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
 
 <p>To integrate MiniApp SDK into your Xcode project using Swift Package Manager, add it to the dependencies value of your <code>Package.swift</code>:</p>
 <pre class="highlight ruby"><code><span class="ss">dependencies: </span><span class="p">[</span>
-    <span class="p">.</span><span class="nf">package</span><span class="p">(</span><span class="ss">url: </span><span class="s2">"https://github.com/rakutentech/ios-miniapp.git"</span><span class="p">,</span> <span class="p">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="ss">from: </span><span class="s2">"5.3.0-alpha"</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">package</span><span class="p">(</span><span class="ss">url: </span><span class="s2">"https://github.com/rakutentech/ios-miniapp.git"</span><span class="p">,</span> <span class="p">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="ss">from: </span><span class="s2">"5.3.0"</span><span class="p">))</span>
 <span class="p">]</span>
 </code></pre>
 <h3 id='configuration' class='heading'>Configuration</h3>
@@ -523,6 +523,7 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
 <ul>
 <li><a href="#configure-mini-app">Configure MiniApp</a></li>
 <li><a href="#create-mini-app">Create a MiniApp</a></li>
+<li><a href="#load-a-mini-app-from-bundle">Loading a Miniapp from Bundle</a></li>
 <li><a href="#mini-app-features">Mini App Features</a>
 
 <ul>
@@ -624,6 +625,36 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="nf">print</span><span class="p">(</span><span class="s">"error: miniapp failed to load"</span><span class="p">)</span>
   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><a id="load-a-mini-app-from-bundle"></a></p>
+<h3 id='load-a-miniapp-for-bundle' class='heading'>Load a MiniApp for Bundle</h3>
+
+<hr>
+
+<p>Miniapps can be loaded from Bundle now,</p>
+
+<p>The following is a simplified example:</p>
+
+<ol>
+<li>Provide  the filname of the bundle, followed by MiniApp ID and VersionID
+<code>swift
+MiniApp.unzipMiniApp(fileName: &quot;js-miniapp-sample&quot;, miniAppId: &quot;mini-app-testing-appid&quot;, versionId: &quot;mini-app-testing-versionid&quot;)
+</code></li>
+<li>Your Miniapp will be extracted to the default location where all Miniapps are downloaded</li>
+<li>Load Miniapp from Bundle</li>
+</ol>
+<pre class="highlight swift"><code>
+<span class="c1">// notice the new parameter for ads delegation</span>
+<span class="k">let</span> <span class="nv">params</span> <span class="o">=</span> <span class="kt">MiniAppParameters</span><span class="o">.</span><span class="nf">default</span><span class="p">(</span>
+    <span class="nv">config</span><span class="p">:</span> <span class="kt">MiniAppConfig</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">current</span><span class="p">(),</span> <span class="nv">adsDisplayer</span><span class="p">:</span> <span class="k">self</span><span class="p">,</span> <span class="nv">messageInterface</span><span class="p">:</span> <span class="k">self</span><span class="p">),</span>
+    <span class="nv">appId</span><span class="p">:</span> <span class="s">"mini-app-testing-appid"</span><span class="p">,</span>
+    <span class="nv">version</span><span class="p">:</span> <span class="s">"mini-app-testing-versionid"</span>
+<span class="p">)</span>
+<span class="k">let</span> <span class="nv">miniAppView</span> <span class="o">=</span> <span class="kt">MiniAppView</span><span class="p">(</span><span class="nv">params</span><span class="p">:</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">view</span><span class="o">.</span><span class="n">loadFromBundle</span> <span class="p">{</span>
+    <span class="c1">// Returns a MiniAppWebView to load</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -1817,7 +1848,7 @@ iOS Hostapp can extend this optional <code>MAAnalayticsDelegate</code> interface
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2023 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2023-07-12)</p>
+      <p>&copy; 2023 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2023-07-25)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
