@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 5.3.0 (2023-07-24)
+### 5.3.0 (2023-07-25)
 **SDK**
 - **Deprecated:** `create(appInfo: ,queryParams: ,completionHandler: ,messageInterface: ,adsDisplayer: ,fromCache: ) in `MiniApp` class.
 - **Deprecated:** `getUniqueId(completionHandler:)` in `MiniAppMessageDelegate` protocol is deprecated. You should use `getMessagingUniqueId(completionHandler:)` instead.
