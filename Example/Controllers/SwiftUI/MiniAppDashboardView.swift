@@ -52,7 +52,7 @@ struct MiniAppDashboardView: View {
                 .tag(2)
 
                 NavigationView {
-                    MiniAppSettingsView(viewModel:sharedSettingsVM, showFullProgress: $isPresentingFullProgress)
+                    MiniAppSettingsView(viewModel: sharedSettingsVM, showFullProgress: $isPresentingFullProgress)
                 }
                 .navigationViewStyle(.stack)
                 .tabItem {

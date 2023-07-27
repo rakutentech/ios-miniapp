@@ -8,10 +8,9 @@ struct SampleApp: App {
 
     let store = MiniAppStore.shared
     let deepLinkManager = DeeplinkManager()
-    
+
     @StateObject var sharedSettingsViewModel = MiniAppSettingsViewModel()
     @State var deepLink: SampleAppDeeplink?
-    
 
     var body: some Scene {
         WindowGroup {
@@ -70,7 +69,7 @@ struct SampleApp: App {
                 }
         }
     }
-    
+
     func prepareSettingsViewModel(with params: SettingsParams) {
         if params.tab == 1 {
             let list1 = self.setConfigValues(with: params, for: ListConfiguration(listType: .listI))
@@ -86,8 +85,8 @@ struct SampleApp: App {
         sharedSettingsViewModel.listConfig.persist()
         sharedSettingsViewModel.selectedListConfig = params.tab == 1 ? .listI : .listII
     }
-    
-    func setConfigValues(with params: SettingsParams, for listConfig:ListConfiguration) -> ListConfiguration {
+
+    func setConfigValues(with params: SettingsParams, for listConfig: ListConfiguration) -> ListConfiguration {
         var listConfig = listConfig
         if params.isProduction {
             listConfig.environmentMode = .production

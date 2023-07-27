@@ -87,9 +87,9 @@ class DeeplinkManager {
             return .settings(settingsParams: settingsParams)
         }
     }
-    
+
     func getQueryItems(_ urlString: String) -> SettingsParams {
-        var queryItems: [String : String] = [:]
+        var queryItems: [String: String] = [:]
         let components: NSURLComponents? = getURLComonents(urlString)
         for item in components?.queryItems ?? [] {
             queryItems[item.name] = item.value?.removingPercentEncoding
@@ -102,9 +102,9 @@ class DeeplinkManager {
         settingsParams.isPreviewMode = Bool(queryItems["isPreviewMode"] ?? "") ?? false
         return settingsParams
     }
-    
+
     func getURLComonents(_ urlString: String?) -> NSURLComponents? {
-        var components: NSURLComponents? = nil
+        var components: NSURLComponents?
         let linkUrl = URL(string: urlString?.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
         if let linkUrl = linkUrl {
             components = NSURLComponents(url: linkUrl, resolvingAgainstBaseURL: true)

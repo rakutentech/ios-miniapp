@@ -217,7 +217,6 @@ struct MiniAppSettingsView: View {
                 dismissButton: .default(Text("Ok"), action: {
                     self.tmpProjectKey = maskedString(of: viewModel.listConfig.projectId ?? "")
                     self.tmpSubscriptionKey = maskedString(of: viewModel.listConfig.subscriptionKey ?? "")
-                    
                 })
             )
         }
