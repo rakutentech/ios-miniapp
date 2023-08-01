@@ -174,7 +174,7 @@ public class MiniAppView: UIView, MiniAppViewable {
             }
         }
     }
-    
+
     public func loadFromBundle(miniAppManifest: MiniAppManifest?, completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
         guard webView == nil else {
             completion(.failure(miniAppAlreadyLoadedError))
