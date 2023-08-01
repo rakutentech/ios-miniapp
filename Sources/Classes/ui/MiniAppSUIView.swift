@@ -11,11 +11,15 @@ public struct MiniAppSUIView: UIViewRepresentable {
     var fromCache: Bool = false
     var fromBundle: Bool = false
 
-    public init(params: MiniAppViewParameters.DefaultParams, fromCache: Bool = false, handler: MiniAppSUIViewHandler, fromBundle: Bool = false) {
+    // This parameter will be used for loadFromBundle only
+    var miniAppManifest: MiniAppManifest?
+
+    public init(params: MiniAppViewParameters.DefaultParams, fromCache: Bool = false, handler: MiniAppSUIViewHandler, fromBundle: Bool = false, miniAppManifest: MiniAppManifest? = nil) {
         self.params = .default(params)
         self.fromCache = fromCache
         self.handler = handler
         self.fromBundle = fromBundle
+        self.miniAppManifest = miniAppManifest
     }
 
     public init(urlParams: MiniAppViewParameters.UrlParams) {
@@ -33,7 +37,8 @@ public struct MiniAppSUIView: UIViewRepresentable {
         let view = MiniAppView(params: params)
         view.progressStateView = MiniAppProgressView()
         if fromBundle {
-            view.loadFromBundle {_ in
+            view.enable3DTouch = false
+            view.loadFromBundle(miniAppManifest: miniAppManifest) {_ in
                 self.handler.isActive = true
             }
         } else {
