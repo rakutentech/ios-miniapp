@@ -39,7 +39,7 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     public var enable3DTouch: Bool {
         get {
-            return true
+            return enableLinkPreview
         }
         set {
             enableLinkPreview = newValue
