@@ -35,6 +35,17 @@ public class MiniAppView: UIView, MiniAppViewable {
     }
     var cancellables = Set<AnyCancellable>()
 
+    fileprivate var enableLinkPreview: Bool = true
+
+    public var enable3DTouch: Bool {
+        get {
+            return true
+        }
+        set {
+            enableLinkPreview = newValue
+        }
+    }
+
     public init(params: MiniAppViewParameters) {
         switch params {
         case let .default(params):
@@ -98,6 +109,7 @@ public class MiniAppView: UIView, MiniAppViewable {
 
     internal func setupWebView(webView: MiniAppWebView) {
         self.webView = webView
+        self.webView?.allowsLinkPreview = enableLinkPreview
         webView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(webView)
         NSLayoutConstraint.activate([
@@ -162,14 +174,14 @@ public class MiniAppView: UIView, MiniAppViewable {
             }
         }
     }
-
-    public func loadFromBundle(completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
+    
+    public func loadFromBundle(miniAppManifest: MiniAppManifest?, completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
         guard webView == nil else {
             completion(.failure(miniAppAlreadyLoadedError))
             return
         }
         state.send(.loading)
-        miniAppHandler.loadFromBundle { [weak self] result in
+        miniAppHandler.loadFromBundle(miniAppManifest: miniAppManifest) { [weak self] result in
             switch result {
             case let .success(webView):
                 self?.state.send(.active)

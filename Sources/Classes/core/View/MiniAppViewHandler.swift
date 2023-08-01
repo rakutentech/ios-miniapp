@@ -292,11 +292,12 @@ class MiniAppViewHandler: NSObject {
         }
     }
 
-    func loadFromBundle(completion: @escaping ((Result<MiniAppWebView, MASDKError>) -> Void)) {
+    func loadFromBundle(miniAppManifest: MiniAppManifest? = nil, completion: @escaping ((Result<MiniAppWebView, MASDKError>) -> Void)) {
         guard let versionId = version else {
             completion(.failure(.invalidVersionId))
             return
         }
+        saveManifestInfoForBundle(miniAppManifest: miniAppManifest)
         if isValidMiniAppInfo(versionId: versionId) {
             if isMiniAppAvailable(versionId: versionId) {
                 if miniAppDownloader.isCacheSecure(appId: appId, versionId: versionId) {
@@ -326,6 +327,13 @@ class MiniAppViewHandler: NSObject {
                 completion(.failure(.miniAppNotFound))
             }
         }
+    }
+
+    func saveManifestInfoForBundle(miniAppManifest: MiniAppManifest?) {
+        guard let manifest = miniAppManifest else {
+            return
+        }
+        miniAppManifestStorage.saveManifestInfo(forMiniApp: appId, manifest: manifest)
     }
 
     func loadWebView(
