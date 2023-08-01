@@ -33,7 +33,7 @@ struct MiniAppFromBundle: View {
             queryParams: getQueryParam()
         )
     }
-    
+
     func getMiniAppManifest() -> MiniAppManifest? {
         return MiniAppManifest(requiredPermissions: permissionList(),
                                optionalPermissions: nil,
@@ -52,10 +52,6 @@ struct MiniAppFromBundle: View {
             print("Failed to set up MiniApp permissions")
             return []
         }
-    }
-    
-    func hardCodePermissions() {
-        
     }
 }
 
