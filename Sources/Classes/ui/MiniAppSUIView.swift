@@ -10,9 +10,9 @@ public struct MiniAppSUIView: UIViewRepresentable {
     var params: MiniAppViewParameters
     var fromCache: Bool = false
     var fromBundle: Bool = false
-    
+
     // This parameter will be used for loadFromBundle only
-    var miniAppManifest: MiniAppManifest? = nil
+    var miniAppManifest: MiniAppManifest?
 
     public init(params: MiniAppViewParameters.DefaultParams, fromCache: Bool = false, handler: MiniAppSUIViewHandler, fromBundle: Bool = false, miniAppManifest: MiniAppManifest? = nil) {
         self.params = .default(params)
