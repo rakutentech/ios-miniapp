@@ -17,3 +17,7 @@ enum Constants {
 public typealias MASDKDownloadedListPermissionsPair = [(MiniAppInfo, [MASDKCustomPermissionModel])]
 
 let offlineErrorCodeList: [Int] = [NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut, NSURLErrorDataNotAllowed]
+
+public struct MiniAppSDKConstants {
+    public static let miniAppRootFolderName = "MiniApp"
+}

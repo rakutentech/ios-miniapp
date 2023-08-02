@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         MiniApp.configure()
-        MiniApp.unzipMiniApp(fileName: "js-miniapp-sample", miniAppId: "mini-app-testing-appid", versionId: "mini-app-testing-versionid")
+        MiniApp.unzipMiniApp(fileName: "js-miniapp-sample", miniAppId: Global.DemoApp.bundleMiniAppId, versionId: Global.DemoApp.bundleMiniAppVersionId)
         AppCenter.start(withAppSecret: Bundle.main.value(for: "AppCenterSecret"), services: [Crashes.self])
 
         GADMobileAds.sharedInstance().start(completionHandler: nil)

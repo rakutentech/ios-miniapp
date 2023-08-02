@@ -7,7 +7,6 @@ orbs:
   gh: circleci/github-cli@1.0.4
   macos: circleci/macos@2
   ruby: circleci/ruby@1.2.0
-  codecov: codecov/codecov@3.1.1
   app-center: rakutentech/app-center@0.1.3
 
 container_medium: &container_medium
@@ -37,8 +36,6 @@ jobs:
       - run:
           name: Execute Tests
           command: fastlane ci
-      - store_artifacts:
-          path: ./artifacts/unit-tests
       - persist_to_workspace:
           root: .
           paths:
@@ -47,12 +44,6 @@ jobs:
           root: ../
           paths:
             - MiniApp-Secrets.xcconfig
-      - codecov/upload:
-          file: "artifacts/unit-tests/report.junit"
-      - codecov/upload:
-          file: "artifacts/unit-tests/report.html"
-      - codecov/upload:
-          file: "artifacts/unit-tests/compile_commands.json"
 
   app-center-publish-sim:
     <<: *container_medium
