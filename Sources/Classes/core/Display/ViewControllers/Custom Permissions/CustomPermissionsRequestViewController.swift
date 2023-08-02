@@ -11,7 +11,7 @@ class CustomPermissionsRequestViewController: UIViewController {
 
     var customPermissionHandlerObj: CustomPermissionsCompletionHandler?
     var permissionsRequestList: [MASDKCustomPermissionModel]?
-    var miniAppTitle: String = "MiniApp"
+    var miniAppTitle: String = MiniAppSDKConstants.miniAppRootFolderName
 
     override func viewDidLoad() {
         super.viewDidLoad()
