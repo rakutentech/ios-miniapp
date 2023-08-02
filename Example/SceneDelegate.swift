@@ -44,12 +44,14 @@ class DeeplinkManager {
     enum Path: String {
         case qrcode = "preview"
         case deeplink = "dl"
+        case settings = "settings"
     }
 
     enum Target: Equatable, Identifiable {
         case unknown
         case qrcode(code: String)
         case deeplink(id: String)
+        case settings(settingsParams: SettingsParams)
 
         var id: String {
             switch self {
@@ -59,6 +61,8 @@ class DeeplinkManager {
                 return code
             case let .deeplink(id):
                 return id
+            case let .settings(settingsParams):
+                return settingsParams.projectId
             }
         }
     }
@@ -77,6 +81,34 @@ class DeeplinkManager {
         case .deeplink:
             guard url.pathComponents.count > 1 else { return .unknown }
             return .deeplink(id: url.pathComponents[2])
+        case .settings:
+            guard url.pathComponents.count > 1 else { return .unknown }
+            let settingsParams = self.getQueryItems(url.absoluteString)
+            return .settings(settingsParams: settingsParams)
         }
+    }
+
+    func getQueryItems(_ urlString: String) -> SettingsParams {
+        var queryItems: [String: String] = [:]
+        let components: NSURLComponents? = getURLComonents(urlString)
+        for item in components?.queryItems ?? [] {
+            queryItems[item.name] = item.value?.removingPercentEncoding
+        }
+        var settingsParams = SettingsParams()
+        settingsParams.tab = Int(queryItems["tab"] ?? "") ?? 1
+        settingsParams.projectId = queryItems["projectid"] ?? ""
+        settingsParams.subscriptionKey = queryItems["subscription"] ?? ""
+        settingsParams.isProduction = Bool(queryItems["isProduction"] ?? "") ?? false
+        settingsParams.isPreviewMode = Bool(queryItems["isPreviewMode"] ?? "") ?? false
+        return settingsParams
+    }
+
+    func getURLComonents(_ urlString: String?) -> NSURLComponents? {
+        var components: NSURLComponents?
+        let linkUrl = URL(string: urlString?.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
+        if let linkUrl = linkUrl {
+            components = NSURLComponents(url: linkUrl, resolvingAgainstBaseURL: true)
+        }
+        return components
     }
 }

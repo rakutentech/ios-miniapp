@@ -17,6 +17,7 @@
 		1C0A785C29C3417500433A38 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0A785A29C3417500433A38 /* AppTrackingTransparency.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C0C5C892A0C973300CB1F63 /* HostAppThemeColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0C5C882A0C973300CB1F63 /* HostAppThemeColorsView.swift */; };
 		1C2E06AE293A6A99003C6380 /* MiniAppSecureStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */; };
+		1C3FCFEB2A666DB3003C7A05 /* SettingsParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3FCFEA2A666DB3003C7A05 /* SettingsParams.swift */; };
 		1C6BAB472A5519340012E800 /* MAAnalyticsInfoLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6BAB462A5519340012E800 /* MAAnalyticsInfoLogger.swift */; };
 		1C6BAB4B2A5522F60012E800 /* MAAnalyticsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6BAB4A2A5522F60012E800 /* MAAnalyticsInfoView.swift */; };
 		1CD1591829421FDF001E0E21 /* UniversalBridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1591729421FDF001E0E21 /* UniversalBridgeView.swift */; };
@@ -156,6 +157,7 @@
 		1C0A785A29C3417500433A38 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		1C0C5C882A0C973300CB1F63 /* HostAppThemeColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostAppThemeColorsView.swift; sourceTree = "<group>"; };
 		1C2E06AD293A6A99003C6380 /* MiniAppSecureStorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAppSecureStorageView.swift; sourceTree = "<group>"; };
+		1C3FCFEA2A666DB3003C7A05 /* SettingsParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsParams.swift; sourceTree = "<group>"; };
 		1C6BAB462A5519340012E800 /* MAAnalyticsInfoLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAnalyticsInfoLogger.swift; sourceTree = "<group>"; };
 		1C6BAB4A2A5522F60012E800 /* MAAnalyticsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAAnalyticsInfoView.swift; sourceTree = "<group>"; };
 		1CD1591729421FDF001E0E21 /* UniversalBridgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalBridgeView.swift; sourceTree = "<group>"; };
@@ -447,6 +449,7 @@
 			children = (
 				38920AD5251D9C57004C5DDD /* UserProfileModel.swift */,
 				A13C249726A15048003ADC6D /* UserPointsModel.swift */,
+				1C3FCFEA2A666DB3003C7A05 /* SettingsParams.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -880,6 +883,7 @@
 				F70DD8EC28D417C4003EF1F1 /* MiniAppSettingsQAView.swift in Sources */,
 				F70DD8EA28D417C4003EF1F1 /* MiniAppSettingsProfileView.swift in Sources */,
 				F70DD8E828D417C4003EF1F1 /* MiniAppSettingsView+Config.swift in Sources */,
+				1C3FCFEB2A666DB3003C7A05 /* SettingsParams.swift in Sources */,
 				F70DD8F628D417C4003EF1F1 /* MiniAppWithTermsView.swift in Sources */,
 				A13198012918A45C00B839E8 /* View+Events.swift in Sources */,
 				F70DD8EE28D417C4003EF1F1 /* MiniAppSettingsAccessTokenView.swift in Sources */,
