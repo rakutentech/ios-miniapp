@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 5.3.1 (2023-08-01)
+### 5.3.1 (2023-08-02)
 **SDK**
 - **Feature:** Updated `loadFromBundle(miniAppManifest:completionHandler)` interface with optional MiniAppManifest object. 
 - **Feature:** Added a new property in MiniAppViewable class to Enable/Disable 3D touch for the Miniapp that is launched. 
