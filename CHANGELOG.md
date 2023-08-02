@@ -1,5 +1,16 @@
 ## CHANGELOG
 
+### 5.3.1 (2023-08-02)
+**SDK**
+- **Feature:** Updated `loadFromBundle(miniAppManifest:completionHandler)` interface with optional MiniAppManifest object. 
+- **Feature:** Added a new property in MiniAppViewable class to Enable/Disable 3D touch for the Miniapp that is launched. 
+- **Fix:** Enable variables to public for `MAAnalyticsInfo`
+
+**Sample App**
+- **Feature:** Updated Sample app to send `miniAppManifest` while loading from bundle
+- **Feature:** Hardcoded permissions for `loadFromBundle` approach
+---
+
 ### 5.3.0 (2023-07-25)
 **SDK**
 - **Deprecated:** `create(appInfo: ,queryParams: ,completionHandler: ,messageInterface: ,adsDisplayer: ,fromCache: ) in `MiniApp` class.

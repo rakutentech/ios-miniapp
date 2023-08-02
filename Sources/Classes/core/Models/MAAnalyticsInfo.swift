@@ -16,12 +16,12 @@ public enum MAAnalyticsActionType: String, Codable {
 }
 
 public class MAAnalyticsInfo: Codable {
-    let eventType: MAAnalyticsEventType
-    let actionType: MAAnalyticsActionType
-    let pageName: String
-    let componentName: String
-    let elementType: String
-    let data: String
+    public let eventType: MAAnalyticsEventType
+    public let actionType: MAAnalyticsActionType
+    public let pageName: String
+    public let componentName: String
+    public let elementType: String
+    public let data: String
 
     public init(eventType: MAAnalyticsEventType,
                 actionType: MAAnalyticsActionType,
