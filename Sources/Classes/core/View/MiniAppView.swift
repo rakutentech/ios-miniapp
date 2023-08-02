@@ -187,7 +187,7 @@ public class MiniAppView: UIView, MiniAppViewable {
     }
 
     public var miniAppTitle: String {
-        return miniAppHandler.title.isEmpty ? "MiniApp" : miniAppHandler.title
+        return miniAppHandler.title.isEmpty ? MiniAppSDKConstants.miniAppRootFolderName : miniAppHandler.title
     }
 
     public enum MiniAppLoadStatus {
