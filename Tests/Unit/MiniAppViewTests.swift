@@ -245,7 +245,7 @@ class MiniAppViewTests: XCTestCase {
             )
         )
         let view = MiniAppView(params: params)
-        XCTAssertEqual(view.miniAppTitle, "MiniApp")
+        XCTAssertEqual(view.miniAppTitle, MiniAppSDKConstants.miniAppRootFolderName)
 
         view.miniAppHandler.title = "MiniApp (Test)"
         XCTAssertEqual(view.miniAppTitle, "MiniApp (Test)")

@@ -196,7 +196,7 @@ class MiniAppViewHandler: NSObject {
             }
             switch result {
             case .success(let info):
-                let miniAppTitle = info.displayName ?? "MiniApp"
+                let miniAppTitle = info.displayName ?? MiniAppSDKConstants.miniAppRootFolderName
                 self.title = miniAppTitle
                 self.downloadMiniApp(appInfo: info, queryParams: self.queryParams) { result in
                     switch result {
@@ -338,7 +338,7 @@ class MiniAppViewHandler: NSObject {
 
     func loadWebView(
         webView: MiniAppWebView,
-        miniAppTitle: String = "MiniApp",
+        miniAppTitle: String = MiniAppSDKConstants.miniAppRootFolderName,
         miniAppId: String,
         versionId: String,
         queryParams: String? = nil,

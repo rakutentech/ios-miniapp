@@ -1,6 +1,10 @@
 name: Build and Test using Fastlane
 
 on:
+  push:
+    branches:
+      - master
+      - candidate
   pull_request:
 
 jobs:

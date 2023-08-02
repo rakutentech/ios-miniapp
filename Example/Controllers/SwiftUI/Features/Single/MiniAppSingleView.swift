@@ -42,7 +42,7 @@ struct MiniAppSingleView: View {
         VStack {
             MiniAppWithTermsView(viewModel: viewModel, handler: handler)
         }
-        .navigationTitle(handler.isActive ? handler.miniAppTitle?() ?? "MiniApp" : "MiniApp")
+        .navigationTitle(handler.isActive ? handler.miniAppTitle?() ?? MiniAppSDKConstants.miniAppRootFolderName : MiniAppSDKConstants.miniAppRootFolderName)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar(content: {

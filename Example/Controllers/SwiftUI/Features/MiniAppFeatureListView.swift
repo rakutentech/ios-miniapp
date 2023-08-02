@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import MiniApp
 
 struct MiniAppFeatureListView: View {
 
@@ -17,7 +18,7 @@ struct MiniAppFeatureListView: View {
                 })
                 NavigationLink(destination: MiniAppFromBundle(), label: {
                     MiniAppFeatureListCell(
-                        title: "Miniapp",
+                        title: MiniAppSDKConstants.miniAppRootFolderName,
                         subTitle: "Open a miniapp from Bundle",
                         active: true
                     )

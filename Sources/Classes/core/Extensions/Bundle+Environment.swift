@@ -39,7 +39,7 @@ extension Bundle {
     }
 
     public class var miniAppSDKBundle: Bundle {
-        miniAppBundle("MiniApp")
+        miniAppBundle(MiniAppSDKConstants.miniAppRootFolderName)
     }
 
     class var miniAppLocalizationBundle: Bundle {

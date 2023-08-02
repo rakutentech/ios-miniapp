@@ -16,7 +16,7 @@ struct MiniAppFromBundle: View {
                            fromBundle: true,
                            miniAppManifest: getMiniAppManifest())
         }
-        .navigationTitle("MiniApp")
+        .navigationTitle(MiniAppSDKConstants.miniAppRootFolderName)
     }
 
     func miniAppViewParams(config: MiniAppSdkConfig) -> MiniAppViewParameters.DefaultParams {
@@ -24,12 +24,13 @@ struct MiniAppFromBundle: View {
             config: MiniAppConfig(
                 config: config,
                 adsDisplayer: AdMobDisplayer(),
-                messageDelegate: MiniAppViewMessageDelegator(),
+                messageDelegate: MiniAppViewMessageDelegator(miniAppId: Global.DemoApp.bundleMiniAppId,
+                                                             miniAppVersion: Global.DemoApp.bundleMiniAppVersionId),
                 navigationDelegate: MiniAppViewNavigationDelegator()
             ),
             type: .miniapp,
-            appId: "mini-app-testing-appid",
-            version: "mini-app-testing-versionid",
+            appId: Global.DemoApp.bundleMiniAppId,
+            version: Global.DemoApp.bundleMiniAppVersionId,
             queryParams: getQueryParam()
         )
     }
