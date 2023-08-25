@@ -1,11 +1,14 @@
 import SwiftUI
+import MiniApp
 
 struct MiniAppListRowCell: View {
-
+    
     @State var iconUrl: URL?
     @State var displayName: String
+    @State var miniAppId: String
     @State var versionTag: String
     @State var versionId: String
+    @State var listType: ListType
 
     var body: some View {
         HStack {
@@ -17,6 +20,9 @@ struct MiniAppListRowCell: View {
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 40, height: 40, alignment: .center)
+                            .contextMenu {
+                                menuItems
+                            }
                     }, placeholder: {
                         Rectangle()
                             .fill(Color(.systemGray3))
@@ -25,10 +31,13 @@ struct MiniAppListRowCell: View {
                 } else {
                     RemoteImageView(urlString: iconUrl?.absoluteString ?? "")
                         .frame(width: 60, height: 40, alignment: .center)
+                        .contextMenu {
+                            menuItems
+                        }
                 }
                 Spacer()
             }
-
+            
             VStack(spacing: 3) {
                 HStack {
                     Text(displayName)
@@ -53,14 +62,37 @@ struct MiniAppListRowCell: View {
             .padding(10)
         }
     }
+    
+    var menuItems: some View {
+        Group {
+            Button("Download", action: downloadMiniAppInBackground)
+            Button("Available already?", action: isMiniAppDownloadedAlready)
+        }
+    }
+
+    func downloadMiniAppInBackground() {
+        MiniApp.shared(with: ListConfiguration(listType: listType).sdkConfig).downloadMiniApp(appId: miniAppId, versionId: versionId) { result in
+            switch result {
+            case .success(_):
+                print("Download Completed")
+            case .failure(let error):
+                print("Error downloading Miniapp:", error)
+            }
+        }
+    }
+
+    func isMiniAppDownloadedAlready() {
+    }
 }
 
 struct MiniAppListRowCell_Previews: PreviewProvider {
     static var previews: some View {
         MiniAppListRowCell(
             displayName: "MiniApp Sample",
+            miniAppId: "123",
             versionTag: "0.7.2",
-            versionId: "abcdefgh-12345678-abcdefgh-12345678"
+            versionId: "abcdefgh-12345678-abcdefgh-12345678",
+            listType: .listI
         )
     }
 }
