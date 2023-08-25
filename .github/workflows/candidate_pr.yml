@@ -1,0 +1,12 @@
+name: Create Candidate Pull Request
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - name: Create PR
+      run: gh pr create -B candidate -H master --title 'Candidate PR after release ' --body 'Pull request to merge changes from Candidate to master after release'

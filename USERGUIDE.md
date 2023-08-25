@@ -83,7 +83,7 @@ To integrate MiniApp SDK into your Xcode project using Swift Package Manager, ad
 
 ```ruby
 dependencies: [
-    .package(url: "https://github.com/rakutentech/ios-miniapp.git", .upToNextMajor(from: "5.3.1"))
+    .package(url: "https://github.com/rakutentech/ios-miniapp.git", .upToNextMajor(from: "5.4.0"))
 ]
 ``` 
 
