@@ -52,7 +52,7 @@ class MiniAppDownloader: MiniAppDownloaderInterface {
         }
     }
 
-    private func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, MASDKError>) -> Void) {
+    internal func download(appId: String, versionId: String, completionHandler: @escaping (Result<URL, MASDKError>) -> Void) {
         let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
         self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
             switch result {

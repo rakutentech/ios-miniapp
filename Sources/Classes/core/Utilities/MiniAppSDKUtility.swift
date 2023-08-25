@@ -14,4 +14,23 @@ class MiniAppSDKUtility {
             MiniAppLogger.e("error unzipping archive", err)
         }
     }
+
+    internal static func cleanMiniAppVersions(appId: String, exceptForVersionId: String) {
+        guard !appId.isEmpty, !exceptForVersionId.isEmpty else {
+            return
+        }
+        MiniAppStorage.cleanVersions(for: appId, differentFrom: exceptForVersionId)
+    }
+
+    internal static func isMiniAppAvailable(appId: String, versionId: String) -> Bool {
+        guard !appId.isEmpty, !versionId.isEmpty else {
+            return false
+        }
+        let versionDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+        let miniAppRootPath = "\(versionDirectory.path)/\(Constants.rootFileName)"
+        if FileManager.default.fileExists(atPath: miniAppRootPath) {
+            return true
+        }
+        return false
+    }
 }
