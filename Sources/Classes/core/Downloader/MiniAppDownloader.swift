@@ -78,6 +78,28 @@ class MiniAppDownloader: MiniAppDownloaderInterface {
         }
     }
 
+    internal func downloadMiniApp(appId: String, versionId: String, completionHandler: @escaping (Result<URL, MASDKError>) -> Void) {
+        let miniAppStoragePath = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)
+        self.manifestDownloader.fetchManifest(apiClient: self.miniAppClient, appId: appId, versionId: versionId) { (result) in
+            switch result {
+            case .success(let responseData):
+                self.startDownloadingFiles(urls: responseData.manifest, to: miniAppStoragePath, miniAppId: appId, miniAppVersion: versionId) { downloadResult in
+                    switch downloadResult {
+                    case .success:
+                        DispatchQueue.main.async {
+                            self.cacheVerifier.storeHash(for: appId, version: versionId)
+                        }
+                        fallthrough
+                    default:
+                        completionHandler(downloadResult)
+                    }
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
+    }
+
     func isMiniAppAlreadyDownloaded(appId: String, versionId: String) -> Bool {
         if miniAppStatus.isDownloaded(appId: appId, versionId: versionId) {
             let versionDirectory = FileManager.getMiniAppVersionDirectory(with: appId, and: versionId)

@@ -205,9 +205,15 @@ public class MiniApp: NSObject {
     public func clearSecureStorage(for miniAppId: String) {
         try? MiniAppSecureStorage.wipeSecureStorage(for: miniAppId)
     }
-
-    public static func unzipMiniApp(fileName: String, miniAppId: String, versionId: String) {
-        MiniAppSDKUtility.unzipMiniApp(fileName: fileName, miniAppId: miniAppId, versionId: versionId)
+    
+    /// Unzip the provided archive file from bundle.
+    /// - Parameters:
+    ///   - fileName: File name of the Bundle that you want to extract in MiniApp folder
+    ///   - miniAppId: MiniApp ID
+    ///   - versionId: Version ID
+    ///   - completionHandler: Status of the Unzip feature
+    public static func unzipMiniApp(fileName: String, miniAppId: String, versionId: String, completionHandler: ((Result<Bool, MASDKError>) -> Void)? = nil) {
+        MiniAppSDKUtility.unzipMiniApp(fileName: fileName, miniAppId: miniAppId, versionId: versionId, completionHandler: completionHandler)
     }
 
     /// Download a specific MiniApp from the Platform, please note that the MiniApp should be available before start downloading
@@ -218,15 +224,6 @@ public class MiniApp: NSObject {
     public func downloadMiniApp(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
         realMiniApp.downloadMiniApp(appId: appId, versionId: versionId, completionHandler: completionHandler)
     }
-
-    /// Delete all versions of MiniApp except for the version that is provided.
-    /// - Parameters:
-    ///   - appId: MiniApp ID
-    ///   - exceptForVersion: VersionID that will NOT be deleted
-    ///   - completionHandler: Completion handler that tells the status of the cleaning
-    public static func cleanVersions(appId: String, exceptForVersion: String) {
-        MiniAppSDKUtility.cleanMiniAppVersions(appId: appId, exceptForVersionId: exceptForVersion)
-    }
     
     /// Check and return TRUE if the MiniApp is available for a given MiniAppID and VersionID.
     /// This method not only checks if the folder is available, but also checks if index.html is available.
@@ -234,7 +231,7 @@ public class MiniApp: NSObject {
     ///   - appId: MiniApp ID
     ///   - versionId: VersionID of the MiniApp
     /// - Returns: TRUE if MiniApp is available
-    public static func isMiniAppAvailable(appId: String, versionId: String) -> Bool {
+    public static func isMiniAppDownloadedAlready(appId: String, versionId: String) -> Bool {
         return MiniAppSDKUtility.isMiniAppAvailable(appId: appId, versionId: versionId)
     }
 }

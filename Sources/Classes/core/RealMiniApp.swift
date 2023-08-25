@@ -445,7 +445,7 @@ internal class RealMiniApp {
         if versionId.isEmpty {
             return completionHandler(.failure(.invalidVersionId))
         }
-        miniAppDownloader.download(appId: appId, versionId: versionId) { result in
+        miniAppDownloader.downloadMiniApp(appId: appId, versionId: versionId) { result in
             switch result {
             case .success(_):
                 completionHandler(.success(true))
