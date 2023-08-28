@@ -204,7 +204,7 @@ class MiniAppViewTests: XCTestCase {
             case .success:
                 XCTFail("should not succeed")
             case let .failure(error):
-                XCTAssertTrue(error.localizedDescription.contains("MiniApp is not in preview mode"))
+                XCTAssertTrue(error.localizedDescription.contains("MiniApp is in preview mode"))
             }
             expectation.fulfill()
         }
