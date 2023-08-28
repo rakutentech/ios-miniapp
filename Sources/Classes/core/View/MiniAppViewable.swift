@@ -33,6 +33,9 @@ public protocol MiniAppViewable: UIView, MiniAppNavigationBarDelegate {
     ///
     var alertInfo: CloseAlertInfo? { get }
 
+    var enable3DTouch: Bool { get }
+
+    func loadFromBundle(miniAppManifest: MiniAppManifest?, completion: @escaping ((Result<Bool, MASDKError>) -> Void))
 }
 
 public extension MiniAppViewable {
@@ -43,5 +46,9 @@ public extension MiniAppViewable {
     @discardableResult
     func loadAsync(fromCache: Bool = false) async throws -> MiniAppView.MiniAppLoadStatus {
         try await loadAsync(fromCache: fromCache)
+    }
+
+    func loadFromBundle(miniAppManifest: MiniAppManifest? = nil, completion: @escaping ((Result<Bool, MASDKError>) -> Void)) {
+        loadFromBundle(miniAppManifest: miniAppManifest, completion: completion)
     }
 }

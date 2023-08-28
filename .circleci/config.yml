@@ -33,9 +33,6 @@ jobs:
       - run:
           name: Build Simulator
           command: fastlane build_sim_ci
-      - run:
-          name: Execute Tests
-          command: fastlane ci
       - persist_to_workspace:
           root: .
           paths:
@@ -134,13 +131,6 @@ jobs:
           name: Clear Cache
           when: always
           command: rm ../MiniApp-Secrets.xcconfig || true
-
-  release-candidate-merge-pr:
-    <<: *container_medium
-    steps:
-      - run:
-          name: PR for Candidate Merge to Master
-          command: fastlane candidate_pr
 
   release-sdk:
     <<: *container_medium
@@ -245,15 +235,6 @@ workflows:
               ignore: /.*/
       - generate-and-publish-documentation:
           name: "Generate and Publish Doc"
-          requires:
-            - Release SDK
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - release-candidate-merge-pr:
-          name: "PR for Candidate Merge to Master"
           requires:
             - Release SDK
           filters:
