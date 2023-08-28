@@ -113,8 +113,10 @@ extension MiniAppListView {
                                     MiniAppListRowCell(
                                         iconUrl: info.icon,
                                         displayName: info.displayName ?? "",
+                                        miniAppId: info.id,
                                         versionTag: info.version.versionTag,
-                                        versionId: info.version.versionId
+                                        versionId: info.version.versionId,
+                                        listType: viewModel.type
                                     )
                                 }
                             }

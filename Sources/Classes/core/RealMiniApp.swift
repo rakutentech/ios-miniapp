@@ -437,6 +437,23 @@ internal class RealMiniApp {
             completionHandler(.failure(.miniAppCorrupted))
         }
     }
+
+    func downloadMiniApp(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
+        if appId.isEmpty {
+            return completionHandler(.failure(.invalidAppId))
+        }
+        if versionId.isEmpty {
+            return completionHandler(.failure(.invalidVersionId))
+        }
+        miniAppDownloader.downloadMiniApp(appId: appId, versionId: versionId) { result in
+            switch result {
+            case .success:
+                completionHandler(.success(true))
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
+    }
 }
 
 extension RealMiniApp: MiniAppMessageDelegate {

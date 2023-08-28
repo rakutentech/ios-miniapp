@@ -83,7 +83,7 @@ To integrate MiniApp SDK into your Xcode project using Swift Package Manager, ad
 
 ```ruby
 dependencies: [
-    .package(url: "https://github.com/rakutentech/ios-miniapp.git", .upToNextMajor(from: "5.3.1"))
+    .package(url: "https://github.com/rakutentech/ios-miniapp.git", .upToNextMajor(from: "5.4.0"))
 ]
 ``` 
 
@@ -114,6 +114,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
 * [Configure MiniApp](#configure-mini-app)
 * [Create a MiniApp](#create-mini-app)
 * [Loading a Miniapp from Bundle](#load-a-mini-app-from-bundle)
+* [Download a Miniapp in Background](#download-a-miniapp-in-background)
 * [Mini App Features](#mini-app-features)
     * [Retrieving Unique ID](#retrieve-unique-id)
     * [Requesting Location Permissions](#request-location-permission)
@@ -144,6 +145,7 @@ Config.userDefaults?.set("MY_CUSTOM_ID", forKey: Config.Key.subscriptionKey.rawV
     * [MiniApp events](#miniapp-events)
     * [Load Mini app from Cache](#miniapp-load-cache)
     * [Keyboard Events](#keyboard-events)
+    * [MiniApp Cache available](#miniapp-cache-available)
 
 <a id="configure-mini-app"></a>
 
@@ -232,7 +234,20 @@ view.loadFromBundle {
     // Returns a MiniAppWebView to load
 }
 ```
+<a id="download-a-miniapp-in-background"></a>
 
+### Download a Miniapp in Background
+---
+Miniapps can be downloaded in background using the following method,
+
+```swift
+
+// Please pass the valid Miniapp ID and version ID that is uploaded and available in platform to start downloading. 
+// Once the downloading is completed, completionHandler will let you know if the downloading is success or a failure
+MiniApp.shared(with: Config.current()).downloadMiniApp(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
+
+}
+```
 
 <a id="mini-app-features"></a>
 
@@ -1196,6 +1211,18 @@ extension ViewController: MAAnalyticsDelegate {
             // analyticsInfo: MAAnalyticsInfo - This object holds the Analytics info of the events triggered from MiniApps, This can be further used to record the MiniApp Analytics events from host app.
         completionHandler(.success(.success))
     }
+}
+```
+
+<a id="miniapp-cache-available"></a>
+
+### MiniApp Cache available
+
+Host app can check if Miniapp is downloaded and cached already using the following interface
+
+```swift
+if MiniApp.isMiniAppCacheAvailable(appId: miniAppId, versionId: versionId) {
+    // Returns true if Miniapp is available
 }
 ```
 

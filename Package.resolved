@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/googleads/swift-package-manager-google-mobile-ads.git",
         "state": {
           "branch": null,
-          "revision": "78f4c64d0f1900e54529e4c78075d663ca67d6e0",
-          "version": "9.14.0"
+          "revision": "a6e24f2167295d95371bfc3049e47381a73a9e43",
+          "version": "10.7.0"
         }
       },
       {

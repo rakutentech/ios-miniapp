@@ -182,7 +182,7 @@ class MiniAppViewHandler: NSObject {
                         queryParams: self.queryParams
                     )
                 } catch {
-                    completion(.failure(.unknownError(domain: "", code: 0, description: "internal error: could not load the miniapp")))
+                    completion(.failure(.unknownError(domain: "", code: 0, description: "Internal error: could not load the miniapp")))
                 }
                 completion(.success(newWebView))
             }
@@ -191,7 +191,7 @@ class MiniAppViewHandler: NSObject {
 
         getMiniAppInfo(miniAppId: appId, miniAppVersion: version ?? "") { [weak self] result in
             guard let self = self else {
-                completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp download failed")))
+                completion(.failure(.unknownError(domain: "", code: 0, description: "Miniapp download failed")))
                 return
             }
             switch result {
@@ -202,7 +202,7 @@ class MiniAppViewHandler: NSObject {
                     switch result {
                     case let .success(state):
                         guard state else {
-                            completion(.failure(.unknownError(domain: "", code: 0, description: "miniapp download failed")))
+                            completion(.failure(.unknownError(domain: "", code: 0, description: "MiniApp download failed")))
                             return
                         }
                         MiniAppLogger.d("MiniApp loaded with state: \(state)")
@@ -222,7 +222,7 @@ class MiniAppViewHandler: NSObject {
                                     queryParams: self.queryParams
                                 )
                             } catch {
-                                completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
+                                completion(.failure(.unknownError(domain: "", code: 0, description: "Internal error")))
                             }
                             completion(.success(newWebView))
                         }
@@ -240,10 +240,8 @@ class MiniAppViewHandler: NSObject {
         if appId.isEmpty {
             return completion(.failure(.invalidAppId))
         }
-        guard
-            !miniAppClient.environment.isPreviewMode
-        else {
-            return completion(.failure(.unknownError(domain: "", code: 0, description: "MiniApp is not in preview mode")))
+        guard !miniAppClient.environment.isPreviewMode else {
+            return completion(.failure(.unknownError(domain: "", code: 0, description: "MiniApp is in preview mode")))
         }
         guard
             let cachedVersion = miniAppDownloader.getCachedMiniAppVersion(appId: appId, versionId: version ?? "")
@@ -276,7 +274,7 @@ class MiniAppViewHandler: NSObject {
                                     queryParams: self.queryParams
                                 )
                             } catch {
-                                completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
+                                completion(.failure(.unknownError(domain: "", code: 0, description: "Internal error")))
                             }
                             completion(.success(newWebView))
                         }
@@ -316,7 +314,7 @@ class MiniAppViewHandler: NSObject {
                                 queryParams: self.queryParams
                             )
                         } catch {
-                            completion(.failure(.unknownError(domain: "", code: 0, description: "internal error")))
+                            completion(.failure(.unknownError(domain: "", code: 0, description: "Internal error")))
                         }
                         completion(.success(newWebView))
                     }
@@ -345,7 +343,7 @@ class MiniAppViewHandler: NSObject {
         navigationView: (UIView & MiniAppNavigationDelegate)? = nil
     ) throws {
         guard let messageInterface = messageDelegate else {
-            throw MASDKError.unknownError(domain: "", code: 0, description: "no message interface provided")
+            throw MASDKError.unknownError(domain: "", code: 0, description: "No message interface provided")
         }
 
         webView.navigationDelegate = self
