@@ -447,7 +447,7 @@ internal class RealMiniApp {
         }
         miniAppDownloader.downloadMiniApp(appId: appId, versionId: versionId) { result in
             switch result {
-            case .success(_):
+            case .success:
                 completionHandler(.success(true))
             case .failure(let error):
                 completionHandler(.failure(error))

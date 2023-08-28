@@ -2,13 +2,15 @@ import SwiftUI
 import MiniApp
 
 struct MiniAppListRowCell: View {
-    
+
     @State var iconUrl: URL?
     @State var displayName: String
     @State var miniAppId: String
     @State var versionTag: String
     @State var versionId: String
     @State var listType: ListType
+    @State private var showingAlert = false
+    @State private var alertDescription = "false"
 
     var body: some View {
         HStack {
@@ -37,7 +39,7 @@ struct MiniAppListRowCell: View {
                 }
                 Spacer()
             }
-            
+
             VStack(spacing: 3) {
                 HStack {
                     Text(displayName)
@@ -59,10 +61,16 @@ struct MiniAppListRowCell: View {
                     Spacer()
                 }
             }
+            .alert(isPresented: $showingAlert) {
+                Alert(
+                    title: Text("Info"),
+                    message: Text(alertDescription),
+                    dismissButton: .default(Text("OK")))
+            }
             .padding(10)
         }
     }
-    
+
     var menuItems: some View {
         Group {
             Button("Download", action: downloadMiniAppInBackground)
@@ -73,7 +81,7 @@ struct MiniAppListRowCell: View {
     func downloadMiniAppInBackground() {
         MiniApp.shared(with: ListConfiguration(listType: listType).sdkConfig).downloadMiniApp(appId: miniAppId, versionId: versionId) { result in
             switch result {
-            case .success(_):
+            case .success:
                 print("Download Completed")
             case .failure(let error):
                 print("Error downloading Miniapp:", error)
@@ -82,6 +90,13 @@ struct MiniAppListRowCell: View {
     }
 
     func isMiniAppDownloadedAlready() {
+        if MiniApp.isMiniAppDownloadedAlready(appId: miniAppId, versionId: versionId) {
+            showingAlert = true
+            alertDescription = "MiniApp is available"
+        } else {
+            showingAlert = true
+            alertDescription = "MiniApp is not downloaded"
+        }
     }
 }
 

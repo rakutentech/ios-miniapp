@@ -205,7 +205,7 @@ public class MiniApp: NSObject {
     public func clearSecureStorage(for miniAppId: String) {
         try? MiniAppSecureStorage.wipeSecureStorage(for: miniAppId)
     }
-    
+
     /// Unzip the provided archive file from bundle.
     /// - Parameters:
     ///   - fileName: File name of the Bundle that you want to extract in MiniApp folder
@@ -224,7 +224,7 @@ public class MiniApp: NSObject {
     public func downloadMiniApp(appId: String, versionId: String, completionHandler: @escaping (Result<Bool, MASDKError>) -> Void) {
         realMiniApp.downloadMiniApp(appId: appId, versionId: versionId, completionHandler: completionHandler)
     }
-    
+
     /// Check and return TRUE if the MiniApp is available for a given MiniAppID and VersionID.
     /// This method not only checks if the folder is available, but also checks if index.html is available.
     /// - Parameters:
