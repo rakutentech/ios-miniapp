@@ -186,11 +186,22 @@ public class MiniAppView: UIView, MiniAppViewable {
             case let .success(webView):
                 self?.state.send(.active)
                 self?.setupWebView(webView: webView)
+                self?.cleanVersions()
                 completion(.success(true))
             case let .failure(error):
                 self?.state.send(.error(error))
                 completion(.failure(error))
             }
+        }
+    }
+
+    /// This method will clean all versions of MiniApp except for the version that is passed/loaded
+    internal func cleanVersions() {
+        guard let versionId = miniAppHandler.version, !versionId.isEmpty else {
+            return
+        }
+        if !miniAppHandler.appId.isEmpty {
+            MiniAppSDKUtility.cleanMiniAppVersions(appId: miniAppHandler.appId, exceptForVersionId: versionId)
         }
     }
 
