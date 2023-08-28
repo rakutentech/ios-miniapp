@@ -20,7 +20,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          MiniApp 5.3.1 Docs
+          MiniApp 5.4.0 Docs
         </a>
          (67% documented)
       </p>
@@ -333,6 +333,9 @@
                 <a class="nav-group-task-link" href="Structs/MiniAppReward.html">MiniAppReward</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/MiniAppSDKConstants.html">MiniAppSDKConstants</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs.html#/s:7MiniApp0aB9SSLConfigV">MiniAppSSLConfig</a>
               </li>
               <li class="nav-group-task">
@@ -451,7 +454,7 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
 
 <p>To integrate MiniApp SDK into your Xcode project using Swift Package Manager, add it to the dependencies value of your <code>Package.swift</code>:</p>
 <pre class="highlight ruby"><code><span class="ss">dependencies: </span><span class="p">[</span>
-    <span class="p">.</span><span class="nf">package</span><span class="p">(</span><span class="ss">url: </span><span class="s2">"https://github.com/rakutentech/ios-miniapp.git"</span><span class="p">,</span> <span class="p">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="ss">from: </span><span class="s2">"5.3.1"</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">package</span><span class="p">(</span><span class="ss">url: </span><span class="s2">"https://github.com/rakutentech/ios-miniapp.git"</span><span class="p">,</span> <span class="p">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="ss">from: </span><span class="s2">"5.4.0"</span><span class="p">))</span>
 <span class="p">]</span>
 </code></pre>
 <h3 id='configuration' class='heading'>Configuration</h3>
@@ -524,6 +527,7 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
 <li><a href="#configure-mini-app">Configure MiniApp</a></li>
 <li><a href="#create-mini-app">Create a MiniApp</a></li>
 <li><a href="#load-a-mini-app-from-bundle">Loading a Miniapp from Bundle</a></li>
+<li><a href="#download-a-miniapp-in-background">Download a Miniapp in Background</a></li>
 <li><a href="#mini-app-features">Mini App Features</a>
 
 <ul>
@@ -562,6 +566,7 @@ To depend on MiniApp SDK through Carthage add this line to you Cartfile:</p>
 <li><a href="#miniapp-events">MiniApp events</a></li>
 <li><a href="#miniapp-load-cache">Load Mini app from Cache</a></li>
 <li><a href="#keyboard-events">Keyboard Events</a></li>
+<li><a href="#miniapp-cache-available">MiniApp Cache available</a></li>
 </ul></li>
 </ul>
 
@@ -655,6 +660,20 @@ MiniApp.unzipMiniApp(fileName: &quot;js-miniapp-sample&quot;, miniAppId: &quot;m
 <span class="k">let</span> <span class="nv">miniAppView</span> <span class="o">=</span> <span class="kt">MiniAppView</span><span class="p">(</span><span class="nv">params</span><span class="p">:</span> <span class="n">params</span><span class="p">)</span>
 <span class="n">view</span><span class="o">.</span><span class="n">loadFromBundle</span> <span class="p">{</span>
     <span class="c1">// Returns a MiniAppWebView to load</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><a id="download-a-miniapp-in-background"></a></p>
+<h3 id='download-a-miniapp-in-background' class='heading'>Download a Miniapp in Background</h3>
+
+<hr>
+
+<p>Miniapps can be downloaded in background using the following method,</p>
+<pre class="highlight swift"><code>
+<span class="c1">// Please pass the valid Miniapp ID and version ID that is uploaded and available in platform to start downloading. </span>
+<span class="c1">// Once the downloading is completed, completionHandler will let you know if the downloading is success or a failure</span>
+<span class="kt">MiniApp</span><span class="o">.</span><span class="nf">shared</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">Config</span><span class="o">.</span><span class="nf">current</span><span class="p">())</span><span class="o">.</span><span class="nf">downloadMiniApp</span><span class="p">(</span><span class="nv">appId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">versionId</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">Bool</span><span class="p">,</span> <span class="kt">MASDKError</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="p">{</span>
+
 <span class="p">}</span>
 </code></pre>
 
@@ -1768,6 +1787,15 @@ iOS Hostapp can extend this optional <code>MAAnalayticsDelegate</code> interface
 <span class="p">}</span>
 </code></pre>
 
+<p><a id="miniapp-cache-available"></a></p>
+<h3 id='miniapp-cache-available' class='heading'>MiniApp Cache available</h3>
+
+<p>Host app can check if Miniapp is downloaded and cached already using the following interface</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="kt">MiniApp</span><span class="o">.</span><span class="nf">isMiniAppCacheAvailable</span><span class="p">(</span><span class="nv">appId</span><span class="p">:</span> <span class="n">miniAppId</span><span class="p">,</span> <span class="nv">versionId</span><span class="p">:</span> <span class="n">versionId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Returns true if Miniapp is available</span>
+<span class="p">}</span>
+</code></pre>
+
 <p><a id="faqs-and-troubleshooting"></a></p>
 <h2 id='faqs-and-troubleshooting' class='heading'>FAQs and Troubleshooting</h2>
 <h3 id='how-do-i-deep-link-to-mini-apps' class='heading'>How do I deep link to mini apps?</h3>
@@ -1848,7 +1876,7 @@ iOS Hostapp can extend this optional <code>MAAnalayticsDelegate</code> interface
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2023 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2023-08-02)</p>
+      <p>&copy; 2023 <a class="link" href="https://github.com/rakutentech/ios-miniapp" target="_blank" rel="external noopener">Rakuten Ecosystem Mobile</a>. All rights reserved. (Last updated: 2023-08-28)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
