@@ -231,7 +231,7 @@ public class MiniApp: NSObject {
     ///   - appId: MiniApp ID
     ///   - versionId: VersionID of the MiniApp
     /// - Returns: TRUE if MiniApp is available
-    public static func isMiniAppDownloadedAlready(appId: String, versionId: String) -> Bool {
+    public static func isMiniAppCacheAvailable(appId: String, versionId: String) -> Bool {
         return MiniAppSDKUtility.isMiniAppAvailable(appId: appId, versionId: versionId)
     }
 }

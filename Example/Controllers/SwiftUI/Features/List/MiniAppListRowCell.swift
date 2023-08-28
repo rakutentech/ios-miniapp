@@ -74,7 +74,7 @@ struct MiniAppListRowCell: View {
     var menuItems: some View {
         Group {
             Button("Download", action: downloadMiniAppInBackground)
-            Button("Available already?", action: isMiniAppDownloadedAlready)
+            Button("Available already?", action: isMiniAppCacheAvailable)
         }
     }
 
@@ -89,8 +89,8 @@ struct MiniAppListRowCell: View {
         }
     }
 
-    func isMiniAppDownloadedAlready() {
-        if MiniApp.isMiniAppDownloadedAlready(appId: miniAppId, versionId: versionId) {
+    func isMiniAppCacheAvailable() {
+        if MiniApp.isMiniAppCacheAvailable(appId: miniAppId, versionId: versionId) {
             showingAlert = true
             alertDescription = "MiniApp is available"
         } else {
