@@ -1,5 +1,14 @@
 ## CHANGELOG
 
+### 5.4.0 (2023-08-29)
+**SDK**
+- **Feature:** Added a new interface `downloadMiniApp(appId:versionId:completionHandler:)` to download Miniapp from platform in background if needed.
+- **Feature:** Added a utility method to know if Miniapp has beend downloaded properly. `isMiniAppCacheAvailable(appId: String, versionId:)`
+- **Refactor:** Updated unzip Miniapp method with optional completion handler that will let the host app know if the download is success. `unzipMiniApp(fileName:miniAppId:versionId:completionHandler:)`
+
+**Sample App**
+- **Feature:** Added Menu in list view to Download and check if Miniapp is downloaded already.
+
 ### 5.3.1 (2023-08-02)
 **SDK**
 - **Feature:** Updated `loadFromBundle(miniAppManifest:completionHandler)` interface with optional MiniAppManifest object. 
