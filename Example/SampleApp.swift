@@ -41,9 +41,8 @@ struct SampleApp: App {
                                 print(error)
                             }
                         }
-                    case let .settings(settinsInfo):
-                        prepareSettingsViewModel(with: settinsInfo)
-                        deepLink = .settings(viewModel: self.sharedSettingsViewModel)
+                    case let .settings(_):
+                        return
                     }
                 }
                 .sheet(item: $deepLink) {
@@ -61,51 +60,11 @@ struct SampleApp: App {
                         }
                         .accentColor(.red)
                     case .settings(let viewModel):
-                        NavigationView {
-                            MiniAppSettingsView(viewModel: viewModel, showFullProgress: .constant(false))
-                        }
+                        MiniAppDashboardView(sharedSettingsVM: viewModel, selection: 3)
                         .accentColor(.red)
                     }
                 }
         }
-    }
-
-    func prepareSettingsViewModel(with params: SettingsParams) {
-        if params.tab == 1 {
-            let list1 = self.setConfigValues(with: params, for: ListConfiguration(listType: .listI))
-            sharedSettingsViewModel.listConfig = list1
-            sharedSettingsViewModel.listConfigI = list1
-            sharedSettingsViewModel.listConfigI.persist()
-        } else {
-            let list2 = self.setConfigValues(with: params, for: ListConfiguration(listType: .listII))
-            sharedSettingsViewModel.listConfig = list2
-            sharedSettingsViewModel.listConfigII = list2
-            sharedSettingsViewModel.listConfigII.persist()
-        }
-        sharedSettingsViewModel.listConfig.persist()
-        sharedSettingsViewModel.selectedListConfig = params.tab == 1 ? .listI : .listII
-    }
-
-    func setConfigValues(with params: SettingsParams, for listConfig: ListConfiguration) -> ListConfiguration {
-        var listConfig = listConfig
-        if params.isProduction {
-            listConfig.environmentMode = .production
-            listConfig.projectIdProd = params.projectId
-            listConfig.subscriptionKey = params.subscriptionKey
-        } else {
-            listConfig.environmentMode = .staging
-            listConfig.projectIdStaging = params.projectId
-            listConfig.subscriptionKeyStaging = params.subscriptionKey
-        }
-        if params.isPreviewMode {
-            listConfig.previewMode = .previewable
-        } else {
-            listConfig.previewMode = .published
-        }
-        listConfig.projectId = params.projectId
-        listConfig.subscriptionKey = params.subscriptionKey
-        listConfig.persist()
-        return listConfig
     }
 }
 
