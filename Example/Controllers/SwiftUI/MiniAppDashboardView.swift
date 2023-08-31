@@ -9,7 +9,7 @@ class MiniAppDashboardViewModel: ObservableObject {
 struct MiniAppDashboardView: View {
 
     let deepLinkManager = DeeplinkManager()
-    
+
     @StateObject var viewModel = MiniAppDashboardViewModel()
     @StateObject var sharedSettingsVM: MiniAppSettingsViewModel
 
@@ -78,14 +78,14 @@ struct MiniAppDashboardView: View {
                 selection = 3
             }
         }
-        .onOpenURL{url in
+        .onOpenURL { url in
             let receivedDeepLink = deepLinkManager.manage(url: url)
             switch receivedDeepLink {
             case .unknown:
                 return
-            case .qrcode(_):
+            case .qrcode:
                 return
-            case .deeplink(_):
+            case .deeplink:
                 return
             case let .settings(settinsInfo):
                 prepareSettingsViewModel(with: settinsInfo)
@@ -108,7 +108,7 @@ struct MiniAppDashboardView: View {
             return "Unknown"
         }
     }
-    
+
     func prepareSettingsViewModel(with params: SettingsParams) {
         if params.tab == 1 {
             let list1 = self.setConfigValues(with: params, for: ListConfiguration(listType: .listI))
