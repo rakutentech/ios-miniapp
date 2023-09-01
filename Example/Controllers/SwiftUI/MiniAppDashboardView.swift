@@ -8,6 +8,8 @@ class MiniAppDashboardViewModel: ObservableObject {
 
 struct MiniAppDashboardView: View {
 
+    let deepLinkManager = DeeplinkManager()
+
     @StateObject var viewModel = MiniAppDashboardViewModel()
     @StateObject var sharedSettingsVM: MiniAppSettingsViewModel
 
@@ -76,6 +78,16 @@ struct MiniAppDashboardView: View {
                 selection = 3
             }
         }
+        .onOpenURL { url in
+            let receivedDeepLink = deepLinkManager.manage(url: url)
+            switch receivedDeepLink {
+            case .unknown, .qrcode, .deeplink:
+                return
+            case let .settings(settinsInfo):
+                prepareSettingsViewModel(with: settinsInfo)
+                selection = 3
+            }
+        }
     }
 
     var navigationTitle: String {
@@ -91,6 +103,35 @@ struct MiniAppDashboardView: View {
         default:
             return "Unknown"
         }
+    }
+
+    func prepareSettingsViewModel(with params: SettingsParams) {
+        if params.tab == 1 {
+            let list1 = self.setConfigValues(with: params, for: ListConfiguration(listType: .listI))
+            sharedSettingsVM.listConfigI = list1
+        } else {
+            let list2 = self.setConfigValues(with: params, for: ListConfiguration(listType: .listII))
+            sharedSettingsVM.listConfigII = list2
+        }
+        sharedSettingsVM.selectedListConfig = params.tab == 1 ? .listI : .listII
+    }
+
+    func setConfigValues(with params: SettingsParams, for listConfig: ListConfiguration) -> ListConfiguration {
+        var listConfig = listConfig
+        listConfig.listType = params.tab == 1 ? .listI : .listII
+        if params.isProduction {
+            listConfig.environmentMode = .production
+        } else {
+            listConfig.environmentMode = .staging
+        }
+        if params.isPreviewMode {
+            listConfig.previewMode = .previewable
+        } else {
+            listConfig.previewMode = .published
+        }
+        listConfig.projectId = params.projectId
+        listConfig.subscriptionKey = params.subscriptionKey
+        return listConfig
     }
 }
 
