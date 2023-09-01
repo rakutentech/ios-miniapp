@@ -81,11 +81,7 @@ struct MiniAppDashboardView: View {
         .onOpenURL { url in
             let receivedDeepLink = deepLinkManager.manage(url: url)
             switch receivedDeepLink {
-            case .unknown:
-                return
-            case .qrcode:
-                return
-            case .deeplink:
+            case .unknown, .qrcode, .deeplink:
                 return
             case let .settings(settinsInfo):
                 prepareSettingsViewModel(with: settinsInfo)
