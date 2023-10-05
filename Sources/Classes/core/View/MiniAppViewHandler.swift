@@ -131,7 +131,7 @@ class MiniAppViewHandler: NSObject {
 
         super.init()
     }
-    
+
     init(
         config: MiniAppConfig,
         url: URL,
