@@ -50,12 +50,23 @@ public class MiniAppView: UIView, MiniAppViewable {
         switch params {
         case let .default(params):
             self.type = params.type
-            self.miniAppHandler = MiniAppViewHandler(
-                config: params.config,
-                appId: params.appId,
-                version: params.version,
-                queryParams: params.queryParams
-            )
+            if params.fromBundle ?? false {
+                self.miniAppHandler = MiniAppViewHandler(
+                    config: params.config,
+                    appId: params.appId,
+                    version: params.version,
+                    queryParams: params.queryParams,
+                    fromBundle: params.fromBundle
+                )
+            } else {
+                self.miniAppHandler = MiniAppViewHandler(
+                    config: params.config,
+                    appId: params.appId,
+                    version: params.version,
+                    queryParams: params.queryParams
+                )
+            }
+
         case let .url(urlParams):
             self.type = urlParams.type
             self.miniAppHandler = MiniAppViewHandler(

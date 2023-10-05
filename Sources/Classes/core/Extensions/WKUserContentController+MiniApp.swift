@@ -14,7 +14,7 @@ extension WKUserContentController {
         delegate: MiniAppCallbackDelegate,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         adsDisplayer: MiniAppAdDisplayer?,
-        secureStorageDelegate: MiniAppSecureStorageDelegate,
+        secureStorageDelegate: MiniAppSecureStorageDelegate?,
         miniAppId: String,
         miniAppTitle: String,
         miniAppManageDelegate: MiniAppManageDelegate
@@ -25,7 +25,7 @@ extension WKUserContentController {
                     delegate: delegate,
                     hostAppMessageDelegate: hostAppMessageDelegate,
                     adsDisplayer: adsDisplayer,
-                    secureStorageDelegate: secureStorageDelegate,
+                    secureStorageDelegate: secureStorageDelegate ?? nil,
                     miniAppManageDelegate: miniAppManageDelegate,
                     miniAppId: miniAppId,
                     miniAppTitle: miniAppTitle

@@ -13,11 +13,11 @@ class MiniAppViewHandler: NSObject {
     internal var miniAppDownloader: MiniAppDownloaderInterface
     internal var miniAppStatus: MiniAppStatus
     internal var manifestDownloader: ManifestDownloader
-    internal var miniAppInfoFetcher: MiniAppInfoFetcherInterface
+    internal var miniAppInfoFetcher: MiniAppInfoFetcherInterface?
     internal var miniAppManifestStorage: MAManifestStorage
-    internal var metaDataDownloader: MetaDataDownloader
+    internal var metaDataDownloader: MetaDataDownloader?
     internal var miniAppPermissionStorage: MiniAppPermissionsStorage
-    internal var secureStorage: MiniAppSecureStorage
+    internal var secureStorage: MiniAppSecureStorage?
 
     internal var projectId: String?
 
@@ -96,6 +96,44 @@ class MiniAppViewHandler: NSObject {
 
     init(
         config: MiniAppConfig,
+        appId: String,
+        version: String? = nil,
+        queryParams: String? = nil,
+        fromBundle: Bool? = false
+    ) {
+        manifestDownloader = ManifestDownloader()
+        miniAppStatus = MiniAppStatus()
+        miniAppManifestStorage = MAManifestStorage()
+        metaDataDownloader = MetaDataDownloader()
+        miniAppPermissionStorage = MiniAppPermissionsStorage()
+
+        miniAppClient = MiniAppClient(
+            baseUrl: config.config?.baseUrl,
+            rasProjectId: config.config?.rasProjectId,
+            subscriptionKey: config.config?.subscriptionKey,
+            hostAppVersion: config.config?.hostAppVersion,
+            isPreviewMode: config.config?.isPreviewMode
+        )
+
+        adsDisplayer = config.adsDisplayer
+
+        miniAppDownloader = MiniAppDownloader(
+            apiClient: miniAppClient,
+            manifestDownloader: manifestDownloader,
+            status: miniAppStatus
+        )
+
+        self.appId = appId
+        self.version = version
+        self.queryParams = queryParams
+        self.messageDelegate = config.messageDelegate
+        self.navigationDelegate = config.navigationDelegate
+
+        super.init()
+    }
+    
+    init(
+        config: MiniAppConfig,
         url: URL,
         queryParams: String? = nil,
         initialLoadCallback: ((Bool) -> Void)? = nil,
@@ -159,7 +197,7 @@ class MiniAppViewHandler: NSObject {
         UIViewController.attemptRotationToDeviceOrientation()
         webView?.configuration.userContentController.removeMessageHandler()
         NotificationCenter.default.removeObserver(self)
-        secureStorage.unloadStorage()
+        secureStorage?.unloadStorage()
     }
 
     required init?(coder: NSCoder) { return nil }
@@ -298,28 +336,24 @@ class MiniAppViewHandler: NSObject {
         saveManifestInfoForBundle(miniAppManifest: miniAppManifest)
         if isValidMiniAppInfo(versionId: versionId) {
             if isMiniAppAvailable(versionId: versionId) {
-                if miniAppDownloader.isCacheSecure(appId: appId, versionId: versionId) {
-                    DispatchQueue.main.async {
-                        let newWebView = MiniAppWebView(
+                DispatchQueue.main.async {
+                    let newWebView = MiniAppWebView(
+                        miniAppId: self.appId,
+                        versionId: versionId,
+                        queryParams: self.queryParams
+                    )
+                    self.webView = newWebView
+                    do {
+                        try self.loadWebView(
+                            webView: newWebView,
                             miniAppId: self.appId,
                             versionId: versionId,
                             queryParams: self.queryParams
                         )
-                        self.webView = newWebView
-                        do {
-                            try self.loadWebView(
-                                webView: newWebView,
-                                miniAppId: self.appId,
-                                versionId: versionId,
-                                queryParams: self.queryParams
-                            )
-                        } catch {
-                            completion(.failure(.unknownError(domain: "", code: 0, description: "Internal error")))
-                        }
-                        completion(.success(newWebView))
+                    } catch {
+                        completion(.failure(.unknownError(domain: "", code: 0, description: "Internal error")))
                     }
-                } else {
-                    completion(.failure(.miniAppCorrupted))
+                    completion(.success(newWebView))
                 }
             } else {
                 completion(.failure(.miniAppNotFound))
@@ -406,7 +440,7 @@ extension MiniAppViewHandler {
         miniAppVersion: String? = nil,
         completionHandler: @escaping (Result<MiniAppInfo, MASDKError>) -> Void
     ) {
-        return miniAppInfoFetcher.getInfo(
+        miniAppInfoFetcher?.getInfo(
             miniAppId: miniAppId,
             miniAppVersion: miniAppVersion,
             apiClient: self.miniAppClient,
@@ -529,7 +563,7 @@ extension MiniAppViewHandler {
         if version.isEmpty {
             return completionHandler(.failure(.invalidVersionId))
         }
-        metaDataDownloader.getMiniAppMetaInfo(
+        metaDataDownloader?.getMiniAppMetaInfo(
             miniAppId: appId,
             miniAppVersion: version,
             apiClient: self.miniAppClient,
@@ -707,7 +741,7 @@ extension MiniAppViewHandler: WKNavigationDelegate {
 
     private func notifySecureStorageStatus() {
         if shouldAutoLoadSecureStorage {
-            secureStorage.loadStorage { success in
+            secureStorage?.loadStorage { success in
                 if success {
                     MiniAppSecureStorage.sendLoadStorageReady(miniAppId: self.appId, miniAppVersion: self.version ?? "")
                 } else {
@@ -853,23 +887,23 @@ extension MiniAppViewHandler: MiniAppCallbackDelegate {
 // MARK: - MiniAppSecureStorageDelegate
 extension MiniAppViewHandler: MiniAppSecureStorageDelegate {
     func get(key: String) throws -> String? {
-        return try secureStorage.get(key: key)
+        return try secureStorage?.get(key: key)
     }
 
     func set(dict: [String: String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
-        return secureStorage.set(dict: dict, completion: completion)
+        secureStorage?.set(dict: dict, completion: completion)
     }
 
     func remove(keys: [String], completion: ((Result<Bool, MiniAppSecureStorageError>) -> Void)?) {
-        return secureStorage.remove(keys: keys, completion: completion)
+        secureStorage?.remove(keys: keys, completion: completion)
     }
 
     func size() -> MiniAppSecureStorageSize {
-        return secureStorage.size()
+        return secureStorage?.size() ?? MiniAppSecureStorageSize(used: 0, max: 0)
     }
 
     func clearSecureStorage() throws {
-        try secureStorage.clearSecureStorage()
+        try secureStorage?.clearSecureStorage()
     }
 }
 
