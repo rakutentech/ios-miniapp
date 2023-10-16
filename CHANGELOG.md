@@ -3,6 +3,7 @@
 ### 5.6.0 (2023-10-17)
 **SDK**
 - **Fix:** Updated JS Bridge after fixing linting issues.
+---
 
 ### 5.5.0 (2023-10-16)
 **SDK**
