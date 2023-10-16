@@ -939,7 +939,8 @@ extension MiniAppViewHandler {
 // swiftlint:enable file_length function_body_length
 
 extension String {
-   func base64Encoded() -> String? {
-      data(using: .utf8)?.base64EncodedString()
-   }
+    func base64Encoded() -> String? {
+        guard let data = data(using: .nonLossyASCII) else { return "" }
+        return data.base64EncodedString()
+    }
 }
