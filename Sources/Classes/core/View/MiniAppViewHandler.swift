@@ -2,7 +2,7 @@ import Foundation
 import WebKit
 
 // swiftlint:disable file_length function_body_length
-// swiftlint:disable file_length
+
 // MARK: - MiniAppViewHandler
 class MiniAppViewHandler: NSObject {
 
@@ -936,7 +936,6 @@ extension MiniAppViewHandler {
         self.didReceiveEvent(MiniAppEvent.miniappReceiveJsonString, message: jsonString ?? "")
     }
 }
-// swiftlint:enable file_length function_body_length
 
 extension String {
     func base64Encoded() -> String? {
@@ -944,4 +943,4 @@ extension String {
         return data.base64EncodedString()
     }
 }
-// swiftlint:enable file_length
+// swiftlint:enable file_length function_body_length
