@@ -831,7 +831,11 @@ extension MiniAppViewHandler: MiniAppCallbackDelegate {
     }
 
     func didReceiveEvent(_ event: MiniAppEvent, message: String) {
-        let messageBody = Constants.JavaScript.eventCallback + "('\(event.rawValue)'," + "'\(message)')"
+        var encodedMessage = message
+        if event == .miniappReceiveJsonString {
+            encodedMessage = message.base64Encoded() ?? ""
+        }
+        let messageBody = Constants.JavaScript.eventCallback + "('\(event.rawValue)'," + "'\(encodedMessage)')"
         messageBodies.append(messageBody)
         MiniAppLogger.d(messageBody, "♨️️")
         webView?.evaluateJavaScript(messageBody)
@@ -930,6 +934,13 @@ extension MiniAppViewHandler: WKUIDelegate {
 extension MiniAppViewHandler {
     internal func sendJsonToMiniApp(string jsonString: String?) {
         self.didReceiveEvent(MiniAppEvent.miniappReceiveJsonString, message: jsonString ?? "")
+    }
+}
+
+extension String {
+    func base64Encoded() -> String? {
+        guard let data = data(using: .nonLossyASCII) else { return "" }
+        return data.base64EncodedString()
     }
 }
 // swiftlint:enable file_length function_body_length
