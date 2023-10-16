@@ -831,7 +831,11 @@ extension MiniAppViewHandler: MiniAppCallbackDelegate {
     }
 
     func didReceiveEvent(_ event: MiniAppEvent, message: String) {
-        let messageBody = Constants.JavaScript.eventCallback + "('\(event.rawValue)'," + "'\(message)')"
+        var encodedMessage = message
+        if event == .miniappReceiveJsonString {
+            encodedMessage = message.base64Encoded() ?? ""
+        }
+        let messageBody = Constants.JavaScript.eventCallback + "('\(event.rawValue)'," + "'\(encodedMessage)')"
         messageBodies.append(messageBody)
         MiniAppLogger.d(messageBody, "♨️️")
         webView?.evaluateJavaScript(messageBody)
@@ -933,3 +937,9 @@ extension MiniAppViewHandler {
     }
 }
 // swiftlint:enable file_length function_body_length
+
+extension String {
+   func base64Encoded() -> String? {
+      data(using: .utf8)?.base64EncodedString()
+   }
+}
