@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 5.5.0 (2023-10-16)
+**SDK**
+- **Fix:** Fix character escaping issue in Universal bridge (`sendJsonToMiniApp`)
+---
+
 ### 5.4.0 (2023-08-28)
 **SDK**
 - **Feature:** Added a new interface `downloadMiniApp(appId:versionId:completionHandler:)` to download Miniapp from platform in background if needed.
