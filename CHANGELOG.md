@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 5.6.1 (2023-10-17)
+**SDK**
+- **Fix:** Fixed `getUsername` unicode issue
+---
+
 ### 5.6.0 (2023-10-17)
 **SDK**
 - **Fix:** Updated JS Bridge after fixing linting issues.

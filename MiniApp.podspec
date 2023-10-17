@@ -1,6 +1,6 @@
 Pod::Spec.new do |miniapp|
   miniapp.name         = 'MiniApp'
-  miniapp.version      = '5.6.0'
+  miniapp.version      = '5.6.1'
   miniapp.authors      = "Rakuten Ecosystem Mobile"
   miniapp.summary      = "Rakuten's Mini App SDK"
   miniapp.description  = "This open-source library allows you to integrate Mini App ecosystem into your iOS applications. Mini App SDK also facilitates communication between a mini app and the host app via a message bridge."
