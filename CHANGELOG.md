@@ -1,5 +1,20 @@
 ## CHANGELOG
 
+### 5.6.1 (2023-10-17)
+**SDK**
+- **Fix:** Fixed `getUsername` unicode issue
+---
+
+### 5.6.0 (2023-10-17)
+**SDK**
+- **Fix:** Updated JS Bridge after fixing linting issues.
+---
+
+### 5.5.0 (2023-10-16)
+**SDK**
+- **Fix:** Fix character escaping issue in Universal bridge (`sendJsonToMiniApp`)
+---
+
 ### 5.4.0 (2023-08-28)
 **SDK**
 - **Feature:** Added a new interface `downloadMiniApp(appId:versionId:completionHandler:)` to download Miniapp from platform in background if needed.

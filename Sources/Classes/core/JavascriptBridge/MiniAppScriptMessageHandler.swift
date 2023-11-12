@@ -467,7 +467,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
                         self.executeJavaScriptCallback(responseStatus: .onError, messageId: callbackId, response: getMiniAppErrorMessage(MiniAppErrorType.hostAppError))
                         return
                     }
-                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: userName)
+                    self.executeJavaScriptCallback(responseStatus: .onSuccess, messageId: callbackId, response: userName.base64Encoded() ?? "")
                 case .failure(let error):
                     self.handleMASDKError(error: error, callbackId: callbackId)
                 }
