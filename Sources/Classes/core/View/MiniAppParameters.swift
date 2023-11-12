@@ -19,6 +19,7 @@ public extension MiniAppViewParameters {
         let appId: String
         let version: String?
         let queryParams: String?
+        var fromBundle: Bool? = false
 
         /**
         Initializes default parameters for MiniAppView
@@ -35,13 +36,15 @@ public extension MiniAppViewParameters {
             type: MiniAppType,
             appId: String,
             version: String? = nil,
-            queryParams: String? = nil
+            queryParams: String? = nil,
+            fromBundle: Bool? = false
         ) {
             self.config = config
             self.type = type
             self.appId = appId
             self.version = version
             self.queryParams = queryParams
+            self.fromBundle = fromBundle
         }
     }
 
@@ -80,6 +83,7 @@ public extension MiniAppViewParameters {
         let type: MiniAppType
         let info: MiniAppInfo
         let queryParams: String?
+        var fromBundle: Bool? = false
 
         /**
         Initializes url parameters for MiniAppView
@@ -94,12 +98,14 @@ public extension MiniAppViewParameters {
             config: MiniAppConfig,
             type: MiniAppType,
             info: MiniAppInfo,
-            queryParams: String? = nil
+            queryParams: String? = nil,
+            fromBundle: Bool? = false
         ) {
             self.config = config
             self.type = type
             self.info = info
             self.queryParams = queryParams
+            self.fromBundle = fromBundle
         }
     }
 }

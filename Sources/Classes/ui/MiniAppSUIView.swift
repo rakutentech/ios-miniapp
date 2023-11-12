@@ -15,7 +15,9 @@ public struct MiniAppSUIView: UIViewRepresentable {
     var miniAppManifest: MiniAppManifest?
 
     public init(params: MiniAppViewParameters.DefaultParams, fromCache: Bool = false, handler: MiniAppSUIViewHandler, fromBundle: Bool = false, miniAppManifest: MiniAppManifest? = nil) {
-        self.params = .default(params)
+        var miniAppParams = params
+        miniAppParams.fromBundle = fromBundle
+        self.params = .default(miniAppParams)
         self.fromCache = fromCache
         self.handler = handler
         self.fromBundle = fromBundle

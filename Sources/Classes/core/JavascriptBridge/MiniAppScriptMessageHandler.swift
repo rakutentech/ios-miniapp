@@ -28,7 +28,7 @@ internal class MiniAppScriptMessageHandler: NSObject, WKScriptMessageHandler {
         delegate: MiniAppCallbackDelegate,
         hostAppMessageDelegate: MiniAppMessageDelegate,
         adsDisplayer: MiniAppAdDisplayer?,
-        secureStorageDelegate: MiniAppSecureStorageDelegate,
+        secureStorageDelegate: MiniAppSecureStorageDelegate?,
         miniAppManageDelegate: MiniAppManageDelegate?,
         miniAppId: String,
         miniAppTitle: String

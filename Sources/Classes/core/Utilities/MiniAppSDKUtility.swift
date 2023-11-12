@@ -11,6 +11,7 @@ class MiniAppSDKUtility {
         do {
             try FileManager.default.unzipItem(at: filePath, to: FileManager.getMiniAppVersionDirectory(with: miniAppId, and: versionId), skipCRC32: true)
             cacheVerifier.storeHash(for: miniAppId, version: versionId)
+            completionHandler?(.success(true))
             return
         } catch let err {
             MiniAppLogger.e("Error unzipping archive", err)
