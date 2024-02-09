@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "CSQLite",
+        "repositoryURL": "https://github.com/stephencelis/CSQLite.git",
+        "state": {
+          "branch": null,
+          "revision": "9106e983d5e3d5149ee35281ec089484b0def018",
+          "version": "0.0.3"
+        }
+      },
+      {
         "package": "GoogleAppMeasurement",
         "repositoryURL": "https://github.com/google/GoogleAppMeasurement.git",
         "state": {
@@ -78,8 +87,8 @@
         "repositoryURL": "https://github.com/weichsel/ZIPFoundation.git",
         "state": {
           "branch": null,
-          "revision": "43ec568034b3731101dbf7670765d671c30f54f3",
-          "version": "0.9.16"
+          "revision": "b979e8b52c7ae7f3f39fa0182e738e9e7257eb78",
+          "version": "0.9.18"
         }
       }
     ]
